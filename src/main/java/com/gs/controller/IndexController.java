@@ -15,9 +15,20 @@ public class IndexController {
 
     private Logger logger = (Logger) LoggerFactory.getLogger(IndexController.class);
 
+    /**
+     * 前台主页
+     */
     @RequestMapping(value = "index",method = RequestMethod.GET)
     public String home() {
         return "customer/index";
+    }
+
+    /**
+     * 后台主页
+     */
+    @RequestMapping(value = "backstageIndex", method = RequestMethod.GET)
+    public String backstageHome() {
+        return "backstage/index";
     }
 
 }
