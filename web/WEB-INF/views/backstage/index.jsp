@@ -188,13 +188,13 @@
                     <li>
                         <a href="#"><i class="fa fa-ambulance"></i> <span class="nav-label">派工领料管理</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
-                            <li><a class="J_menuItem" href="basic_gallery.html">物料清单</a>
+                            <li><a class="J_menuItem" href="pickingControll/materialsIndex">物料清单</a>
                             </li>
-                            <li><a class="J_menuItem" href="carousel.html">指派员工</a>
+                            <li><a class="J_menuItem" href="pickingControll/assignstaffIndex">指派员工</a>
                             </li>
-                            <li><a class="J_menuItem" href="blueimp.html">领料管理</a>
+                            <li><a class="J_menuItem" href="pickingControll/acquisitionIndex">领料管理</a>
                             </li>
-                            <li><a class="J_menuItem" href="blueimp.html">退料管理</a>
+                            <li><a class="J_menuItem" href="pickingControll/returnedIndex">退料管理</a>
                             </li>
                         </ul>
                     </li>
