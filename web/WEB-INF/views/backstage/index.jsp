@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="renderer" content="webkit">
     <meta http-equiv="Cache-Control" content="no-siteapp" />
-    <title>H+ 后台主题UI框架 - 主页</title>
+    <title>汽车维修保养系统</title>
 
     <meta name="keywords" content="H+后台主题,后台bootstrap框架,会员中心主题,后台HTML,响应式后台">
     <meta name="description" content="H+是一个完全响应式，基于Bootstrap3最新版本开发的扁平化主题，她采用了主流的左右两栏式布局，使用了Html5+CSS3等现代技术">
@@ -16,10 +16,10 @@
     <![endif]-->
 
     <link rel="shortcut icon" href="favicon.ico">
-    <link href="/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
-    <link href="/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
-    <link href="/css/animate.min.css" rel="stylesheet">
-    <link href="/css/style.min.css?v=4.1.0" rel="stylesheet">
+    <link href="/static/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="/static/css/font-awesome.min.css?v=4.4.0" rel="stylesheet">
+    <link href="/static/css/animate.min.css" rel="stylesheet">
+    <link href="/static/css/style.min.css?v=4.1.0" rel="stylesheet">
 </head>
 
 <body class="fixed-sidebar full-height-layout gray-bg" style="overflow:hidden">
@@ -65,6 +65,15 @@
                     </li>
                     <li>
                         <a class="J_menuItem" href="/vaildate/index">jqueryVaildate</a>
+                    </li>
+                    <li>
+                        <a class="J_menuItem" href="/error/notFound">404</a>
+                    </li>
+                    <li>
+                        <a class="J_menuItem" href="/error/serverError">500</a>
+                    </li>
+                    <li>
+                        <a class="J_menuItem" href="/head/edit">head</a>
                     </li>
                     <li>
                         <a href="#">
@@ -272,13 +281,13 @@
                     <li>
                         <a href="#"><i class="fa fa-gear"></i> <span class="nav-label">系统管理</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
-                            <li><a class="J_menuItem" href="basic_gallery.html">模块管理</a>
+                            <li><a class="J_menuItem" href="/systemManage/moduleIndex">模块管理</a>
                             </li>
-                            <li><a class="J_menuItem" href="carousel.html">权限管理</a>
+                            <li><a class="J_menuItem" href="/systemManage/perManageIndex">权限管理</a>
                             </li>
-                            <li><a class="J_menuItem" href="blueimp.html">权限分配</a>
+                            <li><a class="J_menuItem" href="/systemManage/perDistributionIndex">权限分配</a>
                             </li>
-                            <li><a class="J_menuItem" href="blueimp.html">流程管理</a>
+                            <li><a class="J_menuItem" href="/systemManage/flowIndex">流程管理</a>
                             </li>
                         </ul>
                     </li>
@@ -389,29 +398,15 @@
                 </button>
                 <nav class="page-tabs J_menuTabs">
                     <div class="page-tabs-content">
-                        <a href="javascript:;" class="active J_menuTab" data-id="index_v1.html">首页</a>
+                        <a href="javascript:;" class="active J_menuTab" data-id="/backstage/home">首页</a>
                     </div>
                 </nav>
-                <button class="roll-nav roll-right J_tabRight"><i class="fa fa-forward"></i>
+                <button class="roll-nav roll-right J_tabRight" style="padding:0; margin:0;"><i class="fa fa-forward"></i>
                 </button>
-                <div class="btn-group roll-nav roll-right">
-                    <button class="dropdown J_tabClose" data-toggle="dropdown">关闭操作<span class="caret"></span>
-
-                    </button>
-                    <ul role="menu" class="dropdown-menu dropdown-menu-right">
-                        <li class="J_tabShowActive"><a>定位当前选项卡</a>
-                        </li>
-                        <li class="divider"></li>
-                        <li class="J_tabCloseAll"><a>关闭全部选项卡</a>
-                        </li>
-                        <li class="J_tabCloseOther"><a>关闭其他选项卡</a>
-                        </li>
-                    </ul>
-                </div>
                 <a href="login.html" class="roll-nav roll-right J_tabExit"><i class="fa fa fa-sign-out"></i> 退出</a>
             </div>
             <div class="row J_mainContent" id="content-main" style="height:100%;">
-                <iframe  class="J_iframe" name="iframe0" width="100%" height="100%" src="" frameborder="0" data-id="index_v1.html" seamless></iframe>
+                <iframe id="j_iframe" class="J_iframe" name="iframe0" width="100%" height="100%" src="/backstage/home" frameborder="0" data-id="/backstage/home" seamless></iframe>
             </div>
         </div>
         <!--右侧部分结束-->
@@ -817,14 +812,14 @@
 
         </div>
     </div>
-    <script src="/js/jquery.min.js?v=2.1.4"></script>
-    <script src="/js/bootstrap.min.js?v=3.3.6"></script>
-    <script src="/js/plugins/metisMenu/jquery.metisMenu.js"></script>
-    <script src="/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
-    <script src="/js/plugins/layer/layer.min.js"></script>
-    <script src="/js/hplus.min.js?v=4.1.0"></script>
-    <script type="text/javascript" src="/js/contabs.min.js"></script>
-    <script src="/js/plugins/pace/pace.min.js"></script>
+    <script src="/static/js/jquery.min.js?v=2.1.4"></script>
+    <script src="/static/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="/static/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="/static/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="/static/js/plugins/layer/layer.min.js"></script>
+    <script src="/static/js/hplus.min.js?v=4.1.0"></script>
+    <script src="/static/js/contabs.min.js"></script>
+    <script src="/static/js/plugins/pace/pace.min.js"></script>
     <script>
         $(function() {
             function bodyScroll(event){

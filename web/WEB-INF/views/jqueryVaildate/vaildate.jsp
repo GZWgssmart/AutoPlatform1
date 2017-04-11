@@ -3,11 +3,11 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <script src="/js/jquery.min.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
-    <script src="/js/jqueryVaildate/jquery.validate.js"></script>
-    <script src="/js/jqueryVaildate/messages_zh.js"></script>
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/jqueryVaildate/jquery.validate.js"></script>
+    <script src="/static/js/jqueryVaildate/messages_zh.js"></script>
     <script>
         $.validator.setDefaults({
             submitHandler: function() {
