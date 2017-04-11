@@ -43,14 +43,16 @@
         <!-- 登录地址 -->   
         <property name="loginUrl" value="/login.jsp"/>      
         <!-- 错误页面 -->  
-        <property name="unauthorizedUrl" value="/unauth.jsp"/>    
+        <property name="unauthorizedUrl" value="/error/serverError"/>
         <!-- 权限配置 -->  
         <property name="filterChainDefinitions">    
             <value>  
                 /login = anon
-                /css/**=anon  
-                /images/**=anon
-                /js/**=anon
+                /static/**=anon
+                /static/css/**=anon
+                /static/images/**=anon
+                /static/js/**=anon
+                /static/uploads/**=anon
             </value>    
         </property>    
     </bean>  
