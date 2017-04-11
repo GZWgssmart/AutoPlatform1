@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+﻿<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -253,19 +253,19 @@
                     <li>
                         <a href="#"><i class="fa fa-bar-chart"></i> <span class="nav-label">报表统计</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
-                            <li><a class="J_menuItem" href="basic_gallery.html">维修保养统计</a>
+                            <li><a class="J_menuItem" href="/statistics/maintain">维修保养统计</a>
                             </li>
-                            <li><a class="J_menuItem" href="carousel.html">员工工单统计</a>
+                            <li><a class="J_menuItem" href="/statistics/workorder">员工工单统计</a>
                             </li>
-                            <li><a class="J_menuItem" href="blueimp.html">物料使用统计</a>
+                            <li><a class="J_menuItem" href="/statistics/usematerials">物料使用统计</a>
                             </li>
-                            <li><a class="J_menuItem" href="blueimp.html">维修类型统计</a>
+                            <li><a class="J_menuItem" href="/statistics/maintaintype">维修类型统计</a>
                             </li>
-                            <li><a class="J_menuItem" href="blueimp.html">提成统计</a>
+                            <li><a class="J_menuItem" href="/statistics/pushmoney">提成统计</a>
                             </li>
-                            <li><a class="J_menuItem" href="blueimp.html">库存统计</a>
+                            <li><a class="J_menuItem" href="/statistics/stock">库存统计</a>
                             </li>
-                            <li><a class="J_menuItem" href="blueimp.html">财务统计</a>
+                            <li><a class="J_menuItem" href="/statistics/finance">财务统计</a>
                             </li>
                         </ul>
                     </li>
