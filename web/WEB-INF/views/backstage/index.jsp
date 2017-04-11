@@ -73,7 +73,7 @@
                         <a class="J_menuItem" href="/error/serverError">500</a>
                     </li>
                     <li>
-                        <a class="J_menuItem" href="/head/edit">head</a>
+                        <a class="J_menuItem" href="/edit">head</a>
                     </li>
                     <li>
                         <a href="#">
