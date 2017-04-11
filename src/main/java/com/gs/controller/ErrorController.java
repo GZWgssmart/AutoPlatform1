@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 @RequestMapping("/error")
-public class errorController {
+public class ErrorController {
 
-    private Logger logger = (Logger) LoggerFactory.getLogger(errorController.class);
+    private Logger logger = (Logger) LoggerFactory.getLogger(ErrorController.class);
 
     /**
      * 404

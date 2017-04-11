@@ -19,7 +19,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/vaildate")
-public class vaildateController {
+public class VaildateController {
 
     @RequestMapping(value = "index" ,method = RequestMethod.GET)
     public ModelAndView tableIndex(){

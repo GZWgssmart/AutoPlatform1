@@ -8,8 +8,6 @@ import org.apache.shiro.authz.Permission;
 import org.apache.shiro.authz.permission.RolePermissionResolver;
 import org.springframework.stereotype.Component;
 
-import com.gs.service.RolePermissionService;
-
 @Component(value = "rolePermissionRelover")
 public class MyRolePermissionResolver implements RolePermissionResolver{
 	

@@ -7,17 +7,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-@RequestMapping("/backstage")
-public class backstageController {
+@RequestMapping("/head")
+public class HeadController {
 
-    private Logger logger = (Logger) LoggerFactory.getLogger(backstageController.class);
+    private Logger logger = (Logger) LoggerFactory.getLogger(HeadController.class);
 
     /**
-     * 后台主页
+     * edit
      */
-    @RequestMapping(value = "home", method = RequestMethod.GET)
-    public String backstageHome() {
-        return "backstage/home";
+    @RequestMapping(value = "edit", method = RequestMethod.GET)
+    public String edit() {
+        return "head/form_avatar";
     }
-
 }
