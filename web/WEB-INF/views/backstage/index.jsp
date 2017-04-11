@@ -150,13 +150,13 @@
                     <li>
                         <a href="#"><i class="fa fa-cubes"></i> <span class="nav-label">配件管理</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
-                            <li><a class="J_menuItem" href="contacts.html">库存管理</a>
+                            <li><a class="J_menuItem" href="/accessories/accessories">库存管理</a>
                             </li>
-                            <li><a class="J_menuItem" href="profile.html">配件分类管理</a>
+                            <li><a class="J_menuItem" href="/accessories/type">配件分类管理</a>
                             </li>
-                            <li><a href="#">配件采购管理</a>
+                            <li><a class="J_menuItem" href="/accessories/buy">配件采购管理</a>
                             </li>
-                            <li><a class="J_menuItem" href="teams_board.html">配件销售管理</a>
+                            <li><a class="J_menuItem" href="/accessories/sale">配件销售管理</a>
                             </li>
                         </ul>
                     </li>
