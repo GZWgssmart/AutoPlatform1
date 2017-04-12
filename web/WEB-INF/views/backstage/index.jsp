@@ -118,10 +118,7 @@
                         </a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a class="J_menuItem" href="graph_echarts.html">人员角色管理</a>
-                            </li>
-                            <li>
-                                <a class="J_menuItem" href="graph_flot.html">人员基本信息管理</a>
+                                <a class="J_menuItem" href="/emp/empInformation">人员基本信息管理</a>
                             </li>
                             <li>
                                 <a class="J_menuItem" href="graph_morris.html">工资管理</a>
@@ -136,7 +133,7 @@
                     <li>
                         <a href="#"><i class="fa fa-users"></i> <span class="nav-label">供应商管理</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
-                            <li><a class="J_menuItem" href="form_basic.html">供应商管理</a>
+                            <li><a class="J_menuItem" href="/supplier/supplierInformation">供应商管理</a>
                             </li>
                             <li><a class="J_menuItem" href="form_validate.html">供应商分类管理</a>
                             </li>

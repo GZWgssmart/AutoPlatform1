@@ -1,0 +1,26 @@
+.container {
+    width:100%;
+
+}
+.bootstrap-table {
+    width: 100%;
+}
+
+
+.modal-dialog.modal-content.modal-header {
+    width: auto;
+}
+
+.modal-dialog.modal-content.modal-body {
+    width: auto;
+}
+
+.modal-dialog.modal-content.modal-header input {
+    width: 70%;
+}
+
+.modal-dialog.modal-content.modal-header select {
+    width: 70%;
+}
+
+
