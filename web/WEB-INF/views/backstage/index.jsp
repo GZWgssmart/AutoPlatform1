@@ -83,28 +83,28 @@
                         </a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a class="J_menuItem" href="index_v1.html" data-index="0">公司信息管理</a>
+                                <a class="J_menuItem" href="/backstage/companyInfo" data-index="0">公司信息管理</a>
                             </li>
                             <li>
-                                <a class="J_menuItem" href="index_v2.html">汽车品牌管理</a>
+                                <a class="J_menuItem" href="/backstage/carBrand">汽车品牌管理</a>
                             </li>
                             <li>
-                                <a class="J_menuItem" href="index_v3.html">车型管理</a>
+                                <a class="J_menuItem" href="/backstage/carModel">车型管理</a>
                             </li>
                             <li>
-                                <a class="J_menuItem" href="index_v4.html">汽车颜色管理</a>
+                                <a class="J_menuItem" href="/backstage/carColor">汽车颜色管理</a>
                             </li>
                             <li>
-                                <a class="J_menuItem" href="index_v5.html" target="_blank">车牌管理</a>
+                                <a class="J_menuItem" href="/backstage/carPlate" target="_blank">车牌管理</a>
                             </li>
                             <li>
-                                <a class="J_menuItem" href="index_v6.html" target="_blank">保养项目管理</a>
+                                <a class="J_menuItem" href="/backstage/upkeepItem" target="_blank">保养项目管理</a>
                             </li>
                             <li>
-                                <a class="J_menuItem" href="index_v7.html" target="_blank">维修项目管理</a>
+                                <a class="J_menuItem" href="/backstage/maintainItem" target="_blank">维修项目管理</a>
                             </li>
                             <li>
-                                <a class="J_menuItem" href="index_v8.html" target="_blank">常见故障管理</a>
+                                <a class="J_menuItem" href="/backstage/commonFaults" target="_blank">常见故障管理</a>
                             </li>
                         </ul>
 

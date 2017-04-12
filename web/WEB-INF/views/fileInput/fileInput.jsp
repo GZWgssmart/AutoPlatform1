@@ -27,8 +27,6 @@
             <input id="txt_file" name="txt_file" type="file" class="form-control" multiple class="file-loading"
                    placeholder="请选择或输入一个你想上传的相册类型,默认当天日期为类型!"/>
         </div>
-
-
     </div>
 
 </div>
