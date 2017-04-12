@@ -61,10 +61,10 @@
         <div class="modal-content" style="overflow:hidden;">
             <form action="/table/edit" onsubmit="return checkAdd()" id="addForm" method="post">
                 <div class="modal-header" style="overflow:hidden;">
-                    <input type="text" id="addId" placeholder="请输入标题" style="width:300px;margin-left:70px;" maxlength="15" name="top-search"/>
-                    <input type="text" id="addPrice" placeholder="请输入标题" style="width:300px;margin-left:70px;" maxlength="15" name="top-search"/>
+                    <input type="text" id="addId" placeholder="请输入标题" style="width:300px;" maxlength="15" name="top-search"/>
+                    <input type="text" id="addPrice" placeholder="请输入标题" style="width:300px;" maxlength="15" name="top-search"/>
                     <br />
-                    <select id="addSelect"  class="js-example-basic-multiple" multiple="multiple" style="width:300px;margin-left:70px;">
+                    <select id="addSelect"  class="js-example-basic-multiple" multiple="multiple" style="width:300px;">
                     </select>
                 </div>
                 <div class="modal-body" style="overflow:hidden;">

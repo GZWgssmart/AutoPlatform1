@@ -68,22 +68,24 @@
         <div class="modal fade" id="add" aria-hidden="true" style="overflow:hidden;">
             <div class="modal-dialog" style="overflow:hidden;">
                 <div class="modal-content" style="overflow:hidden;">
+                    <h3>标题标题标题</h3>
                     <form action="/table/edit" onsubmit="return checkAdd()" id="addForm" method="post">
                         <div class="modal-header" style=" overflow:hidden;">
-                            <div class="input-group">
-                                <select  id="addSelect" style="width: 70%"  class="js-example-basic-multiple" multiple="multiple"></select>
-                            </div>
 
                             <div class="input-group">
                                 <span class="input-group-addon" id="sizing-addon1">手机号码</span>
                                 <input type="text" class="form-control" placeholder="手机号码" aria-describedby="sizing-addon2">
                             </div>
                             <div class="input-group">
-                                <span class="input-group-addon" id="sizing-addon2">姓名</span>
+                                <span class="input-group-addon" id="sizing-addon2">姓名&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
                                 <input type="text" class="form-control" placeholder="姓名" aria-describedby="sizing-addon2">
                             </div>
                             <div class="input-group">
                                 <span class="input-group-addon" id="sizing-addon3">身份证号码</span>
+                                <input type="text" class="form-control" placeholder="身份证号码" aria-describedby="sizing-addon2">
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-addon" id="sizing-addon4">身份证号码2</span>
                                 <input type="text" class="form-control" placeholder="身份证号码" aria-describedby="sizing-addon2">
                             </div>
                             <br />

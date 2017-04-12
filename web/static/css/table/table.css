@@ -5,7 +5,10 @@
 .bootstrap-table {
     width: 100%;
 }
-
+.modal-content{
+    width: 550px;
+    height: auto;
+}
 
 .modal-dialog.modal-content.modal-header {
     width: auto;
@@ -21,6 +24,14 @@
 
 .modal-dialog.modal-content.modal-header select {
     width: 70%;
+}
+.input-group{
+    margin:15px 25px;
+}
+.modal-content h3{
+    margin-top: 15px;
+    margin-bottom:5px;
+    margin-left: 15px;
 }
 
 
