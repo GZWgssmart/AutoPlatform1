@@ -76,32 +76,41 @@
                                     class="fa fa-camera"></i> 拍照</a>
                         </p>
                         <div id="userAlbums" style="display:none">
-                            <a href="<%=path %>/img/a1.jpg" class="fancybox" title="选取该照片">
-                                <img src="<%=path %>/img/a1.jpg" alt="示例图片1"/>
+                            <a href="<%=path %>/static/img/a1.jpg" class="fancybox" title="选取该照片">
+                                <img src="<%=path %>/static/img/a1.jpg" alt="示例图片1"/>
                             </a>
-                            <a href="<%=path %>/img/a2.jpg" class="fancybox" title="选取该照片">
-                                <img src="<%=path %>/img/a2.jpg" alt="示例图片2"/>
+                            <a href="<%=path %>/static/img/a2.jpg" class="fancybox" title="选取该照片">
+                                <img src="<%=path %>/static/img/a2.jpg" alt="示例图片2"/>
                             </a>
-                            <a href="<%=path %>/img/a3.jpg" class="fancybox" title="选取该照片">
-                                <img src="<%=path %>/img/a3.jpg" alt="示例图片2"/>
+                            <a href="<%=path %>/static/img/a3.jpg" class="fancybox" title="选取该照片">
+                                <img src="<%=path %>/static/img/a3.jpg" alt="示例图片2"/>
                             </a>
-                            <a href="<%=path %>/img/a4.jpg" class="fancybox" title="选取该照片">
-                                <img src="<%=path %>/img/a4.jpg" alt="示例图片2"/>
+                            <a href="<%=path %>/static/img/a4.jpg" class="fancybox" title="选取该照片">
+                                <img src="<%=path %>/static/img/a4.jpg" alt="示例图片2"/>
                             </a>
-                            <a href="<%=path %>/img/a5.jpg" class="fancybox" title="选取该照片">
-                                <img src="<%=path %>/img/a5.jpg" alt="示例图片2"/>
+                            <a href="<%=path %>/static/img/a5.jpg" class="fancybox" title="选取该照片">
+                                <img src="<%=path %>/static/img/a5.jpg" alt="示例图片2"/>
                             </a>
-                            <a href="<%=path %>/img/a6.jpg" class="fancybox" title="选取该照片">
-                                <img src="<%=path %>/img/a6.jpg" alt="示例图片2"/>
+                            <a href="<%=path %>/static/img/a6.jpg" class="fancybox" title="选取该照片">
+                                <img src="<%=path %>/static/img/a6.jpg" alt="示例图片2"/>
                             </a>
-                            <a href="<%=path %>/img/a7.jpg" class="fancybox" title="选取该照片">
-                                <img src="<%=path %>/img/a7.jpg" alt="示例图片2"/>
+                            <a href="<%=path %>/static/img/a7.jpg" class="fancybox" title="选取该照片">
+                                <img src="<%=path %>/static/img/a7.jpg" alt="示例图片2"/>
                             </a>
-                            <a href="<%=path %>/img/a8.jpg" class="fancybox" title="选取该照片">
-                                <img src="<%=path %>/img/a8.jpg" alt="示例图片2"/>
+                            <a href="<%=path %>/static/img/a8.jpg" class="fancybox" title="选取该照片">
+                                <img src="<%=path %>/static/img/a8.jpg" alt="示例图片2"/>
                             </a>
-                            <a href="<%=path %>/img/a9.jpg" class="fancybox" title="选取该照片">
-                                <img src="<%=path %>/img/a9.jpg" alt="示例图片2"/>
+                            <a href="<%=path %>/static/img/a9.jpg" class="fancybox" title="选取该照片">
+                                <img src="<%=path %>/static/img/a9.jpg" alt="示例图片2"/>
+                            </a>
+                            <a href="<%=path %>/static/img/a10.jpg" class="fancybox" title="选取该照片">
+                                <img src="<%=path %>/static/img/a10.jpg" alt="示例图片2"/>
+                            </a>
+                            <a href="<%=path %>/static/img/a11.jpg" class="fancybox" title="选取该照片">
+                                <img src="<%=path %>/static/img/a11.jpg" alt="示例图片2"/>
+                            </a>
+                            <a href="<%=path %>/static/img/a12.jpg" class="fancybox" title="选取该照片">
+                                <img src="<%=path %>/static/img/a12.jpg" alt="示例图片2"/>
                             </a>
                         </div>
                     </div>
