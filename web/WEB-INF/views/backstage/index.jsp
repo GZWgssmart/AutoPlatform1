@@ -124,7 +124,7 @@
                                 <a class="J_menuItem" href="graph_morris.html">工资管理</a>
                             </li>
                             <li>
-                                <a class="J_menuItem" href="graph_rickshaw.html">工单查询</a>
+                                <a class="J_menuItem" href="/emp/workInfo">工单查询</a>
                             </li>
 
                         </ul>
@@ -135,7 +135,7 @@
                         <ul class="nav nav-second-level">
                             <li><a class="J_menuItem" href="/supplier/supplierInformation">供应商管理</a>
                             </li>
-                            <li><a class="J_menuItem" href="form_validate.html">供应商分类管理</a>
+                            <li><a class="J_menuItem" href="/supplier/supplierType">供应商分类管理</a>
                             </li>
                             <li><a class="J_menuItem" href="form_advanced.html">下单统计</a>
                             </li>

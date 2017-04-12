@@ -2,13 +2,13 @@
   Created by IntelliJ IDEA.
   User: AngeJob
   Date: 2017/4/12
-  Time: 10:20
+  Time: 10:42
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>供应商管理</title>
+    <title>供应商类型管理</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/css/bootstrap.min.css">
@@ -46,14 +46,9 @@
             <tr>
                 <th data-radio="true" data-field="status"></th>
                 <th data-width="10%" data-field="supplyName">供应商名称</th>
-                <th data-width="15%" data-field="phone">联系电话</th>
-                <th data-width="10%" data-field="name">负责人</th>
-                <th data-width="15%" data-field="identity">供应商地址</th>
-                <th data-width="10%" data-field="weChat">微信</th>
-                <th data-width="10%" data-field="type">供应商类型</th>
-                <th data-width="10%" data-field="company">所属公司</th>
-                <th data-width="15%" data-field="createTime">创建时间</th>
-                <th data-width="5%" data-field="supplyStatus">供应商状态</th>
+                <th data-width="10%" data-field="companyName">所属公司</th>
+                <th data-width="15%" data-field="des">描述</th>
+                <th data-width="10%" data-field="status">状态</th>
             </tr>
             </thead>
         </table>
@@ -184,7 +179,7 @@
 <script src="/static/js/select2/select2.js"></script>
 <script src="/static/js/sweetalert/sweetalert.min.js"></script>
 <script src="/static/js/contextmenu.js"></script>
-<script src="/static/js/supplierInFormation/supplierType.js"></script>
+<script src="/static/js/supplierInFormation/supplierInFormation.js"></script>
 <script src="/static/js/bootstrap-select/bootstrap-select.js"></script>
 
 </body>

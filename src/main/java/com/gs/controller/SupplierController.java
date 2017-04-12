@@ -16,9 +16,24 @@ public class SupplierController {
     private Logger logger = (Logger) LoggerFactory.getLogger(SystemManageController.class);
 
 
+
+    /**
+     * 供货商管理
+     * @return
+     */
     @RequestMapping(value = "supplierInformation", method = RequestMethod.GET)
     public String supplierInformation() {
         logger.info("供货商管理");
         return "supplier/supplierInFormation";
+    }
+
+    /**
+     * 供货商分类管理
+     * @return
+     */
+    @RequestMapping(value = "supplierType", method = RequestMethod.GET)
+    public String supplierType() {
+        logger.info("供货商分类管理");
+        return "supplier/supplierType";
     }
 }
