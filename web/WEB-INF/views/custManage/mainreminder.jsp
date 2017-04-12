@@ -1,24 +1,20 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: yaoyong
-  Date: 2017/4/11
-  Time: 15:34
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <html>
 <head>
-    <title>物料清单管理</title>
     <meta charset="utf-8">
+    <title>维修保养提醒</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/css/bootstrap.min.css">
     <link rel="stylesheet" href="/static/css/bootstrap-table.css">
     <link rel="stylesheet" href="/static/css/select2.min.css">
     <link rel="stylesheet" href="/static/css/sweetalert.css">
-    <link rel="stylesheet" href="/static/css/table/table.css">
 </head>
 <body>
 <%@include file="../backstage/contextmenu.jsp"%>
+
 <div class="container">
     <div class="panel-body" style="padding-bottom:0px;"  >
         <!--show-refresh, show-toggle的样式可以在bootstrap-table.js的948行修改-->
@@ -44,12 +40,8 @@
             <thead>
             <tr>
                 <th data-radio="true" data-field="status"></th>
-                <th data-field="name">物料名称</th>
-                <th data-field="state">物料说明</th>
-                <th ddata-field="amount">物料数量</th>
-                <th data-field="record">维修保养记录</th>
-                <th data-field="time">领料时间</th>
-                <th data-field="Status">状态</th>
+                <th  data-field="name">用户编号</th>
+                <th data-field="price">提醒时间</th>
             </tr>
             </thead>
         </table>
@@ -73,14 +65,14 @@
         <div class="modal-content" style="overflow:hidden;">
             <form action="/table/edit" onsubmit="return checkAdd()" id="addForm" method="post">
                 <div class="modal-header" style="overflow:hidden;">
-                    <input type="text" id="addId" placeholder="请输入标题" style="width:300px;margin-left:70px;" maxlength="15" name="top-search"/>
-                    <input type="text" id="addPrice" placeholder="请输入标题" style="width:300px;margin-left:70px;" maxlength="15" name="top-search"/>
+                    <input type="text" id="addId" placeholder="内容不能为空" style="width:300px;margin-left:70px;" maxlength="15" name="top-search"/>
+                    <input type="text" id="addPrice" placeholder="内容不能为空" style="width:300px;margin-left:70px;" maxlength="15" name="top-search"/>
                     <br />
                     <select id="addSelect"  class="js-example-basic-multiple" multiple="multiple" style="width:300px;margin-left:70px;">
                     </select>
                 </div>
                 <div class="modal-body" style="overflow:hidden;">
-                    <textarea id="addName" placeholder="请输入描述"  style="width:530px;height:100px;" maxlength="142"></textarea>
+                    <textarea id="addName" placeholder="内容不能为空"  style="width:530px;height:100px;" maxlength="142"></textarea>
                 </div>
                 <div class="modal-footer" style="overflow:hidden;">
                     <span id="addError" style="color: red;"></span>
@@ -96,17 +88,18 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+
 <!-- 修改弹窗 -->
 <div class="modal fade" id="edit" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <form id="editForm" class="data1" id="editForm" method="post">
                 <div class="modal-header" style="overflow:hidden;">
-                    <input type="text"  define="ceshi.id" name="id" placeholder="请输入标题" style="width:300px;margin-left:70px;" maxlength="15"/>
-                    <input type="text"  define="ceshi.price" name="price"  placeholder="请输入标题" style="width:300px;margin-left:70px;" maxlength="15"/>
+                    <input type="text"  define="ceshi.id" name="id" placeholder="内容不能为空" style="width:300px;margin-left:70px;" maxlength="15"/>
+                    <input type="text"  define="ceshi.price" name="price"  placeholder="内容不能为空" style="width:300px;margin-left:70px;" maxlength="15"/>
                 </div>
                 <div class="modal-body">
-                    <textarea type="text"  define="ceshi.name" name="name" placeholder="请输入描述"  style="width:530px;height:100px;" maxlength="142"></textarea>
+                    <textarea type="text"  define="ceshi.name" name="name" placeholder="内容不能为空"  style="width:530px;height:100px;" maxlength="142"></textarea>
                 </div>
                 <div class="modal-footer">
                     <span id="editError" style="color: red;"></span>
@@ -142,7 +135,6 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-
 <!-- 提示弹窗 -->
 <div class="modal fade" id="tanchuang" aria-hidden="true">
     <div class="modal-dialog">
@@ -161,7 +153,6 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-
 <script src="/static/js/jquery.min.js"></script>
 <script src="/static/js/bootstrap.min.js"></script>
 <script src="/static/js/bootstrap-table/bootstrap-table.js"></script>
@@ -170,15 +161,13 @@
 <script src="/static/js/select2/select2.js"></script>
 <script src="/static/js/sweetalert/sweetalert.min.js"></script>
 <script src="/static/js/contextmenu.js"></script>
-<script src="/static/js/supplierInFormation/supplierInFormation.js"></script>
-<script src="/static/js/bootstrap-select/bootstrap-select.js"></script>
 <script>
     $(function () {
         $('#table').bootstrapTable('hideColumn', 'id');
 
         $("#addSelect").select2({
-                language: 'zh-CN'
-            }
+                    language: 'zh-CN'
+                }
         );
 
         //绑定Ajax的内容
@@ -244,19 +233,19 @@
 
     function checkEdit() {
         $.post("/table/edit",
-            $("#editForm").serialize(),
-            function (data) {
-                if (data.result == "success") {
-                    $("#edit").modal('hide'); // 关闭指定的窗口
-                    $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
-                    swal({
-                        title:"",
-                        text: data.message,
-                        type:"success"})// 提示窗口, 修改成功
-                } else if (data.result == "fail") {
-                    //$.messager.alert("提示", data.result.message, "info");
-                }
-            }, "json"
+                $("#editForm").serialize(),
+                function (data) {
+                    if (data.result == "success") {
+                        $("#edit").modal('hide'); // 关闭指定的窗口
+                        $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
+                        swal({
+                            title:"",
+                            text: data.message,
+                            type:"success"})// 提示窗口, 修改成功
+                    } else if (data.result == "fail") {
+                        //$.messager.alert("提示", data.result.message, "info");
+                    }
+                }, "json"
         );
     }
 

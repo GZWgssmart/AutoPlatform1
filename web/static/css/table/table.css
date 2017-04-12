@@ -6,24 +6,35 @@
     width: 100%;
 }
 .modal-content{
-    width: 550px;
+    width: 100%;
+    min-height: 350px;
     height: auto;
 }
-
-.modal-dialog.modal-content.modal-header {
-    width: auto;
+.modal-dialog{
+    border: 2px solid red;
+    width: 90%;
+    height: auto;
+    min-height: 350px;
 }
 
-.modal-dialog.modal-content.modal-body {
-    width: auto;
+
+.modal-header {
+    margin: 10px 15px;
+    width: 50%;
+    border-bottom:none;
+    padding: 0;
+}
+
+.modal-body {
+    margin: 0 10px;
 }
 
 .modal-dialog.modal-content.modal-header input {
-    width: 70%;
+    width: 50%;
 }
 
 .modal-dialog.modal-content.modal-header select {
-    width: 70%;
+    width: 50%;
 }
 .input-group{
     margin:15px 25px;

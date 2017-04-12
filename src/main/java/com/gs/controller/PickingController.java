@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 
 @Controller
-@RequestMapping("pickingControll")
+@RequestMapping("/pickingControll")
 public class PickingController {
 
     private Logger logger = (Logger) LoggerFactory.getLogger(PickingController.class);

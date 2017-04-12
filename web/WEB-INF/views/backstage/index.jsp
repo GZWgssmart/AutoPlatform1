@@ -160,26 +160,24 @@
                     <li>
                         <a href="#"><i class="fa fa-phone"></i> <span class="nav-label">&nbsp;维修保养预约</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
-                            <li><a class="J_menuItem" href="typography.html">预约管理</a>
+                            <li>
+                                <a class="J_menuItem" href="/customerBooking/bookingManagement">预约管理</a>
                             </li>
                             <li>
-                                <a href="#">电话预约  </a>
+                                <a class="J_menuItem" href="/customerBooking/phoneReservation">电话预约</a>
                             </li>
-                            <li><a class="J_menuItem" href="buttons.html">微信预约</a>
+                            <li>
+                                <a class="J_menuItem" href="/customerBooking/weChatReservation">微信预约</a>
                             </li>
                         </ul>
                     </li>
                     <li>
                         <a href="#"><i class="fa fa-car"></i> <span class="nav-label">维修保养接待</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
-                            <li><a class="J_menuItem" href="table_basic.html">接待登记管理</a>
-                            </li>
-                            <li><a class="J_menuItem" href="table_data_tables.html">维修保养明细管理</a>
-                            </li>
-                            <li><a class="J_menuItem" href="table_jqgrid.html">微信确认维修保养明细</a>
-                            </li>
-                            <li><a class="J_menuItem" href="table_foo_table.html">微信查看维修保养明细</a>
-                            </li>
+                            <li><a class="J_menuItem" href="/maintenanceJieDaiGuanLi/reception">接待登记管理</a></li>
+                            <li><a class="J_menuItem" href="/maintenanceJieDaiGuanLi/subsidiary">维修保养明细管理</a></li>
+                            <li><a class="J_menuItem" href="table_jqgrid.html">微信确认维修保养明细</a></li>
+                            <li><a class="J_menuItem" href="table_foo_table.html">微信查看维修保养明细</a></li>
                         </ul>
                     </li>
                     <li>
@@ -198,9 +196,9 @@
                     <li>
                         <a href="#"><i class="fa fa-wrench"></i> <span class="nav-label">车辆维修保养</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
-                            <li><a class="J_menuItem" href="basic_gallery.html">维修保养进度管理</a>
+                            <li><a class="J_menuItem" href="maintenanceController/maintenanceIndex">维修保养进度管理</a>
                             </li>
-                            <li><a class="J_menuItem" href="carousel.html">微信查看维修保养进度</a>
+                            <li><a class="J_menuItem" href="maintenanceController/scheduleIndex">微信查看维修保养进度</a>
                             </li>
                         </ul>
                     </li>
@@ -220,30 +218,28 @@
                     <li>
                         <a href="#"><i class="fa fa-user-plus"></i> <span class="nav-label">客户管理</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
-                            <li><a class="J_menuItem" href="basic_gallery.html">维修记录管理</a>
+                            <li><a class="J_menuItem" href="/custManage/maintenanceIndex">维修保养记录管理</a>
                             </li>
-                            <li><a class="J_menuItem" href="carousel.html">保养记录管理</a>
+                            <li><a class="J_menuItem" href="/custManage/mainreminderIndex">维修保养提醒</a>
                             </li>
-                            <li><a class="J_menuItem" href="blueimp.html">保养提醒，邮件与短信提醒</a>
+                            <li><a class="J_menuItem" href="/custManage/smsalertsIndex">短信群发提醒</a>
                             </li>
-                            <li><a class="J_menuItem" href="blueimp.html">投诉管理</a>
+                            <li><a class="J_menuItem" href="/custManage/complaintIndex">投诉管理</a>
                             </li>
-                            <li><a class="J_menuItem" href="blueimp.html">跟踪回访管理</a>
-                            </li>
-                            <li><a class="J_menuItem" href="blueimp.html">短信群发管理</a>
+                            <li><a class="J_menuItem" href="/custManage/fllowUpIndex">跟踪回访管理</a>
                             </li>
                         </ul>
                     </li>
                     <li>
                         <a href="#"><i class="fa fa-cny"></i> <span class="nav-label">&nbsp;&nbsp;财务管理</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
-                            <li><a class="J_menuItem" href="basic_gallery.html">支出管理</a>
+                            <li><a class="J_menuItem" href="/financial/payOut">支出管理</a>
                             </li>
-                            <li><a class="J_menuItem" href="carousel.html">收入管理</a>
+                            <li><a class="J_menuItem" href="/financial/income">收入管理</a>
                             </li>
-                            <li><a class="J_menuItem" href="blueimp.html">工资管理</a>
+                            <li><a class="J_menuItem" href="/financial/salary">工资管理</a>
                             </li>
-                            <li><a class="J_menuItem" href="blueimp.html">对账单管理</a>
+                            <li><a class="J_menuItem" href="/financial/bill">对账单管理</a>
                             </li>
                         </ul>
                     </li>
