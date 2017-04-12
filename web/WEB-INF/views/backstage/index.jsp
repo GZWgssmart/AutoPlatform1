@@ -160,12 +160,14 @@
                     <li>
                         <a href="#"><i class="fa fa-phone"></i> <span class="nav-label">&nbsp;维修保养预约</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
-                            <li><a class="J_menuItem" href="typography.html">预约管理</a>
+                            <li>
+                                <a class="J_menuItem" href="/customerBooking/bookingManagement">预约管理</a>
                             </li>
                             <li>
-                                <a href="#">电话预约  </a>
+                                <a class="J_menuItem" href="/customerBooking/phoneReservation">电话预约</a>
                             </li>
-                            <li><a class="J_menuItem" href="buttons.html">微信预约</a>
+                            <li>
+                                <a class="J_menuItem" href="/customerBooking/weChatReservation">微信预约</a>
                             </li>
                         </ul>
                     </li>
