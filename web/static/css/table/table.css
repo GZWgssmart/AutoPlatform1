@@ -1,0 +1,48 @@
+.container {
+    width:100%;
+
+}
+.bootstrap-table {
+    width: 100%;
+}
+.modal-content{
+    width: 100%;
+    min-height: 350px;
+    height: auto;
+}
+.modal-dialog{
+    border: 2px solid red;
+    width: 90%;
+    height: auto;
+    min-height: 350px;
+}
+
+
+.modal-header {
+    margin: 10px 15px;
+    width: 50%;
+    border-bottom:none;
+    padding: 0;
+}
+
+.modal-body {
+    margin: 0 10px;
+}
+
+.modal-dialog.modal-content.modal-header input {
+    width: 50%;
+}
+
+.modal-dialog.modal-content.modal-header select {
+    width: 50%;
+}
+.input-group{
+    margin:15px 25px;
+}
+.modal-content h3{
+    margin-top: 15px;
+    margin-bottom:5px;
+    margin-left: 15px;
+}
+
+

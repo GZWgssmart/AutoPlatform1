@@ -30,7 +30,8 @@
     <mvc:resources location="/static/css/" mapping="/static/css/**"/>
     <mvc:resources location="/static/js/" mapping="/static/js/**"/>
     <mvc:resources location="/static/uploads/" mapping="/static/uploads/**" />
-
+    <mvc:resources location="/static/jsp/" mapping="/static/jsp/**"/>
+    <mvc:resources location="/static/scripts/" mapping="/static/scripts/**"/>
 
     <bean id="mappingJacksonHttpMessageConverter"
           class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
