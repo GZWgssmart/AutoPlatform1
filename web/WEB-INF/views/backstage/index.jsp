@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+﻿<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -73,7 +73,7 @@
                         <a class="J_menuItem" href="/error/serverError">500</a>
                     </li>
                     <li>
-                        <a class="J_menuItem" href="/head/edit">head</a>
+                        <a class="J_menuItem" href="/edit">head</a>
                     </li>
                     <li>
                         <a href="#">
@@ -147,13 +147,13 @@
                     <li>
                         <a href="#"><i class="fa fa-cubes"></i> <span class="nav-label">配件管理</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
-                            <li><a class="J_menuItem" href="contacts.html">库存管理</a>
+                            <li><a class="J_menuItem" href="/accessories/accessories">库存管理</a>
                             </li>
-                            <li><a class="J_menuItem" href="profile.html">配件分类管理</a>
+                            <li><a class="J_menuItem" href="/accessories/type">配件分类管理</a>
                             </li>
-                            <li><a href="#">配件采购管理</a>
+                            <li><a class="J_menuItem" href="/accessories/buy">配件采购管理</a>
                             </li>
-                            <li><a class="J_menuItem" href="teams_board.html">配件销售管理</a>
+                            <li><a class="J_menuItem" href="/accessories/sale">配件销售管理</a>
                             </li>
                         </ul>
                     </li>
@@ -185,13 +185,13 @@
                     <li>
                         <a href="#"><i class="fa fa-ambulance"></i> <span class="nav-label">派工领料管理</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
-                            <li><a class="J_menuItem" href="basic_gallery.html">物料清单</a>
+                            <li><a class="J_menuItem" href="pickingControll/materialsIndex">物料清单</a>
                             </li>
-                            <li><a class="J_menuItem" href="carousel.html">指派员工</a>
+                            <li><a class="J_menuItem" href="pickingControll/assignstaffIndex">指派员工</a>
                             </li>
-                            <li><a class="J_menuItem" href="blueimp.html">领料管理</a>
+                            <li><a class="J_menuItem" href="pickingControll/acquisitionIndex">领料管理</a>
                             </li>
-                            <li><a class="J_menuItem" href="blueimp.html">退料管理</a>
+                            <li><a class="J_menuItem" href="pickingControll/returnedIndex">退料管理</a>
                             </li>
                         </ul>
                     </li>
@@ -250,19 +250,19 @@
                     <li>
                         <a href="#"><i class="fa fa-bar-chart"></i> <span class="nav-label">报表统计</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
-                            <li><a class="J_menuItem" href="basic_gallery.html">维修保养统计</a>
+                            <li><a class="J_menuItem" href="/statistics/maintain">维修保养统计</a>
                             </li>
-                            <li><a class="J_menuItem" href="carousel.html">员工工单统计</a>
+                            <li><a class="J_menuItem" href="/statistics/workorder">员工工单统计</a>
                             </li>
-                            <li><a class="J_menuItem" href="blueimp.html">物料使用统计</a>
+                            <li><a class="J_menuItem" href="/statistics/usematerials">物料使用统计</a>
                             </li>
-                            <li><a class="J_menuItem" href="blueimp.html">维修类型统计</a>
+                            <li><a class="J_menuItem" href="/statistics/maintaintype">维修类型统计</a>
                             </li>
-                            <li><a class="J_menuItem" href="blueimp.html">提成统计</a>
+                            <li><a class="J_menuItem" href="/statistics/pushmoney">提成统计</a>
                             </li>
-                            <li><a class="J_menuItem" href="blueimp.html">库存统计</a>
+                            <li><a class="J_menuItem" href="/statistics/stock">库存统计</a>
                             </li>
-                            <li><a class="J_menuItem" href="blueimp.html">财务统计</a>
+                            <li><a class="J_menuItem" href="/statistics/finance">财务统计</a>
                             </li>
                         </ul>
                     </li>
