@@ -175,14 +175,10 @@
                     <li>
                         <a href="#"><i class="fa fa-car"></i> <span class="nav-label">维修保养接待</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
-                            <li><a class="J_menuItem" href="table_basic.html">接待登记管理</a>
-                            </li>
-                            <li><a class="J_menuItem" href="table_data_tables.html">维修保养明细管理</a>
-                            </li>
-                            <li><a class="J_menuItem" href="table_jqgrid.html">微信确认维修保养明细</a>
-                            </li>
-                            <li><a class="J_menuItem" href="table_foo_table.html">微信查看维修保养明细</a>
-                            </li>
+                            <li><a class="J_menuItem" href="/maintenanceJieDaiGuanLi/reception">接待登记管理</a></li>
+                            <li><a class="J_menuItem" href="/maintenanceJieDaiGuanLi/subsidiary">维修保养明细管理</a></li>
+                            <li><a class="J_menuItem" href="table_jqgrid.html">微信确认维修保养明细</a></li>
+                            <li><a class="J_menuItem" href="table_foo_table.html">微信查看维修保养明细</a></li>
                         </ul>
                     </li>
                     <li>
@@ -240,13 +236,13 @@
                     <li>
                         <a href="#"><i class="fa fa-cny"></i> <span class="nav-label">&nbsp;&nbsp;财务管理</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
-                            <li><a class="J_menuItem" href="basic_gallery.html">支出管理</a>
+                            <li><a class="J_menuItem" href="/financial/payOut">支出管理</a>
                             </li>
-                            <li><a class="J_menuItem" href="carousel.html">收入管理</a>
+                            <li><a class="J_menuItem" href="/financial/income">收入管理</a>
                             </li>
-                            <li><a class="J_menuItem" href="blueimp.html">工资管理</a>
+                            <li><a class="J_menuItem" href="/financial/salary">工资管理</a>
                             </li>
-                            <li><a class="J_menuItem" href="blueimp.html">对账单管理</a>
+                            <li><a class="J_menuItem" href="/financial/bill">对账单管理</a>
                             </li>
                         </ul>
                     </li>
