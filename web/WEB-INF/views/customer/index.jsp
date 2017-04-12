@@ -12,5 +12,6 @@
 </head>
 <body>
 <a href="/backstageIndex">进入后台</a>
+<a href="/frontpageHome">进入前台</a>
 </body>
 </html>
