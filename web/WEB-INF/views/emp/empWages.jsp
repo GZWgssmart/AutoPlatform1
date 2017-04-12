@@ -67,7 +67,6 @@
             <div class="modal-dialog" style="overflow:hidden;">
                 <div class="modal-content" style="overflow:hidden;">
                     <h3>标题标题标题</h3>
-                    <hr/>
                     <form action="/table/edit" onsubmit="return checkAdd()" id="addForm" method="post">
                         <div class="modal-header" style=" overflow:hidden;">
 
@@ -109,31 +108,13 @@
     <div class="modal fade" id="edit" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <h3>标题标题标题</h3>
-                <hr/>
                 <form id="editForm" class="data1" id="editForm" method="post">
-                    <div class="modal-header" style=" overflow:hidden;">
-                        <div class="input-group">
-                            <span class="input-group-addon">手机号码</span>
-                            <input type="text" class="form-control" define="ceshi.id" name="id" placeholder="请输入要更改的值"  maxlength="15"/>
-                        </div>
-                        <div class="input-group">
-                            <span class="input-group-addon">姓名</span>
-                            <input type="text" class="form-control" define="ceshi.price" name="price"  placeholder="请输入要更改的值"  maxlength="15"/>
-                        </div>
-                        <div class="input-group">
-                            <span class="input-group-addon">身份证号</span>
-                            <input type="text" class="form-control" define="ceshi.price" name="price"  placeholder="请输入要更改的值"  maxlength="15"/>
-                        </div>
-                       <%-- <div class="modal-header" style="width:auto; overflow:hidden;">
-                            <input type="text"  define="ceshi.id" name="id" placeholder="请输入标题"  maxlength="15"/>
-                            <input type="text"  define="ceshi.price" name="price"  placeholder="请输入标题"  maxlength="15"/>
-                        </div>
-                        --%>
-
-                        <div class="modal-body">
-                            <textarea type="text" style="width:100%;height:100px; "  define="ceshi.name" name="name" placeholder="请输入描述"  maxlength="142"></textarea>
-                        </div>
+                    <div class="modal-header" style="width:auto; overflow:hidden;">
+                        <input type="text"  define="ceshi.id" name="id" placeholder="请输入标题"  maxlength="15"/>
+                        <input type="text"  define="ceshi.price" name="price"  placeholder="请输入标题"  maxlength="15"/>
+                    </div>
+                    <div class="modal-body">
+                        <textarea type="text" style="width: 80%"  define="ceshi.name" name="name" placeholder="请输入描述"  maxlength="142"></textarea>
                     </div>
                     <div class="modal-footer">
                         <span id="editError" style="color: red;"></span>
@@ -195,7 +176,7 @@
 <script src="/static/js/select2/select2.js"></script>
 <script src="/static/js/sweetalert/sweetalert.min.js"></script>
 <script src="/static/js/contextmenu.js"></script>
-<script src="/static/js/emp/empInFormation.js"></script>
+<script src="/static/js/emp/empWages.js"></script>
 <script src="/static/js/bootstrap-select/bootstrap-select.js"></script>
 
 </body>

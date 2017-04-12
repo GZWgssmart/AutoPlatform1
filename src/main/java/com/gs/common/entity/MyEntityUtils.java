@@ -27,6 +27,7 @@ public class MyEntityUtils {
      * 各位按自己的
      */
     public void tableToEntity(String tName) {
+        int n=2;
         tablename = tName;
         //数据连Connection获取,自己想办法就行.
         String url = "jdbc:mysql://localhost:3306/d_goods";
@@ -71,6 +72,7 @@ public class MyEntityUtils {
             }
             String content = parse(colnames, colTypes, colSizes);
             try {
+                tablename=tablename.substring(tablename.length()-7,tablename.length());
                 FileWriter fw = new FileWriter("C:\\Users\\AngeJob\\Desktop\\AutoPlatform1\\src\\main\\java\\com\\gs\\bean" + "/" + initcap(tablename) + ".java");
                 PrintWriter pw = new PrintWriter(fw);
                 pw.println(content);
@@ -109,6 +111,7 @@ public class MyEntityUtils {
         }
         //表注释
         processColnames(sb);
+        tablename=tablename.substring(tablename.length()-7,tablename.length());
         sb.append("public class " + initcap(tablename) + " implements Serializable {\r\n");
         processAllAttrs(sb);
         processAllMethod(sb);

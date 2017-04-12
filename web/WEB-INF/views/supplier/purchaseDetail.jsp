@@ -2,13 +2,13 @@
   Created by IntelliJ IDEA.
   User: AngeJob
   Date: 2017/4/12
-  Time: 10:42
+  Time: 10:20
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>供应商类型管理</title>
+    <title>采购明细</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/css/bootstrap.min.css">
@@ -45,24 +45,24 @@
             <thead>
             <tr>
                 <th data-radio="true" data-field="status"></th>
-                <th  data-field="supplyName">供应商名称</th>
-                <th  data-field="companyName">所属公司</th>
-                <th  data-field="supplyTypeDes">描述</th>
-                <th  data-field="supplyTypeStatus">状态</th>
+                <th data-width="15%" data-field="purchaseId">单号</th>
+                <th data-width="15%" data-field="barCode">条形码</th>
+                <th data-width="10%" data-field="productName">商品名称</th>
+                <th data-width="5%" data-field="Specifications">规格</th>
+                <th data-width="5%" data-field="Number">数量</th>
+                <th data-width="5%" data-field="price">进价</th>
+                <th data-width="5%" data-field="countPrice">合计</th>
+                <th data-width="10%" data-field="Supplier">供应商</th>
+                <th data-width="8%" data-field="purchaseType">采购类型</th>
+                <th data-width="15%" data-field="purchaseTime">采购时间</th>
+                <th data-width="20%" data-field="purchaseDes">备注</th>
             </tr>
             </thead>
         </table>
         <div id="toolbar" class="btn-group">
-            <button id="btn_add" type="button" class="btn btn-default" onclick="showAdd();">
-                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
-            </button>
-            <button id="btn_edit" type="button" class="btn btn-default" onclick="showEdit();">
-                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
-            </button>
-            <button id="btn_delete" type="button" class="btn btn-default" onclick="showDel();">
-                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
-            </button>
+            <a class='btn btn-success' href='javascript:;'>导出</a>
         </div>
+
     </div>
 </div>
 
@@ -179,7 +179,7 @@
 <script src="/static/js/select2/select2.js"></script>
 <script src="/static/js/sweetalert/sweetalert.min.js"></script>
 <script src="/static/js/contextmenu.js"></script>
-<script src="/static/js/supplier/supplierInFormation.js"></script>
+<script src="/static/js/supplier/purchaseDetail.js"></script>
 <script src="/static/js/bootstrap-select/bootstrap-select.js"></script>
 
 </body>

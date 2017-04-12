@@ -36,4 +36,22 @@ public class SupplierController {
         logger.info("供货商分类管理");
         return "supplier/supplierType";
     }
+
+    /**
+     * 下单统计
+     */
+    @RequestMapping(value = "purchaseDetail", method = RequestMethod.GET)
+    public String purchaseDetail() {
+        logger.info("下单统计管理");
+        return "supplier/purchaseDetail";
+    }
+
+    /**
+     * 支付统计
+     */
+    @RequestMapping(value = "purchaseBill", method = RequestMethod.GET)
+    public String purchaseBill() {
+        logger.info("支付统计");
+        return "supplier/purchaseBill";
+    }
 }

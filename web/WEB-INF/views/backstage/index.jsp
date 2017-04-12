@@ -121,7 +121,7 @@
                                 <a class="J_menuItem" href="/emp/empInformation">人员基本信息管理</a>
                             </li>
                             <li>
-                                <a class="J_menuItem" href="graph_morris.html">工资管理</a>
+                                <a class="J_menuItem" href="/emp/empWages">工资管理</a>
                             </li>
                             <li>
                                 <a class="J_menuItem" href="/emp/workInfo">工单查询</a>
@@ -137,9 +137,9 @@
                             </li>
                             <li><a class="J_menuItem" href="/supplier/supplierType">供应商分类管理</a>
                             </li>
-                            <li><a class="J_menuItem" href="form_advanced.html">下单统计</a>
+                            <li><a class="J_menuItem" href="/supplier/purchaseDetail">下单统计</a>
                             </li>
-                            <li><a class="J_menuItem" href="form_wizard.html">支付统计</a>
+                            <li><a class="J_menuItem" href="/supplier/purchaseBill">支付统计</a>
                             </li>
                             <
                         </ul>
