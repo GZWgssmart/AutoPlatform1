@@ -196,9 +196,9 @@
                     <li>
                         <a href="#"><i class="fa fa-wrench"></i> <span class="nav-label">车辆维修保养</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
-                            <li><a class="J_menuItem" href="basic_gallery.html">维修保养进度管理</a>
+                            <li><a class="J_menuItem" href="maintenanceController/maintenanceIndex">维修保养进度管理</a>
                             </li>
-                            <li><a class="J_menuItem" href="carousel.html">微信查看维修保养进度</a>
+                            <li><a class="J_menuItem" href="maintenanceController/scheduleIndex">微信查看维修保养进度</a>
                             </li>
                         </ul>
                     </li>
