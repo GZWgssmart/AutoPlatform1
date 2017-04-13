@@ -6,9 +6,6 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%
-    String path = request.getContextPath();
-%>
 <html>
 <head>
     <title>汽车品牌管理</title>
@@ -18,6 +15,7 @@
     <link rel="stylesheet" href="/static/css/bootstrap-table.css">
     <link rel="stylesheet" href="/static/css/select2.min.css">
     <link rel="stylesheet" href="/static/css/sweetalert.css">
+    <link rel="stylesheet" href="/static/css/fileinput.css">
 </head>
 <body>
 <%@include file="../backstage/contextmenu.jsp" %>
@@ -68,24 +66,44 @@
 </div>
 
 <!-- 添加弹窗 -->
-<div class="modal fade" id="add" aria-hidden="true" style="overflow:hidden; ">
-    <div class="modal-dialog" style="overflow:hidden;">
+<div class="modal fade" id="addWindow" aria-hidden="true" style="overflow:auto; ">
+    <div class="modal-dialog" style="width: 700px;height: auto;">
         <div class="modal-content" style="overflow:hidden;">
-            <form action="/table/edit" onsubmit="return checkAdd()"
-                  id="addForm" method="post">
-                <div class="modal-header input-group" style="overflow:hidden;">
-                    <span class="input-group-addon">汽车品牌</span>
-                    <input class="form-control" type="text" id="addId" placeholder="请输入品牌名" style="width:300px;"
-                           maxlength="15" name="top-search"/>
+            <form class="form-horizontal" onsubmit="return checkAdd()" id="addForm" method="post">
+                <div class="modal-header" style="overflow:auto;">
+                    <h4>请填写汽车品牌的相关信息</h4>
                 </div>
-                <div class="modal-body" style="overflow:hidden;">
-                    <textarea id="addName" placeholder="请输入描述" style="width:550px;height:100px;"
-                              maxlength="142"></textarea>
+                <br/>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">汽车品牌：</label>
+                    <div class="col-sm-7">
+                        <input type="text" placeholder="请输入汽车品牌的名字" class="form-control">
+                    </div>
                 </div>
-                <div class="modal-footer" style="overflow:hidden;">
-                    <span id="addError" style="color: red;"></span>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-primary">保存</button>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">汽车品牌描述：</label>
+                    <div class="col-sm-7">
+                        <textarea type="text" placeholder="请输入关于该品牌的描述" style="height: 100px;" class="form-control"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">汽车品牌Logo：</label>
+                    <div class="col-lg-7">
+                        <div class="ibox-title">
+                            <div class="input-group">
+                                <input id="add_carBrandLogo" define="carBrand.brandLogo" name="txt_file"
+                                       type="file" class="form-control" multiple
+                                       class="file-loading"
+                                       placeholder="请选择或输入一个你想上传的相册类型,默认当天日期为类型!"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-8">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button class="btn btn-sm btn-success" type="submit">保 存</button>
+                    </div>
                 </div>
             </form>
         </div><!-- /.modal-content -->
@@ -94,24 +112,44 @@
 
 
 <!-- 修改弹窗 -->
-<div class="modal fade" id="edit" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <form id="editForm" class="data1" id="editForm" method="post">
-                <div class="modal-header input-group" style="overflow:hidden;">
-                    <span class="input-group-addon">汽车品牌</span>
-                    <input class="form-control" define="ceshi.id" type="text" id="id" placeholder="请输入品牌名"
-                           style="width:300px;"
-                           maxlength="15" name="top-search"/>
+<div class="modal fade" id="editWindow" aria-hidden="true" style="overflow:auto; ">
+    <div class="modal-dialog" style="width: 700px;height: auto;">
+        <div class="modal-content" style="overflow:hidden;">
+            <form class="form-horizontal" onsubmit="return checkAdd()" id="editForm" method="post">
+                <div class="modal-header" style="overflow:auto;">
+                    <p>请修改该品牌的相关信息</p>
                 </div>
-                <div class="modal-body" style="overflow:hidden;">
-                    <textarea type="text" define="ceshi.name" name="name" placeholder="修改描述"
-                              style="width:530px;height:100px;" maxlength="142"></textarea>
+                <br/>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">汽车品牌名称：</label>
+                    <div class="col-sm-7">
+                        <input type="text" define="carBrand.brandName" placeholder="请输入汽车品牌名称" class="form-control">
+                    </div>
                 </div>
-                <div class="modal-footer" style="overflow:hidden;">
-                    <span id="err" style="color: red;"></span>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-primary">保存</button>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">汽车品牌描述：</label>
+                    <div class="col-sm-7">
+                        <textarea type="text" define="carBrand.brandDes" placeholder="请输入关于该品牌的描述" style="height: 100px;" class="form-control"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">汽车品牌Logo：</label>
+                    <div class="col-lg-7">
+                        <div class="ibox-title">
+                            <div class="input-group">
+                                <input id="edit_carBrandLogo" define="carBrand.brandLogo" name="txt_file"
+                                       type="file" class="form-control" multiple
+                                       class="file-loading"
+                                       placeholder="请选择或输入一个你想上传的相册类型,默认当天日期为类型!"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-8">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button class="btn btn-sm btn-success" type="submit">保 存</button>
+                    </div>
                 </div>
             </form>
         </div><!-- /.modal-content -->
@@ -164,98 +202,8 @@
 <script src="/static/js/select2/select2.js"></script>
 <script src="/static/js/sweetalert/sweetalert.min.js"></script>
 <script src="/static/js/contextmenu.js"></script>
-<script>
-    $(function () {
-        $('#table').bootstrapTable('hideColumn', 'id');
-
-        $("#addSelect").select2({
-                language: 'zh-CN'
-            }
-        );
-
-        //绑定Ajax的内容
-        $.getJSON("/table/queryType", function (data) {
-            $("#addSelect").empty();//清空下拉框
-            $.each(data, function (i, item) {
-                $("#addSelect").append("<option value='" + data[i].id + "'>&nbsp;" + data[i].name + "</option>");
-            });
-        })
-//            $("#addSelect").on("select2:select",
-//                    function (e) {
-//                        alert(e)
-//                        alert("select2:select", e);
-//            });
-    });
-
-    function showEdit() {
-        var row = $('table').bootstrapTable('getSelections');
-        if (row.length > 0) {
-//                $('#editId').val(row[0].id);
-//                $('#editName').val(row[0].name);
-//                $('#editPrice').val(row[0].price);
-            $("#edit").modal('show'); // 显示弹窗
-            var ceshi = row[0];
-            $("#editForm").fill(ceshi);
-        } else {
-//            $("#tanchuang").modal('show');
-        }
-    }
-
-    function showAdd() {
-
-        $("#add").modal('show');
-    }
-
-    function formatRepo(repo) {
-        return repo.text
-    }
-    function formatRepoSelection(repo) {
-        return repo.text
-    }
-
-    function showDel() {
-        var row = $('table').bootstrapTable('getSelections');
-        if (row.length > 0) {
-            $("#del").modal('show');
-        } else {
-            $("#tanchuang").modal('show');
-        }
-    }
-
-    function checkAdd() {
-        var id = $('#addId').val();
-        var name = $('#addName').val();
-        var price = $('#addPrice').val();
-        var reslist = $("#addSelect").select2("data"); //获取多选的值
-        alert(reslist.length)
-        if (id != "" && name != "" && price != "") {
-            return true;
-        } else {
-            var error = document.getElementById("addError");
-            error.innerHTML = "请输入正确的数据";
-            return false;
-        }
-    }
-
-    function checkEdit() {
-        $.post("/table/edit",
-            $("#editForm").serialize(),
-            function (data) {
-                if (data.result == "success") {
-                    $("#edit").modal('hide'); // 关闭指定的窗口
-                    $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
-                    swal({
-                        title: "",
-                        text: data.message,
-                        type: "success"
-                    })// 提示窗口, 修改成功
-                } else if (data.result == "fail") {
-                    //$.messager.alert("提示", data.result.message, "info");
-                }
-            }, "json"
-        );
-    }
-
-</script>
+<script src="/static/js/fileInput/fileinput.js"></script>
+<script src="/static/js/fileInput/zh.js"></script>
+<script src="/static/js/backstage/basicInfoManage/carBrand.js"></script>
 </body>
 </html>

@@ -47,13 +47,10 @@
             <thead>
             <tr>
                 <th data-radio="true" data-field="status"></th>
-                <th data-field="companyName">公司名称</th>
-                <th data-field="companyAddress">公司地址</th>
-                <th data-field="companyTel">联系电话</th>
-                <th data-field="companyPricipal">负责人</th>
-                <th data-field="companyOpenDate">公司成立时间</th>
-                <th data-field="companyLogo">公司LOGO</th>
-
+                <th data-field="modelName">公司名称</th>
+                <th data-field="modelDes">公司地址</th>
+                <th data-field="brandId">联系电话</th>
+                <th data-field="modelStaus">负责人</th>
             </tr>
             </thead>
         </table>

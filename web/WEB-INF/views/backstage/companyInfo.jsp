@@ -259,6 +259,6 @@
 --%>
 <%--<script src="/static/js/dateTimePicker/moment.js"></script>--%>
 <%--<script src="/static/js/dateTimePicker/bootstrap-datetimepicker.js"></script>--%>
-<script src="/static/js/backstage/companyInfo.js"></script>
+<script src="/static/js/backstage/basicInfoManage/companyInfo.js"></script>
 </body>
 </html>

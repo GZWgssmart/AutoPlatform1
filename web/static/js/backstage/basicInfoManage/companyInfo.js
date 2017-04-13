@@ -78,7 +78,7 @@ function checkEdit() {
         $("#editForm").serialize(),
         function (data) {
             if (data.result == "success") {
-                $("#edit").modal('hide'); // 关闭指定的窗口
+                $("#editWindow").modal('hide'); // 关闭指定的窗口
                 $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
                 swal({
                     title: "",
