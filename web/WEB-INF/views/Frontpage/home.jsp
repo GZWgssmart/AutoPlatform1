@@ -4,6 +4,7 @@
     <title>主页</title>
 </head>
 <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+<link rel="stylesheet" href="/static/css/animate.css">
 
 <style>
     html,body{
@@ -74,12 +75,12 @@
         font-size: 20px;
     }
     .curtain{
-        height: 500px;
+        height: 650px;
         width: 100%;
         background: url(/static/img/Frontpage/bg2.png);
     }
     .curtain2{
-        height: 600px;
+        height: 700px;
         width:100%;
         background: url(/static/img/Frontpage/bg1.png);
     }
@@ -122,17 +123,21 @@
         width: 10%;
         height: 95%;
     }
-    .heading{
-        padding: 25px 15px;
-        width: 50%;
+    .rows{
+        padding: 60px 15px;
+        width: 100%;
         height: 80%;
     }
-    .heading p{
+    .text p{
+        height: 100%;
         margin: 0px 15px;
         padding: 0px 0px;
         color: white;
         font-size: 24px;
         line-height: 40px;
+    }
+    .right-img{
+        height: 100%;
     }
 
 </style>
@@ -196,7 +201,7 @@
 
         <div class="curtain2">
             <h2 class="title">这是他妈的标题标题标题</h2>
-            <div class="row features-info">
+            <div class="row features-info banner-info text-left wow fadeInLeft animated"  data-wow-delay="0.5s" style="visibility: visible; animation-delay: 0.5s; animation-name: fadeInLeft;">
                 <div class="col-sm-6 col-md-4">
                     <div class="secicon1">
                         <i class="icon icon-quan"></i>
@@ -216,7 +221,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row features-info">
+            <div class="row features-info banner-img wow fadeInRight animated" data-wow-delay="0.5s" style="visibility: visible; animation-delay: 0.5s; animation-name: fadeInLeft;">
                 <div class="col-sm-6 col-md-4">
                     <div class="secicon1">
                         <i class="icon icon-quan"></i>
@@ -238,22 +243,33 @@
             </div>
         </div>
         <div class="curtain">
-            <div class="heading">
-                <p>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"汽车维修管理系统"是一款面向汽修汽配行业的管理软件，本系统专注于车辆的信息化管理，
-                    为加强企业对车辆维修的综合管理而提供全方位的解决方案，并且具有二次开发的独特特性，
-                    独特的二次开发功能可以为新老用户在以后的使用过程中出现的新模块，新功能随时进行添加，
-                    为用户的使用提供全面服务。
-                </p>
-                <p>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"汽车维修管理系统"以对车辆的维修和管理为主线，
-                    通过对信息的收集、存储、传递、统计、分析、综合查询、报表输出和信息共享，
-                    及时为企业领导及各部门管理人员的决策提供全面、准确的信息数据。
-                </p>
+            <div class="rows">
+                <div class="col-md-7 banner-info text-left wow fadeInLeft animated" data-wow-delay="0.4s" style="visibility: visible; animation-delay: 0.4s; animation-name: fadeInLeft;">
+                    <div class="text">
+                        <p>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"汽车维修管理系统"是一款面向汽修汽配行业的管理软件，本系统专注于车辆的信息化管理，
+                            为加强企业对车辆维修的综合管理而提供全方位的解决方案，并且具有二次开发的独特特性，
+                            独特的二次开发功能可以为新老用户在以后的使用过程中出现的新模块，新功能随时进行添加，
+                            为用户的使用提供全面服务。</br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"汽车维修管理系统"以对车辆的维修和管理为主线，
+                            通过对信息的收集、存储、传递、统计、分析、综合查询、报表输出和信息共享，
+                            及时为企业领导及各部门管理人员的决策提供全面、准确的信息数据。
+                        </p>
+                    </div>
+                </div>
+                <div class="right-img col-md-5 banner-img wow fadeInRight animated" data-wow-delay="0.4s" style="visibility: visible; animation-delay: 0.4s; animation-name: fadeInRight;">
+                    <img src="/static/img/Frontpage/slider.png" style="width: 100%;height: 100%"/>
+                </div>
             </div>
         </div>
 </div>
 <script src="/static/js/jquery.min.js"></script>
 <script src="/static/js/bootstrap.min.js"></script>
+<script src="/static/js/wow.js"></script>
+<script>
+    if (!(/msie [6|7|8|9]/i.test(navigator.userAgent))){
+        new WOW().init();
+    };
+</script>
 </body>
 </html>
