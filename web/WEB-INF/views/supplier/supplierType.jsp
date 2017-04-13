@@ -112,7 +112,7 @@
 <div class="modal fade" id="edit" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form class="form-horizontal" onsubmit="return checkAdd()" id="editForm" method="post">
+            <form  role="form" class="form-horizontal" onsubmit="return checkAdd()" id="editForm" method="post">
                 <div class="modal-header" style="overflow:auto;">
                     <p>修改供货商类型信息</p>
                 </div>
@@ -139,9 +139,7 @@
                     <button type="button" class="btn btn-default"
                             data-dismiss="modal">关闭
                     </button>
-                    <button type="button" class="btn btn-primary">
-                        保存
-                    </button>
+                    <input type="submit" class="btn btn-primary"/>
                 </div>
             </form>
         </div><!-- /.modal-content -->
