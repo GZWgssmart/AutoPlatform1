@@ -33,7 +33,7 @@
 		errorClass : 'help-block',
 
 		rules : {
-			sizeLength : {
+			name : {
                 required : true,
                 minlength : 2
 			},
@@ -66,7 +66,7 @@
 			}
 		},
 		messages : {
-			firstname : "请输入姓名",
+            name : "请输入姓名",
 			email : {
 				required : "请输入Email地址",
 				email : "请输入正确的email地址"
@@ -77,8 +77,8 @@
 			},
 			confirm_password : {
 				required : "请输入确认密码",
-				minlength : "确认密码不能小于5个字符",
-				equalTo : "两次输入密码不一致不一致"
+				minlength : "不能小于5个字符",
+				equalTo : "两次输入密码不一致"
 			},
 			phone : {
 				required : "请输入手机号码"
