@@ -11,7 +11,7 @@
     height: auto;
 }
 .modal-dialog{
-    border: 2px solid red;
+    border: 2px;
     width: 90%;
     height: auto;
     min-height: 350px;
