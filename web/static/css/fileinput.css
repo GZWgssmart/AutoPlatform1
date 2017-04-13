@@ -446,7 +446,9 @@
 .file-preview-initial.sortable-chosen {
     background-color: #d9edf7;
 }
-
+.form-group .col-lg-7 .ibox-title .input-group{
+    padding-left:15px;
+}
 /* IE 10 fix */
 .btn-file ::-ms-browse {
     width: 100%;

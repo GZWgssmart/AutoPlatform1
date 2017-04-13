@@ -66,20 +66,20 @@
         <div class="modal fade" id="add" aria-hidden="true" style="overflow:hidden;">
             <div class="modal-dialog" style="overflow:hidden;">
                 <div class="modal-content" style="overflow:hidden;">
-                    <form class="form-horizontal" onsubmit="return checkAdd()" id="addForm" method="post">
+                    <form class="form-horizontal" role="form" onsubmit="return checkAdd()" id="register-form" method="post">
                         <div class="modal-header" style="overflow:auto;">
                             <p>添加人员信息</p>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">姓名：</label>
+                            <label class="col-sm-3 control-label" for="name">姓名：</label>
                             <div class="col-sm-7">
-                                <input type="text" placeholder="请输入姓名" class="form-control">
+                                <input type="text" id="name" name="name" placeholder="请输入姓名" class="form-control">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">手机号码：</label>
+                            <label class="col-sm-3 control-label" for="phone">手机号码：</label>
                             <div class="col-sm-7">
-                                <input type="text" placeholder="请输入手机号码" class="form-control">
+                                <input type="text" id="phone" name="phone" placeholder="请输入手机号码" class="form-control">
                             </div>
                         </div>
                         <div class="form-group">
@@ -110,9 +110,15 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">密码：</label>
+                            <label class="col-sm-3 control-label" for="password">密码：</label>
                             <div class="col-sm-7">
-                                <input type="password" placeholder="请输入密码" class="form-control">
+                                <input type="password" id="password" name="password" placeholder="请输入密码" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label" for="confirm_password">确定密码：</label>
+                            <div class="col-sm-7">
+                                <input type="password" id="confirm_password" name="confirm_password" placeholder="请确定密码" class="form-control">
                             </div>
                         </div>
                         <div class="modal-footer" style="overflow:hidden;">
@@ -120,9 +126,7 @@
                             <button type="button" class="btn btn-default"
                                     data-dismiss="modal">关闭
                             </button>
-                            <button type="button" class="btn btn-primary">
-                                保存
-                            </button>
+                            <button type="submit" class="btn btn-primary btn-sm">保存</button>
                         </div>
                     </form>
                 </div><!-- /.modal-content -->
@@ -146,7 +150,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">手机号码：</label>
+                        <label class="col-sm-3 control-label" >手机号码：</label>
                         <div class="col-sm-7">
                             <input type="text" define="emp.price" class="form-control">
                         </div>
@@ -189,9 +193,7 @@
                         <button type="button" class="btn btn-default"
                                 data-dismiss="modal">关闭
                         </button>
-                        <button type="button" class="btn btn-primary">
-                            保存
-                        </button>
+                        <button type="submit" class="btn btn-primary btn-sm">保存</button>
                     </div>
                 </form>
             </div><!-- /.modal-content -->
@@ -244,8 +246,10 @@
 <script src="/static/js/select2/select2.js"></script>
 <script src="/static/js/sweetalert/sweetalert.min.js"></script>
 <script src="/static/js/contextmenu.js"></script>
-<script src="/static/js/emp/empInFormation.js"></script>
+<script src="/static/js/backstage/emp/empInFormation.js"></script>
 <script src="/static/js/bootstrap-select/bootstrap-select.js"></script>
+<script src="/static/js/form/jquery.validate.js"></script>
+<script src="/static/js/form/form.js"></script>
 
 </body>
 </html>

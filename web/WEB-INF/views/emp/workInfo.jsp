@@ -171,7 +171,7 @@
 <script src="/static/js/select2/select2.js"></script>
 <script src="/static/js/sweetalert/sweetalert.min.js"></script>
 <script src="/static/js/contextmenu.js"></script>
-<script src="/static/js/emp/workInFo.js"></script>
+<script src="/static/js/emp/backstage/workInFo.js"></script>
 <script src="/static/js/bootstrap-select/bootstrap-select.js"></script>
 
 </body>

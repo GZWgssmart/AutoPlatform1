@@ -112,14 +112,14 @@
 <div class="modal fade" id="edit" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form  role="form" class="form-horizontal" onsubmit="return checkAdd()" id="editForm" method="post">
+            <form  role="form" class="form-horizontal" onsubmit="return checkAdd()" id="register-form" method="post">
                 <div class="modal-header" style="overflow:auto;">
                     <p>修改供货商类型信息</p>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">供货商名称：</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="请输入供货商名称" class="form-control">
+                        <input type="text" name="name" id="name" placeholder="请输入供货商名称" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
@@ -192,8 +192,11 @@
 <script src="/static/js/select2/select2.js"></script>
 <script src="/static/js/sweetalert/sweetalert.min.js"></script>
 <script src="/static/js/contextmenu.js"></script>
-<script src="/static/js/supplier/supplierInFormation.js"></script>
+<script src="/static/js/backstage/supplier/supplierType.js"></script>
 <script src="/static/js/bootstrap-select/bootstrap-select.js"></script>
+
+]
+
 
 </body>
 </html>
