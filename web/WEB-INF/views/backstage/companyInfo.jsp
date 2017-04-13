@@ -118,7 +118,7 @@
                     <label class="col-sm-3 control-label">公司logo：</label>
                     <div class="col-lg-7">
                         <div class="ibox-title">
-                            <div class="input-group">
+                            <div class="input-group" style="padding-left: 15px;">
                                 <input id="add_companyLogo" name="txt_file" type="file" class="form-control" multiple
                                        class="file-loading"
                                        placeholder="请选择或输入一个你想上传的相册类型,默认当天日期为类型!"/>
