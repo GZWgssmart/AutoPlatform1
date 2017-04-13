@@ -30,8 +30,13 @@ function showEdit(){
         var emp = row[0];
         $("#editForm").fill(emp);
     }else{
-        //layer.msg("请先选择某一行", {time : 1500, icon : 2});
-        layer.alert("请先选择某一行");
+        Modal.confirm(
+            {
+                msg: "是否删除角色？"
+            })
+            .on( function (e) {
+                alert("返回结果：" + e);
+            });
     }
 }
 

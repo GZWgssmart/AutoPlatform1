@@ -62,8 +62,7 @@
     </div>
 
     <!-- 添加弹窗 -->
-
-        <div class="modal fade" id="add" aria-hidden="true" style="overflow:hidden;">
+<div class="modal fade" id="add" aria-hidden="true" style="overflow:hidden;">
             <div class="modal-dialog" style="overflow:hidden;">
                 <div class="modal-content" style="overflow:hidden;">
                     <form class="form-horizontal" role="form" onsubmit="return checkAdd()" id="register-form" method="post">
