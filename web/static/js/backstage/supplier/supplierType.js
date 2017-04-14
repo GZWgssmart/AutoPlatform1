@@ -30,8 +30,10 @@ function showEdit(){
         var ceshi = row[0];
         $("#editForm").fill(ceshi);
     }else{
-        //layer.msg("请先选择某一行", {time : 1500, icon : 2});
-        layer.alert("请先选择某一行");
+        swal({
+            title:"",
+            text:"请先选择一行数据",
+            type:"warning"})// 提示窗口, 修改成功
     }
 }
 

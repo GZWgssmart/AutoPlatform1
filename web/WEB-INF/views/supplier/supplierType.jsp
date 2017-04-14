@@ -68,53 +68,12 @@
 
 <!-- 添加弹窗 -->
 
-<div class="modal fade" id="add" aria-hidden="true" style="overflow:hidden;">
-    <div class="modal-dialog" style="overflow:hidden;">
-        <div class="modal-content" style="overflow:hidden;">
-            <form class="form-horizontal" onsubmit="return checkAdd()" id="addForm" method="post">
+<div class="modal fade" id="add" aria-hidden="true" >
+    <div class="modal-dialog" >
+        <div class="modal-content" >
+                <form class="form-horizontal"  role="form" onsubmit="return checkAdd()" id="register-form" method="post">
                 <div class="modal-header" style="overflow:auto;">
                     <p>添加供货商类型信息</p>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">供货商名称：</label>
-                    <div class="col-sm-7">
-                        <input type="text" placeholder="请输入供货商名称" class="form-control">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">供应商所属公司：</label>
-                    <div class="col-sm-7">
-                        <input type="text" placeholder="请输入供应商所属公司" class="form-control">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">供货商描述：</label>
-                    <div class="col-sm-7">
-                        <input type="text" placeholder="请输入供货商描述" class="form-control">
-                    </div>
-                </div>
-                <div class="modal-footer" style="overflow:hidden;">
-                    <span id="addError"></span>
-                    <button type="button" class="btn btn-default"
-                            data-dismiss="modal">关闭
-                    </button>
-                    <button type="button" class="btn btn-primary">
-                        保存
-                    </button>
-                </div>
-            </form>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
-
-<!-- 修改弹窗 -->
-<div class="modal fade" id="edit" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <form  role="form" class="form-horizontal" onsubmit="return checkAdd()" id="register-form" method="post">
-                <div class="modal-header" style="overflow:auto;">
-                    <p>修改供货商类型信息</p>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">供货商名称：</label>
@@ -134,7 +93,46 @@
                         <input type="text" placeholder="请输入供货商描述" class="form-control">
                     </div>
                 </div>
-                <div class="modal-footer" style="overflow:hidden;">
+                <div class="modal-footer" >
+                    <span id="addError"></span>
+                    <button type="button" class="btn btn-default"
+                            data-dismiss="modal">关闭
+                    </button>
+                    <button type="submit" class="btn btn-primary btn-sm">保存</button>
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+<!-- 修改弹窗 -->
+<div class="modal fade" id="edit" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form  class="form-horizontal" onsubmit="return checkAdd()" method="post">
+                <div class="modal-header" style="overflow:auto;">
+                    <p>修改供货商类型信息</p>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">供货商名称：</label>
+                    <div class="col-sm-7">
+                        <input type="text" name="name"  placeholder="请输入供货商名称" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">供应商所属公司：</label>
+                    <div class="col-sm-7">
+                        <input type="text" placeholder="请输入供应商所属公司" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">供货商描述：</label>
+                    <div class="col-sm-7">
+                        <input type="text" placeholder="请输入供货商描述" class="form-control">
+                    </div>
+                </div>
+                <div class="modal-footer" >
                     <span id="editError"></span>
                     <button type="button" class="btn btn-default"
                             data-dismiss="modal">关闭
@@ -148,7 +146,7 @@
 
 <!-- 删除弹窗 -->
 <div class="modal fade" id="del" aria-hidden="true">
-    <div class="modal-dialog" style="overflow:hidden;">
+    <div class="modal-dialog" >
         <form action="/table/edit" method="post">
             <div class="modal-content">
                 <input type="hidden" id="delNoticeId"/>
@@ -194,8 +192,8 @@
 <script src="/static/js/contextmenu.js"></script>
 <script src="/static/js/backstage/supplier/supplierType.js"></script>
 <script src="/static/js/bootstrap-select/bootstrap-select.js"></script>
-
-]
+<script src="/static/js/form/jquery.validate.js"></script>
+<script src="/static/js/form/form.js"></script>
 
 
 </body>

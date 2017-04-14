@@ -50,19 +50,27 @@
         </table>
         <div id="toolbar" class="btn-group">
 
-            <a class='btn btn-success' href='javascript:;'>结算</a>
-            <a class='btn btn-warning' href='javascript:;'>还款</a>
-            <a class='btn btn-primary' href='javascript:;'>结算后预览</a>
-            <a class='btn btn-danger' href='javascript:;'>作废</a>
+            <button id="btn_add" type="button" class="btn btn-default" onclick="showAdd();">
+                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>结算
+            </button>
+            <button id="btn_edit" type="button" class="btn btn-default" onclick="showEdit();">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>还款
+            </button>
+            <button id="btn_return" type="button" class="btn btn-default" onclick="showReturn();">
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>结算后预览
+            </button>
+            <button id="btn_delete" type="button" class="btn btn-default" onclick="showReturn();">
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>作废
+            </button>
         </div>
     </div>
 </div>
 
 <!-- 添加弹窗 -->
 
-<div class="modal fade" id="add" aria-hidden="true" style="overflow:hidden;">
-    <div class="modal-dialog" style="overflow:hidden;">
-        <div class="modal-content" style="overflow:hidden;">
+<div class="modal fade" id="add" aria-hidden="true" >
+    <div class="modal-dialog" >
+        <div class="modal-content" >
             <form action="/table/edit" onsubmit="return checkAdd()" id="addForm" method="post">
                 <div class="modal-header" style=" overflow:hidden;">
                     <div class="input-group">
@@ -84,14 +92,12 @@
                     <br />
                 </div>
 
-                <div class="modal-footer" style="overflow:hidden;">
+                <div class="modal-footer" >
                     <span id="addError" style="color: red;"></span>
                     <button type="button" class="btn btn-default"
                             data-dismiss="modal">关闭
                     </button>
-                    <button type="button" class="btn btn-primary">
-                        保存
-                    </button>
+                    <button type="submit" class="btn btn-primary btn-sm">保存</button>
                 </div>
             </form>
         </div><!-- /.modal-content -->
@@ -127,7 +133,7 @@
 
 <!-- 删除弹窗 -->
 <div class="modal fade" id="del" aria-hidden="true">
-    <div class="modal-dialog" style="overflow:hidden;">
+    <div class="modal-dialog" >
         <form action="/table/edit" method="post">
             <div class="modal-content">
                 <input type="hidden" id="delNoticeId"/>
@@ -171,7 +177,7 @@
 <script src="/static/js/select2/select2.js"></script>
 <script src="/static/js/sweetalert/sweetalert.min.js"></script>
 <script src="/static/js/contextmenu.js"></script>
-<script src="/static/js/emp/backstage/workInFo.js"></script>
+<script src="/static/js/backstage/emp/workInFo.js"></script>
 <script src="/static/js/bootstrap-select/bootstrap-select.js"></script>
 
 </body>

@@ -5,14 +5,9 @@
 .bootstrap-table {
     width: 100%;
 }
-.modal-content{
-    width: 100%;
-    min-height: 350px;
-    height: auto;
-}
 .modal-dialog{
     border: 2px;
-    width: 90%;
+    width: 70%;
     height: auto;
     min-height: 350px;
 }

@@ -60,7 +60,9 @@
             </thead>
         </table>
         <div id="toolbar" class="btn-group">
-            <a class='btn btn-success' href='javascript:;'>导出</a>
+            <button id="btn_delete" type="button" class="btn btn-default" onclick="showReturn();">
+                <span class="glyphicon glyphicon-export" aria-hidden="true"></span>导出
+            </button>
         </div>
 
     </div>
@@ -68,9 +70,9 @@
 
 <!-- 添加弹窗 -->
 
-<div class="modal fade" id="add" aria-hidden="true" style="overflow:hidden;">
-    <div class="modal-dialog" style="overflow:hidden;">
-        <div class="modal-content" style="overflow:hidden;">
+<div class="modal fade" id="add" aria-hidden="true" >
+    <div class="modal-dialog" >
+        <div class="modal-content" >
             <form action="/table/edit" onsubmit="return checkAdd()" id="addForm" method="post">
                 <div class="modal-header" style=" overflow:hidden;">
                     <div class="input-group">
@@ -92,14 +94,12 @@
                     <br />
                 </div>
 
-                <div class="modal-footer" style="overflow:hidden;">
+                <div class="modal-footer" >
                     <span id="addError" style="color: red;"></span>
                     <button type="button" class="btn btn-default"
                             data-dismiss="modal">关闭
                     </button>
-                    <button type="button" class="btn btn-primary">
-                        保存
-                    </button>
+                    <button type="submit" class="btn btn-primary btn-sm">保存</button>
                 </div>
             </form>
         </div><!-- /.modal-content -->
@@ -135,7 +135,7 @@
 
 <!-- 删除弹窗 -->
 <div class="modal fade" id="del" aria-hidden="true">
-    <div class="modal-dialog" style="overflow:hidden;">
+    <div class="modal-dialog" >
         <form action="/table/edit" method="post">
             <div class="modal-content">
                 <input type="hidden" id="delNoticeId"/>

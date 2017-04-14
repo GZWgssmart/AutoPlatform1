@@ -72,9 +72,9 @@
 
 <!-- 添加弹窗 -->
 
-<div class="modal fade" role="form" id="add" aria-hidden="true" style="overflow:hidden;">
-    <div class="modal-dialog" style="overflow:hidden;">
-        <div class="modal-content" style="overflow:hidden;">
+<div class="modal fade" role="form" id="add" aria-hidden="true" >
+    <div class="modal-dialog" >
+        <div class="modal-content" >
             <form class="form-horizontal" onsubmit="return checkAdd()" id="register-form" method="get">
                 <div class="modal-header" style="overflow:auto;">
                     <p>添加供货商信息</p>
@@ -89,7 +89,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">供货商名称：</label>
+                    <label class="col-sm-3 control-label" for="name">供货商名称：</label>
                     <div class="col-sm-7">
                         <input id="name" name="name" type="text" placeholder="请输入供货商名称" class="form-control">
                     </div>
@@ -129,7 +129,7 @@
                         <input type="number" placeholder="请输入描述" class="form-control" max="10">
                     </div>
                 </div>
-                <div class="modal-footer" style="overflow:hidden;">
+                <div class="modal-footer" >
                     <span id="addError"></span>
                     <button type="button" class="btn btn-default"
                             data-dismiss="modal">关闭
@@ -198,7 +198,7 @@
                         <input type="number" placeholder="请输入描述" class="form-control" max="10">
                     </div>
                 </div>
-                <div class="modal-footer" style="overflow:hidden;">
+                <div class="modal-footer" >
                     <span id="editError"></span>
                     <button type="button" class="btn btn-default"
                             data-dismiss="modal">关闭
@@ -212,7 +212,7 @@
 
 <!-- 删除弹窗 -->
 <div class="modal fade" id="del" aria-hidden="true">
-    <div class="modal-dialog" style="overflow:hidden;">
+    <div class="modal-dialog" >
         <form action="/table/edit" method="post">
             <div class="modal-content">
                 <input type="hidden" id="delNoticeId"/>
