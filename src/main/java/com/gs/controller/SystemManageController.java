@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
- * 系统管理
+ * 系统管理, 张文星
  */
 @Controller
 @RequestMapping("/systemManage")
@@ -18,8 +18,8 @@ public class SystemManageController {
     /**
      * 模块管理
      */
-    @RequestMapping(value = "moduleIndex", method = RequestMethod.GET)
-    public String moduleIndex() {
+    @RequestMapping(value = "moduleManageIndex", method = RequestMethod.GET)
+    public String moduleManage() {
         logger.info("跳转到模块管理页面");
         return "systemManage/flowManage";
     }
@@ -28,7 +28,7 @@ public class SystemManageController {
      * 权限管理
      */
     @RequestMapping(value = "perManageIndex", method = RequestMethod.GET)
-    public String perManageIndex() {
+    public String perManage() {
         logger.info("跳转到权限管理页面");
         return "systemManage/permissionsManage";
     }
@@ -37,7 +37,7 @@ public class SystemManageController {
      * 权限分配
      */
     @RequestMapping(value = "perDistributionIndex", method = RequestMethod.GET)
-    public String backstageHome() {
+    public String perDistribution() {
         logger.info("跳转到权限分配页面");
         return "systemManage/permissionsDistribution";
     }
@@ -46,7 +46,7 @@ public class SystemManageController {
      * 流程管理
      */
     @RequestMapping(value = "flowIndex", method = RequestMethod.GET)
-    public String flowIndex() {
+    public String flow() {
         logger.info("跳转到流程管理页面");
         return "systemManage/flowManage";
     }
