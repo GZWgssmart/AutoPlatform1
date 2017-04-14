@@ -58,7 +58,9 @@
             </thead>
         </table>
         <div id="toolbar" class="btn-group">
-            <a class='btn btn-success' href='javascript:;'>打印</a>
+            <button id="btn_delete" type="button" class="btn btn-default" onclick="showReturn();">
+                <span class="glyphicon glyphicon-import" aria-hidden="true"></span>打印
+            </button>
         </div>
 
     </div>

@@ -56,7 +56,11 @@
                 <button id="btn_edit" type="button" class="btn btn-default" onclick="showEdit();">
                     <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
                 </button>
-                <a class='btn btn-danger' href='javascript:;'>离职</a>
+                <button id="btn_return" type="button" class="btn btn-default" onclick="showReturn();">
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>离职
+                </button>
+
+
             </div>
         </div>
     </div>

@@ -60,7 +60,9 @@
             </thead>
         </table>
         <div id="toolbar" class="btn-group">
-            <a class='btn btn-success' href='javascript:;'>导出</a>
+            <button id="btn_delete" type="button" class="btn btn-default" onclick="showReturn();">
+                <span class="glyphicon glyphicon-export" aria-hidden="true"></span>导出
+            </button>
         </div>
 
     </div>

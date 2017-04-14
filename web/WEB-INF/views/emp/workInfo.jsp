@@ -50,10 +50,18 @@
         </table>
         <div id="toolbar" class="btn-group">
 
-            <a class='btn btn-success' href='javascript:;'>结算</a>
-            <a class='btn btn-warning' href='javascript:;'>还款</a>
-            <a class='btn btn-primary' href='javascript:;'>结算后预览</a>
-            <a class='btn btn-danger' href='javascript:;'>作废</a>
+            <button id="btn_add" type="button" class="btn btn-default" onclick="showAdd();">
+                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>结算
+            </button>
+            <button id="btn_edit" type="button" class="btn btn-default" onclick="showEdit();">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>还款
+            </button>
+            <button id="btn_return" type="button" class="btn btn-default" onclick="showReturn();">
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>结算后预览
+            </button>
+            <button id="btn_delete" type="button" class="btn btn-default" onclick="showReturn();">
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>作废
+            </button>
         </div>
     </div>
 </div>
