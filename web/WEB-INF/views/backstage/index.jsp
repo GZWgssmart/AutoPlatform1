@@ -134,18 +134,15 @@
                             </li>
                             <li><a class="J_menuItem" href="/supplier/supplierType">供应商分类管理</a>
                             </li>
-                            <li><a class="J_menuItem" href="/supplier/purchaseDetail">下单统计</a>
+                            <li><a class="J_menuItem" href="/supplier/purchaseDetail">下单记录</a>
                             </li>
-                            <li><a class="J_menuItem" href="/supplier/purchaseBill">支付统计</a>
+                            <li><a class="J_menuItem" href="/supplier/purchaseBill">支付记录</a>
                             </li>
-                            <
                         </ul>
                     </li>
                     <li>
                         <a href="#"><i class="fa fa-cubes"></i> <span class="nav-label">配件管理</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
-                            <li><a class="J_menuItem" href="/accessories/accessories">库存管理</a>
-                            </li>
                             <li><a class="J_menuItem" href="/accessories/type">配件分类管理</a>
                             </li>
                             <li><a class="J_menuItem" href="/accessories/buy">配件采购管理</a>
@@ -157,9 +154,6 @@
                     <li>
                         <a href="#"><i class="fa fa-phone"></i> <span class="nav-label">&nbsp;维修保养预约</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
-                            <li>
-                                <a class="J_menuItem" href="/customerBooking/bookingManagement">预约管理</a>
-                            </li>
                             <li>
                                 <a class="J_menuItem" href="/customerBooking/phoneReservation">电话预约</a>
                             </li>
@@ -173,8 +167,6 @@
                         <ul class="nav nav-second-level">
                             <li><a class="J_menuItem" href="/maintenanceJieDaiGuanLi/reception">接待登记管理</a></li>
                             <li><a class="J_menuItem" href="/maintenanceJieDaiGuanLi/subsidiary">维修保养明细管理</a></li>
-                            <li><a class="J_menuItem" href="table_jqgrid.html">微信确认维修保养明细</a></li>
-                            <li><a class="J_menuItem" href="table_foo_table.html">微信查看维修保养明细</a></li>
                         </ul>
                     </li>
                     <li>
@@ -182,20 +174,12 @@
                         <ul class="nav nav-second-level">
                             <li><a class="J_menuItem" href="pickingControll/materialsIndex">物料清单</a>
                             </li>
-                            <li><a class="J_menuItem" href="pickingControll/assignstaffIndex">指派员工</a>
-                            </li>
-                            <li><a class="J_menuItem" href="pickingControll/acquisitionIndex">领料管理</a>
-                            </li>
-                            <li><a class="J_menuItem" href="pickingControll/returnedIndex">退料管理</a>
-                            </li>
                         </ul>
                     </li>
                     <li>
                         <a href="#"><i class="fa fa-wrench"></i> <span class="nav-label">车辆维修保养</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li><a class="J_menuItem" href="maintenanceController/maintenanceIndex">维修保养进度管理</a>
-                            </li>
-                            <li><a class="J_menuItem" href="maintenanceController/scheduleIndex">微信查看维修保养进度</a>
                             </li>
                         </ul>
                     </li>
@@ -206,8 +190,6 @@
                             </li>
                             <li><a class="J_menuItem" href="/clearingOut/chargeDocumentsIndex">收费单据管理</a>
                             </li>
-                            <li><a class="J_menuItem" href="/clearingOut/printStatementsIndex">打印结算单</a>
-                            </li>
                         </ul>
                     </li>
                     <li>
@@ -217,7 +199,7 @@
                             </li>
                             <li><a class="J_menuItem" href="/custManage/mainreminderIndex">维修保养提醒</a>
                             </li>
-                            <li><a class="J_menuItem" href="/custManage/smsalertsIndex">短信群发提醒</a>
+                            <li><a class="J_menuItem" href="/custManage/smsalertsIndex">短信群发管理</a>
                             </li>
                             <li><a class="J_menuItem" href="/custManage/complaintIndex">投诉管理</a>
                             </li>
@@ -258,17 +240,10 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="#"><i class="fa fa-mobile-phone"></i> <span class="nav-label">&nbsp;&nbsp;手机支付</span><span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            <li><a class="J_menuItem" href="basic_gallery.html">支付宝支付</a>
-                            </li>
-                            <li><a class="J_menuItem" href="carousel.html">微信支付</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
                         <a href="#"><i class="fa fa-gear"></i> <span class="nav-label">系统管理</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
+                            <li><a class="J_menuItem" href="/systemManage/moduleManageIndex">人员角色管理</a>
+                            </li>
                             <li><a class="J_menuItem" href="/systemManage/moduleManageIndex">模块管理</a>
                             </li>
                             <li><a class="J_menuItem" href="/systemManage/perManageIndex">权限管理</a>

@@ -55,6 +55,12 @@
             <button id="btn_delete" type="button" class="btn btn-default" onclick="showDel();">
                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
             </button>
+            <button id="btn_Export" type="button" class="btn btn-default" onclick="showExport();">
+                <span class="glyphicon glyphicon-export" aria-hidden="true"></span>导出
+            </button>
+            <button id="btn_print" type="button" class="btn btn-default" onclick="showPrint();">
+                <span class="glyphicon glyphicon-print" aria-hidden="true"></span>打印
+            </button>
         </div>
     </div>
 </div>
@@ -249,6 +255,14 @@
         );
     }
 
+    function showExport(){
+        alert("导出")
+    }
+
+    function showPrint(){
+        alert("打印")
+        window.print();
+    }
 </script>
 </body>
 </html>

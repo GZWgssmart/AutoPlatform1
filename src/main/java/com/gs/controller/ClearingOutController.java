@@ -33,13 +33,4 @@ public class ClearingOutController {
         return "clearingOut/chargeDocuments";
     }
 
-    /**
-     * 打印结算单
-     */
-    @RequestMapping(value = "printStatementsIndex", method = RequestMethod.GET)
-    public String printStatements() {
-        logger.info("跳转到打印结算单页面");
-        return "clearingOut/printStatements";
-    }
-
 }
