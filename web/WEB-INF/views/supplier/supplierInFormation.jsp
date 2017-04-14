@@ -89,7 +89,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">供货商名称：</label>
+                    <label class="col-sm-3 control-label" for="name">供货商名称：</label>
                     <div class="col-sm-7">
                         <input id="name" name="name" type="text" placeholder="请输入供货商名称" class="form-control">
                     </div>

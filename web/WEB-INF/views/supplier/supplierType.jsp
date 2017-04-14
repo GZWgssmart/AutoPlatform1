@@ -71,14 +71,14 @@
 <div class="modal fade" id="add" aria-hidden="true" >
     <div class="modal-dialog" >
         <div class="modal-content" >
-            <form class="form-horizontal" onsubmit="return checkAdd()" id="addForm" method="post">
+                <form class="form-horizontal"  role="form" onsubmit="return checkAdd()" id="register-form" method="post">
                 <div class="modal-header" style="overflow:auto;">
                     <p>添加供货商类型信息</p>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">供货商名称：</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="请输入供货商名称" class="form-control">
+                        <input type="text" name="name" id="name" placeholder="请输入供货商名称" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
@@ -98,9 +98,7 @@
                     <button type="button" class="btn btn-default"
                             data-dismiss="modal">关闭
                     </button>
-                    <button type="button" class="btn btn-primary">
-                        保存
-                    </button>
+                    <button type="submit" class="btn btn-primary btn-sm">保存</button>
                 </div>
             </form>
         </div><!-- /.modal-content -->
@@ -112,14 +110,14 @@
 <div class="modal fade" id="edit" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form  role="form" class="form-horizontal" onsubmit="return checkAdd()" id="register-form" method="post">
+            <form  class="form-horizontal" onsubmit="return checkAdd()" method="post">
                 <div class="modal-header" style="overflow:auto;">
                     <p>修改供货商类型信息</p>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">供货商名称：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="name" id="name" placeholder="请输入供货商名称" class="form-control">
+                        <input type="text" name="name"  placeholder="请输入供货商名称" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
@@ -194,8 +192,8 @@
 <script src="/static/js/contextmenu.js"></script>
 <script src="/static/js/backstage/supplier/supplierType.js"></script>
 <script src="/static/js/bootstrap-select/bootstrap-select.js"></script>
-
-]
+<script src="/static/js/form/jquery.validate.js"></script>
+<script src="/static/js/form/form.js"></script>
 
 
 </body>

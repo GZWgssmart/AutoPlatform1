@@ -95,9 +95,7 @@
                     <button type="button" class="btn btn-default"
                             data-dismiss="modal">关闭
                     </button>
-                    <button type="button" class="btn btn-primary">
-                        保存
-                    </button>
+                    <button type="submit" class="btn btn-primary btn-sm">保存</button>
                 </div>
             </form>
         </div><!-- /.modal-content -->

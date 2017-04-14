@@ -89,9 +89,7 @@
                     <button type="button" class="btn btn-default"
                             data-dismiss="modal">关闭
                     </button>
-                    <button type="button" class="btn btn-primary">
-                        保存
-                    </button>
+                    <button type="submit" class="btn btn-primary btn-sm">保存</button>
                 </div>
             </form>
         </div><!-- /.modal-content -->
@@ -171,7 +169,7 @@
 <script src="/static/js/select2/select2.js"></script>
 <script src="/static/js/sweetalert/sweetalert.min.js"></script>
 <script src="/static/js/contextmenu.js"></script>
-<script src="/static/js/emp/backstage/workInFo.js"></script>
+<script src="/static/js/backstage/emp/workInFo.js"></script>
 <script src="/static/js/bootstrap-select/bootstrap-select.js"></script>
 
 </body>
