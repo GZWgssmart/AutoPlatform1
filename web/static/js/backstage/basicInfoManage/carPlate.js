@@ -30,7 +30,11 @@ function showEdit() {
         var ceshi = row[0];
         $("#editForm").fill(ceshi);
     } else {
-        $("#tanchuang").modal('show');
+        swal({
+            "title": "",
+            "text": "请先选择一条数据",
+            "type": "warning"
+        })
     }
 }
 
@@ -88,3 +92,81 @@ function checkEdit() {
         }, "json"
     );
 }
+
+//前端验证
+$(document).ready(function () {
+    $("#showAddFormWar").validate({
+        errorElement: 'span',
+        errorClass: 'help-block',
+
+        rules: {
+            plateName: {
+                required: true,
+                minlength: 2
+            },
+            plateDes: {
+                required: true,
+                minlength: 2
+            },
+        },
+        messages: {
+            plateName: "请输入车牌名称",
+            plateDes: "请输入车牌描述",
+        },
+        errorPlacement: function (error, element) {
+            element.next().remove();
+            element.after('<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>');
+            element.closest('.form-group').append(error);
+        },
+        highlight: function (element) {
+            $(element).closest('.form-group').addClass('has-error has-feedback');
+        },
+        success: function (label) {
+            var el = label.closest('.form-group').find("input");
+            el.next().remove();
+            el.after('<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>');
+            label.closest('.form-group').removeClass('has-error').addClass("has-feedback has-success");
+            label.remove();
+        },
+        submitHandler: function (form) {
+            alert("submitted!");
+        }
+    })
+    $("#showEditFormWar").validate({
+        errorElement: 'span',
+        errorClass: 'help-block',
+
+        rules: {
+            plateName: {
+                required: true,
+                minlength: 2
+            },
+            plateDes: {
+                required: true,
+                minlength: 2
+            },
+        },
+        messages: {
+            plateName: "请输入车牌名称",
+            plateDes: "请输入车牌描述",
+        },
+        errorPlacement: function (error, element) {
+            element.next().remove();
+            element.after('<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>');
+            element.closest('.form-group').append(error);
+        },
+        highlight: function (element) {
+            $(element).closest('.form-group').addClass('has-error has-feedback');
+        },
+        success: function (label) {
+            var el = label.closest('.form-group').find("input");
+            el.next().remove();
+            el.after('<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>');
+            label.closest('.form-group').removeClass('has-error').addClass("has-feedback has-success");
+            label.remove();
+        },
+        submitHandler: function (form) {
+            alert("submitted!");
+        }
+    })
+});

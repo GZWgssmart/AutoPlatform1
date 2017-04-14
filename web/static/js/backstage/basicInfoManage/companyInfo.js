@@ -30,7 +30,11 @@ function showEdit() {
         var ceshi = row[0];
         $("#editForm").fill(ceshi);
     } else {
-        $("#tanchuang").modal('show');
+        swal({
+            "title": "",
+            "text": "请先选择一条数据",
+            "type": "warning"
+        })
     }
 }
 
@@ -38,7 +42,6 @@ function showEdit() {
 function showAdd() {
     $("#addWindow").modal('show');
 }
-
 
 function formatRepo(repo) {
     return repo.text
@@ -171,3 +174,119 @@ $('#editDateTimePicker').datetimepicker({
 //         });
 //     }
 // })
+
+$(document).ready(function () {
+    jQuery.validator.addMethod("isPhone", function (value, element) {
+        var length = value.length;
+        return this.optional(element) || (length == 11 && /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/.test(value));
+    }, "请正确填写您的手机号码。");
+
+    $("#showAddFormWar").validate({
+        errorElement: 'span',
+        errorClass: 'help-block',
+
+        rules: {
+            companyName: {
+                required: true,
+                minlength: 2
+            },
+            companyAddress: {
+                required: true,
+                minlength: 2
+            },
+            companyTel: {
+                required: true,
+                isPhone: true,
+            },
+            companyPricipal: {
+                required: true,
+                minlength: 2
+            },
+            companyOpenDate: {
+                required: true,
+                date: true
+            }
+        },
+        messages: {
+            companyName: "请输入你的公司名",
+            companyAddress: "请输入你的公司地址",
+            companyTel: {
+                required: "请输入你的联系方式",
+            },
+            companyPricipal: "请输入你的公司负责人",
+            companyOpenDate: "请输入公司成立时间"
+        },
+        errorPlacement: function (error, element) {
+            element.next().remove();
+            element.after('<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>');
+            element.closest('.form-group').append(error);
+        },
+        highlight: function (element) {
+            $(element).closest('.form-group').addClass('has-error has-feedback');
+        },
+        success: function (label) {
+            var el = label.closest('.form-group').find("input");
+            el.next().remove();
+            el.after('<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>');
+            label.closest('.form-group').removeClass('has-error').addClass("has-feedback has-success");
+            label.remove();
+        },
+        submitHandler: function (form) {
+            alert("submitted!");
+        }
+    }),
+    $("#showEditFormWar").validate({
+        errorElement: 'span',
+        errorClass: 'help-block',
+
+        rules: {
+            companyName: {
+                required: true,
+                minlength: 2
+            },
+            companyAddress: {
+                required: true,
+                minlength: 2
+            },
+            companyTel: {
+                required: true,
+                isPhone: true,
+            },
+            companyPricipal: {
+                required: true,
+                minlength: 2
+            },
+            companyOpenDate: {
+                required: true,
+                date: true
+            }
+        },
+        messages: {
+            companyName: "请输入你的公司名",
+            companyAddress: "请输入你的公司地址",
+            companyTel: {
+                required: "请输入你的联系方式",
+            },
+            companyPricipal: "请输入你的公司负责人",
+            companyOpenDate: "请输入公司成立时间"
+        },
+        errorPlacement: function (error, element) {
+            element.next().remove();
+            element.after('<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>');
+            element.closest('.form-group').append(error);
+        },
+        highlight: function (element) {
+            $(element).closest('.form-group').addClass('has-error has-feedback');
+        },
+        success: function (label) {
+            var el = label.closest('.form-group').find("input");
+            el.next().remove();
+            el.after('<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>');
+            label.closest('.form-group').removeClass('has-error').addClass("has-feedback has-success");
+            label.remove();
+        },
+        submitHandler: function (form) {
+            alert("submitted!");
+        }
+    })
+});

@@ -30,7 +30,11 @@ function showEdit() {
         var ceshi = row[0];
         $("#editForm").fill(ceshi);
     } else {
-//            $("#tanchuang").modal('show');
+        swal({
+            "title": "",
+            "text": "请先选择一条数据",
+            "type": "warning"
+        })
     }
 }
 
@@ -105,7 +109,7 @@ $(function () {
 var FileInput = function () {
     var oFile = new Object();
     //初始化fileinput控件（第一次初始化）
-    oFile.Init = function(ctrlName, uploadUrl) {
+    oFile.Init = function (ctrlName, uploadUrl) {
         var control = $('#' + ctrlName);
         //初始化上传控件的样式
         control.fileinput({
@@ -124,15 +128,93 @@ var FileInput = function () {
             //minFileCount: 0,
             maxFileCount: 10, //表示允许同时上传的最大文件个数
             enctype: 'multipart/form-data',
-            validateInitialCount:true,
+            validateInitialCount: true,
             previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
             msgFilesTooMany: "选择上传的文件数量({n}) 超过允许的最大数值{m}！",
-        }).on("fileuploaded", function(event, data) {
+        }).on("fileuploaded", function (event, data) {
             // data 为controller返回的json
-            if(data.response.result =='success'){
+            if (data.response.result == 'success') {
                 alert('处理成功');
             }
         });
     }
     return oFile;
 };
+
+//前端验证
+$(document).ready(function () {
+    $("#showAddFormWar").validate({
+        errorElement: 'span',
+        errorClass: 'help-block',
+
+        rules: {
+            brandName: {
+                required: true,
+                minlength: 2
+            },
+            brandDes: {
+                required: true,
+                minlength: 2
+            }
+        },
+        messages: {
+            brandName: "请输入品牌名",
+            brandDes: "请输入品牌的描述",
+        },
+        errorPlacement: function (error, element) {
+            element.next().remove();
+            element.after('<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>');
+            element.closest('.form-group').append(error);
+        },
+        highlight: function (element) {
+            $(element).closest('.form-group').addClass('has-error has-feedback');
+        },
+        success: function (label) {
+            var el = label.closest('.form-group').find("input");
+            el.next().remove();
+            el.after('<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>');
+            label.closest('.form-group').removeClass('has-error').addClass("has-feedback has-success");
+            label.remove();
+        },
+        submitHandler: function (form) {
+            alert("submitted!");
+        }
+    })
+    $("#showEditFormWar").validate({
+        errorElement: 'span',
+        errorClass: 'help-block',
+
+        rules: {
+            brandName: {
+                required: true,
+                minlength: 2
+            },
+            brandDes: {
+                required: true,
+                minlength: 2
+            }
+        },
+        messages: {
+            brandName: "请输入品牌名",
+            brandDes: "请输入品牌的描述",
+        },
+        errorPlacement: function (error, element) {
+            element.next().remove();
+            element.after('<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>');
+            element.closest('.form-group').append(error);
+        },
+        highlight: function (element) {
+            $(element).closest('.form-group').addClass('has-error has-feedback');
+        },
+        success: function (label) {
+            var el = label.closest('.form-group').find("input");
+            el.next().remove();
+            el.after('<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>');
+            label.closest('.form-group').removeClass('has-error').addClass("has-feedback has-success");
+            label.remove();
+        },
+        submitHandler: function (form) {
+            alert("submitted!");
+        }
+    })
+});

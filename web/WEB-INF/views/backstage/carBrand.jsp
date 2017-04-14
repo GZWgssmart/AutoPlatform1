@@ -46,6 +46,7 @@
             <tr>
                 <th data-radio="true" data-field="status"></th>
                 <th data-field="brandName">品牌名</th>
+                <th data-field="brandLogo">品牌Logo</th>
                 <th data-field="brandDes">品牌描述</th>
                 <th data-field="brandStatus">品牌状态</th>
             </tr>
@@ -69,7 +70,7 @@
 <div class="modal fade" id="addWindow" aria-hidden="true" style="overflow:auto; ">
     <div class="modal-dialog" style="width: 700px;height: auto;">
         <div class="modal-content" style="overflow:hidden;">
-            <form class="form-horizontal" onsubmit="return checkAdd()" id="addForm" method="post">
+            <form class="form-horizontal" role="form" onsubmit="return checkAdd()" id="showAddFormWar" method="post">
                 <div class="modal-header" style="overflow:auto;">
                     <h4>请填写汽车品牌的相关信息</h4>
                 </div>
@@ -77,13 +78,13 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">汽车品牌：</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="请输入汽车品牌的名字" class="form-control">
+                        <input type="text" name="brandName" placeholder="请输入汽车品牌的名字" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">汽车品牌描述：</label>
                     <div class="col-sm-7">
-                        <textarea type="text" placeholder="请输入关于该品牌的描述" style="height: 100px;" class="form-control"></textarea>
+                        <textarea type="text" name="brandDes" placeholder="请输入关于该品牌的描述" style="height: 100px;" class="form-control"></textarea>
                     </div>
                 </div>
                 <div class="form-group">
@@ -91,7 +92,7 @@
                     <div class="col-lg-7">
                         <div class="ibox-title">
                             <div class="input-group" style="padding-left: 15px;">
-                                <input id="add_carBrandLogo" define="carBrand.brandLogo" name="txt_file"
+                                <input id="add_carBrandLogo"  define="carBrand.brandLogo" name="txt_file"
                                        type="file" class="form-control" multiple
                                        class="file-loading"
                                        placeholder="请选择或输入一个你想上传的相册类型,默认当天日期为类型!"/>
@@ -115,7 +116,7 @@
 <div class="modal fade" id="editWindow" aria-hidden="true" style="overflow:auto; ">
     <div class="modal-dialog" style="width: 700px;height: auto;">
         <div class="modal-content" style="overflow:hidden;">
-            <form class="form-horizontal" onsubmit="return checkAdd()" id="editForm" method="post">
+            <form class="form-horizontal" role="form" onsubmit="return checkAdd()" id="showEditFormWar" method="post">
                 <div class="modal-header" style="overflow:auto;">
                     <p>请修改该品牌的相关信息</p>
                 </div>
@@ -123,13 +124,13 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">汽车品牌名称：</label>
                     <div class="col-sm-7">
-                        <input type="text" define="carBrand.brandName" placeholder="请输入汽车品牌名称" class="form-control">
+                        <input type="text" name="brandName" define="carBrand.brandName" placeholder="请输入汽车品牌名称" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">汽车品牌描述：</label>
                     <div class="col-sm-7">
-                        <textarea type="text" define="carBrand.brandDes" placeholder="请输入关于该品牌的描述" style="height: 100px;" class="form-control"></textarea>
+                        <textarea type="text" name="brandDes" define="carBrand.brandDes" placeholder="请输入关于该品牌的描述" style="height: 100px;" class="form-control"></textarea>
                     </div>
                 </div>
                 <div class="form-group">
@@ -204,6 +205,7 @@
 <script src="/static/js/contextmenu.js"></script>
 <script src="/static/js/fileInput/fileinput.js"></script>
 <script src="/static/js/fileInput/zh.js"></script>
+<script src="/static/js/form/jquery.validate.js"></script>
 <script src="/static/js/backstage/basicInfoManage/carBrand.js"></script>
 </body>
 </html>

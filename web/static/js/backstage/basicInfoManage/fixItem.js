@@ -30,7 +30,11 @@ function showEdit() {
         var ceshi = row[0];
         $("#editForm").fill(ceshi);
     } else {
-        $("#tanchuang").modal('show');
+        swal({
+            "title": "",
+            "text": "请先选择一条数据",
+            "type": "warning"
+        })
     }
 }
 
@@ -96,4 +100,93 @@ $('#addDateTimePicker').datetimepicker({
 $('#editDateTimePicker').datetimepicker({
     language: 'zh-CN',
     format: 'yyyy-mm-dd hh:ii'
+});
+
+
+//前端验证
+$(document).ready(function () {
+    $("#showAddFormWar").validate({
+        errorElement: 'span',
+        errorClass: 'help-block',
+
+        rules: {
+            fixName: {
+                required: true,
+                minlength: 2
+            },
+            fixHour: {
+                required: true,
+                minlength: 2
+            },
+            fixMoney: {
+                required: true,
+                minlength: 2
+            }
+        },
+        messages: {
+            fixName: "请输入维修项目名称",
+            fixHour: "请输入维修时间",
+            fixMoney: "请输入维修费用",
+        },
+        errorPlacement: function (error, element) {
+            element.next().remove();
+            element.after('<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>');
+            element.closest('.form-group').append(error);
+        },
+        highlight: function (element) {
+            $(element).closest('.form-group').addClass('has-error has-feedback');
+        },
+        success: function (label) {
+            var el = label.closest('.form-group').find("input");
+            el.next().remove();
+            el.after('<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>');
+            label.closest('.form-group').removeClass('has-error').addClass("has-feedback has-success");
+            label.remove();
+        },
+        submitHandler: function (form) {
+            alert("submitted!");
+        }
+    })
+    $("#showEditFormWar").validate({
+        errorElement: 'span',
+        errorClass: 'help-block',
+
+        rules: {
+            fixName: {
+                required: true,
+                minlength: 2
+            },
+            fixHour: {
+                required: true,
+                minlength: 2
+            },
+            fixMoney: {
+                required: true,
+                minlength: 2
+            },
+        },
+        messages: {
+            fixName: "请输入维修项目名称",
+            fixHour: "请输入维修时间",
+            fixMoney: "请输入维修费用",
+        },
+        errorPlacement: function (error, element) {
+            element.next().remove();
+            element.after('<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>');
+            element.closest('.form-group').append(error);
+        },
+        highlight: function (element) {
+            $(element).closest('.form-group').addClass('has-error has-feedback');
+        },
+        success: function (label) {
+            var el = label.closest('.form-group').find("input");
+            el.next().remove();
+            el.after('<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>');
+            label.closest('.form-group').removeClass('has-error').addClass("has-feedback has-success");
+            label.remove();
+        },
+        submitHandler: function (form) {
+            alert("submitted!");
+        }
+    })
 });

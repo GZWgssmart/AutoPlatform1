@@ -71,7 +71,7 @@
 <div class="modal fade" id="addWindow" aria-hidden="true" style="overflow:auto; ">
     <div class="modal-dialog" style="width: 700px;height: auto;">
         <div class="modal-content" style="overflow:hidden;">
-            <form class="form-horizontal" onsubmit="return checkAdd()" id="addForm" method="post">
+            <form class="form-horizontal" role="form" onsubmit="return checkAdd()" id="showAddFormWar" method="post">
                 <div class="modal-header" style="overflow:auto;">
                     <h4>请填写汽车车牌的相关信息</h4>
                 </div>
@@ -79,13 +79,13 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">车牌名称：</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="请输入该车牌的名称" class="form-control">
+                        <input type="text" name="plateName" placeholder="请输入该车牌的名称" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">车型描述：</label>
                     <div class="col-sm-7">
-                        <textarea type="text" placeholder="请输入关于该车牌的描述" style="height: 100px;"
+                        <textarea type="text" name="plateDes" placeholder="请输入关于该车牌的描述" style="height: 100px;"
                                   class="form-control"></textarea>
                     </div>
                 </div>
@@ -104,7 +104,7 @@
 <div class="modal fade" id="editWindow" aria-hidden="true">
     <div class="modal-dialog" style="width: 700px;height: auto;">
         <div class="modal-content" style="overflow:hidden;">
-            <form class="form-horizontal" onsubmit="return checkAdd()" id="editForm" method="post">
+            <form class="form-horizontal" role="form" onsubmit="return checkAdd()" id="showEditFormWar" method="post">
                 <div class="modal-header" style="overflow:auto;">
                     <h4>请修改汽车车牌的相关信息</h4>
                 </div>
@@ -112,13 +112,13 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">车牌名称：</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="请输入该车牌的名称" class="form-control">
+                        <input type="text" name="plateName" placeholder="请输入该车牌的名称" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">车型描述：</label>
                     <div class="col-sm-7">
-                        <textarea type="text" placeholder="请输入关于该车牌的描述" style="height: 100px;"
+                        <textarea type="text" name="plateDes" placeholder="请输入关于该车牌的描述" style="height: 100px;"
                                   class="form-control"></textarea>
                     </div>
                 </div>
@@ -179,6 +179,7 @@
 <script src="/static/js/select2/select2.js"></script>
 <script src="/static/js/sweetalert/sweetalert.min.js"></script>
 <script src="/static/js/contextmenu.js"></script>
+<script src="/static/js/form/jquery.validate.js"></script>
 <script src="/static/js/backstage/basicInfoManage/carPlate.js"></script>
 </body>
 </html>

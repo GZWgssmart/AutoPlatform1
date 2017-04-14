@@ -31,7 +31,6 @@
 	$("#register-form").validate({
 		errorElement : 'span',
 		errorClass : 'help-block',
-
 		rules : {
 			name : {
                 required : true,
@@ -109,6 +108,5 @@
 		submitHandler: function(form) { 
 			alert("submitted!");
 		}
-
 	})
 });

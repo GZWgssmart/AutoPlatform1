@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="/static/css/select2.min.css">
     <link rel="stylesheet" href="/static/css/sweetalert.css">
     <link rel="stylesheet" href="/static/css/fileinput.css">
+    <link rel="stylesheet" href="/static/css/table/table.css">
     <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.css">
     <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/datetimepicker.less">
 </head>
@@ -76,7 +77,7 @@
 <div class="modal fade" id="addWindow" aria-hidden="true" style="overflow:auto;">
     <div class="modal-dialog" style="overflow:hidden;">
         <div class="modal-content" style="overflow:hidden;">
-            <form class="form-horizontal" onsubmit="return checkAdd()" id="addForm" method="post">
+            <form class="form-horizontal" role="form" onsubmit="return checkAdd()" id="showAddFormWar" method="post">
                 <div class="modal-header" style="overflow:auto;">
                     <h4>请填写相关的故障信息</h4>
                 </div>
@@ -84,13 +85,13 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">故障名称：</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="请输入故障的名称" class="form-control">
+                        <input type="text" name="faultsName" placeholder="请输入故障的名称" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">记录时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" define="companyInfo.companyOpenTime" placeholder="请选择发现故障的时间"
+                        <input type="text" name="recordTime" define="companyInfo.companyOpenTime" placeholder="请选择发现故障的时间"
                                value="2012-05-15 21:05"
                                id="addDateTimePicker" class="form-control">
                     </div>
@@ -98,13 +99,13 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">故障等级：</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="请预估故障的等级" class="form-control"></input>
+                        <input type="text" name="level" placeholder="请预估故障的等级" class="form-control"></input>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">故障描述：</label>
                     <div class="col-sm-7">
-                        <textarea type="text" placeholder="请输入该故障相关的描述" style="height: 100px;"
+                        <textarea type="text" name="faultsDes" placeholder="请输入该故障相关的描述" style="height: 100px;"
                                   class="form-control"></textarea>
                     </div>
                 </div>
@@ -137,7 +138,7 @@
 <div class="modal fade" id="editWindow" aria-hidden="true" style="overflow:auto;">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form class="form-horizontal" onsubmit="return checkAdd()" id="editForm" method="post">
+            <form class="form-horizontal" role="form" onsubmit="return checkAdd()" id="showEditFormWar" method="post">
                 <div class="modal-header" style="overflow:auto;">
                     <h4>请填写相关的故障信息</h4>
                 </div>
@@ -145,13 +146,13 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">故障名称：</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="请输入故障的名称" class="form-control">
+                        <input type="text" name="faultsName" placeholder="请输入故障的名称" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">记录时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" define="companyInfo.companyOpenTime" placeholder="请选择发现故障的时间"
+                        <input type="text" name="recordTime" define="companyInfo.companyOpenTime" placeholder="请选择发现故障的时间"
                                value="2012-05-15 21:05"
                                id="editDateTimePicker" class="form-control">
                     </div>
@@ -159,13 +160,13 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">故障等级：</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="请预估故障的等级" class="form-control"></input>
+                        <input type="text" name="level" placeholder="请预估故障的等级" class="form-control"></input>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">故障描述：</label>
                     <div class="col-sm-7">
-                        <textarea type="text" placeholder="请输入该故障相关的描述" style="height: 100px;"
+                        <textarea type="text" name="faultsDes" placeholder="请输入该故障相关的描述" style="height: 100px;"
                                   class="form-control"></textarea>
                     </div>
                 </div>
@@ -243,6 +244,7 @@
 <script src="/static/js/fileInput/zh.js"></script>
 <script src="/static/js/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.js"></script>
 <script src="/static/js/bootstrap-dateTimePicker/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+<script src="/static/js/form/jquery.validate.js"></script>
 <script src="/static/js/backstage/basicInfoManage/commonFaults.js"></script>
 </body>
 </html>
