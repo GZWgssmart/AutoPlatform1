@@ -16,6 +16,8 @@
     <link rel="stylesheet" href="/static/css/select2.min.css">
     <link rel="stylesheet" href="/static/css/sweetalert.css">
     <link rel="stylesheet" href="/static/css/table/table.css">
+    <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/datetimepicker.less">
 </head>
 <body>
 <%@include file="../backstage/contextmenu.jsp"%>
@@ -71,25 +73,46 @@
 <div class="modal fade" id="add" aria-hidden="true" style="overflow:hidden;">
     <div class="modal-dialog" style="overflow:hidden;">
         <div class="modal-content" style="overflow:hidden;">
-            <form action="/table/edit" onsubmit="return checkAdd()" id="addForm" method="post">
-                <div class="modal-header" style="overflow:hidden;">
-                    <input type="text" id="addId" placeholder="请输入标题" style="width:300px;margin-left:70px;" maxlength="15" name="top-search"/>
-                    <input type="text" id="addPrice" placeholder="请输入标题" style="width:300px;margin-left:70px;" maxlength="15" name="top-search"/>
-                    <br />
-                    <select id="addSelect"  class="js-example-basic-multiple" multiple="multiple" style="width:300px;margin-left:70px;">
-                    </select>
+            <form class="form-horizontal" role="form" onsubmit="return checkAdd()" id="register-form" method="post">
+                <div class="modal-header" style="overflow:auto;">
+                    <p>添加物料清单</p>
                 </div>
-                <div class="modal-body" style="overflow:hidden;">
-                    <textarea id="addName" placeholder="请输入描述"  style="width:530px;height:100px;" maxlength="142"></textarea>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label" for="materialName">物料名称：</label>
+                    <div class="col-sm-7">
+                        <input type="text" id="materialName" name="materialName" placeholder="请输入物料名称" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label" for="materielState">物料说明：</label>
+                    <div class="col-sm-7">
+                        <input type="text" id="materielState" name="materielState" placeholder="请输入物料说明" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label" for="materielCount">物料数量：</label>
+                    <div class="col-sm-7">
+                        <input type="text" id="materielCount" name="materielCount" placeholder="请输入物料数量" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label" for="maintain">维修保养记录：</label>
+                    <div class="col-sm-7">
+                        <input type="text" id="maintain" name="maintain" placeholder="请输入维修保养记录" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label" for="materiel_Receive_Time">领料时间：</label>
+                    <div class="col-sm-7">
+                        <input type="text" id="materiel_Receive_Time" name="materiel_Receive_Time" placeholder="请输入领料时间" class="form-control">
+                    </div>
                 </div>
                 <div class="modal-footer" style="overflow:hidden;">
-                    <span id="addError" style="color: red;"></span>
+                    <span id="addError"></span>
                     <button type="button" class="btn btn-default"
                             data-dismiss="modal">关闭
                     </button>
-                    <button type="button" class="btn btn-primary">
-                        保存
-                    </button>
+                    <button type="submit" class="btn btn-primary btn-sm">保存</button>
                 </div>
             </form>
         </div><!-- /.modal-content -->
@@ -170,8 +193,9 @@
 <script src="/static/js/select2/select2.js"></script>
 <script src="/static/js/sweetalert/sweetalert.min.js"></script>
 <script src="/static/js/contextmenu.js"></script>
-<script src="/static/js/supplierInFormation/supplierInFormation.js"></script>
 <script src="/static/js/bootstrap-select/bootstrap-select.js"></script>
+<script src="/static/js/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.js"></script>
+<script src="/static/js/bootstrap-dateTimePicker/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
 <script>
     $(function () {
         $('#table').bootstrapTable('hideColumn', 'id');
