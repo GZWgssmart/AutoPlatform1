@@ -695,6 +695,7 @@ $.extend($.validator, {
 				}
 				if ( !this.labelContainer.append(label).length ) {
 					if ( this.settings.errorPlacement ) {
+
 						this.settings.errorPlacement(label, $(element) );
 					} else {
 						label.insertAfter(element);
@@ -1229,3 +1230,4 @@ $.format = $.validator.format;
 		}
 	});
 }(jQuery));
+

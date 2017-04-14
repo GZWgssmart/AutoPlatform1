@@ -29,7 +29,7 @@
                    data-show-toggle="true"
                    data-show-columns="true"
                    data-page-size="10"
-                   data-height="700"
+                   data-height="600"
                    data-id-field="id"
                    data-page-list="[5, 10, 20]"
                    data-cach="false"
@@ -65,8 +65,11 @@
         </div>
     </div>
 
-    <!-- 添加弹窗 -->
-<div class="modal fade" id="add" aria-hidden="true">
+    <!-- 添加弹窗
+        aria-hidden="true" 默认隐藏
+        data-backdrop="static" 点击模态窗底层不会关闭模态窗
+    -->
+<div class="modal fade" id="add" aria-hidden="true" data-backdrop="static">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <form class="form-horizontal" role="form" onsubmit="return checkAdd()" id="register-form" method="post">
@@ -138,7 +141,7 @@
 
 
     <!-- 修改弹窗 -->
-    <div class="modal fade" id="edit" aria-hidden="true">
+    <div class="modal fade" id="edit" aria-hidden="true" data-backdrop="static">
         <div class="modal-dialog">
             <div class="modal-content">
                 <hr/>
@@ -204,7 +207,7 @@
     </div><!-- /.modal -->
 
     <!-- 删除弹窗 -->
-    <div class="modal fade" id="del" aria-hidden="true">
+    <div class="modal fade" id="del" aria-hidden="true" data-backdrop="static">
         <div class="modal-dialog">
             <form action="/table/edit" method="post">
                 <div class="modal-content">
@@ -220,25 +223,6 @@
                     </div>
                 </div><!-- /.modal-content -->
             </form>
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
-
-    <!-- 提示弹窗 -->
-    <div class="modal fade" id="tanchuang" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    提示
-                </div>
-                <div class="modal-body">
-                    请先选择某一行
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default"
-                            data-dismiss="modal">关闭
-                    </button>
-                </div>
-            </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 <script src="/static/js/jquery.min.js"></script>
