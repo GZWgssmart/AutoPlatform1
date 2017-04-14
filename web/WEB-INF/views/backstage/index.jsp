@@ -40,7 +40,7 @@
                                 </span>
                             </a>
                             <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                                <li><a class="J_menuItem" href="form_avatar.html">修改头像</a>
+                                <li><a class="J_menuItem" href="/edit">修改头像</a>
                                 </li>
                                 <li><a class="J_menuItem" href="profile.html">个人资料</a>
                                 </li>
@@ -71,9 +71,6 @@
                     </li>
                     <li>
                         <a class="J_menuItem" href="/error/serverError">500</a>
-                    </li>
-                    <li>
-                        <a class="J_menuItem" href="/edit">head</a>
                     </li>
                     <li>
                         <a href="#">
