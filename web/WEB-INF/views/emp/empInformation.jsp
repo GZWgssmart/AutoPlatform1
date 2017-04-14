@@ -62,9 +62,9 @@
     </div>
 
     <!-- 添加弹窗 -->
-<div class="modal fade" id="add" aria-hidden="true" style="overflow:hidden;">
-            <div class="modal-dialog" style="overflow:hidden;">
-                <div class="modal-content" style="overflow:hidden;">
+<div class="modal fade" id="add" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
                     <form class="form-horizontal" role="form" onsubmit="return checkAdd()" id="register-form" method="post">
                         <div class="modal-header" style="overflow:auto;">
                             <p>添加人员信息</p>
@@ -201,7 +201,7 @@
 
     <!-- 删除弹窗 -->
     <div class="modal fade" id="del" aria-hidden="true">
-        <div class="modal-dialog" style="overflow:hidden;">
+        <div class="modal-dialog">
             <form action="/table/edit" method="post">
                 <div class="modal-content">
                     <input type="hidden" id="delNoticeId"/>
