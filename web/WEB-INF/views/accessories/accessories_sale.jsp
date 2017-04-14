@@ -46,6 +46,8 @@
             <thead>
             <tr>
                 <th data-checkbox="true" data-field="accSaleId"></th>
+                <th data-field="companyId">所属公司</th>
+                <th data-field="accId">配件编号</th>
                 <th data-field="accSaledTime">配件销售时间</th>
                 <th data-field="accSaleCount">配件销售数量</th>
                 <th data-field="accSalePrice">配件销售单价</th>
@@ -70,11 +72,203 @@
         </div>
     </div>
 </div>
-<script>
-    $(function () {
-        $('#table').bootstrapTable('hideColumn', 'accSaleId');
-    })
-</script>
+<!-- 增加弹窗 -->
+<div class="modal fade" id="addWindow" aria-hidden="true" style="overflow:auto; ">
+    <div class="modal-dialog" style="width: 700px;height: auto;">
+        <div class="modal-content" style="overflow:hidden;">
+            <form class="form-horizontal" onsubmit="return checkAdd()" id="addForm" method="post">
+                <div class="modal-header" style="overflow:auto;">
+                    <h4>请填写配件销售信息</h4>
+                </div>
+                <br/>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">所属公司：</label>
+                    <div class="col-sm-7">
+                        <input type="text" placeholder="请输入所属公司" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">配件编号：</label>
+                    <div class="col-sm-7">
+                        <input type="text" placeholder="请输入配件编号" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">配件销售时间：</label>
+                    <div class="col-sm-7">
+                        <input type="text" value="2012-05-15 21:05" id="addDateTimePicker" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">配件销售数量：</label>
+                    <div class="col-sm-7">
+                        <input type="text" placeholder="请输入配件销售数量" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">配件销售单价：</label>
+                    <div class="col-sm-7">
+                        <input type="text" placeholder="请输入配件销售单价" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">配件销售总价：</label>
+                    <div class="col-sm-7">
+                        <input type="text" placeholder="请输入配件销售总价" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">配件销售折扣：</label>
+                    <div class="col-sm-7">
+                        <input type="text" placeholder="请输入配件销售折扣" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">配件销售最终价：</label>
+                    <div class="col-sm-7">
+                        <input type="text" placeholder="请输入配件销售最终价" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">销售记录创建时间：</label>
+                    <div class="col-sm-7">
+                        <input type="text" value="2012-05-15 21:05" id="addDateTimePicker" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">销售记录状态：</label>
+                    <div class="col-sm-7">
+                        <input type="text" placeholder="销售记录状态" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-8">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button class="btn btn-sm btn-success" type="submit">保 存</button>
+                    </div>
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+<!-- 修改弹窗 -->
+<div class="modal fade" id="editWindow" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form class="form-horizontal" onsubmit="return checkAdd()" id="editForm" method="post">
+                <div class="modal-header" style="overflow:auto;">
+                    <h4>请填写配件销售信息</h4>
+                </div>
+                <br/>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">所属公司：</label>
+                    <div class="col-sm-7">
+                        <input type="text" placeholder="请输入所属公司" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">配件编号：</label>
+                    <div class="col-sm-7">
+                        <input type="text" placeholder="请输入配件编号" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">配件销售时间：</label>
+                    <div class="col-sm-7">
+                        <input type="text" value="2012-05-15 21:05" id="addDateTimePicker" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">配件销售数量：</label>
+                    <div class="col-sm-7">
+                        <input type="text" placeholder="请输入配件销售数量" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">配件销售单价：</label>
+                    <div class="col-sm-7">
+                        <input type="text" placeholder="请输入配件销售单价" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">配件销售总价：</label>
+                    <div class="col-sm-7">
+                        <input type="text" placeholder="请输入配件销售总价" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">配件销售折扣：</label>
+                    <div class="col-sm-7">
+                        <input type="text" placeholder="请输入配件销售折扣" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">配件销售最终价：</label>
+                    <div class="col-sm-7">
+                        <input type="text" placeholder="请输入配件销售最终价" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">销售记录创建时间：</label>
+                    <div class="col-sm-7">
+                        <input type="text" value="2012-05-15 21:05" id="addDateTimePicker" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">销售记录状态：</label>
+                    <div class="col-sm-7">
+                        <input type="text" placeholder="销售记录状态" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-8">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button class="btn btn-sm btn-success" type="submit">保 存</button>
+                    </div>
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- 删除弹窗 -->
+<div class="modal fade" id="del" aria-hidden="true">
+    <div class="modal-dialog" style="overflow:hidden;">
+        <form action="/table/edit" method="post">
+            <div class="modal-content">
+                <input type="hidden" id="delNoticeId"/>
+                <div class="modal-footer" style="text-align: center;">
+                    <h2>确认删除吗?</h2>
+                    <button type="button" class="btn btn-default"
+                            data-dismiss="modal">关闭
+                    </button>
+                    <button type="sumbit" class="btn btn-primary" onclick="del()">
+                        确认
+                    </button>
+                </div>
+            </div><!-- /.modal-content -->
+        </form>
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- 提示弹窗 -->
+<div class="modal fade" id="tanchuang" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                提示
+            </div>
+            <div class="modal-body">
+                请先选择某一行
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default"
+                        data-dismiss="modal">关闭
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 <script src="/static/js/jquery.min.js"></script>
 <script src="/static/js/bootstrap.min.js"></script>
 <script src="/static/js/bootstrap-table/bootstrap-table.js"></script>
@@ -84,5 +278,6 @@
 <script src="/static/js/sweetalert/sweetalert.min.js"></script>
 <script src="/static/js/contextmenu.js"></script>
 <script src="/static/js/bootstrap-select/bootstrap-select.js"></script>
+<script src="/static/js/backstage/accessories/accessories_sale.js"></script>
 </body>
 </html>

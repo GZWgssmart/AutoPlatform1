@@ -1,14 +1,17 @@
 <%--
   Created by IntelliJ IDEA.
-  User: XiaoQiao
+  User: Administrator
   Date: 2017/4/11
-  Time: 15:07
+  Time: 15:59
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    String path = request.getContextPath();
+%>
 <html>
 <head>
-    <title>配件分类管理</title>
+    <title>维修保养明细管理</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/css/bootstrap.min.css">
@@ -16,17 +19,20 @@
     <link rel="stylesheet" href="/static/css/select2.min.css">
     <link rel="stylesheet" href="/static/css/sweetalert.css">
     <link rel="stylesheet" href="/static/css/table/table.css">
+    <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/datetimepicker.less">
 </head>
 <body>
 <%@include file="../backstage/contextmenu.jsp" %>
-<div class="container ">
+
+<div class="container">
     <div class="panel-body" style="padding-bottom:0px;">
         <!--show-refresh, show-toggle的样式可以在bootstrap-table.js的948行修改-->
         <!-- table里的所有属性在bootstrap-table.js的240行-->
         <table id="table"
                data-toggle="table"
                data-toolbar="#toolbar"
-               data-url="#"
+               data-url=""
                data-method="post"
                data-query-params="queryParams"
                data-pagination="true"
@@ -34,22 +40,20 @@
                data-show-refresh="true"
                data-show-toggle="true"
                data-show-columns="true"
-               data-show-export="true"
                data-page-size="10"
-               data-height="520"
+               data-height="543"
                data-id-field="id"
                data-page-list="[5, 10, 20]"
                data-cach="false"
                data-click-to-select="true"
-               data-minimum-count-columns="2"
                data-single-select="true">
             <thead>
             <tr>
-                <th data-checkbox="true" data-field="accTypeId"></th>
-                <th data-field="companyId">所属公司</th>
-                <th data-field="accTypeName">配件分类名称</th>
-                <th data-field="accTypeDes">配件分类描述</th>
-                <th data-field="accTypeStatus">配件分类状态</th>
+                <th data-radio="true" data-field="maintainDetailId">保养明细编号</th>
+                <th data-field="maintainRecordId">保养记录编号</th>
+                <th data-field="maintainItemId">保养项目编号</th>
+                <th data-field="maintainDiscount">保养项目折扣</th>
+                <th data-field="mdCreatedTime">保养明细创建时间</th>
             </tr>
             </thead>
         </table>
@@ -66,37 +70,38 @@
         </div>
     </div>
 </div>
-<!-- 增加弹窗 -->
+
+<!-- 添加弹窗 -->
 <div class="modal fade" id="addWindow" aria-hidden="true" style="overflow:auto; ">
     <div class="modal-dialog" style="width: 700px;height: auto;">
         <div class="modal-content" style="overflow:hidden;">
             <form class="form-horizontal" onsubmit="return checkAdd()" id="addForm" method="post">
                 <div class="modal-header" style="overflow:auto;">
-                    <h4>请填写配件类别信息</h4>
+                    <h4>请填写维修保养明细信息</h4>
                 </div>
                 <br/>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">所属公司：</label>
+                    <label class="col-sm-3 control-label">保养记录编号：</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="请输入所属公司" class="form-control">
+                        <input type="text" placeholder="请选择维修保养记录编号" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">配件分类名称：</label>
+                    <label class="col-sm-3 control-label">保养项目编号：</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="请输入配件分类名称" class="form-control">
+                        <input type="text" placeholder="请选择保养项目编号" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">配件分类描述：</label>
+                    <label class="col-sm-3 control-label">保养项目折扣：</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="请输入配件分类描述" class="form-control">
+                        <input type="text" placeholder="请选择保养项目折扣" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">配件分类状态：</label>
+                    <label class="col-sm-3 control-label">保养明细创建时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="配件分类状态" class="form-control">
+                        <input type="text" value="2012-05-15 21:05" id="maddDateTime" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
@@ -108,39 +113,41 @@
             </form>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
-</div>
+</div><!-- /.modal -->
+
+
 <!-- 修改弹窗 -->
 <div class="modal fade" id="editWindow" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <form class="form-horizontal" onsubmit="return checkAdd()" id="editForm" method="post">
                 <div class="modal-header" style="overflow:auto;">
-                    <h4>请填写配件类别信息</h4>
+                    <h4>请修改维修保养明细信息</h4>
                 </div>
                 <br/>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">所属公司：</label>
+                    <label class="col-sm-3 control-label">保养记录编号：</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="请输入所属公司" class="form-control">
+                        <input type="text" define="MaintainDetail.maintainRecordId" placeholder="请选择维修保养记录编号" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">配件分类名称：</label>
+                    <label class="col-sm-3 control-label">保养项目编号：</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="请输入配件分类名称" class="form-control">
+                        <input type="text" define="MaintainDetail.maintainItemId" placeholder="请选择维修保养项目编号" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">配件分类描述：</label>
+                    <label class="col-sm-3 control-label">保养项目折扣：</label>
                     <div class="col-sm-7">
-                        <textarea type="text" placeholder="请输入相关内容" style="height: 100px;"
-                                  class="form-control"></textarea>
+                        <input type="text" define="MaintainDetail.maintainDiscount" placeholder="请选择维修保养项目编号" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">配件分类状态：</label>
+                    <label class="col-sm-3 control-label">保养明细创建时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="配件分类状态" class="form-control">
+                        <input type="text" define="MaintainDetail.mdCreatedTime" value="2012-05-15 21:05"
+                               id="meditDateTime4" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
@@ -200,7 +207,8 @@
 <script src="/static/js/select2/select2.js"></script>
 <script src="/static/js/sweetalert/sweetalert.min.js"></script>
 <script src="/static/js/contextmenu.js"></script>
-<script src="/static/js/bootstrap-select/bootstrap-select.js"></script>
-<script src="/static/js/backstage/accessories/accessories_type.js"></script>
+<script src="/static/js/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.js"></script>
+<script src="/static/js/bootstrap-dateTimePicker/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+<script src="/static/js/backstage/custManage/maintaindetails.js"></script>
 </body>
 </html>

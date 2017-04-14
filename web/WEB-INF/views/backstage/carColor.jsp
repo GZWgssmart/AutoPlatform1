@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="/static/css/bootstrap-table.css">
     <link rel="stylesheet" href="/static/css/select2.min.css">
     <link rel="stylesheet" href="/static/css/sweetalert.css">
+    <link rel="stylesheet" href="/static/css/table/table.css">
     <link rel="stylesheet" href="/static/css/minicolors/jquery.minicolors.css">
 </head>
 <body>
@@ -74,7 +75,7 @@
 <div class="modal fade" id="addWindow" aria-hidden="true" style="overflow:auto; ">
     <div class="modal-dialog" style="width: 700px;height: auto;">
         <div class="modal-content" style="overflow:hidden;">
-            <form class="form-horizontal" onsubmit="return checkAdd()" id="addForm" method="post">
+            <form class="form-horizontal" role="form" onsubmit="return checkAdd()" id="showAddFormWar" method="post">
                 <div class="modal-header" style="overflow:auto;">
                     <h4>请填写汽车颜色的相关信息</h4>
                 </div>
@@ -82,13 +83,13 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">颜色命名：</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="请输入颜色命名" class="form-control">
+                        <input type="text" name="colorName" placeholder="请输入颜色命名" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">颜色的16进制值：</label>
                     <div class="col-sm-5" style="padding-right: 0px">
-                        <input name="addColor" type="text" class="form-control addColor" data-control="hue" value="">
+                        <input name="colorHex" type="text" class="form-control addColor" data-control="hue" value="">
                     </div>
                     <div class="col-sm-2" style="padding-left: 0px;">
                         <input type="button" class="btn btn-default" value="确认" onclick="showAddHex();">
@@ -103,7 +104,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">颜色的描述：</label>
                     <div class="col-sm-7">
-                        <textarea type="text" placeholder="请输入该颜色的相关描述" style="height: 100px;"
+                        <textarea type="text" name="colorDes" placeholder="请输入该颜色的相关描述" style="height: 100px;"
                                   class="form-control"></textarea>
                     </div>
                 </div>
@@ -122,7 +123,7 @@
 <div class="modal fade" id="editWindow" aria-hidden="true" style="overflow:auto; ">
     <div class="modal-dialog" style="width: 700px;height: auto;">
         <div class="modal-content" style="overflow:hidden;">
-            <form class="form-horizontal" onsubmit="return checkAdd()" id="editForm" method="post">
+            <form class="form-horizontal" role="form" onsubmit="return checkAdd()" id="showEditFormWar" method="post">
                 <div class="modal-header" style="overflow:auto;">
                     <h4>请填写汽车颜色的相关信息</h4>
                 </div>
@@ -130,14 +131,14 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">颜色命名：</label>
                     <div class="col-sm-7">
-                        <input type="text" define="carColor.colorName" placeholder="请输入颜色命名" class="form-control">
+                        <input type="text" name="colorName" define="carColor.colorName" placeholder="请输入颜色命名" class="form-control">
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="col-sm-3 control-label">颜色的16进制值：</label>
                     <div class="col-sm-5" style="padding-right: 0px">
-                        <input name="editColor" define="carColor.colorHex" type="text" class="form-control editColor" data-control="hue" value="">
+                        <input name="colorHex" define="carColor.colorHex" type="text" class="form-control editColor" data-control="hue" value="">
                     </div>
                     <div class="col-sm-2" style="padding-left: 0px;">
                         <input type="button" class="btn btn-default" value="确认" onclick="showEditHex();">
@@ -152,7 +153,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">颜色的描述：</label>
                     <div class="col-sm-7">
-                        <textarea type="text" define="carColor.colorDes" placeholder="请输入该颜色的相关描述" style="height: 100px;"
+                        <textarea type="text" name="colorDes" define="carColor.colorDes" placeholder="请输入该颜色的相关描述" style="height: 100px;"
                                   class="form-control"></textarea>
                     </div>
                 </div>
@@ -214,6 +215,7 @@
 <script src="/static/js/sweetalert/sweetalert.min.js"></script>
 <script src="/static/js/contextmenu.js"></script>
 <script src="/static/js/minicolors/jquery.minicolors.min.js"></script>
+<script src="/static/js/form/jquery.validate.js"></script>
 <script src="/static/js/backstage/basicInfoManage/carColor.js"></script>
 </body>
 </html>

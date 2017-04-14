@@ -1,13 +1,15 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <html>
 <head>
     <title>主页</title>
 </head>
-<link rel="stylesheet" href="/static/css/bootstrap.min.css">
+<link rel="stylesheet" href="/static/css/bootstrap.css">
 <link rel="stylesheet" href="/static/css/animate.css">
-
 <style>
     html,body{
+        margin: 0;
+        padding: 0;
         font-family: 'microsoft Yahei','Open Sans', sans-serif;
         width: 100%;
         height: auto;
@@ -74,16 +76,18 @@
         padding-bottom: 27%;
         font-size: 20px;
     }
-    .curtain{
-        height: 650px;
+    .Maincontent2{
+        height: 700px;
         width: 100%;
         background: url(/static/img/Frontpage/bg2.png);
     }
-    .curtain2{
+    .Maincontent{
         height: 700px;
         width:100%;
+        padding-top:5%;
         background: url(/static/img/Frontpage/bg1.png);
     }
+    
     .title{
         text-align: center;
         margin-top: 0;
@@ -111,9 +115,12 @@
         background: url("/static/img/Frontpage/quan.png") no-repeat;
     }
     .text-icon{
-        font-size: 25px;
+
         padding-left: 15px;
         font-weight: 600;
+    }
+    span{
+        font-size:19px; ;
     }
     #myCarousel.left{
         width: 10%;
@@ -124,12 +131,15 @@
         height: 95%;
     }
     .rows{
-        padding: 60px 15px;
+        padding-top: 80px;
+        padding-left:15px;
+        padding-right: 15px;
+        padding-bottom: 35px;
         width: 100%;
         height: 80%;
     }
     .text p{
-        height: 100%;
+        height: auto;
         margin: 0px 15px;
         padding: 0px 0px;
         color: white;
@@ -137,11 +147,69 @@
         line-height: 40px;
     }
     .right-img{
-        height: 100%;
+        height: 49%;
+        width: 80%;
+    }
+    .button-box{
+        margin: 5%;
+        height: auto;
+        text-align: center;
+    }
+    .button-box .btn{
+        background-color:#eb9316;
+        box-shadow: 4px 4px 10px black;
+        color: white;
+        font-size: 20px;
+    }
+    .button-box2{
+        height: auto;
+        text-align: center;
+    }
+    .button-box2 .btn{
+        background-color:#eb9316;
+        box-shadow: 4px 4px 10px black;
+        color: white;
+        font-size: 20px;
+    }
+    .Maincontent3{
+        width: 100%;
+        height: 700px;
+        background: url(/static/img/Frontpage/bg3.png);
+    }
+    .title3{
+        margin:10% 0;
+        color: white;
+        text-align: center;
+    }
+    .title3 h2{
+        font-size: 4em;
+    }
+
+    .mc3-txt{
+        color: white;
+        text-align: center;
+        margin-left: -120px;
+    }
+    .mc3-txt p{
+        font-size: 19px;
+    }
+    .jiantou{
+        position: absolute;
+        margin-top:0px ;
+        margin-left: 50px;
+    }
+    .jiantou2{
+        position: absolute;
+        margin-left: 50px ;
+        margin-top: 100px;
+    }
+    .container{
+        padding-right: 0px;
     }
 
 </style>
 <body>
+
     <div class="content">
         <nav class="nav navbar-default navbar-fixed-top" role="navigation">
             <div class="container-fluid">
@@ -199,69 +267,126 @@
                data-slide="next"><span class="glyphicon glyphicon-chevron-right" style="left:0;width:200px;height: 200px;"></span></a>
         </div>
 
-        <div class="curtain2">
-            <h2 class="title">这是他妈的标题标题标题</h2>
+        <div class="Maincontent">
+            <h2 class="title">汽车维修保养采购平台</h2>
             <div class="row features-info banner-info text-left wow fadeInLeft animated"  data-wow-delay="0.5s" style="visibility: visible; animation-delay: 0.5s; animation-name: fadeInLeft;">
-                <div class="col-sm-6 col-md-4">
+                <div class="col-sm-4 col-md-4">
                     <div class="secicon1">
                         <i class="icon icon-quan"></i>
                         <span class="text-icon">全系车型，海量品类</span>
                     </div>
                 </div>
-                <div class="col-sm-6 col-md-4">
+                <div class="col-sm-4 col-md-4">
                     <div class="secicon1">
-                        <i class="icon icon-quan"></i>
-                        <span class="text-icon">全系车型，海量品类</span>
+                        <i class="icon" style="background: url(/static/img/Frontpage/bi.png)"></i>
+                        <span class="text-icon">多家比价，透明降本</span>
                     </div>
                 </div>
-                <div class="col-sm-6 col-md-4">
+                <div class="col-sm-4 col-md-4">
                     <div class="secicon1">
-                        <i class="icon icon-quan"></i>
-                        <span class="text-icon">全系车型，海量品类</span>
+                        <i class="icon" style="background: url(/static/img/Frontpage/fu.png)"></i>
+                        <span class="text-icon">账期服务，采购代付</span>
                     </div>
                 </div>
             </div>
-            <div class="row features-info banner-img wow fadeInRight animated" data-wow-delay="0.5s" style="visibility: visible; animation-delay: 0.5s; animation-name: fadeInLeft;">
-                <div class="col-sm-6 col-md-4">
+            <div class="row features-info banner-img wow fadeInRight animated" data-wow-delay="0.5s" style="visibility: visible; animation-delay: 0.5s; animation-name: fadeInRight;">
+                <div class="col-sm-4 col-md-4">
                     <div class="secicon1">
-                        <i class="icon icon-quan"></i>
-                        <span class="text-icon">全系车型，海量品类</span>
+                        <i class="icon" style="background:url(/static/img/Frontpage/zhun.png);"></i>
+                        <span class="text-icon">数据支持，精准下单</span>
                     </div>
                 </div>
-                <div class="col-sm-6 col-md-4">
+                <div class="col-sm-4 col-md-4">
                     <div class="secicon1">
-                        <i class="icon icon-quan"></i>
-                        <span class="text-icon">全系车型，海量品类</span>
+                        <i class="icon" style="background: url(/static/img/Frontpage/bao.png);"></i>
+                        <span class="text-icon">三包三赔，权益保障</span>
                     </div>
                 </div>
-                <div class="col-sm-6 col-md-4">
+                <div class="col-sm-4 col-md-4">
                     <div class="secicon1">
-                        <i class="icon icon-quan"></i>
-                        <span class="text-icon">全系车型，海量品类</span>
+                        <i class="icon" style="background: url(/static/img/Frontpage/xiao.png)"></i>
+                        <span class="text-icon">高效物流，轨迹跟踪</span>
                     </div>
                 </div>
+            </div>
+            <div class="button-box">
+                <button class="btn wow fadeInRight animated" data-wow-delay="1.5s" style="width: 200px;height: 50px;visibility: visible; animation-delay: 1.5s;animation-name: fadeInRight;">了解更多</button>
             </div>
         </div>
-        <div class="curtain">
+        <div class="Maincontent2">
             <div class="rows">
                 <div class="col-md-7 banner-info text-left wow fadeInLeft animated" data-wow-delay="0.4s" style="visibility: visible; animation-delay: 0.4s; animation-name: fadeInLeft;">
                     <div class="text">
                         <p>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"汽车维修管理系统"是一款面向汽修汽配行业的管理软件，本系统专注于车辆的信息化管理，
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"汽车维修管理系统"是一款面向汽修汽配行业的管理软件，本系统专注于车辆的信息化管理，
                             为加强企业对车辆维修的综合管理而提供全方位的解决方案，并且具有二次开发的独特特性，
                             独特的二次开发功能可以为新老用户在以后的使用过程中出现的新模块，新功能随时进行添加，
                             为用户的使用提供全面服务。</br>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"汽车维修管理系统"以对车辆的维修和管理为主线，
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"汽车维修管理系统"以对车辆的维修和管理为主线，
                             通过对信息的收集、存储、传递、统计、分析、综合查询、报表输出和信息共享，
-                            及时为企业领导及各部门管理人员的决策提供全面、准确的信息数据。
+                            及时为企业领导及各部门管理人员的决策提供全面、准确的信息数据。<br/>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;此汽车维修保养管理系统旨在提升汽修店的信息化水平及工作
+                            效率，提供便捷有效的方式管理从维修保养预约到维修完成产生收费单据并提车的整个过程。并附带汽修店基本信息的管理，汽车配件的库存管理等功能。
                         </p>
                     </div>
+                    <div class="clearfix"></div>
                 </div>
-                <div class="right-img col-md-5 banner-img wow fadeInRight animated" data-wow-delay="0.4s" style="visibility: visible; animation-delay: 0.4s; animation-name: fadeInRight;">
-                    <img src="/static/img/Frontpage/slider.png" style="width: 100%;height: 100%"/>
+                <div class="col-md-5 col-sm-7 banner-img wow fadeInRight animated" data-wow-delay="0.4s" style="visibility: visible; animation-delay: 0.4s; animation-name: fadeInRight;">
+                    <div class="right-img">
+                        <a href="#"><img src="/static/img/Frontpage/slider.png" style="width: 100%;height: 100%"/></a>
+                    </div>
+                </div>
+            </div>
+            <div class="button-box2">
+                <button class="btn wow fadeInRight animated " data-wow-delay="1s" style="width: 200px;height: 50px;visibility: visible; animation-delay: 1s; animation-name: fadeInRight;">了解更多</button>
+            </div>
+        </div>
+        <div class="Maincontent3">
+            <div class="container">
+                <div class="title3">
+                    <h2>您的汽修管家系统</h2>
+                </div>
+                <div class="row team-con">
+                    <div class="col-md-12">
+                        <div class="col-sm-3 col-md-3 one wow fadeInRight animated" style="visibility: visible; animation-delay: 0.4s; animation-name: fadeInRight;">
+                            <div class=" mc3-txt">
+                                <h3>微信连接</h3>
+                                <p>连接客户信任</p>
+                            </div>
+                            <img src="/static/img/Frontpage/9.png"/>
+                            <img class="jiantou" src="/static/img/Frontpage/12.png"/>
+                        </div>
+                        <div class="col-sm-3 col-md-3 wow fadeInRight animated" style="visibility: visible; animation-delay: 0.6s; animation-name: fadeInRight;">
+                            <img src="/static/img/Frontpage/10.png"/>
+                            <img class="jiantou2" src="/static/img/Frontpage/14.png"/>
+                            <div class=" mc3-txt">
+                                <h3>连接智能管理工具</h3>
+                                <p>连接业务提效</p>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 col-md-3 wow fadeInRight animated"  style="visibility: visible; animation-delay: 0.8s; animation-name: fadeInRight;">
+                            <div class=" mc3-txt">
+                                <h3>连接供应链</h3>
+                                <p>连接采购降本</p>
+                            </div>
+                            <img src="/static/img/Frontpage/11.png"/>
+                            <img class="jiantou" src="/static/img/Frontpage/12.png"/>
+                        </div>
+                        <div class="col-sm-3 col-md-3 wow fadeInRight animated"  style="visibility: visible; animation-delay: 1s; animation-name: fadeInRight;">
+                            <img src="/static/img/Frontpage/4.png"/>
+                            <div class=" mc3-txt">
+                                <h3>连接采购降本</h3>
+                                <p>连接管理动态可视</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="button-box2" style="margin-top: 8%;">
+                    <button class="btn wow fadeInRight animated " data-wow-delay="1s" style="width: 200px;height: 50px;visibility: visible; animation-delay: 1s; animation-name: fadeInRight;">马上进入</button>
                 </div>
             </div>
         </div>
+
 </div>
 <script src="/static/js/jquery.min.js"></script>
 <script src="/static/js/bootstrap.min.js"></script>

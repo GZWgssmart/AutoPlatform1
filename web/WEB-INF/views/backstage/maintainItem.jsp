@@ -74,7 +74,7 @@
 <div class="modal fade" id="addWindow" aria-hidden="true" style="overflow:auto; ">
     <div class="modal-dialog" style="width: 700px;height: auto;">
         <div class="modal-content" style="overflow:hidden;">
-            <form class="form-horizontal" onsubmit="return checkAdd()" id="addForm" method="post">
+            <form class="form-horizontal" role="form" onsubmit="return checkAdd()" id="showAddFormWar" method="post">
                 <div class="modal-header" style="overflow:auto;">
                     <h4>请填写该保养项目的信息</h4>
                 </div>
@@ -82,25 +82,25 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">保养项目名称：</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="请输入保养项目的名称" class="form-control">
+                        <input type="text" name="maintainName" placeholder="请输入保养项目的名称" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">所需时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" value="2012-05-15 21:05" id="addDateTimePicker" class="form-control">
+                        <input type="text" name="maintainHour" value="2012-05-15 21:05" id="addDateTimePicker" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">所需费用：</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="请预估所需的费用" class="form-control"></input>
+                        <input type="text" name="maintainMoney" placeholder="请预估所需的费用" class="form-control"></input>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">相关描述：</label>
                     <div class="col-sm-7">
-                        <textarea type="text" placeholder="请输入该项目相关的描述" style="height: 100px;" class="form-control"></textarea>
+                        <textarea type="text" name="maintainDes" placeholder="请输入该项目相关的描述" style="height: 100px;" class="form-control"></textarea>
                     </div>
                 </div>
                 <div class="form-group">
@@ -119,7 +119,7 @@
 <div class="modal fade" id="editWindow" aria-hidden="true">
     <div class="modal-dialog" style="width: 700px;height: auto;">
         <div class="modal-content" style="overflow:hidden;">
-            <form class="form-horizontal" onsubmit="return checkAdd()" id="editForm" method="post">
+            <form class="form-horizontal" role="form" onsubmit="return checkAdd()" id="showEditFormWar" method="post">
                 <div class="modal-header" style="overflow:auto;">
                     <h4>请修改该保养项目的信息</h4>
                 </div>
@@ -127,25 +127,25 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">保养项目名称：</label>
                     <div class="col-sm-7">
-                        <input type="text" define="" placeholder="请输入保养项目的名称" class="form-control">
+                        <input type="text" name="maintainName" define="" placeholder="请输入保养项目的名称" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">所需时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" value="2012-05-15 21:05" id="editDateTimePicker" class="form-control">
+                        <input type="text" name="maintainHour" value="2012-05-15 21:05" id="editDateTimePicker" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">所需费用：</label>
                     <div class="col-sm-7">
-                        <input type="text" define="" placeholder="请预估所需的费用" class="form-control"></input>
+                        <input type="text" name="maintainMoney" define="" placeholder="请预估所需的费用" class="form-control"></input>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">相关描述：</label>
                     <div class="col-sm-7">
-                        <textarea type="text" define="" placeholder="请输入该项目相关的描述" style="height: 100px;" class="form-control"></textarea>
+                        <textarea type="text" name="maintainDes" define="" placeholder="请输入该项目相关的描述" style="height: 100px;" class="form-control"></textarea>
                     </div>
                 </div>
                 <div class="form-group">
@@ -207,6 +207,7 @@
 <script src="/static/js/contextmenu.js"></script>
 <script src="/static/js/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.js"></script>
 <script src="/static/js/bootstrap-dateTimePicker/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+<script src="/static/js/form/jquery.validate.js"></script>
 <script src="/static/js/backstage/basicInfoManage/maintainItem.js"></script>
 </body>
 </html>

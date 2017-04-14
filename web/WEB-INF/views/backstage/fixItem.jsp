@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="/static/css/bootstrap-table.css">
     <link rel="stylesheet" href="/static/css/select2.min.css">
     <link rel="stylesheet" href="/static/css/sweetalert.css">
+    <link rel="stylesheet" href="/static/css/table/table.css">
     <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.css">
     <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/datetimepicker.less">
 </head>
@@ -74,7 +75,7 @@
 <div class="modal fade" id="addWindow" aria-hidden="true" style="overflow:auto; ">
     <div class="modal-dialog" style="width: 700px;height: auto;">
         <div class="modal-content" style="overflow:hidden;">
-            <form class="form-horizontal" onsubmit="return checkAdd()" id="addForm" method="post">
+            <form class="form-horizontal" role="form" onsubmit="return checkAdd()" id="showAddFormWar" method="post">
                 <div class="modal-header" style="overflow:auto;">
                     <h4>请填写该维修项目的相关信息</h4>
                 </div>
@@ -82,19 +83,19 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">维修项目名称：</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="请输入维修项目名称" class="form-control">
+                        <input type="text" name="fixName" placeholder="请输入维修项目名称" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">预计维修时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" value="2012-05-15 21:05" id="addDateTimePicker" class="form-control">
+                        <input type="text" name="fixHour" value="2012-05-15 21:05" id="addDateTimePicker" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">预计维修费用：</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="请预估所需的维修费用" class="form-control"></input>
+                        <input type="text" name="fixMoney" placeholder="请预估所需的维修费用" class="form-control"></input>
                     </div>
                 </div>
                 <div class="form-group">
@@ -120,7 +121,7 @@
 <div class="modal fade" id="editWindow" aria-hidden="true">
     <div class="modal-dialog" style="width: 700px;height: auto;">
         <div class="modal-content" style="overflow: hidden;">
-            <form class="form-horizontal" onsubmit="return checkAdd()" id="editForm" method="post">
+            <form class="form-horizontal" role="form" onsubmit="return checkAdd()" id="showEditFormWar" method="post">
                 <div class="modal-header" style="overflow:auto;">
                     <h4>请填写该维修项目的相关信息</h4>
                 </div>
@@ -128,19 +129,19 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">维修项目名称：</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="请输入维修项目名称" class="form-control">
+                        <input type="text" name="fixName" placeholder="请输入维修项目名称" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">预计维修时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" value="2012-05-15 21:05" id="editDateTimePicker" class="form-control">
+                        <input type="text" name="fixHour" value="2012-05-15 21:05" id="editDateTimePicker" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">预计维修费用：</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="请预估所需的维修费用" class="form-control"></input>
+                        <input type="text" name="fixMoney" placeholder="请预估所需的维修费用" class="form-control"></input>
                     </div>
                 </div>
                 <div class="form-group">
@@ -209,6 +210,7 @@
 <script src="/static/js/contextmenu.js"></script>
 <script src="/static/js/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.js"></script>
 <script src="/static/js/bootstrap-dateTimePicker/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+<script src="/static/js/form/jquery.validate.js"></script>
 <script src="/static/js/backstage/basicInfoManage/fixItem.js"></script>
 </body>
 </html>

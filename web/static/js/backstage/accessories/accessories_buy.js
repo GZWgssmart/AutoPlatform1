@@ -1,5 +1,5 @@
 $(function () {
-    $('#table').bootstrapTable('hideColumn', 'id');
+    $('#table').bootstrapTable('hideColumn', 'accBuyId');
     $("#addSelect").select2({
             language: 'zh-CN'
         }
@@ -146,14 +146,6 @@ $('#addDateTimePicker').datetimepicker({
     format: 'yyyy-mm-dd hh:ii'
 });
 $('#editDateTimePicker').datetimepicker({
-    language: 'zh-CN',
-    format: 'yyyy-mm-dd hh:ii'
-});
-$('#addDateTimePicker1').datetimepicker({
-    language: 'zh-CN',
-    format: 'yyyy-mm-dd hh:ii'
-});
-$('#editDateTimePicker1').datetimepicker({
     language: 'zh-CN',
     format: 'yyyy-mm-dd hh:ii'
 });

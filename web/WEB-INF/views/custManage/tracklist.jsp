@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="/static/css/bootstrap-table.css">
     <link rel="stylesheet" href="/static/css/select2.min.css">
     <link rel="stylesheet" href="/static/css/sweetalert.css">
+    <link rel="stylesheet" href="/static/css/table/table.css">
     <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.css">
     <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/datetimepicker.less">
 </head>
@@ -48,11 +49,13 @@
                data-single-select="true">
             <thead>
             <tr>
-                <th data-radio="true" data-field="status"></th>
-                <th data-field="modelName">回访人</th>
+                <th data-radio="true" data-field="trackId">跟踪回访编号</th>
+                <th data-field="userId">回访人</th>
                 <th data-field="modelDes">回访时间</th>
-                <th data-field="brandId">回访问题</th>
-                <th data-field="modelStaus">服务评价</th>
+                <th data-field="trackContent">回访问题</th>
+                <th data-field="modelStaus">本次服务评价</th>
+                <th data-field="trackUser">跟踪回访用户</th>
+                <th data-field="trackGreateTime">跟踪回访创建时间</th>
             </tr>
             </thead>
         </table>
@@ -82,13 +85,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">回访人：</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="请输入回访人" class="form-control">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">回访时间：</label>
-                    <div class="col-sm-7">
-                        <input type="text" value="2012-05-15 21:05" id="addDateTimePicker" class="form-control">
+                        <input type="text" placeholder="请选择回访人" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
@@ -99,10 +96,22 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">服务评价：</label>
+                    <label class="col-sm-3 control-label">本次服务评价：</label>
                     <div class="col-sm-7">
-                        <textarea type="text" placeholder="请输入服务评价" style="height: 100px;"
+                        <textarea type="text" placeholder="请输入服务评价（1-10分）" style="height: 100px;"
                                   class="form-control"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">跟踪回访用户：</label>
+                    <div class="col-sm-7">
+                        <input type="text" placeholder="请选择跟踪回访用户" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">跟踪回访创建时间：</label>
+                    <div class="col-sm-7">
+                        <input type="text" value="2012-05-15 21:05" id="addDateTimePicker" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
@@ -123,34 +132,40 @@
         <div class="modal-content">
             <form class="form-horizontal" onsubmit="return checkAdd()" id="editForm" method="post">
                 <div class="modal-header" style="overflow:auto;">
-                    <h4>请填写跟踪回访管理信息</h4>
+                    <h4>请修改跟踪回访管理信息</h4>
                 </div>
                 <br/>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">回访人：</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="请输入回访人" class="form-control">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">回访时间：</label>
-                    <div class="col-sm-7">
-                        <input type="text" define="companyInfo.companyOpenTime" value="2012-05-15 21:05"
-                               id="editDateTimePicker" class="form-control">
+                        <input type="text" define="TrackList.userId" placeholder="请选择回访人" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">回访问题：</label>
                     <div class="col-sm-7">
-                        <textarea type="text" placeholder="请输入相关内容" style="height: 100px;"
+                        <textarea type="text" define="TrackList.trackContent" placeholder="请输入相关内容" style="height: 100px;"
                                   class="form-control"></textarea>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">服务评价：</label>
+                    <label class="col-sm-3 control-label">本次服务评价：</label>
                     <div class="col-sm-7">
-                        <textarea type="text" placeholder="请输入服务评价" style="height: 100px;"
+                        <textarea type="text" define="TrackList.serviceEvaluate" placeholder="请输入服务评价（1-10分）" style="height: 100px;"
                                   class="form-control"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">跟踪回访用户：</label>
+                    <div class="col-sm-7">
+                        <input type="text" define="TrackList.trackUser" placeholder="请选择跟踪回访用户" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">跟踪回访创建时间：</label>
+                    <div class="col-sm-7">
+                        <input type="text" define="TrackList.trackGreatedTime" value="2012-05-15 21:05"
+                               id="editDateTimePicker" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
@@ -210,6 +225,8 @@
 <script src="/static/js/select2/select2.js"></script>
 <script src="/static/js/sweetalert/sweetalert.min.js"></script>
 <script src="/static/js/contextmenu.js"></script>
-<script src="/static/js/backstage/custManage/fllowup.js"></script>
+<script src="/static/js/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.js"></script>
+<script src="/static/js/bootstrap-dateTimePicker/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+<script src="/static/js/backstage/custManage/tracklist.js"></script>
 </body>
 </html>

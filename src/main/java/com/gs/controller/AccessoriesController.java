@@ -16,22 +16,26 @@ public class AccessoriesController {
     private Logger logger = (Logger) LoggerFactory.getLogger(AccessoriesController.class);
 
     @RequestMapping("type")
-    public ModelAndView accessories_type() {
-        return new ModelAndView("accessories/accessories_type");
+    public String accessories_type() {
+        logger.info("跳转到配件分类管理页面");
+        return "accessories/accessories_type";
     }
 
     @RequestMapping("accessories")
-    public ModelAndView accessories() {
-        return new ModelAndView("accessories/accessories");
+    public String accessories() {
+        logger.info("跳转到库存管理页面");
+        return "accessories/accessories";
     }
 
     @RequestMapping("buy")
-    public ModelAndView accessories_buy() {
-        return new ModelAndView("accessories/accessories_buy");
+    public String accessories_buy() {
+        logger.info("跳转到配件采购管理页面");
+        return "accessories/accessories_buy";
     }
 
     @RequestMapping("sale")
-    public ModelAndView accessories_sale() {
-        return new ModelAndView("accessories/accessories_sale");
+    public String accessories_sale() {
+        logger.info("跳转到配件销售管理页面");
+        return "accessories/accessories_sale";
     }
 }
