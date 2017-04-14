@@ -120,7 +120,7 @@
                                 <input type="password" id="confirm_password" name="confirm_password" placeholder="请确定密码" class="form-control">
                             </div>
                         </div>
-                        <div class="modal-footer" style="overflow:hidden;">
+                        <div class="modal-footer">
                             <span id="addError"></span>
                             <button type="button" class="btn btn-default"
                                     data-dismiss="modal">关闭
@@ -187,7 +187,7 @@
                             <input type="password" class="form-control">
                         </div>
                     </div>
-                    <div class="modal-footer" style="overflow:hidden;">
+                    <div class="modal-footer">
                         <span id="editError"></span>
                         <button type="button" class="btn btn-default"
                                 data-dismiss="modal">关闭

@@ -63,9 +63,9 @@
 
     <!-- 添加弹窗 -->
 
-        <div class="modal fade" id="add" aria-hidden="true" style="overflow:hidden;">
-            <div class="modal-dialog" style="overflow:hidden;">
-                <div class="modal-content" style="overflow:hidden;">
+        <div class="modal fade" id="add" aria-hidden="true" >
+            <div class="modal-dialog" >
+                <div class="modal-content" >
                     <h3>标题标题标题</h3>
                     <form action="/table/edit" onsubmit="return checkAdd()" id="addForm" method="post">
                         <div class="modal-header" style=" overflow:hidden;">
@@ -89,7 +89,7 @@
                             <br />
                         </div>
 
-                        <div class="modal-footer" style="overflow:hidden;">
+                        <div class="modal-footer" >
                             <span id="addError" style="color: red;"></span>
                             <button type="button" class="btn btn-default"
                                     data-dismiss="modal">关闭
@@ -132,7 +132,7 @@
 
     <!-- 删除弹窗 -->
     <div class="modal fade" id="del" aria-hidden="true">
-        <div class="modal-dialog" style="overflow:hidden;">
+        <div class="modal-dialog" >
             <form action="/table/edit" method="post">
                 <div class="modal-content">
                     <input type="hidden" id="delNoticeId"/>

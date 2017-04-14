@@ -30,13 +30,10 @@ function showEdit(){
         var emp = row[0];
         $("#editForm").fill(emp);
     }else{
-        Modal.confirm(
-            {
-                msg: "是否删除角色？"
-            })
-            .on( function (e) {
-                alert("返回结果：" + e);
-            });
+        swal({
+            title:"",
+            text:"请先选择一行数据",
+            type:"warning"})// 提示窗口, 修改成功
     }
 }
 
