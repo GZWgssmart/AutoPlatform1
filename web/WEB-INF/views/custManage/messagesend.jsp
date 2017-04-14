@@ -11,13 +11,14 @@
 %>
 <html>
 <head>
-    <title>维修保养提醒 </title>
+    <title>短信发送提醒</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/css/bootstrap.min.css">
     <link rel="stylesheet" href="/static/css/bootstrap-table.css">
     <link rel="stylesheet" href="/static/css/select2.min.css">
     <link rel="stylesheet" href="/static/css/sweetalert.css">
+    <link rel="stylesheet" href="/static/css/table/table.css">
     <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.css">
     <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/datetimepicker.less">
 </head>
@@ -48,9 +49,11 @@
                data-single-select="true">
             <thead>
             <tr>
-                <th data-radio="true" data-field="status"></th>
-                <th data-field="modelName">用户名称</th>
-                <th data-field="modelDes">提醒时间</th>
+                <th data-radio="true" data-field="messageId">短信发送记录编号</th>
+                <th  data-field="userId">用户名称</th>
+                <th data-field="sendTime">发送时间</th>
+                <th data-field="sendGreatedTime">发送记录创建时间</th>
+                <th data-field="sendMsg">发送内容</th>
             </tr>
             </thead>
         </table>
@@ -74,19 +77,32 @@
         <div class="modal-content" style="overflow:hidden;">
             <form class="form-horizontal" onsubmit="return checkAdd()" id="addForm" method="post">
                 <div class="modal-header" style="overflow:auto;">
-                    <h4>请填写维修保养提醒信息</h4>
+                    <h4>请填写短信发送提醒信息</h4>
                 </div>
                 <br/>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">用户名称：</label>
                     <div class="col-sm-7">
-                        <input type="text" define="carModel.modelName" placeholder="请输入用户名称" class="form-control">
+                        <input type="text" placeholder="请输入用户名称" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">提醒时间：</label>
+                    <label class="col-sm-3 control-label">发送时间：</label>
                     <div class="col-sm-7">
                         <input type="text" value="2012-05-15 21:05" id="addDateTimePicker" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">发送记录创建时间：</label>
+                    <div class="col-sm-7">
+                        <input type="text" value="2012-05-15 21:05" id="addDateTimePicker1" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">发送内容：</label>
+                    <div class="col-sm-7">
+                        <textarea type="text" placeholder="请输入相关内容" style="height: 100px;"
+                                  class="form-control"></textarea>
                     </div>
                 </div>
                 <div class="form-group">
@@ -107,20 +123,34 @@
         <div class="modal-content">
             <form class="form-horizontal" onsubmit="return checkAdd()" id="editForm" method="post">
                 <div class="modal-header" style="overflow:auto;">
-                    <h4>请填写维修保养提醒信息</h4>
+                    <h4>请修改短信发送提醒信息</h4>
                 </div>
                 <br/>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">用户名称：</label>
                     <div class="col-sm-7">
-                        <input type="text" define="carModel.modelName" placeholder="请输入用户名称" class="form-control">
+                        <input type="text" define="MessageSend.userId" placeholder="请输入用户名称" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">提醒时间：</label>
+                    <label class="col-sm-3 control-label">发送时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" define="companyInfo.companyOpenTime" value="2012-05-15 21:05"
+                        <input type="text" define="MessageSend.sendTime" value="2012-05-15 21:05"
                                id="editDateTimePicker" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">发送记录创建时间：</label>
+                    <div class="col-sm-7">
+                        <input type="text" define="MessageSend.sendGreateTime" value="2012-05-15 21:05"
+                               id="editDateTimePicker1" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">发送内容：</label>
+                    <div class="col-sm-7">
+                        <textarea type="text"  define="MessageSend.sendMsg" placeholder="请输入相关投诉内容" style="height: 100px;"
+                                  class="form-control"></textarea>
                     </div>
                 </div>
                 <div class="form-group">
@@ -180,6 +210,8 @@
 <script src="/static/js/select2/select2.js"></script>
 <script src="/static/js/sweetalert/sweetalert.min.js"></script>
 <script src="/static/js/contextmenu.js"></script>
-<script src="/static/js/backstage/custManage/mainreminder.js"></script>
+<script src="/static/js/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.js"></script>
+<script src="/static/js/bootstrap-dateTimePicker/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+<script src="/static/js/backstage/custManage/messagesend.js"></script>
 </body>
 </html>

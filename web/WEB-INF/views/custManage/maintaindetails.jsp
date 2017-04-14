@@ -11,7 +11,7 @@
 %>
 <html>
 <head>
-    <title>投诉管理</title>
+    <title>维修保养明细管理</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/css/bootstrap.min.css">
@@ -49,13 +49,11 @@
                data-single-select="true">
             <thead>
             <tr>
-                <th data-radio="true" data-field="complaintId">投诉编号</th>
-                <th  data-field="userId">投诉人姓名</th>
-                <th data-field="complaintGreatedTime">投诉时间</th>
-                <th data-field="complaintContent">投诉内容</th>
-                <th data-field="complaintReplyTime">投诉回复时间</th>
-                <th data-field="complaintReply">投诉回复内容</th>
-                <th  data-field="complaintReplyUser">投诉回复人</th>
+                <th data-radio="true" data-field="maintainDetailId">保养明细编号</th>
+                <th data-field="maintainRecordId">保养记录编号</th>
+                <th data-field="maintainItemId">保养项目编号</th>
+                <th data-field="maintainDiscount">保养项目折扣</th>
+                <th data-field="mdCreatedTime">保养明细创建时间</th>
             </tr>
             </thead>
         </table>
@@ -79,48 +77,33 @@
         <div class="modal-content" style="overflow:hidden;">
             <form class="form-horizontal" onsubmit="return checkAdd()" id="addForm" method="post">
                 <div class="modal-header" style="overflow:auto;">
-                    <h4>请填写投诉管理信息</h4>
+                    <h4>请填写维修保养明细信息</h4>
                 </div>
                 <br/>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">投诉人姓名：</label>
+                    <label class="col-sm-3 control-label">保养记录编号：</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="请输入投诉人姓名" class="form-control">
+                        <input type="text" placeholder="请选择维修保养记录编号" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">投诉时间：</label>
+                    <label class="col-sm-3 control-label">保养项目编号：</label>
                     <div class="col-sm-7">
-                        <input type="text" value="2012-05-15 21:05" id="addDateTimePicker" class="form-control">
+                        <input type="text" placeholder="请选择保养项目编号" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">投诉内容：</label>
+                    <label class="col-sm-3 control-label">保养项目折扣：</label>
                     <div class="col-sm-7">
-                        <textarea type="text" placeholder="请输入相关内容" style="height: 100px;"
-                                  class="form-control"></textarea>
+                        <input type="text" placeholder="请选择保养项目折扣" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">投诉回复人：</label>
+                    <label class="col-sm-3 control-label">保养明细创建时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="请选择投诉回复人" class="form-control">
+                        <input type="text" value="2012-05-15 21:05" id="maddDateTime" class="form-control">
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">投诉回复时间：</label>
-                    <div class="col-sm-7">
-                        <input type="text" value="2012-05-15 21:05" id="addDateTimePicker1" class="form-control">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">投诉回复内容：</label>
-                    <div class="col-sm-7">
-                        <textarea type="text" placeholder="请输入相关内容" style="height: 100px;"
-                                  class="form-control"></textarea>
-                    </div>
-                </div>
-
                 <div class="form-group">
                     <div class="col-sm-offset-8">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
@@ -139,47 +122,32 @@
         <div class="modal-content">
             <form class="form-horizontal" onsubmit="return checkAdd()" id="editForm" method="post">
                 <div class="modal-header" style="overflow:auto;">
-                    <h4>请修改投诉管理信息</h4>
+                    <h4>请修改维修保养明细信息</h4>
                 </div>
                 <br/>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">投诉人姓名：</label>
+                    <label class="col-sm-3 control-label">保养记录编号：</label>
                     <div class="col-sm-7">
-                        <input type="text" define="Complaint.userId" placeholder="请输入投诉人姓名" class="form-control">
+                        <input type="text" define="MaintainDetail.maintainRecordId" placeholder="请选择维修保养记录编号" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">投诉时间：</label>
+                    <label class="col-sm-3 control-label">保养项目编号：</label>
                     <div class="col-sm-7">
-                        <input type="text" define="Complaint.complaintGreatedTime" value="2012-05-15 21:05"
-                               id="editDateTimePicker" class="form-control">
+                        <input type="text" define="MaintainDetail.maintainItemId" placeholder="请选择维修保养项目编号" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">投诉内容：</label>
+                    <label class="col-sm-3 control-label">保养项目折扣：</label>
                     <div class="col-sm-7">
-                        <textarea type="text" define="Complaint.complaintContent" placeholder="请输入相关内容" style="height: 100px;"
-                                  class="form-control"></textarea>
+                        <input type="text" define="MaintainDetail.maintainDiscount" placeholder="请选择维修保养项目编号" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">投诉回复人：</label>
+                    <label class="col-sm-3 control-label">保养明细创建时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" define="Complaint.complaintReplyUser" placeholder="请选择投诉回复人" class="form-control">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">投诉回复时间：</label>
-                    <div class="col-sm-7">
-                        <input type="text" define="Complaint.complaintReplyTime" value="2012-05-15 21:05"
-                               id="editDateTimePicker1" class="form-control">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">投诉回复内容：</label>
-                    <div class="col-sm-7">
-                        <textarea type="text" define="Complaint.complaintReply" placeholder="请输入相关内容" style="height: 100px;"
-                                  class="form-control"></textarea>
+                        <input type="text" define="MaintainDetail.mdCreatedTime" value="2012-05-15 21:05"
+                               id="meditDateTime4" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
@@ -241,6 +209,6 @@
 <script src="/static/js/contextmenu.js"></script>
 <script src="/static/js/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.js"></script>
 <script src="/static/js/bootstrap-dateTimePicker/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
-<script src="/static/js/backstage/custManage/complaint.js"></script>
+<script src="/static/js/backstage/custManage/maintaindetails.js"></script>
 </body>
 </html>

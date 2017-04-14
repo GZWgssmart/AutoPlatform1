@@ -149,7 +149,22 @@ $('#editDateTimePicker').datetimepicker({
     language: 'zh-CN',
     format: 'yyyy-mm-dd hh:ii'
 });
-
+$('#addDateTimePicker1').datetimepicker({
+    language: 'zh-CN',
+    format: 'yyyy-mm-dd hh:ii'
+});
+$('#editDateTimePicker1').datetimepicker({
+    language: 'zh-CN',
+    format: 'yyyy-mm-dd hh:ii'
+});
+$('#addDateTimePicker2').datetimepicker({
+    language: 'zh-CN',
+    format: 'yyyy-mm-dd hh:ii'
+});
+$('#editDateTimePicker2').datetimepicker({
+    language: 'zh-CN',
+    format: 'yyyy-mm-dd hh:ii'
+});
 
 // //日期时间控件初始化
 // $(document).ready(function () {

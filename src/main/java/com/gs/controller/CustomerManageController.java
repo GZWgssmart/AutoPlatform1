@@ -18,28 +18,37 @@ public class CustomerManageController {
     /**
      * 维修保养记录管理
      */
-    @RequestMapping(value = "maintenanceIndex", method = RequestMethod.GET)
-    public String maintenanceIndex() {
+    @RequestMapping(value = "maintainrecordIndex", method = RequestMethod.GET)
+    public String maintainrecordIndex() {
         logger.info("跳转到维修保养记录管理");
-        return "custManage/maintenance";
+        return "custManage/maintainrecord";
+    }
+
+    /**
+     * 维修保养明细管理
+     */
+    @RequestMapping(value = "maintaindetailsIndex", method = RequestMethod.GET)
+    public String maintaindetailsIndex() {
+        logger.info("跳转到维修保养明细管理");
+        return "custManage/maintaindetails";
     }
 
     /**
      * 维修保养提醒
      */
-    @RequestMapping(value = "mainreminderIndex", method = RequestMethod.GET)
-    public String mainreminderIndex() {
+    @RequestMapping(value = "maintainremindIndex", method = RequestMethod.GET)
+    public String maintainremindIndex() {
         logger.info("跳转到维修保养提醒");
-        return "custManage/mainreminder";
+        return "custManage/maintainremind";
     }
 
     /**
      * 短信群发提醒
      */
-    @RequestMapping(value = "smsalertsIndex", method = RequestMethod.GET)
-    public String smsalertsIndex() {
+    @RequestMapping(value = "messagesendIndex", method = RequestMethod.GET)
+    public String messagesendIndex() {
         logger.info("跳转到短信群发提醒");
-        return "custManage/smsalerts";
+        return "custManage/messagesend";
     }
 
 
@@ -55,10 +64,19 @@ public class CustomerManageController {
     /**
      * 跟踪回访管理
      */
-    @RequestMapping(value = "fllowUpIndex", method = RequestMethod.GET)
-    public String fllowUpIndex() {
+    @RequestMapping(value = "tracklistIndex", method = RequestMethod.GET)
+    public String tracklistIndex() {
         logger.info("跳转到跟踪回访管理");
-        return "custManage/fllowUp";
+        return "custManage/tracklist";
+    }
+
+    /**
+     * 微信公众号查看
+     */
+    @RequestMapping(value = "wechatpublicIndex", method = RequestMethod.GET)
+    public String wechatpublicIndex() {
+        logger.info("跳转到微信公众号查看");
+        return "custManage/wechatpublic";
     }
 
 }

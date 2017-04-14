@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="/static/css/bootstrap-table.css">
     <link rel="stylesheet" href="/static/css/select2.min.css">
     <link rel="stylesheet" href="/static/css/sweetalert.css">
+    <link rel="stylesheet" href="/static/css/table/table.css">
     <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.css">
     <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/datetimepicker.less">
 </head>
@@ -48,11 +49,15 @@
                data-single-select="true">
             <thead>
             <tr>
-                <th data-radio="true" data-field="status"></th>
-                <th  data-field="name">保养项目</th>
-                <th data-field="price">保养时间</th>
-                <th  data-field="name">预约时间</th>
-                <th data-field="price">收费单据</th>
+                <th data-radio="true" data-field="recordId">保养记录编号</th>
+                <th data-field="checkinId">保养登记编号</th>
+                <th data-field="startTime">保养开始时间</th>
+                <th data-field="endTime">保养预估结束时间</th>
+                <th data-field="actualEndTime">保养实际结束时间</th>
+                <th data-field="recordCreatedTime">保养记录创建时间</th>
+                <th  data-field="pickupTime">保养车主提车时间</th>
+                <th data-field="recordDes">保养记录描述</th>
+                <th data-field="recordStatus">保养记录状态</th>
             </tr>
             </thead>
         </table>
@@ -80,27 +85,46 @@
                 </div>
                 <br/>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">保养项目：</label>
+                    <label class="col-sm-3 control-label">保养登记编号：</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="请输入保养项目" class="form-control">
+                        <input type="text" placeholder="请选择维修保养登记编号" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">预约时间：</label>
+                    <label class="col-sm-3 control-label">保养开始时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" value="2012-05-15 21:05" id="addDateTimePicker" class="form-control">
+                        <input type="text" value="2012-05-15 21:05" id="maddDateTime" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">保养时间：</label>
+                    <label class="col-sm-3 control-label">保养预估结束时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" value="2012-05-15 21:05" id="addDateTimePicker" class="form-control">
+                        <input type="text" value="2012-05-15 21:05" id="maddDateTime1" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">收费单据：</label>
+                    <label class="col-sm-3 control-label">保养实际结束时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="请输入收费单据" class="form-control">
+                        <input type="text" value="2012-05-15 21:05" id="maddDateTime2" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">保养记录创建时间：</label>
+                    <div class="col-sm-7">
+                        <input type="text" value="2012-05-15 21:05" id="maddDateTime3" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">保养车主提车时间：</label>
+                    <div class="col-sm-7">
+                        <input type="text" value="2012-05-15 21:05" id="maddDateTime4" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">保养记录描述：</label>
+                    <div class="col-sm-7">
+                        <textarea type="text" placeholder="请输入相关内容" style="height: 120px;"
+                                  class="form-control"></textarea>
                     </div>
                 </div>
                 <div class="form-group">
@@ -121,33 +145,55 @@
         <div class="modal-content">
             <form class="form-horizontal" onsubmit="return checkAdd()" id="editForm" method="post">
                 <div class="modal-header" style="overflow:auto;">
-                    <h4>请填写维修保养记录信息</h4>
+                    <h4>请修改维修保养记录信息</h4>
                 </div>
                 <br/>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">保养项目：</label>
+                    <label class="col-sm-3 control-label">保养登记编号：</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="请输入保养项目" class="form-control">
+                        <input type="text" define="MaintainRecord.checkinId" placeholder="请选择维修保养登记编号" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">预约时间：</label>
+                    <label class="col-sm-3 control-label">保养开始时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" define="companyInfo.companyOpenTime" value="2012-05-15 21:05"
-                               id="editDateTimePicker" class="form-control">
+                        <input type="text" define="MaintainRecord.startTime" value="2012-05-15 21:05"
+                               id="meditDateTime" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">保养时间：</label>
+                    <label class="col-sm-3 control-label">保养预估结束时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" define="companyInfo.companyOpenTime" value="2012-05-15 21:05"
-                               id="editDateTimePicker" class="form-control">
+                        <input type="text" define="MaintainRecord.endTime" value="2012-05-15 21:05"
+                               id="meditDateTime1" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">收费单据：</label>
+                    <label class="col-sm-3 control-label">保养实际结束时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="请输入收费单据" class="form-control">
+                        <input type="text" define="MaintainRecord.actualEndTime" value="2012-05-15 21:05"
+                               id="meditDateTime2" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">保养记录创建时间：</label>
+                    <div class="col-sm-7">
+                        <input type="text" define="MaintainRecord.recordCreatedTime" value="2012-05-15 21:05"
+                               id="meditDateTime3" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">保养车主提车时间：</label>
+                    <div class="col-sm-7">
+                        <input type="text" define="MaintainRecord.pickupTime" value="2012-05-15 21:05"
+                               id="meditDateTime4" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">保养记录描述：</label>
+                    <div class="col-sm-7">
+                        <textarea type="text" define="MaintainRecord.recordDes" placeholder="请输入相关内容" style="height: 120px;"
+                                  class="form-control"></textarea>
                     </div>
                 </div>
                 <div class="form-group">
@@ -207,6 +253,8 @@
 <script src="/static/js/select2/select2.js"></script>
 <script src="/static/js/sweetalert/sweetalert.min.js"></script>
 <script src="/static/js/contextmenu.js"></script>
-<script src="/static/js/backstage/custManage/maintenance.js"></script>
+<script src="/static/js/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.js"></script>
+<script src="/static/js/bootstrap-dateTimePicker/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+<script src="/static/js/backstage/custManage/maintainrecord.js"></script>
 </body>
 </html>

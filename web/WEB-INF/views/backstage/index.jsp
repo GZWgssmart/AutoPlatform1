@@ -213,15 +213,19 @@
                     <li>
                         <a href="#"><i class="fa fa-user-plus"></i> <span class="nav-label">客户管理</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
-                            <li><a class="J_menuItem" href="/custManage/maintenanceIndex">维修保养记录管理</a>
+                            <li><a class="J_menuItem" href="/custManage/maintainrecordIndex">维修保养记录管理</a>
                             </li>
-                            <li><a class="J_menuItem" href="/custManage/mainreminderIndex">维修保养提醒</a>
+                            <li><a class="J_menuItem" href="/custManage/maintaindetailsIndex">维修保养明细管理</a>
                             </li>
-                            <li><a class="J_menuItem" href="/custManage/smsalertsIndex">短信群发提醒</a>
+                            <li><a class="J_menuItem" href="/custManage/maintainremindIndex">维修保养提醒</a>
+                            </li>
+                            <li><a class="J_menuItem" href="/custManage/messagesendIndex">短信群发提醒</a>
                             </li>
                             <li><a class="J_menuItem" href="/custManage/complaintIndex">投诉管理</a>
                             </li>
-                            <li><a class="J_menuItem" href="/custManage/fllowUpIndex">跟踪回访管理</a>
+                            <li><a class="J_menuItem" href="/custManage/tracklistIndex">跟踪回访管理</a>
+                            </li>
+                            <li><a class="J_menuItem" href="/custManage/wechatpublicIndex">微信公众号查看</a>
                             </li>
                         </ul>
                     </li>
