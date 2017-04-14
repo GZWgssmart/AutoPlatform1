@@ -86,16 +86,16 @@ public class BackstageController {
     @RequestMapping(value = "upkeepItem", method = RequestMethod.GET)
     public String upkeepItemIndex() {
         logger.info("跳转到保养项目管理页面");
-        return "backstage/upkeepItem";
+        return "backstage/maintainItem";
     }
 
     /**
      * 维修项目管理
      */
-    @RequestMapping(value = "maintainItem", method = RequestMethod.GET)
+    @RequestMapping(value = "fixItem", method = RequestMethod.GET)
     public String maintainItemIndex() {
         logger.info("跳转到维修项目管理页面");
-        return "backstage/maintainItem";
+        return "backstage/fixItem";
     }
 
     /**

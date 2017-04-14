@@ -90,7 +90,7 @@
                     <label class="col-sm-3 control-label">汽车品牌Logo：</label>
                     <div class="col-lg-7">
                         <div class="ibox-title">
-                            <div class="input-group">
+                            <div class="input-group" style="padding-left: 15px;">
                                 <input id="add_carBrandLogo" define="carBrand.brandLogo" name="txt_file"
                                        type="file" class="form-control" multiple
                                        class="file-loading"
@@ -136,7 +136,7 @@
                     <label class="col-sm-3 control-label">汽车品牌Logo：</label>
                     <div class="col-lg-7">
                         <div class="ibox-title">
-                            <div class="input-group">
+                            <div class="input-group" style="padding-left: 15px;">
                                 <input id="edit_carBrandLogo" define="carBrand.brandLogo" name="txt_file"
                                        type="file" class="form-control" multiple
                                        class="file-loading"

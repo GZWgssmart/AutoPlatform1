@@ -29,7 +29,7 @@
         <table id="table"
                data-toggle="table"
                data-toolbar="#toolbar"
-               data-url=""
+               data-url="/table/query"
                data-method="post"
                data-query-params="queryParams"
                data-pagination="true"
@@ -110,8 +110,8 @@
 
 <!-- 修改弹窗 -->
 <div class="modal fade" id="editWindow" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
+    <div class="modal-dialog" style="width: 700px;height: auto;">
+        <div class="modal-content" style="overflow:hidden;">
             <form class="form-horizontal" onsubmit="return checkAdd()" id="editForm" method="post">
                 <div class="modal-header" style="overflow:auto;">
                     <h4>请修改汽车车型的相关信息</h4>

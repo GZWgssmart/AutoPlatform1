@@ -184,7 +184,7 @@
                     <label class="col-sm-3 control-label">公司logo：</label>
                     <div class="col-lg-7">
                         <div class="ibox-title">
-                            <div class="input-group">
+                            <div class="input-group" style="padding-left: 15px;">
                                 <input id="edit_companyLogo" define="companyInfo.companyLogo" name="txt_file"
                                        type="file" class="form-control" multiple
                                        class="file-loading"

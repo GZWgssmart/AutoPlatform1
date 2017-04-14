@@ -11,14 +11,13 @@
 %>
 <html>
 <head>
-    <title>常见故障管理</title>
+    <title>维修项目管理</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/css/bootstrap.min.css">
     <link rel="stylesheet" href="/static/css/bootstrap-table.css">
     <link rel="stylesheet" href="/static/css/select2.min.css">
     <link rel="stylesheet" href="/static/css/sweetalert.css">
-    <link rel="stylesheet" href="/static/css/fileinput.css">
     <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.css">
     <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/datetimepicker.less">
 </head>
@@ -50,11 +49,10 @@
             <thead>
             <tr>
                 <th data-radio="true" data-field="status"></th>
-                <th data-field="faultsName">故障名称</th>
-                <th data-field="recordTime">记录时间</th>
-                <th data-field="level">等级</th>
-                <th data-field="faultsDes">故障描述</th>
-                <th data-field="faultsImages">故障截图</th>
+                <th data-field="fixName">维修项目名称</th>
+                <th data-field="fixHour">维修时间</th>
+                <th data-field="fixMoney">维修费用</th>
+                <th data-field="fixDes">描述</th>
             </tr>
             </thead>
         </table>
@@ -73,52 +71,37 @@
 </div>
 
 <!-- 添加弹窗 -->
-<div class="modal fade" id="addWindow" aria-hidden="true" style="overflow:auto;">
-    <div class="modal-dialog" style="overflow:hidden;">
+<div class="modal fade" id="addWindow" aria-hidden="true" style="overflow:auto; ">
+    <div class="modal-dialog" style="width: 700px;height: auto;">
         <div class="modal-content" style="overflow:hidden;">
             <form class="form-horizontal" onsubmit="return checkAdd()" id="addForm" method="post">
                 <div class="modal-header" style="overflow:auto;">
-                    <h4>请填写相关的故障信息</h4>
+                    <h4>请填写该维修项目的相关信息</h4>
                 </div>
                 <br/>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">故障名称：</label>
+                    <label class="col-sm-3 control-label">维修项目名称：</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="请输入故障的名称" class="form-control">
+                        <input type="text" placeholder="请输入维修项目名称" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">记录时间：</label>
+                    <label class="col-sm-3 control-label">预计维修时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" define="companyInfo.companyOpenTime" placeholder="请选择发现故障的时间"
-                               value="2012-05-15 21:05"
-                               id="addDateTimePicker" class="form-control">
+                        <input type="text" value="2012-05-15 21:05" id="addDateTimePicker" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">故障等级：</label>
+                    <label class="col-sm-3 control-label">预计维修费用：</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="请预估故障的等级" class="form-control"></input>
+                        <input type="text" placeholder="请预估所需的维修费用" class="form-control"></input>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">故障描述：</label>
+                    <label class="col-sm-3 control-label">项目描述：</label>
                     <div class="col-sm-7">
-                        <textarea type="text" placeholder="请输入该故障相关的描述" style="height: 100px;"
+                        <textarea type="text" placeholder="请输入该项目的相关描述" style="height: 100px;"
                                   class="form-control"></textarea>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">故障截图：</label>
-                    <div class="col-lg-7">
-                        <div class="ibox-title">
-                            <div class="input-group" style="padding-left: 15px;">
-                                <input id="add_commonFaultsImages" define="commonFaults.faultsImages" name="txt_file"
-                                       type="file" class="form-control" multiple
-                                       class="file-loading"
-                                       placeholder="请选择或输入一个你想上传的相册类型,默认当天日期为类型!"/>
-                            </div>
-                        </div>
                     </div>
                 </div>
                 <div class="form-group">
@@ -134,52 +117,37 @@
 
 
 <!-- 修改弹窗 -->
-<div class="modal fade" id="editWindow" aria-hidden="true" style="overflow:auto;">
-    <div class="modal-dialog">
-        <div class="modal-content">
+<div class="modal fade" id="editWindow" aria-hidden="true">
+    <div class="modal-dialog" style="width: 700px;height: auto;">
+        <div class="modal-content" style="overflow: hidden;">
             <form class="form-horizontal" onsubmit="return checkAdd()" id="editForm" method="post">
                 <div class="modal-header" style="overflow:auto;">
-                    <h4>请填写相关的故障信息</h4>
+                    <h4>请填写该维修项目的相关信息</h4>
                 </div>
                 <br/>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">故障名称：</label>
+                    <label class="col-sm-3 control-label">维修项目名称：</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="请输入故障的名称" class="form-control">
+                        <input type="text" placeholder="请输入维修项目名称" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">记录时间：</label>
+                    <label class="col-sm-3 control-label">预计维修时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" define="companyInfo.companyOpenTime" placeholder="请选择发现故障的时间"
-                               value="2012-05-15 21:05"
-                               id="editDateTimePicker" class="form-control">
+                        <input type="text" value="2012-05-15 21:05" id="editDateTimePicker" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">故障等级：</label>
+                    <label class="col-sm-3 control-label">预计维修费用：</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="请预估故障的等级" class="form-control"></input>
+                        <input type="text" placeholder="请预估所需的维修费用" class="form-control"></input>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">故障描述：</label>
+                    <label class="col-sm-3 control-label">项目描述：</label>
                     <div class="col-sm-7">
-                        <textarea type="text" placeholder="请输入该故障相关的描述" style="height: 100px;"
+                        <textarea type="text" placeholder="请输入该项目的相关描述" style="height: 100px;"
                                   class="form-control"></textarea>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">故障截图：</label>
-                    <div class="col-lg-7">
-                        <div class="ibox-title">
-                            <div class="input-group" style="padding-left: 15px;">
-                                <input id="edit_commonFaultsImages" define="commonFaults.faultsImages" name="txt_file"
-                                       type="file" class="form-control" multiple
-                                       class="file-loading"
-                                       placeholder="请选择或输入一个你想上传的相册类型,默认当天日期为类型!"/>
-                            </div>
-                        </div>
                     </div>
                 </div>
                 <div class="form-group">
@@ -239,10 +207,8 @@
 <script src="/static/js/select2/select2.js"></script>
 <script src="/static/js/sweetalert/sweetalert.min.js"></script>
 <script src="/static/js/contextmenu.js"></script>
-<script src="/static/js/fileInput/fileinput.js"></script>
-<script src="/static/js/fileInput/zh.js"></script>
 <script src="/static/js/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.js"></script>
 <script src="/static/js/bootstrap-dateTimePicker/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
-<script src="/static/js/backstage/basicInfoManage/commonFaults.js"></script>
+<script src="/static/js/backstage/basicInfoManage/fixItem.js"></script>
 </body>
 </html>
