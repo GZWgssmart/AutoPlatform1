@@ -4,10 +4,12 @@
 <head>
     <title>主页</title>
 </head>
-<link rel="stylesheet" href="/static/css/bootstrap.min.css">
+<link rel="stylesheet" href="/static/css/bootstrap.css">
 <link rel="stylesheet" href="/static/css/animate.css">
 <style>
     html,body{
+        margin: 0;
+        padding: 0;
         font-family: 'microsoft Yahei','Open Sans', sans-serif;
         width: 100%;
         height: auto;
@@ -145,7 +147,8 @@
         line-height: 40px;
     }
     .right-img{
-        height: 100%;
+        height: 49%;
+        width: 80%;
     }
     .button-box{
         margin: 5%;
@@ -168,16 +171,40 @@
         color: white;
         font-size: 20px;
     }
-
-    @media screen and (max-width: 456px){
-        .right-img img{
-            display: none;
-        }
-    }
     .Maincontent3{
         width: 100%;
         height: 700px;
         background: url(/static/img/Frontpage/bg3.png);
+    }
+    .title3{
+        margin:10% 0;
+        color: white;
+        text-align: center;
+    }
+    .title3 h2{
+        font-size: 4em;
+    }
+
+    .mc3-txt{
+        color: white;
+        text-align: center;
+        margin-left: -120px;
+    }
+    .mc3-txt p{
+        font-size: 19px;
+    }
+    .jiantou{
+        position: absolute;
+        margin-top:0px ;
+        margin-left: 50px;
+    }
+    .jiantou2{
+        position: absolute;
+        margin-left: 50px ;
+        margin-top: 100px;
+    }
+    .container{
+        padding-right: 0px;
     }
 
 </style>
@@ -304,8 +331,10 @@
                     </div>
                     <div class="clearfix"></div>
                 </div>
-                <div class="right-img col-md-5 banner-img wow fadeInRight animated" data-wow-delay="0.4s" style="visibility: visible; animation-delay: 0.4s; animation-name: fadeInRight;">
-                    <a href="#"><img src="/static/img/Frontpage/slider.png" id="js" style="width: 100%;height: 100%"/></a>
+                <div class="col-md-5 col-sm-7 banner-img wow fadeInRight animated" data-wow-delay="0.4s" style="visibility: visible; animation-delay: 0.4s; animation-name: fadeInRight;">
+                    <div class="right-img">
+                        <a href="#"><img src="/static/img/Frontpage/slider.png" style="width: 100%;height: 100%"/></a>
+                    </div>
                 </div>
             </div>
             <div class="button-box2">
@@ -314,7 +343,47 @@
         </div>
         <div class="Maincontent3">
             <div class="container">
-                
+                <div class="title3">
+                    <h2>您的汽修管家系统</h2>
+                </div>
+                <div class="row team-con">
+                    <div class="col-md-12">
+                        <div class="col-sm-3 col-md-3 one wow fadeInRight animated" style="visibility: visible; animation-delay: 0.4s; animation-name: fadeInRight;">
+                            <div class=" mc3-txt">
+                                <h3>微信连接</h3>
+                                <p>连接客户信任</p>
+                            </div>
+                            <img src="/static/img/Frontpage/9.png"/>
+                            <img class="jiantou" src="/static/img/Frontpage/12.png"/>
+                        </div>
+                        <div class="col-sm-3 col-md-3 wow fadeInRight animated" style="visibility: visible; animation-delay: 0.6s; animation-name: fadeInRight;">
+                            <img src="/static/img/Frontpage/10.png"/>
+                            <img class="jiantou2" src="/static/img/Frontpage/14.png"/>
+                            <div class=" mc3-txt">
+                                <h3>连接智能管理工具</h3>
+                                <p>连接业务提效</p>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 col-md-3 wow fadeInRight animated"  style="visibility: visible; animation-delay: 0.8s; animation-name: fadeInRight;">
+                            <div class=" mc3-txt">
+                                <h3>连接供应链</h3>
+                                <p>连接采购降本</p>
+                            </div>
+                            <img src="/static/img/Frontpage/11.png"/>
+                            <img class="jiantou" src="/static/img/Frontpage/12.png"/>
+                        </div>
+                        <div class="col-sm-3 col-md-3 wow fadeInRight animated"  style="visibility: visible; animation-delay: 1s; animation-name: fadeInRight;">
+                            <img src="/static/img/Frontpage/4.png"/>
+                            <div class=" mc3-txt">
+                                <h3>连接采购降本</h3>
+                                <p>连接管理动态可视</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="button-box2" style="margin-top: 8%;">
+                    <button class="btn wow fadeInRight animated " data-wow-delay="1s" style="width: 200px;height: 50px;visibility: visible; animation-delay: 1s; animation-name: fadeInRight;">马上进入</button>
+                </div>
             </div>
         </div>
 
