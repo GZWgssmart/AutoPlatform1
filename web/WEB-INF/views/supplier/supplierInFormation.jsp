@@ -72,38 +72,69 @@
 
 <!-- 添加弹窗 -->
 
-<div class="modal fade" id="add" aria-hidden="true" style="overflow:hidden;">
-    <div class="modal-dialog" style="overflow:hidden;">
-        <div class="modal-content" style="overflow:hidden;">
-            <form action="/table/edit" onsubmit="return checkAdd()" id="addForm" method="post">
-                <div class="modal-header" style=" overflow:hidden;">
-                    <div class="input-group">
-                        <select  id="addSelect" style="width: 70%"  class="js-example-basic-multiple" multiple="multiple"></select>
+<div class="modal fade" role="form" id="add" aria-hidden="true" >
+    <div class="modal-dialog" >
+        <div class="modal-content" >
+            <form class="form-horizontal" onsubmit="return checkAdd()" id="register-form" method="get">
+                <div class="modal-header" style="overflow:auto;">
+                    <p>添加供货商信息</p>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">供货商类型：</label>
+                    <div class="col-sm-7">
+                        <select  placeholder="请输入供货商类型" class="form-control">
+                            <option>a</option>
+                            <option>a</option>
+                        </select>
                     </div>
-
-                    <div class="input-group">
-                        <span class="input-group-addon" id="sizing-addon1">手机号码</span>
-                        <input type="text" class="form-control" placeholder="手机号码" aria-describedby="sizing-addon2">
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label" for="name">供货商名称：</label>
+                    <div class="col-sm-7">
+                        <input id="name" name="name" type="text" placeholder="请输入供货商名称" class="form-control">
                     </div>
-                    <div class="input-group">
-                        <span class="input-group-addon" id="sizing-addon2">姓名</span>
-                        <input type="text" class="form-control" placeholder="姓名" aria-describedby="sizing-addon2">
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">供应商负责人：</label>
+                    <div class="col-sm-7">
+                        <input type="text"  placeholder="请输入供应商负责人" class="form-control">
                     </div>
-                    <div class="input-group">
-                        <span class="input-group-addon" id="sizing-addon3">身份证号码</span>
-                        <input type="text" class="form-control" placeholder="身份证号码" aria-describedby="sizing-addon2">
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label" for="tel">联系电话：</label>
+                    <div class="col-sm-7">
+                        <input type="text" id="tel" name="tel" placeholder="请输入联系电话" class="form-control">
                     </div>
-                    <br />
                 </div>
 
-                <div class="modal-footer" style="overflow:hidden;">
-                    <span id="addError" style="color: red;"></span>
+
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">银行：</label>
+                    <div class="col-sm-7">
+                        <input type="text" placeholder="请输入户名" class="form-control">
+                        <input type="text" placeholder="请输入开户行" class="form-control">
+                        <input type="text" placeholder="请输入银行卡号" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">供应商地址：</label>
+                    <div class="col-sm-7">
+                        <input type="text" placeholder="请输入供应商地址" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">描述：</label>
+                    <div class="col-sm-7">
+                        <input type="number" placeholder="请输入描述" class="form-control" max="10">
+                    </div>
+                </div>
+                <div class="modal-footer" >
+                    <span id="addError"></span>
                     <button type="button" class="btn btn-default"
                             data-dismiss="modal">关闭
                     </button>
-                    <button type="button" class="btn btn-primary">
-                        保存
-                    </button>
+                    <button type="submit" class="btn btn-primary btn-sm">保存</button>
                 </div>
             </form>
         </div><!-- /.modal-content -->
@@ -112,25 +143,67 @@
 
 
 <!-- 修改弹窗 -->
-<div class="modal fade" id="edit" aria-hidden="true">
+<div class="modal fade" role="form" id="edit" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form id="editForm" class="data1" id="editForm" method="post">
-                <div class="modal-header" style="width:auto; overflow:hidden;">
-                    <input type="text"  define="ceshi.id" name="id" placeholder="请输入标题"  maxlength="15"/>
-                    <input type="text"  define="ceshi.price" name="price"  placeholder="请输入标题"  maxlength="15"/>
+            <form class="form-horizontal" onsubmit="return checkAdd()" id="editForm" method="post">
+                <div class="modal-header" style="overflow:auto;">
+                    <p>修改供货商信息</p>
                 </div>
-                <div class="modal-body">
-                    <textarea type="text" style="width: 80%"  define="ceshi.name" name="name" placeholder="请输入描述"  maxlength="142"></textarea>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">供货商类型：</label>
+                    <div class="col-sm-7">
+                        <select  placeholder="请输入供货商类型" class="form-control">
+                            <option>a</option>
+                            <option>a</option>
+                        </select>
+                    </div>
                 </div>
-                <div class="modal-footer">
-                    <span id="editError" style="color: red;"></span>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">供货商名称：</label>
+                    <div class="col-sm-7">
+                        <input type="text" placeholder="请输入供货商名称" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">供应商负责人：</label>
+                    <div class="col-sm-7">
+                        <input type="text" placeholder="请输入供应商负责人" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">联系电话：</label>
+                    <div class="col-sm-7">
+                        <input type="text" placeholder="请输入联系电话" class="form-control">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">银行：</label>
+                    <div class="col-sm-7">
+                        <input type="text" placeholder="请输入户名" class="form-control">
+                        <input type="text" placeholder="请输入开户行" class="form-control">
+                        <input type="text" placeholder="请输入银行卡号" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">供应商地址：</label>
+                    <div class="col-sm-7">
+                        <input type="text" placeholder="请输入供应商地址" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">描述：</label>
+                    <div class="col-sm-7">
+                        <input type="number" placeholder="请输入描述" class="form-control" max="10">
+                    </div>
+                </div>
+                <div class="modal-footer" >
+                    <span id="editError"></span>
                     <button type="button" class="btn btn-default"
                             data-dismiss="modal">关闭
                     </button>
-                    <button type="button" onclick="checkEdit()" class="btn btn-primary">
-                        保存
-                    </button>
+                    <button type="submit" class="btn btn-primary btn-sm">保存</button>
                 </div>
             </form>
         </div><!-- /.modal-content -->
@@ -139,7 +212,7 @@
 
 <!-- 删除弹窗 -->
 <div class="modal fade" id="del" aria-hidden="true">
-    <div class="modal-dialog" style="overflow:hidden;">
+    <div class="modal-dialog" >
         <form action="/table/edit" method="post">
             <div class="modal-content">
                 <input type="hidden" id="delNoticeId"/>
@@ -183,8 +256,10 @@
 <script src="/static/js/select2/select2.js"></script>
 <script src="/static/js/sweetalert/sweetalert.min.js"></script>
 <script src="/static/js/contextmenu.js"></script>
-<script src="/static/js/supplierInFormation/supplierInFormation.js"></script>
+<script src="/static/js/backstage/supplier/supplierInFormation.js"></script>
 <script src="/static/js/bootstrap-select/bootstrap-select.js"></script>
+<script src="/static/js/form/jquery.validate.js"></script>
+<script src="/static/js/form/form.js"></script>
 
 </body>
 </html>

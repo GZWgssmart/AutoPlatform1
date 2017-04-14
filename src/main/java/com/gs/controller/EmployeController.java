@@ -17,11 +17,28 @@ public class EmployeController {
     private Logger logger = (Logger) LoggerFactory.getLogger(EmployeController.class);
 
     /**
-     * 运功
+     * 员工基本信息跳转页面
      */
     @RequestMapping(value = "empInformation", method = RequestMethod.GET)
     public String empInformation() {
         logger.info("员工基本信息跳转页面");
         return "emp/empInformation";
+    }
+
+    /**
+     * 员工工资跳转页面
+     */
+    @RequestMapping(value = "empWages", method = RequestMethod.GET)
+    public String empWages() {
+        logger.info("员工工资跳转页面");
+        return "emp/empWages";
+    }
+    /**
+     * 员工工单跳转页面
+     */
+    @RequestMapping(value = "workInfo", method = RequestMethod.GET)
+    public String workInfo() {
+        logger.info("员工工单跳转页面");
+        return "emp/workInfo";
     }
 }
