@@ -205,13 +205,11 @@
                     <li>
                         <a href="#"><i class="fa fa-calculator"></i> <span class="nav-label">结算出厂</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
-                            <li><a class="J_menuItem" href="basic_gallery.html">提醒提车管理</a>
+                            <li><a class="J_menuItem" href="/clearingOut/carRemindIndex">提醒提车管理</a>
                             </li>
-                            <li><a class="J_menuItem" href="carousel.html">收费单据管理</a>
+                            <li><a class="J_menuItem" href="/clearingOut/chargeDocumentsIndex">收费单据管理</a>
                             </li>
-                            <li><a class="J_menuItem" href="blueimp.html">微信确认维修保养结果并支付</a>
-                            </li>
-                            <li><a class="J_menuItem" href="blueimp.html">打印结算单</a>
+                            <li><a class="J_menuItem" href="/clearingOut/printStatementsIndex">打印结算单</a>
                             </li>
                         </ul>
                     </li>
@@ -274,7 +272,7 @@
                     <li>
                         <a href="#"><i class="fa fa-gear"></i> <span class="nav-label">系统管理</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
-                            <li><a class="J_menuItem" href="/systemManage/moduleIndex">模块管理</a>
+                            <li><a class="J_menuItem" href="/systemManage/moduleManageIndex">模块管理</a>
                             </li>
                             <li><a class="J_menuItem" href="/systemManage/perManageIndex">权限管理</a>
                             </li>
