@@ -51,6 +51,8 @@
                 <th ddata-field="materielCount">物料数量</th>
                 <th data-field="maintain">维修保养记录</th>
                 <th data-field="materiel_Receive_Time">领料时间</th>
+                <th data-field="accCount">退料数量</th>
+                <th data-field="mrReturnDate">退料时间</th>
                 <th data-field="materielStatus">状态</th>
             </tr>
             </thead>
@@ -65,9 +67,61 @@
             <button id="btn_delete" type="button" class="btn btn-default" onclick="showDel();">
                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
             </button>
+            <button id="btn_appoint" type="button" class="btn btn-warning" onclick="showAppoint();">指派员工</button>
+            <button id="btn_confirm" type="button" class="btn btn-info" onclick="showConfirm();">领料确认</button>
+            <button id="btn_application" type="button" class="btn btn-success" onclick="showApplication();">退料申请</button>
+            <button id="btn_regress" type="button" class="btn btn-danger" onclick="showRegress();">确认退料</button>
         </div>
     </div>
 </div>
+
+<!-- 指派员工弹窗 -->
+<div class="modal fade" id="appoint" aria-hidden="true" style="overflow:auto; ">
+    <div class="modal-dialog" style="width: 700px;height: auto;">
+        <div class="modal-content" style="overflow:hidden; ">
+            <form class="form-horizontal" id="AppointForm" method="post">
+                <div class="modal-header" style="overflow:auto;">
+                    <p>请选择指定的员工</p>
+                </div>
+                <hr>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">请选择员工：</label>
+                    <select id="addSelect"  class="js-example-basic-multiple" multiple="multiple" style="width:300px;">
+                    </select>
+                </div>
+                <div class="modal-footer" style="border: none;">
+                    <span id="editError" style="color: red;"></span>
+                    <button type="button" class="btn btn-default"
+                            data-dismiss="modal">关闭
+                    </button>
+                    <button type="button" onclick="checkEdit()" class="btn btn-primary">
+                        确认
+                    </button>
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- 确认退料弹窗 -->
+<div class="modal fade" id="regress" aria-hidden="true">
+    <div class="modal-dialog" style="overflow:hidden;">
+        <form action="/table/edit" method="post">
+            <div class="modal-content">
+                <input type="hidden" id="delNoticeId1"/>
+                <div class="modal-footer" style="text-align: center;">
+                    <h2>确认退料吗?</h2>
+                    <button type="button" class="btn btn-default"
+                            data-dismiss="modal">取消
+                    </button>
+                    <button type="sumbit" class="btn btn-primary" onclick="del()">
+                        确认
+                    </button>
+                </div>
+            </div><!-- /.modal-content -->
+        </form>
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 <!-- 添加弹窗 -->
 <div class="modal fade" id="add" aria-hidden="true" style="overflow:hidden;">
@@ -132,7 +186,7 @@
                     <textarea type="text"  define="ceshi.name" name="name" placeholder="请输入描述"  style="width:530px;height:100px;" maxlength="142"></textarea>
                 </div>
                 <div class="modal-footer">
-                    <span id="editError" style="color: red;"></span>
+                    <span id="editError1" style="color: red;"></span>
                     <button type="button" class="btn btn-default"
                             data-dismiss="modal">关闭
                     </button>
@@ -196,94 +250,6 @@
 <script src="/static/js/bootstrap-select/bootstrap-select.js"></script>
 <script src="/static/js/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.js"></script>
 <script src="/static/js/bootstrap-dateTimePicker/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
-<script>
-    $(function () {
-        $('#table').bootstrapTable('hideColumn', 'id');
-
-        $("#addSelect").select2({
-                language: 'zh-CN'
-            }
-        );
-
-        //绑定Ajax的内容
-        $.getJSON("/table/queryType", function (data) {
-            $("#addSelect").empty();//清空下拉框
-            $.each(data, function (i, item) {
-                $("#addSelect").append("<option value='" + data[i].id + "'>&nbsp;" + data[i].name + "</option>");
-            });
-        })
-//            $("#addSelect").on("select2:select",
-//                    function (e) {
-//                        alert(e)
-//                        alert("select2:select", e);
-//            });
-    });
-
-    function showEdit(){
-        var row =  $('table').bootstrapTable('getSelections');
-        if(row.length >0) {
-//                $('#editId').val(row[0].id);
-//                $('#editName').val(row[0].name);
-//                $('#editPrice').val(row[0].price);
-            $("#edit").modal('show'); // 显示弹窗
-            var ceshi = row[0];
-            $("#editForm").fill(ceshi);
-        }else{
-            //layer.msg("请先选择某一行", {time : 1500, icon : 2});
-            layer.alert("请先选择某一行");
-        }
-    }
-
-    function showAdd(){
-
-        $("#add").modal('show');
-    }
-
-    function formatRepo(repo){return repo.text}
-    function formatRepoSelection(repo){return repo.text}
-
-    function showDel(){
-        var row =  $('table').bootstrapTable('getSelections');
-        if(row.length >0) {
-            $("#del").modal('show');
-        }else{
-            $("#tanchuang").modal('show');
-        }
-    }
-
-    function checkAdd(){
-        var id = $('#addId').val();
-        var name = $('#addName').val();
-        var price = $('#addPrice').val();
-        var reslist=$("#addSelect").select2("data"); //获取多选的值
-        alert(reslist.length)
-        if(id != "" && name != "" && price != ""){
-            return true;
-        }else{
-            var error = document.getElementById("addError");
-            error.innerHTML = "请输入正确的数据";
-            return false;
-        }
-    }
-
-    function checkEdit() {
-        $.post("/table/edit",
-            $("#editForm").serialize(),
-            function (data) {
-                if (data.result == "success") {
-                    $("#edit").modal('hide'); // 关闭指定的窗口
-                    $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
-                    swal({
-                        title:"",
-                        text: data.message,
-                        type:"success"})// 提示窗口, 修改成功
-                } else if (data.result == "fail") {
-                    //$.messager.alert("提示", data.result.message, "info");
-                }
-            }, "json"
-        );
-    }
-
-</script>
+<script src="/static/js/backstage/picking/materials.js"></script>
 </body>
 </html>
