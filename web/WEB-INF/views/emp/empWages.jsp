@@ -40,24 +40,15 @@
                     <th data-radio="true" data-field="status"></th>
                     <th data-width="15%" data-field="phone">用户手机号</th>
                     <th data-width="10%" data-field="name">姓名</th>
-                    <th data-width="15%" data-field="identity">身份证号</th>
-                    <th data-width="10%" data-field="weChat">微信</th>
-                    <th data-width="10%" data-field="company">所属公司</th>
-                    <th data-width="15%" data-field="createTime">创建时间</th>
-                    <th data-width="15%" data-field="userLoginedTime">最近一次登录时间</th>
-                    <th data-width="5%" data-field="userStatus">用户状态</th>
+                    <th data-width="10%" data-field="prizeSalary">奖金</th>
+                    <th data-width="10%" data-field="minusSalay">罚款</th>
+                    <th data-width="10%" data-field="totalSalary">总工资</th>
+                    <th data-width="15%" data-field="salaryDes">工资发放描述</th>
+                    <th data-width="15%" data-field="salaryTime">工资发放时间</th>
+                    <th data-width="15%" data-field="salaryCreatedTime">创建时间</th>
                 </tr>
                 </thead>
             </table>
-            <div id="toolbar" class="btn-group">
-                <button id="btn_add" type="button" class="btn btn-default" onclick="showAdd();">
-                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
-                </button>
-                <button id="btn_edit" type="button" class="btn btn-default" onclick="showEdit();">
-                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
-                </button>
-                <a class='btn btn-danger' href='javascript:;'>离职</a>
-            </div>
         </div>
     </div>
 
