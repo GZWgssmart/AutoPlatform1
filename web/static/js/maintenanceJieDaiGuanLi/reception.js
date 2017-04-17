@@ -21,12 +21,14 @@ $(function () {
 });
 
 function showEdit(){
-    var row =  $('table').bootstrapTable('getSelections');
-    if(row.length > 0) {
+    var row =  $('#table').bootstrapTable('getSelections');
+    console.log($('#table').bootstrapTable("getOptions"));
+    //alert(row)
+    if(row.length >0) {
 //                $('#editId').val(row[0].id);
 //                $('#editName').val(row[0].name);
 //                $('#editPrice').val(row[0].price);
-        $("#edit").modal('show'); // 显示弹窗
+        $("#editWindow").modal('show'); // 显示弹窗
         var ceshi = row[0];
         $("#editForm").fill(ceshi);
     }else{
@@ -80,8 +82,8 @@ function checkAdd(){
     }
 }
 
-function checkEdit() {
-    $.post("/table/edit",
+function checkEdit(url) {
+    $.post(url,
         $("#editForm").serialize(),
         function (data) {
             if (data.result == "success") {

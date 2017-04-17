@@ -17,14 +17,14 @@
 
 <div class="container">
     <div class="panel-body" style="padding-bottom:0px;"  >
-        <!--show-refresh, show-toggle的样式可以在bootstrap-table.js的948行修改-->
+        <!--show-refredata-single-sesh, show-toggle的样式可以在bootstrap-table.js的948行修改-->
         <!-- table里的所有属性在bootstrap-table.js的240行-->
         <table id="table" data-toggle="table" data-toolbar="#toolbar"
                data-url="/table/query" data-method="post" data-query-params="queryParams"
                data-pagination="true" data-search="true" data-show-refresh="true"
                data-show-toggle="true" data-show-columns="true" data-page-size="10"
                data-height="543" data-id-field="id" data-page-list="[5, 10, 20]"
-               data-cach="false" data-click-to-select="true" data-single-select="true">
+               data-cach="false" data-click-to-select="true" lect="true">
             <thead>
                 <tr>
                     <th data-radio="true" data-field="status"></th>
@@ -47,7 +47,7 @@
                     <th data-field="maintainOrFix">保养还是维修</th>
                     <th data-field="checkinCreatedTime">登记创建时间</th>  <%-- 由系统创建 --%>
                     <th data-field="company">汽修公司名称</th>    <%-- t_company --%>
-                    <th data-field="status">状态</th>
+                    <th data-field="checkStatus">状态</th>
                 </tr>
             </thead>
         </table>
@@ -186,10 +186,10 @@
 </div><!-- /.modal -->
 
 <!-- 修改弹窗 -->
-<div class="modal fade" id="edit" aria-hidden="true" data-backdrop="static">
+<div class="modal fade" id="editWindow" aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form class="form-horizontal" id="editForm" method="post">
+            <form class="form-horizontal" id="editForm" method="post" onclick="return checkEdit('table/edit');">
                 <div class="modal-header" style="overflow:auto;">
                     <h4>被接待的车主信息修改</h4>
                 </div>
