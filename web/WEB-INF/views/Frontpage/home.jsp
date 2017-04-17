@@ -319,13 +319,13 @@
 
                 </div>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#">主页</a></li>
-                    <li class="icon-li"><a href="#">登录</a></li>
-                    <li class="icon-li"><a href="#">注册</a></li>
+                    <li><a href="javaScript:;">主页</a></li>
+                    <li class="icon-li"><a href="javaScript:;">登录</a></li>
+                    <li class="icon-li"><a href="javaScript:;">注册</a></li>
                     <li class="icon-li"><a href="/backstageIndex">后台</a></li>
-                    <li class="icon-li"><a href="#">关于我们</a></li>
-                    <li id="menu-bg"><a href="#">申请使用</a></li>
-                    <li id="menu-bg2"><a href="#">购买本产品</a></li>
+                    <li class="icon-li"><a href="javaScript:;">关于我们</a></li>
+                    <li id="menu-bg"><a href="javaScript:;">申请使用</a></li>
+                    <li id="menu-bg2"><a href="javaScript:;">购买本产品</a></li>
                 </ul>
             </div>
         </nav>
@@ -436,7 +436,7 @@
                 </div>
                 <div class="col-md-5 col-sm-7 banner-img wow fadeInRight animated" data-wow-delay="0.4s" style="visibility: visible; animation-name: fadeInRight;">
                     <div class="right-img">
-                        <a href="#"><img src="/static/img/Frontpage/slider.png" style="width: 100%;height: 100%"/></a>
+                        <a href="javaScript:;"><img src="/static/img/Frontpage/slider.png" style="width: 100%;height: 100%"/></a>
                     </div>
                 </div>
             </div>
@@ -527,8 +527,8 @@
         <%--主内容五--%>
         <div class="Maincontent5">
             <div class="mc5-top">
-                <h2><a href="==" style="color: #0d8ddb;">商家加盟入口</a></h2>
-                <span class="wow fadeInRight animated" data-wow-delay="0.5s" style="visibility: visible; animation-name: fadeInRight;"><a href="==" style="color:white ;">欢迎汽修、汽配商家入驻加盟</a></span>
+                <h2><a href="javaScript:;" style="color: #0d8ddb;">商家加盟入口</a></h2>
+                <span class="wow fadeInRight animated" data-wow-delay="0.5s" style="visibility: visible; animation-name: fadeInRight;"><a href="javaScript:;" style="color:white ;">欢迎汽修、汽配商家入驻加盟</a></span>
             </div>
         </div>
         <%--底部版权--%>
@@ -541,8 +541,8 @@
                             <i class="icon-phone"><img src="/static/img/Frontpage/phone.png"/></i>
                             <span class="phone">40000-13864</span>
                         </p>
-                        <p><a href="==">E-mail:qweasdzxc102@qq.com</a></p>
-                        <p><a href="---"><img src="/static/img/Frontpage/btm-left.png"></a></p>
+                        <p>E-mail:qweasdzxc102@qq.com</p>
+                        <p><a href="javaScript:;"><img src="/static/img/Frontpage/btm-left.png"></a></p>
                     </div>
                     <div class="col-sm-9 col-md-6 wechat">
                         <h2>扫码关注</h2>
@@ -561,8 +561,8 @@
                     <div class="col-md-2 col-sm-3 rt-img row">
                         <div class="col-md-12 col-sm-12 gz">
                             <h4>关注抽奖有好礼</h4>
-                            <a href="==" id="mc5-rtimg"><img src="/static/img/Frontpage/weibo.png"/></a>
-                            <a href="=="><img src="/static/img/Frontpage/toutiao.png"/></a>
+                            <a href="javaScript:;" id="mc5-rtimg"><img src="/static/img/Frontpage/weibo.png"/></a>
+                            <a href="javaScript:;"><img src="/static/img/Frontpage/toutiao.png"/></a>
                         </div>
                     </div>
                 </div>
