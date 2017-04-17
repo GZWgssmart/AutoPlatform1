@@ -30,7 +30,11 @@ function showEdit() {
         var ceshi = row[0];
         $("#editForm").fill(ceshi);
     } else {
-        $("#tanchuang").modal('show');
+        swal({
+            "title": "",
+            "text": "请先选择一条数据",
+            "type": "warning"
+        })
     }
 }
 
@@ -53,7 +57,11 @@ function showDel() {
     if (row.length > 0) {
         $("#del").modal('show');
     } else {
-        $("#tanchuang").modal('show');
+        swal({
+            "title": "",
+            "text": "请先选择一条数据",
+            "type": "warning"
+        })
     }
 }
 
@@ -92,60 +100,28 @@ function checkEdit() {
     );
 }
 
-//初始化文件上传控件
-$(function () {
-    //0.初始化fileinput
-    var oFileInput = new FileInput();
-    oFileInput.Init("add_companyLogo", "/file/addFile");
-});
-
-$(function () {
-    //0.初始化fileinput
-    var oFileInput = new FileInput();
-    oFileInput.Init("edit_companyLogo", "/file/editFile");
-});
-
-//初始化fileinput
-var FileInput = function () {
-    var oFile = new Object();
-    //初始化fileinput控件（第一次初始化）
-    oFile.Init = function (ctrlName, uploadUrl) {
-        var control = $('#' + ctrlName);
-        //初始化上传控件的样式
-        control.fileinput({
-            language: 'zh', //设置语言
-            uploadUrl: uploadUrl, //上传的地址
-            allowedFileExtensions: ['jpg', 'gif', 'png'],//接收的文件后缀
-            showUpload: true, //是否显示上传按钮
-            showCaption: false,//是否显示标题
-            browseClass: "btn btn-primary", //按钮样式
-            dropZoneEnabled: true,//是否显示拖拽区域
-            //minImageWidth: 50, //图片的最小宽度
-            //minImageHeight: 50,//图片的最小高度
-            //maxImageWidth: 1000,//图片的最大宽度
-            //maxImageHeight: 1000,//图片的最大高度
-            //maxFileSize: 0,//单位为kb，如果为0表示不限制文件大小
-            //minFileCount: 0,
-            maxFileCount: 10, //表示允许同时上传的最大文件个数
-            enctype: 'multipart/form-data',
-            validateInitialCount: true,
-            previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
-            msgFilesTooMany: "选择上传的文件数量({n}) 超过允许的最大数值{m}！",
-        }).on("fileuploaded", function (event, data) {
-            // data 为controller返回的json
-            if (data.response.result == 'success') {
-                alert('处理成功');
-            }
-        });
-    }
-    return oFile;
-};
 
 $('#addDateTimePicker').datetimepicker({
     language: 'zh-CN',
     format: 'yyyy-mm-dd hh:ii'
 });
+$('#addDateTimePicker2').datetimepicker({
+    language: 'zh-CN',
+    format: 'yyyy-mm-dd hh:ii'
+});
+$('#addDateTimePicker3').datetimepicker({
+    language: 'zh-CN',
+    format: 'yyyy-mm-dd hh:ii'
+});
 $('#editDateTimePicker').datetimepicker({
+    language: 'zh-CN',
+    format: 'yyyy-mm-dd hh:ii'
+});
+$('#editDateTimePicker2').datetimepicker({
+    language: 'zh-CN',
+    format: 'yyyy-mm-dd hh:ii'
+});
+$('#editDateTimePicker3').datetimepicker({
     language: 'zh-CN',
     format: 'yyyy-mm-dd hh:ii'
 });
@@ -171,3 +147,151 @@ $('#editDateTimePicker').datetimepicker({
 //         });
 //     }
 // })
+
+//前端验证
+$(document).ready(function () {
+    $("#addForm").validate({
+        errorElement: 'span',
+        errorClass: 'help-block',
+
+        rules: {
+            companyId: {
+                required: true,
+                minlength: 2
+            },
+            accTypeId: {
+                required: true,
+                minlength: 2
+            },
+            accName: {
+                required: true,
+                minlength: 2
+            },
+            accCommodityCode: {
+                required: true,
+                minlength: 2
+            },
+            accDes: {
+                required: true,
+                minlength: 2
+            },
+            accPrice: {
+                required: true,
+                minlength: 2
+            },
+            accSalePrice: {
+                required: true,
+                minlength: 2
+            },
+            accTotal: {
+                required: true,
+                minlength: 2
+            },
+            accIdle: {
+                required: true,
+                minlength: 2
+            }
+        },
+        messages: {
+            companyId: "请输入公司名称",
+            accTypeId: "请输入配件所属类别",
+            accName: "请输入配件名称",
+            accCommodityCode: "请输入配件商品条码",
+            accDes: "请输入配件描述",
+            accPrice: "请输入配件价格",
+            accSalePrice: "请输入配件售价",
+            accTotal: "请输入配件数量",
+            accIdle: "请输入配件可用数量",
+        },
+        errorPlacement: function (error, element) {
+            element.next().remove();
+            element.after('<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>');
+            element.closest('.form-group').append(error);
+        },
+        highlight: function (element) {
+            $(element).closest('.form-group').addClass('has-error has-feedback');
+        },
+        success: function (label) {
+            var el = label.closest('.form-group').find("input");
+            el.next().remove();
+            el.after('<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>');
+            label.closest('.form-group').removeClass('has-error').addClass("has-feedback has-success");
+            label.remove();
+        },
+        submitHandler: function (form) {
+            alert("submitted!");
+        }
+    })
+    $("#editForm").validate({
+        errorElement: 'span',
+        errorClass: 'help-block',
+
+        rules: {
+            companyId: {
+                required: true,
+                minlength: 2
+            },
+            accTypeId: {
+                required: true,
+                minlength: 2
+            },
+            accName: {
+                required: true,
+                minlength: 2
+            },
+            accCommodityCode: {
+                required: true,
+                minlength: 2
+            },
+            accDes: {
+                required: true,
+                minlength: 2
+            },
+            accPrice: {
+                required: true,
+                minlength: 2
+            },
+            accSalePrice: {
+                required: true,
+                minlength: 2
+            },
+            accTotal: {
+                required: true,
+                minlength: 2
+            },
+            accIdle: {
+                required: true,
+                minlength: 2
+            }
+        },
+        messages: {
+            companyId: "请输入公司名称",
+            accTypeId: "请输入配件所属类别",
+            accName: "请输入配件名称",
+            accCommodityCode: "请输入配件商品条码",
+            accDes: "请输入配件描述",
+            accPrice: "请输入配件价格",
+            accSalePrice: "请输入配件售价",
+            accTotal: "请输入配件数量",
+            accIdle: "请输入配件可用数量"
+        },
+        errorPlacement: function (error, element) {
+            element.next().remove();
+            element.after('<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>');
+            element.closest('.form-group').append(error);
+        },
+        highlight: function (element) {
+            $(element).closest('.form-group').addClass('has-error has-feedback');
+        },
+        success: function (label) {
+            var el = label.closest('.form-group').find("input");
+            el.next().remove();
+            el.after('<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>');
+            label.closest('.form-group').removeClass('has-error').addClass("has-feedback has-success");
+            label.remove();
+        },
+        submitHandler: function (form) {
+            alert("submitted!");
+        }
+    })
+});
