@@ -1,4 +1,4 @@
-<!--维修电话预约管理-->
+<!--电话预约管理-->
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -45,8 +45,8 @@
                 <th data-field="plateId">车牌号</th>
                 <th data-field="arriveTime">到店时间</th>
                 <th data-field="maintainOrFix">
-                    <select id="jungle" name="jungle" title="请选择一个选项" required style="width: 100px; height:35px;">
-                        <option value="">请选择</option>
+                    <select name="jungle" title="请选择一个选项" required data-width="100">
+                        <option value=""></option>
                         <option value="1">美容</option>
                         <option value="2">维修</option>
                         <option value="3">保养</option>
@@ -71,59 +71,30 @@
         </div>
     </div>
 </div>
-<div class="modal fade" id="add" aria-hidden="true" style="overflow:hidden; ">
-    <div class="modal-dialog" style="height: auto;">
-        <div class="modal-content" style="overflow:hidden;">
-            <form class="form-horizontal" onsubmit="return checkAdd()" id="addForm" method="post">
+<!--添加窗口-->
+<div class="modal fade" id="add" aria-hidden="true" style="overflow:auto; ">
+    <div class="modal-dialog" style="height: auto; overflow:auto;">
+        <div class="modal-content" style="overflow:auto;">
+            <form class="form-horizontal" role="form" onsubmit="return checkAdd()" id="addForm" method="post">
                 <div class="modal-header" style="overflow:auto;">
                     <h4>请填写预约信息</h4>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">车主姓名：</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="请输入姓名" class="form-control">
+                        <input type="text" name="userId" placeholder="请输入姓名" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">车主电话：</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="请输入电话" class="form-control">
+                        <input type="text" name="userPhone" placeholder="请输入电话" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">品牌：</label>
                     <div class="col-sm-7">
-                        <input type="number" placeholder="请输入品牌" class="form-control" max="11">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">颜色：</label>
-                    <div class="col-sm-7">
-                        <input type="text" placeholder="选择颜色" class="form-control">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">车型：</label>
-                    <div class="col-sm-7">
-                        <input type="text" placeholder="请输入车型" class="form-control">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">车牌号：</label>
-                    <div class="col-sm-7">
-                        <input type="text" placeholder="请输入车牌号" class="form-control">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">到店时间：</label>
-                    <div class="col-sm-7">
-                        <input type="number" placeholder="请选择到店时间" class="form-control" max="11">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">保养类型：</label>
-                    <div class="col-sm-7">
-                        <select id="jungle" name="jungle" title="请选择一个选项" required style="width:332px;height:32px;">
+                        <select name="jungle" title="请选择一个选项" required style="width:320px;height:32px;">
                             <option value="">请选择</option>
                             <option value="1">美容</option>
                             <option value="2">维修</option>
@@ -132,21 +103,54 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">预约日期：</label>
-                    <div class="col-sm-7">
-                        <input type="text" value="2012-05-15 21:05" id="addDateTimePicker" class="form-control">
+                    <label class="col-sm-3 control-label">颜色：</label>
+                    <div class="col-sm-5" style="padding-right: 0px">
+                        <input name="colorId"type="text" class="form-control editColor" data-control="hue" value="">
+                    </div>
+                    <div class="col-sm-2" style="padding-left: 0px;">
+                        <input type="button" class="btn btn-default" value="确认" onclick="showAddHex();">
                     </div>
                 </div>
                 <div class="form-group">
+                    <label class="col-sm-3 control-label">车型：</label>
+                    <div class="col-sm-7">
+                        <input type="text" name="modelId" placeholder="请输入车型" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">车牌号：</label>
+                    <div class="col-sm-7">
+                        <input type="text" name="plateId" placeholder="请输入车牌号" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">到店时间：</label>
+                    <div class="col-sm-7">
+                        <input type="text" name="arriveTime" id="addarriveTime" value="2012-05-15 21:05" placeholder="请选择到店时间" class="form-control" max="11">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">保养类型：</label>
+                    <div class="col-sm-7">
+                        <select name="jungle" title="请选择一个选项" required style="width:320px;height:32px;">
+                            <option value="">请选择</option>
+                            <option value="1">美容</option>
+                            <option value="2">维修</option>
+                            <option value="3">保养</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
                     <label class="col-sm-3 control-label">汽修公司：</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="请输入汽修公司" class="form-control">
+                        <input type="text" name="companyId" placeholder="请输入汽修公司" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">预约状态：</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="请选择状态" class="form-control">
+                        <input type="text" name="appotmentStatus" placeholder="请选择状态" class="form-control">
                     </div>
                 </div>
 
@@ -165,30 +169,98 @@
 
 
 <!-- 修改弹窗 -->
-<div class="modal fade" id="edit" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <form id="editForm" class="data1" id="editForm" method="post">
-                <div class="modal-header" style="overflow:hidden;">
-                    <input type="text"  define="ceshi.id" name="id" placeholder="请输入标题" style="width:300px;margin-left:70px;" maxlength="15"/>
-                    <input type="text"  define="ceshi.price" name="price"  placeholder="请输入标题" style="width:300px;margin-left:70px;" maxlength="15"/>
+<div class="modal fade" id="editWindow" aria-hidden="true" style="overflow:auto; ">
+    <div class="modal-dialog" style="height: auto; overflow:auto;">
+        <div class="modal-content" style="overflow:auto;">
+            <form class="form-horizontal" role="form" onsubmit="return checkAdd()" id="editForm" method="post">
+                <div class="modal-header" style="overflow:auto;">
+                    <h4>请填写预约信息</h4>
                 </div>
-                <div class="modal-body">
-                    <textarea type="text"  define="ceshi.name" name="name" placeholder="请输入描述"  style="width:530px;height:100px;" maxlength="142"></textarea>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">车主姓名：</label>
+                    <div class="col-sm-7">
+                        <input type="text" name="userId" placeholder="请输入姓名" class="form-control">
+                    </div>
                 </div>
-                <div class="modal-footer">
-                    <span id="editError" style="color: red;"></span>
-                    <button type="button" class="btn btn-default"
-                            data-dismiss="modal">关闭
-                    </button>
-                    <button type="button" onclick="checkEdit()" class="btn btn-primary">
-                        保存
-                    </button>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">车主电话：</label>
+                    <div class="col-sm-7">
+                        <input type="text" name="userPhone" placeholder="请输入电话" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">品牌：</label>
+                    <div class="col-sm-7">
+                        <select name="brandId" title="请选择一个选项" required style="width:320px;height:32px;">
+                            <option value="">对方回复</option>
+                            <option value="1">美容</option>
+                            <option value="2">维修</option>
+                            <option value="3">保养</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">颜色：</label>
+                    <div class="col-sm-5" style="padding-right: 0px">
+                        <input name="colorId" type="text" class="form-control addColor" data-control="hue" value="">
+                    </div>
+                    <div class="col-sm-2" style="padding-left: 0px;">
+                        <input type="button" class="btn btn-default" value="确认" onclick="showEditHex();">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">车型：</label>
+                    <div class="col-sm-7">
+                        <input type="text" name="modelId" placeholder="请输入车型" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">车牌号：</label>
+                    <div class="col-sm-7">
+                        <input type="text" name="plateId" placeholder="请输入车牌号" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">到店时间：</label>
+                    <div class="col-sm-7">
+                        <input type="text" name="arriveTime" id="editarriveTime"placeholder="请选择到店时间" class="form-control" max="11">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">保养类型：</label>
+                    <div class="col-sm-7">
+                        <select id="jungle" name="jungle" title="请选择一个选项" required style="width:320px;height:32px;">
+                            <option value="">请选择</option>
+                            <option value="1">美容</option>
+                            <option value="2">维修</option>
+                            <option value="3">保养</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">汽修公司：</label>
+                    <div class="col-sm-7">
+                        <input type="text" name="companyId" placeholder="请输入汽修公司" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">预约状态：</label>
+                    <div class="col-sm-7">
+                        <input type="text" name="appotmentStatus" value="2012-05-15 21:05" id="addDateTimePicker" class="form-control">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-offset-8">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button class="btn btn-sm btn-success" type="submit">保 存</button>
+                    </div>
                 </div>
             </form>
+
         </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+    </div>
+</div>
 
 <!-- 删除弹窗 -->
 <div class="modal fade" id="del" aria-hidden="true">
@@ -228,6 +300,7 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
 <script src="/static/js/jquery.min.js"></script>
 <script src="/static/js/bootstrap.min.js"></script>
 <script src="/static/js/bootstrap-table/bootstrap-table.js"></script>
@@ -235,7 +308,11 @@
 <script src="/static/js/jquery.formFill.js"></script>
 <script src="/static/js/select2/select2.js"></script>
 <script src="/static/js/sweetalert/sweetalert.min.js"></script>
+<script src="/static/js/form/jquery.validate.js"></script>
 <script src="/static/js/contextmenu.js"></script>
+<script src="/static/js/minicolors/jquery.minicolors.min.js"></script>
+<script src="/static/js/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.js"></script>
+<script src="/static/js/bootstrap-dateTimePicker/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
 <script>
     $(function () {
         $('#table').bootstrapTable('hideColumn', 'id');
@@ -258,22 +335,25 @@
 //                        alert("select2:select", e);
 //            });
     });
-
+    //修改窗口
     function showEdit(){
         var row =  $('table').bootstrapTable('getSelections');
-        if(row.length >0) {
+        if(row.length > 0) {
 //                $('#editId').val(row[0].id);
 //                $('#editName').val(row[0].name);
 //                $('#editPrice').val(row[0].price);
-            $("#edit").modal('show'); // 显示弹窗
+            $("#editWindow").modal('show'); // 显示弹窗
             var ceshi = row[0];
             $("#editForm").fill(ceshi);
         }else{
-            //layer.msg("请先选择某一行", {time : 1500, icon : 2});
-            layer.alert("请先选择某一行");
+            swal({
+                "title": "",
+                "text": "请先选择一条数据",
+                "type": "warning"
+            })
         }
     }
-
+    //添加窗口
     function showAdd(){
 
         $("#add").modal('show');
@@ -296,7 +376,7 @@
         var name = $('#addName').val();
         var price = $('#addPrice').val();
         var reslist=$("#addSelect").select2("data"); //获取多选的值
-        alert(reslist.length)
+        //alert(reslist.length)
         if(id != "" && name != "" && price != ""){
             return true;
         }else{
@@ -323,6 +403,164 @@
             }, "json"
         );
     }
+//前台验证
+    $(document).ready(function () {
+        jQuery.validator.addMethod("isuserPhone", function (value, element) {
+            var length = value.length;
+            return this.optional(element) || (length == 11 && /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/.test(value));
+        }, "请正确填写您的手机号码。");
+
+        $("#addForm").validate({
+            errorElement: 'span',
+            errorClass: 'help-block',
+
+            rules: {
+                userId: {
+                    required: true,
+                    minlength: 2
+                },
+                userPhone: {
+                    required: true,
+                    isuserPhone: true,
+                },
+                colorId: {
+                    required: true,
+                    minlength: 2
+                },
+                modelId: {
+                    required: true,
+                    minlength: 5
+                },
+                plateId: {
+                    required: true,
+                    minlength: 7
+                },
+                arriveTime: {
+                    required: true,
+                    date: true
+                },
+                appCreatedTime: {
+                    required: true,
+                    date: true
+                },
+                companyId: {
+                    required: true,
+                    minlength: 5
+                }
+            },
+            messages: {
+                userId: "请输入姓名",
+                userPhone: {
+                    required: "请输入你的联系方式",
+                },
+                colorId: "请你颜色",
+                modelId: "请输入车型",
+                plateId: "请输入车牌号",
+                arriveTime: "到店时间",
+                appCreatedTime: "请输入预约日期",
+                companyId: "请输入公司名称"
+            },
+            errorPlacement: function (error, element) {
+                element.next().remove();
+                element.after('<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>');
+                element.closest('.form-group').append(error);
+            },
+            highlight: function (element) {
+                $(element).closest('.form-group').addClass('has-error has-feedback');
+            },
+            success: function (label) {
+                var el = label.closest('.form-group').find("input");
+                el.next().remove();
+                el.after('<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>');
+                label.closest('.form-group').removeClass('has-error').addClass("has-feedback has-success");
+                label.remove();
+            },
+            submitHandler: function (form) {
+                alert("submitted!");
+            }
+        }),
+            $("#editForm").validate({
+                errorElement: 'span',
+                errorClass: 'help-block',
+
+                rules: {
+                    userId: {
+                        required: true,
+                        minlength: 2
+                    },
+                    userPhone: {
+                        required: true,
+                        isPhone: true,
+                    },
+                    colorId: {
+                        required: true,
+                        minlength: 2
+                    },
+                    modelId: {
+                        required: true,
+                        minlength: 5
+                    },
+                    plateId: {
+                        required: true,
+                        minlength: 7
+                    },
+                    arriveTime: {
+                        required: true,
+                        date: true
+                    },
+                    appCreatedTime: {
+                        required: true,
+                        date: true
+                    },
+                    companyId: {
+                        required: true,
+                        minlength: 5
+                    }
+                },
+                messages: {
+                    userId: "请输入姓名",
+                    userPhone: {
+                        required: "请输入你的联系方式",
+                    },
+                    colorId: "请你颜色",
+                    modelId: "请输入车型",
+                    plateId: "请输入车牌号",
+                    arriveTime: "到店时间",
+                    appCreatedTime: "请输入预约日期",
+                    companyId: "请输入公司名称"
+
+                },
+                errorPlacement: function (error, element) {
+                    element.next().remove();
+                    element.after('<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>');
+                    element.closest('.form-group').append(error);
+                },
+                highlight: function (element) {
+                    $(element).closest('.form-group').addClass('has-error has-feedback');
+                },
+                success: function (label) {
+                    var el = label.closest('.form-group').find("input");
+                    el.next().remove();
+                    el.after('<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>');
+                    label.closest('.form-group').removeClass('has-error').addClass("has-feedback has-success");
+                    label.remove();
+                },
+                submitHandler: function (form) {
+                    alert("submitted!");
+                }
+            })
+    });
+    //设置到店时间
+    $('#addarriveTime').datetimepicker({
+        language: 'zh-CN',
+        format: 'yyyy-mm-dd hh:ii'
+    });
+    //修改到店时间
+    $('#editarriveTime').datetimepicker({
+        language: 'zh-CN',
+        format: 'yyyy-mm-dd hh:ii'
+    });
+
 
 </script>
 </body>
