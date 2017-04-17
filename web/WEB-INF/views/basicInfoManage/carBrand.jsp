@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="/static/css/fileinput.css">
 </head>
 <body>
-<%@include file="contextmenu.jsp" %>
+<%@include file="../backstage/contextmenu.jsp" %>
 
 <div class="container">
     <div class="panel-body" style="padding-bottom:0px;">
