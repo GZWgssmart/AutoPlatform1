@@ -19,8 +19,13 @@
     <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.css">
     <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/datetimepicker.less">
 </head>
+<style>
+    .sd{
+        font-weight: bold;
+    }
+</style>
 <body>
-<%@include file="../backstage/contextmenu.jsp"%>
+<%@include file="../backstage/contextmenu.jsp"%>a
 <div class="container">
     <div class="panel-body" style="padding-bottom:0px;"  >
         <!--show-refresh, show-toggle的样式可以在bootstrap-table.js的948行修改-->
@@ -77,11 +82,11 @@
 
 <!-- 指派员工弹窗 -->
 <div class="modal fade" id="appoint" aria-hidden="true" style="overflow:auto; ">
-    <div class="modal-dialog" style="width: 700px;height: auto;">
-        <div class="modal-content" style="overflow:hidden; ">
+    <div class="modal-dialog">
+        <div class="modal-content">
             <form class="form-horizontal" id="AppointForm" method="post">
                 <div class="modal-header" style="overflow:auto;">
-                    <p>请选择指定的员工</p>
+                    <h4 class="sd">请选择指定的员工</h4>
                 </div>
                 <hr>
                 <div class="form-group">
@@ -114,7 +119,27 @@
                     <button type="button" class="btn btn-default"
                             data-dismiss="modal">取消
                     </button>
-                    <button type="sumbit" class="btn btn-primary" onclick="del()">
+                    <button type="sumbit" class="btn btn-primary" onclick="">
+                        确认
+                    </button>
+                </div>
+            </div><!-- /.modal-content -->
+        </form>
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- 退料申请添加弹窗 -->
+<div class="modal fade" id="application" aria-hidden="true">
+    <div class="modal-dialog" style="overflow:hidden;">
+        <form action="/table/edit" method="post">
+            <div class="modal-content">
+                <input type="hidden" id="delNoticeId3"/>
+                <div class="modal-footer" style="text-align: center;">
+                    <h2>确认退料申请吗?</h2>
+                    <button type="button" class="btn btn-default"
+                            data-dismiss="modal">取消
+                    </button>
+                    <button type="sumbit" class="btn btn-primary" onclick="">
                         确认
                     </button>
                 </div>
@@ -134,7 +159,7 @@
                     <button type="button" class="btn btn-default"
                             data-dismiss="modal">取消
                     </button>
-                    <button type="sumbit" class="btn btn-primary" onclick="del()">
+                    <button type="sumbit" class="btn btn-primary" onclick="">
                         确认
                     </button>
                 </div>
@@ -144,44 +169,45 @@
 </div><!-- /.modal -->
 
 <!-- 添加弹窗 -->
-<div class="modal fade" id="add" aria-hidden="true" style="overflow:hidden;">
-    <div class="modal-dialog" style="overflow:hidden;">
-        <div class="modal-content" style="overflow:hidden;">
-            <form class="form-horizontal" role="form" onsubmit="return checkAdd()" id="register-form" method="post">
+<div class="modal fade" id="addWindow" aria-hidden="true" style="overflow:auto; ">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form class="form-horizontal" role="form" onsubmit="return checkAdd()" id="showAddFormWar" method="post">
                 <div class="modal-header" style="overflow:auto;">
-                    <p>添加物料清单</p>
+                    <h4 class="sd">添加物料清单</h4>
                 </div>
+                <hr>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label" for="materialName">物料名称：</label>
+                    <label class="col-sm-3 control-label">物料名称：</label>
                     <div class="col-sm-7">
-                        <input type="text" id="materialName" name="materialName" placeholder="请输入物料名称" class="form-control">
+                        <input type="text" name="materialName" placeholder="请输入物料名称" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label" for="materielState">物料说明：</label>
+                    <label class="col-sm-3 control-label">物料说明：</label>
                     <div class="col-sm-7">
-                        <input type="text" id="materielState" name="materielState" placeholder="请输入物料说明" class="form-control">
+                        <input type="text" name="materielState" placeholder="请输入物料说明" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label" for="materielCount">物料数量：</label>
+                    <label class="col-sm-3 control-label">物料数量：</label>
                     <div class="col-sm-7">
-                        <input type="text" id="materielCount" name="materielCount" placeholder="请输入物料数量" class="form-control">
+                        <input type="text" name="materielCount" placeholder="请输入物料数量" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label" for="maintain">维修保养记录：</label>
+                    <label class="col-sm-3 control-label">维修保养记录：</label>
                     <div class="col-sm-7">
-                        <input type="text" id="maintain" name="maintain" placeholder="请输入维修保养记录" class="form-control">
+                        <input type="text" name="maintain" placeholder="请输入维修保养记录" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label" for="materiel_Receive_Time">领料时间：</label>
+                    <label class="col-sm-3 control-label">领料时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" id="materiel_Receive_Time" name="materiel_Receive_Time" placeholder="请输入领料时间" class="form-control">
+                        <input type="text" name="materiel_Receive_Time" value="2012-05-15 21:05" id="materiel_Receive_Time" class="form-control">
                     </div>
                 </div>
-                <div class="modal-footer" style="overflow:hidden;">
+                <div class="modal-footer" style="border: none;">
                     <span id="addError"></span>
                     <button type="button" class="btn btn-default"
                             data-dismiss="modal">关闭
@@ -194,25 +220,50 @@
 </div><!-- /.modal -->
 
 <!-- 修改弹窗 -->
-<div class="modal fade" id="edit" aria-hidden="true">
+<div class="modal fade" id="editWindow" aria-hidden="true" style="overflow:auto; ">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form id="editForm" class="data1" id="editForm" method="post">
-                <div class="modal-header" style="overflow:hidden;">
-                    <input type="text"  define="ceshi.id" name="id" placeholder="请输入标题" style="width:300px;margin-left:70px;" maxlength="15"/>
-                    <input type="text"  define="ceshi.price" name="price"  placeholder="请输入标题" style="width:300px;margin-left:70px;" maxlength="15"/>
+            <form class="form-horizontal" role="form" onsubmit="return checkAdd()" id="showEditFormWar" method="post">
+                <div class="modal-header" style="overflow:auto;">
+                    <h4 class="sd">请修改你的物料清单</h4>
                 </div>
-                <div class="modal-body">
-                    <textarea type="text"  define="ceshi.name" name="name" placeholder="请输入描述"  style="width:530px;height:100px;" maxlength="142"></textarea>
+                <hr>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">物料名称：</label>
+                    <div class="col-sm-7">
+                        <input type="text" name="materialName" placeholder="请输入物料名称" class="form-control">
+                    </div>
                 </div>
-                <div class="modal-footer">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">物料说明：</label>
+                    <div class="col-sm-7">
+                        <input type="text" name="materielState" placeholder="请输入物料说明" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">物料数量：</label>
+                    <div class="col-sm-7">
+                        <input type="text" name="materielCount" placeholder="请输入物料数量" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">维修保养记录：</label>
+                    <div class="col-sm-7">
+                        <input type="text" name="maintain" placeholder="请输入维修保养记录" class="form-control">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">领料时间：</label>
+                    <div class="col-sm-7">
+                        <input type="text" name="materiel_Receive_Time" define="materiel_Receive_Time" value="2012-05-15 21:05"
+                               id="editDateTimePicker" class="form-control">
+                    </div>
+                </div>
+                <div class="modal-footer" style="border: none;">
                     <span id="editError1" style="color: red;"></span>
-                    <button type="button" class="btn btn-default"
-                            data-dismiss="modal">关闭
-                    </button>
-                    <button type="button" onclick="checkEdit()" class="btn btn-primary">
-                        保存
-                    </button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button class="btn btn-sm btn-success" type="submit">保 存</button>
                 </div>
             </form>
         </div><!-- /.modal-content -->
@@ -269,6 +320,7 @@
 <script src="/static/js/contextmenu.js"></script>
 <script src="/static/js/bootstrap-select/bootstrap-select.js"></script>
 <script src="/static/js/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.js"></script>
+<script src="/static/js/form/jquery.validate.js"></script>
 <script src="/static/js/bootstrap-dateTimePicker/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
 <script src="/static/js/backstage/picking/materials.js"></script>
 </body>
