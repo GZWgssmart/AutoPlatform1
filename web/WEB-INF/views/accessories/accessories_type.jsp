@@ -43,7 +43,7 @@
                data-single-select="true">
             <thead>
             <tr>
-                <th data-radio="true" data-field="status"></th>
+                <th data-checkbox="true" data-field="status"></th>
                 <th data-field="companyId">所属公司</th>
                 <th data-field="accTypeName">配件分类名称</th>
                 <th data-field="accTypeDes">配件分类描述</th>
@@ -77,25 +77,26 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">所属公司：</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="请输入所属公司" class="form-control">
+                        <input type="text" name="companyId" placeholder="请输入所属公司" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">配件分类名称：</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="请输入配件分类名称" class="form-control">
+                        <input type="text" name="accTypeName" placeholder="请输入配件分类名称" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">配件分类描述：</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="请输入配件分类描述" class="form-control">
+                        <textarea type="text" name="accTypeDes" placeholder="请输入相关内容" style="height: 100px;"
+                                  class="form-control"></textarea>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">配件分类状态：</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="配件分类状态" class="form-control">
+                        <input type="text" name="accTypeStatus" placeholder="配件分类状态" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
@@ -120,26 +121,26 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">所属公司：</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="请输入所属公司" class="form-control">
+                        <input type="text" name="companyId" placeholder="请输入所属公司" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">配件分类名称：</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="请输入配件分类名称" class="form-control">
+                        <input type="text" name="accTypeName" placeholder="请输入配件分类名称" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">配件分类描述：</label>
                     <div class="col-sm-7">
-                        <textarea type="text" placeholder="请输入相关内容" style="height: 100px;"
+                        <textarea type="text" name="accTypeDes" placeholder="请输入相关内容" style="height: 100px;"
                                   class="form-control"></textarea>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">配件分类状态：</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="配件分类状态" class="form-control">
+                        <input type="text" name="accTypeStatus" placeholder="配件分类状态" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
