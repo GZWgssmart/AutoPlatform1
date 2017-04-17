@@ -56,6 +56,28 @@ function showAppoint(){
     }
 }
 
+//领料确认
+function showConfirm(){
+    alert("sss");
+    var row =  $('table').bootstrapTable('getSelections');
+    if(row.length >0) {
+//                $('#editId').val(row[0].id);
+//                $('#editName').val(row[0].name);
+//                $('#editPrice').val(row[0].price)
+        alert("sss")
+        $("#confirm").modal('show'); // 显示弹窗
+    }else{
+        //layer.msg("请先选择某一行", {time : 1500, icon : 2});
+        swal({
+            title:"",
+            text:"请先选择一行数据",
+            type:"warning"})// 提示窗口, 修改成功
+    }
+}
+
+
+
+
 //确认退料
 function showRegress(){
     var row =  $('table').bootstrapTable('getSelections');
