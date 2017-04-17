@@ -166,12 +166,10 @@
     </div>
 </div>
 
-
-
 <!-- 修改弹窗 -->
-<div class="modal fade" id="editWindow" aria-hidden="true" style="overflow:hidden; ">
-    <div class="modal-dialog" style="height: auto;">
-        <div class="modal-content" style="overflow:hidden;">
+<div class="modal fade" id="editWindow" aria-hidden="true" style="overflow:auto; ">
+    <div class="modal-dialog" style="height: auto; overflow:auto;">
+        <div class="modal-content" style="overflow:auto;">
             <form class="form-horizontal" role="form" onsubmit="return checkAdd()" id="editForm" method="post">
                 <div class="modal-header" style="overflow:auto;">
                     <h4>请填写预约信息</h4>
