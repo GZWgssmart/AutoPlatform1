@@ -7,33 +7,42 @@
     <link rel="stylesheet" href="/static/css/bootstrap-table.css">
     <link rel="stylesheet" href="/static/css/select2.min.css">
     <link rel="stylesheet" href="/static/css/sweetalert.css">
+    <link rel="stylesheet" href="/static/css/table/table.css">
 
     <title>维修保养明细管理</title>
 </head>
 <body>
 
+<%@include file="../backstage/contextmenu.jsp"%>
+
 <div class="container">
     <div class="panel-body" style="padding-bottom:0px;"  >
-        <h3 style="align-content: center;">维修保养项目录入</h3>
         <!--show-refresh, show-toggle的样式可以在bootstrap-table.js的948行修改-->
         <!-- table里的所有属性在bootstrap-table.js的240行-->
-        <table id="table" data-toggle="table" data-toolbar="#toolbar"
-               data-url="/table/query" data-method="post" data-query-params="queryParams"
-               data-pagination="true" data-search="true" data-show-refresh="true"
-               data-show-toggle="true" data-show-columns="true" data-page-size="10"
-               data-height="543" data-id-field="id" data-page-list="[5, 10, 20]"
-               data-cach="false" data-click-to-select="true" data-single-select="true">
+        <table id="table" data-toggle="table" data-toolbar="#toolbar" data-url="/table/query"
+               data-method="post" data-query-params="queryParams" data-pagination="true"
+               data-search="true" data-show-refresh="true" data-show-toggle="true"
+               data-show-columns="true" data-page-size="10" data-height="600"
+               data-id-field="id" data-page-list="[5, 10, 20]" data-cach="false"
+               data-click-to-select="true" data-single-select="true">
             <thead>
                 <tr>
+                    <%-- 时间控件都没加 --%>
                     <th data-radio="true" data-field="status"></th>
+                    <th data-field="startTime">开始时间</th>
+                    <th data-field="endTime">预估结束时间</th>
+                    <th data-field="actualEndTime">实际结束时间</th>
                     <th data-field="maintainName">维修保养项目名称</th>
+                    <th data-field="pickupTime">维修保养记录创建时间</th>
                     <th data-field="maintainHour">工时</th>
                     <th data-field="maintainMoney">基础费用</th>
                     <th data-field="maintainManHourFee">工时费</th>
+                    <th data-field="maintainDiscount">维修保养项目折扣</th> <%-- 默认0,可选择折扣，也可选择减价 --%>
                     <th data-field="maintainOrFix">保养还是维修</th><%-- 下拉 --%>
                     <th data-field="maintainDes">描述</th>
                     <th data-field="companyName">维修保养项目所属公司</th>
-                    <th data-field="maintainStatus">状态</th>
+                    <th data-field="mdCreateTime">维修保养明细创建时间</th>
+                    <th data-field="recordStatus">状态</th>
                 </tr>
             </thead>
         </table>
@@ -51,47 +60,101 @@
     </div>
 </div>
 
-
-<!-- 添加弹窗 -->
-<div class="modal fade" id="add" aria-hidden="true" style="overflow:hidden;">
-    <div class="modal-dialog" style="overflow:hidden;">
-        <div class="modal-content" style="overflow:hidden;">
-            <div class="container" style="width: 80%;">
-                <form action="/table/edit" onsubmit=" return checkAdd()" id="addForm" method="post">
-                    <fieldset>
-                        <legend>维修保养明细录入</legend>
-                        <label for="cname">维修保养项目名称</label>
-                        <input class="form-control" id="cname" name="maintainName" minlength="2" type="text" required="true">
-
-                        <label for="cHour">维修保养项目工时</label>
-                        <input class="form-control" id="cHour" type="email" name="maintainHour" required>
-
-                        <label for="money">基础费用</label>
-                        <input class="form-control" id="money" type="maintainMoney" name="byOne">
-
-                        <label for="manHourFee">工时费用</label>
-                        <input class="form-control" id="manHourFee" name="maintainManHourFee" type="phone" required></input>
-
-                        <label for="cComment">维修保养项目描述</label>
-                        <textarea class="form-control" id="cComment" name="maintainDes"></textarea>
-
-                        <label for="company">维修保养项目所属公司</label>
-                        <input class="form-control" id="company" name="companyName"></input>
-
-                        <!-- 注: 这两处的radio要自己改下 radio 的 required 表示必须选中一个。 -->
-                        <label for="cComment">保养还是维修</label><br/>
-                        <input type="radio" id="gender_female" value="f" name="maintainOrFix"/> 保养
-                        <input type="radio" id="gender_male" value="m" name="maintainOrFix" /> 维修 <br/>
-
-                        <label for="cComment">状态</label><br/>
-                        <input type="radio" id="gender_Y" value="Y" name="maintainStatus"/> 禁用
-                        <input type="radio" id="gender_N" value="N" name="maintainStatus" /> 激活 <br/>
-
-                    </fieldset>
-                    <div class="modal-footer" style="overflow:hidden;">
-                        <span id="addError" style="color: red;"></span>
-                        <button type="button" class="btn btn-default" data-dismiss="modal"> 关闭 </button>
-                        <button type="button" class="btn btn-primary"> 保存 </button>
+<%-- 添加窗口 --%>
+<div class="modal fade" id="add" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="container">
+                <form class="form-horizontal" role="form" onsubmit="return checkAdd()" id="register-form" method="post">
+                    <div class="modal-header" style="overflow:auto;">
+                        <p>维修保养明细录入</p>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-5 control-label" for="name">维修保养开始时间：</label>
+                        <div class="col-sm-7">
+                            <input type="datetime" id="statt" name="start" placeholder="2017/02/02 08:30" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-5 control-label" for="name">维修保养预估结束时间：</label>
+                        <div class="col-sm-7">
+                            <input type="datetime" id="end" name="end" placeholder="2017/02/07 08:30" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-5 control-label" for="name">维修保养实际结束时间：</label>
+                        <div class="col-sm-7">
+                            <input type="datetime" id="actualEnd" name="actualEnd" placeholder="2017/02/02 08:30" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-5 control-label" for="name">维修保养项目名称：</label>
+                        <div class="col-sm-7">
+                            <input type="text" id="name" name="name" placeholder="维修保养项目名称" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-5 control-label" for="name">维修保养项目工时：</label>
+                        <div class="col-sm-7">
+                            <input type="number" id="hour" name="hour" placeholder="维修保养项目工时" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-5 control-label" for="name">基础费用：</label>
+                        <div class="col-sm-7">
+                            <input type="number" id="money" name="money" placeholder="基础费用" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-5 control-label" for="name">工时费用：</label>
+                        <div class="col-sm-7">
+                            <input type="number" id="manHourFee" name="manHourFee" placeholder="工时费用" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-5 control-label">维修保养项目描述：</label>
+                        <div class="col-sm-7">
+                            <textarea type="text" placeholder="请输入维修保养项目描述" style="height: 50px;"
+                                  class="form-control"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-5 control-label" for="name">维修保养项目所属公司：</label>
+                        <div class="col-sm-7">
+                            <input type="text" placeholder="维修保养项目所属公司" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-5 control-label">维修保养项目折扣：</label>
+                        <div class="col-sm-7">
+                            <select>
+                                <option>无</option>
+                                <option>折扣</option>
+                                <option>减价</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-5 control-label">保养还是维修：</label>
+                        <div class="col-sm-7">
+                            <select>
+                                <option>保养</option>
+                                <option>维修</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-5 control-label">状态：</label>
+                        <div class="col-sm-7">
+                            <index type="radio" value="Y" /> 激 活
+                            <index type="radio" value="N" /> 禁 用
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-8">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            <button class="btn btn-sm btn-success" type="submit">保 存</button>
+                        </div>
                     </div>
                 </form>
             </div>
@@ -104,47 +167,97 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="container" style="width: 80%;">
-                <form action="/table/edit" onsubmit=" return checkAdd()" id="editForm" method="post">
-                    <fieldset>
-                        <legend>修改维修保养项目</legend>
-                        <p hidden>
-                            <label for="cname">id</label>
-                            <input name="ceshi.id">
-                        </p>
-                        <p>
-                            <label for="cname">维修保养项目名称</label>
-                            <input class="form-control" name="ceshi.maintainName" minlength="2" type="text" required="true">
-                        </p>
-                        <p>
-                            <label for="cHour">工时</label>
-                            <input class="form-control" type="email" name="ceshi.maintainHour" required>
-                        </p>
-                        <p>
-                            <label for="money">基础费用</label>
-                            <input class="form-control" type="byteRangeLength" name="ceshi.maintainMoney">
-                        </p>
-                        <p>
-                            <label for="manHourFee">工时费</label>
-                            <input class="form-control" name="ceshi.maintainManHourFee" type="phone" required></input>
-                        </p>
-                        <p>
-                            <label for="cComment">描述</label>
-                            <input class="form-control" name="ceshi.maintainDes" type="isIdCardNo" required></input>
-                        </p>
-                        <p>
-                            <label for="company">维修保养项目所属公司</label>
-                            <textarea class="form-control" name="ceshi.companyName" required></textarea>
-                        </p>
-                        <p><!-- radio 的 required 表示必须选中一个。 -->
-                            <label for="cComment">保养还是维修</label><br/>
-                            <input type="radio" value="f" name="ceshi.maintainOrFix"/> 保养
-                            <input type="radio" value="m" name="ceshi.maintainOrFix" /> 维修
-                        </p>
-                            <label for="cComment">状态</label><br/>
-                            <input type="radio" value="Y" name="ceshi.maintainOrFix"/> 禁用
-                            <input type="radio" value="N" name="ceshi.maintainOrFix" /> 激活
-                        </p>
-                    </fieldset>
+                <form class="form-horizontal" id="editForm" method="post">
+                    <div class="modal-header" style="overflow:auto;">
+                        <p>维修保养明细修改</p>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-5 control-label" for="name">维修保养开始时间：</label>
+                        <div class="col-sm-7">
+                            <input type="datetime" name="start" placeholder="2017/02/02 08:30" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-5 control-label" for="name">维修保养预估结束时间：</label>
+                        <div class="col-sm-7">
+                            <input type="datetime" name="end" placeholder="2017/02/07 08:30" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-5 control-label" for="name">维修保养实际结束时间：</label>
+                        <div class="col-sm-7">
+                            <input type="datetime" name="actualEnd" placeholder="2017/02/02 08:30" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-5 control-label" for="name">维修保养项目名称：</label>
+                        <div class="col-sm-7">
+                            <input type="text" name="name" placeholder="维修保养项目名称" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-5 control-label" for="name">维修保养项目工时：</label>
+                        <div class="col-sm-7">
+                            <input type="number" name="hour" placeholder="维修保养项目工时" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-5 control-label" for="name">基础费用：</label>
+                        <div class="col-sm-7">
+                            <input type="number" name="money" placeholder="基础费用" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-5 control-label" for="name">工时费用：</label>
+                        <div class="col-sm-7">
+                            <input type="number" name="manHourFee" placeholder="工时费用" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-5 control-label">维修保养项目描述：</label>
+                        <div class="col-sm-7">
+                            <textarea type="text" placeholder="请输入维修保养项目描述" style="height: 50px;"
+                                      class="form-control"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-5 control-label" for="name">维修保养项目所属公司：</label>
+                        <div class="col-sm-7">
+                            <input type="text" placeholder="维修保养项目所属公司" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-5 control-label">维修保养项目折扣：</label>
+                        <div class="col-sm-7">
+                            <select>
+                                <option>无</option>
+                                <option>折扣</option>
+                                <option>减价</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-5 control-label">保养还是维修：</label>
+                        <div class="col-sm-7">
+                            <select>
+                                <option>保养</option>
+                                <option>维修</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-5 control-label">状态：</label>
+                        <div class="col-sm-7">
+                            <index type="radio" value="Y" /> 激 活
+                            <index type="radio" value="N" /> 禁 用
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-8">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            <button class="btn btn-sm btn-success" type="submit">保 存</button>
+                        </div>
+                    </div>
                     <div class="modal-footer" style="overflow:hidden;">
                         <button type="button" class="btn btn-default" data-dismiss="modal"> 关闭 </button>
                         <button type="button" class="btn btn-primary"> 保存 </button>
@@ -194,107 +307,17 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-
-<script src="/static/js/jquery.min.js"></script>
-<script src="/static/js/bootstrap.min.js"></script>
-<script src="/static/js/bootstrap-table/bootstrap-table.js"></script>
-<script src="/static/js/bootstrap-table/bootstrap-table-zh-CN.js"></script>
-<script src="/static/js/jquery.formFill.js"></script>
-<script src="/static/js/select2/select2.js"></script>
-<script src="/static/js/sweetalert/sweetalert.min.js"></script>
-<script src="/static/js/contextmenu.js"></script>
-<script>
-    $(function () {
-        $('#table').bootstrapTable('hideColumn', 'id');
-
-        $("#addSelect").select2({
-                language: 'zh-CN'
-            }
-        );
-
-        //绑定Ajax的内容
-        $.getJSON("/table/queryType", function (data) {
-            $("#addSelect").empty();//清空下拉框
-            $.each(data, function (i, item) {
-                $("#addSelect").append("<option value='" + data[i].id + "'>&nbsp;" + data[i].name + "</option>");
-            });
-        })
-        //            $("#addSelect").on("select2:select",
-        //                    function (e) {
-        //                        alert(e)
-        //                        alert("select2:select", e);
-        //            });
-    });
-
-    function showEdit(){
-        var row =  $('table').bootstrapTable('getSelections');
-        if(row.length >0) {
-            //                $('#editId').val(row[0].id);
-            //                $('#editName').val(row[0].name);
-            //                $('#editPrice').val(row[0].price);
-            $("#edit").modal('show'); // 显示弹窗
-            var ceshi = row[0];
-            $("#editForm").fill(ceshi);
-        }else{
-            //layer.msg("请先选择某一行", {time : 1500, icon : 2});
-//            layer.alert("请先选择某一行");
-            $("#tanchuang").modal('show');
-        }
-    }
-
-    function showAdd(){
-        $("#add").modal('show');
-    }
-
-    function formatRepo(repo) {
-        return repo.text
-    }
-    function formatRepoSelection(repo) {
-        return repo.text
-    }
-
-    function showDel(){
-        var row =  $('table').bootstrapTable('getSelections');
-        if(row.length >0) {
-            $("#del").modal('show');
-        }else{
-            $("#tanchuang").modal('show');
-        }
-    }
-
-    function checkAdd(){
-        var id = $('#addId').val();
-        var name = $('#addName').val();
-        var price = $('#addPrice').val();
-        var reslist=$("#addSelect").select2("data"); //获取多选的值
-        alert(reslist.length)
-        if(id != "" && name != "" && price != ""){
-            return true;
-        }else{
-            var error = document.getElementById("addError");
-            error.innerHTML = "请输入正确的数据";
-            return false;
-        }
-    }
-
-    function checkEdit() {
-        $.post("/table/edit",
-            $("#editForm").serialize(),
-            function (data) {
-                if (data.result == "success") {
-                    $("#edit").modal('hide'); // 关闭指定的窗口
-                    $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
-                    swal({
-                        title:"",
-                        text: data.message,
-                        type:"success"})// 提示窗口, 修改成功
-                } else if (data.result == "fail") {
-                    //$.messager.alert("提示", data.result.message, "info");
-                }
-            }, "json"
-        );
-    }
-
-</script>
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/bootstrap-table/bootstrap-table.js"></script>
+    <script src="/static/js/bootstrap-table/bootstrap-table-zh-CN.js"></script>
+    <script src="/static/js/jquery.formFill.js"></script>
+    <script src="/static/js/select2/select2.js"></script>
+    <script src="/static/js/sweetalert/sweetalert.min.js"></script>
+    <script src="/static/js/contextmenu.js"></script>
+    <script src="/static/js/bootstrap-select/bootstrap-select.js"></script>
+    <script src="/static/js/form/jquery.validate.js"></script>
+    <script src="/static/js/form/form.js"></script>
+    <script src="/static/js/maintenanceJieDaiGuanLi/subsidiary.js"></script>
 </body>
 </html>
