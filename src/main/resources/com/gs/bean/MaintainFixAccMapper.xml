@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gs.dao.MaintainFixAccDAO" >
+  <resultMap id="BaseResultMap" type="com.gs.bean.MaintainFixAcc" >
+    <id column="mainAccId" property="mainAccId" jdbcType="VARCHAR" />
+    <result column="maintainId" property="maintainId" jdbcType="VARCHAR" />
+    <result column="accId" property="accId" jdbcType="VARCHAR" />
+    <result column="accCount" property="accCount" jdbcType="INTEGER" />
+  </resultMap>
+
+</mapper>

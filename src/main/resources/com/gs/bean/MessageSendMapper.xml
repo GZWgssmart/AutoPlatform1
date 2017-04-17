@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gs.dao.MessageSendDAO" >
+  <resultMap id="BaseResultMap" type="com.gs.bean.MessageSend" >
+    <id column="messageId" property="messageId" jdbcType="VARCHAR" />
+    <result column="userId" property="userId" jdbcType="VARCHAR" />
+    <result column="sendMsg" property="sendMsg" jdbcType="VARCHAR" />
+    <result column="sendTime" property="sendTime" jdbcType="TIMESTAMP" />
+    <result column="sendCreatedTime" property="sendCreatedTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+</mapper>

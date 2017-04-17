@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gs.dao.IncomingOutgoingDAO" >
+  <resultMap id="BaseResultMap" type="com.gs.bean.IncomingOutgoing" >
+    <id column="inOutId" property="inOutId" jdbcType="VARCHAR" />
+    <result column="inTypeId" property="inTypeId" jdbcType="VARCHAR" />
+    <result column="outTypeId" property="outTypeId" jdbcType="VARCHAR" />
+    <result column="inOutMoney" property="inOutMoney" jdbcType="DOUBLE" />
+    <result column="inOutCreatedUser" property="inOutCreatedUser" jdbcType="VARCHAR" />
+    <result column="inOutCreatedTime" property="inOutCreatedTime" jdbcType="TIMESTAMP" />
+    <result column="inOutStatus" property="inOutStatus" jdbcType="VARCHAR" />
+  </resultMap>
+
+</mapper>

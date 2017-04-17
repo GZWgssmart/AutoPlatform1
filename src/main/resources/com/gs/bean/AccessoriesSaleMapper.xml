@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gs.dao.AccessoriesSaleDAO" >
+  <resultMap id="BaseResultMap" type="com.gs.bean.AccessoriesSale" >
+    <id column="acc_Sale_Id" property="accSaleId" jdbcType="VARCHAR" />
+    <result column="accId" property="accId" jdbcType="VARCHAR" />
+    <result column="accSaledTime" property="accSaledTime" jdbcType="TIMESTAMP" />
+    <result column="accSaleCount" property="accSaleCount" jdbcType="INTEGER" />
+    <result column="accSalePrice" property="accSalePrice" jdbcType="DOUBLE" />
+    <result column="accSaleTotal" property="accSaleTotal" jdbcType="DOUBLE" />
+    <result column="accSaleDiscount" property="accSaleDiscount" jdbcType="DOUBLE" />
+    <result column="accSaleMoney" property="accSaleMoney" jdbcType="DOUBLE" />
+    <result column="accSaleCreatedTime" property="accSaleCreatedTime" jdbcType="TIMESTAMP" />
+    <result column="companyId" property="companyId" jdbcType="VARCHAR" />
+    <result column="accSaleStatus" property="accSaleStatus" jdbcType="VARCHAR" />
+  </resultMap>
+
+</mapper>

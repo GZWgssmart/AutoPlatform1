@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gs.dao.CompanyDAO" >
+  <resultMap id="BaseResultMap" type="com.gs.bean.Company" >
+    <id column="company_Id" property="companyId" jdbcType="VARCHAR" />
+    <result column="companyName" property="companyName" jdbcType="VARCHAR" />
+    <result column="companyAddress" property="companyAddress" jdbcType="VARCHAR" />
+    <result column="companyTel" property="companyTel" jdbcType="VARCHAR" />
+    <result column="companyPricipal" property="companyPricipal" jdbcType="VARCHAR" />
+    <result column="companyWebsite" property="companyWebsite" jdbcType="VARCHAR" />
+    <result column="companyLogo" property="companyLogo" jdbcType="VARCHAR" />
+    <result column="companyOpendate" property="companyOpendate" jdbcType="DATE" />
+    <result column="companySize" property="companySize" jdbcType="VARCHAR" />
+    <result column="companyLongitude" property="companyLongitude" jdbcType="DOUBLE" />
+    <result column="companyLatitude" property="companyLatitude" jdbcType="DOUBLE" />
+    <result column="companyDes" property="companyDes" jdbcType="VARCHAR" />
+    <result column="companyStatus" property="companyStatus" jdbcType="VARCHAR" />
+  </resultMap>
+
+</mapper>

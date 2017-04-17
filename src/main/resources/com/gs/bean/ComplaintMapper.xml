@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gs.dao.ComplaintDAO" >
+  <resultMap id="BaseResultMap" type="com.gs.bean.Complaint" >
+    <id column="complaint_Id" property="complaintId" jdbcType="VARCHAR" />
+    <result column="userId" property="userId" jdbcType="VARCHAR" />
+    <result column="complaintContent" property="complaintContent" jdbcType="VARCHAR" />
+    <result column="complaintCreatedTime" property="complaintCreatedTime" jdbcType="TIMESTAMP" />
+    <result column="complaintReply" property="complaintReply" jdbcType="VARCHAR" />
+    <result column="complaintReplyTime" property="complaintReplyTime" jdbcType="TIMESTAMP" />
+    <result column="complaintReplyUser" property="complaintReplyUser" jdbcType="VARCHAR" />
+  </resultMap>
+
+</mapper>

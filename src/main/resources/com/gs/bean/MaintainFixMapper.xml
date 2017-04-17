@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gs.dao.MaintainFixDAO" >
+  <resultMap id="BaseResultMap" type="com.gs.bean.MaintainFix" >
+    <id column="maintainId" property="maintainId" jdbcType="VARCHAR" />
+    <result column="maintainName" property="maintainName" jdbcType="VARCHAR" />
+    <result column="maintainHour" property="maintainHour" jdbcType="DOUBLE" />
+    <result column="maintainMoney" property="maintainMoney" jdbcType="DOUBLE" />
+    <result column="maintainManhourFee" property="maintainManhourFee" jdbcType="DOUBLE" />
+    <result column="maintainOrFix" property="maintainOrFix" jdbcType="VARCHAR" />
+    <result column="maintainDes" property="maintainDes" jdbcType="VARCHAR" />
+    <result column="companyId" property="companyId" jdbcType="VARCHAR" />
+    <result column="maintainStatus" property="maintainStatus" jdbcType="VARCHAR" />
+  </resultMap>
+
+</mapper>

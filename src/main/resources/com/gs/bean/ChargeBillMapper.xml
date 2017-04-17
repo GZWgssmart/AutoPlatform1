@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gs.dao.ChargeBillDAO" >
+  <resultMap id="BaseResultMap" type="com.gs.bean.ChargeBill" >
+    <id column="chargeBillId" property="chargeBillId" jdbcType="VARCHAR" />
+    <result column="maintainRecordId" property="maintainRecordId" jdbcType="VARCHAR" />
+    <result column="chargeBillMoney" property="chargeBillMoney" jdbcType="DOUBLE" />
+    <result column="paymentMethod" property="paymentMethod" jdbcType="VARCHAR" />
+    <result column="actualPayment" property="actualPayment" jdbcType="DOUBLE" />
+    <result column="chargeTime" property="chargeTime" jdbcType="TIMESTAMP" />
+    <result column="chargeCreatedTime" property="chargeCreatedTime" jdbcType="TIMESTAMP" />
+    <result column="chargeBillDes" property="chargeBillDes" jdbcType="VARCHAR" />
+    <result column="chargeBillStatus" property="chargeBillStatus" jdbcType="VARCHAR" />
+  </resultMap>
+
+</mapper>
