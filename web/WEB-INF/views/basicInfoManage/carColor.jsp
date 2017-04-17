@@ -6,26 +6,23 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    String path = request.getContextPath();
+%>
 <html>
 <head>
-    <title>公司信息管理</title>
+    <title>汽车颜色管理</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <%--
-        移动端的dateTimePicker的css样式
-    --%>
-    <%--<link rel="stylesheet" href="/static/css/dateTimePicker.css">--%>
     <link rel="stylesheet" href="/static/css/bootstrap.min.css">
     <link rel="stylesheet" href="/static/css/bootstrap-table.css">
     <link rel="stylesheet" href="/static/css/select2.min.css">
     <link rel="stylesheet" href="/static/css/sweetalert.css">
-    <link rel="stylesheet" href="/static/css/fileinput.css">
     <link rel="stylesheet" href="/static/css/table/table.css">
-    <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.css">
-    <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/datetimepicker.less">
+    <link rel="stylesheet" href="/static/css/minicolors/jquery.minicolors.css">
 </head>
 <body>
-<%@include file="../basicInfoManage/contextmenu.jsp" %>
+<%@include file="contextmenu.jsp" %>
 
 <div class="container">
     <div class="panel-body" style="padding-bottom:0px;">
@@ -52,11 +49,11 @@
             <thead>
             <tr>
                 <th data-radio="true" data-field="status"></th>
-                <th data-field="ScheduleNumber">进度编号</th>
-                <th data-field="MaintenanceProject">维修保养项目</th>
-                <th ddata-field="EstimatedOverTime">预估结束时间</th>
-                <th data-field="actualEndTime">实际结束时间</th>
-
+                <th data-field="colorName">颜色名称</th>
+                <th data-field="colorRGB">颜色的RBG值</th>
+                <th data-field="colorHex">颜色的16进制值</th>
+                <th data-field="colorDes">颜色描述</th>
+                <th data-field="colorStatus">颜色状态</th>
             </tr>
             </thead>
         </table>
@@ -74,37 +71,41 @@
     </div>
 </div>
 
-
-<!-- 添加弹窗 -->
+<%--添加窗口--%>
 <div class="modal fade" id="addWindow" aria-hidden="true" style="overflow:auto; ">
     <div class="modal-dialog" style="width: 700px;height: auto;">
         <div class="modal-content" style="overflow:hidden;">
-            <form class="form-horizontal" onsubmit="return checkAdd()" id="addForm" method="post">
+            <form class="form-horizontal" role="form" onsubmit="return checkAdd()" id="showAddFormWar" method="post">
                 <div class="modal-header" style="overflow:auto;">
-                    <h4>请填写车辆维修保养</h4>
+                    <h4>请填写汽车颜色的相关信息</h4>
                 </div>
+                <br/>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">进度编号：</label>
+                    <label class="col-sm-3 control-label">颜色命名：</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="请输入进度编号" class="form-control">
+                        <input type="text" name="colorName" placeholder="请输入颜色命名" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">维修保养项目：</label>
-                    <div class="col-sm-7">
-                        <input type="text" placeholder="请输入维修保养项目" class="form-control">
+                    <label class="col-sm-3 control-label">颜色的16进制值：</label>
+                    <div class="col-sm-5" style="padding-right: 0px">
+                        <input name="colorHex" type="text" class="form-control addColor" data-control="hue" value="">
+                    </div>
+                    <div class="col-sm-2" style="padding-left: 0px;">
+                        <input type="button" class="btn btn-default" value="确认" onclick="showAddHex();">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">预计结束时间：</label>
+                    <label class="col-sm-3 control-label">颜色的RGB值：</label>
                     <div class="col-sm-7">
-                        <input type="text" value="2012-05-15 21:05" id="addDateTimePicker" class="form-control">
+                        <input id="addrgbColor" type="text" placeholder="请选择颜色的RGB值" value="" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">实际结束时间：</label>
+                    <label class="col-sm-3 control-label">颜色的描述：</label>
                     <div class="col-sm-7">
-                        <input type="text" value="2012-05-15 21:05" id="addDateTimePicker1" class="form-control">
+                        <textarea type="text" name="colorDes" placeholder="请输入该颜色的相关描述" style="height: 100px;"
+                                  class="form-control"></textarea>
                     </div>
                 </div>
                 <div class="form-group">
@@ -118,43 +119,44 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-
-<!-- 修改弹窗 -->
+<%--修改窗口--%>
 <div class="modal fade" id="editWindow" aria-hidden="true" style="overflow:auto; ">
     <div class="modal-dialog" style="width: 700px;height: auto;">
         <div class="modal-content" style="overflow:hidden;">
-            <form class="form-horizontal" onsubmit="return checkAdd()" id="editForm" method="post">
+            <form class="form-horizontal" role="form" onsubmit="return checkAdd()" id="showEditFormWar" method="post">
                 <div class="modal-header" style="overflow:auto;">
-                    <p>请修改车辆维修保养</p>
+                    <h4>请填写汽车颜色的相关信息</h4>
                 </div>
+                <br/>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">进度编号：</label>
+                    <label class="col-sm-3 control-label">颜色命名：</label>
                     <div class="col-sm-7">
-                        <input type="text" define="maintenance.ScheduleNumber" placeholder="请输入进度编号" class="form-control">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">维修保养项目：</label>
-                    <div class="col-sm-7">
-                        <input type="text" define="maintenance.companyAddress" placeholder="请输入维修保养项目"
-                               class="form-control">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">预计结束时间：</label>
-                    <div class="col-sm-7">
-                        <input type="text" define="maintenance.MaintenanceProject" value="2012-05-15 21:05"
-                               id="editDateTimePicker" class="form-control">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">实际结束时间：</label>
-                    <div class="col-sm-7">
-                        <input type="text" define="maintenance.actualEndTime" value="2012-05-15 21:05"
-                               id="editDateTimePicker1" class="form-control">
+                        <input type="text" name="colorName" define="carColor.colorName" placeholder="请输入颜色命名" class="form-control">
                     </div>
                 </div>
 
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">颜色的16进制值：</label>
+                    <div class="col-sm-5" style="padding-right: 0px">
+                        <input name="colorHex" define="carColor.colorHex" type="text" class="form-control editColor" data-control="hue" value="">
+                    </div>
+                    <div class="col-sm-2" style="padding-left: 0px;">
+                        <input type="button" class="btn btn-default" value="确认" onclick="showEditHex();">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">颜色的RGB值：</label>
+                    <div class="col-sm-7">
+                        <input id="editrgbColor" define="carColor.colorRGB" type="text" placeholder="请选择颜色的RGB值" value="" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">颜色的描述：</label>
+                    <div class="col-sm-7">
+                        <textarea type="text" name="colorDes" define="carColor.colorDes" placeholder="请输入该颜色的相关描述" style="height: 100px;"
+                                  class="form-control"></textarea>
+                    </div>
+                </div>
                 <div class="form-group">
                     <div class="col-sm-offset-8">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
@@ -212,15 +214,8 @@
 <script src="/static/js/select2/select2.js"></script>
 <script src="/static/js/sweetalert/sweetalert.min.js"></script>
 <script src="/static/js/contextmenu.js"></script>
-<script src="/static/js/fileInput/fileinput.js"></script>
-<script src="/static/js/fileInput/zh.js"></script>
-<script src="/static/js/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.js"></script>
-<script src="/static/js/bootstrap-dateTimePicker/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
-<%--
-    被注释的两行是移动端版本的datetimepicker
---%>
-<%--<script src="/static/js/dateTimePicker/moment.js"></script>--%>
-<%--<script src="/static/js/dateTimePicker/bootstrap-datetimepicker.js"></script>--%>
-<script src="/static/js/backstage/basicInfoManage/maintenance.js"></script>
+<script src="/static/js/minicolors/jquery.minicolors.min.js"></script>
+<script src="/static/js/form/jquery.validate.js"></script>
+<script src="/static/js/backstage/basicInfoManage/carColor.js"></script>
 </body>
 </html>

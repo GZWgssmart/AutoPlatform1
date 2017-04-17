@@ -33,7 +33,7 @@ public class BackstageController {
     @RequestMapping(value = "companyInfo", method = RequestMethod.GET)
     public String companyInfoIndex() {
         logger.info("跳转到公司信息管理页面");
-        return "backstage/companyInfo";
+        return "basicInfoManage/companyInfo";
     }
 
     /**
@@ -44,7 +44,7 @@ public class BackstageController {
     @RequestMapping(value = "carBrand", method = RequestMethod.GET)
     public String carBrandIndex() {
         logger.info("跳转到汽车品牌管理页面");
-        return "backstage/carBrand";
+        return "basicInfoManage/carBrand";
     }
 
     /**
@@ -55,7 +55,7 @@ public class BackstageController {
     @RequestMapping(value = "carModel", method = RequestMethod.GET)
     public String carModelIndex() {
         logger.info("跳转到车型管理页面");
-        return "backstage/carModel";
+        return "basicInfoManage/carModel";
     }
 
     /**
@@ -66,7 +66,7 @@ public class BackstageController {
     @RequestMapping(value = "carColor", method = RequestMethod.GET)
     public String carColorIndex() {
         logger.info("跳转到汽车颜色管理页面");
-        return "backstage/carColor";
+        return "basicInfoManage/carColor";
     }
 
     /**
@@ -77,7 +77,7 @@ public class BackstageController {
     @RequestMapping(value = "carPlate", method = RequestMethod.GET)
     public String carPlateIndex() {
         logger.info("跳转到汽车车牌管理页面");
-        return "backstage/carPlate";
+        return "basicInfoManage/carPlate";
     }
 
     /**
@@ -86,7 +86,7 @@ public class BackstageController {
     @RequestMapping(value = "upkeepItem", method = RequestMethod.GET)
     public String upkeepItemIndex() {
         logger.info("跳转到保养项目管理页面");
-        return "backstage/maintainItem";
+        return "basicInfoManage/maintainItem";
     }
 
     /**
@@ -95,7 +95,7 @@ public class BackstageController {
     @RequestMapping(value = "fixItem", method = RequestMethod.GET)
     public String maintainItemIndex() {
         logger.info("跳转到维修项目管理页面");
-        return "backstage/fixItem";
+        return "basicInfoManage/fixItem";
     }
 
     /**
@@ -104,7 +104,7 @@ public class BackstageController {
     @RequestMapping(value = "commonFaults", method = RequestMethod.GET)
     public String commonFaultsIndex() {
         logger.info("跳转到常见故障管理页面");
-        return "backstage/commonFaults";
+        return "basicInfoManage/commonFaults";
     }
 
 

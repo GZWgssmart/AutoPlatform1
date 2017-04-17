@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="/static/css/bootstrap.min.css">
 </head>
 <body>
-<%@include file="contextmenu.jsp"%>
+<%@include file="../basicInfoManage/contextmenu.jsp"%>
 <script src="/static/js/jquery.min.js"></script>
 <script src="/static/js/bootstrap.min.js"></script>
 <script src="/static/js/contextmenu.js"></script>

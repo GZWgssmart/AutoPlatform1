@@ -25,7 +25,7 @@
     <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/datetimepicker.less">
 </head>
 <body>
-<%@include file="../basicInfoManage/contextmenu.jsp" %>
+<%@include file="contextmenu.jsp" %>
 
 <div class="container">
     <div class="panel-body" style="padding-bottom:0px;">
@@ -52,10 +52,12 @@
             <thead>
             <tr>
                 <th data-radio="true" data-field="status"></th>
-                <th data-field="ScheduleNumber">进度编号</th>
-                <th data-field="MaintenanceProject">维修保养项目</th>
-                <th ddata-field="EstimatedOverTime">预估结束时间</th>
-                <th data-field="actualEndTime">实际结束时间</th>
+                <th data-field="companyName">公司名称</th>
+                <th data-field="companyAddress">公司地址</th>
+                <th data-field="companyTel">联系电话</th>
+                <th data-field="companyPricipal">负责人</th>
+                <th data-field="companyOpenDate">公司成立时间</th>
+                <th data-field="companyLogo">公司LOGO</th>
 
             </tr>
             </thead>
@@ -76,41 +78,59 @@
 
 
 <!-- 添加弹窗 -->
-<div class="modal fade" id="addWindow" aria-hidden="true" style="overflow:auto; ">
-    <div class="modal-dialog" style="width: 700px;height: auto;">
-        <div class="modal-content" style="overflow:hidden;">
-            <form class="form-horizontal" onsubmit="return checkAdd()" id="addForm" method="post">
+<div class="modal fade"  id="addWindow" aria-hidden="true" style="overflow:auto; ">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form class="form-horizontal" role="form" onsubmit="return checkAdd()" id="showAddFormWar" method="post" >
                 <div class="modal-header" style="overflow:auto;">
-                    <h4>请填写车辆维修保养</h4>
+                    <h4>请填写你的公司信息</h4>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">进度编号：</label>
+                    <label class="col-sm-3 control-label">公司名称：</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="请输入进度编号" class="form-control">
+                        <input type="text" id="companyName" name="companyName" placeholder="请输入公司名称" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">维修保养项目：</label>
+                    <label class="col-sm-3 control-label">公司地址：</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="请输入维修保养项目" class="form-control">
+                        <input type="text" name="companyAddress" placeholder="请输入公司地址" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">预计结束时间：</label>
+                    <label class="col-sm-3 control-label">联系电话：</label>
                     <div class="col-sm-7">
-                        <input type="text" value="2012-05-15 21:05" id="addDateTimePicker" class="form-control">
+                        <input type="number" name="companyTel" placeholder="请输入联系方式" class="form-control" max="11">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">实际结束时间：</label>
+                    <label class="col-sm-3 control-label">负责人：</label>
                     <div class="col-sm-7">
-                        <input type="text" value="2012-05-15 21:05" id="addDateTimePicker1" class="form-control">
+                        <input type="text" name="companyPricipal" placeholder="请输入负责人" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">公司成立时间：</label>
+                    <div class="col-sm-7">
+                        <input type="text" name="companyOpenDate" value="2012-05-15 21:05" id="addDateTimePicker" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">公司logo：</label>
+                    <div class="col-lg-7">
+                        <div class="ibox-title">
+                            <div class="input-group" style="padding-left: 15px;">
+                                <input id="add_companyLogo" name="txt_file" type="file" class="form-control" multiple
+                                       class="file-loading"
+                                       placeholder="请选择或输入一个你想上传的相册类型,默认当天日期为类型!"/>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-8">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button class="btn btn-sm btn-success" type="submit">保 存</button>
+                        <button class="btn btn-sm btn-success submit" type="submit">保 存</button>
                     </div>
                 </div>
             </form>
@@ -121,40 +141,59 @@
 
 <!-- 修改弹窗 -->
 <div class="modal fade" id="editWindow" aria-hidden="true" style="overflow:auto; ">
-    <div class="modal-dialog" style="width: 700px;height: auto;">
-        <div class="modal-content" style="overflow:hidden;">
-            <form class="form-horizontal" onsubmit="return checkAdd()" id="editForm" method="post">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form class="form-horizontal" role="form" onsubmit="return checkEdit()" id="showEditFormWar" method="post">
                 <div class="modal-header" style="overflow:auto;">
-                    <p>请修改车辆维修保养</p>
+                    <p>请修改你的公司信息</p>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">进度编号：</label>
+                    <label class="col-sm-3 control-label">公司名称：</label>
                     <div class="col-sm-7">
-                        <input type="text" define="maintenance.ScheduleNumber" placeholder="请输入进度编号" class="form-control">
+                        <input type="text" name="companyName" define="companyInfo.companyName" placeholder="请输入公司名称" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">维修保养项目：</label>
+                    <label class="col-sm-3 control-label">公司地址：</label>
                     <div class="col-sm-7">
-                        <input type="text" define="maintenance.companyAddress" placeholder="请输入维修保养项目"
+                        <input type="text" name="companyAddress" define="companyInfo.companyAddress" placeholder="请输入公司地址"
                                class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">预计结束时间：</label>
+                    <label class="col-sm-3 control-label">联系电话：</label>
                     <div class="col-sm-7">
-                        <input type="text" define="maintenance.MaintenanceProject" value="2012-05-15 21:05"
+                        <input type="number" name="companyTel" define="companyInfo.companyTel" placeholder="请输入联系方式"
+                               class="form-control" max="11">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">负责人：</label>
+                    <div class="col-sm-7">
+                        <input type="text" name="companyPricipal" define="companyInfo.companyPricipal" placeholder="请输入负责人"
+                               class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">公司成立时间：</label>
+                    <div class="col-sm-7">
+                        <input type="text" name="companyOpenDate" define="companyInfo.companyOpenTime" value="2012-05-15 21:05"
                                id="editDateTimePicker" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">实际结束时间：</label>
-                    <div class="col-sm-7">
-                        <input type="text" define="maintenance.actualEndTime" value="2012-05-15 21:05"
-                               id="editDateTimePicker1" class="form-control">
+                    <label class="col-sm-3 control-label">公司logo：</label>
+                    <div class="col-lg-7">
+                        <div class="ibox-title">
+                            <div class="input-group" style="padding-left: 15px;">
+                                <input id="edit_companyLogo" define="companyInfo.companyLogo" name="txt_file"
+                                       type="file" class="form-control" multiple
+                                       class="file-loading"
+                                       placeholder="请选择或输入一个你想上传的相册类型,默认当天日期为类型!"/>
+                            </div>
+                        </div>
                     </div>
                 </div>
-
                 <div class="form-group">
                     <div class="col-sm-offset-8">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
@@ -168,7 +207,7 @@
 
 <!-- 删除弹窗 -->
 <div class="modal fade" id="del" aria-hidden="true">
-    <div class="modal-dialog" style="overflow:hidden;">
+    <div class="modal-dialog">
         <form action="/table/edit" method="post">
             <div class="modal-content">
                 <input type="hidden" id="delNoticeId"/>
@@ -221,6 +260,7 @@
 --%>
 <%--<script src="/static/js/dateTimePicker/moment.js"></script>--%>
 <%--<script src="/static/js/dateTimePicker/bootstrap-datetimepicker.js"></script>--%>
-<script src="/static/js/backstage/basicInfoManage/maintenance.js"></script>
+<script src="/static/js/form/jquery.validate.js"></script>
+<script src="/static/js/backstage/basicInfoManage/companyInfo.js"></script>
 </body>
 </html>
