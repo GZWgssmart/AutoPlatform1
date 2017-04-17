@@ -60,19 +60,6 @@ public interface BaseService<PK extends Serializable, T> {
     public int batchUpdate(List<T> list);
 
     /**
-     * 查询所有记录
-     * @return
-     */
-    public List<T> queryAll();
-
-    /**
-     * 查询指定状态的所有记录
-     * @param status
-     * @return
-     */
-    public List<T> queryAll(String status);
-
-    /**
      * 查询单个记录
      * @param t
      * @return

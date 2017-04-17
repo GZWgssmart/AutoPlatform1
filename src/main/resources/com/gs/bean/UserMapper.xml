@@ -1,7 +1,28 @@
-<!DOCTYPE mapper
-    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gs.dao.UserMapper">
+  <resultMap id="BaseResultMap" type="com.gs.bean.User">
+    <id column="userId" jdbcType="VARCHAR" property="userId" />
+    <result column="userEmail" jdbcType="VARCHAR" property="userEmail" />
+    <result column="userPhone" jdbcType="VARCHAR" property="userPhone" />
+    <result column="userPwd" jdbcType="VARCHAR" property="userPwd" />
+    <result column="userNickName" jdbcType="VARCHAR" property="userNickName" />
+    <result column="userIdentity" jdbcType="VARCHAR" property="userIdentity" />
+    <result column="userName" jdbcType="VARCHAR" property="userName" />
+    <result column="userGender" jdbcType="VARCHAR" property="userGender" />
+    <result column="userBirthday" jdbcType="TIMESTAMP" property="userBirthday" />
+    <result column="userAddress" jdbcType="VARCHAR" property="userAddress" />
+    <result column="qqOpenId" jdbcType="VARCHAR" property="qqOpenId" />
+    <result column="weiboOpenId" jdbcType="VARCHAR" property="weiboOpenId" />
+    <result column="weChatOpenId" jdbcType="VARCHAR" property="weChatOpenId" />
+    <result column="userIcon" jdbcType="VARCHAR" property="userIcon" />
+    <result column="userDes" jdbcType="VARCHAR" property="userDes" />
+    <result column="companyId" jdbcType="VARCHAR" property="companyId" />
+    <result column="userSalary" jdbcType="DOUBLE" property="userSalary" />
+    <result column="userCreatedTime" jdbcType="TIMESTAMP" property="userCreatedTime" />
+    <result column="userLoginedTime" jdbcType="TIMESTAMP" property="userLoginedTime" />
+    <result column="userStatus" jdbcType="VARCHAR" property="userStatus" />
+  </resultMap>
 
-<mapper namespace="com.gs.dao.UserDAO">
 
 </mapper>
