@@ -11,7 +11,7 @@
 %>
 <html>
 <head>
-    <title>维修保养明细管理</title>
+    <title>维维修保养明细管理</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/css/bootstrap.min.css">
@@ -32,7 +32,7 @@
         <table id="table"
                data-toggle="table"
                data-toolbar="#toolbar"
-               data-url=""
+               data-url="/table/query"
                data-method="post"
                data-query-params="queryParams"
                data-pagination="true"
@@ -49,11 +49,11 @@
                data-single-select="true">
             <thead>
             <tr>
-                <th data-radio="true" data-field="maintainDetailId">保养明细编号</th>
-                <th data-field="maintainRecordId">保养记录编号</th>
-                <th data-field="maintainItemId">保养项目编号</th>
-                <th data-field="maintainDiscount">保养项目折扣</th>
-                <th data-field="mdCreatedTime">保养明细创建时间</th>
+                <th data-radio="true" data-field="status"></th>
+                <th data-field="maintainRecordId">维修保养记录</th>
+                <th data-field="maintainItemId">维修保养项目</th>
+                <th data-field="maintainDiscount">维修保养项目折扣</th>
+                <th data-field="mdCreatedTime">维修保养明细创建时间</th>
             </tr>
             </thead>
         </table>
@@ -73,35 +73,35 @@
 
 <!-- 添加弹窗 -->
 <div class="modal fade" id="addWindow" aria-hidden="true" style="overflow:auto; ">
-    <div class="modal-dialog" style="width: 700px;height: auto;">
+    <div class="modal-dialog" style="width: 780px;height: auto;">
         <div class="modal-content" style="overflow:hidden;">
-            <form class="form-horizontal" onsubmit="return checkAdd()" id="addForm" method="post">
+            <form class="form-horizontal" role="form" onsubmit="return checkAdd()" id="addForm" method="post">
                 <div class="modal-header" style="overflow:auto;">
                     <h4>请填写维修保养明细信息</h4>
                 </div>
                 <br/>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">保养记录编号：</label>
+                    <label class="col-sm-3 control-label">维修保养记录：</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="请选择维修保养记录编号" class="form-control">
+                        <input type="text" name="maintainRecordId" placeholder="请选择维修保养记录" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">保养项目编号：</label>
+                    <label class="col-sm-3 control-label">维修保养项目：</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="请选择保养项目编号" class="form-control">
+                        <input type="text" name="maintainItemId" placeholder="请选择维修保养项目" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">保养项目折扣：</label>
+                    <label class="col-sm-3 control-label">维修保养项目折扣：</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="请选择保养项目折扣" class="form-control">
+                        <input type="text" name="maintainDiscount" placeholder="请输入维修保养项目折扣" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">保养明细创建时间：</label>
+                    <label class="col-sm-3 control-label">维修保养明细创建时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" value="2012-05-15 21:05" id="maddDateTime" class="form-control">
+                        <input type="text" name="mdCreatedTime" value="2012-05-15 21:05" id="maddDateTime" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
@@ -118,7 +118,7 @@
 
 <!-- 修改弹窗 -->
 <div class="modal fade" id="editWindow" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog" style="width: 780px;height: auto;">
         <div class="modal-content">
             <form class="form-horizontal" onsubmit="return checkAdd()" id="editForm" method="post">
                 <div class="modal-header" style="overflow:auto;">
@@ -126,27 +126,27 @@
                 </div>
                 <br/>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">保养记录编号：</label>
+                    <label class="col-sm-3 control-label">维修保养记录：</label>
                     <div class="col-sm-7">
-                        <input type="text" define="MaintainDetail.maintainRecordId" placeholder="请选择维修保养记录编号" class="form-control">
+                        <input type="text" name="maintainRecordId" define="MaintainDetail.maintainRecordId" placeholder="请选择维修保养记录" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">保养项目编号：</label>
+                    <label class="col-sm-3 control-label">维修保养项目：</label>
                     <div class="col-sm-7">
-                        <input type="text" define="MaintainDetail.maintainItemId" placeholder="请选择维修保养项目编号" class="form-control">
+                        <input type="text" name="maintainItemId" define="MaintainDetail.maintainItemId" placeholder="请选择维修保养项目" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">保养项目折扣：</label>
+                    <label class="col-sm-3 control-label">维修保养项目折扣：</label>
                     <div class="col-sm-7">
-                        <input type="text" define="MaintainDetail.maintainDiscount" placeholder="请选择维修保养项目编号" class="form-control">
+                        <input type="text" name="maintainDiscount" define="MaintainDetail.maintainDiscount" placeholder="请选择维修保养项目折扣" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">保养明细创建时间：</label>
+                    <label class="col-sm-3 control-label">维修保养明细创建时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" define="MaintainDetail.mdCreatedTime" value="2012-05-15 21:05"
+                        <input type="text" name="mdCreatedTime" define="MaintainDetail.mdCreatedTime" value="2012-05-15 21:05"
                                id="meditDateTime4" class="form-control">
                     </div>
                 </div>
@@ -210,5 +210,6 @@
 <script src="/static/js/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.js"></script>
 <script src="/static/js/bootstrap-dateTimePicker/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
 <script src="/static/js/backstage/custManage/maintaindetails.js"></script>
+<script src="/static/js/form/jquery.validate.js"></script>
 </body>
 </html>

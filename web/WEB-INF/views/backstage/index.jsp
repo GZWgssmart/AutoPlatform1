@@ -201,7 +201,7 @@
                             </li>
                             <li><a class="J_menuItem" href="/custManage/maintaindetailsIndex">维修保养明细管理</a>
                             </li>
-                            <li><a class="J_menuItem" href="/custManage/smsalertsIndex">短信群发管理</a>
+                            <li><a class="J_menuItem" href="/custManage/maintainremindIndex">维修保养提醒</a>
                             </li>
                             <li><a class="J_menuItem" href="/custManage/messagesendIndex">短信群发提醒</a>
                             </li>

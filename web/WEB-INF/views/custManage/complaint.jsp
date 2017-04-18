@@ -32,7 +32,7 @@
         <table id="table"
                data-toggle="table"
                data-toolbar="#toolbar"
-               data-url=""
+               data-url="/table/query"
                data-method="post"
                data-query-params="queryParams"
                data-pagination="true"
@@ -49,13 +49,13 @@
                data-single-select="true">
             <thead>
             <tr>
-                <th data-radio="true" data-field="complaintId">投诉编号</th>
-                <th  data-field="userId">投诉人姓名</th>
-                <th data-field="complaintGreatedTime">投诉时间</th>
+                <th data-radio="true" data-field="status"></th>
+                <th data-field="userId">投诉人</th>
+                <th data-field="complaintCreatedTime">投诉时间</th>
                 <th data-field="complaintContent">投诉内容</th>
+                <th data-field="complaintReplyUser">投诉回复人</th>
                 <th data-field="complaintReplyTime">投诉回复时间</th>
                 <th data-field="complaintReply">投诉回复内容</th>
-                <th  data-field="complaintReplyUser">投诉回复人</th>
             </tr>
             </thead>
         </table>
@@ -75,48 +75,48 @@
 
 <!-- 添加弹窗 -->
 <div class="modal fade" id="addWindow" aria-hidden="true" style="overflow:auto; ">
-    <div class="modal-dialog" style="width: 700px;height: auto;">
+    <div class="modal-dialog" style="width: 780px;height: auto;">
         <div class="modal-content" style="overflow:hidden;">
-            <form class="form-horizontal" onsubmit="return checkAdd()" id="addForm" method="post">
+            <form class="form-horizontal" role="form" onsubmit="return checkAdd()" id="addForm" method="post">
                 <div class="modal-header" style="overflow:auto;">
                     <h4>请填写投诉管理信息</h4>
                 </div>
                 <br/>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">投诉人姓名：</label>
+                    <label class="col-sm-3 control-label">投诉人：</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="请输入投诉人姓名" class="form-control">
+                        <input type="text" name="userId" placeholder="请选择投诉人" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">投诉时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" value="2012-05-15 21:05" id="addDateTimePicker" class="form-control">
+                        <input type="text" name="complaintCreatedTime" value="2012-05-15 21:05" id="addDateTimePicker" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">投诉内容：</label>
                     <div class="col-sm-7">
-                        <textarea type="text" placeholder="请输入相关内容" style="height: 100px;"
+                        <textarea type="text" name="complaintContent" placeholder="请输入投诉内容" style="height: 100px;"
                                   class="form-control"></textarea>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">投诉回复人：</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="请选择投诉回复人" class="form-control">
+                        <input type="text" name="complaintReplyUser" placeholder="请选择投诉回复人" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">投诉回复时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" value="2012-05-15 21:05" id="addDateTimePicker1" class="form-control">
+                        <input type="text" name="complaintReplyTime" value="2012-05-15 21:05" id="addDateTimePicker1" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">投诉回复内容：</label>
                     <div class="col-sm-7">
-                        <textarea type="text" placeholder="请输入相关内容" style="height: 100px;"
+                        <textarea type="text"  name="complaintReply" placeholder="请输入投诉回复内容" style="height: 100px;"
                                   class="form-control"></textarea>
                     </div>
                 </div>
@@ -135,7 +135,7 @@
 
 <!-- 修改弹窗 -->
 <div class="modal fade" id="editWindow" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog" style="width: 780px;height: auto;">
         <div class="modal-content">
             <form class="form-horizontal" onsubmit="return checkAdd()" id="editForm" method="post">
                 <div class="modal-header" style="overflow:auto;">
@@ -143,42 +143,42 @@
                 </div>
                 <br/>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">投诉人姓名：</label>
+                    <label class="col-sm-3 control-label">投诉人：</label>
                     <div class="col-sm-7">
-                        <input type="text" define="Complaint.userId" placeholder="请输入投诉人姓名" class="form-control">
+                        <input type="text" name="userId" define="Complaint.userId" placeholder="请选择投诉人" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">投诉时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" define="Complaint.complaintGreatedTime" value="2012-05-15 21:05"
+                        <input type="text" name="complaintCreatedTime" define="Complaint.complaintCreatedTime" value="2012-05-15 21:05"
                                id="editDateTimePicker" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">投诉内容：</label>
                     <div class="col-sm-7">
-                        <textarea type="text" define="Complaint.complaintContent" placeholder="请输入相关内容" style="height: 100px;"
+                        <textarea type="text"  name="complaintContent" define="Complaint.complaintContent" placeholder="请输入投诉内容" style="height: 100px;"
                                   class="form-control"></textarea>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">投诉回复人：</label>
                     <div class="col-sm-7">
-                        <input type="text" define="Complaint.complaintReplyUser" placeholder="请选择投诉回复人" class="form-control">
+                        <input type="text"  name="complaintReplyUser" define="Complaint.complaintReplyUser" placeholder="请选择投诉回复人" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">投诉回复时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" define="Complaint.complaintReplyTime" value="2012-05-15 21:05"
+                        <input type="text"  name="complaintReplyTime" define="Complaint.complaintReplyTime" value="2012-05-15 21:05"
                                id="editDateTimePicker1" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">投诉回复内容：</label>
                     <div class="col-sm-7">
-                        <textarea type="text" define="Complaint.complaintReply" placeholder="请输入相关内容" style="height: 100px;"
+                        <textarea type="text"  name="complaintReply" define="Complaint.complaintReply" placeholder="请输入投诉回复内容" style="height: 100px;"
                                   class="form-control"></textarea>
                     </div>
                 </div>
@@ -242,5 +242,6 @@
 <script src="/static/js/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.js"></script>
 <script src="/static/js/bootstrap-dateTimePicker/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
 <script src="/static/js/backstage/custManage/complaint.js"></script>
+<script src="/static/js/form/jquery.validate.js"></script>
 </body>
 </html>

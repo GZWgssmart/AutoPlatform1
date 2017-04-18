@@ -158,24 +158,120 @@ $('#editDateTimePicker1').datetimepicker({
     format: 'yyyy-mm-dd hh:ii'
 });
 
+//前端验证
+$(document).ready(function () {
+    $("#addForm").validate({
+        errorElement: 'span',
+        errorClass: 'help-block',
 
-// //日期时间控件初始化
-// $(document).ready(function () {
-//     // 带时间的控件
-//     // if ($(".iDate.full").length > 0) {
-//     //     $(".iDate.full").datetimepicker({
-//     //         locale: "zh-cn",
-//     //         format: "YYYY-MM-DD a hh:mm",
-//     //         dayViewHeaderFormat: "YYYY年 MMMM"
-//     //     });
-//     // }
-//
-//     //不带时间的控件
-//     if ($(".iDate.date").length > 0) {
-//         $(".iDate.date").datetimepicker({
-//             locale: "zh-cn",
-//             format: "YYYY-MM-DD",
-//             dayViewHeaderFormat: "YYYY年 MMMM"
-//         });
-//     }
-// })
+        rules: {
+            userId: {
+                required: true,
+                minlength: 2
+            },
+            complaintCreatedTime: {
+                required: true,
+                minlength: 2
+            },
+            complaintContent: {
+                required: true,
+                minlength: 2
+            },
+            complaintReplyUser: {
+                required: true,
+                minlength: 2
+            },
+            complaintReplyTime: {
+                required: true,
+                minlength: 2
+            },
+            complaintReply: {
+                required: true,
+                minlength: 2
+            }
+        },
+        messages: {
+            userId: "请选择投诉人",
+            complaintCreatedTime: "请选择投诉时间",
+            complaintContent: "请输入投诉内容",
+            complaintReplyUser: "请选择投诉回复人",
+            complaintReplyTime: "请选择投诉回复时间",
+            complaintReply: "请输入投诉回复内容",
+        },
+        errorPlacement: function (error, element) {
+            element.next().remove();
+            element.after('<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>');
+            element.closest('.form-group').append(error);
+        },
+        highlight: function (element) {
+            $(element).closest('.form-group').addClass('has-error has-feedback');
+        },
+        success: function (label) {
+            var el = label.closest('.form-group').find("input");
+            el.next().remove();
+            el.after('<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>');
+            label.closest('.form-group').removeClass('has-error').addClass("has-feedback has-success");
+            label.remove();
+        },
+        submitHandler: function (form) {
+            alert("submitted!");
+        }
+    })
+    $("#editForm").validate({
+        errorElement: 'span',
+        errorClass: 'help-block',
+
+        rules: {
+            userId: {
+                required: true,
+                minlength: 2
+            },
+            complaintCreatedTime: {
+                required: true,
+                minlength: 2
+            },
+            complaintContent: {
+                required: true,
+                minlength: 2
+            },
+            complaintReplyUser: {
+                required: true,
+                minlength: 2
+            },
+            complaintReplyTime: {
+                required: true,
+                minlength: 2
+            },
+            complaintReply: {
+                required: true,
+                minlength: 2
+            }
+        },
+        messages: {
+            userId: "请选择投诉人",
+            complaintCreatedTime: "请选择投诉时间",
+            complaintContent: "请输入投诉内容",
+            complaintReplyUser: "请选择投诉回复人",
+            complaintReplyTime: "请选择投诉回复时间",
+            complaintReply: "请输入投诉回复内容",
+        },
+        errorPlacement: function (error, element) {
+            element.next().remove();
+            element.after('<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>');
+            element.closest('.form-group').append(error);
+        },
+        highlight: function (element) {
+            $(element).closest('.form-group').addClass('has-error has-feedback');
+        },
+        success: function (label) {
+            var el = label.closest('.form-group').find("input");
+            el.next().remove();
+            el.after('<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>');
+            label.closest('.form-group').removeClass('has-error').addClass("has-feedback has-success");
+            label.remove();
+        },
+        submitHandler: function (form) {
+            alert("submitted!");
+        }
+    })
+});
