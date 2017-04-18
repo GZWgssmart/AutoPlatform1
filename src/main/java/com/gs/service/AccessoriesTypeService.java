@@ -5,9 +5,9 @@ import com.gs.bean.AccessoriesType;
 import java.util.List;
 
 /**
- * 由Wjhsmart技术支持
+ * 由CSWangBin技术支持
  *
- * @author Wjhsmart
+ * @author CSWangBin
  * @des 配件分类service
  * @since 2017-04-17 15:49:18
  */

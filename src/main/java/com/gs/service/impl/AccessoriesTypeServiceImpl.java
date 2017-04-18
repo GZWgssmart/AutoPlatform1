@@ -8,9 +8,9 @@ import javax.annotation.Resource;
 import java.util.List;
 import com.gs.common.bean.Pager;
 /**
-*由Wjhsmart技术支持
+*由CSWangBin技术支持
 *
-*@author Wjhsmart
+*@author CSWangBin
 *@since 2017-04-17 15:49:20
 *@des 配件分类Service实现
 */
