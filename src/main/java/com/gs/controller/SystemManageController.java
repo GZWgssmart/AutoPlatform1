@@ -16,6 +16,15 @@ public class SystemManageController {
     private Logger logger = (Logger) LoggerFactory.getLogger(SystemManageController.class);
 
     /**
+     * 人员角色管理
+     */
+    @RequestMapping(value = "userRoleManageIndex", method = RequestMethod.GET)
+    public String userRoleManage() {
+        logger.info("跳转到人员角色管理页面");
+        return "systemManage/userRoleManage";
+    }
+
+    /**
      * 模块管理
      */
     @RequestMapping(value = "moduleManageIndex", method = RequestMethod.GET)
