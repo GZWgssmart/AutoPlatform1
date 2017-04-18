@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="/static/css/bootstrap-table.css">
     <link rel="stylesheet" href="/static/css/select2.min.css">
     <link rel="stylesheet" href="/static/css/sweetalert.css">
-    <link rel="stylesheet" href="/static/css/table/table.css">
 </head>
 <body>
 <%@include file="../backstage/contextmenu.jsp"%>
@@ -38,29 +37,24 @@
             <thead>
             <tr>
                 <th data-radio="true" data-field="status"></th>
-                <th data-width="15%" data-field="phone">联系电话</th>
-                <th data-width="10%" data-field="name">车主姓名</th>
-                <th data-width="20%" data-field="des">说明</th>
-                <th data-width="20%" data-field="des">说明</th>
-                <th data-width="15%" data-field="createTime">单据日期</th>
-                <th data-width="15%" data-field="workCompletionTime">预计完成时间</th>
-                <th data-width="10%" data-field="workStatus">当前状态</th>
+                <th data-field="workId">工单编号</th>
+                <th data-field="recordId">保养记录编号</th>
+                <th data-field="userId">工单指派用户编号</th>
+                <th data-field="workAssignTime">工单指派时间</th>
+                <th data-field="workcreateTime">工单创建时间</th>
+                <th data-field="workStatus">当前状态</th>
             </tr>
             </thead>
         </table>
         <div id="toolbar" class="btn-group">
-
             <button id="btn_add" type="button" class="btn btn-default" onclick="showAdd();">
-                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>结算
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
             </button>
             <button id="btn_edit" type="button" class="btn btn-default" onclick="showEdit();">
-                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>还款
+                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
             </button>
-            <button id="btn_return" type="button" class="btn btn-default" onclick="showReturn();">
-                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>结算后预览
-            </button>
-            <button id="btn_delete" type="button" class="btn btn-default" onclick="showReturn();">
-                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>作废
+            <button id="btn_delete" type="button" class="btn btn-default" onclick="showDel();">
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
             </button>
         </div>
     </div>
@@ -68,67 +62,94 @@
 
 <!-- 添加弹窗 -->
 
-<div class="modal fade" id="add" aria-hidden="true" >
-    <div class="modal-dialog" >
-        <div class="modal-content" >
-            <form action="/table/edit" onsubmit="return checkAdd()" id="addForm" method="post">
-                <div class="modal-header" style=" overflow:hidden;">
-                    <div class="input-group">
-                        <select  id="addSelect" style="width: 70%"  class="js-example-basic-multiple" multiple="multiple"></select>
+<div class="modal fade" id="add" aria-hidden="true" style="overflow:auto; ">
+    <div class="modal-dialog" style="height: auto; overflow:auto;">
+        <div class="modal-content" style="overflow:auto;">
+            <form class="form-horizontal" role="form" onsubmit="return checkAdd()" id="addForm" method="post">
+                <div class="modal-header" style="overflow:auto;">
+                    <h4>请填写订单信息</h4>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">保养记录编号：</label>
+                    <div class="col-sm-7">
+                        <input type="text" name="recordId" placeholder="请输入保养记录编号" class="form-control">
                     </div>
-
-                    <div class="input-group">
-                        <span class="input-group-addon" id="sizing-addon1">手机号码</span>
-                        <input type="text" class="form-control" placeholder="手机号码" aria-describedby="sizing-addon2">
-                    </div>
-                    <div class="input-group">
-                        <span class="input-group-addon" id="sizing-addon2">姓名</span>
-                        <input type="text" class="form-control" placeholder="姓名" aria-describedby="sizing-addon2">
-                    </div>
-                    <div class="input-group">
-                        <span class="input-group-addon" id="sizing-addon3">身份证号码</span>
-                        <input type="text" class="form-control" placeholder="身份证号码" aria-describedby="sizing-addon2">
-                    </div>
-                    <br />
                 </div>
 
-                <div class="modal-footer" >
-                    <span id="addError" style="color: red;"></span>
-                    <button type="button" class="btn btn-default"
-                            data-dismiss="modal">关闭
-                    </button>
-                    <button type="submit" class="btn btn-primary btn-sm">保存</button>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">指派用户编号：</label>
+                    <div class="col-sm-7">
+                        <input type="text" name="userId" placeholder="请输入工单指派用户编号" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">工单指派时间：</label>
+                    <div class="col-sm-7">
+                        <input type="text" name="workAssignTime" placeholder="请输入工单指派时间" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">工单创建时间：</label>
+                    <div class="col-sm-7">
+                        <input type="text" name="workcreateTime" id="" value="2012-05-15 21:05" placeholder="请输入工单创建时间" class="form-control" max="11">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-8">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button class="btn btn-sm btn-success" type="submit">保 存</button>
+                    </div>
                 </div>
             </form>
+
         </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+    </div>
+</div>
 
 
 <!-- 修改弹窗 -->
-<div class="modal fade" id="edit" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <form id="editForm" class="data1" id="editForm" method="post">
-                <div class="modal-header" style="width:auto; overflow:hidden;">
-                    <input type="text"  define="ceshi.id" name="id" placeholder="请输入标题"  maxlength="15"/>
-                    <input type="text"  define="ceshi.price" name="price"  placeholder="请输入标题"  maxlength="15"/>
+<div class="modal fade" id="edit" aria-hidden="true" style="overflow:auto; ">
+    <div class="modal-dialog" style="height: auto; overflow:auto;">
+        <div class="modal-content" style="overflow:auto;">
+            <form class="form-horizontal" role="form" onsubmit="return checkEdit()" id="editForm" method="post">
+                <div class="modal-header" style="overflow:auto;">
+                    <h4>请修改订单信息</h4>
                 </div>
-                <div class="modal-body">
-                    <textarea type="text" style="width: 80%"  define="ceshi.name" name="name" placeholder="请输入描述"  maxlength="142"></textarea>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">保养记录编号：</label>
+                    <div class="col-sm-7">
+                        <input type="text" name="recordId" placeholder="请输入保养记录编号" class="form-control">
+                    </div>
                 </div>
-                <div class="modal-footer">
-                    <span id="editError" style="color: red;"></span>
-                    <button type="button" class="btn btn-default"
-                            data-dismiss="modal">关闭
-                    </button>
-                    <button type="button" onclick="checkEdit()" class="btn btn-primary">
-                        保存
-                    </button>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">指派用户编号：</label>
+                    <div class="col-sm-7">
+                        <input type="text" name="userId" placeholder="请输入工单指派用户编号" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">工单指派时间：</label>
+                    <div class="col-sm-7">
+                        <input type="text" name="workAssignTime" placeholder="请输入工单指派时间" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">工单创建时间：</label>
+                    <div class="col-sm-7">
+                        <input type="text" name="workcreateTime" id="addarriveTime" value="2012-05-15 21:05" placeholder="请输入工单创建时间" class="form-control" max="11">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-8">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button class="btn btn-sm btn-success" type="submit">保 存</button>
+                    </div>
                 </div>
             </form>
+
         </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
+    </div>
 </div><!-- /.modal -->
 
 <!-- 删除弹窗 -->
@@ -176,6 +197,7 @@
 <script src="/static/js/jquery.formFill.js"></script>
 <script src="/static/js/select2/select2.js"></script>
 <script src="/static/js/sweetalert/sweetalert.min.js"></script>
+<script src="/static/js/form/jquery.validate.js"></script>
 <script src="/static/js/contextmenu.js"></script>
 <script src="/static/js/backstage/emp/workInFo.js"></script>
 <script src="/static/js/bootstrap-select/bootstrap-select.js"></script>
