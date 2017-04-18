@@ -137,7 +137,7 @@
 <div class="modal fade" id="editWindow" aria-hidden="true">
     <div class="modal-dialog" style="width: 780px;height: auto;">
         <div class="modal-content">
-            <form class="form-horizontal" onsubmit="return checkAdd()" id="editForm" method="post">
+            <form class="form-horizontal" role="form" onsubmit="return checkAdd()" id="editForm" method="post">
                 <div class="modal-header" style="overflow:auto;">
                     <h4>请修改投诉管理信息</h4>
                 </div>
