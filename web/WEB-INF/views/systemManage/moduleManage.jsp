@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="/static/css/bootstrap-table.css">
     <link rel="stylesheet" href="/static/css/select2.min.css">
     <link rel="stylesheet" href="/static/css/sweetalert.css">
+    <link rel="stylesheet" href="/static/css/table/table.css">
+    <link rel="stylesheet" href="/static/css/systemManage/distribution.css">
 </head>
 <body>
 <%@include file="../backstage/contextmenu.jsp"%>
@@ -40,12 +42,18 @@
             <thead>
             <tr>
                 <th data-radio="true" data-field="status"></th>
-                <th  data-field="name">用户账号</th>
-                <th data-field="price">用户密码</th>
+                <th  data-field="name">模块名称</th>
+                <th data-field="price">模块描述</th>
             </tr>
             </thead>
         </table>
         <div id="toolbar" class="btn-group">
+            <button id="btn_available" type="button" class="btn btn-default" onclick="showAvailable();">
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>可用模块
+            </button>
+            <button id="btn_disable" type="button" class="btn btn-default" onclick="showDisable();">
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>禁用模块
+            </button>
             <button id="btn_add" type="button" class="btn btn-default" onclick="showAdd();">
                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
             </button>
@@ -56,32 +64,55 @@
                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
             </button>
         </div>
+
+        <h4>具体模块权限</h4>
+        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+            <c:forEach items="${roles}" var="role">
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="heading${role.roleId}">
+                        <h4 class="panel-title">
+                            <a role="button" id="${role.roleId}" data-toggle="collapse" data-parent="#accordion" href="#collapse${role.roleId}"
+                               aria-expanded="false" onclick="showCollapse(${role.roleId})">
+                                    ${role.roleName}
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapse${role.roleId}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading${role.roleId}">
+                    </div>
+                </div>
+            </c:forEach>
+        </div>
     </div>
+
 </div>
 
 <!-- 添加弹窗 -->
-<div class="modal fade" id="add" aria-hidden="true" style="overflow:hidden;">
-    <div class="modal-dialog" style="overflow:hidden;">
-        <div class="modal-content" style="overflow:hidden;">
-            <form action="/table/edit" onsubmit="return checkAdd()" id="addForm" method="post">
-                <div class="modal-header" style="overflow:hidden;">
-                    <input type="text" id="addId" placeholder="请输入标题" style="width:300px;margin-left:70px;" maxlength="15" name="top-search"/>
-                    <input type="text" id="addPrice" placeholder="请输入标题" style="width:300px;margin-left:70px;" maxlength="15" name="top-search"/>
-                    <br />
-                    <select id="addSelect"  class="js-example-basic-multiple" multiple="multiple" style="width:300px;margin-left:70px;">
-                    </select>
+<div class="modal fade" id="add" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <hr/>
+            <form id="addForm" class="form-horizontal" method="post">
+                <input type="reset" name="reset" style="display: none;"/>
+                <div class="modal-header" style="overflow:auto;">
+                    <p>修改模块</p>
                 </div>
-                <div class="modal-body" style="overflow:hidden;">
-                    <textarea id="addName" placeholder="请输入描述"  style="width:530px;height:100px;" maxlength="142"></textarea>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">模块名称：</label>
+                    <div class="col-sm-7">
+                        <input type="text" name="moduleName" define="emp.name" class="form-control" maxlength="20">
+                    </div>
                 </div>
-                <div class="modal-footer" style="overflow:hidden;">
-                    <span id="addError" style="color: red;"></span>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">模块描述：</label>
+                    <div class="col-sm-7">
+                        <input type="text" name="moduleDes" define="emp.name" class="form-control" maxlength="500">
+                    </div>
+                </div>
+                <div class="modal-footer">
                     <button type="button" class="btn btn-default"
                             data-dismiss="modal">关闭
                     </button>
-                    <button type="button" class="btn btn-primary">
-                        保存
-                    </button>
+                    <button id="addButton" type="submit" class="btn btn-primary btn-sm">保存</button>
                 </div>
             </form>
         </div><!-- /.modal-content -->
@@ -90,66 +121,33 @@
 
 
 <!-- 修改弹窗 -->
-<div class="modal fade" id="edit" aria-hidden="true">
+<div class="modal fade" id="edit" aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form id="editForm" class="data1" id="editForm" method="post">
-                <div class="modal-header" style="overflow:hidden;">
-                    <input type="text"  define="ceshi.id" name="id" placeholder="请输入标题" style="width:300px;margin-left:70px;" maxlength="15"/>
-                    <input type="text"  define="ceshi.price" name="price"  placeholder="请输入标题" style="width:300px;margin-left:70px;" maxlength="15"/>
+            <hr/>
+            <form id="editForm" class="form-horizontal" method="post">
+                <div class="modal-header" style="overflow:auto;">
+                    <p>修改模块</p>
                 </div>
-                <div class="modal-body">
-                    <textarea type="text"  define="ceshi.name" name="name" placeholder="请输入描述"  style="width:530px;height:100px;" maxlength="142"></textarea>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">模块名称：</label>
+                    <div class="col-sm-7">
+                        <input type="text" name="moduleName" define="emp.name" class="form-control" maxlength="20">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">模块描述：</label>
+                    <div class="col-sm-7">
+                        <input type="text" name="moduleDes" define="emp.name" class="form-control" maxlength="500">
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <span id="editError" style="color: red;"></span>
                     <button type="button" class="btn btn-default"
                             data-dismiss="modal">关闭
                     </button>
-                    <button type="button" onclick="checkEdit()" class="btn btn-primary">
-                        保存
-                    </button>
+                    <button id="editButton" type="submit" class="btn btn-primary btn-sm">保存</button>
                 </div>
             </form>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
-<!-- 删除弹窗 -->
-<div class="modal fade" id="del" aria-hidden="true">
-    <div class="modal-dialog" style="overflow:hidden;">
-        <form action="/table/edit" method="post">
-            <div class="modal-content">
-                <input type="hidden" id="delNoticeId"/>
-                <div class="modal-footer" style="text-align: center;">
-                    <h2>确认删除吗?</h2>
-                    <button type="button" class="btn btn-default"
-                            data-dismiss="modal">关闭
-                    </button>
-                    <button type="sumbit" class="btn btn-primary" onclick="del()">
-                        确认
-                    </button>
-                </div>
-            </div><!-- /.modal-content -->
-        </form>
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
-<!-- 提示弹窗 -->
-<div class="modal fade" id="tanchuang" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                提示
-            </div>
-            <div class="modal-body">
-                请先选择某一行
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default"
-                        data-dismiss="modal">关闭
-                </button>
-            </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
@@ -161,94 +159,7 @@
 <script src="/static/js/select2/select2.js"></script>
 <script src="/static/js/sweetalert/sweetalert.min.js"></script>
 <script src="/static/js/contextmenu.js"></script>
-<script>
-    $(function () {
-        $('#table').bootstrapTable('hideColumn', 'id');
-
-        $("#addSelect").select2({
-                language: 'zh-CN'
-            }
-        );
-
-        //绑定Ajax的内容
-        $.getJSON("/table/queryType", function (data) {
-            $("#addSelect").empty();//清空下拉框
-            $.each(data, function (i, item) {
-                $("#addSelect").append("<option value='" + data[i].id + "'>&nbsp;" + data[i].name + "</option>");
-            });
-        })
-//            $("#addSelect").on("select2:select",
-//                    function (e) {
-//                        alert(e)
-//                        alert("select2:select", e);
-//            });
-    });
-
-    function showEdit(){
-        var row =  $('table').bootstrapTable('getSelections');
-        if(row.length >0) {
-//                $('#editId').val(row[0].id);
-//                $('#editName').val(row[0].name);
-//                $('#editPrice').val(row[0].price);
-            $("#edit").modal('show'); // 显示弹窗
-            var ceshi = row[0];
-            $("#editForm").fill(ceshi);
-        }else{
-            //layer.msg("请先选择某一行", {time : 1500, icon : 2});
-            layer.alert("请先选择某一行");
-        }
-    }
-
-    function showAdd(){
-
-        $("#add").modal('show');
-    }
-
-    function formatRepo(repo){return repo.text}
-    function formatRepoSelection(repo){return repo.text}
-
-    function showDel(){
-        var row =  $('table').bootstrapTable('getSelections');
-        if(row.length >0) {
-            $("#del").modal('show');
-        }else{
-            $("#tanchuang").modal('show');
-        }
-    }
-
-    function checkAdd(){
-        var id = $('#addId').val();
-        var name = $('#addName').val();
-        var price = $('#addPrice').val();
-        var reslist=$("#addSelect").select2("data"); //获取多选的值
-        alert(reslist.length)
-        if(id != "" && name != "" && price != ""){
-            return true;
-        }else{
-            var error = document.getElementById("addError");
-            error.innerHTML = "请输入正确的数据";
-            return false;
-        }
-    }
-
-    function checkEdit() {
-        $.post("/table/edit",
-            $("#editForm").serialize(),
-            function (data) {
-                if (data.result == "success") {
-                    $("#edit").modal('hide'); // 关闭指定的窗口
-                    $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
-                    swal({
-                        title:"",
-                        text: data.message,
-                        type:"success"})// 提示窗口, 修改成功
-                } else if (data.result == "fail") {
-                    //$.messager.alert("提示", data.result.message, "info");
-                }
-            }, "json"
-        );
-    }
-
-</script>
+<script src="/static/js/form/jquery.validate.js"></script>
+<script src="/static/js/backstage/systemManage/moduleManage.js"></script>
 </body>
 </html>

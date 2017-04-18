@@ -41,13 +41,18 @@
             <thead>
             <tr>
                 <th data-checkBox="true" data-field="status"></th>
-                <th data-field="name">用户名称</th>
                 <th data-field="price">角色名称</th>
-                <th data-field="price">角色分配时间</th>
+                <th data-field="price">角色描述</th>
             </tr>
             </thead>
         </table>
         <div id="toolbar" class="btn-group">
+            <button id="btn_available" type="button" class="btn btn-default" onclick="showAvailable();">
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>可用角色
+            </button>
+            <button id="btn_disable" type="button" class="btn btn-default" onclick="showDisable();">
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>禁用角色
+            </button>
             <button id="btn_add" type="button" class="btn btn-default" onclick="showAdd();">
                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
             </button>
@@ -62,39 +67,32 @@
 </div>
 
 <!-- 添加弹窗 -->
-<div class="modal fade" id="add" aria-hidden="true" style="overflow:hidden;">
-    <div class="modal-dialog" style="overflow:hidden;">
-        <div class="modal-content" style="overflow:hidden;">
+<div class="modal fade" id="add" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
             <hr/>
             <form class="form-horizontal" role="form" id="addForm" method="post">
+                <input type="reset" name="reset" style="display: none;"/>
                 <div class="modal-header" style="overflow:auto;">
-                    <p>添加人员角色</p>
+                    <p>添加角色</p>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">人员名称 :</label>
+                    <label class="col-sm-3 control-label">角色名称：</label>
                     <div class="col-sm-7">
-                        <select id="userNameSelect" name="userName" class="form-control js-example-basic-multiple" multiple="multiple" style="width:300px;">
-                        </select>
+                        <input type="text" name="roleName" define="emp.name" class="form-control" maxlength="20">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">角色：</label>
+                    <label class="col-sm-3 control-label">角色描述：</label>
                     <div class="col-sm-7">
-                        <select  id="roleNameSelect" name="roleName" class="form-control js-example-basic-multiple" multiple="multiple" style="width:100%;">
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label" >付款方式：</label>
-                    <div class="col-sm-7">
-                        <input type="text" name="ddd" define="emp.price" class="form-control">
+                        <input type="text" name="roleDes" define="emp.name" class="form-control" maxlength="20">
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default"
                             data-dismiss="modal">关闭
                     </button>
-                    <button type="submit" class="btn btn-primary btn-sm">保存</button>
+                    <button id="addButton" type="submit" class="btn btn-primary btn-sm">保存</button>
                 </div>
             </form>
         </div><!-- /.modal-content -->
@@ -103,32 +101,31 @@
 
 
 <!-- 修改弹窗 -->
-<div class="modal fade" id="edit" aria-hidden="true">
+<div class="modal fade" id="edit" aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog">
         <div class="modal-content">
             <form id="editForm" class="form-horizontal" method="post">
+                <input type="reset" name="reset" style="display: none;"/>
                 <div class="modal-header" style="overflow:auto;">
-                    <p>修改人员角色</p>
+                    <p>修改角色</p>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">人员名称 :</label>
+                    <label class="col-sm-3 control-label">角色名称：</label>
                     <div class="col-sm-7">
-                        <select id="userNameSelect1" name="userName" class="js-example-basic-multiple" multiple="multiple" style="width:300px;">
-                        </select>
+                        <input type="text" name="roleName" define="emp.name" class="form-control" maxlength="20">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">角色：</label>
+                    <label class="col-sm-3 control-label">角色描述：</label>
                     <div class="col-sm-7">
-                        <select id="roleNameSelect1" name="rolerName" class="js-example-basic-multiple" multiple="multiple" style="width:300px;">
-                        </select>
+                        <input type="text" name="roleDes" define="emp.name" class="form-control" maxlength="20">
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default"
                             data-dismiss="modal">关闭
                     </button>
-                    <button type="submit" class="btn btn-primary btn-sm">保存</button>
+                    <button id="editButton" type="submit" class="btn btn-primary btn-sm">保存</button>
                 </div>
             </form>
         </div><!-- /.modal-content -->
@@ -144,6 +141,6 @@
 <script src="/static/js/sweetalert/sweetalert.min.js"></script>
 <script src="/static/js/contextmenu.js"></script>
 <script src="/static/js/form/jquery.validate.js"></script>
-<script src="/static/js/backstage/systemManage/userRoleManage.js"></script>
+<script src="/static/js/backstage/systemManage/roleManage.js"></script>
 </body>
 </html>
