@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
- * Created by AngeJob on 2017/4/12.
+ * 供应商管理页面跳转
  */
 
 @Controller
@@ -15,26 +15,24 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class SupplierController {
     private Logger logger = (Logger) LoggerFactory.getLogger(SystemManageController.class);
 
-
-
     /**
-     * 供货商管理
-     * @return
-     */
-    @RequestMapping(value = "supplierInformation", method = RequestMethod.GET)
-    public String supplierInformation() {
-        logger.info("供货商管理");
-        return "supplier/supplierInFormation";
-    }
-
-    /**
-     * 供货商分类管理
+     * 供应商类型管理
      * @return
      */
     @RequestMapping(value = "supplierType", method = RequestMethod.GET)
     public String supplierType() {
-        logger.info("供货商分类管理");
+        logger.info("供应商类型管理");
         return "supplier/supplierType";
+    }
+
+    /**
+     * 供应商管理
+     * @return
+     */
+    @RequestMapping(value = "supplierInformation", method = RequestMethod.GET)
+    public String supplierInformation() {
+        logger.info("供应商管理");
+        return "supplier/supplierInFormation";
     }
 
     /**
@@ -42,7 +40,7 @@ public class SupplierController {
      */
     @RequestMapping(value = "purchaseDetail", method = RequestMethod.GET)
     public String purchaseDetail() {
-        logger.info("下单统计管理");
+        logger.info("下单统计");
         return "supplier/purchaseDetail";
     }
 

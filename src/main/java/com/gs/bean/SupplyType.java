@@ -1,15 +1,18 @@
 package com.gs.bean;
 
+/*
+供应商类型管理
+ */
 public class SupplyType {
-    private String supplyTypeId;
+    private String supplyTypeId;        // 供应商类型编号
 
-    private String supplyTypeName;
+    private String supplyTypeName;      // 供应商类型名称
 
-    private String supplyTypeDes;
+    private String supplyTypeDes;       // 供应商类型描述
 
-    private String companyId;
+    private String companyId;           // 供应商类型所属公司
 
-    private String supplyTypeStatus;
+    private String supplyTypeStatus;   // 供应商类型状态
 
     public String getSupplyTypeId() {
         return supplyTypeId;

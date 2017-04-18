@@ -59,7 +59,7 @@ function checkAdd(){
     var name = $('#addName').val();
     var price = $('#addPrice').val();
     var reslist=$("#addSelect").select2("data"); //获取多选的值
-    alert(reslist.length)
+    /*alert(reslist.length)*/
     if(id != "" && name != "" && price != ""){
         return true;
     }else{
@@ -87,3 +87,90 @@ function checkEdit() {
     );
 }
 
+//前端验证
+$(document).ready(function () {
+    $("#addForm").validate({
+        errorElement: 'span',
+        errorClass: 'help-block',
+
+        rules: {
+            supplyTypeName: {
+                required: true,
+                minlength: 2
+            },
+            companyName: {
+                required: true,
+                minlength: 2
+            },
+            supplyTypeDes: {
+                required: true,
+                minlength: 2
+            }
+        },
+        messages: {
+            supplyTypeName: "请输入供应商类型名称",
+            companyName: "请选择供应商类型所属公司",
+            supplyTypeDes: "供应商类型描述内容",
+        },
+        errorPlacement: function (error, element) {
+            element.next().remove();
+            element.after('<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>');
+            element.closest('.form-group').append(error);
+        },
+        highlight: function (element) {
+            $(element).closest('.form-group').addClass('has-error has-feedback');
+        },
+        success: function (label) {
+            var el = label.closest('.form-group').find("input");
+            el.next().remove();
+            el.after('<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>');
+            label.closest('.form-group').removeClass('has-error').addClass("has-feedback has-success");
+            label.remove();
+        },
+        submitHandler: function (form) {
+            alert("submitted!");
+        }
+    })
+    $("#editForm").validate({
+        errorElement: 'span',
+        errorClass: 'help-block',
+
+        rules: {
+            supplyTypeName: {
+                required: true,
+                minlength: 2
+            },
+            companyName: {
+                required: true,
+                minlength: 2
+            },
+            supplyTypeDes: {
+                required: true,
+                minlength: 2
+            }
+        },
+        messages: {
+            supplyTypeName: "请输入供应商类型名称",
+            companyName: "请选择供应商类型所属公司",
+            supplyTypeDes: "供应商类型描述内容",
+        },
+        errorPlacement: function (error, element) {
+            element.next().remove();
+            element.after('<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>');
+            element.closest('.form-group').append(error);
+        },
+        highlight: function (element) {
+            $(element).closest('.form-group').addClass('has-error has-feedback');
+        },
+        success: function (label) {
+            var el = label.closest('.form-group').find("input");
+            el.next().remove();
+            el.after('<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>');
+            label.closest('.form-group').removeClass('has-error').addClass("has-feedback has-success");
+            label.remove();
+        },
+        submitHandler: function (form) {
+            alert("submitted!");
+        }
+    })
+});

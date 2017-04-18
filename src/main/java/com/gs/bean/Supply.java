@@ -1,35 +1,37 @@
 package com.gs.bean;
 
 import java.util.Date;
-
+/*
+供应商管理
+ */
 public class Supply {
-    private String supplyId;
+    private String supplyId;              // 供应商编号
 
-    private String supplyName;
+    private String supplyName;            // 供应商名称
 
-    private String supplyTel;
+    private String supplyTel;             // 供应商联系电话
 
-    private String supplyPricipal;
+    private String supplyPricipal;       // 供应商负责人
 
-    private String supplyAddress;
+    private String supplyAddress;        // 供应商地址
 
-    private String supplyBank;
+    private String supplyBank;           // 供应商开户银行全称
 
-    private String supplyBankAccount;
+    private String supplyBankAccount;   // 供应商开户人姓名
 
-    private String supplyBankNo;
+    private String supplyBankNo;         // 供应商开户卡号
 
-    private String supplyAlipay;
+    private String supplyAlipay;         // 供应商支付宝
 
-    private String supplyWeChat;
+    private String supplyWeChat;         // 供应商微信
 
-    private Date supplyCreatedTime;
+    private Date supplyCreatedTime;     // 供应商创建时间
 
-    private String supplyTypeId;
+    private String supplyTypeId;        // 供应商类型
 
-    private String companyId;
+    private String companyId;           // 供应商所属公司
 
-    private String supplyStatus;
+    private String supplyStatus;        // 供应商状态
 
     public String getSupplyId() {
         return supplyId;
