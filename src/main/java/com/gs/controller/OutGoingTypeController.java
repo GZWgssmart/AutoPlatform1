@@ -43,4 +43,7 @@ public class OutGoingTypeController {
         return outgoingTypes;
     }
 
+
+
+
 }
