@@ -62,7 +62,7 @@
                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
             </button>
             <button id="btn_delete" type="button" class="btn btn-default" onclick="showDel();">
-                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>禁用
             </button>
         </div>
     </div>
