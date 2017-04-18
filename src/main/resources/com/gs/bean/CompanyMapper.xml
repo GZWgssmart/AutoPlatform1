@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.gs.dao.CompanyDAO" >
-  <resultMap id="BaseResultMap" type="com.gs.bean.Company" >
+  <resultMap id="companyMap" type="company" >
     <id column="company_Id" property="companyId" jdbcType="VARCHAR" />
     <result column="companyName" property="companyName" jdbcType="VARCHAR" />
     <result column="companyAddress" property="companyAddress" jdbcType="VARCHAR" />
@@ -16,5 +16,21 @@
     <result column="companyDes" property="companyDes" jdbcType="VARCHAR" />
     <result column="companyStatus" property="companyStatus" jdbcType="VARCHAR" />
   </resultMap>
+
+  <select id="queryAll" resultMap="companyMap">
+    select * from t_company
+  </select>
+
+  <insert id="insert"  parameterType="company">
+			INSERT into t_company(companyId, companyName, companyAddress, companyTel,companyPricipal,companyOpendate,companyLogo) values(uuid(), #{companyName}, #{companyAddress}, #{companyTel}, #{companyPricipal}, #{companyOpendate}, #{companyLogo})
+  </insert>
+
+  <update id="update" parameterType="company">
+			update t_company set companyName = #{companyName},companyAddress = #{companyAddress},companyTel = #{companyTel},companyPricipal = #{companyPricipal},companyOpendate = #{companyOpendate},companyLogo = #{companyLogo}where companyId = #{companyId}
+  </update>
+
+  <delete id="deleteById" parameterType="string">
+           delete from t_company where companyId = #{companyId}
+  </delete>
 
 </mapper>

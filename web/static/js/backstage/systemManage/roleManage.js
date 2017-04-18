@@ -53,19 +53,36 @@ $(function () {
     })
 });
 
+$("#editForm").submit(function(){
+    $(":submit",this).attr("disabled","disabled");
+});
+
+$("#addForm").submit(function(){
+    $(":submit",this).attr("disabled","disabled");
+});
+
+function showAvailable(){
+    alert("可用");
+}
+
+function showDisable(){
+    alert("禁用");
+}
+
 function showEdit(){
     var row =  $('table').bootstrapTable('getSelections');
     if(row.length >0) {
 //                $('#editId').val(row[0].id);
 //                $('#editName').val(row[0].name);
 //                $('#editPrice').val(row[0].price);
+        $("#editButton").removeAttr("disabled");
         $("#edit").modal('show'); // 显示弹窗
         var ceshi = row[0];
         $("#editForm").fill(ceshi);
     }else{
         swal({
             title:"",
-            text: "请先选择要修改的人员角色", // 主要文本
+            text: "请先选择要修改的角色", // 主要文本
             confirmButtonColor: "#DD6B55", // 提示按钮的颜色
             confirmButtonText:"确定", // 提示按钮上的文本
             type:"warning"}) // 提示类型
@@ -77,7 +94,7 @@ function showDel(){
     if(row.length >0) {
         swal(
             {title:"",
-                text:"您确定要删除此条人员角色吗",
+                text:"您确定要禁用此角色吗",
                 type:"warning",
                 showCancelButton:true,
                 confirmButtonColor:"#DD6B55",
@@ -89,7 +106,7 @@ function showDel(){
                 if(isConfirm)
                 {
                     swal({title:"",
-                        text:"删除成功",
+                        text:"禁用成功",
                         type:"success",
                         confirmButtonText:"确认",
                     },function(){
@@ -105,7 +122,7 @@ function showDel(){
     }else{
         swal({
             title:"",
-            text: "请先选择要删除的人员角色", // 主要文本
+            text: "请先选择要禁用的角色", // 主要文本
             confirmButtonColor: "#DD6B55", // 提示按钮的颜色
             confirmButtonText:"确定", // 提示按钮上的文本
             type:"warning"}) // 提示类型
@@ -113,6 +130,8 @@ function showDel(){
 }
 
 function showAdd(){
+    $("input[type=reset]").trigger("click");
+    $("#addButton").removeAttr("disabled");
     $("#add").modal('show');
 }
 
@@ -121,57 +140,46 @@ $(document).ready(function() {
         errorElement : 'span',
         errorClass : 'help-block',
         rules : {
-            userName : {
+            roleDes : {
                 required : true
             },
             roleName : {
                 required : true
             },
-            ddd : {
-                required : true,
-            }
         },
         messages : {
-            userName : "请选择人员",
-            roleName : "请选择角色",
-            ddd : "请选择角色"
+            roleName : "请输入角色名称",
+            roleDes : "请输入角色描述"
         },
         errorPlacement : function(error, element) {
+            $("#addButton").removeAttr("disabled");
                 element.after('<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>');
                 element.closest('.form-group').append(error);
         },
         highlight : function(element) {
+            $("#addButton").removeAttr("disabled");
                 $(element).closest('.form-group').addClass('has-error has-feedback');
         },
         success : function(label) {
+            $("#addButton").removeAttr("disabled");
                 var el=label.closest('.form-group').find("input");
-                var el1=label.closest('.form-group').find("select");
                 el.next().remove();
-                // alert(label.select.id);
-                // var role=$("#roleNameSelect");
-                // var user=$("#userNameSelect");
-
-                // role.next().remove();
-                // user.next().remove();
                 el.after('<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>');
-                el1.after('<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>');
-                // role.after('<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>');
-                // user.after('<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>');
                 label.closest('.form-group').removeClass('has-error').addClass("has-feedback has-success");
                 label.remove();
         },
         submitHandler: function(form) {
-            $.post("/table/edit",
+            $.post("/table/add",
                 $("#editForm").serialize(),
                 function (data) {
                     if (data.result == "success") {
-                        $("#edit").modal('hide'); // 关闭指定的窗口
+                        $("#add").modal('hide'); // 关闭指定的窗口
                         $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
                         swal({
                             title:"",
                             text: data.message, // 主要文本
                             confirmButtonText:"确定", // 提示按钮上的文本
-                            type:"warning"}) // 提示类型
+                            type:"success"}) // 提示类型
                     } else if (data.result == "fail") {
                         swal({title:"",
                             text:"添加失败",
@@ -187,26 +195,29 @@ $(document).ready(function() {
         errorElement : 'span',
         errorClass : 'help-block',
         rules : {
-            userName : {
-                required : true,
+            roleDes : {
+                required : true
             },
             roleName : {
-                required : true,
-            }
+                required : true
+            },
         },
         messages : {
-            userName : "请选择人员",
-            roleName : "请选择角色"
+            roleName : "请输入角色名称",
+            roleDes : "请输入角色描述"
         },
         errorPlacement : function(error, element) {
+            $("#editButton").removeAttr("disabled");
             element.next().remove();
             element.after('<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>');
             element.closest('.form-group').append(error);
         },
         highlight : function(element) {
+            $("#editButton").removeAttr("disabled");
             $(element).closest('.form-group').addClass('has-error has-feedback');
         },
         success : function(label) {
+            $("#editButton").removeAttr("disabled");
             var el=label.closest('.form-group').find("input");
             el.next().remove();
             el.after('<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>');
@@ -224,7 +235,7 @@ $(document).ready(function() {
                             title:"",
                             text: data.message, // 主要文本
                             confirmButtonText:"确定", // 提示按钮上的文本
-                            type:"warning"}) // 提示类型
+                            type:"success"}) // 提示类型
                     } else if (data.result == "fail") {
                         swal({title:"",
                             text:"修改失败",
