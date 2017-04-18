@@ -1,10 +1,33 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.gs.dao.OutgoingTypeDAO" >
-  <resultMap id="BaseResultMap" type="com.gs.bean.OutgoingType" >
+  <resultMap id="outGoingTypeMap" type="com.gs.bean.OutgoingType" >
     <id column="outTypeId" property="outTypeId" jdbcType="VARCHAR" />
     <result column="outTypeName" property="outTypeName" jdbcType="VARCHAR" />
     <result column="outTypeStatus" property="outTypeStatus" jdbcType="VARCHAR" />
   </resultMap>
+
+  <select id="queryAll" resultType="list" resultMap="outGoingTypeMap">
+        <![CDATA[
+        select * from t_outgoing_type
+        ]]>
+    </select>
+
+  <select id="count" resultType="int" parameterType="outGoingType">
+    select count(*) from t_outgoing_type;
+  </select>
+
+  <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="outGoingType">
+    <![CDATA[
+        insert into t_outgoing_type(inTypeId, inTypeName, inTypeStatus) values(#{inTypeId}, #{inTypeName}, #{inTypeStatus})
+        ]]>
+  </insert>
+
+  <update id="update" keyProperty="id" parameterType="outGoingType">
+    <![CDATA[
+        update t_outgoing_type set inTypeId = #{inTypeId}, inTypeName = #{inTypeName}, inTypeStatus = #{inTypeStatus} where inTypeId = #{inTypeId}
+        ]]>
+  </update>
+
 
 </mapper>

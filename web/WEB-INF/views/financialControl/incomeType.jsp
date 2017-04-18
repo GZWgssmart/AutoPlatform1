@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="/static/css/sweetalert.css">
     <link rel="stylesheet" href="/static/css/table/table.css">
 
-    <title>收入管理</title>
+    <title>收入类型管理</title>
 </head>
 <body>
 
@@ -30,11 +30,8 @@
                 <%-- 收入信息是由系统自动根据维修保养收费单据生成的 --%>
                 <th data-radio="true" data-field="status"></th>
                 <th data-field="type">收入类型</th>
-                <th data-field="money">收入金额</th>
-                <th data-field="createdUser">收入创建人</th>
-                <th data-field="createdTime">收入创建时间</th>
+                <th data-field="createdTime">创建时间</th>
                 <th data-field="typeStatus">收入类型状态</th>
-                <th data-field="typeStatus">收入记录状态</th>
             </tr>
             </thead>
         </table>
@@ -59,32 +56,13 @@
             <div class="container" style="width: 80%;">
                 <form class="form-horizontal" onsubmit="return checkAdd()" id="addForm" method="post">
                     <div class="modal-header" style="overflow:auto;">
-                        <h4>收入记录录入</h4>
+                        <h4>收入类型添加</h4>
                     </div>
                     <br/>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">收入类型：</label>
                         <div class="col-sm-7">
                             <input type="text" placeholder="请输入收入类型" class="form-control">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">收入金额：</label>
-                        <div class="col-sm-7">
-                            <input type="number" placeholder="请输入收入金额" class="form-control">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">创建人：</label>
-                        <div class="col-sm-7">
-                            <input type="text" placeholder="请输入收入创建人" class="form-control">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-5 control-label">收入记录状态</label>
-                        <div class="col-sm-7">
-                            <label><input type="radio" name="status" value="Y"> 激活</label>
-                            <label><input type="radio" name="status" value="N"> 禁用</label>
                         </div>
                     </div>
                     <div class="form-group">
@@ -106,32 +84,13 @@
             <div class="container" style="width: 80%;">
                 <form id="editForm" class="data1" method="post">
                     <div class="modal-header" style="overflow:auto;">
-                        <h4>收入记录修改</h4>
+                        <h4>收入类型修改</h4>
                     </div>
                     <br/>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">收入类型：</label>
                         <div class="col-sm-7">
                             <input type="text" placeholder="请输入收入类型" class="form-control">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">收入金额</label>
-                        <div class="col-sm-7">
-                            <input type="number" placeholder="请输入收入金额" class="form-control">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">收入创建人</label>
-                        <div class="col-sm-7">
-                            <input type="text" placeholder="请输入收入创建人" class="form-control">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-5 control-label">收入记录状态</label>
-                        <div class="col-sm-7">
-                            <label><input type="radio" name="status" value="Y"> 激活</label>
-                            <label><input type="radio" name="status" value="N"> 禁用</label>
                         </div>
                     </div>
                     <div class="modal-footer" style="overflow:hidden;">
@@ -152,7 +111,7 @@
 <script src="/static/js/select2/select2.js"></script>
 <script src="/static/js/sweetalert/sweetalert.min.js"></script>
 <script src="/static/js/contextmenu.js"></script>
-<script src="/static/js/financialControlJS/income.js"></script>
+<script src="/static/js/financialControlJS/incomeType.js"></script>
 <script src="/static/js/bootstrap-select/bootstrap-select.js"></script>
 
 </body>

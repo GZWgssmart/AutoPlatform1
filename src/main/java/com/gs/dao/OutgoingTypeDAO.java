@@ -1,7 +1,12 @@
 package com.gs.dao;
 
 import com.gs.bean.OutgoingType;
+import com.gs.common.bean.Pager4EasyUI;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
 /**
 *由Wjhsmart技术支持
 *

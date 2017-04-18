@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="/static/css/sweetalert.css">
     <link rel="stylesheet" href="/static/css/table/table.css">
 
-    <title>支出管理</title>
+    <title>支出类型管理</title>
 </head>
 <body>
 
@@ -19,21 +19,29 @@
     <div class="panel-body" style="padding-bottom:0px;"  >
         <!--show-refresh, show-toggle的样式可以在bootstrap-table.js的948行修改-->
         <!-- table里的所有属性在bootstrap-table.js的240行-->
-        <table id="table" data-toggle="table" data-toolbar="#toolbar" data-url=""
-               data-method="post" data-query-params="queryParams" data-pagination="true"
-               data-search="true" data-show-refresh="true" data-show-toggle="true"
-               data-show-columns="true" data-page-size="10" data-height="543"
-               data-id-field="id" data-page-list="[5, 10, 20]" data-cach="false"
-               data-click-to-select="true" data-single-select="true">
+        <table id="table"
+               data-toggle="table"
+               data-toolbar="#toolbar"
+               data-url="/outGoingType/queryAll"
+               data-method="post"
+               data-query-params="queryParams"
+               data-pagination="true"
+               data-search="true"
+               data-show-refresh="true"
+               data-show-toggle="true"
+               data-show-columns="true"
+               data-page-size="10"
+               data-height="600"
+               data-id-field="id"
+               data-page-list="[5, 10, 20]"
+               data-cach="false"
+               data-click-to-select="true"
+               data-single-select="true">
             <thead>
                 <tr>
                     <th data-radio="true" data-field="status"></th>
-                    <th data-field="type">支出类型</th>
-                    <th data-field="money">支出金额</th>
-                    <th data-field="createdUser">支出创建人</th>
-                    <th data-field="createdTime">支出创建时间</th>
-                    <th data-field="typeStatus">支出类型状态</th>
-                    <th data-field="typeStatus">支出记录状态</th>
+                    <th data-field="outTypeName">支出类型</th>
+                    <th data-field="outTypeStatus">支出类型状态</th>
                 </tr>
             </thead>
         </table>
@@ -58,25 +66,13 @@
             <div class="container" style="width: 80%;">
                 <form class="form-horizontal" onsubmit="return checkAdd()" id="addForm" method="post">
                     <div class="modal-header" style="overflow:auto;">
-                        <h4>支出记录录入</h4>
+                        <h4>添加支出类型</h4>
                     </div>
                     <br/>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">支出类型：</label>
+                        <label class="col-sm-3 control-label">名称：</label>
                         <div class="col-sm-7">
-                            <input type="text" placeholder="请输入支出类型" class="form-control">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">支出金额：</label>
-                        <div class="col-sm-7">
-                            <input type="number" placeholder="请输入支出金额" class="form-control">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">创建人：</label>
-                        <div class="col-sm-7">
-                            <input type="text" placeholder="请输入支出创建人" class="form-control">
+                            <input type="text" placeholder="请输入支出类型名称" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
@@ -92,43 +88,32 @@
 </div><!-- /.modal -->
 
 <!-- 修改弹窗 -->
-<div class="modal fade" id="edit" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
+<div class="modal fade" id="edit" aria-hidden="true" style="overflow:auto;">
+    <div class="modal-dialog" style="overflow:hidden;">
+        <div class="modal-content" style="overflow:hidden;">
             <div class="container" style="width: 80%;">
-                <form id="editForm" class="data1" method="post">
+                <form class="form-horizontal" onsubmit="return checkAdd()" id="editForm" method="post">
                     <div class="modal-header" style="overflow:auto;">
-                        <h4>支出记录修改</h4>
+                        <h4>添加支出类型</h4>
                     </div>
                     <br/>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">支出类型：</label>
+                        <label class="col-sm-3 control-label">名称：</label>
                         <div class="col-sm-7">
-                            <input type="text" placeholder="请输入支出类型" class="form-control">
+                            <input type="text" placeholder="请输入支出类型名称" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">支出金额：</label>
-                        <div class="col-sm-7">
-                            <input type="number" placeholder="请输入支出金额" class="form-control">
+                        <div class="col-sm-offset-8">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            <button class="btn btn-sm btn-success" type="submit">保 存</button>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">创建人：</label>
-                        <div class="col-sm-7">
-                            <input type="text" placeholder="请输入支出创建人" class="form-control">
-                        </div>
-                    </div>
-                    <div class="modal-footer" style="overflow:hidden;">
-                        <button type="button" class="btn btn-default" data-dismiss="modal"> 关闭 </button>
-                        <button type="button" class="btn btn-primary"> 保存 </button>
                     </div>
                 </form>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-
 <!-- 删除弹窗 -->
 <div class="modal fade" id="del" aria-hidden="true">
     <div class="modal-dialog" style="overflow:hidden;">
@@ -176,7 +161,7 @@
 <script src="/static/js/select2/select2.js"></script>
 <script src="/static/js/sweetalert/sweetalert.min.js"></script>
 <script src="/static/js/contextmenu.js"></script>
-<script src="/static/js/financialControlJS/payOut.js"></script>
+<script src="/static/js/financialControlJS/payOutType.js"></script>
 <script src="/static/js/bootstrap-select/bootstrap-select.js"></script>
 
 </body>

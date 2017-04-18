@@ -1,6 +1,10 @@
 package com.gs.service;
 
 import com.gs.bean.OutgoingType;
+import com.gs.common.bean.Pager4EasyUI;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
 *由Wjhsmart技术支持
@@ -10,5 +14,8 @@ import com.gs.bean.OutgoingType;
 *@des 模块表Service
 */
 public interface OutgoingTypeService extends BaseService<String, OutgoingType>{
+
+
+    public List<OutgoingType> queryAll();
 
 }

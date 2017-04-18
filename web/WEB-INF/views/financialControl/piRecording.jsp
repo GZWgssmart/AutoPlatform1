@@ -13,10 +13,10 @@
 </head>
 <body>
 
-<%@include file="../backstage/contextmenu.jsp"%>
+<%@include file="../backstage/contextmenu.jsp" %>
 
 <div class="container">
-    <div class="panel-body" style="padding-bottom:0px;"  >
+    <div class="panel-body">
         <!--show-refresh, show-toggle的样式可以在bootstrap-table.js的948行修改-->
         <!-- table里的所有属性在bootstrap-table.js的240行-->
         <table id="table" data-toggle="table" data-toolbar="#toolbar" data-url=""
@@ -28,18 +28,18 @@
             <thead>
             <tr>
                 <th data-radio="true" data-field="status"></th>
-                <th data-field="type">支出类型</th>
-                <th data-field="money">支出金额</th>
-                <th data-field="createdUser">支出创建人</th>
-                <th data-field="createdTime">支出创建时间</th>
-                <th data-field="typeStatus">支出类型状态</th>
-                <th data-field="typeStatus">支出记录状态</th>
+                <th data-width="15%" data-field="outTypeId">支出类型</th>
+                <th data-width="15%" data-field="inTypeId">收入类型</th>
+                <th data-width="15%" data-field="inOutMoney">收支金额</th>
+                <th data-width="15%" data-field="inOutCreatedUser">创建人</th>
+                <th data-width="20%" data-field="inOutCreatedTime">创建时间</th>
+                <th data-width="15%" data-field="inOutStatus">记录状态</th>
             </tr>
             </thead>
         </table>
         <div id="toolbar" class="btn-group">
             <button id="btn_add" type="button" class="btn btn-default" onclick="showAdd();">
-                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>其它支出
             </button>
             <button id="btn_edit" type="button" class="btn btn-default" onclick="showEdit();">
                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
@@ -56,54 +56,28 @@
     <div class="modal-dialog" style="overflow:hidden;">
         <div class="modal-content" style="overflow:hidden;">
             <div class="container" style="width: 80%;">
-                <form class="form-horizontal" role="form" onsubmit="return checkAdd()" id="register-form" method="post">
+                <form class="form-horizontal" onsubmit="return checkAdd()" id="addForm" method="post">
                     <div class="modal-header" style="overflow:auto;">
-                        <p>员工工资录入</p>
+                        <h4>其它支出添加</h4>
                     </div>
+                    <br/>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label" for="name">员工姓名：</label>
+                        <label class="col-sm-3 control-label">收支金额：</label>
                         <div class="col-sm-7">
-                            <input type="text" id="name" name="name" placeholder="请输入员工姓名" class="form-control">
+                            <input type="number" placeholder="请输入收支金额" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label" for="phone">手机号码：</label>
+                        <label class="col-sm-3 control-label">创建人：</label>
                         <div class="col-sm-7">
-                            <input type="text" id="phone" name="phone" placeholder="请输入手机号码" class="form-control">
+                            <input type="text" placeholder="请输入收支记录创建人" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">罚款：</label>
-                        <div class="col-sm-7">
-                            <input type="number" placeholder="请输入罚款" class="form-control" max="10">
+                        <div class="col-sm-offset-8">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            <button class="btn btn-sm btn-success" type="submit">保 存</button>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">底薪：</label>
-                        <div class="col-sm-7">
-                            <input type="number" placeholder="请输入联系方式" class="form-control" max="10">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">总工资：</label>
-                        <div class="col-sm-7">
-                            <input type="number" placeholder="请输入总工资" class="form-control" max="11">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label" for="password">工资描述：</label>
-                        <div class="col-sm-7">
-                            <input type="password" id="password" name="password" placeholder="请输入工资发放描述" class="form-control">
-                        </div>
-                    </div>
-
-                    <div class="modal-footer">
-                        <span id="addError"></span>
-                        <button type="button" class="btn btn-default"
-                                data-dismiss="modal">关闭
-                        </button>
-                        <button type="submit" class="btn btn-primary btn-sm">保存</button>
                     </div>
                 </form>
             </div>
@@ -116,54 +90,26 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="container" style="width: 80%;">
-                <form class="form-horizontal" role="form" onsubmit="return checkAdd()" id="edit-form" method="post">
+                <form id="editForm" class="data1" method="post">
                     <div class="modal-header" style="overflow:auto;">
-                        <p>员工工资录入</p>
+                        <h4>收支记录修改</h4>
                     </div>
+                    <br/>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label" for="name">员工姓名：</label>
+                        <label class="col-sm-3 control-label">收支金额：</label>
                         <div class="col-sm-7">
-                            <input type="text" id="n" name="name" placeholder="请输入员工姓名" class="form-control">
+                            <input type="number" placeholder="请输入收支金额" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label" for="phone">手机号码：</label>
+                        <label class="col-sm-3 control-label">创建人：</label>
                         <div class="col-sm-7">
-                            <input type="text" id="p" name="phone" placeholder="请输入手机号码" class="form-control">
+                            <input type="text" placeholder="请输入收支记录创建人" class="form-control">
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">罚款：</label>
-                        <div class="col-sm-7">
-                            <input type="number" placeholder="请输入罚款" class="form-control" max="10">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">底薪：</label>
-                        <div class="col-sm-7">
-                            <input type="number" placeholder="请输入联系方式" class="form-control" max="10">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">总工资：</label>
-                        <div class="col-sm-7">
-                            <input type="number" placeholder="请输入总工资" class="form-control" max="11">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label" for="password">工资描述：</label>
-                        <div class="col-sm-7">
-                            <input type="password" id="pwd" name="password" placeholder="请输入工资发放描述" class="form-control">
-                        </div>
-                    </div>
-
-                    <div class="modal-footer">
-                        <span id="editError"></span>
-                        <button type="button" class="btn btn-default"
-                                data-dismiss="modal">关闭
-                        </button>
-                        <button type="submit" class="btn btn-primary btn-sm">保存</button>
+                    <div class="modal-footer" style="overflow:hidden;">
+                        <button type="button" class="btn btn-default" data-dismiss="modal"> 关闭</button>
+                        <button type="button" class="btn btn-primary"> 保存</button>
                     </div>
                 </form>
             </div>
@@ -220,7 +166,6 @@
 <script src="/static/js/contextmenu.js"></script>
 <script src="/static/js/financialControlJS/payOut.js"></script>
 <script src="/static/js/bootstrap-select/bootstrap-select.js"></script>
-
 
 </body>
 </html>

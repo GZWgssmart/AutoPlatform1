@@ -1,6 +1,7 @@
 package com.gs.service.impl;
 
 import com.gs.bean.OutgoingType;
+import com.gs.common.bean.Pager4EasyUI;
 import com.gs.dao.OutgoingTypeDAO;
 import com.gs.service.OutgoingTypeService;
 import org.springframework.stereotype.Service;
@@ -38,5 +39,7 @@ public class OutgoingTypeServiceImpl implements OutgoingTypeService {
 	public int count() { return outgoingTypeDAO.count(); }
 	public int inactive(String id) { return outgoingTypeDAO.inactive(id); }
 	public int active(String id) { return outgoingTypeDAO.active(id); }
+
+
 
 }

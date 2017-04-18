@@ -11,10 +11,40 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * Created by 小蜜蜂 on 2017-04-12.
  */
 @Controller
-@RequestMapping("/financial")
-public class FinancialController {
+@RequestMapping("/financialView")
+public class FinancialViewController {
 
-    private Logger logger = (Logger) LoggerFactory.getLogger(FinancialController.class);
+    private Logger logger = (Logger) LoggerFactory.getLogger(FinancialViewController.class);
+
+    /**
+     * 跳转至支出管理页面
+     * @return
+     */
+    @RequestMapping(value = "payOutType", method = RequestMethod.GET)
+    public String payOutType() {
+        logger.info("跳转至支出类型管理页面");
+        return "/financialControl/payOutType";
+    }
+
+    /**
+     * 跳转至收入管理页面
+     * @return
+     */
+    @RequestMapping(value = "incomeType", method = RequestMethod.GET)
+    public String incomeType() {
+        logger.info("跳转至收入类型管理页面");
+        return "/financialControl/incomeType";
+    }
+
+    /**
+     * 跳转至收入管理页面
+     * @return
+     */
+    @RequestMapping(value = "piRecording", method = RequestMethod.GET)
+    public String piRecording() {
+        logger.info("跳转至收支记录管理页面");
+        return "/financialControl/piRecording";
+    }
 
     /**
      * 跳转至支出管理页面
