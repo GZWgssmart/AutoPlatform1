@@ -72,19 +72,19 @@
                     <div class="form-group">
                         <label class="col-sm-5 control-label" for="name">维修保养开始时间：</label>
                         <div class="col-sm-7">
-                            <input type="datetime" id="statt" name="start" placeholder="2017/02/02 08:30" class="form-control">
+                            <input type="date" id="statt" name="start" placeholder="2017/02/02 08:30" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-5 control-label" for="name">维修保养预估结束时间：</label>
+                        <label class="col-sm-5 control-label" for="name">预估结束时间：</label>
                         <div class="col-sm-7">
-                            <input type="datetime" id="end" name="end" placeholder="2017/02/07 08:30" class="form-control">
+                            <input type="date" id="end" name="end" placeholder="2017/02/07 08:30" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-5 control-label" for="name">维修保养实际结束时间：</label>
+                        <label class="col-sm-5 control-label" for="name">实际结束时间：</label>
                         <div class="col-sm-7">
-                            <input type="datetime" id="actualEnd" name="actualEnd" placeholder="2017/02/02 08:30" class="form-control">
+                            <input type="date" id="actualEnd" name="actualEnd" placeholder="2017/02/02 08:30" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
@@ -119,7 +119,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-5 control-label" for="name">维修保养项目所属公司：</label>
+                        <label class="col-sm-5 control-label" for="name">项目所属公司：</label>
                         <div class="col-sm-7">
                             <input type="text" placeholder="维修保养项目所属公司" class="form-control">
                         </div>
@@ -141,13 +141,6 @@
                                 <option>保养</option>
                                 <option>维修</option>
                             </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-5 control-label">状态：</label>
-                        <div class="col-sm-7">
-                            <index type="radio" value="Y" /> 激 活
-                            <index type="radio" value="N" /> 禁 用
                         </div>
                     </div>
                     <div class="form-group">
@@ -174,19 +167,19 @@
                     <div class="form-group">
                         <label class="col-sm-5 control-label" for="name">维修保养开始时间：</label>
                         <div class="col-sm-7">
-                            <input type="datetime" name="start" placeholder="2017/02/02 08:30" class="form-control">
+                            <input type="date" name="start" placeholder="2017/02/02 08:30" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-5 control-label" for="name">维修保养预估结束时间：</label>
+                        <label class="col-sm-5 control-label" for="name">预估结束时间：</label>
                         <div class="col-sm-7">
-                            <input type="datetime" name="end" placeholder="2017/02/07 08:30" class="form-control">
+                            <input type="date" name="end" placeholder="2017/02/07 08:30" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-5 control-label" for="name">维修保养实际结束时间：</label>
+                        <label class="col-sm-5 control-label" for="name">实际结束时间：</label>
                         <div class="col-sm-7">
-                            <input type="datetime" name="actualEnd" placeholder="2017/02/02 08:30" class="form-control">
+                            <input type="date" name="actualEnd" placeholder="2017/02/02 08:30" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
@@ -221,7 +214,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-5 control-label" for="name">维修保养项目所属公司：</label>
+                        <label class="col-sm-5 control-label" for="name">项目所属公司：</label>
                         <div class="col-sm-7">
                             <input type="text" placeholder="维修保养项目所属公司" class="form-control">
                         </div>
@@ -248,14 +241,8 @@
                     <div class="form-group">
                         <label class="col-sm-5 control-label">状态：</label>
                         <div class="col-sm-7">
-                            <index type="radio" value="Y" /> 激 活
-                            <index type="radio" value="N" /> 禁 用
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-sm-offset-8">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                            <button class="btn btn-sm btn-success" type="submit">保 存</button>
+                            <label><input type="radio" name="recordStatus" value="Y" /> 激 活</label>
+                            <label><input type="radio" name="recordStatus" value="N" /> 禁 用</label>
                         </div>
                     </div>
                     <div class="modal-footer" style="overflow:hidden;">

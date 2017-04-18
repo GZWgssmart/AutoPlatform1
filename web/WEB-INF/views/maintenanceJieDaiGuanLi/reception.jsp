@@ -96,7 +96,7 @@
                     <div class="form-group">
                         <label class="col-sm-5 control-label">车主手机号</label>
                         <div class="col-sm-7">
-                            <input type="number" placeholder="请输入车主手机号" class="form-control">
+                            <input type="number" placeholder="请输入车主手机号" class="form-control" maxlength="11">
                         </div>
                     </div>
                     <div class="form-group">
@@ -124,7 +124,7 @@
                     <div class="form-group">
                         <label class="col-sm-5 control-label">车主到店时间：</label>
                         <div class="col-sm-7">
-                            <input type="datetime" placeholder="2017/04/12 20:31" class="form-control">
+                            <input type="date" placeholder="2017/04/12 20:31" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
@@ -215,7 +215,7 @@
                 <div class="form-group">
                     <label class="col-sm-5 control-label">车主手机号</label>
                     <div class="col-sm-7">
-                        <input type="number" placeholder="请输入车主手机号" class="form-control">
+                        <input type="number" placeholder="请输入车主手机号" class="form-control" maxlength="11">
                     </div>
                 </div>
                 <div class="form-group">
@@ -243,7 +243,7 @@
                 <div class="form-group">
                     <label class="col-sm-5 control-label">车主到店时间：</label>
                     <div class="col-sm-7">
-                        <input type="datetime" placeholder="2017/04/12 20:31" class="form-control">
+                        <input type="date" placeholder="2017/04/12 20:31" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
