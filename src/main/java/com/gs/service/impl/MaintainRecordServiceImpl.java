@@ -31,6 +31,12 @@ public class MaintainRecordServiceImpl implements MaintainRecordService {
 	public int update(MaintainRecord maintainRecord) { return maintainRecordDAO.update(maintainRecord); }
 	public int batchUpdate(List<MaintainRecord> list) { return maintainRecordDAO.batchUpdate(list); }
 	public List<MaintainRecord> queryAll() { return maintainRecordDAO.queryAll(); }
+
+	@Override
+	public List<MaintainRecord> queryAll(String status) {
+		return maintainRecordDAO.queryAll();
+	}
+
 	public List<MaintainRecord> queryByStatus(String status) { return maintainRecordDAO.queryAll(status); }
 	public MaintainRecord query(MaintainRecord maintainRecord) { return maintainRecordDAO.query(maintainRecord); }
 	public MaintainRecord queryById(String id) { return maintainRecordDAO.queryById(id); }

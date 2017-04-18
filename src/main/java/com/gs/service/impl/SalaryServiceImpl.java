@@ -31,6 +31,12 @@ public class SalaryServiceImpl implements SalaryService {
 	public int update(Salary salary) { return salaryDAO.update(salary); }
 	public int batchUpdate(List<Salary> list) { return salaryDAO.batchUpdate(list); }
 	public List<Salary> queryAll() { return salaryDAO.queryAll(); }
+
+	@Override
+	public List<Salary> queryAll(String status) {
+		return salaryDAO.queryAll();
+	}
+
 	public List<Salary> queryByStatus(String status) { return salaryDAO.queryAll(status); }
 	public Salary query(Salary salary) { return salaryDAO.query(salary); }
 	public Salary queryById(String id) { return salaryDAO.queryById(id); }

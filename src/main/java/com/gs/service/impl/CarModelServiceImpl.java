@@ -31,6 +31,12 @@ public class CarModelServiceImpl implements CarModelService {
 	public int update(CarModel carModel) { return carModelDAO.update(carModel); }
 	public int batchUpdate(List<CarModel> list) { return carModelDAO.batchUpdate(list); }
 	public List<CarModel> queryAll() { return carModelDAO.queryAll(); }
+
+	@Override
+	public List<CarModel> queryAll(String status) {
+		return carModelDAO.queryAll();
+	}
+
 	public List<CarModel> queryByStatus(String status) { return carModelDAO.queryAll(status); }
 	public CarModel query(CarModel carModel) { return carModelDAO.query(carModel); }
 	public CarModel queryById(String id) { return carModelDAO.queryById(id); }

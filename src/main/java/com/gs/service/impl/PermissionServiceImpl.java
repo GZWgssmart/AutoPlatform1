@@ -31,6 +31,12 @@ public class PermissionServiceImpl implements PermissionService {
 	public int update(Permission permission) { return permissionDAO.update(permission); }
 	public int batchUpdate(List<Permission> list) { return permissionDAO.batchUpdate(list); }
 	public List<Permission> queryAll() { return permissionDAO.queryAll(); }
+
+	@Override
+	public List<Permission> queryAll(String status) {
+		return permissionDAO.queryAll();
+	}
+
 	public List<Permission> queryByStatus(String status) { return permissionDAO.queryAll(status); }
 	public Permission query(Permission permission) { return permissionDAO.query(permission); }
 	public Permission queryById(String id) { return permissionDAO.queryById(id); }

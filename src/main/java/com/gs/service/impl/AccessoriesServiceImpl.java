@@ -30,6 +30,12 @@ public class AccessoriesServiceImpl implements AccessoriesService {
 	public int update(Accessories accessories) { return accessoriesDAO.update(accessories); }
 	public int batchUpdate(List<Accessories> list) { return accessoriesDAO.batchUpdate(list); }
 	public List<Accessories> queryAll() { return accessoriesDAO.queryAll(); }
+
+	@Override
+	public List<Accessories> queryAll(String status) {
+		return accessoriesDAO.queryAll();
+	}
+
 	public List<Accessories> queryByStatus(String status) { return accessoriesDAO.queryAll(status); }
 	public Accessories query(Accessories accessories) { return accessoriesDAO.query(accessories); }
 	public Accessories queryById(String id) { return accessoriesDAO.queryById(id); }

@@ -31,6 +31,12 @@ public class ModuleServiceImpl implements ModuleService {
 	public int update(Module module) { return moduleDAO.update(module); }
 	public int batchUpdate(List<Module> list) { return moduleDAO.batchUpdate(list); }
 	public List<Module> queryAll() { return moduleDAO.queryAll(); }
+
+	@Override
+	public List<Module> queryAll(String status) {
+		return moduleDAO.queryAll();
+	}
+
 	public List<Module> queryByStatus(String status) { return moduleDAO.queryAll(status); }
 	public Module query(Module module) { return moduleDAO.query(module); }
 	public Module queryById(String id) { return moduleDAO.queryById(id); }

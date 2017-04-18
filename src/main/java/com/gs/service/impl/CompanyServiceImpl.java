@@ -31,6 +31,12 @@ public class CompanyServiceImpl implements CompanyService {
 	public int update(Company company) { return companyDAO.update(company); }
 	public int batchUpdate(List<Company> list) { return companyDAO.batchUpdate(list); }
 	public List<Company> queryAll() { return companyDAO.queryAll(); }
+
+	@Override
+	public List<Company> queryAll(String status) {
+		return companyDAO.queryAll();
+	}
+
 	public List<Company> queryByStatus(String status) { return companyDAO.queryAll(status); }
 	public Company query(Company company) { return companyDAO.query(company); }
 	public Company queryById(String id) { return companyDAO.queryById(id); }

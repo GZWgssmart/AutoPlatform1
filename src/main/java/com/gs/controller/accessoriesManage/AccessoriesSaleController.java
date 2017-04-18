@@ -47,8 +47,14 @@ public class AccessoriesSaleController {
      */
     @ResponseBody
     @RequestMapping(value = "removeAccSale", method = RequestMethod.POST)
-    public ControllerResult removeAccSale() {
-        return null;
+    public ControllerResult removeAccSale(String id) {
+        if(id!=null&&!id.equals("")){
+            accessoriesSaleService.deleteById(id);
+            logger.info("删除成功");
+            return ControllerResult.getSuccessResult("删除成功");
+        }else{
+            return ControllerResult.getFailResult("删除失败");
+        }
     }
 
     /**
@@ -57,8 +63,14 @@ public class AccessoriesSaleController {
      */
     @ResponseBody
     @RequestMapping(value = "updateAccSale", method = RequestMethod.POST)
-    public ControllerResult updateAccSale() {
-        return null;
+    public ControllerResult updateAccSale(AccessoriesSale accessoriesSale) {
+        if(accessoriesSale!=null&&!accessoriesSale.equals("")){
+            accessoriesSaleService.update(accessoriesSale);
+            logger.info("更新成功");
+            return ControllerResult.getSuccessResult("更新成功");
+        }else{
+            return ControllerResult.getFailResult("更新失败");
+        }
     }
 
 }

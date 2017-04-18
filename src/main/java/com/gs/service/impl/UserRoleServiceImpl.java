@@ -31,6 +31,12 @@ public class UserRoleServiceImpl implements UserRoleService {
 	public int update(UserRole userRole) { return userRoleDAO.update(userRole); }
 	public int batchUpdate(List<UserRole> list) { return userRoleDAO.batchUpdate(list); }
 	public List<UserRole> queryAll() { return userRoleDAO.queryAll(); }
+
+	@Override
+	public List<UserRole> queryAll(String status) {
+		return userRoleDAO.queryAll();
+	}
+
 	public List<UserRole> queryByStatus(String status) { return userRoleDAO.queryAll(status); }
 	public UserRole query(UserRole userRole) { return userRoleDAO.query(userRole); }
 	public UserRole queryById(String id) { return userRoleDAO.queryById(id); }

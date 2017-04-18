@@ -30,6 +30,12 @@ public class AppointmentServiceImpl implements AppointmentService {
 	public int update(Appointment appointment) { return appointmentDAO.update(appointment); }
 	public int batchUpdate(List<Appointment> list) { return appointmentDAO.batchUpdate(list); }
 	public List<Appointment> queryAll() { return appointmentDAO.queryAll(); }
+
+	@Override
+	public List<Appointment> queryAll(String status) {
+		return appointmentDAO.queryAll();
+	}
+
 	public List<Appointment> queryByStatus(String status) { return appointmentDAO.queryAll(status); }
 	public Appointment query(Appointment appointment) { return appointmentDAO.query(appointment); }
 	public Appointment queryById(String id) { return appointmentDAO.queryById(id); }

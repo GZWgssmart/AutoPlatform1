@@ -31,6 +31,12 @@ public class MessageSendServiceImpl implements MessageSendService {
 	public int update(MessageSend messageSend) { return messageSendDAO.update(messageSend); }
 	public int batchUpdate(List<MessageSend> list) { return messageSendDAO.batchUpdate(list); }
 	public List<MessageSend> queryAll() { return messageSendDAO.queryAll(); }
+
+	@Override
+	public List<MessageSend> queryAll(String status) {
+		return messageSendDAO.queryAll();
+	}
+
 	public List<MessageSend> queryByStatus(String status) { return messageSendDAO.queryAll(status); }
 	public MessageSend query(MessageSend messageSend) { return messageSendDAO.query(messageSend); }
 	public MessageSend queryById(String id) { return messageSendDAO.queryById(id); }

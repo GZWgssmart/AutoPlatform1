@@ -31,6 +31,12 @@ public class CarPlateServiceImpl implements CarPlateService {
 	public int update(CarPlate carPlate) { return carPlateDAO.update(carPlate); }
 	public int batchUpdate(List<CarPlate> list) { return carPlateDAO.batchUpdate(list); }
 	public List<CarPlate> queryAll() { return carPlateDAO.queryAll(); }
+
+	@Override
+	public List<CarPlate> queryAll(String status) {
+		return carPlateDAO.queryAll();
+	}
+
 	public List<CarPlate> queryByStatus(String status) { return carPlateDAO.queryAll(status); }
 	public CarPlate query(CarPlate carPlate) { return carPlateDAO.query(carPlate); }
 	public CarPlate queryById(String id) { return carPlateDAO.queryById(id); }

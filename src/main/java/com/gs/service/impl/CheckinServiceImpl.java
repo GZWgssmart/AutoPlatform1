@@ -31,6 +31,12 @@ public class CheckinServiceImpl implements CheckinService {
 	public int update(Checkin checkin) { return checkinDAO.update(checkin); }
 	public int batchUpdate(List<Checkin> list) { return checkinDAO.batchUpdate(list); }
 	public List<Checkin> queryAll() { return checkinDAO.queryAll(); }
+
+	@Override
+	public List<Checkin> queryAll(String status) {
+		return checkinDAO.queryAll();
+	}
+
 	public List<Checkin> queryByStatus(String status) { return checkinDAO.queryAll(status); }
 	public Checkin query(Checkin checkin) { return checkinDAO.query(checkin); }
 	public Checkin queryById(String id) { return checkinDAO.queryById(id); }

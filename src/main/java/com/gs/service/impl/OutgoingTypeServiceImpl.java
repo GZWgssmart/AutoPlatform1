@@ -32,6 +32,12 @@ public class OutgoingTypeServiceImpl implements OutgoingTypeService {
 	public int update(OutgoingType outgoingType) { return outgoingTypeDAO.update(outgoingType); }
 	public int batchUpdate(List<OutgoingType> list) { return outgoingTypeDAO.batchUpdate(list); }
 	public List<OutgoingType> queryAll() { return outgoingTypeDAO.queryAll(); }
+
+	@Override
+	public List<OutgoingType> queryAll(String status) {
+		return outgoingTypeDAO.queryAll();
+	}
+
 	public List<OutgoingType> queryByStatus(String status) { return outgoingTypeDAO.queryAll(status); }
 	public OutgoingType query(OutgoingType outgoingType) { return outgoingTypeDAO.query(outgoingType); }
 	public OutgoingType queryById(String id) { return outgoingTypeDAO.queryById(id); }

@@ -31,6 +31,12 @@ public class MaterialReturnServiceImpl implements MaterialReturnService {
 	public int update(MaterialReturn materialReturn) { return materialReturnDAO.update(materialReturn); }
 	public int batchUpdate(List<MaterialReturn> list) { return materialReturnDAO.batchUpdate(list); }
 	public List<MaterialReturn> queryAll() { return materialReturnDAO.queryAll(); }
+
+	@Override
+	public List<MaterialReturn> queryAll(String status) {
+		return materialReturnDAO.queryAll();
+	}
+
 	public List<MaterialReturn> queryByStatus(String status) { return materialReturnDAO.queryAll(status); }
 	public MaterialReturn query(MaterialReturn materialReturn) { return materialReturnDAO.query(materialReturn); }
 	public MaterialReturn queryById(String id) { return materialReturnDAO.queryById(id); }

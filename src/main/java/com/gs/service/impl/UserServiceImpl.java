@@ -31,6 +31,12 @@ public class UserServiceImpl implements UserService {
 	public int update(User user) { return userDAO.update(user); }
 	public int batchUpdate(List<User> list) { return userDAO.batchUpdate(list); }
 	public List<User> queryAll() { return userDAO.queryAll(); }
+
+	@Override
+	public List<User> queryAll(String status) {
+		return userDAO.queryAll();
+	}
+
 	public List<User> queryByStatus(String status) { return userDAO.queryAll(status); }
 	public User query(User user) { return userDAO.query(user); }
 	public User queryById(String id) { return userDAO.queryById(id); }

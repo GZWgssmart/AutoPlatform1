@@ -31,6 +31,12 @@ public class IncomingOutgoingServiceImpl implements IncomingOutgoingService {
 	public int update(IncomingOutgoing incomingOutgoing) { return incomingOutgoingDAO.update(incomingOutgoing); }
 	public int batchUpdate(List<IncomingOutgoing> list) { return incomingOutgoingDAO.batchUpdate(list); }
 	public List<IncomingOutgoing> queryAll() { return incomingOutgoingDAO.queryAll(); }
+
+	@Override
+	public List<IncomingOutgoing> queryAll(String status) {
+		return incomingOutgoingDAO.queryAll();
+	}
+
 	public List<IncomingOutgoing> queryByStatus(String status) { return incomingOutgoingDAO.queryAll(status); }
 	public IncomingOutgoing query(IncomingOutgoing incomingOutgoing) { return incomingOutgoingDAO.query(incomingOutgoing); }
 	public IncomingOutgoing queryById(String id) { return incomingOutgoingDAO.queryById(id); }

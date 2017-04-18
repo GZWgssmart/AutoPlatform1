@@ -31,6 +31,12 @@ public class RoleServiceImpl implements RoleService {
 	public int update(Role role) { return roleDAO.update(role); }
 	public int batchUpdate(List<Role> list) { return roleDAO.batchUpdate(list); }
 	public List<Role> queryAll() { return roleDAO.queryAll(); }
+
+	@Override
+	public List<Role> queryAll(String status) {
+		return roleDAO.queryAll();
+	}
+
 	public List<Role> queryByStatus(String status) { return roleDAO.queryAll(status); }
 	public Role query(Role role) { return roleDAO.query(role); }
 	public Role queryById(String id) { return roleDAO.queryById(id); }
