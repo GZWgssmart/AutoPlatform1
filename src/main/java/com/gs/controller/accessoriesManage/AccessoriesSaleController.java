@@ -1,6 +1,7 @@
 package com.gs.controller.accessoriesManage;
 
 import ch.qos.logback.classic.Logger;
+import com.gs.bean.Accessories;
 import com.gs.bean.AccessoriesSale;
 import com.gs.common.bean.ControllerResult;
 import com.gs.service.AccessoriesSaleService;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * 王怡 配件销售
@@ -25,6 +27,20 @@ public class AccessoriesSaleController {
 
     @Resource
     private AccessoriesSaleService accessoriesSaleService;
+
+    /**
+     * 查询所有的配件销售记录
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "queryAllAccSale",method = RequestMethod.POST)
+    public List<AccessoriesSale> queryAllAccSale(){
+        List<AccessoriesSale> accessoriesSaleList=accessoriesSaleService.queryAll();
+        if(accessoriesSaleList!=null&&!accessoriesSaleList.equals("")){
+            return accessoriesSaleList;
+        }
+        return null;
+    }
     /**
      * 添加配件销售记录
      * @return
