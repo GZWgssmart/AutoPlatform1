@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gs.dao.MaterialReturnDAO" >
+  <resultMap id="BaseResultMap" type="com.gs.bean.MaterialReturn" >
+    <id column="materialReturnId" property="materialReturnId" jdbcType="VARCHAR" />
+    <result column="matainRecordId" property="matainRecordId" jdbcType="VARCHAR" />
+    <result column="accId" property="accId" jdbcType="VARCHAR" />
+    <result column="accCount" property="accCount" jdbcType="INTEGER" />
+    <result column="mrCreatedDate" property="mrCreatedDate" jdbcType="TIMESTAMP" />
+    <result column="mrReturnDate" property="mrReturnDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+</mapper>

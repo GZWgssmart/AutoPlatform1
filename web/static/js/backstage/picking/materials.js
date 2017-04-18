@@ -26,7 +26,7 @@ function showEdit(){
 //                $('#editId').val(row[0].id);
 //                $('#editName').val(row[0].name);
 //                $('#editPrice').val(row[0].price);
-        $("#edit").modal('show'); // 显示弹窗
+        $("#editWindow").modal('show'); // 显示弹窗
         var ceshi = row[0];
         $("#AppointForm").fill(ceshi);
     }else{
@@ -58,13 +58,11 @@ function showAppoint(){
 
 //领料确认
 function showConfirm(){
-    alert("sss");
     var row =  $('table').bootstrapTable('getSelections');
     if(row.length >0) {
 //                $('#editId').val(row[0].id);
 //                $('#editName').val(row[0].name);
 //                $('#editPrice').val(row[0].price)
-        alert("sss")
         $("#confirm").modal('show'); // 显示弹窗
     }else{
         //layer.msg("请先选择某一行", {time : 1500, icon : 2});
@@ -75,8 +73,22 @@ function showConfirm(){
     }
 }
 
-
-
+//退料申请
+function showApplication(){
+    var row =  $('table').bootstrapTable('getSelections');
+    if(row.length >0) {
+//                $('#editId').val(row[0].id);
+//                $('#editName').val(row[0].name);
+//                $('#editPrice').val(row[0].price)
+        $("#application").modal('show'); // 显示弹窗
+    }else{
+        //layer.msg("请先选择某一行", {time : 1500, icon : 2});
+        swal({
+            title:"",
+            text:"请先选择一行数据",
+            type:"warning"})// 提示窗口, 修改成功
+    }
+}
 
 //确认退料
 function showRegress(){
@@ -98,7 +110,7 @@ function showRegress(){
 
 function showAdd(){
 
-    $("#add").modal('show');
+    $("#addWindow").modal('show');
 }
 
 function formatRepo(repo){return repo.text}
@@ -118,7 +130,7 @@ function checkAdd(){
     var name = $('#addName').val();
     var price = $('#addPrice').val();
     var reslist=$("#addSelect").select2("data"); //获取多选的值
-    alert(reslist.length)
+    //alert(reslist.length)
     if(id != "" && name != "" && price != ""){
         return true;
     }else{
@@ -133,7 +145,7 @@ function checkEdit() {
         $("#editForm").serialize(),
         function (data) {
             if (data.result == "success") {
-                $("#edit").modal('hide'); // 关闭指定的窗口
+                $("#editWindow").modal('hide'); // 关闭指定的窗口
                 $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
                 swal({
                     title:"",
@@ -145,3 +157,111 @@ function checkEdit() {
         }, "json"
     );
 }
+
+//前段验证
+$(document).ready(function () {
+    $("#showAddFormWar").validate({
+        errorElement: 'span',
+        errorClass: 'help-block',
+
+        rules: {
+            materialName: {
+                required: true,
+                minlength: 2
+            },
+            materielState: {
+                required: true,
+                minlength: 2
+            },
+            materielCount: {
+                required: true,
+                minlength:2
+            },
+            maintain: {
+                required: true,
+                minlength:2
+            },
+            materiel_Receive_Time: {
+                required: true,
+                date:true
+            }
+        },
+        messages: {
+            materialName: "请输入物料名称",
+            materielState: "请输入物料说明",
+            materielCount: "请输入物料数量",
+            maintain:"请输入维修保养记录",
+            materiel_Receive_Time:"请输入领料时间"
+        },
+        errorPlacement: function (error, element) {
+            element.next().remove();
+            element.after('<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>');
+            element.closest('.form-group').append(error);
+        },
+        highlight: function (element) {
+            $(element).closest('.form-group').addClass('has-error has-feedback');
+        },
+        success: function (label) {
+            var el = label.closest('.form-group').find("input");
+            el.next().remove();
+            el.after('<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>');
+            label.closest('.form-group').removeClass('has-error').addClass("has-feedback has-success");
+            label.remove();
+        },
+        submitHandler: function (form) {
+            alert("submitted!");
+        }
+    })
+    $("#showEditFormWar").validate({
+        errorElement: 'span',
+        errorClass: 'help-block',
+
+        rules: {
+            materialName: {
+                required: true,
+                minlength: 2
+            },
+            materielState: {
+                required: true,
+                minlength: 2
+            },
+            materielCount: {
+                required: true,
+                minlength:2
+            },
+            maintain: {
+                required: true,
+                minlength:2
+            },
+            materiel_Receive_Time: {
+                required: true,
+                date:true
+            }
+        },
+        messages: {
+            materialName: "请输入物料名称",
+            materielState: "请输入物料说明",
+            materielCount: "请输入物料数量",
+            maintain:"请输入维修保养记录",
+            materiel_Receive_Time:"请输入领料时间",
+        },
+        errorPlacement: function (error, element) {
+            element.next().remove();
+            element.after('<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>');
+            element.closest('.form-group').append(error);
+        },
+        highlight: function (element) {
+            $(element).closest('.form-group').addClass('has-error has-feedback');
+        },
+        success: function (label) {
+            var el = label.closest('.form-group').find("input");
+            el.next().remove();
+            el.after('<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>');
+            label.closest('.form-group').removeClass('has-error').addClass("has-feedback has-success");
+            label.remove();
+        },
+        submitHandler: function (form) {
+            alert("submitted!");
+        }
+    })
+});

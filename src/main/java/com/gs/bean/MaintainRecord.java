@@ -2,24 +2,24 @@ package com.gs.bean;
 
 import java.util.Date;
 
-/**
- * Created by XiaoQiao on 2017/4/14.
- */
-
-/**
- * 维修保养记录
- */
 public class MaintainRecord {
+    private String recordId;
 
-    private String recordId; //维修保养记录编号
-    private String checkinId; //维修保养登记编号
-    private Date startTime; //维修保养开始时间
-    private Date endTime; //维修保养预估结束时间
-    private Date actualEndTime; //维修保养实际结束时间
-    private Date recordCreatedTime; //维修保养记录创建时间
-    private Date pickupTime; //维修保养结束车主提车时间
-    private String recordDes; //维修保养记录描述
-    private String recordStatus; //维修保养记录状态
+    private String checkinId;
+
+    private Date startTime;
+
+    private Date endTime;
+
+    private Date actualEndTime;
+
+    private Date recordCreatedTime;
+
+    private Date pickupTime;
+
+    private String recordDes;
+
+    private String recordStatus;
 
     public String getRecordId() {
         return recordId;

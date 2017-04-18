@@ -87,7 +87,7 @@
         padding-top:5%;
         background: url(/static/img/Frontpage/bg1.png);
     }
-    
+
     .title{
         text-align: center;
         margin-top: 0;
@@ -130,7 +130,7 @@
         width: 10%;
         height: 95%;
     }
-    .rows{
+    .mc2-row{
         padding-top: 80px;
         padding-left:15px;
         padding-right: 15px;
@@ -206,28 +206,130 @@
     .container{
         padding-right: 0px;
     }
+    .Maincontent4{
+        padding: 120px 0 100px 0;
+        width: 100%;
+        height:650px;
+        background: url(/static/img/Frontpage/bg4.png);
+    }
+    .mc4-title{
+        text-align: center;
 
+    }
+    .mc4-title h2{
+        font-size: 4em;
+        margin: 15px 0;
+    }
+    .mc4-title-p{
+        color: #808080;
+        font-size: 24px;
+    }
+    .title-bg{
+        background: url(/static/img/Frontpage/t-bg1.png);
+        color: white;
+        width: 330px;
+        font-size: 24px;
+        padding: 0 10px;
+    }
+    .about-info{
+        padding: 40px 40px 50px 185px;
+    }
+    .Maincontent5{
+        background: url(/static/img/Frontpage/mc5-bg.png);
+        width: 100%;
+        height: 275px;
+
+    }
+    .team-con{
+        margin-left:2% ;
+    }
+    .mc5-top a{
+        text-decoration: none;
+    }
+    .mc5-top h2{
+        background-color: white;
+        color: #0d8ddb;
+        font-size: 4em;
+    }
+    .mc5-top{
+        padding-top: 5%;
+        text-align: center;
+    }
+    .mc5-top span{
+        font-size: 24px;
+    }
+    .bottom-nav{
+        width: 100%;
+        height: auto;
+    }
+    .bottom-nav a{
+        text-decoration: none;
+        color: #9d9d9d;
+    }
+    .btm-left{
+        font-size: 24px;
+        border-right: solid 1px grey;
+    }
+
+    .phone{
+        padding-left: 15px;
+    }
+    .wechat{
+        text-align: center;
+        border-right: solid 1px grey;
+        height: 163px;
+    }
+    .sm{
+        margin-left: 20px;
+    }
+    .gz{
+        margin-top: 20px;
+        margin-bottom: 10px;
+    }
+    .gz h4{
+        margin-bottom: 20px;
+    }
+    #mc5-rtimg{
+        margin-right: 20px;
+    }
+    .t-bottom{
+        text-align: center;
+        width: 100%;
+        background-color: #e2e2e2;
+    }
+    .t-bottom span{
+        margin-top: 20px;
+    }
+    .go-top{
+        position:fixed;
+        background: url(/static/img/Frontpage/g-top.png) no-repeat;
+        width: 48px;
+        height: 48px;
+        right: 2em;
+        bottom: 10em;
+    }
 </style>
 <body>
 
-    <div class="content">
+    <div class="content" name="top">
+        <%--导航栏--%>
         <nav class="nav navbar-default navbar-fixed-top" role="navigation">
             <div class="container-fluid">
                 <div class="navbar-header">
 
                 </div>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#">主页</a></li>
-                    <li class="icon-li"><a href="#">登录</a></li>
-                    <li class="icon-li"><a href="#">试用申请</a></li>
+                    <li><a href="javaScript:;">主页</a></li>
+                    <li class="icon-li"><a href="javaScript:;">登录</a></li>
+                    <li class="icon-li"><a href="javaScript:;">注册</a></li>
                     <li class="icon-li"><a href="/backstageIndex">后台</a></li>
-                    <li class="icon-li"><a href="#">关于我们</a></li>
-                    <li id="menu-bg"><a href="#">汽配商入驻</a></li>
-                    <li id="menu-bg2"><a href="#">汽修厂入驻</a></li>
+                    <li class="icon-li"><a href="javaScript:;">关于我们</a></li>
+                    <li id="menu-bg"><a href="javaScript:;">申请使用</a></li>
+                    <li id="menu-bg2"><a href="javaScript:;">购买本产品</a></li>
                 </ul>
             </div>
         </nav>
-
+        <%--轮播图--%>
         <div id="myCarousel" class="carousel slide" data-ride="carousel">
             <!-- 轮播（Carousel）指标 -->
             <ol class="carousel-indicators">
@@ -266,7 +368,7 @@
             <a class="carousel-control right" href="#myCarousel"
                data-slide="next"><span class="glyphicon glyphicon-chevron-right" style="left:0;width:200px;height: 200px;"></span></a>
         </div>
-
+        <%--主内容一--%>
         <div class="Maincontent">
             <h2 class="title">汽车维修保养采购平台</h2>
             <div class="row features-info banner-info text-left wow fadeInLeft animated"  data-wow-delay="0.5s" style="visibility: visible; animation-delay: 0.5s; animation-name: fadeInLeft;">
@@ -310,12 +412,13 @@
                 </div>
             </div>
             <div class="button-box">
-                <button class="btn wow fadeInRight animated" data-wow-delay="1.5s" style="width: 200px;height: 50px;visibility: visible; animation-delay: 1.5s;animation-name: fadeInRight;">了解更多</button>
+                <button class="btn wow fadeInRight animated" data-wow-delay="1s" style="width: 200px;height: 50px;visibility: visible; animation-delay: 1.5s;animation-name: fadeInRight;">了解更多</button>
             </div>
         </div>
+        <%--主内容二--%>
         <div class="Maincontent2">
-            <div class="rows">
-                <div class="col-md-7 banner-info text-left wow fadeInLeft animated" data-wow-delay="0.4s" style="visibility: visible; animation-delay: 0.4s; animation-name: fadeInLeft;">
+            <div class="row mc2-row">
+                <div class="col-md-7 banner-info text-left wow fadeInLeft animated" data-wow-delay="0.4s" style="visibility: visible;animation-name: fadeInLeft;">
                     <div class="text">
                         <p>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"汽车维修管理系统"是一款面向汽修汽配行业的管理软件，本系统专注于车辆的信息化管理，
@@ -331,16 +434,17 @@
                     </div>
                     <div class="clearfix"></div>
                 </div>
-                <div class="col-md-5 col-sm-7 banner-img wow fadeInRight animated" data-wow-delay="0.4s" style="visibility: visible; animation-delay: 0.4s; animation-name: fadeInRight;">
+                <div class="col-md-5 col-sm-7 banner-img wow fadeInRight animated" data-wow-delay="0.4s" style="visibility: visible; animation-name: fadeInRight;">
                     <div class="right-img">
-                        <a href="#"><img src="/static/img/Frontpage/slider.png" style="width: 100%;height: 100%"/></a>
+                        <a href="javaScript:;"><img src="/static/img/Frontpage/slider.png" style="width: 100%;height: 100%"/></a>
                     </div>
                 </div>
             </div>
             <div class="button-box2">
-                <button class="btn wow fadeInRight animated " data-wow-delay="1s" style="width: 200px;height: 50px;visibility: visible; animation-delay: 1s; animation-name: fadeInRight;">了解更多</button>
+                <button class="btn wow fadeInRight animated " data-wow-delay="0.5s" style="width: 200px;height: 50px;visibility: visible; animation-delay: 1s; animation-name: fadeInRight;">了解更多</button>
             </div>
         </div>
+        <%--主内容三--%>
         <div class="Maincontent3">
             <div class="container">
                 <div class="title3">
@@ -382,19 +486,110 @@
                     </div>
                 </div>
                 <div class="button-box2" style="margin-top: 8%;">
-                    <button class="btn wow fadeInRight animated " data-wow-delay="1s" style="width: 200px;height: 50px;visibility: visible; animation-delay: 1s; animation-name: fadeInRight;">马上进入</button>
+                    <button class="btn wow fadeInRight animated " data-wow-delay="0.5s" style="width: 200px;height: 50px;visibility: visible; animation-delay: 1s; animation-name: fadeInRight;">马上进入</button>
                 </div>
             </div>
         </div>
-
+        <%--主内容四--%>
+        <div class="Maincontent4">
+            <div class="mc4-title">
+                <h2>标题标题标题</h2>
+                <span class="mc4-title-p">
+                   系统管理，信息管理，人员管理，财务管理...
+                </span>
+                <span class="title-bg">
+                    车主一站式O2O养车生活馆
+                </span>
+            </div>
+            <div class="row about-info">
+                <div class="col-md-12">
+                    <div class="col-sm-4 col-md-4 zoomIn wow animated animated">
+                        <div class="image1">
+                            <img src="/static/img/Frontpage/mc4-bg1.png"/>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 col-md-4 zoomIn wow animated animated">
+                        <div class="image2">
+                            <img src="/static/img/Frontpage/mc4-bg2.png"/>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 col-md-4 zoomIn wow animated animated">
+                        <div class="image3">
+                            <img src="/static/img/Frontpage/mc4-bg3.png"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="button-box2">
+                <button class="btn wow fadeInRight animated " style="width: 200px;height: 50px;visibility: visible; animation-name: fadeInRight;">马上进入</button>
+            </div>
+        </div>
+        <%--主内容五--%>
+        <div class="Maincontent5">
+            <div class="mc5-top">
+                <h2><a href="javaScript:;" style="color: #0d8ddb;">商家加盟入口</a></h2>
+                <span class="wow fadeInRight animated" data-wow-delay="0.5s" style="visibility: visible; animation-name: fadeInRight;"><a href="javaScript:;" style="color:white ;">欢迎汽修、汽配商家入驻加盟</a></span>
+            </div>
+        </div>
+        <%--底部版权--%>
+        <div class="bottom-nav">
+            <div class="container">
+                <div class="row concart-warp">
+                    <div class="col-md-4 col-sm-12 btm-left">
+                        <h4>联系我们：</h4>
+                        <p>
+                            <i class="icon-phone"><img src="/static/img/Frontpage/phone.png"/></i>
+                            <span class="phone">40000-13864</span>
+                        </p>
+                        <p>E-mail:qweasdzxc102@qq.com</p>
+                        <p><a href="javaScript:;"><img src="/static/img/Frontpage/btm-left.png"></a></p>
+                    </div>
+                    <div class="col-sm-9 col-md-6 wechat">
+                        <h2>扫码关注</h2>
+                        <div class="row sm ">
+                            <div class="col-md-4 col-sm-4">
+                                <img src="/static/img/Frontpage/pcode-4.png"/>
+                            </div>
+                            <div class="col-md-4 col-sm-4">
+                                <img src="/static/img/Frontpage/pcode-4.png"/>
+                            </div>
+                            <div class="col-md-4 col-sm-4">
+                                <img src="/static/img/Frontpage/pcode-4.png"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-sm-3 rt-img row">
+                        <div class="col-md-12 col-sm-12 gz">
+                            <h4>关注抽奖有好礼</h4>
+                            <a href="javaScript:;" id="mc5-rtimg"><img src="/static/img/Frontpage/weibo.png"/></a>
+                            <a href="javaScript:;"><img src="/static/img/Frontpage/toutiao.png"/></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="t-bottom">
+                <span>© 2011-2016 赣州宏图预科班 版权所有 ｜ 赣ICP备11018683-3</span>
+            </div>
+        </div>
+        <a href="#top" class="go-top" id="backtop" style="display:none;"></a>
 </div>
 <script src="/static/js/jquery.min.js"></script>
 <script src="/static/js/bootstrap.min.js"></script>
 <script src="/static/js/wow.js"></script>
 <script>
-    if (!(/msie [6|7|8|9]/i.test(navigator.userAgent))){
+    if (!(/msie [5|6|7|8|9]/i.test(navigator.userAgent))){
         new WOW().init();
     };
+    $(function(){
+        var backtop = document.getElementById("backtop");
+        $(window).scroll(function () {
+            if($(window).scrollTop() >= 500){
+                backtop.style.display = "block";
+            }else if($(window).scrollTop() <500){
+                backtop.style.display = "none";
+            }
+        });
+    });
 </script>
 </body>
 </html>

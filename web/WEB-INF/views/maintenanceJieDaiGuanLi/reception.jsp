@@ -7,57 +7,47 @@
     <link rel="stylesheet" href="/static/css/bootstrap-table.css">
     <link rel="stylesheet" href="/static/css/select2.min.css">
     <link rel="stylesheet" href="/static/css/sweetalert.css">
-    <script src="/static/js/jqueryVaildate/jquery.validate.js"></script>
-    <script src="/static/js/jqueryVaildate/messages_zh.js"></script>
-    <script>
-        $.validator.setDefaults({
-            submitHandler: function() {
-                alert("提交事件!");
-            }
-        });
-        $().ready(function() {
-            $("#commentForm").validate();
-        });
-    </script>
-    <style>
-        label.error {
-            color: red;
-            font-weight: 100;
-            font-size: 16px;
-        }
-
-        label {
-            font-weight: 100;
-            font-size: 16px;
-        }
-    </style>
+    <link rel="stylesheet" href="/static/css/table/table.css">
 
     <title>接待登记管理</title>
 </head>
 <body>
 
+<%@include file="../backstage/contextmenu.jsp"%>
+
 <div class="container">
     <div class="panel-body" style="padding-bottom:0px;"  >
-        <!--show-refresh, show-toggle的样式可以在bootstrap-table.js的948行修改-->
+        <!--show-refredata-single-sesh, show-toggle的样式可以在bootstrap-table.js的948行修改-->
         <!-- table里的所有属性在bootstrap-table.js的240行-->
         <table id="table" data-toggle="table" data-toolbar="#toolbar"
                data-url="/table/query" data-method="post" data-query-params="queryParams"
                data-pagination="true" data-search="true" data-show-refresh="true"
                data-show-toggle="true" data-show-columns="true" data-page-size="10"
                data-height="543" data-id-field="id" data-page-list="[5, 10, 20]"
-               data-cach="false" data-click-to-select="true" data-single-select="true">
+               data-cach="false" data-click-to-select="true" lect="true">
             <thead>
                 <tr>
                     <th data-radio="true" data-field="status"></th>
                     <%-- 车主信息也从预约记录中获取,如果不是预约的则手动输入 --%>
+                    <%-- 这个可能是判断车主用户是否有注册的，自己改 --%>
+                    <th data-field="userName">接待员</th>      <%-- 当t_user为空,表示非注册车主登记 --%>
+                    <th data-field="appointment">预约号</th>   <%-- t_appointment,可为空,当为空时说明没有预约过 --%>
                     <th data-field="name">车主名字</th>
                     <th data-field="email">车主邮箱</th>
-                    <th data-field="plate">车主车牌号</th>
                     <th data-field="phone">车主手机号</th>
-                    <th data-field="isClear">是否洗车</th>
-                    <th data-field="goods">车内物品</th>
-                    <th data-field="currentOil">当前油量</th>
+                    <th data-field="brand">品牌</th>
                     <th data-field="color">车颜色</th>
+                    <th data-field="mode">车型</th>
+                    <th data-field="carPlate">车主车牌号</th>
+                    <th data-field="arriverTime">到店时间</th>
+                    <th data-field="mileage">汽车行驶里程</th>
+                    <th data-field="carThings">车内物品</th>
+                    <th data-field="intactDegrees">车身完好度</th>
+                    <th data-field="userRequests">用户要求描述</th>
+                    <th data-field="maintainOrFix">保养还是维修</th>
+                    <th data-field="checkinCreatedTime">登记创建时间</th>  <%-- 由系统创建 --%>
+                    <th data-field="company">汽修公司名称</th>    <%-- t_company --%>
+                    <th data-field="checkStatus">状态</th>
                 </tr>
             </thead>
         </table>
@@ -76,37 +66,118 @@
 </div>
 
 <!-- 添加弹窗 -->
-<div class="modal fade" id="add" aria-hidden="true" style="overflow:hidden;">
-    <div class="modal-dialog" style="overflow:hidden;">
+<div class="modal fade" id="addWindow" aria-hidden="true" style="overflow:auto;">
+    <div class="modal-dialog" style="overflow:auto;">
         <div class="modal-content" style="overflow:hidden;">
             <div class="container" style="width: 80%;">
-                <form action="/table/edit" onsubmit=" return checkAdd()" id="addForm" method="post">
-                    <fieldset>
-                        <legend>被接待的车主信息录入</legend>
-                        <label for="cname">车主名字</label>
-                        <input class="form-control" id="cname" name="name" minlength="2" type="text" required="true">
-                        <label for="cemail">车主E-Mail</label>
-                        <input class="form-control" id="cemail" type="email" name="email" required>
-                        <label for="plateNum">车主车牌号</label>
-                        <input class="form-control" id="plateNum" type="byteRangeLength" name="plate">
-                        <label for="cphone">手机号</label>
-                        <input class="form-control" id="cphone" name="phone" type="phone" required></input>
-                    <!-- radio 的 required 表示必须选中一个。 -->
-                        <label for="cComment">是否洗车</label><br/>
-                        <input type="radio" id="gender_Y" value="Y" name="isClear"/> 是
-                        <input type="radio" id="gender_N" value="N" name="isClear" /> 否 <br/>
-                        <label for="cComment">当前油量</label>
-                        <input class="form-control" id="cComment" name="currentOil" type="isIdCardNo" required></input>
-                        <label for="cGoods">车内物品</label>
-                        <textarea class="form-control" id="cGoods" name="goods" required></textarea>
+                <form class="form-horizontal" onsubmit="return checkAdd()" id="addForm" method="post">
+                    <div class="modal-header" style="align-content: center;overflow:auto;">
+                        <h4>被接待的车主信息录入</h4>
+                    </div><hr/>
+                    <br/>
+                    <div class="form-group">
+                        <label class="col-sm-5 control-label">车主名字：</label>
+                        <div class="col-sm-7">
+                            <input type="text" placeholder="请输入车主姓名" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-5 control-label">车主E-Mail</label>
+                        <div class="col-sm-7">
+                            <input type="email" placeholder="请输入车主E-Mail" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-5 control-label">车主车牌号</label>
+                        <div class="col-sm-7">
+                            <input type="number" placeholder="请输入车主车牌号" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-5 control-label">车主手机号</label>
+                        <div class="col-sm-7">
+                            <input type="number" placeholder="请输入车主手机号" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-5 control-label">车的品牌：</label>
+                        <div class="col-sm-7">
+                            <select>
+                                <option>请选择品牌</option>
+                                <option>品牌一</option>
+                                <option>品牌二</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-5 control-label">车的颜色：</label>
+                        <div class="col-sm-7">
+                            <input type="text" placeholder="请输入车的颜色" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-5 control-label">车型：</label>
+                        <div class="col-sm-7">
+                            <input type="text" placeholder="请输入车型" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-5 control-label">车主到店时间：</label>
+                        <div class="col-sm-7">
+                            <input type="datetime" placeholder="2017/04/12 20:31" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-5 control-label">汽车行驶里程：</label>
+                        <div class="col-sm-7">
+                            <input type="text" placeholder="请输入汽车行驶里程" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-5 control-label">车身完好度：</label>
+                        <div class="col-sm-7">
+                            <input type="text" placeholder="请输入车身完好度" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-5 control-label">汽修公司名称：</label>
+                        <div class="col-sm-7">
+                            <input type="text" placeholder="请输入汽修公司名称" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-5 control-label">当前油量</label>
+                        <div class="col-sm-7">
+                            <input type="number" placeholder="请输入车主当前油量" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-5 control-label">车内物品：</label>
+                        <div class="col-sm-7">
+                            <textarea type="text" placeholder="请输入车内物品" style="height: 50px;"
+                                      class="form-control"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-5 control-label">用户要求描述：</label>
+                        <div class="col-sm-7">
+                            <textarea type="text" placeholder="请输入用户要求描述" style="height: 50px;"
+                                      class="form-control"></textarea>
+                        </div>
+                    </div>
                     <%-- 注: 暂时先这么写，颜色是选择不是输入,看到这句说明你要更改这部分 --%>
-                        <label for="cGoods">车的颜色</label>
-                        <textarea class="form-control" name="color" required></textarea>
-                    </fieldset>
-                    <div class="modal-footer" style="overflow:hidden;">
-                        <span id="addError" style="color: red;"></span>
-                        <button type="button" class="btn btn-default" data-dismiss="modal"> 关闭 </button>
-                        <button type="button" class="btn btn-primary"> 保存 </button>
+                    <div class="form-group">
+                        <label class="col-sm-5 control-label">车的颜色：</label>
+                        <div class="col-sm-7">
+                        <textarea type="text" placeholder="请输入车的颜色" style="height: 50px;"
+                                  class="form-control"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-8">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            <button class="btn btn-sm btn-success" type="submit">保 存</button>
+                        </div>
                     </div>
                 </form>
             </div>
@@ -115,58 +186,119 @@
 </div><!-- /.modal -->
 
 <!-- 修改弹窗 -->
-<div class="modal fade" id="edit" aria-hidden="true">
+<div class="modal fade" id="editWindow" aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="container" style="width: 80%;">
-                <form action="/table/edit" onsubmit=" return checkAdd()" id="editForm" method="post">
-                    <fieldset>
-                        <%--<legend>输入您的名字，邮箱，URL，备注。</legend>--%>
-                        <p hidden>
-                            <label for="cname">id</label>
-                            <input name="ceshi.id" minlength="2">
-                        </p>
-                        <p>
-                            <label for="cname">车主名字</label>
-                            <input class="form-control" name="ceshi.name" minlength="2" type="text" required="true">
-                        </p>
-                        <p>
-                            <label for="cemail">车主E-Mail</label>
-                            <input class="form-control" type="email" name="ceshi.email" required>
-                        </p>
-                        <p>
-                            <label for="plateNum">车主车牌号</label>
-                            <input class="form-control" type="byteRangeLength" name="ceshi.plate">
-                        </p>
-                        <p>
-                            <label for="cphone">手机号</label>
-                            <input class="form-control" name="ceshi.phone" type="phone" required></input>
-                        </p>
-                        <p><!-- radio 的 required 表示必须选中一个。 -->
-                            <label for="cComment">是否洗车</label><br/>
-                            <input type="radio" value="f" name="ceshi.isclear"/> 是
-                            <input type="radio" value="m" name="ceshi.isclear" /> 否
-                        </p>
-                        <p>
-                            <label for="cComment">当前油量</label>
-                            <input class="form-control" name="ceshi.currentOil" type="isIdCardNo" required></input>
-                        </p>
-                        <p>
-                            <label for="cGoods">车内物品</label>
-                            <textarea class="form-control" name="ceshi.goods" required></textarea>
-                        </p>
-                        <%-- 注: 暂时先这么写，颜色是选择不是输入,看到这句说明你要更改这部分 --%>
-                        <p>
-                            <label for="cGoods">车的颜色</label>
-                            <textarea class="form-control" name="ceshi.color" required></textarea>
-                        </p>
-                    </fieldset>
-                    <div class="modal-footer" style="overflow:hidden;">
-                        <button type="button" class="btn btn-default" data-dismiss="modal"> 关闭 </button>
-                        <button type="button" class="btn btn-primary"> 保存 </button>
+            <form class="form-horizontal" id="editForm" method="post" onclick="return checkEdit('table/edit');">
+                <div class="modal-header" style="overflow:auto;">
+                    <h4>被接待的车主信息修改</h4>
+                </div>
+                <br/>
+                <div class="form-group">
+                    <label class="col-sm-5 control-label">车主名字：</label>
+                    <div class="col-sm-7">
+                        <input type="text" placeholder="请输入车主姓名" class="form-control">
                     </div>
-                </form>
-            </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-5 control-label">车主E-Mail</label>
+                    <div class="col-sm-7">
+                        <input type="email" placeholder="请输入车主E-Mail" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-5 control-label">车主车牌号</label>
+                    <div class="col-sm-7">
+                        <input type="number" placeholder="请输入车主车牌号" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-5 control-label">车主手机号</label>
+                    <div class="col-sm-7">
+                        <input type="number" placeholder="请输入车主手机号" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-5 control-label">车的品牌：</label>
+                    <div class="col-sm-7">
+                        <select>
+                            <option>请选择品牌</option>
+                            <option>品牌一</option>
+                            <option>品牌二</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-5 control-label">车的颜色：</label>
+                    <div class="col-sm-7">
+                        <input type="text" placeholder="请输入车的颜色" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-5 control-label">车型：</label>
+                    <div class="col-sm-7">
+                        <input type="text" placeholder="请输入车型" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-5 control-label">车主到店时间：</label>
+                    <div class="col-sm-7">
+                        <input type="datetime" placeholder="2017/04/12 20:31" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-5 control-label">汽车行驶里程：</label>
+                    <div class="col-sm-7">
+                        <input type="text" placeholder="请输入汽车行驶里程" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-5 control-label">车身完好度：</label>
+                    <div class="col-sm-7">
+                        <input type="text" placeholder="请输入车身完好度" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-5 control-label">汽修公司名称：</label>
+                    <div class="col-sm-7">
+                        <input type="text" placeholder="请输入汽修公司名称" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">当前油量</label>
+                    <div class="col-sm-7">
+                        <input type="number" placeholder="请输入车主当前油量" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">车内物品：</label>
+                    <div class="col-sm-7">
+                            <textarea type="text" placeholder="请输入车内物品" style="height: 50px;"
+                                      class="form-control"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">用户要求描述：</label>
+                    <div class="col-sm-7">
+                            <textarea type="text" placeholder="请输入用户要求描述" style="height: 50px;"
+                                      class="form-control"></textarea>
+                    </div>
+                </div>
+                <%-- 注: 暂时先这么写，颜色是选择不是输入,看到这句说明你要更改这部分 --%>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">车的颜色：</label>
+                    <div class="col-sm-7">
+                        <textarea type="text" placeholder="请输入车的颜色" style="height: 50px;"
+                                  class="form-control"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-8">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button class="btn btn-sm btn-success" type="submit">保 存</button>
+                    </div>
+                </div>
+            </form>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
@@ -182,33 +314,13 @@
                     <button type="button" class="btn btn-default"
                             data-dismiss="modal">关闭
                     </button>
-                    <button type="sumbit" class="btn btn-primary" onclick="del()">
+                    <button type="sumbit" class="btn btn-primary" onclick="showDel()">
                         确认
                     </button>
                 </div>
             </div><!-- /.modal-content -->
         </form>
     </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
-<!-- 提示弹窗 -->
-<div class="modal fade" id="tanchuang" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                提示
-            </div>
-            <div class="modal-body">
-                请先选择某一行
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default"
-                        data-dismiss="modal">关闭
-                </button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-
 </div><!-- /.modal -->
 
     <script src="/static/js/jquery.min.js"></script>
@@ -219,102 +331,8 @@
     <script src="/static/js/select2/select2.js"></script>
     <script src="/static/js/sweetalert/sweetalert.min.js"></script>
     <script src="/static/js/contextmenu.js"></script>
-    <script>
-        $(function () {
-            $('#table').bootstrapTable('hideColumn', 'id');
+    <script src="/static/js/maintenanceJieDaiGuanLi/reception.js"></script>
+    <script src="/static/js/bootstrap-select/bootstrap-select.js"></script>
 
-            $("#addSelect").select2({
-                    language: 'zh-CN'
-                }
-            );
-
-            //绑定Ajax的内容
-            $.getJSON("/table/queryType", function (data) {
-                $("#addSelect").empty();//清空下拉框
-                $.each(data, function (i, item) {
-                    $("#addSelect").append("<option value='" + data[i].id + "'>&nbsp;" + data[i].name + "</option>");
-                });
-            })
-    //            $("#addSelect").on("select2:select",
-    //                    function (e) {
-    //                        alert(e)
-    //                        alert("select2:select", e);
-    //            });
-        });
-
-        function showEdit(){
-            var row =  $('table').bootstrapTable('getSelections');
-            if(row.length >0) {
-    //                $('#editId').val(row[0].id);
-    //                $('#editName').val(row[0].name);
-    //                $('#editPrice').val(row[0].price);
-                $("#edit").modal('show'); // 显示弹窗
-                var ceshi = row[0];
-                $("#editForm").fill(ceshi);
-            }else{
-                //layer.msg("请先选择某一行", {time : 1500, icon : 2});
-                $("#tanchuang").modal('show');
-            }
-        }
-
-        function showAdd(){
-            $("#add").modal('show');
-        }
-
-        function formatRepo(repo) {
-            return repo.text
-        }
-        function formatRepoSelection(repo) {
-            return repo.text
-        }
-
-        function showDel(){
-            var row =  $('table').bootstrapTable('getSelections');
-            if(row.length >0) {
-                $("#del").modal('show');
-            }else{
-                $("#tanchuang").modal('show');
-            }
-        }
-
-        function checkAdd(){
-            var id = $('#addId').val();
-            var name = $('#email').val();
-            var price = $('#plate').val();
-            var price = $('#phone').val();
-            var price = $('#isclear').val();
-            var price = $('#currentOil').val();
-            var price = $('#goods').val();
-            var price = $('#color').val();
-//            var reslist=$("#phone").select2("data"); //获取多选的值
-            alert(reslist.length)
-            if(id != "" && name != "" && price != ""){
-                return true;
-            }else{
-                var error = document.getElementById("addError");
-                error.innerHTML = "请输入正确的数据";
-                return false;
-            }
-        }
-
-        function checkEdit() {
-            $.post("/table/edit",
-                $("#editForm").serialize(),
-                function (data) {
-                    if (data.result == "success") {
-                        $("#edit").modal('hide'); // 关闭指定的窗口
-                        $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
-                        swal({
-                            title:"",
-                            text: data.message,
-                            type:"success"})// 提示窗口, 修改成功
-                    } else if (data.result == "fail") {
-                        //$.messager.alert("提示", data.result.message, "info");
-                    }
-                }, "json"
-            );
-        }
-
-    </script>
 </body>
 </html>

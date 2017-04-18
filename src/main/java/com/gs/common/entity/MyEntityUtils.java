@@ -30,7 +30,7 @@ public class MyEntityUtils {
         int n=2;
         tablename = tName;
         //数据连Connection获取,自己想办法就行.
-        String url = "jdbc:mysql://localhost:3306/d_goods";
+        String url = "jdbc:mysql://localhost:3306/auto_platform";
         String user = "root";
         String passwd = "123456";
         try {
@@ -72,8 +72,7 @@ public class MyEntityUtils {
             }
             String content = parse(colnames, colTypes, colSizes);
             try {
-                tablename=tablename.substring(tablename.length()-7,tablename.length());
-                FileWriter fw = new FileWriter("C:\\Users\\AngeJob\\Desktop\\AutoPlatform1\\src\\main\\java\\com\\gs\\bean" + "/" + initcap(tablename) + ".java");
+                FileWriter fw = new FileWriter("C:\\Users\\GZWangBin\\Desktop\\AutoPlatform1\\src\\main\\java\\com\\gs\\bean" + "/" + initcap(tablename) + ".java");
                 PrintWriter pw = new PrintWriter(fw);
                 pw.println(content);
                 pw.flush();
@@ -111,7 +110,7 @@ public class MyEntityUtils {
         }
         //表注释
         processColnames(sb);
-        tablename=tablename.substring(tablename.length()-7,tablename.length());
+        tablename=tablename.substring(tablename.lastIndexOf("_")+2);;
         sb.append("public class " + initcap(tablename) + " implements Serializable {\r\n");
         processAllAttrs(sb);
         processAllMethod(sb);
@@ -242,7 +241,7 @@ public class MyEntityUtils {
      */
     public static void main(String[] args) {
         MyEntityUtils t = new MyEntityUtils();
-        t.tableToEntity("t_product");
+        t.tableToEntity("t_accessories_buy");
     }
 
 }

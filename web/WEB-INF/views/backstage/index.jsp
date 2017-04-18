@@ -145,6 +145,8 @@
                         <ul class="nav nav-second-level">
                             <li><a class="J_menuItem" href="/accessories/type">配件分类管理</a>
                             </li>
+                            <li><a class="J_menuItem" href="/accessories/accessories">配件库存管理</a>
+                            </li>
                             <li><a class="J_menuItem" href="/accessories/buy">配件采购管理</a>
                             </li>
                             <li><a class="J_menuItem" href="/accessories/sale">配件销售管理</a>

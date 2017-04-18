@@ -2,10 +2,14 @@ package com.gs.dao;
 
 import com.gs.bean.TrackList;
 import org.springframework.stereotype.Repository;
-
 /**
- * Created by XiaoQiao on 2017/4/16.
- */
+*由Wjhsmart技术支持
+*
+*@author Wjhsmart
+*@since 2017-04-17 16:11:49
+*@des 
+*/
 @Repository
-public interface TrackListDAO extends BaseDAO<String, TrackList> {
+public interface TrackListDAO extends BaseDAO<String, TrackList>{
+
 }

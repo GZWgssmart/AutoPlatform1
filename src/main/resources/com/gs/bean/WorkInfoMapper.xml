@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gs.dao.WorkInfoDAO" >
+  <resultMap id="BaseResultMap" type="com.gs.bean.WorkInfo" >
+    <id column="workId" property="workId" jdbcType="VARCHAR" />
+    <result column="recordId" property="recordId" jdbcType="VARCHAR" />
+    <result column="userId" property="userId" jdbcType="VARCHAR" />
+    <result column="workAssignTime" property="workAssignTime" jdbcType="TIMESTAMP" />
+    <result column="workCreatedTime" property="workCreatedTime" jdbcType="TIMESTAMP" />
+    <result column="workStatus" property="workStatus" jdbcType="VARCHAR" />
+  </resultMap>
+
+</mapper>

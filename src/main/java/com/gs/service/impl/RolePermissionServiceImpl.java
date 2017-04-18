@@ -13,10 +13,10 @@ import java.util.List;
 
 @Service
 public class RolePermissionServiceImpl implements RolePermissionService {
-	
+
 	@Resource
 	private RolePermissionDAO rolePermissionDAO;
-	
+
 	@Override
 	public Collection<Permission> queryAllPermissionByRoleName(String roleName) {
 		List<String> p = rolePermissionDAO.queryAllPermissionByRoleName(roleName);
@@ -27,5 +27,5 @@ public class RolePermissionServiceImpl implements RolePermissionService {
 		}
 		return permissions;
 	}
-	
+
 }

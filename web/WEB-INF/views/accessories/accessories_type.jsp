@@ -19,14 +19,14 @@
 </head>
 <body>
 <%@include file="../backstage/contextmenu.jsp" %>
-<div class="container ">
+<div class="container">
     <div class="panel-body" style="padding-bottom:0px;">
         <!--show-refresh, show-toggle的样式可以在bootstrap-table.js的948行修改-->
         <!-- table里的所有属性在bootstrap-table.js的240行-->
         <table id="table"
                data-toggle="table"
                data-toolbar="#toolbar"
-               data-url="#"
+               data-url="/table/query"
                data-method="post"
                data-query-params="queryParams"
                data-pagination="true"
@@ -34,18 +34,16 @@
                data-show-refresh="true"
                data-show-toggle="true"
                data-show-columns="true"
-               data-show-export="true"
                data-page-size="10"
-               data-height="520"
+               data-height="543"
                data-id-field="id"
                data-page-list="[5, 10, 20]"
                data-cach="false"
                data-click-to-select="true"
-               data-minimum-count-columns="2"
                data-single-select="true">
             <thead>
             <tr>
-                <th data-checkbox="true" data-field="accTypeId"></th>
+                <th data-checkbox="true" data-field="status"></th>
                 <th data-field="companyId">所属公司</th>
                 <th data-field="accTypeName">配件分类名称</th>
                 <th data-field="accTypeDes">配件分类描述</th>
@@ -66,6 +64,7 @@
         </div>
     </div>
 </div>
+
 <!-- 增加弹窗 -->
 <div class="modal fade" id="addWindow" aria-hidden="true" style="overflow:auto; ">
     <div class="modal-dialog" style="width: 700px;height: auto;">
@@ -78,25 +77,26 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">所属公司：</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="请输入所属公司" class="form-control">
+                        <input type="text" name="companyId" placeholder="请输入所属公司" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">配件分类名称：</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="请输入配件分类名称" class="form-control">
+                        <input type="text" name="accTypeName" placeholder="请输入配件分类名称" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">配件分类描述：</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="请输入配件分类描述" class="form-control">
+                        <textarea type="text" name="accTypeDes" placeholder="请输入相关内容" style="height: 100px;"
+                                  class="form-control"></textarea>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">配件分类状态：</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="配件分类状态" class="form-control">
+                        <input type="text" name="accTypeStatus" placeholder="配件分类状态" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
@@ -121,26 +121,26 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">所属公司：</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="请输入所属公司" class="form-control">
+                        <input type="text" name="companyId" placeholder="请输入所属公司" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">配件分类名称：</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="请输入配件分类名称" class="form-control">
+                        <input type="text" name="accTypeName" placeholder="请输入配件分类名称" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">配件分类描述：</label>
                     <div class="col-sm-7">
-                        <textarea type="text" placeholder="请输入相关内容" style="height: 100px;"
+                        <textarea type="text" name="accTypeDes" placeholder="请输入相关内容" style="height: 100px;"
                                   class="form-control"></textarea>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">配件分类状态：</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="配件分类状态" class="form-control">
+                        <input type="text" name="accTypeStatus" placeholder="配件分类状态" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
@@ -201,6 +201,7 @@
 <script src="/static/js/sweetalert/sweetalert.min.js"></script>
 <script src="/static/js/contextmenu.js"></script>
 <script src="/static/js/bootstrap-select/bootstrap-select.js"></script>
+<script src="/static/js/form/jquery.validate.js"></script>
 <script src="/static/js/backstage/accessories/accessories_type.js"></script>
 </body>
 </html>

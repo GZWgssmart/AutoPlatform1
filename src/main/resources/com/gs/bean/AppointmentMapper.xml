@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gs.dao.AppointmentDAO" >
+  <resultMap id="BaseResultMap" type="com.gs.bean.Appointment" >
+    <id column="appointmentId" property="appointmentId" jdbcType="VARCHAR" />
+    <result column="userId" property="userId" jdbcType="VARCHAR" />
+    <result column="userName" property="userName" jdbcType="VARCHAR" />
+    <result column="userPhone" property="userPhone" jdbcType="VARCHAR" />
+    <result column="brandId" property="brandId" jdbcType="VARCHAR" />
+    <result column="colorId" property="colorId" jdbcType="VARCHAR" />
+    <result column="modelId" property="modelId" jdbcType="VARCHAR" />
+    <result column="plateId" property="plateId" jdbcType="VARCHAR" />
+    <result column="carPlate" property="carPlate" jdbcType="VARCHAR" />
+    <result column="arriveTime" property="arriveTime" jdbcType="TIMESTAMP" />
+    <result column="maintainOrFix" property="maintainOrFix" jdbcType="VARCHAR" />
+    <result column="appCreatedTime" property="appCreatedTime" jdbcType="TIMESTAMP" />
+    <result column="companyId" property="companyId" jdbcType="VARCHAR" />
+    <result column="appoitmentStatus" property="appoitmentStatus" jdbcType="VARCHAR" />
+  </resultMap>
+
+</mapper>

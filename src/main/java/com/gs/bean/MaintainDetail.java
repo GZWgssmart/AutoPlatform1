@@ -2,20 +2,16 @@ package com.gs.bean;
 
 import java.util.Date;
 
-/**
- * Created by XiaoQiao on 2017/4/14.
- */
-
-/**
- * 维修保养明细
- */
 public class MaintainDetail {
+    private String maintainDetailId;
 
-    private String maintainDetailId; //维修保养明细编号
-    private String maintainRecordId; //维修保养记录编号
-    private String maintainItemId; //维修保养项目编号
-    private double maintainDiscount; //维修保养项目折扣
-    private Date mdCreatedTime; //维修保养明细创建时间
+    private String maintainRecordId;
+
+    private String maintainItemId;
+
+    private Double maintainDiscount;
+
+    private Date mdcreatedTime;
 
     public String getMaintainDetailId() {
         return maintainDetailId;
@@ -41,19 +37,19 @@ public class MaintainDetail {
         this.maintainItemId = maintainItemId;
     }
 
-    public double getMaintainDiscount() {
+    public Double getMaintainDiscount() {
         return maintainDiscount;
     }
 
-    public void setMaintainDiscount(double maintainDiscount) {
+    public void setMaintainDiscount(Double maintainDiscount) {
         this.maintainDiscount = maintainDiscount;
     }
 
-    public Date getMdCreatedTime() {
-        return mdCreatedTime;
+    public Date getMdcreatedTime() {
+        return mdcreatedTime;
     }
 
-    public void setMdCreatedTime(Date mdCreatedTime) {
-        this.mdCreatedTime = mdCreatedTime;
+    public void setMdcreatedTime(Date mdcreatedTime) {
+        this.mdcreatedTime = mdcreatedTime;
     }
 }

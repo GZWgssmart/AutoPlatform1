@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gs.dao.CarPlateDAO" >
+  <resultMap id="BaseResultMap" type="com.gs.bean.CarPlate" >
+    <id column="plateId" property="plateId" jdbcType="VARCHAR" />
+    <result column="plateName" property="plateName" jdbcType="VARCHAR" />
+    <result column="plateDes" property="plateDes" jdbcType="VARCHAR" />
+    <result column="plateStatus" property="plateStatus" jdbcType="VARCHAR" />
+  </resultMap>
+
+</mapper>

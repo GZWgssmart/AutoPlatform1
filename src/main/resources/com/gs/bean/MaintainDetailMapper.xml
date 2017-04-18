@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gs.dao.MaintainDetailDAO" >
+  <resultMap id="BaseResultMap" type="com.gs.bean.MaintainDetail" >
+    <id column="maintainDetailId" property="maintainDetailId" jdbcType="VARCHAR" />
+    <result column="maintainRecordId" property="maintainRecordId" jdbcType="VARCHAR" />
+    <result column="maintainItemId" property="maintainItemId" jdbcType="VARCHAR" />
+    <result column="maintainDiscount" property="maintainDiscount" jdbcType="DOUBLE" />
+    <result column="mdcreatedTime" property="mdcreatedTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+</mapper>

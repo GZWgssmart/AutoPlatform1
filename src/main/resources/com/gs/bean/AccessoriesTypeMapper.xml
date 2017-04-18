@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gs.dao.AccessoriesTypeDAO" >
+  <resultMap id="BaseResultMap" type="com.gs.bean.AccessoriesType" >
+    <id column="accTypeId" property="accTypeId" jdbcType="VARCHAR" />
+    <result column="accTypeName" property="accTypeName" jdbcType="VARCHAR" />
+    <result column="accTypeDes" property="accTypeDes" jdbcType="VARCHAR" />
+    <result column="companyId" property="companyId" jdbcType="VARCHAR" />
+    <result column="accTypeStatus" property="accTypeStatus" jdbcType="VARCHAR" />
+  </resultMap>
+
+</mapper>

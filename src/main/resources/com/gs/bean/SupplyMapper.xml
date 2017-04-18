@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gs.dao.SupplyDAO" >
+  <resultMap id="BaseResultMap" type="com.gs.bean.Supply" >
+    <id column="supplyId" property="supplyId" jdbcType="VARCHAR" />
+    <result column="supplyName" property="supplyName" jdbcType="VARCHAR" />
+    <result column="supplyTel" property="supplyTel" jdbcType="VARCHAR" />
+    <result column="supplyPricipal" property="supplyPricipal" jdbcType="VARCHAR" />
+    <result column="supplyAddress" property="supplyAddress" jdbcType="VARCHAR" />
+    <result column="supplyBank" property="supplyBank" jdbcType="VARCHAR" />
+    <result column="supplyBankAccount" property="supplyBankAccount" jdbcType="VARCHAR" />
+    <result column="supplyBankNo" property="supplyBankNo" jdbcType="VARCHAR" />
+    <result column="supplyAlipay" property="supplyAlipay" jdbcType="VARCHAR" />
+    <result column="supplyWeChat" property="supplyWeChat" jdbcType="VARCHAR" />
+    <result column="supplyCreatedTime" property="supplyCreatedTime" jdbcType="TIMESTAMP" />
+    <result column="supplyTypeId" property="supplyTypeId" jdbcType="VARCHAR" />
+    <result column="companyId" property="companyId" jdbcType="VARCHAR" />
+    <result column="supplyStatus" property="supplyStatus" jdbcType="VARCHAR" />
+  </resultMap>
+
+</mapper>

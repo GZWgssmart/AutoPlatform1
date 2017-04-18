@@ -2,22 +2,20 @@ package com.gs.bean;
 
 import java.util.Date;
 
-/**
- * Created by XiaoQiao on 2017/4/14.
- */
-
-/**
- * 投诉
- */
 public class Complaint {
+    private String complaintId;
 
-    private String complaintId; //投诉编号
-    private String userId; //用户编号
-    private String complaintContent; //投诉内容
-    private Date complaintCreatedTime; //投诉时间
-    private String complaintReply; //投诉回复内容
-    private Date complaintReplyTime; //投诉回复时间
-    private String complaintReplyUser; //投诉回复人,来源于t_user表
+    private String userId;
+
+    private String complaintContent;
+
+    private Date complaintCreatedTime;
+
+    private String complaintReply;
+
+    private Date complaintReplyTime;
+
+    private String complaintReplyUser;
 
     public String getComplaintId() {
         return complaintId;

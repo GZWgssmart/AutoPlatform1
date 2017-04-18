@@ -1,15 +1,17 @@
 package com.gs.service;
 
-import org.apache.shiro.authz.Permission;
+import com.gs.bean.Permission;
+import com.gs.bean.RolePermission;
 
 import java.util.Collection;
 
 /**
- * 根据角色名称获取权限字符串
- *
- */
-public interface RolePermissionService {
-	
-	public Collection<Permission> queryAllPermissionByRoleName(String roleName);
-
+*由Wjhsmart技术支持
+*
+*@author Wjhsmart
+*@since 2017-04-17 16:11:01
+*@des 
+*/
+public interface RolePermissionService{
+    Collection<org.apache.shiro.authz.Permission> queryAllPermissionByRoleName(String roleName);
 }

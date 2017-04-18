@@ -2,23 +2,22 @@ package com.gs.bean;
 
 import java.util.Date;
 
-/**
- * Created by XiaoQiao on 2017/4/14.
- */
-
-/**
- * 保养提醒记录
- */
 public class MaintainRemind {
+    private String remindId;
 
-    private String remindId; //保养提醒记录编号
-    private String userId; //用户编号
-    private Date lastMaintainTime; //上次保养时间
-    private double lastMaintainMileage; //上次保养汽车行驶里程
-    private String remindMsg; //保养提醒消息
-    private Date remindTime; //保养提醒时间
-    private String remindType; //保养提醒方式，如邮箱，手机短信
-    private Date remindCreatedTime; //保养提醒记录创建时间
+    private String userId;
+
+    private Date lastMaintainTime;
+
+    private Double lastMaintainMileage;
+
+    private String remindMsg;
+
+    private Date remindTime;
+
+    private String remindType;
+
+    private Date remindCreatedTime;
 
     public String getRemindId() {
         return remindId;
@@ -44,11 +43,11 @@ public class MaintainRemind {
         this.lastMaintainTime = lastMaintainTime;
     }
 
-    public double getLastMaintainMileage() {
+    public Double getLastMaintainMileage() {
         return lastMaintainMileage;
     }
 
-    public void setLastMaintainMileage(double lastMaintainMileage) {
+    public void setLastMaintainMileage(Double lastMaintainMileage) {
         this.lastMaintainMileage = lastMaintainMileage;
     }
 

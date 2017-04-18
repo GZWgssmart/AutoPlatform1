@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gs.dao.IncomingTypeDAO" >
+  <resultMap id="BaseResultMap" type="com.gs.bean.IncomingType" >
+    <id column="inTypeId" property="inTypeId" jdbcType="VARCHAR" />
+    <result column="inTypeName" property="inTypeName" jdbcType="VARCHAR" />
+    <result column="inTypeStatus" property="inTypeStatus" jdbcType="VARCHAR" />
+  </resultMap>
+
+</mapper>

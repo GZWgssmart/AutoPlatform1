@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gs.dao.MaintainRecordDAO" >
+  <resultMap id="BaseResultMap" type="com.gs.bean.MaintainRecord" >
+    <id column="recordId" property="recordId" jdbcType="VARCHAR" />
+    <result column="checkinId" property="checkinId" jdbcType="VARCHAR" />
+    <result column="startTime" property="startTime" jdbcType="TIMESTAMP" />
+    <result column="endTime" property="endTime" jdbcType="TIMESTAMP" />
+    <result column="actualEndTime" property="actualEndTime" jdbcType="TIMESTAMP" />
+    <result column="recordCreatedTime" property="recordCreatedTime" jdbcType="TIMESTAMP" />
+    <result column="pickupTime" property="pickupTime" jdbcType="TIMESTAMP" />
+    <result column="recordDes" property="recordDes" jdbcType="VARCHAR" />
+    <result column="recordStatus" property="recordStatus" jdbcType="VARCHAR" />
+  </resultMap>
+
+</mapper>

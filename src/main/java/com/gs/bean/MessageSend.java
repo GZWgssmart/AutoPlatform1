@@ -2,20 +2,16 @@ package com.gs.bean;
 
 import java.util.Date;
 
-/**
- * Created by XiaoQiao on 2017/4/14.
- */
-
-/**
- * 短信发送记录
- */
 public class MessageSend {
+    private String messageId;
 
-    private String messageId; //短信发送记录编号
-    private String userId; //用户编号
-    private String sendMsg; //短信发送内容
-    private Date sendTime; //短信发送时间
-    private Date sendCreatedTime; //短信发送记录创建时间
+    private String userId;
+
+    private String sendMsg;
+
+    private Date sendTime;
+
+    private Date sendCreatedTime;
 
     public String getMessageId() {
         return messageId;

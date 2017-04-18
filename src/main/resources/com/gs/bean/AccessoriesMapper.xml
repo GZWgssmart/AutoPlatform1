@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gs.dao.AccessoriesDAO" >
+  <resultMap id="BaseResultMap" type="com.gs.bean.Accessories" >
+    <id column="accId" property="accId" jdbcType="VARCHAR" />
+    <result column="accName" property="accName" jdbcType="VARCHAR" />
+    <result column="accCommodityCode" property="accCommodityCode" jdbcType="VARCHAR" />
+    <result column="accDes" property="accDes" jdbcType="VARCHAR" />
+    <result column="accPrice" property="accPrice" jdbcType="DOUBLE" />
+    <result column="accSalePrice" property="accSalePrice" jdbcType="DOUBLE" />
+    <result column="accUnit" property="accUnit" jdbcType="VARCHAR" />
+    <result column="accTotal" property="accTotal" jdbcType="INTEGER" />
+    <result column="accIdle" property="accIdle" jdbcType="INTEGER" />
+    <result column="accUsedTime" property="accUsedTime" jdbcType="TIMESTAMP" />
+    <result column="accBuyedTime" property="accBuyedTime" jdbcType="TIMESTAMP" />
+    <result column="supplyId" property="supplyId" jdbcType="VARCHAR" />
+    <result column="accCreatedTime" property="accCreatedTime" jdbcType="TIMESTAMP" />
+    <result column="accTypeId" property="accTypeId" jdbcType="VARCHAR" />
+    <result column="companyId" property="companyId" jdbcType="VARCHAR" />
+    <result column="accStatus" property="accStatus" jdbcType="VARCHAR" />
+  </resultMap>
+
+</mapper>

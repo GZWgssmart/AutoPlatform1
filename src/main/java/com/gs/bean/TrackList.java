@@ -2,21 +2,18 @@ package com.gs.bean;
 
 import java.util.Date;
 
-/**
- * Created by XiaoQiao on 2017/4/14.
- */
-
-/**
- * 跟踪回访
- */
 public class TrackList {
+    private String trackId;
 
-    private String trackId; //跟踪回访编号
-    private String userId; //用户编号
-    private String trackContent; //回访的问题
-    private int serviceEvaluate; //本次服务评价
-    private String trackUser; //跟踪回访用户
-    private Date trackCreatedTime; //跟踪回访创建时间
+    private String userId;
+
+    private String trackContent;
+
+    private Integer serviceEvaluate;
+
+    private String trackUser;
+
+    private Date trackCreatedTime;
 
     public String getTrackId() {
         return trackId;
@@ -42,11 +39,11 @@ public class TrackList {
         this.trackContent = trackContent;
     }
 
-    public int getServiceEvaluate() {
+    public Integer getServiceEvaluate() {
         return serviceEvaluate;
     }
 
-    public void setServiceEvaluate(int serviceEvaluate) {
+    public void setServiceEvaluate(Integer serviceEvaluate) {
         this.serviceEvaluate = serviceEvaluate;
     }
 
