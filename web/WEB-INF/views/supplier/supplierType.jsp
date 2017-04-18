@@ -117,19 +117,19 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">供货商名称：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="name"  placeholder="请输入供货商名称" class="form-control">
+                        <input type="text" name="supplyTypeName" define="supplyType.supplyTypeName"  placeholder="请输入供货商名称" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">供应商所属公司：</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="请输入供应商所属公司" class="form-control">
+                        <input type="text" define="supplyType.companyId" placeholder="请输入供应商所属公司" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">供货商描述：</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="请输入供货商描述" class="form-control">
+                        <input type="text" define="supplyType.supplyTypeDes" placeholder="请输入供货商描述" class="form-control">
                     </div>
                 </div>
                 <div class="modal-footer" >
