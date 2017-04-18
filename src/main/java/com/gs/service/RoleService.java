@@ -2,6 +2,8 @@ package com.gs.service;
 
 import com.gs.bean.Role;
 
+import java.util.List;
+
 /**
 *由Wjhsmart技术支持
 *
@@ -10,5 +12,5 @@ import com.gs.bean.Role;
 *@des 
 */
 public interface RoleService extends BaseService<String, Role>{
-
+    public List<Role> queryAll();
 }

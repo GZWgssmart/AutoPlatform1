@@ -59,7 +59,7 @@ function checkAdd(){
     var name = $('#addName').val();
     var price = $('#addPrice').val();
     var reslist=$("#addSelect").select2("data"); //获取多选的值
-    alert(reslist.length)
+    //alert(reslist.length)
     if(id != "" && name != "" && price != ""){
         return true;
     }else{
@@ -68,6 +68,7 @@ function checkAdd(){
         return false;
     }
 }
+
 
 function checkEdit() {
     $.post("/table/edit",
@@ -87,3 +88,105 @@ function checkEdit() {
     );
 }
 
+//前台验证
+$(document).ready(function () {
+    jQuery.validator.addMethod("isuserPhone", function (value, element) {
+        var length = value.length;
+        return this.optional(element) || (length == 11 && /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/.test(value));
+    }, "请正确填写您的手机号码。");
+
+    $("#addForm").validate({
+        errorElement: 'span',
+        errorClass: 'help-block',
+
+        rules: {
+            recordId: {
+                required: true,
+                minlength: 2
+            },
+            userId: {
+                required: true,
+                minlength: 2
+            },
+            workAssignTime: {
+                required: true,
+                date: true
+            },
+            workcreateTime: {
+                required: true,
+                date: true
+            }
+        },
+        messages: {
+            recordId: "请输保养记录编号",
+            userId: "请输入指派用户编号",
+            workAssignTime: "请输入工单指派时间",
+            workcreateTime: "请输入工单创建时间"
+        },
+        errorPlacement: function (error, element) {
+            element.next().remove();
+            element.after('<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>');
+            element.closest('.form-group').append(error);
+        },
+        highlight: function (element) {
+            $(element).closest('.form-group').addClass('has-error has-feedback');
+        },
+        success: function (label) {
+            var el = label.closest('.form-group').find("input");
+            el.next().remove();
+            el.after('<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>');
+            label.closest('.form-group').removeClass('has-error').addClass("has-feedback has-success");
+            label.remove();
+        },
+        submitHandler: function (form) {
+            alert("submitted!");
+        }
+    }),
+        $("#editForm").validate({
+            errorElement: 'span',
+            errorClass: 'help-block',
+
+            rules: {
+                recordId: {
+                    required: true,
+                    minlength: 2
+                },
+                userId: {
+                    required: true,
+                    minlength: 2
+                },
+                workAssignTime: {
+                    required: true,
+                    date: true
+                },
+                workcreateTime: {
+                    required: true,
+                    date: true
+                }
+            },
+            messages: {
+                recordId: "请输保养记录编号",
+                userId: "请输入指派用户编号",
+                workAssignTime: "请输入工单指派时间",
+                workcreateTime: "请输入工单创建时间"
+            },
+            errorPlacement: function (error, element) {
+                element.next().remove();
+                element.after('<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>');
+                element.closest('.form-group').append(error);
+            },
+            highlight: function (element) {
+                $(element).closest('.form-group').addClass('has-error has-feedback');
+            },
+            success: function (label) {
+                var el = label.closest('.form-group').find("input");
+                el.next().remove();
+                el.after('<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>');
+                label.closest('.form-group').removeClass('has-error').addClass("has-feedback has-success");
+                label.remove();
+            },
+            submitHandler: function (form) {
+                alert("submitted!");
+            }
+        })
+});

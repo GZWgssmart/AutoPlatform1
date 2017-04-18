@@ -101,25 +101,100 @@ $('#meditDateTime').datetimepicker({
     format: 'yyyy-mm-dd hh:ii'
 });
 
+//前端验证
+$(document).ready(function () {
+    $("#addForm").validate({
+        errorElement: 'span',
+        errorClass: 'help-block',
 
+        rules: {
+            maintainRecordId: {
+                required: true,
+                minlength: 2
+            },
+            maintainItemId: {
+                required: true,
+                minlength: 2
+            },
+            maintainDiscount: {
+                required: true,
+                minlength: 2
+            },
+            mdCreatedTime: {
+                required: true,
+                minlength: 2
+            }
+        },
+        messages: {
+            maintainRecordId: "请选择维修保养记录",
+            maintainItemId: "请选择维修保养项目",
+            maintainDiscount: "请输入维修保养项目折扣",
+            mdCreatedTime: "请选择维修保养明细创建时间",
+        },
+        errorPlacement: function (error, element) {
+            element.next().remove();
+            element.after('<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>');
+            element.closest('.form-group').append(error);
+        },
+        highlight: function (element) {
+            $(element).closest('.form-group').addClass('has-error has-feedback');
+        },
+        success: function (label) {
+            var el = label.closest('.form-group').find("input");
+            el.next().remove();
+            el.after('<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>');
+            label.closest('.form-group').removeClass('has-error').addClass("has-feedback has-success");
+            label.remove();
+        },
+        submitHandler: function (form) {
+            alert("submitted!");
+        }
+    })
+    $("#editForm").validate({
+        errorElement: 'span',
+        errorClass: 'help-block',
 
-// //日期时间控件初始化
-// $(document).ready(function () {
-//     // 带时间的控件
-//     // if ($(".iDate.full").length > 0) {
-//     //     $(".iDate.full").datetimepicker({
-//     //         locale: "zh-cn",
-//     //         format: "YYYY-MM-DD a hh:mm",
-//     //         dayViewHeaderFormat: "YYYY年 MMMM"
-//     //     });
-//     // }
-//
-//     //不带时间的控件
-//     if ($(".iDate.date").length > 0) {
-//         $(".iDate.date").datetimepicker({
-//             locale: "zh-cn",
-//             format: "YYYY-MM-DD",
-//             dayViewHeaderFormat: "YYYY年 MMMM"
-//         });
-//     }
-// })
+        rules: {
+            maintainRecordId: {
+                required: true,
+                minlength: 2
+            },
+            maintainItemId: {
+                required: true,
+                minlength: 2
+            },
+            maintainDiscount: {
+                required: true,
+                minlength: 2
+            },
+            mdCreatedTime: {
+                required: true,
+                minlength: 2
+            }
+        },
+        messages: {
+            maintainRecordId: "请选择维修保养记录",
+            maintainItemId: "请选择维修保养项目",
+            maintainDiscount: "请输入维修保养项目折扣",
+            mdCreatedTime: "请选择维修保养明细创建时间",
+        },
+        errorPlacement: function (error, element) {
+            element.next().remove();
+            element.after('<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>');
+            element.closest('.form-group').append(error);
+        },
+        highlight: function (element) {
+            $(element).closest('.form-group').addClass('has-error has-feedback');
+        },
+        success: function (label) {
+            var el = label.closest('.form-group').find("input");
+            el.next().remove();
+            el.after('<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>');
+            label.closest('.form-group').removeClass('has-error').addClass("has-feedback has-success");
+            label.remove();
+        },
+        submitHandler: function (form) {
+            alert("submitted!");
+        }
+    })
+});

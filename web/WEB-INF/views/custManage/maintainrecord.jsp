@@ -32,7 +32,7 @@
         <table id="table"
                data-toggle="table"
                data-toolbar="#toolbar"
-               data-url=""
+               data-url="/table/query"
                data-method="post"
                data-query-params="queryParams"
                data-pagination="true"
@@ -49,15 +49,15 @@
                data-single-select="true">
             <thead>
             <tr>
-                <th data-radio="true" data-field="recordId">保养记录编号</th>
-                <th data-field="checkinId">保养登记编号</th>
-                <th data-field="startTime">保养开始时间</th>
-                <th data-field="endTime">保养预估结束时间</th>
-                <th data-field="actualEndTime">保养实际结束时间</th>
-                <th data-field="recordCreatedTime">保养记录创建时间</th>
-                <th  data-field="pickupTime">保养车主提车时间</th>
-                <th data-field="recordDes">保养记录描述</th>
-                <th data-field="recordStatus">保养记录状态</th>
+                <th data-radio="true" data-field="status"></th>
+                <th data-field="checkinId">维修保养登记人</th>
+                <th data-field="startTime">维修保养开始时间</th>
+                <th data-field="endTime">维修保养预估结束时间</th>
+                <th data-field="actualEndTime">维修保养实际结束时间</th>
+                <th data-field="recordCreatedTime">维修保养记录创建时间</th>
+                <th  data-field="pickupTime">维修保养车主提车时间</th>
+                <th data-field="recordDes">维修保养记录描述</th>
+                <th data-field="recordStatus">维修保养记录状态</th>
             </tr>
             </thead>
         </table>
@@ -77,53 +77,53 @@
 
 <!-- 添加弹窗 -->
 <div class="modal fade" id="addWindow" aria-hidden="true" style="overflow:auto; ">
-    <div class="modal-dialog" style="width: 700px;height: auto;">
+    <div class="modal-dialog" style="width: 800px;height: auto;">
         <div class="modal-content" style="overflow:hidden;">
-            <form class="form-horizontal" onsubmit="return checkAdd()" id="addForm" method="post">
+            <form class="form-horizontal" role="form" onsubmit="return checkAdd()" id="addForm" method="post">
                 <div class="modal-header" style="overflow:auto;">
                     <h4>请填写维修保养记录信息</h4>
                 </div>
                 <br/>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">保养登记编号：</label>
+                    <label class="col-sm-3 control-label">维修保养登记人：</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="请选择维修保养登记编号" class="form-control">
+                        <input type="text" name="checkinId" placeholder="请选择维修保养登记人" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">保养开始时间：</label>
+                    <label class="col-sm-3 control-label">维修保养开始时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" value="2012-05-15 21:05" id="maddDateTime" class="form-control">
+                        <input type="text"  name="startTime" value="2012-05-15 21:05" id="maddDateTime" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">保养预估结束时间：</label>
+                    <label class="col-sm-3 control-label">维修保养预估结束时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" value="2012-05-15 21:05" id="maddDateTime1" class="form-control">
+                        <input type="text"  name="endTime" value="2012-05-15 21:05" id="maddDateTime1" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">保养实际结束时间：</label>
+                    <label class="col-sm-3 control-label">维修保养实际结束时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" value="2012-05-15 21:05" id="maddDateTime2" class="form-control">
+                        <input type="text" name="actualEndTime" value="2012-05-15 21:05" id="maddDateTime2" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">保养记录创建时间：</label>
+                    <label class="col-sm-3 control-label">维修保养记录创建时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" value="2012-05-15 21:05" id="maddDateTime3" class="form-control">
+                        <input type="text" name="recordCreatedTime" value="2012-05-15 21:05" id="maddDateTime3" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">保养车主提车时间：</label>
+                    <label class="col-sm-3 control-label">维修保养车主提车时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" value="2012-05-15 21:05" id="maddDateTime4" class="form-control">
+                        <input type="text"  name="pickupTime" value="2012-05-15 21:05" id="maddDateTime4" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">保养记录描述：</label>
+                    <label class="col-sm-3 control-label">维修保养记录描述：</label>
                     <div class="col-sm-7">
-                        <textarea type="text" placeholder="请输入相关内容" style="height: 120px;"
+                        <textarea type="text"  name="recordDes" placeholder="请输入维修保养记录描述" style="height: 120px;"
                                   class="form-control"></textarea>
                     </div>
                 </div>
@@ -141,7 +141,7 @@
 
 <!-- 修改弹窗 -->
 <div class="modal fade" id="editWindow" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog" style="width: 800px;height: auto;">
         <div class="modal-content">
             <form class="form-horizontal" onsubmit="return checkAdd()" id="editForm" method="post">
                 <div class="modal-header" style="overflow:auto;">
@@ -149,50 +149,50 @@
                 </div>
                 <br/>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">保养登记编号：</label>
+                    <label class="col-sm-3 control-label">维修保养登记人：</label>
                     <div class="col-sm-7">
-                        <input type="text" define="MaintainRecord.checkinId" placeholder="请选择维修保养登记编号" class="form-control">
+                        <input type="text"  name="checkinId" define="MaintainRecord.checkinId" placeholder="请选择维修保养登记人" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">保养开始时间：</label>
+                    <label class="col-sm-3 control-label">维修保养开始时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" define="MaintainRecord.startTime" value="2012-05-15 21:05"
+                        <input type="text" name="startTime" define="MaintainRecord.startTime" value="2012-05-15 21:05"
                                id="meditDateTime" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">保养预估结束时间：</label>
+                    <label class="col-sm-3 control-label">维修保养预估结束时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" define="MaintainRecord.endTime" value="2012-05-15 21:05"
+                        <input type="text" name="endTime" define="MaintainRecord.endTime" value="2012-05-15 21:05"
                                id="meditDateTime1" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">保养实际结束时间：</label>
+                    <label class="col-sm-3 control-label">维修保养实际结束时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" define="MaintainRecord.actualEndTime" value="2012-05-15 21:05"
+                        <input type="text" name="actualEndTime" define="MaintainRecord.actualEndTime" value="2012-05-15 21:05"
                                id="meditDateTime2" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">保养记录创建时间：</label>
+                    <label class="col-sm-3 control-label">维修保养记录创建时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" define="MaintainRecord.recordCreatedTime" value="2012-05-15 21:05"
+                        <input type="text" name="recordCreatedTime" define="MaintainRecord.recordCreatedTime" value="2012-05-15 21:05"
                                id="meditDateTime3" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">保养车主提车时间：</label>
+                    <label class="col-sm-3 control-label">维修保养车主提车时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" define="MaintainRecord.pickupTime" value="2012-05-15 21:05"
+                        <input type="text" name="pickupTime" define="MaintainRecord.pickupTime" value="2012-05-15 21:05"
                                id="meditDateTime4" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">保养记录描述：</label>
+                    <label class="col-sm-3 control-label">维修保养记录描述：</label>
                     <div class="col-sm-7">
-                        <textarea type="text" define="MaintainRecord.recordDes" placeholder="请输入相关内容" style="height: 120px;"
+                        <textarea type="text" name="recordDes" define="MaintainRecord.recordDes" placeholder="请输入维修保养记录描述" style="height: 120px;"
                                   class="form-control"></textarea>
                     </div>
                 </div>
@@ -256,5 +256,6 @@
 <script src="/static/js/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.js"></script>
 <script src="/static/js/bootstrap-dateTimePicker/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
 <script src="/static/js/backstage/custManage/maintainrecord.js"></script>
+<script src="/static/js/form/jquery.validate.js"></script>
 </body>
 </html>

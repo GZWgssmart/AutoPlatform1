@@ -13,6 +13,8 @@ public class Permission {
 
     private String permissionStatus;
 
+    private String status;
+
     public String getPermissionId() {
         return permissionId;
     }
@@ -59,5 +61,25 @@ public class Permission {
 
     public void setPermissionStatus(String permissionStatus) {
         this.permissionStatus = permissionStatus;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return "Permission{" +
+                "permissionId='" + permissionId + '\'' +
+                ", permissionName='" + permissionName + '\'' +
+                ", permissionZhname='" + permissionZhname + '\'' +
+                ", permissionDes='" + permissionDes + '\'' +
+                ", permissionStatus='" + permissionStatus + '\'' +
+                ", status='" + status + '\'' +
+                '}';
     }
 }

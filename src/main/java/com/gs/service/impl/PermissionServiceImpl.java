@@ -1,13 +1,13 @@
 package com.gs.service.impl;
 
 import com.gs.bean.Permission;
+import com.gs.common.bean.Pager;
 import com.gs.dao.PermissionDAO;
 import com.gs.service.PermissionService;
 import org.springframework.stereotype.Service;
+
 import javax.annotation.Resource;
 import java.util.List;
-
-import com.gs.common.bean.Pager;
 /**
 *由Wjhsmart技术支持
 *
@@ -39,4 +39,15 @@ public class PermissionServiceImpl implements PermissionService {
 	public int inactive(String id) { return permissionDAO.inactive(id); }
 	public int active(String id) { return permissionDAO.active(id); }
 
+	public List<Permission> queryPermissionById(Integer id) {
+		return permissionDAO.queryPermissionById(id);
+	}
+
+	public void addPermission(int roleId, int permissionId) {
+		permissionDAO.addPermission(roleId, permissionId);
+	}
+
+	public void removePermission(int roleId, int permissionId) {
+		permissionDAO.removePermission(roleId, permissionId);
+	}
 }

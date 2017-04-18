@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.gs.dao.PermissionDAO" >
-  <resultMap id="BaseResultMap" type="com.gs.bean.Permission" >
+  <resultMap id="permissionMap" type="com.gs.bean.Permission" >
     <id column="permissionId" property="permissionId" jdbcType="VARCHAR" />
     <result column="permissionName" property="permissionName" jdbcType="VARCHAR" />
     <result column="permissionZhname" property="permissionZhname" jdbcType="VARCHAR" />
@@ -9,5 +9,20 @@
     <result column="moduleId" property="moduleId" jdbcType="VARCHAR" />
     <result column="permissionStatus" property="permissionStatus" jdbcType="VARCHAR" />
   </resultMap>
+  <select id="queryAll" resultMap="permissionMap">
+    select * from t_permission;
+  </select>
+
+  <select id="queryPermissionById" resultMap="permissionMap">
+    select * from t_permission p where permissionId in (select permissionId from t_role_permission rp where roleId in (select r.roleId from t_role r where roleId = #{id}))
+  </select>
+
+  <delete id="removePermission">
+    delete from t_role_permission where roleId = #{roleId} and permissionId = #{permissionId}
+  </delete>
+
+  <insert id="addPermission">
+    insert into t_role_permission(rpId, roleId,permissionId,rpCreatedTime) values(uuid(),#{roleId}, #{permissionId}, now())
+  </insert>
 
 </mapper>

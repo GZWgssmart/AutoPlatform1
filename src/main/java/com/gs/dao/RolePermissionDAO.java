@@ -1,10 +1,9 @@
 package com.gs.dao;
 
-import com.gs.bean.Permission;
 import com.gs.bean.RolePermission;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -16,5 +15,10 @@ import java.util.List;
 */
 @Repository
 public interface RolePermissionDAO extends BaseDAO<String, RolePermission>{
-    List<String> queryAllPermissionByRoleName(String roleName);
+    /**
+     * 根据角色名获取角色对应的权限信息
+     * @param roleName
+     * @return
+     */
+    public List<String> queryAllPermissionByRoleName(@Param("roleName")String roleName);
 }

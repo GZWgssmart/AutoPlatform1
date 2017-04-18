@@ -201,7 +201,7 @@
                             </li>
                             <li><a class="J_menuItem" href="/custManage/maintaindetailsIndex">维修保养明细管理</a>
                             </li>
-                            <li><a class="J_menuItem" href="/custManage/smsalertsIndex">短信群发管理</a>
+                            <li><a class="J_menuItem" href="/custManage/maintainremindIndex">维修保养提醒</a>
                             </li>
                             <li><a class="J_menuItem" href="/custManage/messagesendIndex">短信群发提醒</a>
                             </li>
@@ -252,7 +252,7 @@
                     <li>
                         <a href="#"><i class="fa fa-gear"></i> <span class="nav-label">系统管理</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
-                            <li><a class="J_menuItem" href="/systemManage/moduleManageIndex">人员角色管理</a>
+                            <li><a class="J_menuItem" href="/systemManage/userRoleManageIndex">人员角色管理</a>
                             </li>
                             <li><a class="J_menuItem" href="/systemManage/moduleManageIndex">模块管理</a>
                             </li>

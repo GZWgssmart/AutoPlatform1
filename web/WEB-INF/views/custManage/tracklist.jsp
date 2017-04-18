@@ -32,7 +32,7 @@
         <table id="table"
                data-toggle="table"
                data-toolbar="#toolbar"
-               data-url=""
+               data-url="/table/query"
                data-method="post"
                data-query-params="queryParams"
                data-pagination="true"
@@ -49,13 +49,12 @@
                data-single-select="true">
             <thead>
             <tr>
-                <th data-radio="true" data-field="trackId">跟踪回访编号</th>
+                <th data-radio="true" data-field="status"></th>
                 <th data-field="userId">回访人</th>
-                <th data-field="modelDes">回访时间</th>
                 <th data-field="trackContent">回访问题</th>
-                <th data-field="modelStaus">本次服务评价</th>
+                <th data-field="serviceEvaluate">本次服务评价</th>
                 <th data-field="trackUser">跟踪回访用户</th>
-                <th data-field="trackGreateTime">跟踪回访创建时间</th>
+                <th data-field="trackCreateTime">跟踪回访创建时间</th>
             </tr>
             </thead>
         </table>
@@ -75,7 +74,7 @@
 
 <!-- 添加弹窗 -->
 <div class="modal fade" id="addWindow" aria-hidden="true" style="overflow:auto; ">
-    <div class="modal-dialog" style="width: 700px;height: auto;">
+    <div class="modal-dialog" style="width: 750px;height: auto;">
         <div class="modal-content" style="overflow:hidden;">
             <form class="form-horizontal" onsubmit="return checkAdd()" id="addForm" method="post">
                 <div class="modal-header" style="overflow:auto;">
@@ -85,33 +84,33 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">回访人：</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="请选择回访人" class="form-control">
+                        <input type="text" name="userId" placeholder="请选择回访人" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">回访问题：</label>
                     <div class="col-sm-7">
-                        <textarea type="text" placeholder="请输入相关内容" style="height: 100px;"
+                        <textarea type="text" name="trackContent" placeholder="请输入回访问题内容" style="height: 100px;"
                                   class="form-control"></textarea>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">本次服务评价：</label>
                     <div class="col-sm-7">
-                        <textarea type="text" placeholder="请输入服务评价（1-10分）" style="height: 100px;"
+                        <textarea type="text" name="serviceEvaluate" placeholder="请输入本次服务评价（1-10分）" style="height: 100px;"
                                   class="form-control"></textarea>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">跟踪回访用户：</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="请选择跟踪回访用户" class="form-control">
+                        <input type="text" name="trackUser" placeholder="请选择跟踪回访用户" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">跟踪回访创建时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" value="2012-05-15 21:05" id="addDateTimePicker" class="form-control">
+                        <input type="text"  name="trackCreateTime" value="2012-05-15 21:05" id="addDateTimePicker" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
@@ -128,7 +127,7 @@
 
 <!-- 修改弹窗 -->
 <div class="modal fade" id="editWindow" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog" style="width: 750px;height: auto;">
         <div class="modal-content">
             <form class="form-horizontal" onsubmit="return checkAdd()" id="editForm" method="post">
                 <div class="modal-header" style="overflow:auto;">
@@ -138,33 +137,33 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">回访人：</label>
                     <div class="col-sm-7">
-                        <input type="text" define="TrackList.userId" placeholder="请选择回访人" class="form-control">
+                        <input type="text" name="userId" define="TrackList.userId" placeholder="请选择回访人" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">回访问题：</label>
                     <div class="col-sm-7">
-                        <textarea type="text" define="TrackList.trackContent" placeholder="请输入相关内容" style="height: 100px;"
+                        <textarea type="text" name="trackContent" define="TrackList.trackContent" placeholder="请输入回访问题内容" style="height: 100px;"
                                   class="form-control"></textarea>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">本次服务评价：</label>
                     <div class="col-sm-7">
-                        <textarea type="text" define="TrackList.serviceEvaluate" placeholder="请输入服务评价（1-10分）" style="height: 100px;"
+                        <textarea type="text"  name="serviceEvaluate" define="TrackList.serviceEvaluate" placeholder="请输入本次服务评价（1-10分）" style="height: 100px;"
                                   class="form-control"></textarea>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">跟踪回访用户：</label>
                     <div class="col-sm-7">
-                        <input type="text" define="TrackList.trackUser" placeholder="请选择跟踪回访用户" class="form-control">
+                        <input type="text" name="trackUser" define="TrackList.trackUser" placeholder="请选择跟踪回访用户" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">跟踪回访创建时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" define="TrackList.trackGreatedTime" value="2012-05-15 21:05"
+                        <input type="text" name="trackCreateTime" define="TrackList.trackCreateTime" value="2012-05-15 21:05"
                                id="editDateTimePicker" class="form-control">
                     </div>
                 </div>
@@ -228,5 +227,6 @@
 <script src="/static/js/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.js"></script>
 <script src="/static/js/bootstrap-dateTimePicker/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
 <script src="/static/js/backstage/custManage/tracklist.js"></script>
+<script src="/static/js/form/jquery.validate.js"></script>
 </body>
 </html>

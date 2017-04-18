@@ -32,7 +32,7 @@
         <table id="table"
                data-toggle="table"
                data-toolbar="#toolbar"
-               data-url=""
+               data-url="/table/query"
                data-method="post"
                data-query-params="queryParams"
                data-pagination="true"
@@ -49,10 +49,10 @@
                data-single-select="true">
             <thead>
             <tr>
-                <th data-radio="true" data-field="messageId">短信发送记录编号</th>
-                <th  data-field="userId">用户名称</th>
+                <th data-radio="true" data-field="status"></th>
+                <th data-field="userId">用户名</th>
                 <th data-field="sendTime">发送时间</th>
-                <th data-field="sendGreatedTime">发送记录创建时间</th>
+                <th data-field="sendCreatedTime">发送记录创建时间</th>
                 <th data-field="sendMsg">发送内容</th>
             </tr>
             </thead>
@@ -73,35 +73,35 @@
 
 <!-- 添加弹窗 -->
 <div class="modal fade" id="addWindow" aria-hidden="true" style="overflow:auto; ">
-    <div class="modal-dialog" style="width: 700px;height: auto;">
+    <div class="modal-dialog" style="width: 720px;height: auto;">
         <div class="modal-content" style="overflow:hidden;">
-            <form class="form-horizontal" onsubmit="return checkAdd()" id="addForm" method="post">
+            <form class="form-horizontal" role="form" onsubmit="return checkAdd()" id="addForm" method="post">
                 <div class="modal-header" style="overflow:auto;">
                     <h4>请填写短信发送提醒信息</h4>
                 </div>
                 <br/>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">用户名称：</label>
+                    <label class="col-sm-3 control-label">用户名：</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="请输入用户名称" class="form-control">
+                        <input type="text" name="userId" placeholder="请选择用户" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">发送时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" value="2012-05-15 21:05" id="addDateTimePicker" class="form-control">
+                        <input type="text" name="sendTime" value="2012-05-15 21:05" id="addDateTimePicker" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">发送记录创建时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" value="2012-05-15 21:05" id="addDateTimePicker1" class="form-control">
+                        <input type="text" name="sendCreatedTime" value="2012-05-15 21:05" id="addDateTimePicker1" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">发送内容：</label>
                     <div class="col-sm-7">
-                        <textarea type="text" placeholder="请输入相关内容" style="height: 100px;"
+                        <textarea type="text" name="sendMsg" placeholder="请输入发送内容" style="height: 100px;"
                                   class="form-control"></textarea>
                     </div>
                 </div>
@@ -119,7 +119,7 @@
 
 <!-- 修改弹窗 -->
 <div class="modal fade" id="editWindow" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog" style="width: 720px;height: auto;">
         <div class="modal-content">
             <form class="form-horizontal" onsubmit="return checkAdd()" id="editForm" method="post">
                 <div class="modal-header" style="overflow:auto;">
@@ -127,29 +127,29 @@
                 </div>
                 <br/>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">用户名称：</label>
+                    <label class="col-sm-3 control-label">用户名：</label>
                     <div class="col-sm-7">
-                        <input type="text" define="MessageSend.userId" placeholder="请输入用户名称" class="form-control">
+                        <input type="text" name="userId" define="MessageSend.userId" placeholder="请选择用户" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">发送时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" define="MessageSend.sendTime" value="2012-05-15 21:05"
+                        <input type="text" name="sendTime" define="MessageSend.sendTime" value="2012-05-15 21:05"
                                id="editDateTimePicker" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">发送记录创建时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" define="MessageSend.sendGreateTime" value="2012-05-15 21:05"
+                        <input type="text"  name="sendCreateTime" define="MessageSend.sendCreateTime" value="2012-05-15 21:05"
                                id="editDateTimePicker1" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">发送内容：</label>
                     <div class="col-sm-7">
-                        <textarea type="text"  define="MessageSend.sendMsg" placeholder="请输入相关投诉内容" style="height: 100px;"
+                        <textarea type="text" name="sendMsg"  define="MessageSend.sendMsg" placeholder="请输入发送内容" style="height: 100px;"
                                   class="form-control"></textarea>
                     </div>
                 </div>
@@ -213,5 +213,6 @@
 <script src="/static/js/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.js"></script>
 <script src="/static/js/bootstrap-dateTimePicker/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
 <script src="/static/js/backstage/custManage/messagesend.js"></script>
+<script src="/static/js/form/jquery.validate.js"></script>
 </body>
 </html>

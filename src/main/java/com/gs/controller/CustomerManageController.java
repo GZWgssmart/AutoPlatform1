@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
- * 系统管理
+ * 客户关系管理
  */
 @Controller
 @RequestMapping("/custManage")
