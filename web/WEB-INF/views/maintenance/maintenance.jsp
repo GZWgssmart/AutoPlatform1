@@ -11,15 +11,10 @@
     <title>维修保养项目管理</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <%--
-        移动端的dateTimePicker的css样式
-    --%>
-    <%--<link rel="stylesheet" href="/static/css/dateTimePicker.css">--%>
     <link rel="stylesheet" href="/static/css/bootstrap.min.css">
     <link rel="stylesheet" href="/static/css/bootstrap-table.css">
     <link rel="stylesheet" href="/static/css/select2.min.css">
     <link rel="stylesheet" href="/static/css/sweetalert.css">
-    <link rel="stylesheet" href="/static/css/fileinput.css">
     <link rel="stylesheet" href="/static/css/table/table.css">
     <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.css">
     <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/datetimepicker.less">
@@ -52,10 +47,15 @@
             <thead>
             <tr>
                 <th data-radio="true" data-field="status"></th>
-                <th data-field="ScheduleNumber">进度编号</th>
-                <th data-field="MaintenanceProject">维修保养项目</th>
-                <th data-field="EstimatedOverTime">预估结束时间</th>
+                <th data-field="recordId">进度编号</th>
+                <th data-field="checkinId">登记编号</th>
+                <th data-field="startTime">开始时间</th>
+                <th data-field="endTime">预估结束时间</th>
                 <th data-field="actualEndTime">实际结束时间</th>
+                <th data-field="recordCreatedTime">创建时间</th>
+                <th data-field="pickupTime">车主提车时间</th>
+                <th data-field="recordDes">进度描述</th>
+                <th data-field="recordStatus">状态</th>
             </tr>
             </thead>
         </table>
@@ -77,35 +77,56 @@
 <!-- 添加弹窗 -->
 <div class="modal fade" id="addWindow" aria-hidden="true" style="overflow:auto; ">
     <div class="modal-dialog" style="width: 700px;height: auto;">
-        <div class="modal-content" style="overflow:hidden;">
+        <div class="modal-content" style="overflow:auto;">
             <form class="form-horizontal" role="form" onsubmit="return checkAdd()" id="showAddFormWar" method="post">
                 <div class="modal-header" style="overflow:auto;">
                     <h4>请填写车辆维修保养</h4>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">进度编号：</label>
+                    <label class="col-sm-3 control-label">登记编号：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="scheduleNumber" placeholder="请输入进度编号" class="form-control">
+                        <input type="text" name="checkinId" placeholder="请输入登记编号" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">维修保养项目：</label>
+                    <label class="col-sm-3 control-label">开始时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="maintenanceProject" placeholder="请输入维修保养项目" class="form-control">
+                        <input type="text" name="startTime" value="2012-05-15 21:05" id="addDateTimePicker"
+                               class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">预计结束时间：</label>
+                    <label class="col-sm-3 control-label">预估结束时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="estimatedOverTime" value="2012-05-15 21:05" id="addDateTimePicker"
+                        <input type="text" name="endTime" value="2012-05-15 21:05" id="addDateTimePicker2"
                                class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">实际结束时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="actualEndTime" value="2012-05-15 21:05" id="addDateTimePicker1"
+                        <input type="text" name="actualEndTime" value="2012-05-15 21:05" id="addDateTimePicker3"
                                class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">创建时间：</label>
+                    <div class="col-sm-7">
+                        <input type="text" name="recordCreatedTime" value="2012-05-15 21:05" id="addDateTimePicker4"
+                               class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">车主提车时间：</label>
+                    <div class="col-sm-7">
+                        <input type="text" name="pickupTime" value="2012-05-15 21:05" id="addDateTimePicker5"
+                               class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">进度描述：</label>
+                    <div class="col-sm-7">
+                        <input type="text" name="recordDes" placeholder="请输入保养进度描述" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
@@ -126,40 +147,61 @@
         <div class="modal-content" style="overflow:hidden;">
             <form class="form-horizontal" role="form" onsubmit="return checkEdit()" id="showEditFormWar" method="post">
                 <div class="modal-header" style="overflow:auto;">
-                    <p>请修改车辆维修保养</p>
+                    <h4>请填写车辆维修保养</h4>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">进度编号：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="ScheduleNumber" define="maintenance.ScheduleNumber"
-                               placeholder="请输入进度编号" class="form-control">
+                        <input type="text" name="recordId" placeholder="请输入进度编号" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">维修保养项目：</label>
+                    <label class="col-sm-3 control-label">登记编号：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="MaintenanceProject" define="maintenance.companyAddress"
-                               placeholder="请输入维修保养项目"
+                        <input type="text" name="checkinId" placeholder="请输入登记编号" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">开始时间：</label>
+                    <div class="col-sm-7">
+                        <input type="text" name="startTime" value="2012-05-15 21:05" id="editDateTimePicker"
                                class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">预计结束时间：</label>
+                    <label class="col-sm-3 control-label">预估结束时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="EstimatedOverTime" define="maintenance.MaintenanceProject"
-                               value="2012-05-15 21:05"
-                               id="editDateTimePicker" class="form-control">
+                        <input type="text" name="endTime" value="2012-05-15 21:05" id="editDateTimePicker2"
+                               class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">实际结束时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="actualEndTime" define="maintenance.actualEndTime"
-                               value="2012-05-15 21:05"
-                               id="editDateTimePicker1" class="form-control">
+                        <input type="text" name="actualEndTime" value="2012-05-15 21:05" id="editDateTimePicker3"
+                               class="form-control">
                     </div>
                 </div>
-
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">创建时间：</label>
+                    <div class="col-sm-7">
+                        <input type="text" name="recordCreatedTime" value="2012-05-15 21:05" id="editDateTimePicker4"
+                               class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">车主提车时间：</label>
+                    <div class="col-sm-7">
+                        <input type="text" name="pickupTime" value="2012-05-15 21:05" id="aditDateTimePicker5"
+                               class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">进度描述：</label>
+                    <div class="col-sm-7">
+                        <input type="text" name="recordDes" placeholder="请输入保养进度描述" class="form-control">
+                    </div>
+                </div>
                 <div class="form-group">
                     <div class="col-sm-offset-8">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
