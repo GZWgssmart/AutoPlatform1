@@ -12,6 +12,7 @@ public interface BaseService<PK extends Serializable, T> {
 
     /**
      * 插入数据
+     *
      * @param t
      * @return
      */
@@ -19,6 +20,7 @@ public interface BaseService<PK extends Serializable, T> {
 
     /**
      * 批量插入数据
+     *
      * @param list
      * @return
      */
@@ -26,6 +28,7 @@ public interface BaseService<PK extends Serializable, T> {
 
     /**
      * 删除数据
+     *
      * @param t
      * @return
      */
@@ -33,6 +36,7 @@ public interface BaseService<PK extends Serializable, T> {
 
     /**
      * 根据id删除数据
+     *
      * @param id
      * @return
      */
@@ -40,6 +44,7 @@ public interface BaseService<PK extends Serializable, T> {
 
     /**
      * 批量删除数据
+     *
      * @param list
      * @return
      */
@@ -47,6 +52,7 @@ public interface BaseService<PK extends Serializable, T> {
 
     /**
      * 更新数据
+     *
      * @param t
      * @return
      */
@@ -54,13 +60,30 @@ public interface BaseService<PK extends Serializable, T> {
 
     /**
      * 批量更新数据
+     *
      * @param list
      * @return
      */
     public int batchUpdate(List<T> list);
 
     /**
+     * 查询所有记录
+     *
+     * @return
+     */
+    public List<T> queryAll();
+
+    /**
+     * 查询指定状态的所有记录
+     *
+     * @param status
+     * @return
+     */
+    public List<T> queryAll(String status);
+
+    /**
      * 查询单个记录
+     *
      * @param t
      * @return
      */
@@ -68,6 +91,7 @@ public interface BaseService<PK extends Serializable, T> {
 
     /**
      * 根据id查询记录
+     *
      * @param id
      * @return
      */
@@ -75,6 +99,7 @@ public interface BaseService<PK extends Serializable, T> {
 
     /**
      * 分页查询记录
+     *
      * @param pager
      * @return
      */
@@ -82,12 +107,14 @@ public interface BaseService<PK extends Serializable, T> {
 
     /**
      * 计数
+     *
      * @return
      */
     public int count();
 
     /**
      * 冻结数据
+     *
      * @param id
      * @return
      */
@@ -95,6 +122,7 @@ public interface BaseService<PK extends Serializable, T> {
 
     /**
      * 激活数据
+     *
      * @param id
      * @return
      */

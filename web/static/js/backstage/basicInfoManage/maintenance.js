@@ -102,23 +102,51 @@ function checkEdit() {
         }, "json"
     );
 }
-
+//添加
 $('#addDateTimePicker').datetimepicker({
     language: 'zh-CN',
     format: 'yyyy-mm-dd hh:ii'
 });
-$('#addDateTimePicker1').datetimepicker({
+$('#addDateTimePicker2').datetimepicker({
     language: 'zh-CN',
     format: 'yyyy-mm-dd hh:ii'
 });
+$('#addDateTimePicker3').datetimepicker({
+    language: 'zh-CN',
+    format: 'yyyy-mm-dd hh:ii'
+});
+$('#addDateTimePicker4').datetimepicker({
+    language: 'zh-CN',
+    format: 'yyyy-mm-dd hh:ii'
+});
+$('#addDateTimePicker5').datetimepicker({
+    language: 'zh-CN',
+    format: 'yyyy-mm-dd hh:ii'
+});
+
+//修改
 $('#editDateTimePicker').datetimepicker({
     language: 'zh-CN',
     format: 'yyyy-mm-dd hh:ii'
 });
-$('#editDateTimePicker1').datetimepicker({
+$('#editDateTimePicker2').datetimepicker({
     language: 'zh-CN',
     format: 'yyyy-mm-dd hh:ii'
 });
+$('#editDateTimePicker3').datetimepicker({
+    language: 'zh-CN',
+    format: 'yyyy-mm-dd hh:ii'
+});
+$('#editDateTimePicker4').datetimepicker({
+    language: 'zh-CN',
+    format: 'yyyy-mm-dd hh:ii'
+});
+$('#editDateTimePicker5').datetimepicker({
+    language: 'zh-CN',
+    format: 'yyyy-mm-dd hh:ii'
+});
+
+
 
 
 // //日期时间控件初始化
@@ -153,30 +181,43 @@ $(document).ready(function () {
         errorClass: 'help-block',
 
         rules: {
-            scheduleNumber: {
+            checkinId: {
                 required: true,
                 minlength: 2
             },
-            maintenanceProject: {
-                required: true,
-                minlength: 2
-            },
-            estimatedOverTime: {
-                required: true,
-                minlength: 2
-            },
-            actualEndTime: {
-                required: true,
-                minlength: 2
-            }
-
+            // startTime: {
+            //     required: true,
+            //     date: true
+            // },
+            // endTime: {
+            //     required: true,
+            //     date: true
+            // },
+            // actualEndTime: {
+            //     required: true,
+            //     date: true
+            // },
+            // recordCreatedTime: {
+            //     required: true,
+            //     date: true
+            // },
+            // pickupTime: {
+            //     required: true,
+            //     date: true
+            // },
+             recordDes: {
+                 required: true,
+                 minlength: 5
+             }
         },
         messages: {
-            ScheduleNumber: "请输入进度编号",
-            MaintenanceProject: "请输入维修保养项目",
-            EstimatedOverTime: "请输入预计结束时间",
-            actualEndTime: "请输入实际结束时间",
-
+            checkinId: "请输入登记编号",
+            // startTime: "请选择时间",
+            // endTime: "请选择预估结束时间",
+            // actualEndTime: "请选择实际结束时间",
+            // recordCreatedTime: "创建时间",
+            // pickupTime: "请选择车主提车时间",
+            recordDes: "进度描述"
         },
         errorPlacement: function (error, element) {
             element.next().remove();
@@ -202,29 +243,44 @@ $(document).ready(function () {
         errorClass: 'help-block',
 
         rules: {
-            ScheduleNumber: {
+            checkinId: {
                 required: true,
                 minlength: 2
             },
-            MaintenanceProject: {
+            // startTime: {
+            //     required: true,
+            //     date: true
+            // },
+            // endTime: {
+            //     required: true,
+            //     date: true
+            // },
+            // actualEndTime: {
+            //     required: true,
+            //     date: true
+            // },
+            // recordCreatedTime: {
+            //     required: true,
+            //     date: true,
+            // },
+            // pickupTime: {
+            //     required: true,
+            //     date: true,
+            // },
+            recordDes: {
                 required: true,
-                minlength: 2
-            },
-            EstimatedOverTime: {
-                required: true,
-                isPhone: true,
-            },
-            actualEndTime: {
-                required: true,
-                isPhone: true,
+                minlength: 5,
             }
 
         },
         messages: {
-            ScheduleNumber: "请输入进度编号",
-            MaintenanceProject: "请输入维修保养项目",
-            EstimatedOverTime: "请输入预计结束时间",
-            actualEndTime: "请输入实际结束时间",
+            checkinId: "请输入登记编号",
+            startTime: "请选择时间",
+            endTime: "请选择预估结束时间",
+            actualEndTime: "请选择实际结束时间",
+            recordCreatedTime: "创建时间",
+            pickupTime: "请选择车主提车时间",
+            recordDes: "进度描述"
         },
         errorPlacement: function (error, element) {
             element.next().remove();

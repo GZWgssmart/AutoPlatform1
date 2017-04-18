@@ -2,6 +2,8 @@ package com.gs.service;
 
 import com.gs.bean.AccessoriesBuy;
 
+import java.util.List;
+
 /**
 *由Wjhsmart技术支持
 *

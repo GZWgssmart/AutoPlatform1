@@ -2,6 +2,9 @@ package com.gs.dao;
 
 import com.gs.bean.AccessoriesType;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
 /**
 *由Wjhsmart技术支持
 *
