@@ -1,10 +1,19 @@
 package com.gs.controller;
 
 import ch.qos.logback.classic.Logger;
+import com.gs.bean.Company;
+import com.gs.common.bean.Pager;
+import com.gs.common.bean.Pager4EasyUI;
+import com.gs.service.CompanyService;
+import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * 基础信息管理
@@ -15,6 +24,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class BackstageController {
 
     private Logger logger = (Logger) LoggerFactory.getLogger(BackstageController.class);
+
+    @Resource
+    private CompanyService companyService;
 
     /**
      * 后台主页
@@ -34,6 +46,17 @@ public class BackstageController {
     public String companyInfoIndex() {
         logger.info("跳转到公司信息管理页面");
         return "basicInfoManage/companyInfo";
+    }
+    @ResponseBody
+    @RequestMapping(value = "queryByPager",method = RequestMethod.GET)
+    public Pager4EasyUI<Company> queryByPager(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
+        Pager pager = new Pager();
+        logger.info("分页查询所有公司信息");
+        pager.setPageNo(Integer.valueOf(pageNumber));
+        pager.setPageSize(Integer.valueOf(pageSize));
+        pager.setTotalRecords(companyService.count());
+        List<Company> companyListList = companyService.queryByPager(pager);
+        return null;
     }
 
     /**
