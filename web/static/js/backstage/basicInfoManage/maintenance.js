@@ -30,7 +30,11 @@ function showEdit() {
         var ceshi = row[0];
         $("#editForm").fill(ceshi);
     } else {
-        $("#tanchuang").modal('show');
+        swal({
+            "title": "",
+            "text": "请先选择一条数据",
+            "type": "warning"
+        })
     }
 }
 
@@ -38,7 +42,6 @@ function showEdit() {
 function showAdd() {
     $("#addWindow").modal('show');
 }
-
 
 function formatRepo(repo) {
     return repo.text
@@ -49,12 +52,20 @@ function formatRepoSelection(repo) {
 
 //显示删除
 function showDel() {
+
     var row = $('table').bootstrapTable('getSelections');
     if (row.length > 0) {
         $("#del").modal('show');
+        var ceshi = row[0];
+        $("#tanchuang").fill(ceshi);
     } else {
-        $("#tanchuang").modal('show');
+        swal({
+            "title": "",
+            "text": "请先选择一条数据",
+            "type": "warning"
+        })
     }
+
 }
 
 //检查添加
@@ -130,3 +141,108 @@ $('#editDateTimePicker1').datetimepicker({
 //         });
 //     }
 // })
+//前段验证
+$(document).ready(function () {
+    jQuery.validator.addMethod("isPhone", function (value, element) {
+        var length = value.length;
+        return this.optional(element) || (length == 11 && /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/.test(value));
+    }, "请正确填写进度编号");
+
+    $("#showAddFormWar").validate({
+        errorElement: 'span',
+        errorClass: 'help-block',
+
+        rules: {
+            scheduleNumber: {
+                required: true,
+                minlength: 2
+            },
+            maintenanceProject: {
+                required: true,
+                minlength: 2
+            },
+            estimatedOverTime: {
+                required: true,
+                minlength: 2
+            },
+            actualEndTime: {
+                required: true,
+                minlength: 2
+            }
+
+        },
+        messages: {
+            ScheduleNumber: "请输入进度编号",
+            MaintenanceProject: "请输入维修保养项目",
+            EstimatedOverTime: "请输入预计结束时间",
+            actualEndTime: "请输入实际结束时间",
+
+        },
+        errorPlacement: function (error, element) {
+            element.next().remove();
+            element.after('<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>');
+            element.closest('.form-group').append(error);
+        },
+        highlight: function (element) {
+            $(element).closest('.form-group').addClass('has-error has-feedback');
+        },
+        success: function (label) {
+            var el = label.closest('.form-group').find("input");
+            el.next().remove();
+            el.after('<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>');
+            label.closest('.form-group').removeClass('has-error').addClass("has-feedback has-success");
+            label.remove();
+        },
+        submitHandler: function (form) {
+            alert("submitted!");
+        }
+    })
+    $("#showEditFormWar").validate({
+        errorElement: 'span',
+        errorClass: 'help-block',
+
+        rules: {
+            ScheduleNumber: {
+                required: true,
+                minlength: 2
+            },
+            MaintenanceProject: {
+                required: true,
+                minlength: 2
+            },
+            EstimatedOverTime: {
+                required: true,
+                isPhone: true,
+            },
+            actualEndTime: {
+                required: true,
+                isPhone: true,
+            }
+
+        },
+        messages: {
+            ScheduleNumber: "请输入进度编号",
+            MaintenanceProject: "请输入维修保养项目",
+            EstimatedOverTime: "请输入预计结束时间",
+            actualEndTime: "请输入实际结束时间",
+        },
+        errorPlacement: function (error, element) {
+            element.next().remove();
+            element.after('<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>');
+            element.closest('.form-group').append(error);
+        },
+        highlight: function (element) {
+            $(element).closest('.form-group').addClass('has-error has-feedback');
+        },
+        success: function (label) {
+            var el = label.closest('.form-group').find("input");
+            el.next().remove();
+            el.after('<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>');
+            label.closest('.form-group').removeClass('has-error').addClass("has-feedback has-success");
+            label.remove();
+        },
+        submitHandler: function (form) {
+            alert("submitted!");
+        }
+    })
+});

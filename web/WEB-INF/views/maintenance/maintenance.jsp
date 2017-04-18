@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>公司信息管理</title>
+    <title>维修保养项目管理</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <%--
@@ -54,9 +54,8 @@
                 <th data-radio="true" data-field="status"></th>
                 <th data-field="ScheduleNumber">进度编号</th>
                 <th data-field="MaintenanceProject">维修保养项目</th>
-                <th ddata-field="EstimatedOverTime">预估结束时间</th>
+                <th data-field="EstimatedOverTime">预估结束时间</th>
                 <th data-field="actualEndTime">实际结束时间</th>
-
             </tr>
             </thead>
         </table>
@@ -79,32 +78,34 @@
 <div class="modal fade" id="addWindow" aria-hidden="true" style="overflow:auto; ">
     <div class="modal-dialog" style="width: 700px;height: auto;">
         <div class="modal-content" style="overflow:hidden;">
-            <form class="form-horizontal" onsubmit="return checkAdd()" id="addForm" method="post">
+            <form class="form-horizontal" role="form" onsubmit="return checkAdd()" id="showAddFormWar" method="post">
                 <div class="modal-header" style="overflow:auto;">
                     <h4>请填写车辆维修保养</h4>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">进度编号：</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="请输入进度编号" class="form-control">
+                        <input type="text" name="scheduleNumber" placeholder="请输入进度编号" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">维修保养项目：</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="请输入维修保养项目" class="form-control">
+                        <input type="text" name="maintenanceProject" placeholder="请输入维修保养项目" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">预计结束时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" value="2012-05-15 21:05" id="addDateTimePicker" class="form-control">
+                        <input type="text" name="estimatedOverTime" value="2012-05-15 21:05" id="addDateTimePicker"
+                               class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">实际结束时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" value="2012-05-15 21:05" id="addDateTimePicker1" class="form-control">
+                        <input type="text" name="actualEndTime" value="2012-05-15 21:05" id="addDateTimePicker1"
+                               class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
@@ -123,34 +124,38 @@
 <div class="modal fade" id="editWindow" aria-hidden="true" style="overflow:auto; ">
     <div class="modal-dialog" style="width: 700px;height: auto;">
         <div class="modal-content" style="overflow:hidden;">
-            <form class="form-horizontal" onsubmit="return checkAdd()" id="editForm" method="post">
+            <form class="form-horizontal" role="form" onsubmit="return checkEdit()" id="showEditFormWar" method="post">
                 <div class="modal-header" style="overflow:auto;">
                     <p>请修改车辆维修保养</p>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">进度编号：</label>
                     <div class="col-sm-7">
-                        <input type="text" define="maintenance.ScheduleNumber" placeholder="请输入进度编号" class="form-control">
+                        <input type="text" name="ScheduleNumber" define="maintenance.ScheduleNumber"
+                               placeholder="请输入进度编号" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">维修保养项目：</label>
                     <div class="col-sm-7">
-                        <input type="text" define="maintenance.companyAddress" placeholder="请输入维修保养项目"
+                        <input type="text" name="MaintenanceProject" define="maintenance.companyAddress"
+                               placeholder="请输入维修保养项目"
                                class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">预计结束时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" define="maintenance.MaintenanceProject" value="2012-05-15 21:05"
+                        <input type="text" name="EstimatedOverTime" define="maintenance.MaintenanceProject"
+                               value="2012-05-15 21:05"
                                id="editDateTimePicker" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">实际结束时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" define="maintenance.actualEndTime" value="2012-05-15 21:05"
+                        <input type="text" name="actualEndTime" define="maintenance.actualEndTime"
+                               value="2012-05-15 21:05"
                                id="editDateTimePicker1" class="form-control">
                     </div>
                 </div>
@@ -186,24 +191,6 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<!-- 提示弹窗 -->
-<div class="modal fade" id="tanchuang" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                提示
-            </div>
-            <div class="modal-body">
-                请先选择某一行
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default"
-                        data-dismiss="modal">关闭
-                </button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
 <script src="/static/js/jquery.min.js"></script>
 <script src="/static/js/bootstrap.min.js"></script>
 <script src="/static/js/bootstrap-table/bootstrap-table.js"></script>
@@ -221,6 +208,7 @@
 --%>
 <%--<script src="/static/js/dateTimePicker/moment.js"></script>--%>
 <%--<script src="/static/js/dateTimePicker/bootstrap-datetimepicker.js"></script>--%>
+<script src="/static/js/form/jquery.validate.js"></script>
 <script src="/static/js/backstage/basicInfoManage/maintenance.js"></script>
 </body>
 </html>
