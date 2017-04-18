@@ -31,6 +31,12 @@ public class MaintainDetailServiceImpl implements MaintainDetailService {
 	public int update(MaintainDetail maintainDetail) { return maintainDetailDAO.update(maintainDetail); }
 	public int batchUpdate(List<MaintainDetail> list) { return maintainDetailDAO.batchUpdate(list); }
 	public List<MaintainDetail> queryAll() { return maintainDetailDAO.queryAll(); }
+
+	@Override
+	public List<MaintainDetail> queryAll(String status) {
+		return maintainDetailDAO.queryAll();
+	}
+
 	public List<MaintainDetail> queryByStatus(String status) { return maintainDetailDAO.queryAll(status); }
 	public MaintainDetail query(MaintainDetail maintainDetail) { return maintainDetailDAO.query(maintainDetail); }
 	public MaintainDetail queryById(String id) { return maintainDetailDAO.queryById(id); }

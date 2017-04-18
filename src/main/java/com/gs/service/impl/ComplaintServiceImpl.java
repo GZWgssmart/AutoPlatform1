@@ -31,6 +31,12 @@ public class ComplaintServiceImpl implements ComplaintService {
 	public int update(Complaint complaint) { return complaintDAO.update(complaint); }
 	public int batchUpdate(List<Complaint> list) { return complaintDAO.batchUpdate(list); }
 	public List<Complaint> queryAll() { return complaintDAO.queryAll(); }
+
+	@Override
+	public List<Complaint> queryAll(String status) {
+		return complaintDAO.queryAll();
+	}
+
 	public List<Complaint> queryByStatus(String status) { return complaintDAO.queryAll(status); }
 	public Complaint query(Complaint complaint) { return complaintDAO.query(complaint); }
 	public Complaint queryById(String id) { return complaintDAO.queryById(id); }

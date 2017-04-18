@@ -31,6 +31,12 @@ public class IncomingTypeServiceImpl implements IncomingTypeService {
 	public int update(IncomingType incomingType) { return incomingTypeDAO.update(incomingType); }
 	public int batchUpdate(List<IncomingType> list) { return incomingTypeDAO.batchUpdate(list); }
 	public List<IncomingType> queryAll() { return incomingTypeDAO.queryAll(); }
+
+	@Override
+	public List<IncomingType> queryAll(String status) {
+		return incomingTypeDAO.queryAll();
+	}
+
 	public List<IncomingType> queryByStatus(String status) { return incomingTypeDAO.queryAll(status); }
 	public IncomingType query(IncomingType incomingType) { return incomingTypeDAO.query(incomingType); }
 	public IncomingType queryById(String id) { return incomingTypeDAO.queryById(id); }

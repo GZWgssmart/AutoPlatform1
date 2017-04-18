@@ -31,6 +31,12 @@ public class CarColorServiceImpl implements CarColorService {
 	public int update(CarColor carColor) { return carColorDAO.update(carColor); }
 	public int batchUpdate(List<CarColor> list) { return carColorDAO.batchUpdate(list); }
 	public List<CarColor> queryAll() { return carColorDAO.queryAll(); }
+
+	@Override
+	public List<CarColor> queryAll(String status) {
+		return carColorDAO.queryAll();
+	}
+
 	public List<CarColor> queryByStatus(String status) { return carColorDAO.queryAll(status); }
 	public CarColor query(CarColor carColor) { return carColorDAO.query(carColor); }
 	public CarColor queryById(String id) { return carColorDAO.queryById(id); }

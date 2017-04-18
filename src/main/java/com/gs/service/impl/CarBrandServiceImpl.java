@@ -30,6 +30,12 @@ public class CarBrandServiceImpl implements CarBrandService {
 	public int update(CarBrand carBrand) { return carBrandDAO.update(carBrand); }
 	public int batchUpdate(List<CarBrand> list) { return carBrandDAO.batchUpdate(list); }
 	public List<CarBrand> queryAll() { return carBrandDAO.queryAll(); }
+
+	@Override
+	public List<CarBrand> queryAll(String status) {
+		return carBrandDAO.queryAll();
+	}
+
 	public List<CarBrand> queryByStatus(String status) { return carBrandDAO.queryAll(status); }
 	public CarBrand query(CarBrand carBrand) { return carBrandDAO.query(carBrand); }
 	public CarBrand queryById(String id) { return carBrandDAO.queryById(id); }

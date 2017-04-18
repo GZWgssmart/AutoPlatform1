@@ -31,6 +31,12 @@ public class TrackListServiceImpl implements TrackListService {
 	public int update(TrackList trackList) { return trackListDAO.update(trackList); }
 	public int batchUpdate(List<TrackList> list) { return trackListDAO.batchUpdate(list); }
 	public List<TrackList> queryAll() { return trackListDAO.queryAll(); }
+
+	@Override
+	public List<TrackList> queryAll(String status) {
+		return trackListDAO.queryAll();
+	}
+
 	public List<TrackList> queryByStatus(String status) { return trackListDAO.queryAll(status); }
 	public TrackList query(TrackList trackList) { return trackListDAO.query(trackList); }
 	public TrackList queryById(String id) { return trackListDAO.queryById(id); }

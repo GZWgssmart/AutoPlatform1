@@ -31,6 +31,12 @@ public class ChargeBillServiceImpl implements ChargeBillService {
 	public int update(ChargeBill chargeBill) { return chargeBillDAO.update(chargeBill); }
 	public int batchUpdate(List<ChargeBill> list) { return chargeBillDAO.batchUpdate(list); }
 	public List<ChargeBill> queryAll() { return chargeBillDAO.queryAll(); }
+
+	@Override
+	public List<ChargeBill> queryAll(String status) {
+		return chargeBillDAO.queryAll();
+	}
+
 	public List<ChargeBill> queryByStatus(String status) { return chargeBillDAO.queryAll(status); }
 	public ChargeBill query(ChargeBill chargeBill) { return chargeBillDAO.query(chargeBill); }
 	public ChargeBill queryById(String id) { return chargeBillDAO.queryById(id); }

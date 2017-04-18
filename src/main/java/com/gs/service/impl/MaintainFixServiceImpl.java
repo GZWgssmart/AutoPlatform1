@@ -31,6 +31,12 @@ public class MaintainFixServiceImpl implements MaintainFixService {
 	public int update(MaintainFix maintainFix) { return maintainFixDAO.update(maintainFix); }
 	public int batchUpdate(List<MaintainFix> list) { return maintainFixDAO.batchUpdate(list); }
 	public List<MaintainFix> queryAll() { return maintainFixDAO.queryAll(); }
+
+	@Override
+	public List<MaintainFix> queryAll(String status) {
+		return maintainFixDAO.queryAll();
+	}
+
 	public List<MaintainFix> queryByStatus(String status) { return maintainFixDAO.queryAll(status); }
 	public MaintainFix query(MaintainFix maintainFix) { return maintainFixDAO.query(maintainFix); }
 	public MaintainFix queryById(String id) { return maintainFixDAO.queryById(id); }

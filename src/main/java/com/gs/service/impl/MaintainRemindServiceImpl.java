@@ -31,6 +31,12 @@ public class MaintainRemindServiceImpl implements MaintainRemindService {
 	public int update(MaintainRemind maintainRemind) { return maintainRemindDAO.update(maintainRemind); }
 	public int batchUpdate(List<MaintainRemind> list) { return maintainRemindDAO.batchUpdate(list); }
 	public List<MaintainRemind> queryAll() { return maintainRemindDAO.queryAll(); }
+
+	@Override
+	public List<MaintainRemind> queryAll(String status) {
+		return maintainRemindDAO.queryAll();
+	}
+
 	public List<MaintainRemind> queryByStatus(String status) { return maintainRemindDAO.queryAll(status); }
 	public MaintainRemind query(MaintainRemind maintainRemind) { return maintainRemindDAO.query(maintainRemind); }
 	public MaintainRemind queryById(String id) { return maintainRemindDAO.queryById(id); }

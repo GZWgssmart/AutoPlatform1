@@ -30,6 +30,12 @@ public class AccessoriesBuyServiceImpl implements AccessoriesBuyService {
 	public int update(AccessoriesBuy accessoriesBuy) { return accessoriesBuyDAO.update(accessoriesBuy); }
 	public int batchUpdate(List<AccessoriesBuy> list) { return accessoriesBuyDAO.batchUpdate(list); }
 	public List<AccessoriesBuy> queryAll() { return accessoriesBuyDAO.queryAll(); }
+
+	@Override
+	public List<AccessoriesBuy> queryAll(String status) {
+		return accessoriesBuyDAO.queryAll();
+	}
+
 	public List<AccessoriesBuy> queryByStatus(String status) { return accessoriesBuyDAO.queryAll(status); }
 	public AccessoriesBuy query(AccessoriesBuy accessoriesBuy) { return accessoriesBuyDAO.query(accessoriesBuy); }
 	public AccessoriesBuy queryById(String id) { return accessoriesBuyDAO.queryById(id); }

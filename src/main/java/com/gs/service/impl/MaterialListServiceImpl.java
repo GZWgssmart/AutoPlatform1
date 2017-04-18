@@ -31,6 +31,12 @@ public class MaterialListServiceImpl implements MaterialListService {
 	public int update(MaterialList materialList) { return materialListDAO.update(materialList); }
 	public int batchUpdate(List<MaterialList> list) { return materialListDAO.batchUpdate(list); }
 	public List<MaterialList> queryAll() { return materialListDAO.queryAll(); }
+
+	@Override
+	public List<MaterialList> queryAll(String status) {
+		return materialListDAO.queryAll();
+	}
+
 	public List<MaterialList> queryByStatus(String status) { return materialListDAO.queryAll(status); }
 	public MaterialList query(MaterialList materialList) { return materialListDAO.query(materialList); }
 	public MaterialList queryById(String id) { return materialListDAO.queryById(id); }

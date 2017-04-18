@@ -31,6 +31,12 @@ public class MaintainFixAccServiceImpl implements MaintainFixAccService {
 	public int update(MaintainFixAcc maintainFixAcc) { return maintainFixAccDAO.update(maintainFixAcc); }
 	public int batchUpdate(List<MaintainFixAcc> list) { return maintainFixAccDAO.batchUpdate(list); }
 	public List<MaintainFixAcc> queryAll() { return maintainFixAccDAO.queryAll(); }
+
+	@Override
+	public List<MaintainFixAcc> queryAll(String status) {
+		return maintainFixAccDAO.queryAll();
+	}
+
 	public List<MaintainFixAcc> queryByStatus(String status) { return maintainFixAccDAO.queryAll(status); }
 	public MaintainFixAcc query(MaintainFixAcc maintainFixAcc) { return maintainFixAccDAO.query(maintainFixAcc); }
 	public MaintainFixAcc queryById(String id) { return maintainFixAccDAO.queryById(id); }

@@ -31,6 +31,12 @@ public class SupplyServiceImpl implements SupplyService {
 	public int update(Supply supply) { return supplyDAO.update(supply); }
 	public int batchUpdate(List<Supply> list) { return supplyDAO.batchUpdate(list); }
 	public List<Supply> queryAll() { return supplyDAO.queryAll(); }
+
+	@Override
+	public List<Supply> queryAll(String status) {
+		return supplyDAO.queryAll();
+	}
+
 	public List<Supply> queryByStatus(String status) { return supplyDAO.queryAll(status); }
 	public Supply query(Supply supply) { return supplyDAO.query(supply); }
 	public Supply queryById(String id) { return supplyDAO.queryById(id); }

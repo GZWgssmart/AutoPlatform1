@@ -31,6 +31,12 @@ public class MaterialUseServiceImpl implements MaterialUseService {
 	public int update(MaterialUse materialUse) { return materialUseDAO.update(materialUse); }
 	public int batchUpdate(List<MaterialUse> list) { return materialUseDAO.batchUpdate(list); }
 	public List<MaterialUse> queryAll() { return materialUseDAO.queryAll(); }
+
+	@Override
+	public List<MaterialUse> queryAll(String status) {
+		return materialUseDAO.queryAll();
+	}
+
 	public List<MaterialUse> queryByStatus(String status) { return materialUseDAO.queryAll(status); }
 	public MaterialUse query(MaterialUse materialUse) { return materialUseDAO.query(materialUse); }
 	public MaterialUse queryById(String id) { return materialUseDAO.queryById(id); }

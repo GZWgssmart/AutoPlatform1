@@ -31,6 +31,12 @@ public class WorkInfoServiceImpl implements WorkInfoService {
 	public int update(WorkInfo workInfo) { return workInfoDAO.update(workInfo); }
 	public int batchUpdate(List<WorkInfo> list) { return workInfoDAO.batchUpdate(list); }
 	public List<WorkInfo> queryAll() { return workInfoDAO.queryAll(); }
+
+	@Override
+	public List<WorkInfo> queryAll(String status) {
+		return workInfoDAO.queryAll();
+	}
+
 	public List<WorkInfo> queryByStatus(String status) { return workInfoDAO.queryAll(status); }
 	public WorkInfo query(WorkInfo workInfo) { return workInfoDAO.query(workInfo); }
 	public WorkInfo queryById(String id) { return workInfoDAO.queryById(id); }
