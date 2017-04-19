@@ -65,7 +65,7 @@ $(document).ready(function(){
             $("#fourthBar").css("background-position","50% "+yPos+"px");
         }
         if(scrollTop > fifthScroll && (scrollTop < fifthScroll+clientHeight+barHeight)){
-            var yPos = (scrollTop - fifthScroll)/4 * 3 - 800;
+            var yPos = (scrollTop - fifthScroll)/4 * 3 - 750;
             $("#fifthBar").css("background-position","50% "+yPos+"px");
         }
         if(scrollTop > sixthScroll && (scrollTop < sixthScroll+clientHeight+barHeight)){

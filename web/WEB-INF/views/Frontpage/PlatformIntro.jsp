@@ -65,18 +65,51 @@
     #sixthBar{
         background: url(/static/img/Frontpage/sg-bg4.jpg)50% -600px;
         height: 600px;
-
+    }
+    .eweima img{
+        height: 90px;
+        width: 90px;
+    }
+    .nav-two{
+        position: fixed;
+        z-index:999;
+        width: 100%;
+        margin-top: -50px;
+        height:auto;
+        border:solid #d4d4d4 0.5px;
+        background-color: white;
+        box-shadow: 5px 0px 3px grey;
+    }
+    .nav-ul li{
+        float: left;
+        list-style-type: none;
+        margin:0px 0px;
+        padding:10px 35px;
+        text-align: center;
+        font-size: 23px;
+    }
+    .nav-ul{
+        margin-bottom:0px;
+    }
+    .container-nav{
+        margin-left: 20%;
+    }
+    #computer{
+        background:url(/static/img/Frontpage/computer.png)0 10px no-repeat;
+    }
+    .nav-two .container-nav .nav-ul a{
+        color: grey;
     }
 </style>
-<body>
+<body name="top">
     <div id="main">
         <%--导航栏--%>
-        <nav class="nav navbar-default navbar-fixed-top" role="navigation">
+        <nav class="nav navbar-default navbar-fixed-top" role="navigation"  style="background-color:	#F5F5F5  ;">
             <div class="container-fluid">
                 <div class="navbar-header">
 
                 </div>
-                <ul class="nav navbar-nav navbar-right">
+                <ul class="nav navbar-nav navbar-right" style="background-color:	#F5F5F5  ;">
                     <li><a href="frontpageHome">主页</a></li>
                     <li class="icon-li"><a href="/backstageIndex">后台</a></li>
                     <li class="icon-li"><a href="javaScript:;">关于我们</a></li>
@@ -85,15 +118,27 @@
                 </ul>
             </div>
         </nav>
+        <%--第二个导航栏--%>
+        <div class="nav-two">
+            <div class="container-nav">
+                <ul class="nav-ul">
+                    <a href="#windows-m"><li><span id="computer">&nbsp;&nbsp;&nbsp;&nbsp;</span>Windows</li></a>
+                    <a href="#iphone-m"><li><span style="background: url(/static/img/Frontpage/iphone.png)0 10px no-repeat;">&nbsp;&nbsp;&nbsp;&nbsp;</span>iPhone</li></a>
+                    <a href="#android-m"><li><span style="background: url(/static/img/Frontpage/android.png)0 10px no-repeat">&nbsp;&nbsp;&nbsp;&nbsp;</span>Android</li></a>
+                    <a href="#ipad-m"><li><span style="background: url(/static/img/Frontpage/iphone.png)0 10px no-repeat;">&nbsp;&nbsp;&nbsp;&nbsp;   </span>iPad</li></a>
+                    <div class="clearfix"></div>
+                </ul>
+            </div>
+        </div>
         <%--第一个内容--%>
-        <div id="first" style="margin-top:50px;">
+        <div id="first" style="margin-top:100px;" name="windows-m">
             <div class="container">
-                <div class="col-md-6 col-sm-6 content-left wow fadeInLeft animated" data-wow-delay="0.4s" >
+                <div class="col-md-6 col-sm-6 content-left wow fadeInLeft animated" data-wow-delay="0.7s" >
                     <div class="first-left-bg">
                         <img style="width: 90%;" src="/static/img/Frontpage/pc-bg.png"/>
                     </div>
                 </div>
-                <div class="col-md-6 col-sm-6 content-right wow fadeInRight animated" data-wow-delay="0.4s" >
+                <div class="col-md-6 col-sm-6 content-right wow fadeInRight animated" data-wow-delay="0.7s" >
                     <div class="first-rt-txt">
                         <h1>电脑版使用·PC端</h1>
                         <ol class="des-txt">
@@ -124,14 +169,14 @@
         <%--背景图--%>
         <div id="thirdBar"></div>
         <%--第二个内容--%>
-        <div id="two">
+        <div id="two" name="iphone-m">
             <div class="container">
-                <div class="col-md-6 col-sm-6 content-left  wow fadeInLeft animated" data-wow-delay="0.4s" >
+                <div class="col-md-6 col-sm-6 content-left  wow fadeInLeft animated" data-wow-delay="0.7s" >
                     <div class="first-left-bg">
                         <img src="/static/img/Frontpage/iphone-green.png"/>
                     </div>
                 </div>
-                <div class="col-md-6 col-sm-6 content-right wow fadeInRight animated" data-wow-delay="0.4s" >
+                <div class="col-md-6 col-sm-6 content-right wow fadeInRight animated" data-wow-delay="0.7s" >
                     <div class="first-rt-txt">
                         <h1>平台使用·iPhone</h1>
                         <ol class="des-txt">
@@ -159,16 +204,16 @@
         <%--背景图--%>
         <div id="fourthBar"></div>
         <%--第三个内容--%>
-        <div id="three">
+        <div id="three" name="android-m">
                 <div class="container">
-                    <div class="col-md-6 col-sm-6 content-left wow fadeInLeft animated" data-wow-delay="0.4s" >
+                    <div class="col-md-6 col-sm-6 content-left wow fadeInLeft animated" data-wow-delay="0.7s" >
                         <div class="first-left-bg">
                             <img src="/static/img/Frontpage/anzhuo-bg.png"/>
                         </div>
                     </div>
-                    <div class="col-md-6 col-sm-6 content-right wow fadeInRight animated" data-wow-delay="0.4s" >
+                    <div class="col-md-6 col-sm-6 content-right wow fadeInRight animated" data-wow-delay="0.7s" >
                         <div class="first-rt-txt">
-                            <h1>平台使用·iPhone</h1>
+                            <h1>移动设备·Android</h1>
                             <ol class="des-txt">
                                 <li>
                                     基本资料：汽修厂名称设置、员工登记、故障定义、维修项目定义、客户档案、车型、修理班组、其它费用定义、颜色、行驶里程保养规定、维修类别
@@ -193,7 +238,7 @@
             </div>
         <div id="fifthBar"></div>
         <%--第四个内容--%>
-        <div id="four">
+        <div id="four" name="ipad-m">
                 <div class="container">
                     <div class="col-md-6 col-sm-6 content-left wow fadeInLeft animated">
                         <div class="first-left-bg">
@@ -240,15 +285,15 @@
                 </div>
                 <div class="col-sm-9 col-md-5 wechat">
                     <h2>扫码关注</h2>
-                    <div class="row sm ">
+                    <div class="row eweima ">
                         <div class="col-md-4 col-sm-4">
-                            <img src="/static/img/Frontpage/pcode-4.png"/>
+                            <img src="/static/img/Frontpage/2wei.jpg"/>
                         </div>
                         <div class="col-md-4 col-sm-4">
-                            <img src="/static/img/Frontpage/pcode-4.png"/>
+                            <img src="/static/img/Frontpage/2wei.jpg"/>
                         </div>
                         <div class="col-md-4 col-sm-4">
-                            <img src="/static/img/Frontpage/pcode-4.png"/>
+                            <img src="/static/img/Frontpage/2wei.jpg"/>
                         </div>
                     </div>
                 </div>
@@ -265,17 +310,42 @@
             </div>
         </div>
     </div>
-
-
-    <script src="/static/js/jquery.min.js"></script>
-    <script src="/static/js/bootstrap.min.js"></script>
-    <script src="/static/js/wow.js"></script>
-    <script src="/static/js/init.js"></script>
-    <script>
-        if (!(/msie [5|6|7|8|9]/i.test(navigator.userAgent))){
-            new WOW().init();
-        };
-    </script>
+    <a href="#top" class="go-top" id="backtop" style="display:none;"></a>
+<script src="/static/js/jquery.min.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+<script src="/static/js/wow.js"></script>
+<script src="/static/js/init.js"></script>
+<script>
+    if (!(/msie [5|6|7|8|9]/i.test(navigator.userAgent))){
+        new WOW().init();
+    };
+    $(function(){
+        var backtop = document.getElementById("backtop");
+        $(window).scroll(function () {
+            if($(window).scrollTop() >= 500){
+                backtop.style.display = "block";
+            }else if($(window).scrollTop() <500){
+                backtop.style.display = "none";
+            }
+        });
+    });
+    $(function(){
+        $('a[href*=#],area[href*=#]').click(function() {
+            if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
+                var $target = $(this.hash);
+                $target = $target.length && $target || $('[name=' + this.hash.slice(1) + ']');
+                if ($target.length) {
+                    var targetOffset = $target.offset().top;
+                    $('html,body').animate({
+                                scrollTop: targetOffset
+                            },
+                            1000);
+                    return false;
+                }
+            }
+        });
+    })
+</script>
 </body>
 
 </html>
