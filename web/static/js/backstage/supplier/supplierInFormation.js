@@ -28,7 +28,7 @@ $(document).ready(function() {
         return this.optional(element) || (checkName.test(value));
     },$.validator.format("请输入正确的身份证号码"));
 
-    $("#register-form").validate({
+    $("#addForm").validate({
         errorElement : 'span',
         errorClass : 'help-block',
         rules : {
@@ -36,7 +36,11 @@ $(document).ready(function() {
                 required : true,
                 minlength : 2
             },
-            supplyPricipa : {
+            supplyTel : {
+                required : true,
+                minlength : 2
+            },
+            supplyPricipal : {
                 required : true,
                 minlength : 2
             },
@@ -44,119 +48,101 @@ $(document).ready(function() {
                 required : true,
                 minlength : 2
             },
-            supplyBank : {
+            supplyWechat : {
                 required : true,
                 minlength : 2
             },
-            supplyBankAccount : {
-                required : true,
-                minlength : 2
-            },
-            supplyBankNo : {
+            supplyCreatedTime : {
                 required : true,
                 minlength : 18
             },
-            supplyTypeId : {
+            supplyTypeName : {
                 required : true,
                 minlength : 2
             },
-            companyId : {
+            companyName : {
                 required : true,
                 minlength : 2
-            },
-            supplyTel: {
-                required : true,
-                minlength : 2
-            },
-            email : {
-                required : true,
-                email : true
-            },
-            password : {
-                required : true,
-                isPwd : true
-            },
-            confirm_password : {
-                required : true,
-                isPwd : true,
-                equalTo : "#password"
-            },
-            phone : {
-                required : true,
-                isPhone : true
-            },
-            isIdCardNo : {
-                required : true,
-                isIdCardNo : true
-            },
-            address : {
-                minlength : 10
             }
         },
-        messages : {
+        messages: {
+            supplyName: "请输入供应商名称",
+            supplyTel: "请输入供应商联系电话",
+            supplyPricipal: "请输入供应商负责人",
+            supplyAddress: "请输入供应商地址",
+            supplyWechat: "请输入供应商微信号",
+            supplyAddress: "请输入供应商地址",
+            supplyWechat: "请输入供应商微信号",
+            supplyTypeName: "请选择供应商类型",
+            companyName: "请选择供应商所属公司",
+        },
+        errorPlacement : function(error, element) {
+            element.next().remove();
+            element.after('<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>');
+            element.closest('.form-group').append(error);
+        },
+        highlight : function(element) {
+            $(element).closest('.form-group').addClass('has-error has-feedback');
+        },
+        success : function(label) {
+            var el=label.closest('.form-group').find("input");
+            el.next().remove();
+            el.after('<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>');
+            label.closest('.form-group').removeClass('has-error').addClass("has-feedback has-success");
+            label.remove();
+        },
+        submitHandler: function(form) {
+            alert("submitted!");
+        }
+    })
+
+    $("#editForm").validate({
+        errorElement : 'span',
+        errorClass : 'help-block',
+        rules : {
             supplyName : {
-                required :"请输入供货商名称",
-                minlength : jQuery.format("名称不能小于{2}个字 符")
-            },
-            supplyPricipa: {
-                required : "请输入供应商负责人",
-                minlength : jQuery.format("不能小于{2}个字 符")
-            },
-            supplyAddress: {
-                required :"请输入供应商地址",
-                minlength : jQuery.format("不能小于{2}个字 符")
-            },
-            supplyBank:{
-                required : "请输入银行名称",
-                minlength : jQuery.format("不能小于{2}个字 符")
-            } ,
-            supplyBankAccount:{
-                required :"请输入开户行姓名",
-                minlength : jQuery.format("不能小于{2}个字 符")
-            } ,
-            supplyBankNo: {
-                required : "请输入开户行卡号",
-                minlength : jQuery.format("不能小于{18}个字 符")
-            },
-            supplyAlipay:{
-                required : "请输入供应商支付宝",
-                minlength : jQuery.format("不能小于{11}个字 符")
-            },
-            supplyWechat:{
-                required : "请输入供应商支付宝",
-                minlength : jQuery.format("不能小于{2}个字 符")
-            },
-            supplyTypeId:{
-                required : "请选择供应商类型",
-                minlength : jQuery.format("不能小于{2}个字 符")
-            },
-            companyId:{
-                required : "请选择供应商所属公司",
-                minlength : jQuery.format("不能小于{2}个字 符")
-            },
-            email : {
-                required : "请输入Email地址",
-                email : "请输入正确的email地址"
-            },
-            password : {
-                required : "请输入密码",
-                minlength : jQuery.format("密码不能小于{0}个字 符")
-            },
-            confirm_password : {
-                required : "请输入确认密码",
-                minlength : "不能小于5个字符",
-                equalTo : "两次输入密码不一致"
-            },
-            phone : {
-                required : "请输入手机号码"
+                required : true,
+                minlength : 2
             },
             supplyTel : {
-                required : "请输入联系号码"
+                required : true,
+                minlength : 2
             },
-            address : {
-                required : "请输入家庭地址",
-                minlength : jQuery.format("家庭地址不能少于{0}个字符")
+            supplyPricipal : {
+                required : true,
+                minlength : 2
+            },
+            supplyAddress : {
+                required : true,
+                minlength : 2
+            },
+            supplyWechat : {
+                required : true,
+                minlength : 2
+            },
+            supplyCreatedTime : {
+                required : true,
+                minlength : 18
+            },
+            supplyTypeName : {
+                required : true,
+                minlength : 2
+            },
+            companyName : {
+                required : true,
+                minlength : 2
             }
+        },
+        messages: {
+            supplyName: "请输入供应商名称",
+            supplyTel: "请输入供应商联系电话",
+            supplyPricipal: "请输入供应商负责人",
+            supplyAddress: "请输入供应商地址",
+            supplyWechat: "请输入供应商微信号",
+            supplyAddress: "请输入供应商地址",
+            supplyWechat: "请输入供应商微信号",
+            supplyTypeName: "请选择供应商类型",
+            companyName: "请选择供应商所属公司",
         },
         errorPlacement : function(error, element) {
             element.next().remove();

@@ -7,9 +7,9 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 /**
-*由Wjhsmart技术支持
+*由CSWangBin技术支持
 *
-*@author Wjhsmart
+*@author CSWangBin
 *@since 2017-04-17 16:10:13
 *@des 模块表Service
 */

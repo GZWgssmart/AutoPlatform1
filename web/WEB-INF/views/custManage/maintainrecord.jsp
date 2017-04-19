@@ -32,7 +32,7 @@
         <table id="table"
                data-toggle="table"
                data-toolbar="#toolbar"
-               data-url="/table/query"
+               data-url="/custManage/queryByPager"
                data-method="post"
                data-query-params="queryParams"
                data-pagination="true"
@@ -42,22 +42,23 @@
                data-show-columns="true"
                data-page-size="10"
                data-height="543"
-               data-id-field="id"
+               data-id-field="recordId"
                data-page-list="[5, 10, 20]"
                data-cach="false"
                data-click-to-select="true"
                data-single-select="true">
             <thead>
             <tr>
-                <th data-radio="true" data-field="status"></th>
-                <th data-field="checkinId">维修保养登记人</th>
+                <th data-checkbox="true" data-field="status"></th>
+                <th data-field="recordId"></th>
+                <th data-field="checkin.userName" data-width="50">维修保养登记人</th>
                 <th data-field="startTime">维修保养开始时间</th>
                 <th data-field="endTime">维修保养预估结束时间</th>
                 <th data-field="actualEndTime">维修保养实际结束时间</th>
                 <th data-field="recordCreatedTime">维修保养记录创建时间</th>
-                <th  data-field="pickupTime">维修保养车主提车时间</th>
+                <th data-field="pickupTime">维修保养车主提车时间</th>
                 <th data-field="recordDes">维修保养记录描述</th>
-                <th data-field="recordStatus">维修保养记录状态</th>
+                <th data-field="recordStatus" data-formatter="formatterStatus">维修保养记录状态</th>
             </tr>
             </thead>
         </table>
@@ -68,8 +69,11 @@
             <button id="btn_edit" type="button" class="btn btn-default" onclick="showEdit();">
                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
             </button>
-            <button id="btn_delete" type="button" class="btn btn-default" onclick="showDel();">
-                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
+            <button id="btn_delete" type="button" class="btn btn-default" onclick="showInactive();">
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>冻结
+            </button>
+            <button id="btn_delete" type="button" class="btn btn-default" onclick="showActive();">
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>解结
             </button>
         </div>
     </div>
@@ -151,7 +155,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">维修保养登记人：</label>
                     <div class="col-sm-7">
-                        <input type="text"  name="checkinId" define="MaintainRecord.checkinId" placeholder="请选择维修保养登记人" class="form-control">
+                        <input type="text"  name="checkinId" define="MaintainRecord.checkin.userName" placeholder="请选择维修保养登记人" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
@@ -203,45 +207,6 @@
                     </div>
                 </div>
             </form>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
-<!-- 删除弹窗 -->
-<div class="modal fade" id="del" aria-hidden="true">
-    <div class="modal-dialog" style="overflow:hidden;">
-        <form action="/table/edit" method="post">
-            <div class="modal-content">
-                <input type="hidden" id="delNoticeId"/>
-                <div class="modal-footer" style="text-align: center;">
-                    <h2>确认删除吗?</h2>
-                    <button type="button" class="btn btn-default"
-                            data-dismiss="modal">关闭
-                    </button>
-                    <button type="sumbit" class="btn btn-primary" onclick="del()">
-                        确认
-                    </button>
-                </div>
-            </div><!-- /.modal-content -->
-        </form>
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
-<!-- 提示弹窗 -->
-<div class="modal fade" id="tanchuang" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                提示
-            </div>
-            <div class="modal-body">
-                请先选择某一行
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default"
-                        data-dismiss="modal">关闭
-                </button>
-            </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->

@@ -190,3 +190,22 @@ $(document).ready(function () {
             }
         })
 });
+//add日期插件
+$('#addwrokAssignTime').datetimepicker({
+    language: 'zh-CN',
+    format: 'yyyy-mm-dd hh:ii'
+});
+$('#addworkcreateTime').datetimepicker({
+    language: 'zh-CN',
+    format: 'yyyy-mm-dd hh:ii'
+});
+
+//edit日期插件
+$('#editwrokAssignTime').datetimepicker({
+    language: 'zh-CN',
+    format: 'yyyy-mm-dd hh:ii'
+});
+$('#editworkcreateTime').datetimepicker({
+    language: 'zh-CN',
+    format: 'yyyy-mm-dd hh:ii'
+});

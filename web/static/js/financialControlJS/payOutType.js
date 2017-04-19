@@ -1,3 +1,13 @@
+function detailFormatter(index, row) {
+    /*处理数据*/
+    if(row.outTypeStatus == 1) {
+        return "&nbsp;&nbsp;<a href='javascript:;' onclick='deleteRow(event)'>禁用</a>";
+    } else {
+        return "&nbsp;&nbsp;<a href='javascript:;' onclick='deleteRow(event)'>启动</a>";
+    }
+
+}
+
 $(function () {
     $('#table').bootstrapTable('hideColumn', 'id');
 

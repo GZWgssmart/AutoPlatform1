@@ -130,9 +130,9 @@
                     <li>
                         <a href="#"><i class="fa fa-users"></i> <span class="nav-label">供应商管理</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
-                            <li><a class="J_menuItem" href="/supplier/supplierInformation">供应商管理</a>
+                            <li><a class="J_menuItem" href="/supplier/supplierType">供应商类型管理</a>
                             </li>
-                            <li><a class="J_menuItem" href="/supplier/supplierType">供应商分类管理</a>
+                            <li><a class="J_menuItem" href="/supplier/supplierInformation">供应商管理</a>
                             </li>
                             <li><a class="J_menuItem" href="/supplier/purchaseDetail">下单记录</a>
                             </li>
@@ -252,7 +252,7 @@
                     <li>
                         <a href="#"><i class="fa fa-gear"></i> <span class="nav-label">系统管理</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
-                            <li><a class="J_menuItem" href="/systemManage/userRoleManageIndex">人员角色管理</a>
+                            <li><a class="J_menuItem" href="/systemManage/roleManageIndex">角色管理</a>
                             </li>
                             <li><a class="J_menuItem" href="/systemManage/moduleManageIndex">模块管理</a>
                             </li>

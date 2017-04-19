@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="/static/css/bootstrap-table.css">
     <link rel="stylesheet" href="/static/css/select2.min.css">
     <link rel="stylesheet" href="/static/css/sweetalert.css">
+    <link rel="stylesheet" href="/static/css/table/table.css">
+    <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/datetimepicker.less">
 </head>
 <body>
 <%@include file="../backstage/contextmenu.jsp"%>
@@ -85,13 +88,13 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">工单指派时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="workAssignTime" placeholder="请输入工单指派时间" class="form-control">
+                        <input type="text" name="workAssignTime" id="addwrokAssignTime" value="2012-05-15 21:05" placeholder="请输入工单指派时间" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">工单创建时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="workcreateTime" id="" value="2012-05-15 21:05" placeholder="请输入工单创建时间" class="form-control" max="11">
+                        <input type="text" name="workcreateTime" id="addworkcreateTime" value="2012-05-15 21:05" placeholder="请输入工单创建时间" class="form-control" max="11">
                     </div>
                 </div>
                 <div class="form-group">
@@ -131,13 +134,13 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">工单指派时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="workAssignTime" placeholder="请输入工单指派时间" class="form-control">
+                        <input type="text" name="workAssignTime" id="editwrokAssignTime" value="2012-05-15 21:05" placeholder="请输入工单指派时间" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">工单创建时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="workcreateTime" id="addarriveTime" value="2012-05-15 21:05" placeholder="请输入工单创建时间" class="form-control" max="11">
+                        <input type="text" name="workcreateTime" id="editworkcreateTime" value="2012-05-15 21:05" placeholder="请输入工单创建时间" class="form-control" max="11">
                     </div>
                 </div>
                 <div class="form-group">
@@ -201,6 +204,8 @@
 <script src="/static/js/contextmenu.js"></script>
 <script src="/static/js/backstage/emp/workInFo.js"></script>
 <script src="/static/js/bootstrap-select/bootstrap-select.js"></script>
+<script src="/static/js/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.js"></script>
+<script src="/static/js/bootstrap-dateTimePicker/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
 
 </body>
 </html>

@@ -34,7 +34,7 @@
         <table id="table"
                data-toggle="table"
                data-toolbar="#toolbar"
-               data-url="/table/query"
+               data-url="/company/queryAll"
                data-method="post"
                data-query-params="queryParams"
                data-pagination="true"
@@ -51,12 +51,12 @@
                data-single-select="true">
             <thead>
             <tr>
-                <th data-radio="true" data-field="status"></th>
+                <th data-radio="true" data-field="companyId"></th>
                 <th data-field="companyName">公司名称</th>
                 <th data-field="companyAddress">公司地址</th>
                 <th data-field="companyTel">联系电话</th>
                 <th data-field="companyPricipal">负责人</th>
-                <th data-field="companyOpenDate">公司成立时间</th>
+                <th data-field="companyOpendate">公司成立时间</th>
                 <th data-field="companyLogo">公司LOGO</th>
 
             </tr>
@@ -112,7 +112,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">公司成立时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="companyOpenDate" value="2012-05-15 21:05" id="addDateTimePicker" class="form-control">
+                        <input type="text" name="companyOpendate" value="2012-05-15 21:05" id="addDateTimePicker" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
@@ -177,7 +177,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">公司成立时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="companyOpenDate" define="companyInfo.companyOpenTime" value="2012-05-15 21:05"
+                        <input type="text" name="companyOpendate" define="companyInfo.companyOpenTime" value="2012-05-15 21:05"
                                id="editDateTimePicker" class="form-control">
                     </div>
                 </div>

@@ -6,9 +6,9 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
-*由Wjhsmart技术支持
+*由CSWangBin技术支持
 *
-*@author Wjhsmart
+*@author CSWangBin
 *@since 2017-04-17 15:44:30
 *@des 配件采购dao
 */

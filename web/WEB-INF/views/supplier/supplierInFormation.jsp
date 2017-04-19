@@ -50,9 +50,9 @@
                 <th data-width="15%" data-field="supplyPricipal">供应商负责人</th>
                 <th data-width="10%" data-field="supplyAddress">供应商地址</th>
                 <th data-width="10%" data-field="supplyWechat">供应商微信号</th>
-                <th data-width="15%" data-field="createTime">创建时间</th>
-                <th data-width="10%" data-field="companyId">所属公司</th>
-                <th data-width="15%" data-field="supplyTypeId">供应商类型</th>
+                <th data-width="15%" data-field="supplyCreatedTime">创建时间</th>
+                <th data-width="15%" data-field="supplyTypeName">供应商类型</th>
+                <th data-width="15%" data-field="companyName">供应商所属公司</th>
                 <th data-width="5%" data-field="supplyStatus">供应商状态</th>
             </tr>
             </thead>
@@ -78,18 +78,47 @@
         <div class="modal-content" >
             <form class="form-horizontal" onsubmit="return checkAdd()" id="register-form" method="get">
                 <div class="modal-header" style="overflow:auto;">
-                    <p>添加供货商信息</p>
+                    <p>添加供应商信息</p>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">供货商类型：</label>
+                    <label class="col-sm-3 control-label" for="name">供应商名称：</label>
                     <div class="col-sm-7">
-                        <select  name="supplyTypeId"  placeholder="请选择供货商类型" class="form-control">
+                        <input id="name" name="supplyName" type="text" placeholder="请输入供应商名称" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label" for="tel">联系电话：</label>
+                    <div class="col-sm-7">
+                        <input type="text" id="tel" name="supplyTel" placeholder="请输入联系电话" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">供应商负责人：</label>
+                    <div class="col-sm-7">
+                        <input type="text"  name="supplyPricipal" placeholder="请输入供应商负责人" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">供应商地址：</label>
+                    <div class="col-sm-7">
+                        <input type="text" name="supplyAddress" placeholder="请输入供应商地址" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">微信号：</label>
+                    <div class="col-sm-7">
+                        <input type="text"  name="supplyWechat" placeholder="请输入微信号" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">供应商类型：</label>
+                    <div class="col-sm-7">
+                        <select  name="supplyTypeId"  placeholder="请选择供应商类型" class="form-control">
                             <option>a</option>
                             <option>a</option>
                         </select>
                     </div>
                 </div>
-
                 <div class="form-group">
                     <label class="col-sm-3 control-label">供应商所属公司：</label>
                     <div class="col-sm-7">
@@ -100,48 +129,21 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label" for="name">供货商名称：</label>
+                    <label class="col-sm-3 control-label">支付宝账号：</label>
                     <div class="col-sm-7">
-                        <input id="name" name="supplyName" type="text" placeholder="请输入供货商名称" class="form-control">
+                        <input type="text"  name="supplyAlipay" placeholder="请输入支付宝账号" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">供应商负责人：</label>
+                    <label class="col-sm-3 control-label">开户行名称：</label>
                     <div class="col-sm-7">
-                        <input type="text"  name="supplyPricipal" placeholder="请输入供应商负责人" class="form-control">
+                        <input type="text" name="supplyBankAccount"  placeholder="请输入开户行名称" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label" for="tel">联系电话：</label>
+                    <label class="col-sm-3 control-label">开户银行全称：</label>
                     <div class="col-sm-7">
-                        <input type="text" id="tel" name="supplyTel" placeholder="请输入联系电话" class="form-control">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">微信号：</label>
-                    <div class="col-sm-7">
-                        <input type="text"  name="supplyWechat" placeholder="请输入微信号" class="form-control">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">支付宝：</label>
-                    <div class="col-sm-7">
-                        <input type="text"  name="supplyAlipay" placeholder="请输入支付宝" class="form-control">
-                    </div>
-                </div>
-
-
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">户名：</label>
-                    <div class="col-sm-7">
-                        <input type="text" name="supplyBankAccount"  placeholder="请输入户名" class="form-control">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">开户行：</label>
-                    <div class="col-sm-7">
-                        <input type="text" name="supplyBank" placeholder="请输入开户行" class="form-control">
+                        <input type="text" name="supplyBank" placeholder="请输入开户银行全称" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
@@ -150,13 +152,6 @@
                         <input type="text" name="supplyBankNo" placeholder="请输入银行卡号" class="form-control">
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">供应商地址：</label>
-                    <div class="col-sm-7">
-                        <input type="text" name="supplyAddress" placeholder="请输入供应商地址" class="form-control">
-                    </div>
-                </div>
-
                 <div class="modal-footer" >
                     <span id="addError"></span>
                     <button type="button" class="btn btn-default"
@@ -176,37 +171,12 @@
         <div class="modal-content">
             <form class="form-horizontal" onsubmit="return checkAdd()" id="editForm" method="post">
                 <div class="modal-header" style="overflow:auto;">
-                    <p>修改供货商信息</p>
+                    <p>修改供应商信息</p>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">供货商类型：</label>
-                    <div class="col-sm-7">
-                        <select  class="form-control">
-                            <option>a</option>
-                            <option>a</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">供应商所属公司：</label>
-                    <div class="col-sm-7">
-                        <select  class="form-control">
-                            <option>a</option>
-                            <option>a</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label" for="name">供货商名称：</label>
+                    <label class="col-sm-3 control-label" for="name">供应商名称：</label>
                     <div class="col-sm-7">
                         <input  name="supplyName" define="supply.supplyName" type="text" class="form-control">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">供应商负责人：</label>
-                    <div class="col-sm-7">
-                        <input type="text" define="supply.supplyPricipal"   name="supplyPricipal" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
@@ -216,26 +186,9 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">微信号：</label>
+                    <label class="col-sm-3 control-label">供应商负责人：</label>
                     <div class="col-sm-7">
-                        <input type="text" define="supply.supplyWechat" name="supplyWechat"  class="form-control">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">支付宝：</label>
-                    <div class="col-sm-7">
-                        <input type="text" define="supply.supplyAlipay"  name="supplyAlipay"  class="form-control">
-                    </div>
-                </div>
-
-
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">银行：</label>
-                    <div class="col-sm-7">
-                        <input type="text" define="supply.supplyBankAccount"  name="supplyBankAccount"   class="form-control">
-                        <input type="text" define="supply.supplyBank" name="supplyBank" class="form-control">
-                        <input type="text" define="supply.supplyBankNo" name="supplyBankNo"  class="form-control">
+                        <input type="text" define="supply.supplyPricipal"   name="supplyPricipal" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
@@ -244,7 +197,43 @@
                         <input type="text" define="supply.supplyAddress" name="supplyAddress" class="form-control">
                     </div>
                 </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">微信号：</label>
+                    <div class="col-sm-7">
+                        <input type="text" define="supply.supplyWechat" name="supplyWechat"  class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">供应商类型：</label>
+                    <div class="col-sm-7">
+                       <%-- <select  class="form-control">
+                            <option>a</option>
+                            <option>a</option>
+                        </select>--%>
+                           <input type="text" define="supply.supplyTypeName" name="supplyTypeName"  class="form-control">
+                    </div>
+                </div>
 
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">供应商所属公司：</label>
+                    <div class="col-sm-7">
+                        <input type="text" define="supply.companyName" name="companyName"  class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">支付宝账号：</label>
+                    <div class="col-sm-7">
+                        <input type="text" define="supply.supplyAlipay"  name="supplyAlipay"  class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">银行：</label>
+                    <div class="col-sm-7">
+                        <input type="text" define="supply.supplyBank" name="supplyBank" class="form-control">
+                        <input type="text" define="supply.supplyBankAccount"  name="supplyBankAccount"   class="form-control">
+                        <input type="text" define="supply.supplyBankNo" name="supplyBankNo"  class="form-control">
+                    </div>
+                </div>
                 <div class="modal-footer" >
                     <span id="editError"></span>
                     <button type="button" class="btn btn-default"

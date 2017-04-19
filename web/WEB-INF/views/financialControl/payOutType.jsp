@@ -42,6 +42,7 @@
                     <th data-radio="true" data-field="status"></th>
                     <th data-field="outTypeName">支出类型</th>
                     <th data-field="outTypeStatus">支出类型状态</th>
+                    <th data-formatter="detailFormatter">操作</th>
                 </tr>
             </thead>
         </table>
@@ -56,6 +57,7 @@
                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
             </button>
         </div>
+
     </div>
 </div>
 

@@ -26,19 +26,22 @@ public class SystemManageController {
     /**
      * 人员角色管理
      */
-    @RequestMapping(value = "userRoleManageIndex", method = RequestMethod.GET)
+    @RequestMapping(value = "roleManageIndex", method = RequestMethod.GET)
     public String userRoleManage() {
         logger.info("跳转到人员角色管理页面");
-        return "systemManage/userRoleManage";
+        return "systemManage/roleManage";
     }
 
     /**
      * 模块管理
      */
     @RequestMapping(value = "moduleManageIndex", method = RequestMethod.GET)
-    public String moduleManage() {
+    public ModelAndView moduleManage() {
         logger.info("跳转到模块管理页面");
-        return "systemManage/flowManage";
+        List<Role> rs = roleService.queryAll();
+        ModelAndView mav = new ModelAndView("systemManage/moduleManage");
+        mav.addObject("roles", rs);
+        return mav;
     }
 
     /**

@@ -21,6 +21,16 @@ public class MaintainRecord {
 
     private String recordStatus;
 
+    private Checkin checkin;
+
+    public Checkin getCheckin() {
+        return checkin;
+    }
+
+    public void setCheckin(Checkin checkin) {
+        this.checkin = checkin;
+    }
+
     public String getRecordId() {
         return recordId;
     }

@@ -45,10 +45,10 @@
             <thead>
             <tr>
                 <th data-radio="true" data-field="status"></th>
-                <th  data-field="supplyName">供应商名称</th>
-                <th  data-field="companyName">所属公司</th>
-                <th  data-field="supplyTypeDes">描述</th>
-                <th  data-field="supplyTypeStatus">状态</th>
+                <th data-field="supplyTypeName">供应商类型名称</th>
+                <th data-field="companyName">供应商类型所属公司</th>
+                <th data-field="supplyTypeDes">供应商类型描述内容</th>
+                <th data-field="supplyTypeStatus">状态</th>
             </tr>
             </thead>
         </table>
@@ -69,28 +69,28 @@
 <!-- 添加弹窗 -->
 
 <div class="modal fade" id="add" aria-hidden="true" >
-    <div class="modal-dialog" >
+    <div class="modal-dialog"  style="width: 750px;height: auto;" >
         <div class="modal-content" >
-                <form class="form-horizontal"  role="form" onsubmit="return checkAdd()" id="register-form" method="post">
+                <form class="form-horizontal"  role="form" onsubmit="return checkAdd()" id="addform" method="post">
                 <div class="modal-header" style="overflow:auto;">
-                    <p>添加供货商类型信息</p>
+                    <p>添加供应商类型信息</p>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">供货商名称：</label>
+                    <label class="col-sm-3 control-label">供应商类型名称：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="name" id="name" placeholder="请输入供货商名称" class="form-control">
+                        <input type="text" name="supplyTypeName" id="name" placeholder="请输入供应商类型名称" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">供应商所属公司：</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="请输入供应商所属公司" class="form-control">
+                        <input type="text"  name="companyName" placeholder="请选择供应商所属公司" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">供货商描述：</label>
+                    <label class="col-sm-3 control-label">供应商类型描述内容：</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="请输入供货商描述" class="form-control">
+                        <input type="text"  name="supplyTypeDes" placeholder="请输入供应商类型描述内容" class="form-control">
                     </div>
                 </div>
                 <div class="modal-footer" >
@@ -108,28 +108,28 @@
 
 <!-- 修改弹窗 -->
 <div class="modal fade" id="edit" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog"  style="width: 750px;height: auto;">
         <div class="modal-content">
-            <form  class="form-horizontal" onsubmit="return checkAdd()" method="post">
+            <form  class="form-horizontal" onsubmit="return checkAdd()" id="editForm" method="post">
                 <div class="modal-header" style="overflow:auto;">
-                    <p>修改供货商类型信息</p>
+                    <p>修改供应商类型信息</p>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">供货商名称：</label>
+                    <label class="col-sm-3 control-label">供应商名称：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="supplyTypeName" define="supplyType.supplyTypeName"  placeholder="请输入供货商名称" class="form-control">
+                        <input type="text" name="supplyTypeName" define="supplyType.supplyTypeName"  placeholder="请输入供应商名称" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">供应商所属公司：</label>
                     <div class="col-sm-7">
-                        <input type="text" define="supplyType.companyId" placeholder="请输入供应商所属公司" class="form-control">
+                        <input type="text" name="companyName" define="supplyType.companyName" placeholder="请选择供应商所属公司" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">供货商描述：</label>
+                    <label class="col-sm-3 control-label">供应商描述：</label>
                     <div class="col-sm-7">
-                        <input type="text" define="supplyType.supplyTypeDes" placeholder="请输入供货商描述" class="form-control">
+                        <input type="text" name="supplyTypeDes" define="supplyType.supplyTypeDes" placeholder="请输入供应商描述内容" class="form-control">
                     </div>
                 </div>
                 <div class="modal-footer" >
@@ -194,7 +194,6 @@
 <script src="/static/js/bootstrap-select/bootstrap-select.js"></script>
 <script src="/static/js/form/jquery.validate.js"></script>
 <script src="/static/js/form/form.js"></script>
-
 
 </body>
 </html>

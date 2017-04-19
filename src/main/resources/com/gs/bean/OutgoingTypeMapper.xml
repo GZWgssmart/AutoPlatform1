@@ -29,5 +29,19 @@
         ]]>
   </update>
 
+  <!--冻结数据-->
+  <update id="inactive" keyProperty="id" parameterType="outGoingType">
+    <![CDATA[
+        update t_outgoing_type set inTypeStatus = 0 where inTypeId = #{inTypeId}
+        ]]>
+  </update>
+
+  <!--激活数据-->
+  <update id="active" keyProperty="id" parameterType="outGoingType">
+    <![CDATA[
+        update t_outgoing_type set inTypeStatus = 1 where inTypeId = #{inTypeId}
+        ]]>
+  </update>
+
 
 </mapper>

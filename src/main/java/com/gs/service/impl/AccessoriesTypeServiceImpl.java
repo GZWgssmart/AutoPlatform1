@@ -11,12 +11,12 @@ import java.util.List;
 import com.gs.common.bean.Pager;
 
 /**
- * 由Wjhsmart技术支持
- *
- * @author Wjhsmart
- * @des 配件分类Service实现
- * @since 2017-04-17 15:49:20
- */
+*由CSWangBin技术支持
+*
+*@author CSWangBin
+*@since 2017-04-17 15:49:20
+*@des 配件分类Service实现
+*/
 @Service
 public class AccessoriesTypeServiceImpl implements AccessoriesTypeService {
 

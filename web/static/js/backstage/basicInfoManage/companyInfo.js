@@ -1,17 +1,16 @@
 $(function () {
-    $('#table').bootstrapTable('hideColumn', 'id');
+    $('#table').bootstrapTable('showColumn', 'companyId');
     $("#addSelect").select2({
             language: 'zh-CN'
         }
     );
-
     //绑定Ajax的内容
-    $.getJSON("/table/queryType", function (data) {
-        $("#addSelect").empty();//清空下拉框
-        $.each(data, function (i, item) {
-            $("#addSelect").append("<option value='" + data[i].id + "'>&nbsp;" + data[i].name + "</option>");
-        });
-    })
+    // $.getJSON("/table/queryAll", function (data) {
+    //     $("#addSelect").empty();//清空下拉框
+    //     $.each(data, function (i, item) {
+    //         $("#addSelect").append("<option value='" + data[i].id + "'>&nbsp;" + data[i].name + "</option>");
+    //     });
+    // })
 //            $("#addSelect").on("select2:select",
 //                    function (e) {
 //                        alert(e)

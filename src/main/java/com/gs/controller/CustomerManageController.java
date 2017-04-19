@@ -1,10 +1,18 @@
 package com.gs.controller;
 
 import ch.qos.logback.classic.Logger;
+import com.gs.bean.MaintainRecord;
+import com.gs.common.bean.Pager;
+import com.gs.service.MaintainRecordService;
+import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * 客户关系管理
@@ -15,6 +23,9 @@ public class CustomerManageController {
 
     private Logger logger = (Logger) LoggerFactory.getLogger(CustomerManageController.class);
 
+    @Resource
+    private MaintainRecordService maintainRecordService;
+
     /**
      * 维修保养记录管理
      */
@@ -22,6 +33,28 @@ public class CustomerManageController {
     public String maintainrecordIndex() {
         logger.info("跳转到维修保养记录管理");
         return "custManage/maintainrecord";
+    }
+
+    @ResponseBody
+    @RequestMapping("queryByPager")
+    public List<MaintainRecord> queryAll() {
+        List<MaintainRecord> queryList = maintainRecordService.queryAll();
+        return queryList;
+    }
+
+    @ResponseBody
+    @RequestMapping("inactive")
+    public int inactive(@Param("recordId") String recordId) {
+        int inactive = maintainRecordService.inactive(recordId);
+        System.out.print("aaaaaaaaaaa"+recordId);
+        return inactive;
+    }
+
+    @ResponseBody
+    @RequestMapping("active")
+    public int active(@Param("recordId") String recordId) {
+        int active = maintainRecordService.active(recordId);
+        return active;
     }
 
     /**

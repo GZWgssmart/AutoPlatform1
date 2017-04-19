@@ -1,22 +1,5 @@
 $(function () {
-    $('#table').bootstrapTable('hideColumn', 'id');
-    $("#addSelect").select2({
-            language: 'zh-CN'
-        }
-    );
-
-    //绑定Ajax的内容
-    $.getJSON("/table/queryType", function (data) {
-        $("#addSelect").empty();//清空下拉框
-        $.each(data, function (i, item) {
-            $("#addSelect").append("<option value='" + data[i].id + "'>&nbsp;" + data[i].name + "</option>");
-        });
-    })
-//            $("#addSelect").on("select2:select",
-//                    function (e) {
-//                        alert(e)
-//                        alert("select2:select", e);
-//            });
+    $('#table').bootstrapTable('hideColumn', 'recordId');
 });
 
 //显示弹窗
@@ -30,7 +13,11 @@ function showEdit() {
         var ceshi = row[0];
         $("#editForm").fill(ceshi);
     } else {
-        $("#tanchuang").modal('show');
+        swal({
+            "title": "",
+            "text": "请先选择一条数据",
+            "type": "warning"
+        })
     }
 }
 
@@ -48,12 +35,64 @@ function formatRepoSelection(repo) {
 }
 
 //显示删除
-function showDel() {
-    var row = $('table').bootstrapTable('getSelections');
+function showInactive() {
+    var row = $('#table').bootstrapTable('getSelections');
     if (row.length > 0) {
-        $("#del").modal('show');
+        swal({
+            title: "您确定要冻结吗？",
+            text: "您确定要冻结这条数据？",
+            type: "warning",
+            showCancelButton: true,
+            closeOnConfirm: false,
+            cancelButtonText: "取消",
+            confirmButtonText: "是的，要我冻结",
+            confirmButtonColor: "#ec6c62"
+        }, function() {
+            $.ajax({
+                url: "/custManage/inactive?recordId="+row[0].recordId,
+                type: "DELETE"
+            }).done(function(data) {
+                swal("操作成功!", "已成功冻结数据！", "success");
+            }).error(function(data) {
+                swal("OMG", "冻结操作失败了!", "error");
+            });
+        });
     } else {
-        $("#tanchuang").modal('show');
+        swal({
+            "title": "",
+            "text": "请先选择一条数据",
+            "type": "warning"
+        })
+    }
+}
+
+function showActive() {
+    var row = $('#table').bootstrapTable('getSelections');
+    if (row.length > 0) {
+        $(function() {
+            $.ajax({
+                url: "/custManage/active?recordId="+row[0].recordId,
+                type: "DELETE"
+            }).done(function(data) {
+                swal("操作成功!", "已成功解冻数据！", "success");
+            }).error(function(data) {
+                swal("OMG", "解冻操作失败了!", "error");
+            });
+        });
+    } else {
+        swal({
+            "title": "",
+            "text": "请先选择一条数据",
+            "type": "warning"
+        })
+    }
+}
+
+function formatterStatus(value, row, index) {
+    if (row.recordStatus == 'Y') {
+        return "可用"
+    } else if (row.recordStatus == 'N') {
+        return "不可用";
     }
 }
 
