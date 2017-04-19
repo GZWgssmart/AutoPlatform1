@@ -31,7 +31,7 @@ public class AccessoriesBuyServiceImpl implements AccessoriesBuyService {
 	public int batchUpdate(List<AccessoriesBuy> list) { return accessoriesBuyDAO.batchUpdate(list); }
 	public List<AccessoriesBuy> queryAll() { return accessoriesBuyDAO.queryAll(); }
 
-	@Override
+
 	public List<AccessoriesBuy> queryAll(String status) {
 		return accessoriesBuyDAO.queryAll();
 	}

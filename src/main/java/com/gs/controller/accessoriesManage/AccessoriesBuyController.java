@@ -21,7 +21,6 @@ import java.util.List;
 @RequestMapping("/accBuy")
 public class AccessoriesBuyController {
 
-
     @Resource
     private AccessoriesBuyService accessoriesBuyService;
 

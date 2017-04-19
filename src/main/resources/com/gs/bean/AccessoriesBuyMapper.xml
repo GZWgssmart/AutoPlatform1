@@ -1,19 +1,31 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.gs.dao.AccessoriesBuyDAO" >
-  <resultMap id="BaseResultMap" type="com.gs.bean.AccessoriesBuy" >
-    <id column="accBuyId" property="accBuyId" />
-    <result column="accId" property="accId"  />
-    <result column="accUnit" property="accUnit"  />
-    <result column="accBuyCount" property="accBuyCount" />
-    <result column="accBuyPrice" property="accBuyPrice" />
-    <result column="accBuyTotal" property="accBuyTotal" />
-    <result column="accBuyDiscount" property="accBuyDiscount" />
-    <result column="accBuyMoney" property="accBuyMoney"  />
-    <result column="accBuyTime" property="accBuyTime" />
-    <result column="accBuyCreatedTime" property="accBuyCreatedTime"  />
-    <result column="companyId" property="companyId"  />
-    <result column="accBuyStatus" property="accBuyStatus"  />
-  </resultMap>
+<mapper namespace="com.gs.dao.AccessoriesBuyDAO">
+    <resultMap id="AccessoriesBuyMap" type="com.gs.bean.AccessoriesBuy">
+        <id column="accBuyId" property="accBuyId"/>
+        <result column="accId" property="accId"/>
+        <result column="accUnit" property="accUnit"/>
+        <result column="accBuyCount" property="accBuyCount"/>
+        <result column="accBuyPrice" property="accBuyPrice"/>
+        <result column="accBuyTotal" property="accBuyTotal"/>
+        <result column="accBuyDiscount" property="accBuyDiscount"/>
+        <result column="accBuyMoney" property="accBuyMoney"/>
+        <result column="accBuyTime" property="accBuyTime"/>
+        <result column="accBuyCreatedTime" property="accBuyCreatedTime"/>
+        <result column="companyId" property="companyId"/>
+        <result column="accBuyStatus" property="accBuyStatus"/>
+    </resultMap>
+
+    <select id="queryAll" resultMap="AccessoriesBuyMap">
+        <![CDATA[
+            select * from auto_platform.t_accessories_buy
+        ]]>
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="AccessoriesBuy">
+        <![CDATA[
+
+        ]]>
+    </insert>
 
 </mapper>

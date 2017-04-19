@@ -50,4 +50,15 @@ public class AccessoriesType {
     public void setAccTypeStatus(String accTypeStatus) {
         this.accTypeStatus = accTypeStatus;
     }
+
+    @Override
+    public String toString() {
+        return "AccessoriesType{" +
+                "accTypeId='" + accTypeId + '\'' +
+                ", accTypeName='" + accTypeName + '\'' +
+                ", accTypeDes='" + accTypeDes + '\'' +
+                ", companyId='" + companyId + '\'' +
+                ", accTypeStatus='" + accTypeStatus + '\'' +
+                '}';
+    }
 }

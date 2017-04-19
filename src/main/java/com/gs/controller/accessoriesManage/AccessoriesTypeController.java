@@ -3,6 +3,7 @@ package com.gs.controller.accessoriesManage;
 import com.gs.bean.AccessoriesType;
 import com.gs.common.bean.ControllerResult;
 import com.gs.service.AccessoriesTypeService;
+import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +27,9 @@ public class AccessoriesTypeController {
     private AccessoriesTypeService accessoriesTypeService;
 
 
+    /**
+     * 查询全部的配件分类
+     */
     @ResponseBody
     @RequestMapping(value = "queryAllAccType",method = RequestMethod.POST)
     public List<AccessoriesType> queryAllAccType(){
@@ -79,6 +83,7 @@ public class AccessoriesTypeController {
     @RequestMapping(value = "updateAccType",method = RequestMethod.POST)
     public ControllerResult updateAccType(AccessoriesType accessoriesType){
         if(accessoriesType!=null&&!accessoriesType.equals("")){
+            System.out.println("前台传过来的数据为"+accessoriesType.toString());
             accessoriesTypeService.update(accessoriesType);
             logger.info("更新成功");
             return ControllerResult.getSuccessResult("更新成功");
@@ -87,4 +92,25 @@ public class AccessoriesTypeController {
         }
     }
 
+    /**
+     * 对状态的激活和启用，只使用一个方法进行切换。
+     */
+    @ResponseBody
+    @RequestMapping(value = "statusOperate",method = RequestMethod.POST)
+    public ControllerResult inactive(String accTypeId,String accTypeStatus){
+        if(accTypeId!=null&&!accTypeId.equals("")&&accTypeStatus!=null&&!accTypeStatus.equals("")){
+            System.out.println("id为"+accTypeId+"状态为"+accTypeStatus);
+            if (accTypeStatus.equals("N")){
+                accessoriesTypeService.active(accTypeId);
+                logger.info("激活成功");
+                return ControllerResult.getSuccessResult("激活成功");
+            }else{
+                accessoriesTypeService.inactive(accTypeId);
+                logger.info("禁用成功");
+                return ControllerResult.getSuccessResult("禁用成功");
+            }
+        }else{
+            return ControllerResult.getFailResult("操作失败");
+        }
+    }
 }

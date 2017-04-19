@@ -1,3 +1,5 @@
+var contentPath = ''
+
 $(function () {
     $('#table').bootstrapTable('hideColumn', 'accTypeId');
     $("#addSelect").select2({
@@ -43,12 +45,48 @@ function showAdd() {
     $("#addWindow").modal('show');
 }
 
-
 function formatRepo(repo) {
     return repo.text
 }
 function formatRepoSelection(repo) {
     return repo.text
+}
+
+//格式化页面上的配件分类状态
+function formatterStatus(value) {
+    if (value == "Y") {
+        return "可用";
+    } else {
+        return "不可用";
+    }
+}
+
+function openStatusFormatter(index, row) {
+    /*处理数据*/
+    if (row.accTypeStatus == 'Y') {
+        return "&nbsp;&nbsp;<a href='javascript:;' onclick='inactive(\"" + row.accTypeId + "\")'>禁用</a>";
+    } else {
+        return "&nbsp;&nbsp;<a href='javascript:;' onclick='active(\"" + row.accTypeId + "\")'>激活</a>";
+    }
+
+}
+
+//禁用状态
+function inactive(accTypeId) {
+    $.post(contentPath + "/accType/statusOperate?accTypeId=" + accTypeId + "&" + "accTypeStatus=" + "Y", function (data) {
+        if (data.result == "success") {
+            $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
+        }
+    })
+}
+
+//激活状态
+function active(accTypeId) {
+    $.post(contentPath + "/accType/statusOperate?accTypeId=" + accTypeId + "&" + "accTypeStatus=" + 'N', function (data) {
+        if (data.result == "success") {
+            $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
+        }
+    })
 }
 
 //显示删除
@@ -116,7 +154,7 @@ $(document).ready(function () {
                 minlength: 2
             },
             accTypeDes: {
-                required: true,
+                required: false,
                 minlength: 2
             }
         },
@@ -141,7 +179,23 @@ $(document).ready(function () {
             label.remove();
         },
         submitHandler: function (form) {
-            alert("submitted!");
+            $.post(contentPath + "/accType/addAccType", $("#addForm").serialize(), function (data) {
+                if (data.result == "success") {
+                    $("#addWindow").modal('hide'); // 关闭指定的窗口
+                    $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
+                    swal({
+                        title: "",
+                        text: data.message,
+                        type: "success"
+                    })
+                } else {
+                    swal({
+                        title: "",
+                        text: data.message,
+                        type: "fail"
+                    })
+                }
+            })
         }
     })
     $("#editForm").validate({
@@ -183,7 +237,23 @@ $(document).ready(function () {
             label.remove();
         },
         submitHandler: function (form) {
-            alert("submitted!");
+            $.post(contentPath + "/accType/updateAccType", $("#editForm").serialize(), function (data) {
+                if (data.result == "success") {
+                    $("#editWindow").modal('hide'); // 关闭指定的窗口
+                    $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
+                    swal({
+                        title: "",
+                        text: data.message,
+                        type: "success"
+                    })
+                } else {
+                    swal({
+                        title: "",
+                        text: data.message,
+                        type: "fail"
+                    })// 提示窗口, 修改成功
+                }
+            })
         }
     })
 });

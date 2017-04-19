@@ -28,7 +28,7 @@
         <table id="table"
                data-toggle="table"
                data-toolbar="#toolbar"
-               data-url="/table/query"
+               data-url="/accBuy/queryAllAccBuy"
                data-method="post"
                data-query-params="queryParams"
                data-pagination="true"

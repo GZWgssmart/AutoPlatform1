@@ -122,4 +122,22 @@ public class AccessoriesBuy {
     public void setAccBuyStatus(String accBuyStatus) {
         this.accBuyStatus = accBuyStatus;
     }
+
+    @Override
+    public String toString() {
+        return "AccessoriesBuy{" +
+                "accBuyId='" + accBuyId + '\'' +
+                ", accId='" + accId + '\'' +
+                ", accUnit='" + accUnit + '\'' +
+                ", accBuyCount=" + accBuyCount +
+                ", accBuyPrice=" + accBuyPrice +
+                ", accBuyTotal=" + accBuyTotal +
+                ", accBuyDiscount=" + accBuyDiscount +
+                ", accBuyMoney=" + accBuyMoney +
+                ", accBuyTime=" + accBuyTime +
+                ", accBuyCreatedTime=" + accBuyCreatedTime +
+                ", companyId='" + companyId + '\'' +
+                ", accBuyStatus='" + accBuyStatus + '\'' +
+                '}';
+    }
 }

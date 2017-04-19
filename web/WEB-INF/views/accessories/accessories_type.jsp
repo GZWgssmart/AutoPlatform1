@@ -6,6 +6,9 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    String path=request.getContextPath();
+%>
 <html>
 <head>
     <title>配件分类管理</title>
@@ -26,7 +29,7 @@
         <table id="table"
                data-toggle="table"
                data-toolbar="#toolbar"
-               data-url="/table/query"
+               data-url="/accType/queryAllAccType"
                data-method="post"
                data-query-params="queryParams"
                data-pagination="true"
@@ -47,7 +50,8 @@
                 <th data-field="companyId">所属公司</th>
                 <th data-field="accTypeName">配件分类名称</th>
                 <th data-field="accTypeDes">配件分类描述</th>
-                <th data-field="accTypeStatus">配件分类状态</th>
+                <th data-field="accTypeStatus" data-formatter="formatterStatus">配件分类状态</th>
+                <th data-formatter="openStatusFormatter">操作</th>
             </tr>
             </thead>
         </table>
@@ -69,7 +73,7 @@
 <div class="modal fade" id="addWindow" aria-hidden="true" style="overflow:auto; ">
     <div class="modal-dialog" style="width: 700px;height: auto;">
         <div class="modal-content" style="overflow:hidden;">
-            <form class="form-horizontal" onsubmit="return checkAdd()" id="addForm" method="post">
+            <form class="form-horizontal" id="addForm" method="post">
                 <div class="modal-header" style="overflow:auto;">
                     <h4>请填写配件类别信息</h4>
                 </div>
@@ -91,12 +95,6 @@
                     <div class="col-sm-7">
                         <textarea type="text" name="accTypeDes" placeholder="请输入相关内容" style="height: 100px;"
                                   class="form-control"></textarea>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">配件分类状态：</label>
-                    <div class="col-sm-7">
-                        <input type="text" name="accTypeStatus" placeholder="配件分类状态" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
@@ -113,7 +111,8 @@
 <div class="modal fade" id="editWindow" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form class="form-horizontal" onsubmit="return checkAdd()" id="editForm" method="post">
+            <form class="form-horizontal" id="editForm" method="post">
+                <input type="hidden" name="accTypeId" define="AccessoriesType.accTypeId"/>
                 <div class="modal-header" style="overflow:auto;">
                     <h4>请填写配件类别信息</h4>
                 </div>
@@ -121,26 +120,20 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">所属公司：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="companyId" placeholder="请输入所属公司" class="form-control">
+                        <input type="text" name="companyId" define="AccessoriesType.companyId" placeholder="请输入所属公司" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">配件分类名称：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="accTypeName" placeholder="请输入配件分类名称" class="form-control">
+                        <input type="text" name="accTypeName" define="AccessoriesType.accTypeName" placeholder="请输入配件分类名称" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">配件分类描述：</label>
                     <div class="col-sm-7">
-                        <textarea type="text" name="accTypeDes" placeholder="请输入相关内容" style="height: 100px;"
+                        <textarea type="text" name="accTypeDes" define="AccessoriesType.accTypeDes" placeholder="请输入相关内容" style="height: 100px;"
                                   class="form-control"></textarea>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">配件分类状态：</label>
-                    <div class="col-sm-7">
-                        <input type="text" name="accTypeStatus" placeholder="配件分类状态" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
