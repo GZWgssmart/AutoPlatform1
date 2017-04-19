@@ -1,3 +1,6 @@
+/**
+ * Created by jyy on 2017/4/19.
+ */
 $(function () {
     $('#table').bootstrapTable('hideColumn', 'id');
 
@@ -19,24 +22,25 @@ $(function () {
 //                        alert("select2:select", e);
 //            });
 });
-
+//修改窗口
 function showEdit(){
     var row =  $('table').bootstrapTable('getSelections');
-    if(row.length >0) {
+    if(row.length > 0) {
 //                $('#editId').val(row[0].id);
 //                $('#editName').val(row[0].name);
 //                $('#editPrice').val(row[0].price);
-        $("#edit").modal('show'); // 显示弹窗
+        $("#editWindow").modal('show'); // 显示弹窗
         var ceshi = row[0];
         $("#editForm").fill(ceshi);
     }else{
         swal({
-            title:"",
-            text:"请先选择一行数据",
-            type:"warning"})// 提示窗口, 修改成功
+            "title": "",
+            "text": "请先选择一条数据",
+            "type": "warning"
+        })
     }
 }
-
+//添加窗口
 function showAdd(){
 
     $("#add").modal('show');
@@ -69,7 +73,6 @@ function checkAdd(){
     }
 }
 
-
 function checkEdit() {
     $.post("/table/edit",
         $("#editForm").serialize(),
@@ -87,7 +90,6 @@ function checkEdit() {
         }, "json"
     );
 }
-
 //前台验证
 $(document).ready(function () {
     jQuery.validator.addMethod("isuserPhone", function (value, element) {
@@ -100,28 +102,50 @@ $(document).ready(function () {
         errorClass: 'help-block',
 
         rules: {
-            recordId: {
-                required: true,
-                minlength: 2
-            },
             userId: {
                 required: true,
                 minlength: 2
             },
-            workAssignTime: {
+            userPhone: {
+                required: true,
+                isuserPhone: true,
+            },
+            colorId: {
+                required: true,
+                minlength: 2
+            },
+            modelId: {
+                required: true,
+                minlength: 5
+            },
+            plateId: {
+                required: true,
+                minlength: 7
+            },
+            arriveTime: {
                 required: true,
                 date: true
             },
-            workcreateTime: {
+            appCreatedTime: {
                 required: true,
                 date: true
+            },
+            companyId: {
+                required: true,
+                minlength: 5
             }
         },
         messages: {
-            recordId: "请输保养记录编号",
-            userId: "请输入指派用户编号",
-            workAssignTime: "请输入工单指派时间",
-            workcreateTime: "请输入工单创建时间"
+            userId: "请输入姓名",
+            userPhone: {
+                required: "请输入你的联系方式",
+            },
+            colorId: "请你颜色",
+            modelId: "请输入车型",
+            plateId: "请输入车牌号",
+            arriveTime: "到店时间",
+            appCreatedTime: "请输入预约日期",
+            companyId: "请输入公司名称"
         },
         errorPlacement: function (error, element) {
             element.next().remove();
@@ -147,28 +171,51 @@ $(document).ready(function () {
             errorClass: 'help-block',
 
             rules: {
-                recordId: {
-                    required: true,
-                    minlength: 2
-                },
                 userId: {
                     required: true,
                     minlength: 2
                 },
-                workAssignTime: {
+                userPhone: {
+                    required: true,
+                    isPhone: true,
+                },
+                colorId: {
+                    required: true,
+                    minlength: 2
+                },
+                modelId: {
+                    required: true,
+                    minlength: 5
+                },
+                plateId: {
+                    required: true,
+                    minlength: 7
+                },
+                arriveTime: {
                     required: true,
                     date: true
                 },
-                workcreateTime: {
+                appCreatedTime: {
                     required: true,
                     date: true
+                },
+                companyId: {
+                    required: true,
+                    minlength: 5
                 }
             },
             messages: {
-                recordId: "请输保养记录编号",
-                userId: "请输入指派用户编号",
-                workAssignTime: "请输入工单指派时间",
-                workcreateTime: "请输入工单创建时间"
+                userId: "请输入姓名",
+                userPhone: {
+                    required: "请输入你的联系方式",
+                },
+                colorId: "请你颜色",
+                modelId: "请输入车型",
+                plateId: "请输入车牌号",
+                arriveTime: "到店时间",
+                appCreatedTime: "请输入预约日期",
+                companyId: "请输入公司名称"
+
             },
             errorPlacement: function (error, element) {
                 element.next().remove();
@@ -190,22 +237,105 @@ $(document).ready(function () {
             }
         })
 });
-//add日期插件
-$('#addwrokAssignTime').datetimepicker({
+//设置到店时间
+$('#addarriveTime').datetimepicker({
     language: 'zh-CN',
     format: 'yyyy-mm-dd hh:ii'
 });
-$('#addworkcreateTime').datetimepicker({
+//修改到店时间
+$('#editarriveTime').datetimepicker({
     language: 'zh-CN',
     format: 'yyyy-mm-dd hh:ii'
 });
 
-//edit日期插件
-$('#editwrokAssignTime').datetimepicker({
-    language: 'zh-CN',
-    format: 'yyyy-mm-dd hh:ii'
+//颜色
+//获取hex颜色值后转换成rgb颜色值后自动添加到rgb颜色框中
+function showAddHex() {
+    var a = document.getElementsByName("addColor")[0].value;
+    if (a.substr(0, 1) == "#") a = a.substring(1);
+    if (a.length != 6)return alert("请输入正确的十六进制颜色码！")
+    a = a.toLowerCase()
+    b = new Array();
+    for (x = 0; x < 3; x++) {
+        b[0] = a.substr(x * 2, 2)
+        b[3] = "0123456789abcdef";
+        b[1] = b[0].substr(0, 1)
+        b[2] = b[0].substr(1, 1)
+        b[20 + x] = b[3].indexOf(b[1]) * 16 + b[3].indexOf(b[2])
+    }
+    var rbgNumber = b[20] + "," + b[21] + "," + b[22];
+    var rgbColor = document.getElementById("addrgbColor");
+    rgbColor.value = rbgNumber;
+}
+function showEditHex() {
+    var a = document.getElementsByName("editColor")[0].value;
+    if (a.substr(0, 1) == "#") a = a.substring(1);
+    if (a.length != 6)return alert("请输入正确的十六进制颜色码！")
+    a = a.toLowerCase()
+    b = new Array();
+    for (x = 0; x < 3; x++) {
+        b[0] = a.substr(x * 2, 2)
+        b[3] = "0123456789abcdef";
+        b[1] = b[0].substr(0, 1)
+        b[2] = b[0].substr(1, 1)
+        b[20 + x] = b[3].indexOf(b[1]) * 16 + b[3].indexOf(b[2])
+    }
+    var rbgNumber = b[20] + "," + b[21] + "," + b[22];
+    var rgbColor = document.getElementById("editrgbColor");
+    rgbColor.value = rbgNumber;
+}
+
+
+function getkey(e, n) {
+    var keynum;
+    if (window.event) keynum = e.keyCode; else if (e.which) keynum = e.which;
+    if (keynum == 13) {
+        if (n == 0) showRGB(); else showRGB2();
+    }
+}
+
+//颜色控件初始化
+$(document).ready(function () {
+    $('.addColor').each(function () {
+        $(this).minicolors({
+            control: $(this).attr('data-control') || 'hue',
+            defaultValue: $(this).attr('data-defaultValue') || '',
+            inline: $(this).attr('data-inline') === 'true',
+            letterCase: $(this).attr('data-letterCase') || 'lowercase',
+            opacity: $(this).attr('data-opacity'),
+            position: $(this).attr('data-position') || 'bottom left',
+            change: function (hex, opacity) {
+                if (!hex) return;
+                if (opacity) hex += ', ' + opacity;
+                try {
+                    console.log(hex);
+                } catch (e) {
+                }
+            },
+            theme: 'bootstrap'
+        });
+    });
 });
-$('#editworkcreateTime').datetimepicker({
-    language: 'zh-CN',
-    format: 'yyyy-mm-dd hh:ii'
+
+//颜色控件初始化
+$(document).ready(function () {
+    $('.editColor').each(function () {
+        $(this).minicolors({
+            control: $(this).attr('data-control') || 'hue',
+            defaultValue: $(this).attr('data-defaultValue') || '',
+            inline: $(this).attr('data-inline') === 'true',
+            letterCase: $(this).attr('data-letterCase') || 'lowercase',
+            opacity: $(this).attr('data-opacity'),
+            position: $(this).attr('data-position') || 'bottom left',
+            change: function (hex, opacity) {
+                if (!hex) return;
+                if (opacity) hex += ', ' + opacity;
+                try {
+                    console.log(hex);
+                } catch (e) {
+                }
+            },
+            theme: 'bootstrap'
+        });
+    });
 });
