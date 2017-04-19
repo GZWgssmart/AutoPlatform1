@@ -17,29 +17,29 @@
     select count(*) from t_outgoing_type;
   </select>
 
-  <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="outGoingType">
+  <insert id="insert" useGeneratedKeys="true" keyProperty="outTypeId" parameterType="outGoingType">
     <![CDATA[
-        insert into t_outgoing_type(inTypeId, inTypeName, inTypeStatus) values(#{inTypeId}, #{inTypeName}, #{inTypeStatus})
+        insert into t_outgoing_type(outTypeId, outTypeName, outTypeStatus) values(#{outTypeId}, #{outTypeName}, #{outTypeStatus})
         ]]>
   </insert>
 
-  <update id="update" keyProperty="id" parameterType="outGoingType">
+  <update id="update" keyProperty="outTypeId" parameterType="outGoingType">
     <![CDATA[
-        update t_outgoing_type set inTypeId = #{inTypeId}, inTypeName = #{inTypeName}, inTypeStatus = #{inTypeStatus} where inTypeId = #{inTypeId}
+        update t_outgoing_type set outTypeName = #{outTypeName}, outTypeStatus = #{outTypeStatus} where outTypeId = #{outTypeId}
         ]]>
   </update>
 
   <!--冻结数据-->
-  <update id="inactive" keyProperty="id" parameterType="outGoingType">
+  <update id="inactive" keyProperty="outTypeId" parameterType="outGoingType">
     <![CDATA[
-        update t_outgoing_type set inTypeStatus = 0 where inTypeId = #{inTypeId}
+        update t_outgoing_type set outTypeStatus = 'N' where outTypeId = #{outTypeId}
         ]]>
   </update>
 
   <!--激活数据-->
-  <update id="active" keyProperty="id" parameterType="outGoingType">
+  <update id="active" keyProperty="outTypeId" parameterType="outGoingType">
     <![CDATA[
-        update t_outgoing_type set inTypeStatus = 1 where inTypeId = #{inTypeId}
+        update t_outgoing_type set outTypeStatus = 'Y' where outTypeId = #{outTypeId}
         ]]>
   </update>
 

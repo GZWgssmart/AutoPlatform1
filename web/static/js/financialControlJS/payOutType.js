@@ -1,10 +1,49 @@
-function detailFormatter(index, row) {
+var context = '';
+
+function statusFormatter(index, row) {
     /*处理数据*/
-    if(row.outTypeStatus == 1) {
-        return "&nbsp;&nbsp;<a href='javascript:;' onclick='deleteRow(event)'>禁用</a>";
+    if(row.outTypeStatus == 'Y') {
+        return "&nbsp;&nbsp;激活";
     } else {
-        return "&nbsp;&nbsp;<a href='javascript:;' onclick='deleteRow(event)'>启动</a>";
+        return "&nbsp;&nbsp;禁用";
     }
+
+}
+
+function openStatusFormatter(index, row) {
+    /*处理数据*/
+    if(row.outTypeStatus == 'Y') {
+        return "&nbsp;&nbsp;<a href='javascript:;' onclick='inactive(\""+row.outTypeId+ "\")'>禁用</a>";
+    } else {
+        return "&nbsp;&nbsp;<a href='javascript:;' onclick='active(\""+row.outTypeId+ "\")'>激活</a>";
+    }
+
+}
+
+function inactive(id) {
+    $.post(context + "/outGoingType/inactive?id="+id,
+        function(data){
+            $('#table').bootstrapTable(
+                "refresh",
+                {
+                }
+            );
+        },"json");
+    location.reload()
+}
+
+function active(id) {
+    $.post(context + "/outGoingType/active?id="+id,
+
+        function(data){
+            $('#table').bootstrapTable(
+                "refresh",
+                {
+
+                }
+            );
+        },"json");
+    location.reload()
 
 }
 
@@ -37,8 +76,8 @@ function showEdit(){
 //                $('#editName').val(row[0].name);
 //                $('#editPrice').val(row[0].price);
         $("#edit").modal('show'); // 显示弹窗
-        var ceshi = row[0];
-        $("#editForm").fill(ceshi);
+        var outGoingType = row[0];
+        $("#outTypeUpdateForm").fill(outGoingType);
     }else{
         swal({
             title:"",
@@ -70,40 +109,118 @@ function showDel(){
     }
 }
 
-function checkAdd(){
-    var id = $('#addId').val();
-    var name = $('#email').val();
-    var price = $('#plate').val();
-    var price = $('#phone').val();
-    var price = $('#isclear').val();
-    var price = $('#currentOil').val();
-    var price = $('#goods').val();
-    var price = $('#color').val();
-//            var reslist=$("#phone").select2("data"); //获取多选的值
-    alert(reslist.length)
-    if(id != "" && name != "" && price != ""){
-        return true;
-    }else{
-        var error = document.getElementById("addError");
-        error.innerHTML = "请输入正确的数据";
-        return false;
-    }
-}
 
-function checkEdit() {
-    $.post("/table/edit",
-        $("#editForm").serialize(),
-        function (data) {
-            if (data.result == "success") {
-                $("#edit").modal('hide'); // 关闭指定的窗口
-                $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
-                swal({
-                    title:"",
-                    text: data.message,
-                    type:"success"})// 提示窗口, 修改成功
-            } else if (data.result == "fail") {
-                //$.messager.alert("提示", data.result.message, "info");
-            }
-        }, "json"
-    );
-}
+
+
+$(document).ready(function() {
+
+    $("#outTypeInsertForm").validate({
+        errorElement : 'span',
+        errorClass : 'help-block',
+        rules : {
+            outTypeName : {
+                required : true,
+                minlength : 2
+            },
+
+        },
+        messages : {
+            outTypeName : {
+                required : "请输入类型名称",
+                minlength : jQuery.format("类型名称不能少于{2}个字符")
+            },
+        },
+        errorPlacement : function(error, element) {
+            element.next().remove();
+            element.after('<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>');
+            element.closest('.form-group').append(error);
+        },
+        highlight : function(element) {
+            $(element).closest('.form-group').addClass('has-error has-feedback');
+        },
+        success : function(label) {
+            var el=label.closest('.form-group').find("input");
+            el.next().remove();
+            el.after('<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>');
+            label.closest('.form-group').removeClass('has-error').addClass("has-feedback has-success");
+            label.remove();
+        },
+        submitHandler: function(form) {
+            $.post("/outGoingType/add",
+                $("#outTypeInsertForm").serialize(),
+                function (data) {
+                    if (data.result == "success") {
+                        $("#add").modal('hide'); // 关闭指定的窗口
+                        $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
+                        swal({
+                            title:"",
+                            text: data.message,
+                            confirmButtonText:"确定", // 提示按钮上的文本
+                            type:"success"})// 提示窗口, 修改成功
+                    } else if (data.result == "fail") {
+                        swal({title:"",
+                            text:"添加失败",
+                            confirmButtonText:"确认",
+                            type:"error"})
+                    }
+                }, "json"
+            );
+        }
+
+    })
+
+    $("#outTypeUpdateForm").validate({
+        errorElement : 'span',
+        errorClass : 'help-block',
+        rules : {
+            outTypeName : {
+                required : true,
+                minlength : 2
+            },
+
+        },
+        messages : {
+            outTypeName : {
+                required : "请输入类型名称",
+                minlength : jQuery.format("类型名称不能少于{2}个字符")
+            },
+        },
+        errorPlacement : function(error, element) {
+            element.next().remove();
+            element.after('<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>');
+            element.closest('.form-group').append(error);
+        },
+        highlight : function(element) {
+            $(element).closest('.form-group').addClass('has-error has-feedback');
+        },
+        success : function(label) {
+            var el=label.closest('.form-group').find("input");
+            el.next().remove();
+            el.after('<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>');
+            label.closest('.form-group').removeClass('has-error').addClass("has-feedback has-success");
+            label.remove();
+        },
+        submitHandler: function(form) {
+            $.post("/outGoingType/update",
+                $("#outTypeUpdateForm").serialize(),
+                function (data) {
+                    if (data.result == "success") {
+                        $("#edit").modal('hide'); // 关闭指定的窗口
+                        $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
+                        swal({
+                            title:"",
+                            text: data.message,
+                            confirmButtonText:"确定", // 提示按钮上的文本
+                            type:"success"})// 提示窗口, 修改成功
+                    } else if (data.result == "fail") {
+                        swal({title:"",
+                            text:"添加失败",
+                            confirmButtonText:"确认",
+                            type:"error"})
+                    }
+                }, "json"
+            );
+        }
+
+    })
+});

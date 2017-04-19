@@ -110,7 +110,7 @@ $(document).ready(function () {
         messages: {
             supplyTypeName: "请输入供应商类型名称",
             companyName: "请选择供应商类型所属公司",
-            supplyTypeDes: "供应商类型描述内容",
+            supplyTypeDes: "请输入供应商类型描述内容",
         },
         errorPlacement: function (error, element) {
             element.next().remove();
@@ -152,7 +152,7 @@ $(document).ready(function () {
         messages: {
             supplyTypeName: "请输入供应商类型名称",
             companyName: "请选择供应商类型所属公司",
-            supplyTypeDes: "供应商类型描述内容",
+            supplyTypeDes: "请输入供应商类型描述内容",
         },
         errorPlacement: function (error, element) {
             element.next().remove();

@@ -41,8 +41,8 @@
                 <tr>
                     <th data-radio="true" data-field="status"></th>
                     <th data-field="outTypeName">支出类型</th>
-                    <th data-field="outTypeStatus">支出类型状态</th>
-                    <th data-formatter="detailFormatter">操作</th>
+                    <th data-formatter="statusFormatter">支出类型状态</th>
+                    <th data-formatter="openStatusFormatter">操作</th>
                 </tr>
             </thead>
         </table>
@@ -53,9 +53,6 @@
             <button id="btn_edit" type="button" class="btn btn-default" onclick="showEdit();">
                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
             </button>
-            <button id="btn_delete" type="button" class="btn btn-default" onclick="showDel();">
-                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
-            </button>
         </div>
 
     </div>
@@ -63,10 +60,10 @@
 
 <!-- 添加弹窗 -->
 <div class="modal fade" id="add" aria-hidden="true" style="overflow:auto;">
-    <div class="modal-dialog" style="overflow:hidden;">
-        <div class="modal-content" style="overflow:hidden;">
+    <div class="modal-dialog">
+        <div class="modal-content">
             <div class="container" style="width: 80%;">
-                <form class="form-horizontal" onsubmit="return checkAdd()" id="addForm" method="post">
+                <form class="form-horizontal" id="outTypeInsertForm" method="post">
                     <div class="modal-header" style="overflow:auto;">
                         <h4>添加支出类型</h4>
                     </div>
@@ -74,7 +71,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">名称：</label>
                         <div class="col-sm-7">
-                            <input type="text" placeholder="请输入支出类型名称" class="form-control">
+                            <input type="text" name="outTypeName" placeholder="请输入支出类型名称" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
@@ -91,18 +88,20 @@
 
 <!-- 修改弹窗 -->
 <div class="modal fade" id="edit" aria-hidden="true" style="overflow:auto;">
-    <div class="modal-dialog" style="overflow:hidden;">
-        <div class="modal-content" style="overflow:hidden;">
+    <div class="modal-dialog">
+        <div class="modal-content">
             <div class="container" style="width: 80%;">
-                <form class="form-horizontal" onsubmit="return checkAdd()" id="editForm" method="post">
+                <form class="form-horizontal" id="outTypeUpdateForm">
+                    <input type="hidden"name="outTypeId" define="outGoingType.outTypeId">
+                    <input type="hidden"name="outTypeStatus" define="outGoingType.outTypeStatus">
                     <div class="modal-header" style="overflow:auto;">
-                        <h4>添加支出类型</h4>
+                        <h4>修改支出类型</h4>
                     </div>
                     <br/>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">名称：</label>
                         <div class="col-sm-7">
-                            <input type="text" placeholder="请输入支出类型名称" class="form-control">
+                            <input type="text"  define="outGoingType.outTypeName"name="outTypeName" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
@@ -118,7 +117,7 @@
 </div><!-- /.modal -->
 <!-- 删除弹窗 -->
 <div class="modal fade" id="del" aria-hidden="true">
-    <div class="modal-dialog" style="overflow:hidden;">
+    <div class="modal-dialog">
         <form action="/table/edit" method="post">
             <div class="modal-content">
                 <input type="hidden" id="delNoticeId"/>
@@ -165,6 +164,7 @@
 <script src="/static/js/contextmenu.js"></script>
 <script src="/static/js/financialControlJS/payOutType.js"></script>
 <script src="/static/js/bootstrap-select/bootstrap-select.js"></script>
+<script src="/static/js/form/jquery.validate.js"></script>
 
 </body>
 </html>
