@@ -26,7 +26,7 @@ public class CarPlateController {
     private CarPlateService carPlateService;
 
     @ResponseBody
-    @RequestMapping(value = "queryAll")
+    @RequestMapping(value = "queryByPager")
     public List<CarPlate> queryAll(){
         logger.info("查询所有车牌");
         List<CarPlate> carPlateList = carPlateService.queryAll();

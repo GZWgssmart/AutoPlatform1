@@ -1,5 +1,5 @@
 $(function () {
-    $('#table').bootstrapTable('showColumn', 'companyId');
+    $('#table').bootstrapTable('hideColumn', 'companyId');
     $("#addSelect").select2({
             language: 'zh-CN'
         }
@@ -25,9 +25,9 @@ function showEdit() {
 //                $('#editId').val(row[0].id);
 //                $('#editName').val(row[0].name);
 //                $('#editPrice').val(row[0].price);
-        $("#editWindow").modal('show'); // 显示弹窗
+        $("#edit").modal('show'); // 显示弹窗
         var ceshi = row[0];
-        $("#editForm").fill(ceshi);
+        $("#showEditFormWar").fill(ceshi);
     } else {
         swal({
             "title": "",
@@ -39,7 +39,7 @@ function showEdit() {
 
 //显示添加
 function showAdd() {
-    $("#addWindow").modal('show');
+    $("#add").modal('show');
 }
 
 function formatRepo(repo) {
@@ -57,41 +57,6 @@ function showDel() {
     } else {
         $("#tanchuang").modal('show');
     }
-}
-
-//检查添加
-function checkAdd() {
-    var id = $('#addId').val();
-    var name = $('#addName').val();
-    var price = $('#addPrice').val();
-    var reslist = $("#addSelect").select2("data"); //获取多选的值
-    if (id != "" && name != "" && price != "") {
-        return true;
-    } else {
-        var error = document.getElementById("addError");
-        error.innerHTML = "请输入正确的数据";
-        return false;
-    }
-}
-
-//检查修改
-function checkEdit() {
-    $.post("/table/edit",
-        $("#editForm").serialize(),
-        function (data) {
-            if (data.result == "success") {
-                $("#editWindow").modal('hide'); // 关闭指定的窗口
-                $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
-                swal({
-                    title: "",
-                    text: data.message,
-                    type: "success"
-                })// 提示窗口, 修改成功
-            } else if (data.result == "fail") {
-                //$.messager.alert("提示", data.result.message, "info");
-            }
-        }, "json"
-    );
 }
 
 //初始化文件上传控件
@@ -230,10 +195,30 @@ $(document).ready(function () {
             label.closest('.form-group').removeClass('has-error').addClass("has-feedback has-success");
             label.remove();
         },
-        submitHandler: function (form) {
-            alert("submitted!");
+        submitHandler: function(form) {
+            $.post("/company/add",
+                $("#showAddFormWar").serialize(),
+                function (data) {
+                    if (data.result == "success") {
+                        $("#add").modal('hide'); // 关闭指定的窗口
+                        $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
+                        swal({
+                            title:"",
+                            text: data.message,
+                            confirmButtonText:"确定", // 提示按钮上的文本
+                            type:"success"})// 提示窗口, 修改成功
+                    } else if (data.result == "fail") {
+                        swal({title:"",
+                            text:"添加失败",
+                            confirmButtonText:"确认",
+                            type:"error"})
+                    }
+                }, "json"
+            );
         }
     }),
+
+
     $("#showEditFormWar").validate({
         errorElement: 'span',
         errorClass: 'help-block',
@@ -284,8 +269,27 @@ $(document).ready(function () {
             label.closest('.form-group').removeClass('has-error').addClass("has-feedback has-success");
             label.remove();
         },
-        submitHandler: function (form) {
-            alert("submitted!");
+        submitHandler: function(form) {
+            $.post("/company/update",
+                $("#showEditFormWar").serialize(),
+                function (data) {
+                    if (data.result == "success") {
+                        $("#edit").modal('hide'); // 关闭指定的窗口
+                        $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
+                        swal({
+                            title:"",
+                            text: data.message,
+                            confirmButtonText:"确定", // 提示按钮上的文本
+                            type:"success"})// 提示窗口, 修改成功
+                    } else if (data.result == "fail") {
+                        swal({title:"",
+                            text:"修改失败",
+                            confirmButtonText:"确认",
+                            type:"error"})
+                    }
+                }, "json"
+            );
         }
+
     })
 });

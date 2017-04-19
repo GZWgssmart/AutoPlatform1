@@ -1,5 +1,5 @@
 $(function () {
-    $('#table').bootstrapTable('showColumn', 'modelId');
+    $('#table').bootstrapTable('hideColumn', 'modelId');
     //
     // $("#addSelect").select2({
     //         language: 'zh-CN'

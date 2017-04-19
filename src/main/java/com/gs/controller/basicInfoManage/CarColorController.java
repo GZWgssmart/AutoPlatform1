@@ -27,7 +27,7 @@ public class CarColorController {
     private Logger logger = (Logger) LoggerFactory.getLogger(CarColorController.class);
 
     @ResponseBody
-    @RequestMapping(value = "queryAll")
+    @RequestMapping(value = "queryByPager")
     public List<CarColor> queryAll(){
         logger.info("查询所有汽车颜色");
         List<CarColor> carColorList = carColorService.queryAll();

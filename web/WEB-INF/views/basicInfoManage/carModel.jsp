@@ -29,7 +29,7 @@
         <table id="table"
                data-toggle="table"
                data-toolbar="#toolbar"
-               data-url="/carModel/queryAll"
+               data-url="/carModel/queryByPager"
                data-method="post"
                data-query-params="queryParams"
                data-pagination="true"
@@ -46,7 +46,7 @@
                data-single-select="true">
             <thead>
             <tr>
-                <th data-radio="true" data-field="modelId"></th>
+                <th data-radio="true" data-field="status"></th>
                 <th data-field="modelName">车型名字</th>
                 <th data-field="modelDes">车型描述</th>
                 <th data-field="brandId">品牌id</th>

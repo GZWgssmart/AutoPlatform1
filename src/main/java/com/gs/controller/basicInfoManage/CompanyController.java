@@ -3,6 +3,7 @@ package com.gs.controller.basicInfoManage;
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.Company;
 import com.gs.common.bean.ControllerResult;
+import com.gs.common.util.UUIDUtil;
 import com.gs.service.CompanyService;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -28,7 +29,7 @@ public class CompanyController {
     private CompanyService companyService;
 
     @ResponseBody
-    @RequestMapping(value = "queryAll",method = RequestMethod.POST)
+    @RequestMapping(value = "queryByPager",method = RequestMethod.POST)
     public List<Company> queryAll() {
         logger.info("查询所有公司信息");
         List<Company> companyList = companyService.queryAll();
@@ -36,10 +37,12 @@ public class CompanyController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "insertCompany", method = RequestMethod.POST)
+    @RequestMapping(value = "add", method = RequestMethod.POST)
     public ControllerResult insertCompany(Company company){
+            logger.info("添加公司信息");
+            company.setCompanyId(UUIDUtil.uuid());
+            company.setCompanyStatus("Y");
             companyService.insert(company);
-            logger.info("添加成功");
             return ControllerResult.getSuccessResult("添加成功");
     }
 

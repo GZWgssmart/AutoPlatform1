@@ -29,7 +29,7 @@ public class CarModelController {
     private CarModelService carModelService;
 
     @ResponseBody
-    @RequestMapping(value = "queryAll")
+    @RequestMapping(value = "queryByPager")
     public List<CarModel> queryAll(){
         logger.info("查询所有车型");
         List<CarModel> carModelList = carModelService.queryAll();

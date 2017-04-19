@@ -30,7 +30,7 @@ public class CarBrandController {
 
 
     @ResponseBody
-    @RequestMapping(value = "queryAll")
+    @RequestMapping(value = "queryByPager")
     public List<CarBrand> queryAll() {
         logger.info("查询所有汽车品牌");
         List<CarBrand> carBrand = carBrandService.queryAll();

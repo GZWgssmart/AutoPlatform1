@@ -34,7 +34,7 @@
         <table id="table"
                data-toggle="table"
                data-toolbar="#toolbar"
-               data-url="/company/queryAll"
+               data-url="/company/queryByPager"
                data-method="post"
                data-query-params="queryParams"
                data-pagination="true"
@@ -51,7 +51,7 @@
                data-single-select="true">
             <thead>
             <tr>
-                <th data-radio="true" data-field="companyId"></th>
+                <th data-radio="true" data-field="status"></th>
                 <th data-field="companyName">公司名称</th>
                 <th data-field="companyAddress">公司地址</th>
                 <th data-field="companyTel">联系电话</th>
@@ -78,10 +78,10 @@
 
 
 <!-- 添加弹窗 -->
-<div class="modal fade"  id="addWindow" aria-hidden="true" style="overflow:auto; ">
+<div class="modal fade"  id="add" aria-hidden="true" style="overflow:auto; ">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form class="form-horizontal" role="form" onsubmit="return checkAdd()" id="showAddFormWar" method="post" >
+            <form class="form-horizontal" role="form" id="showAddFormWar" method="post" >
                 <div class="modal-header" style="overflow:auto;">
                     <h4>请填写你的公司信息</h4>
                 </div>
@@ -100,7 +100,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">联系电话：</label>
                     <div class="col-sm-7">
-                        <input type="number" name="companyTel" placeholder="请输入联系方式" class="form-control" max="11">
+                        <input type="text" name="companyTel" placeholder="请输入联系方式" class="form-control" max="11">
                     </div>
                 </div>
                 <div class="form-group">
@@ -140,10 +140,12 @@
 
 
 <!-- 修改弹窗 -->
-<div class="modal fade" id="editWindow" aria-hidden="true" style="overflow:auto; ">
+<div class="modal fade" id="edit" aria-hidden="true" style="overflow:auto; ">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form class="form-horizontal" role="form" onsubmit="return checkEdit()" id="showEditFormWar" method="post">
+            <form class="form-horizontal" role="form" id="showEditFormWar" method="post">
+                <input type="hidden"name="companyId" define="company.companyId">
+                <input type="hidden"name="companyStatus" define="company.companyStatus">
                 <div class="modal-header" style="overflow:auto;">
                     <p>请修改你的公司信息</p>
                 </div>

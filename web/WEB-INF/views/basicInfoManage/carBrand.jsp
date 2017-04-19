@@ -27,7 +27,7 @@
         <table id="table"
                data-toggle="table"
                data-toolbar="#toolbar"
-               data-url="/arBrand/queryAll"
+               data-url="/arBrand/queryByPager"
                data-method="post"
                data-query-params="queryParams"
                data-pagination="true"
