@@ -83,7 +83,6 @@ public class AccessoriesTypeController {
     @RequestMapping(value = "updateAccType",method = RequestMethod.POST)
     public ControllerResult updateAccType(AccessoriesType accessoriesType){
         if(accessoriesType!=null&&!accessoriesType.equals("")){
-            System.out.println("前台传过来的数据为"+accessoriesType.toString());
             accessoriesTypeService.update(accessoriesType);
             logger.info("更新成功");
             return ControllerResult.getSuccessResult("更新成功");
@@ -99,7 +98,6 @@ public class AccessoriesTypeController {
     @RequestMapping(value = "statusOperate",method = RequestMethod.POST)
     public ControllerResult inactive(String accTypeId,String accTypeStatus){
         if(accTypeId!=null&&!accTypeId.equals("")&&accTypeStatus!=null&&!accTypeStatus.equals("")){
-            System.out.println("id为"+accTypeId+"状态为"+accTypeStatus);
             if (accTypeStatus.equals("N")){
                 accessoriesTypeService.active(accTypeId);
                 logger.info("激活成功");
