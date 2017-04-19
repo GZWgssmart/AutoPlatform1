@@ -27,7 +27,7 @@
         <table id="table"
                data-toggle="table"
                data-toolbar="#toolbar"
-               data-url="/table/query"
+               data-url="/arBrand/queryAll"
                data-method="post"
                data-query-params="queryParams"
                data-pagination="true"
@@ -46,7 +46,7 @@
             <tr>
                 <th data-radio="true" data-field="status"></th>
                 <th data-field="brandName">品牌名</th>
-                <th data-field="brandLogo">品牌Logo</th>
+                <%--<th data-field="brandLogo">品牌Logo</th>--%>
                 <th data-field="brandDes">品牌描述</th>
                 <th data-field="brandStatus">品牌状态</th>
             </tr>
@@ -67,10 +67,10 @@
 </div>
 
 <!-- 添加弹窗 -->
-<div class="modal fade" id="addWindow" aria-hidden="true" style="overflow:auto; ">
+<div class="modal fade" id="add" aria-hidden="true" style="overflow:auto; ">
     <div class="modal-dialog" style="width: 700px;height: auto;">
         <div class="modal-content" style="overflow:hidden;">
-            <form class="form-horizontal" role="form" onsubmit="return checkAdd()" id="showAddFormWar" method="post">
+            <form class="form-horizontal" id="showAddFormWar" method="post">
                 <div class="modal-header" style="overflow:auto;">
                     <h4>请填写汽车品牌的相关信息</h4>
                 </div>
@@ -87,19 +87,19 @@
                         <textarea type="text" name="brandDes" placeholder="请输入关于该品牌的描述" style="height: 100px;" class="form-control"></textarea>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">汽车品牌Logo：</label>
-                    <div class="col-lg-7">
-                        <div class="ibox-title">
-                            <div class="input-group" style="padding-left: 15px;">
-                                <input id="add_carBrandLogo"  define="carBrand.brandLogo" name="txt_file"
-                                       type="file" class="form-control" multiple
-                                       class="file-loading"
-                                       placeholder="请选择或输入一个你想上传的相册类型,默认当天日期为类型!"/>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <%--<div class="form-group">--%>
+                    <%--<label class="col-sm-3 control-label">汽车品牌Logo：</label>--%>
+                    <%--<div class="col-lg-7">--%>
+                        <%--<div class="ibox-title">--%>
+                            <%--<div class="input-group" style="padding-left: 15px;">--%>
+                                <%--<input id="add_carBrandLogo"  define="carBrand.brandLogo" name="txt_file"--%>
+                                       <%--type="file" class="form-control" multiple--%>
+                                       <%--class="file-loading"--%>
+                                       <%--placeholder="请选择或输入一个你想上传的相册类型,默认当天日期为类型!"/>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                    <%--</div>--%>
+                <%--</div>--%>
                 <div class="form-group">
                     <div class="col-sm-offset-8">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
@@ -113,10 +113,12 @@
 
 
 <!-- 修改弹窗 -->
-<div class="modal fade" id="editWindow" aria-hidden="true" style="overflow:auto; ">
+<div class="modal fade" id="edit" aria-hidden="true" style="overflow:auto; ">
     <div class="modal-dialog" style="width: 700px;height: auto;">
         <div class="modal-content" style="overflow:hidden;">
-            <form class="form-horizontal" role="form" onsubmit="return checkAdd()" id="showEditFormWar" method="post">
+            <form class="form-horizontal" id="showEditFormWar">
+                <input type="hidden"name="brandId" define="carBrand.brandId">
+                <input type="hidden"name="brandStatus" define="carBrand.brandStatus">
                 <div class="modal-header" style="overflow:auto;">
                     <p>请修改该品牌的相关信息</p>
                 </div>
@@ -133,19 +135,19 @@
                         <textarea type="text" name="brandDes" define="carBrand.brandDes" placeholder="请输入关于该品牌的描述" style="height: 100px;" class="form-control"></textarea>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">汽车品牌Logo：</label>
-                    <div class="col-lg-7">
-                        <div class="ibox-title">
-                            <div class="input-group" style="padding-left: 15px;">
-                                <input id="edit_carBrandLogo" define="carBrand.brandLogo" name="txt_file"
-                                       type="file" class="form-control" multiple
-                                       class="file-loading"
-                                       placeholder="请选择或输入一个你想上传的相册类型,默认当天日期为类型!"/>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <%--<div class="form-group">--%>
+                    <%--<label class="col-sm-3 control-label">汽车品牌Logo：</label>--%>
+                    <%--<div class="col-lg-7">--%>
+                        <%--<div class="ibox-title">--%>
+                            <%--<div class="input-group" style="padding-left: 15px;">--%>
+                                <%--<input id="edit_carBrandLogo" define="carBrand.brandLogo" name="txt_file"--%>
+                                       <%--type="file" class="form-control" multiple--%>
+                                       <%--class="file-loading"--%>
+                                       <%--placeholder="请选择或输入一个你想上传的相册类型,默认当天日期为类型!"/>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                    <%--</div>--%>
+                <%--</div>--%>
                 <div class="form-group">
                     <div class="col-sm-offset-8">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>

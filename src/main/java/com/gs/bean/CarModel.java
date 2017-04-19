@@ -1,15 +1,25 @@
 package com.gs.bean;
 
 public class CarModel {
-    private String modelId;
+    private String modelId;//车型编号
 
-    private String modelName;
+    private String modelName;//车型名称
 
-    private String modelDes;
+    private String modelDes;//车型描述
 
-    private String brandId;
+    private String brandId;//车型品牌
 
-    private String modelStaus;
+    private String modelStaus;//车型状态
+
+    private CarBrand carBrand;
+
+    public CarBrand getCarBrand() {
+        return carBrand;
+    }
+
+    public void setCarBrand(CarBrand carBrand) {
+        this.carBrand = carBrand;
+    }
 
     public String getModelId() {
         return modelId;

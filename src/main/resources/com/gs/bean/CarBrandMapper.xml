@@ -1,11 +1,27 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.gs.dao.CarBrandDAO" >
-  <resultMap id="BaseResultMap" type="com.gs.bean.CarBrand" >
+  <resultMap id="carbrandMap" type="carbrand" >
     <id column="brandId" property="brandId" jdbcType="VARCHAR" />
     <result column="brandName" property="brandName" jdbcType="VARCHAR" />
     <result column="brandDes" property="brandDes" jdbcType="VARCHAR" />
     <result column="brandStatus" property="brandStatus" jdbcType="VARCHAR" />
   </resultMap>
+
+  <select id="queryAll" resultMap="carbrandMap">
+    select * from t_car_brand
+  </select>
+
+  <insert id="insert"  parameterType="carbrand">
+    INSERT into t_car_brand(brandId, brandName, brandDes, brandStatus) values(uuid(), #{brandName}, #{brandDes}, #{brandStatus})
+  </insert>
+
+  <update id="update" parameterType="carbrand">
+    update t_car_brand set brandName = #{brandName},brandDes = #{brandDes},brandStatus = #{brandStatus} where brandId = #{brandId}
+  </update>
+
+  <delete id="deleteById" parameterType="string">
+    delete from t_car_brand where brandId = #{brandId}
+  </delete>
 
 </mapper>

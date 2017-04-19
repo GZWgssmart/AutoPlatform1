@@ -29,7 +29,7 @@
         <table id="table"
                data-toggle="table"
                data-toolbar="#toolbar"
-               data-url="/table/query"
+               data-url="/carPlate/queryAll"
                data-method="post"
                data-query-params="queryParams"
                data-pagination="true"
@@ -46,7 +46,7 @@
                data-single-select="true">
             <thead>
             <tr>
-                <th data-radio="true" data-field="status"></th>
+                <th data-radio="true" data-field="plateId"></th>
                 <th data-field="plateName">车牌名称</th>
                 <th data-field="plateDes">车牌描述</th>
                 <th data-field="plateStatus">车牌状态</th>

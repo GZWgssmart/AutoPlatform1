@@ -3,31 +3,31 @@ package com.gs.bean;
 import java.util.Date;
 
 public class Company {
-    private String companyId;
+    private String companyId;//公司编号
 
-    private String companyName;
+    private String companyName;//公司名称
 
-    private String companyAddress;
+    private String companyAddress;//公司地址
 
-    private String companyTel;
+    private String companyTel;//公司联系方式
 
-    private String companyPricipal;
+    private String companyPricipal;//公司负责人
 
-    private String companyWebsite;
+    private String companyWebsite;//公司官网URL
 
-    private String companyLogo;
+    private String companyLogo;//公司logo图片
 
-    private Date companyOpendate;
+    private Date companyOpendate;//公司成立时间
 
-    private String companySize;
+    private String companySize;//公司规模
 
-    private Double companyLongitude;
+    private Double companyLongitude;//公司经度
 
-    private Double companyLatitude;
+    private Double companyLatitude;//公司纬度
 
-    private String companyDes;
+    private String companyDes;//公司描述
 
-    private String companyStatus;
+    private String companyStatus;//公司状态
 
     public String getCompanyId() {
         return companyId;

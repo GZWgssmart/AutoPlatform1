@@ -28,7 +28,7 @@ public class CompanyController {
     private CompanyService companyService;
 
     @ResponseBody
-    @RequestMapping(value = "queryAll")
+    @RequestMapping(value = "queryAll",method = RequestMethod.POST)
     public List<Company> queryAll() {
         logger.info("查询所有公司信息");
         List<Company> companyList = companyService.queryAll();

@@ -1,17 +1,17 @@
 package com.gs.bean;
 
 public class CarColor {
-    private String colorId;
+    private String colorId;//颜色编号
 
-    private String colorName;
+    private String colorName;//颜色名称
 
-    private String colorRgb;
+    private String colorRgb;//颜色的RGB值
 
-    private String colorHex;
+    private String colorHex;//颜色的十六进制值
 
-    private String colorDes;
+    private String colorDes;//颜色描述
 
-    private String colorStatus;
+    private String colorStatus;//颜色状态
 
     public String getColorId() {
         return colorId;
