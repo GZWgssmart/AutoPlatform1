@@ -48,7 +48,7 @@
                 <th data-field="supplyTypeName">供应商类型名称</th>
                 <th data-field="companyName">供应商类型所属公司</th>
                 <th data-field="supplyTypeDes">供应商类型描述内容</th>
-                <th data-field="supplyTypeStatus">状态</th>
+                <th data-field="supplyTypeStatus">类型状态</th>
             </tr>
             </thead>
         </table>
@@ -71,7 +71,7 @@
 <div class="modal fade" id="add" aria-hidden="true" >
     <div class="modal-dialog"  style="width: 750px;height: auto;" >
         <div class="modal-content" >
-                <form class="form-horizontal"  role="form" onsubmit="return checkAdd()" id="addform" method="post">
+                <form class="form-horizontal"  role="form" onsubmit="return checkAdd()" id="addForm" method="post">
                 <div class="modal-header" style="overflow:auto;">
                     <p>添加供应商类型信息</p>
                 </div>

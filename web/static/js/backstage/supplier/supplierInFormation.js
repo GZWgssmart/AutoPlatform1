@@ -63,6 +63,22 @@ $(document).ready(function() {
             companyName : {
                 required : true,
                 minlength : 2
+            },
+            supplyAlipay : {
+                required : true,
+                minlength : 2
+            },
+            supplyBank : {
+                required : true,
+                minlength : 2
+            },
+            supplyBankAccount : {
+                required : true,
+                minlength : 2
+            },
+            supplyBankNo : {
+                required : true,
+                minlength : 2
             }
         },
         messages: {
@@ -75,6 +91,10 @@ $(document).ready(function() {
             supplyWechat: "请输入供应商微信号",
             supplyTypeName: "请选择供应商类型",
             companyName: "请选择供应商所属公司",
+            supplyAlipay: "请输入支付宝帐号",
+            supplyBank: "请输入开户银行全称",
+            supplyBankAccount: "请输入开户行名称",
+            supplyBankNo: "请输入银行卡号",
         },
         errorPlacement : function(error, element) {
             element.next().remove();
@@ -131,6 +151,22 @@ $(document).ready(function() {
             companyName : {
                 required : true,
                 minlength : 2
+            },
+            supplyAlipay : {
+                required : true,
+                minlength : 2
+            },
+            supplyBank : {
+                required : true,
+                minlength : 2
+            },
+            supplyBankAccount : {
+                required : true,
+                minlength : 2
+            },
+            supplyBankNo : {
+                required : true,
+                minlength : 2
             }
         },
         messages: {
@@ -143,6 +179,10 @@ $(document).ready(function() {
             supplyWechat: "请输入供应商微信号",
             supplyTypeName: "请选择供应商类型",
             companyName: "请选择供应商所属公司",
+            supplyAlipay: "请输入支付宝帐号",
+            supplyBank: "请输入开户银行全称",
+            supplyBankAccount: "请输入开户行名称",
+            supplyBankNo: "请输入银行卡号",
         },
         errorPlacement : function(error, element) {
             element.next().remove();
@@ -164,9 +204,6 @@ $(document).ready(function() {
         }
     })
 });
-
-
-
 
 
 $(function () {

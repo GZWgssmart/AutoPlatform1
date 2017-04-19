@@ -76,7 +76,7 @@
 <div class="modal fade" role="form" id="add" aria-hidden="true" >
     <div class="modal-dialog" >
         <div class="modal-content" >
-            <form class="form-horizontal" onsubmit="return checkAdd()" id="register-form" method="get">
+            <form class="form-horizontal" onsubmit="return checkAdd()" id="addForm" method="post">
                 <div class="modal-header" style="overflow:auto;">
                     <p>添加供应商信息</p>
                 </div>
@@ -113,19 +113,13 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">供应商类型：</label>
                     <div class="col-sm-7">
-                        <select  name="supplyTypeId"  placeholder="请选择供应商类型" class="form-control">
-                            <option>a</option>
-                            <option>a</option>
-                        </select>
+                        <input type="text" placeholder="请选择供应商类型" name="supplyTypeName"  class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">供应商所属公司：</label>
                     <div class="col-sm-7">
-                        <select  name="companyId" placeholder="请输入供应商所属公司" class="form-control">
-                            <option>a</option>
-                            <option>a</option>
-                        </select>
+                        <input type="text"  placeholder="请选择供应商所属公司" name="companyName"  class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
@@ -135,21 +129,21 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">开户行名称：</label>
+                    <label class="col-sm-3 control-label">开户银行全称：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="supplyBankAccount"  placeholder="请输入开户行名称" class="form-control">
+                        <input type="text" placeholder="请输入开户银行全称" name="supplyBank" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">开户银行全称：</label>
+                    <label class="col-sm-3 control-label">开户行名称：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="supplyBank" placeholder="请输入开户银行全称" class="form-control">
+                        <input type="text" placeholder="请输入开户行名称"  name="supplyBankAccount"   class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">银行卡号：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="supplyBankNo" placeholder="请输入银行卡号" class="form-control">
+                        <input type="text" placeholder="请输入银行卡号" name="supplyBankNo"  class="form-control">
                     </div>
                 </div>
                 <div class="modal-footer" >
@@ -206,10 +200,6 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">供应商类型：</label>
                     <div class="col-sm-7">
-                       <%-- <select  class="form-control">
-                            <option>a</option>
-                            <option>a</option>
-                        </select>--%>
                            <input type="text" define="supply.supplyTypeName" name="supplyTypeName"  class="form-control">
                     </div>
                 </div>
@@ -227,10 +217,20 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">银行：</label>
+                    <label class="col-sm-3 control-label">开户银行全称：</label>
                     <div class="col-sm-7">
                         <input type="text" define="supply.supplyBank" name="supplyBank" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">开户行名称：</label>
+                    <div class="col-sm-7">
                         <input type="text" define="supply.supplyBankAccount"  name="supplyBankAccount"   class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">银行卡号：</label>
+                    <div class="col-sm-7">
                         <input type="text" define="supply.supplyBankNo" name="supplyBankNo"  class="form-control">
                     </div>
                 </div>
