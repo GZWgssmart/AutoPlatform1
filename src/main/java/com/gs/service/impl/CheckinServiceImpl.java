@@ -1,13 +1,13 @@
 package com.gs.service.impl;
 
 import com.gs.bean.Checkin;
+import com.gs.common.bean.Pager;
 import com.gs.dao.CheckinDAO;
 import com.gs.service.CheckinService;
 import org.springframework.stereotype.Service;
+
 import javax.annotation.Resource;
 import java.util.List;
-
-import com.gs.common.bean.Pager;
 /**
 *由CSWangBin技术支持
 *
@@ -32,12 +32,10 @@ public class CheckinServiceImpl implements CheckinService {
 	public int batchUpdate(List<Checkin> list) { return checkinDAO.batchUpdate(list); }
 	public List<Checkin> queryAll() { return checkinDAO.queryAll(); }
 
-	@Override
 	public List<Checkin> queryAll(String status) {
-		return checkinDAO.queryAll();
+		return checkinDAO.queryAll(status);
 	}
 
-	public List<Checkin> queryByStatus(String status) { return checkinDAO.queryAll(status); }
 	public Checkin query(Checkin checkin) { return checkinDAO.query(checkin); }
 	public Checkin queryById(String id) { return checkinDAO.queryById(id); }
 	public List<Checkin> queryByPager(Pager pager) { return checkinDAO.queryByPager(pager); }
@@ -45,4 +43,11 @@ public class CheckinServiceImpl implements CheckinService {
 	public int inactive(String id) { return checkinDAO.inactive(id); }
 	public int active(String id) { return checkinDAO.active(id); }
 
+	public List<Checkin> queryByPagerDisable(Pager pager) {
+		return checkinDAO.queryByPagerDisable(pager);
+	}
+
+	public int countByDisable() {
+		return checkinDAO.countByDisable();
+	}
 }

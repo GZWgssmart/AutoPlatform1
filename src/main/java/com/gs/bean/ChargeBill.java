@@ -2,24 +2,27 @@ package com.gs.bean;
 
 import java.util.Date;
 
+/**
+ * 收费单据bean, 张文星
+ * */
 public class ChargeBill {
-    private String chargeBillId;
+    private String chargeBillId; // 收费单据编号
 
-    private String maintainRecordId;
+    private String maintainRecordId; //维修保养记录编号
 
-    private Double chargeBillMoney;
+    private Double chargeBillMoney; //收费总金额
 
-    private String paymentMethod;
+    private String paymentMethod; //付款方式
 
-    private Double actualPayment;
+    private Double actualPayment; //实付款
 
-    private Date chargeTime;
+    private Date chargeTime; //收费时间
 
-    private Date chargeCreatedTime;
+    private Date chargeCreatedTime; //收费单据创建时间
 
-    private String chargeBillDes;
+    private String chargeBillDes; //收费单据描述
 
-    private String chargeBillStatus;
+    private String chargeBillStatus; //收费状态
 
     public String getChargeBillId() {
         return chargeBillId;

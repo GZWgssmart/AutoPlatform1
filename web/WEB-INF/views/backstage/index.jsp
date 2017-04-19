@@ -167,8 +167,8 @@
                     <li>
                         <a href="#"><i class="fa fa-car"></i> <span class="nav-label">维修保养接待</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
-                            <li><a class="J_menuItem" href="/maintenanceJieDaiGuanLi/reception">接待登记管理</a></li>
-                            <li><a class="J_menuItem" href="/maintenanceJieDaiGuanLi/subsidiary">维修保养明细管理</a></li>
+                            <li><a class="J_menuItem" href="/maintenanceReception/reception">接待登记管理</a></li>
+                            <li><a class="J_menuItem" href="/maintenanceReception/subsidiary">维修保养明细管理</a></li>
                         </ul>
                     </li>
                     <li>
