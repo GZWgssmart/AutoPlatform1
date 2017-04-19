@@ -1,8 +1,13 @@
 var context = '';
 
+$(function () {
+    initTable("table", "/incomingType/queryByPager"); // 初始化表格
+});
+
+
 function statusFormatter(index, row) {
     /*处理数据*/
-    if(row.outTypeStatus == 'Y') {
+    if(row.inTypeStatus == 'Y') {
         return "&nbsp;&nbsp;激活";
     } else {
         return "&nbsp;&nbsp;禁用";
@@ -12,39 +17,32 @@ function statusFormatter(index, row) {
 
 function openStatusFormatter(index, row) {
     /*处理数据*/
-    if(row.outTypeStatus == 'Y') {
-        return "&nbsp;&nbsp;<a href='javascript:;' onclick='inactive(\""+row.outTypeId+ "\")'>禁用</a>";
+    if(row.inTypeStatus == 'Y') {
+        return "&nbsp;&nbsp;<a href='javascript:;' onclick='inactive(\""+row.inTypeId+ "\")'>禁用</a>";
     } else {
-        return "&nbsp;&nbsp;<a href='javascript:;' onclick='active(\""+row.outTypeId+ "\")'>激活</a>";
+        return "&nbsp;&nbsp;<a href='javascript:;' onclick='active(\""+row.inTypeId+ "\")'>激活</a>";
     }
 
 }
 
+
+
 function inactive(id) {
-    $.post(context + "/outGoingType/inactive?id="+id,
-        function(data){
-            $('#table').bootstrapTable(
-                "refresh",
-                {
-                }
-            );
-        },"json");
-    location.reload()
+    $.post(context + "/incomingType/inactive?id="+id,
+        function (data) {
+            if (data.result == "success") {
+                $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
+            }
+        })
 }
 
 function active(id) {
-    $.post(context + "/outGoingType/active?id="+id,
-
-        function(data){
-            $('#table').bootstrapTable(
-                "refresh",
-                {
-
-                }
-            );
-        },"json");
-    location.reload()
-
+    $.post(context + "/incomingType/active?id="+id,
+        function (data) {
+            if (data.result == "success") {
+                $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
+            }
+        })
 }
 
 $(function () {
@@ -56,7 +54,7 @@ $(function () {
     );
 
     //绑定Ajax的内容
-    $.getJSON("/outGoingType/queryByPage", function (data) {
+    $.getJSON("/incomingType/queryByPager", function (data) {
         $("#addSelect").empty();//清空下拉框
         $.each(data, function (i, item) {
             $("#addSelect").append("<option value='" + data[i].inTypeId + "'>&nbsp;" + data[i].inTypeName + "</option>");
@@ -76,8 +74,8 @@ function showEdit(){
 //                $('#editName').val(row[0].name);
 //                $('#editPrice').val(row[0].price);
         $("#edit").modal('show'); // 显示弹窗
-        var outGoingType = row[0];
-        $("#outTypeUpdateForm").fill(outGoingType);
+        var incomingType = row[0];
+        $("#incomingTypeUpdateForm").fill(incomingType);
     }else{
         swal({
             title:"",
@@ -87,6 +85,7 @@ function showEdit(){
 }
 
 function showAdd(){
+    $("#inTypeName").val("");
     $("#add").modal('show');
 }
 
@@ -109,23 +108,20 @@ function showDel(){
     }
 }
 
-
-
-
 $(document).ready(function() {
 
-    $("#outTypeInsertForm").validate({
+    $("#incomingTypeInsertForm").validate({
         errorElement : 'span',
         errorClass : 'help-block',
         rules : {
-            outTypeName : {
+            inTypeName : {
                 required : true,
                 minlength : 2
             },
 
         },
         messages : {
-            outTypeName : {
+            inTypeName : {
                 required : "请输入类型名称",
                 minlength : jQuery.format("类型名称不能少于{2}个字符")
             },
@@ -146,8 +142,8 @@ $(document).ready(function() {
             label.remove();
         },
         submitHandler: function(form) {
-            $.post("/outGoingType/add",
-                $("#outTypeInsertForm").serialize(),
+            $.post(context + "/incomingType/add",
+                $("#incomingTypeInsertForm").serialize(),
                 function (data) {
                     if (data.result == "success") {
                         $("#add").modal('hide'); // 关闭指定的窗口
@@ -169,18 +165,18 @@ $(document).ready(function() {
 
     })
 
-    $("#outTypeUpdateForm").validate({
+    $("#incomingTypeUpdateForm").validate({
         errorElement : 'span',
         errorClass : 'help-block',
         rules : {
-            outTypeName : {
+            inTypeName : {
                 required : true,
                 minlength : 2
             },
 
         },
         messages : {
-            outTypeName : {
+            inTypeName : {
                 required : "请输入类型名称",
                 minlength : jQuery.format("类型名称不能少于{2}个字符")
             },
@@ -201,8 +197,8 @@ $(document).ready(function() {
             label.remove();
         },
         submitHandler: function(form) {
-            $.post("/outGoingType/update",
-                $("#outTypeUpdateForm").serialize(),
+            $.post("/incomingType/update",
+                $("#incomingTypeUpdateForm").serialize(),
                 function (data) {
                     if (data.result == "success") {
                         $("#edit").modal('hide'); // 关闭指定的窗口

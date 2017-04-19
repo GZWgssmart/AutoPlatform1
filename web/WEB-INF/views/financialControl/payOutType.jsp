@@ -71,7 +71,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">名称：</label>
                         <div class="col-sm-7">
-                            <input type="text" name="outTypeName" placeholder="请输入支出类型名称" class="form-control">
+                            <input type="text" id="outTypeName" name="outTypeName" placeholder="请输入支出类型名称" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
@@ -162,7 +162,7 @@
 <script src="/static/js/select2/select2.js"></script>
 <script src="/static/js/sweetalert/sweetalert.min.js"></script>
 <script src="/static/js/contextmenu.js"></script>
-<script src="/static/js/financialControlJS/payOutType.js"></script>
+<script src="/static/js/backstage/financialControlJS/payOutType.js"></script>
 <script src="/static/js/bootstrap-select/bootstrap-select.js"></script>
 <script src="/static/js/form/jquery.validate.js"></script>
 
