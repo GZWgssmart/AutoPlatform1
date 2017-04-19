@@ -1,23 +1,26 @@
 package com.gs.bean;
 
+/**
+ * 维修保养项目表
+ */
 public class MaintainFix {
-    private String maintainId;
+    private String maintainId;//维修保养项目编号
 
-    private String maintainName;
+    private String maintainName;//维修保养项目名称
 
-    private Double maintainHour;
+    private Double maintainHour;//维修保养项目工时
 
-    private Double maintainMoney;
+    private Double maintainMoney;//维修保养项目基础费用
 
-    private Double maintainManhourFee;
+    private Double maintainManhourFee;//维修保养项目工时费
 
-    private String maintainOrFix;
+    private String maintainOrFix;//标识是保养还是维修
 
-    private String maintainDes;
+    private String maintainDes;//维修保养项目描述
 
-    private String companyId;
+    private String companyId;//维修保养项目所属公司 来源于t_company表
 
-    private String maintainStatus;
+    private String maintainStatus;//维修保养项目状态
 
     public String getMaintainId() {
         return maintainId;
