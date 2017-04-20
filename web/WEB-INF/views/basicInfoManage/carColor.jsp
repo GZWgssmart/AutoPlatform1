@@ -31,7 +31,7 @@
         <table id="table"
                data-toggle="table"
                data-toolbar="#toolbar"
-               data-url="/table/query"
+               data-url="/carColor/queryByPager"
                data-method="post"
                data-query-params="queryParams"
                data-pagination="true"
@@ -50,7 +50,7 @@
             <tr>
                 <th data-radio="true" data-field="status"></th>
                 <th data-field="colorName">颜色名称</th>
-                <th data-field="colorRGB">颜色的RBG值</th>
+                <th data-field="colorRgb">颜色的RBG值</th>
                 <th data-field="colorHex">颜色的16进制值</th>
                 <th data-field="colorDes">颜色描述</th>
                 <th data-field="colorStatus">颜色状态</th>

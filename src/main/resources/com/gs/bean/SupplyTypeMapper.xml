@@ -1,12 +1,64 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.gs.dao.SupplyTypeDAO" >
-  <resultMap id="BaseResultMap" type="com.gs.bean.SupplyType" >
+  <resultMap id="supplyTypeMap" type="com.gs.bean.SupplyType" >
     <id column="supplyTypeId" property="supplyTypeId" jdbcType="VARCHAR" />
     <result column="supplyTypeName" property="supplyTypeName" jdbcType="VARCHAR" />
     <result column="supplyTypeDes" property="supplyTypeDes" jdbcType="VARCHAR" />
     <result column="companyId" property="companyId" jdbcType="VARCHAR" />
     <result column="supplyTypeStatus" property="supplyTypeStatus" jdbcType="VARCHAR" />
   </resultMap>
+
+  <!--
+          查询所有供应商类型信息
+      -->
+  <select id="queryAll" resultMap="supplyTypeMap">
+    <![CDATA[
+        SELECT * FROM auto_platform.t_supply_type
+        ]]>
+  </select>
+
+  <!--
+      添加供应商类型信息,默认添加状态为可用状态
+  -->
+  <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="SupplyType">
+    <![CDATA[
+        insert into auto_platform.t_supply_type(supplyTypeId, supplyTypeName, companyId, supplyTypeDes,supplyTypeStatus)
+        values(uuid(),#{supplyTypeName},#{companyId},#{supplyTypeDes},'Y')
+        ]]>
+  </insert>
+
+  <!--
+      根据id删除供应商类型信息
+  -->
+  <delete id="deleteById">
+    DELETE FROM auto_platform.t_supply_type WHERE supplyTypeId=#{supplyTypeId}
+  </delete>
+
+  <!--
+      根据id更新供应商类型信息
+  -->
+  <update id="update" keyProperty="id" parameterType="java.util.Map">
+    UPDATE auto_platform.t_supply_type SET supplyTypeName=#{supplyTypeName},companyId=#{companyId},
+    supplyTypeDes=#{supplyTypeDes} WHERE supplyTypeId=#{supplyTypeId}
+  </update>
+
+  <!--
+      冻结供应商类型信息
+  -->
+  <update id="inactive" keyProperty="id" parameterType="string">
+    <![CDATA[
+        update auto_platform.t_supply_type set supplyTypeStatus = 'N' where supplyTypeId = #{supplyTypeId}
+        ]]>
+  </update>
+
+  <!--
+      激活供应商类型信息
+  -->
+  <update id="active" keyProperty="id" parameterType="string">
+    <![CDATA[
+        update auto_platform.t_supply_type set supplyTypeStatus = 'Y' where supplyTypeId = #{supplyTypeId}
+        ]]>
+  </update>
 
 </mapper>

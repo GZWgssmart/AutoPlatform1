@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Administrator
-  Date: 2017/4/11
-  Time: 15:59
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -16,6 +9,7 @@
     <link rel="stylesheet" href="/static/css/select2.min.css">
     <link rel="stylesheet" href="/static/css/sweetalert.css">
     <link rel="stylesheet" href="/static/css/fileinput.css">
+    <link rel="stylesheet" href="/static/css/table/table.css">
 </head>
 <body>
 <%@include file="../backstage/contextmenu.jsp" %>
@@ -24,32 +18,17 @@
     <div class="panel-body" style="padding-bottom:0px;">
         <!--show-refresh, show-toggle的样式可以在bootstrap-table.js的948行修改-->
         <!-- table里的所有属性在bootstrap-table.js的240行-->
-        <table id="table"
-               data-toggle="table"
-               data-toolbar="#toolbar"
-               data-url="/table/query"
-               data-method="post"
-               data-query-params="queryParams"
-               data-pagination="true"
-               data-search="true"
-               data-show-refresh="true"
-               data-show-toggle="true"
-               data-show-columns="true"
-               data-page-size="10"
-               data-height="543"
-               data-id-field="id"
-               data-page-list="[5, 10, 20]"
-               data-cach="false"
-               data-click-to-select="true"
-               data-single-select="true">
+        <table id="table">
             <thead>
-            <tr>
-                <th data-radio="true" data-field="status"></th>
-                <th data-field="brandName">品牌名</th>
-                <th data-field="brandLogo">品牌Logo</th>
-                <th data-field="brandDes">品牌描述</th>
-                <th data-field="brandStatus">品牌状态</th>
-            </tr>
+                <tr>
+                    <th data-checkbox="true"></th>
+                    <th data-field="brandName">
+                        汽车品牌
+                    </th>
+                    <th data-field="brandDes">
+                        汽车品牌描述
+                    </th>
+                </tr>
             </thead>
         </table>
         <div id="toolbar" class="btn-group">
@@ -67,10 +46,10 @@
 </div>
 
 <!-- 添加弹窗 -->
-<div class="modal fade" id="addWindow" aria-hidden="true" style="overflow:auto; ">
+<div class="modal fade" id="add" aria-hidden="true" style="overflow:auto; ">
     <div class="modal-dialog" style="width: 700px;height: auto;">
         <div class="modal-content" style="overflow:hidden;">
-            <form class="form-horizontal" role="form" onsubmit="return checkAdd()" id="showAddFormWar" method="post">
+            <form class="form-horizontal" id="showAddFormWar" method="post">
                 <div class="modal-header" style="overflow:auto;">
                     <h4>请填写汽车品牌的相关信息</h4>
                 </div>
@@ -87,19 +66,19 @@
                         <textarea type="text" name="brandDes" placeholder="请输入关于该品牌的描述" style="height: 100px;" class="form-control"></textarea>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">汽车品牌Logo：</label>
-                    <div class="col-lg-7">
-                        <div class="ibox-title">
-                            <div class="input-group" style="padding-left: 15px;">
-                                <input id="add_carBrandLogo"  define="carBrand.brandLogo" name="txt_file"
-                                       type="file" class="form-control" multiple
-                                       class="file-loading"
-                                       placeholder="请选择或输入一个你想上传的相册类型,默认当天日期为类型!"/>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <%--<div class="form-group">--%>
+                    <%--<label class="col-sm-3 control-label">汽车品牌Logo：</label>--%>
+                    <%--<div class="col-lg-7">--%>
+                        <%--<div class="ibox-title">--%>
+                            <%--<div class="input-group" style="padding-left: 15px;">--%>
+                                <%--<input id="add_carBrandLogo"  define="carBrand.brandLogo" name="txt_file"--%>
+                                       <%--type="file" class="form-control" multiple--%>
+                                       <%--class="file-loading"--%>
+                                       <%--placeholder="请选择或输入一个你想上传的相册类型,默认当天日期为类型!"/>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                    <%--</div>--%>
+                <%--</div>--%>
                 <div class="form-group">
                     <div class="col-sm-offset-8">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
@@ -113,10 +92,12 @@
 
 
 <!-- 修改弹窗 -->
-<div class="modal fade" id="editWindow" aria-hidden="true" style="overflow:auto; ">
+<div class="modal fade" id="edit" aria-hidden="true" style="overflow:auto; ">
     <div class="modal-dialog" style="width: 700px;height: auto;">
         <div class="modal-content" style="overflow:hidden;">
-            <form class="form-horizontal" role="form" onsubmit="return checkAdd()" id="showEditFormWar" method="post">
+            <form class="form-horizontal" id="showEditFormWar">
+                <input type="hidden"name="brandId" define="carBrand.brandId">
+                <input type="hidden"name="brandStatus" define="carBrand.brandStatus">
                 <div class="modal-header" style="overflow:auto;">
                     <p>请修改该品牌的相关信息</p>
                 </div>
@@ -133,19 +114,19 @@
                         <textarea type="text" name="brandDes" define="carBrand.brandDes" placeholder="请输入关于该品牌的描述" style="height: 100px;" class="form-control"></textarea>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">汽车品牌Logo：</label>
-                    <div class="col-lg-7">
-                        <div class="ibox-title">
-                            <div class="input-group" style="padding-left: 15px;">
-                                <input id="edit_carBrandLogo" define="carBrand.brandLogo" name="txt_file"
-                                       type="file" class="form-control" multiple
-                                       class="file-loading"
-                                       placeholder="请选择或输入一个你想上传的相册类型,默认当天日期为类型!"/>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <%--<div class="form-group">--%>
+                    <%--<label class="col-sm-3 control-label">汽车品牌Logo：</label>--%>
+                    <%--<div class="col-lg-7">--%>
+                        <%--<div class="ibox-title">--%>
+                            <%--<div class="input-group" style="padding-left: 15px;">--%>
+                                <%--<input id="edit_carBrandLogo" define="carBrand.brandLogo" name="txt_file"--%>
+                                       <%--type="file" class="form-control" multiple--%>
+                                       <%--class="file-loading"--%>
+                                       <%--placeholder="请选择或输入一个你想上传的相册类型,默认当天日期为类型!"/>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                    <%--</div>--%>
+                <%--</div>--%>
                 <div class="form-group">
                     <div class="col-sm-offset-8">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
@@ -203,6 +184,7 @@
 <script src="/static/js/select2/select2.js"></script>
 <script src="/static/js/sweetalert/sweetalert.min.js"></script>
 <script src="/static/js/contextmenu.js"></script>
+<script src="/static/js/backstage/main.js"></script>
 <script src="/static/js/fileInput/fileinput.js"></script>
 <script src="/static/js/fileInput/zh.js"></script>
 <script src="/static/js/form/jquery.validate.js"></script>

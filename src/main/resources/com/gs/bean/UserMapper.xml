@@ -24,5 +24,39 @@
     <result column="userStatus" jdbcType="VARCHAR" property="userStatus" />
   </resultMap>
 
+  <!-- 添加员工的基本信息 -->
+  <insert id="insert" useGeneratedKeys="true" keyProperty="userId" parameterType="user">
+    <![CDATA[
+        insert into t_user(userEmail, userPhone, userPwd, userNickName,
+          userIdentity, userName, userGender,userBirthday, userBirthday,
+          userAddress, qqOpenId, weiboOpenId, weChatOpenId, userIcon,
+          userDes, companyId, userSalary, userCreatedTime, userLoginedTime,
+          userStatus) vlaues(#{userEmail}, #{userPhone}, #{userPwd}, #{userNickName},
+          #{userIdentity}, #{userName}, #{userGender},#{userBirthday}, #{userBirthday},
+          #{userAddress}, #{qqOpenId}, #{weiboOpenId}, #{weChatOpenId}, #{userIcon},
+          #{userDes}, #{companyId}, #{userSalary}, #{userCreatedTime}, #{userLoginedTime},
+          #{userStatus});
+      ]]>
+  </insert>
+
+  <!-- 修改员工的基本信息 -->
+  <update id="update" keyProperty="userId" parameterType="user">
+  </update>
+
+  <!-- 分页查询 -->
+  <select id="queryByPager" resultMap="BaseResultMap" parameterType="com.gs.common.bean.Pager">
+    <![CDATA[
+      select * from t_user u where u.userStatus = 'Y'
+    ]]>
+      limit #{beginIndex}, #{pageSize};
+  </select>
+
+  <!-- 查询所有员工的基本信息 -->
+  <select id="queryAll" resultMap="BaseResultMap">
+    <![CDATA[
+      select * from t_user;
+    ]]>
+  </select>
+
 
 </mapper>

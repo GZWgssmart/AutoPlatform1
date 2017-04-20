@@ -1,6 +1,9 @@
 package com.gs.service;
 
 import com.gs.bean.Checkin;
+import com.gs.common.bean.Pager;
+
+import java.util.List;
 
 /**
 *由CSWangBin技术支持
@@ -10,5 +13,12 @@ import com.gs.bean.Checkin;
 *@des 登记表Service
 */
 public interface CheckinService extends BaseService<String, Checkin>{
-
+    /**
+     * 分页查询被禁用的记录
+     */
+    public List<Checkin> queryByPagerDisable(Pager pager);
+    /**
+     * 分页查询被禁用的记录
+     */
+    public int countByDisable();
 }

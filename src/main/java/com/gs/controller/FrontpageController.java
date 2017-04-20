@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 
 @Controller
-@RequestMapping("/front")
+@RequestMapping("/")
 public class FrontpageController {
-    /**
-     * 前台主页
-     */
-    @RequestMapping(value = "/home",method = RequestMethod.GET)
-    public String GoHome() {
-        return "Frontpage/home";
+
+    @RequestMapping(value ="platformIntro",method = RequestMethod.GET)
+    public String Goplatform(){
+        return "Frontpage/PlatformIntro";
     }
+
+
 }

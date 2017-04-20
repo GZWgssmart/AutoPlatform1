@@ -1,13 +1,13 @@
 package com.gs.bean;
 
 public class CarPlate {
-    private String plateId;
+    private String plateId;//车牌编号
 
-    private String plateName;
+    private String plateName;//车牌名称
 
-    private String plateDes;
+    private String plateDes;//车牌描述
 
-    private String plateStatus;
+    private String plateStatus;//车牌状态
 
     public String getPlateId() {
         return plateId;

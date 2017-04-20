@@ -1,7 +1,12 @@
 package com.gs.dao;
 
+import com.gs.bean.Checkin;
 import com.gs.bean.IncomingOutgoing;
+import com.gs.common.bean.Pager;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
 /**
 *由CSWangBin技术支持
 *
@@ -11,5 +16,6 @@ import org.springframework.stereotype.Repository;
 */
 @Repository
 public interface IncomingOutgoingDAO extends BaseDAO<String, IncomingOutgoing>{
+
 
 }

@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="/static/css/bootstrap-table.css">
     <link rel="stylesheet" href="/static/css/select2.min.css">
     <link rel="stylesheet" href="/static/css/sweetalert.css">
+    <link rel="stylesheet" href="/static/css/table/table.css">
 </head>
 <body>
 <%@include file="../backstage/contextmenu.jsp" %>
@@ -29,7 +30,7 @@
         <table id="table"
                data-toggle="table"
                data-toolbar="#toolbar"
-               data-url="/table/query"
+               data-url="/carModel/queryByPager"
                data-method="post"
                data-query-params="queryParams"
                data-pagination="true"

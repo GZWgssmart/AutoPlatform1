@@ -1,8 +1,22 @@
-var context = '';
 
+
+/**
+ * 初始化表格
+ */
+$(function () {
+    initTable("table", "/incomingType/queryByPager"); // 初始化表格
+});
+
+
+/**
+ * 页面状态显示
+ * @param index
+ * @param row
+ * @returns {*}
+ */
 function statusFormatter(index, row) {
     /*处理数据*/
-    if(row.outTypeStatus == 'Y') {
+    if(row.inTypeStatus == 'Y') {
         return "&nbsp;&nbsp;激活";
     } else {
         return "&nbsp;&nbsp;禁用";
@@ -10,65 +24,69 @@ function statusFormatter(index, row) {
 
 }
 
+/**
+ * 激活禁用显示
+ * @param index
+ * @param row
+ * @returns {string}
+ */
 function openStatusFormatter(index, row) {
     /*处理数据*/
-    if(row.outTypeStatus == 'Y') {
-        return "&nbsp;&nbsp;<a href='javascript:;' onclick='inactive(\""+row.outTypeId+ "\")'>禁用</a>";
+    if(row.inTypeStatus == 'Y') {
+        return "&nbsp;&nbsp;<a href='javascript:;' onclick='inactive(\""+row.inTypeId+ "\")'>禁用</a>";
     } else {
-        return "&nbsp;&nbsp;<a href='javascript:;' onclick='active(\""+row.outTypeId+ "\")'>激活</a>";
+        return "&nbsp;&nbsp;<a href='javascript:;' onclick='active(\""+row.inTypeId+ "\")'>激活</a>";
     }
 
 }
 
+
+/**
+ * 禁用操作方法
+ * @param id
+ */
 function inactive(id) {
-    $.post(context + "/outGoingType/inactive?id="+id,
-        function(data){
-            $('#table').bootstrapTable(
-                "refresh",
-                {
-                }
-            );
-        },"json");
-    location.reload()
+    $.post( "/incomingType/inactive?id="+id,
+        function (data) {
+            if (data.result == "success") {
+                $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
+            }
+        })
 }
 
+/**
+ * 激活操作方法
+ * @param id
+ */
 function active(id) {
-    $.post(context + "/outGoingType/active?id="+id,
-
-        function(data){
-            $('#table').bootstrapTable(
-                "refresh",
-                {
-
-                }
-            );
-        },"json");
-    location.reload()
-
+    $.post( "/incomingType/active?id="+id,
+        function (data) {
+            if (data.result == "success") {
+                $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
+            }
+        })
 }
 
-$(function () {
-    $('#table').bootstrapTable('hideColumn', 'id');
+/**
+ * 查询禁用支出类型
+ * @param id
+ */
+function searchDisableStatus() {
+    initTable('table', '/incomingType/queryByPagerDisable');
+}
 
-    $("#addSelect").select2({
-            language: 'zh-CN'
-        }
-    );
+/**
+ * 查询激活支出类型
+ * @param id
+ */
+function searchRapidStatus() {
+    initTable('table', '/incomingType/queryByPager');
+}
 
-    //绑定Ajax的内容
-    $.getJSON("/outGoingType/queryByPage", function (data) {
-        $("#addSelect").empty();//清空下拉框
-        $.each(data, function (i, item) {
-            $("#addSelect").append("<option value='" + data[i].inTypeId + "'>&nbsp;" + data[i].inTypeName + "</option>");
-        });
-    })
-    //            $("#addSelect").on("select2:select",
-    //                    function (e) {
-    //                        alert(e)
-    //                        alert("select2:select", e);
-    //            });
-});
 
+/**
+ * 修改窗口
+ */
 function showEdit(){
     var row =  $('table').bootstrapTable('getSelections');
     if(row.length >0) {
@@ -76,8 +94,8 @@ function showEdit(){
 //                $('#editName').val(row[0].name);
 //                $('#editPrice').val(row[0].price);
         $("#edit").modal('show'); // 显示弹窗
-        var outGoingType = row[0];
-        $("#outTypeUpdateForm").fill(outGoingType);
+        var incomingType = row[0];
+        $("#incomingTypeUpdateForm").fill(incomingType);
     }else{
         swal({
             title:"",
@@ -86,46 +104,31 @@ function showEdit(){
     }
 }
 
+/**
+ * 添加窗口
+ */
 function showAdd(){
+    $("#inTypeName").val("");
     $("#add").modal('show');
 }
 
-function formatRepo(repo) {
-    return repo.text
-}
-function formatRepoSelection(repo) {
-    return repo.text
-}
-
-function showDel(){
-    var row =  $('table').bootstrapTable('getSelections');
-    if(row.length >0) {
-        $("#del").modal('show');
-    }else{
-        swal({
-            title:"",
-            text:"请先选择一行数据",
-            type:"warning"})
-    }
-}
-
-
-
-
+/**
+ * 前台验证及form表单提交
+ */
 $(document).ready(function() {
 
-    $("#outTypeInsertForm").validate({
+    $("#incomingTypeInsertForm").validate({
         errorElement : 'span',
         errorClass : 'help-block',
         rules : {
-            outTypeName : {
+            inTypeName : {
                 required : true,
                 minlength : 2
             },
 
         },
         messages : {
-            outTypeName : {
+            inTypeName : {
                 required : "请输入类型名称",
                 minlength : jQuery.format("类型名称不能少于{2}个字符")
             },
@@ -146,8 +149,8 @@ $(document).ready(function() {
             label.remove();
         },
         submitHandler: function(form) {
-            $.post("/outGoingType/add",
-                $("#outTypeInsertForm").serialize(),
+            $.post( "/incomingType/add",
+                $("#incomingTypeInsertForm").serialize(),
                 function (data) {
                     if (data.result == "success") {
                         $("#add").modal('hide'); // 关闭指定的窗口
@@ -169,18 +172,18 @@ $(document).ready(function() {
 
     })
 
-    $("#outTypeUpdateForm").validate({
+    $("#incomingTypeUpdateForm").validate({
         errorElement : 'span',
         errorClass : 'help-block',
         rules : {
-            outTypeName : {
+            inTypeName : {
                 required : true,
                 minlength : 2
             },
 
         },
         messages : {
-            outTypeName : {
+            inTypeName : {
                 required : "请输入类型名称",
                 minlength : jQuery.format("类型名称不能少于{2}个字符")
             },
@@ -201,8 +204,8 @@ $(document).ready(function() {
             label.remove();
         },
         submitHandler: function(form) {
-            $.post("/outGoingType/update",
-                $("#outTypeUpdateForm").serialize(),
+            $.post("/incomingType/update",
+                $("#incomingTypeUpdateForm").serialize(),
                 function (data) {
                     if (data.result == "success") {
                         $("#edit").modal('hide'); // 关闭指定的窗口

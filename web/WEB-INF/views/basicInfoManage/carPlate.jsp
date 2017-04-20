@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Administrator
-  Date: 2017/4/11
-  Time: 15:59
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     String path = request.getContextPath();
@@ -16,6 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/css/bootstrap.min.css">
     <link rel="stylesheet" href="/static/css/bootstrap-table.css">
+    <link rel="stylesheet" href="/static/css/table/table.css">
     <link rel="stylesheet" href="/static/css/select2.min.css">
     <link rel="stylesheet" href="/static/css/sweetalert.css">
 </head>
@@ -26,31 +20,20 @@
     <div class="panel-body" style="padding-bottom:0px;">
         <!--show-refresh, show-toggle的样式可以在bootstrap-table.js的948行修改-->
         <!-- table里的所有属性在bootstrap-table.js的240行-->
-        <table id="table"
-               data-toggle="table"
-               data-toolbar="#toolbar"
-               data-url="/table/query"
-               data-method="post"
-               data-query-params="queryParams"
-               data-pagination="true"
-               data-search="true"
-               data-show-refresh="true"
-               data-show-toggle="true"
-               data-show-columns="true"
-               data-page-size="10"
-               data-height="543"
-               data-id-field="id"
-               data-page-list="[5, 10, 20]"
-               data-cach="false"
-               data-click-to-select="true"
-               data-single-select="true">
+        <table id="table">
             <thead>
-            <tr>
-                <th data-radio="true" data-field="status"></th>
-                <th data-field="plateName">车牌名称</th>
-                <th data-field="plateDes">车牌描述</th>
-                <th data-field="plateStatus">车牌状态</th>
-            </tr>
+                <tr>
+                    <th data-checkbox="true"></th>
+                    <th data-field="plateName">
+                      车牌名称
+                    </th>
+                    <th data-field="plateDes">
+                        车牌描述
+                    </th>
+                    <th data-field="plateStatus">
+                        车牌状态
+                    </th>
+                </tr>
             </thead>
         </table>
         <div id="toolbar" class="btn-group">
@@ -179,6 +162,9 @@
 <script src="/static/js/select2/select2.js"></script>
 <script src="/static/js/sweetalert/sweetalert.min.js"></script>
 <script src="/static/js/contextmenu.js"></script>
+<script src="/static/js/backstage/main.js"></script>
+<script src="/static/js/fileInput/fileinput.js"></script>
+<script src="/static/js/fileInput/zh.js"></script>
 <script src="/static/js/form/jquery.validate.js"></script>
 <script src="/static/js/backstage/basicInfoManage/carPlate.js"></script>
 </body>

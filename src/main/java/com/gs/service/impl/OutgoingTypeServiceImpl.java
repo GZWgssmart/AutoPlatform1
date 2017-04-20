@@ -1,5 +1,7 @@
 package com.gs.service.impl;
 
+import com.gs.bean.Checkin;
+import com.gs.bean.IncomingType;
 import com.gs.bean.OutgoingType;
 import com.gs.common.bean.Pager4EasyUI;
 import com.gs.dao.OutgoingTypeDAO;
@@ -47,5 +49,13 @@ public class OutgoingTypeServiceImpl implements OutgoingTypeService {
 	public int active(String id) { return outgoingTypeDAO.active(id); }
 
 
+	@Override
+	public List<OutgoingType> queryByPagerDisable(Pager pager) {
+		return outgoingTypeDAO.queryByPagerDisable(pager);
+	}
 
+	@Override
+	public int countByDisable() {
+		return outgoingTypeDAO.countByDisable();
+	}
 }

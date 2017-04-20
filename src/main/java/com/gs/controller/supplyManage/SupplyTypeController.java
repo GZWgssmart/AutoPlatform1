@@ -92,4 +92,25 @@ public class SupplyTypeController {
         }
     }
 
+    /**
+     * 对状态的激活和启用，只使用一个方法进行切换。
+     */
+    @ResponseBody
+    @RequestMapping(value = "statusOperate",method = RequestMethod.POST)
+    public ControllerResult inactive(String supplyTypeId,String supplyTypeStatus){
+        if(supplyTypeId!=null&&!supplyTypeId.equals("")&&supplyTypeStatus!=null&&!supplyTypeStatus.equals("")){
+            if (supplyTypeStatus.equals("N")){
+                supplyTypeService.active(supplyTypeId);
+                logger.info("激活成功");
+                return ControllerResult.getSuccessResult("激活成功");
+            }else{
+                supplyTypeService.inactive(supplyTypeId);
+                logger.info("禁用成功");
+                return ControllerResult.getSuccessResult("禁用成功");
+            }
+        }else{
+            return ControllerResult.getFailResult("操作失败");
+        }
+    }
+
 }

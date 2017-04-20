@@ -2,16 +2,19 @@ package com.gs.bean;
 
 import java.util.Date;
 
+/**
+ * 维修保养明细bean, 张文星
+ * */
 public class MaintainDetail {
-    private String maintainDetailId;
+    private String maintainDetailId; //维修保养明细编号
 
-    private String maintainRecordId;
+    private String maintainRecordId; //维修保养记录编号
 
-    private String maintainItemId;
+    private String maintainItemId; //维修保养项目编号
 
-    private Double maintainDiscount;
+    private Double maintainDiscount; //维修保养项目折扣
 
-    private Date mdcreatedTime;
+    private Date mdcreatedTime; //维修保养明细创建时间
 
     public String getMaintainDetailId() {
         return maintainDetailId;

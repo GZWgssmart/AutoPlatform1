@@ -64,7 +64,7 @@ public class BackstageController {
      *
      * @return
      */
-    @RequestMapping(value = "carBrand", method = RequestMethod.GET)
+    @RequestMapping(value = "carBrand")
     public String carBrandIndex() {
         logger.info("跳转到汽车品牌管理页面");
         return "basicInfoManage/carBrand";
@@ -75,7 +75,7 @@ public class BackstageController {
      *
      * @return
      */
-    @RequestMapping(value = "carModel", method = RequestMethod.GET)
+    @RequestMapping(value = "carModel")
     public String carModelIndex() {
         logger.info("跳转到车型管理页面");
         return "basicInfoManage/carModel";
@@ -86,7 +86,7 @@ public class BackstageController {
      *
      * @return
      */
-    @RequestMapping(value = "carColor", method = RequestMethod.GET)
+    @RequestMapping(value = "carColor")
     public String carColorIndex() {
         logger.info("跳转到汽车颜色管理页面");
         return "basicInfoManage/carColor";
@@ -97,7 +97,7 @@ public class BackstageController {
      *
      * @return
      */
-    @RequestMapping(value = "carPlate", method = RequestMethod.GET)
+    @RequestMapping(value = "carPlate")
     public String carPlateIndex() {
         logger.info("跳转到汽车车牌管理页面");
         return "basicInfoManage/carPlate";
@@ -106,7 +106,7 @@ public class BackstageController {
     /**
      * 保养项目管理
      */
-    @RequestMapping(value = "upkeepItem", method = RequestMethod.GET)
+    @RequestMapping(value = "upkeepItem")
     public String upkeepItemIndex() {
         logger.info("跳转到保养项目管理页面");
         return "basicInfoManage/maintainItem";
@@ -115,7 +115,7 @@ public class BackstageController {
     /**
      * 维修项目管理
      */
-    @RequestMapping(value = "fixItem", method = RequestMethod.GET)
+    @RequestMapping(value = "fixItem")
     public String maintainItemIndex() {
         logger.info("跳转到维修项目管理页面");
         return "basicInfoManage/fixItem";
@@ -124,7 +124,7 @@ public class BackstageController {
     /**
      * 常见故障管理
      */
-    @RequestMapping(value = "commonFaults", method = RequestMethod.GET)
+    @RequestMapping(value = "commonFaults")
     public String commonFaultsIndex() {
         logger.info("跳转到常见故障管理页面");
         return "basicInfoManage/commonFaults";

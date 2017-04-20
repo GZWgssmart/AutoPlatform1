@@ -1,10 +1,68 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.gs.dao.IncomingTypeDAO" >
-  <resultMap id="BaseResultMap" type="com.gs.bean.IncomingType" >
+  <resultMap id="incomingTypeMap" type="com.gs.bean.IncomingType" >
     <id column="inTypeId" property="inTypeId" jdbcType="VARCHAR" />
     <result column="inTypeName" property="inTypeName" jdbcType="VARCHAR" />
     <result column="inTypeStatus" property="inTypeStatus" jdbcType="VARCHAR" />
   </resultMap>
+
+  <select id="count" resultType="int" >
+    <![CDATA[
+      select count(*) from t_incoming_type i where i.inTypeStatus = 'Y'
+    ]]>
+  </select>
+
+  <select id="queryByPager" resultMap="incomingTypeMap" parameterType="com.gs.common.bean.Pager">
+    <![CDATA[
+        select * from t_incoming_type i where 1 =1 and i.inTypeStatus = 'Y'
+    ]]>
+    limit #{beginIndex}, #{pageSize}
+  </select>
+
+  <select id="countByDisable" resultType="int" >
+    <![CDATA[
+       select count(*) from t_incoming_type i where i.inTypeStatus = 'N'
+    ]]>
+  </select>
+
+  <select id="queryByPagerDisable" resultMap="incomingTypeMap" parameterType="com.gs.common.bean.Pager">
+    <![CDATA[
+         select * from t_incoming_type i where 1 =1 and i.inTypeStatus = 'N'
+    ]]>
+    limit #{beginIndex}, #{pageSize}
+  </select>
+
+  <select id="queryAll" resultType="list" resultMap="incomingTypeMap">
+    <![CDATA[
+        select * from t_incoming_type
+        ]]>
+  </select>
+
+  <insert id="insert" useGeneratedKeys="true" keyProperty="inTypeId" parameterType="incomingType">
+    <![CDATA[
+        insert into t_incoming_type(inTypeId, inTypeName, inTypeStatus) values(#{inTypeId}, #{inTypeName}, #{inTypeStatus})
+        ]]>
+  </insert>
+
+  <update id="update" keyProperty="inTypeId" parameterType="incomingType">
+    <![CDATA[
+        update t_incoming_type set inTypeName = #{inTypeName}, inTypeStatus = #{inTypeStatus} where inTypeId = #{inTypeId}
+        ]]>
+  </update>
+
+  <!--冻结数据-->
+  <update id="inactive" keyProperty="inTypeId" parameterType="incomingType">
+    <![CDATA[
+        update t_incoming_type set inTypeStatus = 'N' where inTypeId = #{inTypeId}
+        ]]>
+  </update>
+
+  <!--激活数据-->
+  <update id="active" keyProperty="inTypeId" parameterType="incomingType">
+    <![CDATA[
+        update t_incoming_type set inTypeStatus = 'Y' where inTypeId = #{inTypeId}
+        ]]>
+  </update>
 
 </mapper>

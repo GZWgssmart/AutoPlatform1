@@ -1,13 +1,13 @@
 package com.gs.bean;
 
 public class CarBrand {
-    private String brandId;
+    private String brandId;//品牌编号
 
-    private String brandName;
+    private String brandName;//品牌名称
 
-    private String brandDes;
+    private String brandDes;//品牌描述
 
-    private String brandStatus;
+    private String brandStatus;//品牌状态
 
     public String getBrandId() {
         return brandId;

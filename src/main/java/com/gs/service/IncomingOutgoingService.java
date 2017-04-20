@@ -1,6 +1,10 @@
 package com.gs.service;
 
+import com.gs.bean.Checkin;
 import com.gs.bean.IncomingOutgoing;
+import com.gs.common.bean.Pager;
+
+import java.util.List;
 
 /**
 *由CSWangBin技术支持
@@ -10,5 +14,8 @@ import com.gs.bean.IncomingOutgoing;
 *@des 收支表Service
 */
 public interface IncomingOutgoingService extends BaseService<String, IncomingOutgoing>{
+
+
+
 
 }

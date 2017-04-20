@@ -1,6 +1,7 @@
 package com.gs.controller;
 
 import ch.qos.logback.classic.Logger;
+import com.gs.bean.IncomingType;
 import com.gs.bean.OutgoingType;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
@@ -36,25 +37,43 @@ public class OutGoingTypeController {
     public OutgoingTypeService outgoingTypeService;
 
     @ResponseBody
-    @RequestMapping(value = "queryAll",method = RequestMethod.POST)
-    public List<OutgoingType> queryAll() {
+    @RequestMapping(value = "queryByPager",method = RequestMethod.GET)
+    public Pager4EasyUI<OutgoingType> queryByPager(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
         logger.info("支出类型分页查询");
-        List<OutgoingType> outgoingTypes =  outgoingTypeService.queryAll();
-        return outgoingTypes;
+        Pager pager = new Pager();
+        pager.setPageNo(Integer.valueOf(pageNumber));
+        pager.setPageSize(Integer.valueOf(pageSize));
+        pager.setTotalRecords(outgoingTypeService.count());
+        List<OutgoingType> outgoingTypes = outgoingTypeService.queryByPager(pager);
+        return new Pager4EasyUI<OutgoingType>(pager.getTotalRecords(), outgoingTypes);
     }
 
+    @ResponseBody
+    @RequestMapping(value = "queryByPagerDisable",method = RequestMethod.GET)
+    public Pager4EasyUI<OutgoingType> queryByPagerDisable(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
+        logger.info("支出类型分页查询");
+        Pager pager = new Pager();
+        pager.setPageNo(Integer.valueOf(pageNumber));
+        pager.setPageSize(Integer.valueOf(pageSize));
+        pager.setTotalRecords(outgoingTypeService.countByDisable());
+        List<OutgoingType> outgoingTypes = outgoingTypeService.queryByPagerDisable(pager);
+        return new Pager4EasyUI<OutgoingType>(pager.getTotalRecords(), outgoingTypes);
+    }
+
+    @ResponseBody
     @RequestMapping(value = "inactive",method = RequestMethod.POST)
-    public ModelAndView inactive(String id) {
+    public ControllerResult inactive(String id) {
         logger.info("禁用");
         outgoingTypeService.inactive(id);
-        return new ModelAndView("queryAll");
+        return ControllerResult.getSuccessResult("禁用成功");
     }
 
+    @ResponseBody
     @RequestMapping(value = "active",method = RequestMethod.POST)
-    public ModelAndView active(String id) {
+    public ControllerResult active(String id) {
         logger.info("激活");
         outgoingTypeService.active(id);
-        return new ModelAndView("queryAll");
+        return ControllerResult.getSuccessResult("激活成功");
     }
 
     @ResponseBody

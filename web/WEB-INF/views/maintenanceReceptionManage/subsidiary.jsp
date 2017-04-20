@@ -305,6 +305,7 @@
     <script src="/static/js/bootstrap-select/bootstrap-select.js"></script>
     <script src="/static/js/form/jquery.validate.js"></script>
     <script src="/static/js/form/form.js"></script>
-    <script src="/static/js/maintenanceJieDaiGuanLi/subsidiary.js"></script>
+    <script src="/static/js/backstage/maintenanceReception/subsidiary.js"></script>
+    <script src="/static/js/backstage/main.js"></script>
 </body>
 </html>

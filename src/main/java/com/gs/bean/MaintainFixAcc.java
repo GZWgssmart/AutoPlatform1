@@ -1,13 +1,16 @@
 package com.gs.bean;
 
+/**
+ * 维修保养项目
+ */
 public class MaintainFixAcc {
-    private String mainAccId;
+    private String mainAccId;//保养项目配件编号
 
-    private String maintainId;
+    private String maintainId;//保养项目编号 来源于t_maintain_fix表
 
-    private String accId;
+    private String accId;//配件编号 来源于t_accessories表
 
-    private Integer accCount;
+    private Integer accCount;//配件个数
 
     public String getMainAccId() {
         return mainAccId;

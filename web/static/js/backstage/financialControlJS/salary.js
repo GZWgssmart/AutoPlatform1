@@ -1,3 +1,4 @@
+
 $(function () {
     $('#table').bootstrapTable('hideColumn', 'id');
 
@@ -40,14 +41,6 @@ function showEdit(){
 function showAdd(){
     $("#add").modal('show');
 }
-
-function formatRepo(repo) {
-    return repo.text
-}
-function formatRepoSelection(repo) {
-    return repo.text
-}
-
 function showDel(){
     var row =  $('table').bootstrapTable('getSelections');
     if(row.length >0) {
@@ -60,23 +53,30 @@ function showDel(){
     }
 }
 
-function checkAdd(){
-    var id = $('#addId').val();
-    var name = $('#email').val();
-    var price = $('#plate').val();
-    var price = $('#phone').val();
-    var price = $('#isclear').val();
-    var price = $('#currentOil').val();
-    var price = $('#goods').val();
-    var price = $('#color').val();
-//            var reslist=$("#phone").select2("data"); //获取多选的值
-    alert(reslist.length)
-    if(id != "" && name != "" && price != ""){
-        return true;
-    }else{
-        var error = document.getElementById("addError");
-        error.innerHTML = "请输入正确的数据";
+/** 选择人员 */
+function checkAppointment() {
+    initTableNotTollbar("appTable", "/incomingType/queryByPager");
+    $("#appWin").modal('show');
+}
+
+
+/** 关闭人员管理窗口 */
+function closeAppWin() {
+    $("#appWin").modal('hide');
+    $("#add").modal('show')
+}
+
+/** 选择人员 */
+function checkApp() {
+    var selectRow = $("#appTable").bootstrapTable('getSelections');
+    if (selectRow.length != 1) {
+        swal('选择失败', "只能选择一条数据", "error");
         return false;
+    } else {
+        $("#appWin").modal('hide');
+        var incomeType = selectRow[0];
+        $("#name").val(incomeType.inTypeName);
+        $("#addWin").modal('show');
     }
 }
 
