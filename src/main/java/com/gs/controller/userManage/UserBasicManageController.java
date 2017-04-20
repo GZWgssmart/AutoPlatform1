@@ -62,14 +62,15 @@ public class UserBasicManageController {
     /**
      * 分页查询人员基本信息
      */
-    @RequestMapping(value="queryByPager", method = RequestMethod.POST)
-    public Pager4EasyUI queryByPager(@Param("pageNo") int pageNo, @Param("pageSize") int pageSize) {
+    @ResponseBody
+    @RequestMapping(value="queryByPager", method = RequestMethod.GET)
+    public Pager4EasyUI queryByPager(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
         Pager pager = new Pager();
-        pager.setPageNo(pageNo);
-        pager.setPageSize(pageSize);
+        pager.setPageNo(Integer.valueOf(pageNumber));
+        pager.setPageSize(Integer.valueOf(pageSize));
         pager.setTotalRecords(userService.count());
+        logger.info("分页查询人员基本信息成功");
         List<User> users = userService.queryByPager(pager);
-        logger.info("分页查询成功");
         return new Pager4EasyUI<User>(pager.getTotalRecords(), users);
     }
 

@@ -40,12 +40,7 @@
   </insert>
 
   <!-- 修改员工的基本信息 -->
-  <update id="update" keyProperty="userId" parameterType="">
---     <![CDATA[
---       update t_user u set u.userEmail = #{userEmail}, u.userPhone = #{userPhone},
---         u.userPwd = #{userPwd}, u.userNickName = #{userNickName}, u.userGender = #{userGender},
---         u.userBirthDay = #{userBirthday}, u.userAddress = #{userAddress}
---     ]]>
+  <update id="update" keyProperty="userId" parameterType="user">
   </update>
 
   <!-- 分页查询 -->
