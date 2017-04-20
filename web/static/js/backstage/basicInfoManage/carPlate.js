@@ -1,4 +1,8 @@
 $(function () {
+    initTable('table', '/carPlate/queryByPagerCarPlate'); // 初始化表格
+});
+
+$(function () {
     $('#table').bootstrapTable('hideColumn', 'plateId');
     //
     // $("#addSelect").select2({

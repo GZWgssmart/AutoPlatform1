@@ -8,20 +8,35 @@
     <result column="plateStatus" property="plateStatus" jdbcType="VARCHAR" />
   </resultMap>
 
-      <select id="queryAll" resultMap="plateMap">
-          select *  from t_car_plate
+      <select id="queryByPager" resultMap="plateMap"  parameterType="com.gs.common.bean.Pager">
+          <![CDATA[
+            select *  from t_car_plate cp where cp.plateStatus = 'Y'
+           ]]>
+          limit #{beginIndex}, #{pageSize}
       </select>
 
+    <select id="count" resultType="int" >
+        <![CDATA[
+      select count(plateId) from t_car_plate cp where cp.plateStatus = 'Y'
+    ]]>
+    </select>
+
       <insert id="insert" parameterType="carplate">
-        insert into t_car_plate(plateId,plateName,plateDes,plateStaus) values (uuid(),plateName,plateDes,plateStaus)
+          <![CDATA[
+        insert into t_car_plate(plateId,plateName,plateDes,plateStatus) values (uuid(),plateName,plateDes,plateStatus)
+         ]]>
       </insert>
 
       <update id="update" parameterType="carplate">
-        update t_car_plate set plateName = #{plateName},plateDes = #{plateDes},plateStaus = #{plateStaus} where plateId = #{plateId}
+          <![CDATA[
+        update t_car_plate set plateName = #{plateName},plateDes = #{plateDes},plateStatus = #{plateStatus} where plateId = #{plateId}
+          ]]>
       </update>
 
       <delete id="deleteById" parameterType="string">
+          <![CDATA[
         delete from t_car_plate where plateId = #{plateId}
+         ]]>
       </delete>
 
 </mapper>

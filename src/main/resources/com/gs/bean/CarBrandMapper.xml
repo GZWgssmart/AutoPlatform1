@@ -8,20 +8,35 @@
     <result column="brandStatus" property="brandStatus" jdbcType="VARCHAR" />
   </resultMap>
 
-  <select id="queryAll" resultMap="carbrandMap">
-    select * from t_car_brand
+  <select id="queryByPager" resultMap="carbrandMap" parameterType="com.gs.common.bean.Pager">
+    <![CDATA[
+       select * from t_car_brand cb  where cb.brandStatus = 'Y'
+     ]]>
+    limit #{beginIndex}, #{pageSize}
+  </select>
+
+  <select id="count" resultType="int" >
+    <![CDATA[
+      select count(brandId) from t_car_brand cb where cb.brandStatus = 'Y'
+    ]]>
   </select>
 
   <insert id="insert"  parameterType="carbrand">
+    <![CDATA[
     INSERT into t_car_brand(brandId, brandName, brandDes, brandStatus) values(uuid(), #{brandName}, #{brandDes}, #{brandStatus})
+     ]]>
   </insert>
 
   <update id="update" parameterType="carbrand">
-    update t_car_brand set brandName = #{brandName},brandDes = #{brandDes},brandStatus = #{brandStatus} where brandId = #{brandId}
+    <![CDATA[
+      update t_car_brand set brandName = #{brandName},brandDes = #{brandDes},brandStatus = #{brandStatus} where brandId = #{brandId}
+     ]]>
   </update>
 
   <delete id="deleteById" parameterType="string">
-    delete from t_car_brand where brandId = #{brandId}
+    <![CDATA[
+     delete from t_car_brand where brandId = #{brandId}
+     ]]>
   </delete>
 
 </mapper>
