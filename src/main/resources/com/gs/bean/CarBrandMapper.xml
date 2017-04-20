@@ -23,13 +23,13 @@
 
   <insert id="insert"  parameterType="carbrand">
     <![CDATA[
-    INSERT into t_car_brand(brandId, brandName, brandDes, brandStatus) values(uuid(), #{brandName}, #{brandDes}, #{brandStatus})
+    INSERT into t_car_brand(brandId, brandName, brandDes, brandStatus) values(uuid(), #{brandName}, #{brandDes},'Y')
      ]]>
   </insert>
 
   <update id="update" parameterType="carbrand">
     <![CDATA[
-      update t_car_brand set brandName = #{brandName},brandDes = #{brandDes},brandStatus = #{brandStatus} where brandId = #{brandId}
+      update t_car_brand set brandName = #{brandName},brandDes = #{brandDes} where brandId = #{brandId}
      ]]>
   </update>
 

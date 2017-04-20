@@ -34,7 +34,7 @@ public class CarBrandController {
 
 
     @ResponseBody
-    @RequestMapping(value="queryByPager", method = RequestMethod.GET)
+    @RequestMapping(value="queryByPagerCarBrand", method = RequestMethod.GET)
     public Pager4EasyUI<CarBrand> queryAll(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
         logger.info("分页查询所有汽车品牌");
         Pager pager = new Pager();
@@ -46,22 +46,27 @@ public class CarBrandController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "add",method = RequestMethod.POST)
+    @RequestMapping(value = "addCarBrand",method = RequestMethod.POST)
     public ControllerResult add(CarBrand carBrand){
-        logger.info("添加汽车品牌");
-        carBrand.setBrandId(UUIDUtil.uuid());
-        carBrand.setBrandStatus("Y");
-        carBrandService.insert(carBrand);
-        return ControllerResult.getSuccessResult("添加成功");
+        if (carBrand != null && !carBrand.equals("")) {
+            logger.info("添加汽车品牌");
+            carBrandService.insert(carBrand);
+            return ControllerResult.getSuccessResult("添加成功");
+        }else {
+            return ControllerResult.getFailResult("添加失败，请输入必要的信息");
+        }
     }
 
     @ResponseBody
-    @RequestMapping(value = "update",method = RequestMethod.POST)
+    @RequestMapping(value = "updateCarBrand",method = RequestMethod.POST)
     public ControllerResult update(CarBrand carBrand){
-        logger.info("修改汽车品牌");
-        System.out.println(carBrand.getBrandId() + "," + carBrand.getBrandName() + "," + carBrand.getBrandDes() + "修改汽车品牌测试");
-        carBrandService.update(carBrand);
-        return ControllerResult.getSuccessResult("修改成功");
+        if (carBrand != null && !carBrand.equals("")) {
+            logger.info("修改汽车品牌");
+            carBrandService.update(carBrand);
+            return ControllerResult.getSuccessResult("修改成功");
+        }else {
+            return ControllerResult.getFailResult("修改失败，请输入必要的信息");
+        }
     }
 
 }

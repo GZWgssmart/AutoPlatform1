@@ -28,6 +28,9 @@
                     <th data-field="brandDes">
                         汽车品牌描述
                     </th>
+                    <th data-field="brandStatus">
+                        汽车品牌状态
+                    </th>
                 </tr>
             </thead>
         </table>
