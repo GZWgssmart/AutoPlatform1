@@ -56,10 +56,6 @@ $(document).ready(function() {
                 required : true,
                 minlength : 2
             },
-            supplyCreatedTime : {
-                required : true,
-                minlength : 18
-            },
             supplyTypeId : {
                 required : true,
                 minlength : 2
@@ -157,10 +153,6 @@ $(document).ready(function() {
             supplyWeChat : {
                 required : true,
                 minlength : 2
-            },
-            supplyCreatedTime : {
-                required : true,
-                minlength : 18
             },
             supplyTypeId : {
                 required : true,
@@ -262,9 +254,6 @@ $(function () {
 function showEdit(){
     var row =  $('table').bootstrapTable('getSelections');
     if(row.length >0) {
-//                $('#editId').val(row[0].id);
-//                $('#editName').val(row[0].name);
-//                $('#editPrice').val(row[0].price);
         $("#editWindow").modal('show'); // 显示弹窗
         var ceshi = row[0];
         $("#editForm").fill(ceshi);
@@ -275,6 +264,39 @@ function showEdit(){
             type:"warning"})// 提示窗口, 修改成功
     }
 }
+
+//格式化带时分秒的时间值。
+function formatterDateTime(value) {
+    if (value == undefined || value == null || value == '') {
+        return "";
+    }
+    else {
+        var date = new Date(value);
+        var year = date.getFullYear().toString();
+        var month = (date.getMonth() + 1);
+        var day = date.getDate().toString();
+        var hour = date.getHours().toString();
+        var minutes = date.getMinutes().toString();
+        var seconds = date.getSeconds().toString();
+        if (month < 10) {
+            month = "0" + month;
+        }
+        if (day < 10) {
+            day = "0" + day;
+        }
+        if (hour < 10) {
+            hour = "0" + hour;
+        }
+        if (minutes < 10) {
+            minutes = "0" + minutes;
+        }
+        if (seconds < 10) {
+            seconds = "0" + seconds;
+        }
+        return year + "-" + month + "-" + day + " " + hour + ":" + minutes + ":" + seconds;
+    }
+}
+
 
 function showAdd(){
     $("#addWindow").modal('show');

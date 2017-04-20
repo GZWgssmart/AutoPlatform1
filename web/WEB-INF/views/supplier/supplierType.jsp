@@ -62,7 +62,7 @@
             <button id="searchDisable" type="button" class="btn btn-danger" onclick="searchDisableStatus();">
                 <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询禁用类型
             </button>
-            <button id="searchRapid" type="button" class="btn btn-info" onclick="searchRapidStatus();">
+            <button id="searchRapid" type="button" class="btn btn-success" onclick="searchRapidStatus();">
                 <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询激活类型
             </button>
         </div>
@@ -79,15 +79,21 @@
                     <p>添加供应商类型信息</p>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">供应商类型名称：</label>
+                    <label class="col-sm-3 control-label">供应商类型：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="supplyTypeName" id="name" placeholder="请输入供应商类型名称" class="form-control">
+                        <%--<select class="form-control"  data-style="btn-info" name="supplyTypeName" placeholder="请选择供应商类型">
+                            <option>Mustard</option>
+                            <option>Ketchup</option>
+                            <option>Relish</option>
+                            <option>Relish</option>
+                        </select>--%>
+                        <input type="text" name="supplyTypeName" id="name" placeholder="请选择供应商类型" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">供应商所属公司：</label>
+                    <label class="col-sm-3 control-label">供应商类型所属公司：</label>
                     <div class="col-sm-7">
-                        <input type="text"  name="companyId" placeholder="请选择供应商所属公司" class="form-control">
+                        <input type="text"  name="companyId" placeholder="请选择供应商类型所属公司" class="form-control">
                     </div>
                 </div>
                  <div class="form-group">
@@ -121,13 +127,19 @@
                     <p>修改供应商类型信息</p>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">供应商类型名称：</label>
+                    <label class="col-sm-3 control-label">供应商类型：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="supplyTypeName" define="supplyType.supplyTypeName"  placeholder="请输入供应商类型名称" class="form-control">
+                       <%-- <select class="form-control"  data-style="btn-info" name="supplyTypeName" define="supplyType.supplyTypeName">
+                            <option>Mustard</option>
+                            <option>Ketchup</option>
+                            <option>Relish</option>
+                            <option>Relish</option>
+                        </select>--%>
+                        <input type="text" name="supplyTypeName" define="supplyType.supplyTypeName"  placeholder="请选择供应商类型" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">供应商所属公司：</label>
+                    <label class="col-sm-3 control-label">供应商类型所属公司：</label>
                     <div class="col-sm-7">
                         <input type="text" name="companyId" define="supplyType.companyId" placeholder="请选择供应商类型所属公司" class="form-control">
                     </div>

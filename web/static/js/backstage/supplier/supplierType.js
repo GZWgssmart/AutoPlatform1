@@ -164,7 +164,7 @@ $(document).ready(function () {
             }
         },
         messages: {
-            supplyTypeName: "请输入供应商类型名称",
+            supplyTypeName: "请选择供应商类型",
             companyId: "请选择供应商类型所属公司",
             supplyTypeDes: "请输入供应商类型描述内容",
         },
@@ -222,7 +222,7 @@ $(document).ready(function () {
             }
         },
         messages: {
-            supplyTypeName: "请输入供应商类型名称",
+            supplyTypeName: "请选择供应商类型",
             companyId: "请选择供应商类型所属公司",
             supplyTypeDes: "请输入供应商类型描述内容",
         },

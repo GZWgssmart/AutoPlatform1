@@ -49,7 +49,7 @@
                 <th data-field="supplyPricipal">供应商负责人</th>
                 <th data-field="supplyAddress">供应商地址</th>
                 <th data-field="supplyWeChat">供应商微信号</th>
-                <th data-field="supplyCreatedTime">创建时间</th>
+                <th data-field="supplyCreatedTime" data-formatter="formatterDateTime">&nbsp;&nbsp;创建时间</th>
                 <th data-field="supplyTypeId">供应商类型</th>
                 <th data-field="companyId">供应商所属公司</th>
                 <th data-formatter="formatterStatus">供应商状态</th>
@@ -67,8 +67,6 @@
             <button id="searchDisable" type="button" class="btn btn-danger" onclick="searchDisableStatus();">
                 <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询禁用类型
             </button>
-            <button id="searchRapid" type="button" class="btn btn-info" onclick="searchRapidStatus();">
-                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询激活类型
             </button>
         </div>
     </div>
