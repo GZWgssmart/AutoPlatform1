@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.gs.dao.AppointmentDAO" >
-  <resultMap id="BaseResultMap" type="com.gs.bean.Appointment" >
+  <resultMap id="appointmentMap" type="com.gs.bean.Appointment" >
     <id column="appointmentId" property="appointmentId" jdbcType="VARCHAR" />
     <result column="userId" property="userId" jdbcType="VARCHAR" />
     <result column="userName" property="userName" jdbcType="VARCHAR" />
@@ -16,6 +16,53 @@
     <result column="appCreatedTime" property="appCreatedTime" jdbcType="TIMESTAMP" />
     <result column="companyId" property="companyId" jdbcType="VARCHAR" />
     <result column="appoitmentStatus" property="appoitmentStatus" jdbcType="VARCHAR" />
+
+
+    <association property="brand" javaType="com.gs.bean.CarBrand">
+      <id property="brandId" column="brandId"/>
+      <id property="brandName" column="brandName"/>
+    </association>
+
+    <association property="color" javaType="com.gs.bean.CarColor">
+      <id property="colorId" column="colorId"/>
+      <id property="colorName" column="colorName"/>
+    </association>
+
+    <association property="plate" javaType="com.gs.bean.CarPlate">
+      <id property="plateId" column="plateId"/>
+      <id property="plateName" column="plateName"/>
+    </association>
+
+    <association property="model" javaType="com.gs.bean.CarModel">
+      <id property="modelId" column="modelId"/>
+      <id property="modelName" column="modelName"/>
+    </association>
+
+    <association property="company" javaType="com.gs.bean.Company">
+      <id property="companyId" column="companyId"/>
+      <id property="companyName" column="companyName"/>
+    </association>
+
   </resultMap>
 
+  <select id="queryByPager" resultMap="appointmentMap" parameterType="com.gs.common.bean.Pager">
+    <![CDATA[
+       select am.*, cc.colorId, cc.colorName, cp.plateId, cp.plateName,
+        cm.modelId, cm.modelName, company.companyId,
+        company.companyName, cb.brandId, cb.brandName from t_appointment am
+       LEFT JOIN t_car_color cc on am.colorId =cc.colorId
+       LEFT JOIN t_car_model cm on am.modelId = cm.modelId
+       LEFT JOIN t_car_plate cp on am.plateId = cp.plateId
+       LEFT JOIN t_company company on am.companyId = company.companyId
+       LEFT JOIN t_car_brand cb on am.brandId = cb.brandId
+       where am.appoitmentStatus = 'Y' order by am.appCreatedTime Desc
+    ]]>
+    limit #{beginIndex}, #{pageSize}
+  </select>
+
+  <select id="count" resultType="int" >
+    <![CDATA[
+      select count(appointmentId) from t_appointment am where am.appoitmentStatus = 'Y'
+    ]]>
+  </select>
 </mapper>
