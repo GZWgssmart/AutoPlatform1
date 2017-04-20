@@ -1,12 +1,13 @@
 package com.gs.service.impl;
 
 import com.gs.bean.Appointment;
+import com.gs.common.bean.Pager;
 import com.gs.dao.AppointmentDAO;
 import com.gs.service.AppointmentService;
 import org.springframework.stereotype.Service;
+
 import javax.annotation.Resource;
 import java.util.List;
-import com.gs.common.bean.Pager;
 /**
 *由CSWangBin技术支持
 *
@@ -31,7 +32,6 @@ public class AppointmentServiceImpl implements AppointmentService {
 	public int batchUpdate(List<Appointment> list) { return appointmentDAO.batchUpdate(list); }
 	public List<Appointment> queryAll() { return appointmentDAO.queryAll(); }
 
-	@Override
 	public List<Appointment> queryAll(String status) {
 		return appointmentDAO.queryAll();
 	}
@@ -44,4 +44,11 @@ public class AppointmentServiceImpl implements AppointmentService {
 	public int inactive(String id) { return appointmentDAO.inactive(id); }
 	public int active(String id) { return appointmentDAO.active(id); }
 
+	public List<Appointment> queryByPagerDisable(Pager pager) {
+		return appointmentDAO.queryByPagerDisable(pager);
+	}
+
+	public int countByDisable() {
+		return appointmentDAO.countByDisable();
+	}
 }

@@ -1,12 +1,13 @@
 package com.gs.service.impl;
 
 import com.gs.bean.CarBrand;
+import com.gs.common.bean.Pager;
 import com.gs.dao.CarBrandDAO;
 import com.gs.service.CarBrandService;
 import org.springframework.stereotype.Service;
+
 import javax.annotation.Resource;
 import java.util.List;
-import com.gs.common.bean.Pager;
 /**
 *由CSWangBin技术支持
 *
@@ -31,7 +32,7 @@ public class CarBrandServiceImpl implements CarBrandService {
 	public int batchUpdate(List<CarBrand> list) { return carBrandDAO.batchUpdate(list); }
 	public List<CarBrand> queryAll() { return carBrandDAO.queryAll(); }
 
-	@Override
+
 	public List<CarBrand> queryAll(String status) {
 		return carBrandDAO.queryAll();
 	}

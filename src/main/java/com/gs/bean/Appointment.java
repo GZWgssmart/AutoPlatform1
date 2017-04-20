@@ -31,6 +31,12 @@ public class Appointment {
 
     private String appoitmentStatus;
 
+    private CarBrand brand; // 汽车品牌
+    private CarColor color; // 汽车颜色
+    private CarModel model; // 汽车车型
+    private CarPlate plate; // 汽车车牌
+    private Company company; // 汽修公司
+
     public String getAppointmentId() {
         return appointmentId;
     }
@@ -141,5 +147,65 @@ public class Appointment {
 
     public void setAppoitmentStatus(String appoitmentStatus) {
         this.appoitmentStatus = appoitmentStatus;
+    }
+
+    public CarBrand getBrand() {
+        return brand;
+    }
+
+    public void setBrand(CarBrand brand) {
+        this.brand = brand;
+    }
+
+    public CarColor getColor() {
+        return color;
+    }
+
+    public void setColor(CarColor color) {
+        this.color = color;
+    }
+
+    public CarModel getModel() {
+        return model;
+    }
+
+    public void setModel(CarModel model) {
+        this.model = model;
+    }
+
+    public CarPlate getPlate() {
+        return plate;
+    }
+
+    public void setPlate(CarPlate plate) {
+        this.plate = plate;
+    }
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
+    }
+
+    @Override
+    public String toString() {
+        return "Appointment{" +
+                "appointmentId='" + appointmentId + '\'' +
+                ", userId='" + userId + '\'' +
+                ", userName='" + userName + '\'' +
+                ", userPhone='" + userPhone + '\'' +
+                ", brandId='" + brandId + '\'' +
+                ", colorId='" + colorId + '\'' +
+                ", modelId='" + modelId + '\'' +
+                ", plateId='" + plateId + '\'' +
+                ", carPlate='" + carPlate + '\'' +
+                ", arriveTime=" + arriveTime +
+                ", maintainOrFix='" + maintainOrFix + '\'' +
+                ", appCreatedTime=" + appCreatedTime +
+                ", companyId='" + companyId + '\'' +
+                ", appoitmentStatus='" + appoitmentStatus + '\'' +
+                '}';
     }
 }
