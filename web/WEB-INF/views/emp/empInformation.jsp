@@ -57,87 +57,83 @@
                     <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
                 </button>
                 <button id="btn_return" type="button" class="btn btn-default" onclick="showReturn();">
-                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>离职
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>辞退
                 </button>
-
-
             </div>
         </div>
     </div>
 
-    <!-- 添加弹窗
-        aria-hidden="true" 默认隐藏
-        data-backdrop="static" 点击模态窗底层不会关闭模态窗
-    -->
-<div class="modal fade" id="add" aria-hidden="true" data-backdrop="static">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <form class="form-horizontal" role="form" onsubmit="return checkAdd()" id="register-form" method="post">
-                        <div class="modal-header" style="overflow:auto;">
-                            <p>添加人员信息</p>
+    <!-- 添加弹窗 aria-hidden="true" 默认隐藏 data-backdrop="static" 点击模态窗底层不会关闭模态窗 -->
+    <div class="modal fade" id="add" aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form class="form-horizontal" role="form" onsubmit="return checkAdd()" id="register-form" method="post">
+                    <div class="modal-header" style="overflow:auto;">
+                        <p>添加人员信息</p>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" for="name">姓名：</label>
+                        <div class="col-sm-7">
+                            <input type="text" id="name" name="name" placeholder="请输入姓名" class="form-control">
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label" for="name">姓名：</label>
-                            <div class="col-sm-7">
-                                <input type="text" id="name" name="name" placeholder="请输入姓名" class="form-control">
-                            </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" for="phone">手机号码：</label>
+                        <div class="col-sm-7">
+                            <input type="number" id="phone" class="form-control" aria-describedby="sizing-addon2"
+                                   oninput="if (value.length > 11) { value = value.slice(0, 11)}" />
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label" for="phone">手机号码：</label>
-                            <div class="col-sm-7">
-                                <input type="text" id="phone" name="phone" placeholder="请输入手机号码" class="form-control">
-                            </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">QQ：</label>
+                        <div class="col-sm-7">
+                            <input type="number" placeholder="请输入QQ" class="form-control" max="10">
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">QQ：</label>
-                            <div class="col-sm-7">
-                                <input type="number" placeholder="请输入QQ" class="form-control" max="10">
-                            </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">底薪：</label>
+                        <div class="col-sm-7">
+                            <input type="number" placeholder="请输入底薪" class="form-control">
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">底薪：</label>
-                            <div class="col-sm-7">
-                                <input type="number" placeholder="请输入联系方式" class="form-control" max="10">
-                            </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">微信：</label>
+                        <div class="col-sm-7">
+                            <input type="number" placeholder="请输入微信" class="form-control">
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">微信：</label>
-                            <div class="col-sm-7">
-                                <input type="number" placeholder="请输入微信" class="form-control" max="11">
-                            </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">角色：</label>
+                        <div class="col-sm-7">
+                            <select  placeholder="请选择角色" class="form-control">
+                                <option>a</option>
+                                <option>a</option>
+                            </select>
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">角色：</label>
-                            <div class="col-sm-7">
-                                <select  placeholder="请选择角色" class="form-control">
-                                    <option>a</option>
-                                    <option>a</option>
-                                </select>
-                            </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" for="password">密码：</label>
+                        <div class="col-sm-7">
+                            <input type="password" id="password" name="password" placeholder="请输入密码" class="form-control">
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label" for="password">密码：</label>
-                            <div class="col-sm-7">
-                                <input type="password" id="password" name="password" placeholder="请输入密码" class="form-control">
-                            </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" for="confirm_password">确定密码：</label>
+                        <div class="col-sm-7">
+                            <input type="password" id="confirm_password" name="confirm_password" placeholder="请确定密码" class="form-control">
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label" for="confirm_password">确定密码：</label>
-                            <div class="col-sm-7">
-                                <input type="password" id="confirm_password" name="confirm_password" placeholder="请确定密码" class="form-control">
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <span id="addError"></span>
-                            <button type="button" class="btn btn-default"
-                                    data-dismiss="modal">关闭
-                            </button>
-                            <button type="submit" class="btn btn-primary btn-sm">保存</button>
-                        </div>
-                    </form>
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal-dialog -->
-        </div><!-- /.modal -->
+                    </div>
+                    <div class="modal-footer">
+                        <span id="addError"></span>
+                        <button type="button" class="btn btn-default"
+                                data-dismiss="modal">关闭
+                        </button>
+                        <button type="submit" class="btn btn-primary btn-sm">保存</button>
+                    </div>
+                </form>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 
 
     <!-- 修改弹窗 -->
@@ -158,25 +154,14 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label" >手机号码：</label>
                         <div class="col-sm-7">
-                            <input type="text" define="emp.price" class="form-control">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">QQ：</label>
-                        <div class="col-sm-7">
-                            <input type="number"  class="form-control" max="10">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">底薪：</label>
-                        <div class="col-sm-7">
-                            <input type="number" class="form-control" max="10">
+                            <input type="number" define="emp.phone" class="form-control"
+                                   oninput="if (value.length > 11) { value = value.slice(0, 11)}">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">微信：</label>
                         <div class="col-sm-7">
-                            <input type="number" class="form-control" max="11">
+                            <input type="number" define="emp.weChat" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
