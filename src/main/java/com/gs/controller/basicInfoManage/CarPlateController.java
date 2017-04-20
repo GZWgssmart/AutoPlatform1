@@ -43,6 +43,14 @@ public class CarPlateController {
     }
 
     @ResponseBody
+    @RequestMapping(value = "queryAllCarPlate", method = RequestMethod.GET)
+    public List<CarPlate> queryAll(){
+        logger.info("查询所有车牌");
+        List<CarPlate> carPlates = carPlateService.queryAll();
+        return carPlates;
+    }
+
+    @ResponseBody
     @RequestMapping(value = "addCarPlate",method = RequestMethod.POST)
     public ControllerResult add(CarPlate carPlate) {
         if (carPlate != null && !carPlate.equals("")) {

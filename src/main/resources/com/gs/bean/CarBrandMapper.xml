@@ -8,6 +8,12 @@
     <result column="brandStatus" property="brandStatus" jdbcType="VARCHAR" />
   </resultMap>
 
+  <select id="queryAll" resultMap="carbrandMap">
+    <![CDATA[
+    select * from t_car_brand
+      ]]>
+  </select>
+
   <select id="queryByPager" resultMap="carbrandMap" parameterType="com.gs.common.bean.Pager">
     <![CDATA[
        select * from t_car_brand cb  where cb.brandStatus = 'Y'

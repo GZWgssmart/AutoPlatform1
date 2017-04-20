@@ -46,6 +46,14 @@ public class CarBrandController {
     }
 
     @ResponseBody
+    @RequestMapping(value = "queryAllCarBrand",method = RequestMethod.GET)
+    public List<CarBrand> queryAll(){
+        logger.info("查询所有汽车品牌");
+        List<CarBrand> carBrands = carBrandService.queryAll();
+        return carBrands;
+    }
+
+    @ResponseBody
     @RequestMapping(value = "addCarBrand",method = RequestMethod.POST)
     public ControllerResult add(CarBrand carBrand){
         if (carBrand != null && !carBrand.equals("")) {
