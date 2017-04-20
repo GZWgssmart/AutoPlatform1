@@ -106,7 +106,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">名称：</label>
                         <div class="col-sm-7">
-                            <input type="text"  define="outGoingType.outTypeName"name="outTypeName" class="form-control">
+                            <input type="text"  id="outUpdateTypeName" define="outGoingType.outTypeName"name="outTypeName" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">

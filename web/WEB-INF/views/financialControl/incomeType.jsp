@@ -105,7 +105,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">名称：</label>
                         <div class="col-sm-7">
-                            <input type="text"  define="incomingType.inTypeName"name="inTypeName" class="form-control">
+                            <input type="text" id="inUpdateTypeName"  define="incomingType.inTypeName"name="inTypeName" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">

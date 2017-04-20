@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.gs.dao.IncomingOutgoingDAO" >
-  <resultMap id="BaseResultMap" type="com.gs.bean.IncomingOutgoing" >
+  <resultMap id="incomingOutgoingMap" type="com.gs.bean.IncomingOutgoing" >
     <id column="inOutId" property="inOutId" jdbcType="VARCHAR" />
     <result column="inTypeId" property="inTypeId" jdbcType="VARCHAR" />
     <result column="outTypeId" property="outTypeId" jdbcType="VARCHAR" />
@@ -9,6 +9,85 @@
     <result column="inOutCreatedUser" property="inOutCreatedUser" jdbcType="VARCHAR" />
     <result column="inOutCreatedTime" property="inOutCreatedTime" jdbcType="TIMESTAMP" />
     <result column="inOutStatus" property="inOutStatus" jdbcType="VARCHAR" />
+
+    <association property="incomingType" javaType="com.gs.bean.IncomingType">
+      <id column="incomingType_id" property="inTypeId"/>
+      <result column="incomingType_name" property="inTypeName"/>
+
+      <association property="outgoingType" javaType="com.gs.bean.OutgoingType">
+        <id column="outgoingType_id" property="outTypeId"/>
+        <result column="outgoingType_name" property="outTypeName"/>
+      </association>
+    </association>
+
+    <association property="user" javaType="com.gs.bean.User">
+      <id column="userId" property="userId"/>
+      <result column="userName" property="userName"/>
+    </association>
   </resultMap>
+
+  <select id="count" resultType="int" >
+    <![CDATA[
+      select count(*) from t_incoming_outgoing i where i.inOutStatus = 'Y'
+    ]]>
+  </select>
+
+  <select id="queryByPager" resultMap="incomingOutgoingMap" parameterType="com.gs.common.bean.Pager">
+    <![CDATA[
+      select io.*,i.inTypeId as incomingType_id, i.inTypeName as incomingType_name,o.outTypeId as outgoingType_id,o.outTypeName as outgoingType_name,u.userId ,u.userName from t_incoming_outgoing io
+				LEFT JOIN t_incoming_type i on io.inTypeId = i.inTypeId
+				LEFT JOIN t_outgoing_type o on io.outTypeId = o.outTypeId
+				LEFT JOIN  t_user u on io.inOutCreatedUser = u.userId
+				where  io.inOutStatus = 'Y'
+				order by io.inOutCreatedTime Desc
+    ]]>
+    limit #{beginIndex}, #{pageSize}
+  </select>
+
+  <select id="countByDisable" resultType="int" >
+    <![CDATA[
+        select count(*) from t_incoming_outgoing i where i.inOutStatus = 'N'
+    ]]>
+  </select>
+
+  <select id="queryByPagerDisable" resultMap="incomingOutgoingMap" parameterType="com.gs.common.bean.Pager">
+    <![CDATA[
+          select io.*,i.inTypeId as incomingType_id, i.inTypeName as incomingType_name,o.outTypeId as outgoingType_id,o.outTypeName as outgoingType_name,u.userId ,u.userName from t_incoming_outgoing io
+				LEFT JOIN t_incoming_type i on io.inTypeId = i.inTypeId
+				LEFT JOIN t_outgoing_type o on io.outTypeId = o.outTypeId
+				LEFT JOIN  t_user u on io.inOutCreatedUser = u.userId
+				where  io.inOutStatus = 'N'
+				order by io.inOutCreatedTime Desc
+    ]]>
+    limit #{beginIndex}, #{pageSize}
+  </select>
+
+
+  <insert id="insert" useGeneratedKeys="true" keyProperty="inOutId" parameterType="incomingOutgoing">
+    <![CDATA[
+        insert into t_incoming_outgoing(inOutId, inTypeId, outTypeId,inOutMoney,inOutCreatedUser,inOutCreatedTime,inOutStatus) values(#{inOutId}, #{inTypeId}, #{outTypeId}, #{inOutMoney}, #{inOutCreatedUser}, #{inOutCreatedTime}, #{inOutStatus})
+        ]]>
+  </insert>
+
+  <update id="update" keyProperty="inOutId" parameterType="incomingOutgoing">
+    <![CDATA[
+        update t_incoming_outgoing set inTypeId = #{inTypeId}, outTypeId = #{outTypeId}, inOutMoney = #{inOutMoney}, inOutCreatedUser = #{inOutCreatedUser} where inOutId = #{inOutId}
+        ]]>
+  </update>
+
+  <!--冻结数据-->
+  <update id="inactive" keyProperty="inOutId" parameterType="incomingOutgoing">
+    <![CDATA[
+        update t_incoming_outgoing set inOutStatus = 'N' where inOutId = #{outTypeId}
+        ]]>
+  </update>
+
+  <!--激活数据-->
+  <update id="active" keyProperty="inOutId" parameterType="incomingOutgoing">
+    <![CDATA[
+        update t_incoming_outgoing set inOutStatus = 'Y' where inOutId = #{outTypeId}
+        ]]>
+  </update>
+
 
 </mapper>

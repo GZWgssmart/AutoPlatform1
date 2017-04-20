@@ -40,14 +40,13 @@
             <thead>
             <tr>
                 <th data-radio="true" data-field="status"></th>
-                <th data-width="15%" data-field="phone">用户手机号</th>
-                <th data-width="10%" data-field="name">姓名</th>
-                <th data-width="10%" data-field="prizeSalary">奖金</th>
-                <th data-width="10%" data-field="minusSalay">罚款</th>
-                <th data-width="10%" data-field="totalSalary">总工资</th>
-                <th data-width="15%" data-field="salaryDes">工资发放描述</th>
-                <th data-width="15%" data-field="salaryTime">工资发放时间</th>
-                <th data-width="15%" data-field="salaryCreatedTime">创建时间</th>
+                <th  data-field="user.userName">姓名</th>
+                <th data-field="prizeSalary">奖金</th>
+                <th data-field="minusSalay">罚款</th>
+                <th data-field="totalSalary">总工资</th>
+                <th data-field="salaryDes">工资发放描述</th>
+                <th data-formatter="formatterDate" data-field="salaryTime">工资发放时间</th>
+                <th data-formatter="formatterDate" data-field="salaryCreatedTime">创建时间</th>
             </tr>
             </thead>
         </table>
@@ -58,65 +57,57 @@
             <button id="btn_edit" type="button" class="btn btn-default" onclick="showEdit();">
                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
             </button>
-            <button id="btn_delete" type="button" class="btn btn-default" onclick="showDel();">
-                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
-            </button>
         </div>
     </div>
 </div>
 
 <!-- 添加弹窗 -->
 <div class="modal fade" id="add" aria-hidden="true" style="overflow:auto;">
-    <div class="modal-dialog" style="overflow:hidden;">
-        <div class="modal-content" style="overflow:hidden;">
+    <div class="modal-dialog">
+        <div class="modal-content">
             <div class="container" style="width: 80%;">
-                <form class="form-horizontal" role="form" onsubmit="return checkAdd()" id="register-form" method="post">
+                <form class="form-horizontal" role="form" id="salaryInsertForm" method="post">
+                    <input type="reset" name="reset" style="display: none;"/>
                     <div class="modal-header" style="overflow:auto;">
                         <p>员工工资录入</p>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label" for="name">员工姓名：</label>
+                        <label class="col-sm-3 control-label" for="userName">员工姓名：</label>
                         <div class="col-sm-7">
-                            <input onclick="checkAppointment();"  type="text" readonly="true" id="name" name="name" placeholder="请点击选择员工" class="form-control">
+                            <input type="hidden" id="userId" readonly="true" name="userId">
+                            <input onclick="checkAppointment();" type="text" readonly="true" name="userName" id="userName"  placeholder="请点击选择员工" class="form-control">
                          </div>
 
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label" for="phone">手机号码：</label>
-                        <div class="col-sm-7">
-                            <input type="text" id="phone" name="phone" placeholder="请输入手机号码" class="form-control">
-                        </div>
-                    </div>
-                    <div class="form-group">
                         <label class="col-sm-3 control-label">罚款：</label>
                         <div class="col-sm-7">
-                            <input type="number" placeholder="请输入罚款" class="form-control" max="10">
+                            <input type="text" name="minusSalay" placeholder="请输入罚款" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">底薪：</label>
+                        <label class="col-sm-3 control-label">奖金：</label>
                         <div class="col-sm-7">
-                            <input type="number" placeholder="请输入联系方式" class="form-control" max="10">
+                            <input type="text" name="prizeSalary" placeholder="请输入奖金" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">总工资：</label>
                         <div class="col-sm-7">
-                            <input type="number" placeholder="请输入总工资" class="form-control" max="11">
+                            <input type="text" name="totalSalary" placeholder="请输入总工资" class="form-control">
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label class="col-sm-3 control-label" for="password">工资描述：</label>
+                        <label class="col-sm-3 control-label" >工资描述：</label>
                         <div class="col-sm-7">
-                            <input type="password" id="password" name="password" placeholder="请输入工资发放描述" class="form-control">
+                            <input type="text"  name="salaryDes" placeholder="请输入工资发放描述" class="form-control">
                         </div>
                     </div>
 
                     <div class="modal-footer">
                         <span id="addError"></span>
-                        <button type="button" class="btn btn-default"
-                                data-dismiss="modal">关闭
+                        <button type="button" class="btn btn-default" onclick="addWinClose()">关闭
                         </button>
                         <button type="submit" class="btn btn-primary btn-sm">保存</button>
                     </div>
@@ -127,7 +118,8 @@
 </div><!-- /.modal -->
 
 
-<div id="appWin" class="modal fade" aria-hidden="true" style="overflow:scroll" data-backdrop="static" keyboard:false>
+<%--人员管理窗弹窗显示--%>
+<div id="personnelWin" class="modal fade" aria-hidden="true" style="overflow:scroll" data-backdrop="static" keyboard:false>
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
@@ -139,17 +131,21 @@
                             <thead>
                             <tr>
                                 <th data-radio="true" data-field="status"></th>
-                                <th data-field="inTypeName">收入类型</th>
+                                <th  data-field="userPhone">用户手机号</th>
+                                <th data-field="userName">姓名</th>
+                                <th  data-field="userIdentity">身份证号</th>
+                                <th data-field="wechatOpenId">微信</th>
+                                <th data-field="companyId">所属公司</th>
                             </tr>
                             </thead>
                             <tbody>
                             </tbody>
 
                         </table>
-                        <div class="modal-footer" style="overflow:hidden;">
-                            <button type="button" class="btn btn-default" onclick="closeAppWin()">关闭
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" onclick="closePersonnelWin()">关闭
                             </button>
-                            <input type="button" class="btn btn-primary" onclick="checkApp()" value="确定">
+                            <input type="button" class="btn btn-primary" onclick="checkPersonnel()" value="确定">
                             </input>
                         </div>
                     </div>
@@ -166,48 +162,44 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="container" style="width: 80%;">
-                <form class="form-horizontal" role="form" onsubmit="return checkAdd()" id="edit-form" method="post">
+                <form class="form-horizontal" role="form"  id="salaryUpdateForm" method="post">
+                    <input type="reset" name="reset" style="display: none;"/>
+                    <input  type="hidden" define="salary.salaryId" name="salaryId">
                     <div class="modal-header" style="overflow:auto;">
-                        <p>员工工资录入</p>
+                        <p>修改员工工资录入</p>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label" for="name">员工姓名：</label>
+                        <label class="col-sm-3 control-label" for="userName">员工姓名：</label>
                         <div class="col-sm-7">
-                            <input type="text" id="n" name="name" placeholder="请输入员工姓名" class="form-control">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label" for="phone">手机号码：</label>
-                        <div class="col-sm-7">
-                            <input type="text" id="p" name="phone" placeholder="请输入手机号码" class="form-control">
+                            <input  type="hidden" define="salary.userId" name="userId">
+                            <input define="salary.user.userName"  type="text" readonly="true" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">罚款：</label>
                         <div class="col-sm-7">
-                            <input type="number" placeholder="请输入罚款" class="form-control" max="10">
+                            <input type="text" define="salary.minusSalay"  name="minusSalay" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">底薪：</label>
+                        <label class="col-sm-3 control-label">奖金：</label>
                         <div class="col-sm-7">
-                            <input type="number" placeholder="请输入联系方式" class="form-control" max="10">
+                            <input type="text" define="salary.prizeSalary"  name="prizeSalary" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">总工资：</label>
                         <div class="col-sm-7">
-                            <input type="number" placeholder="请输入总工资" class="form-control" max="11">
+                            <input type="text" define="salary.totalSalary" name="totalSalary" class="form-control">
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label class="col-sm-3 control-label" for="password">工资描述：</label>
+                        <label class="col-sm-3 control-label" >工资描述：</label>
                         <div class="col-sm-7">
-                            <input type="password" id="pwd" name="password" placeholder="请输入工资发放描述" class="form-control">
+                            <input type="text"  define="salary.salaryDes"  name="salaryDes"  class="form-control">
                         </div>
                     </div>
-
                     <div class="modal-footer">
                         <span id="editError"></span>
                         <button type="button" class="btn btn-default"
@@ -221,25 +213,6 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<!-- 删除弹窗 -->
-<div class="modal fade" id="del" aria-hidden="true">
-    <div class="modal-dialog" style="overflow:hidden;">
-        <form action="/table/edit" method="post">
-            <div class="modal-content">
-                <input type="hidden" id="delNoticeId"/>
-                <div class="modal-footer" style="text-align: center;">
-                    <h2>确认删除吗?</h2>
-                    <button type="button" class="btn btn-default"
-                            data-dismiss="modal">关闭
-                    </button>
-                    <button type="sumbit" class="btn btn-primary" onclick="del()">
-                        确认
-                    </button>
-                </div>
-            </div><!-- /.modal-content -->
-        </form>
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
 
 <!-- 提示弹窗 -->
 <div class="modal fade" id="tanchuang" aria-hidden="true">
@@ -271,7 +244,6 @@
 <script src="/static/js/backstage/financialControlJS/salary.js"></script>
 <script src="/static/js/bootstrap-select/bootstrap-select.js"></script>
 <script src="/static/js/backstage/main.js"></script>
-
-
+<script src="/static/js/form/jquery.validate.js"></script>
 </body>
 </html>

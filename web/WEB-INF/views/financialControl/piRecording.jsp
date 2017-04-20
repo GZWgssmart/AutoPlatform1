@@ -19,17 +19,26 @@
     <div class="panel-body">
         <!--show-refresh, show-toggle的样式可以在bootstrap-table.js的948行修改-->
         <!-- table里的所有属性在bootstrap-table.js的240行-->
-        <table id="table" data-toggle="table" data-toolbar="#toolbar" data-url=""
-               data-method="post" data-query-params="queryParams" data-pagination="true"
-               data-search="true" data-show-refresh="true" data-show-toggle="true"
-               data-show-columns="true" data-page-size="10" data-height="543"
-               data-id-field="id" data-page-list="[5, 10, 20]" data-cach="false"
-               data-click-to-select="true" data-single-select="true">
+        <table id="table"
+               data-toggle="table"
+               data-toolbar="#toolbar"
+               data-pagination="true"
+               data-search="true"
+               data-show-refresh="true"
+               data-show-toggle="true"
+               data-show-columns="true"
+               data-page-size="10"
+               data-height="600"
+               data-id-field="id"
+               data-page-list="[5, 10, 20]"
+               data-cach="false"
+               data-click-to-select="true"
+               data-single-select="true">
             <thead>
             <tr>
                 <th data-radio="true" data-field="status"></th>
-                <th data-width="15%" data-field="outTypeId">支出类型</th>
-                <th data-width="15%" data-field="inTypeId">收入类型</th>
+                <th data-width="15%" data-field="outgoingType.outTypeName">支出类型</th>
+                <th data-width="15%" data-field="incomingType.inTypeName">收入类型</th>
                 <th data-width="15%" data-field="inOutMoney">收支金额</th>
                 <th data-width="15%" data-field="inOutCreatedUser">创建人</th>
                 <th data-width="20%" data-field="inOutCreatedTime">创建时间</th>
@@ -164,8 +173,10 @@
 <script src="/static/js/select2/select2.js"></script>
 <script src="/static/js/sweetalert/sweetalert.min.js"></script>
 <script src="/static/js/contextmenu.js"></script>
-<script src="/static/js/backstage/financialControlJS/payOut.js"></script>
+<script src="/static/js/backstage/financialControlJS/piRecording.js"></script>
 <script src="/static/js/bootstrap-select/bootstrap-select.js"></script>
+<script src="/static/js/form/jquery.validate.js"></script>
+<script src="/static/js/backstage/main.js"></script>
 
 </body>
 </html>

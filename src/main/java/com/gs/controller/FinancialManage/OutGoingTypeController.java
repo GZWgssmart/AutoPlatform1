@@ -1,4 +1,4 @@
-package com.gs.controller;
+package com.gs.controller.FinancialManage;
 
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.IncomingType;
@@ -8,6 +8,7 @@ import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
 import com.gs.common.util.PagerUtil;
 import com.gs.common.util.UUIDUtil;
+import com.gs.controller.FinancialViewController;
 import com.gs.service.OutgoingTypeService;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
@@ -28,7 +29,7 @@ import java.util.List;
 @RequestMapping("/outGoingType")
 public class OutGoingTypeController {
 
-    private Logger logger = (Logger) LoggerFactory.getLogger(FinancialViewController.class);
+    private Logger logger = (Logger) LoggerFactory.getLogger(OutGoingTypeController.class);
 
     /**
      * 支出Service
@@ -82,9 +83,18 @@ public class OutGoingTypeController {
         logger.info("添加支出类型");
         outgoingType.setOutTypeId(UUIDUtil.uuid());
         outgoingType.setOutTypeStatus("Y");
-        System.out.printf(outgoingType.getOutTypeName() + "ccccccccccccccccc");
         outgoingTypeService.insert(outgoingType);
         return ControllerResult.getSuccessResult("添加成功");
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "checkOutTypeName", method = RequestMethod.GET)
+    public boolean checkOutTypeName(String outTypeName) {
+        OutgoingType outgoingType = outgoingTypeService.queryById(outTypeName);
+        if(outgoingType != null){
+            return true;
+        }
+        return false;
     }
 
     @ResponseBody

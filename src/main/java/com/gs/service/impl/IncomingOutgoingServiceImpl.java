@@ -45,4 +45,13 @@ public class IncomingOutgoingServiceImpl implements IncomingOutgoingService {
 	public int inactive(String id) { return incomingOutgoingDAO.inactive(id); }
 	public int active(String id) { return incomingOutgoingDAO.active(id); }
 
+	@Override
+	public List<IncomingOutgoing> queryByPagerDisable(Pager pager) {
+		return incomingOutgoingDAO.queryByPagerDisable(pager);
+	}
+
+	@Override
+	public int countByDisable() {
+		return incomingOutgoingDAO.countByDisable();
+	}
 }

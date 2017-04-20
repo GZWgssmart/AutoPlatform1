@@ -15,7 +15,14 @@ import java.util.List;
 */
 public interface IncomingOutgoingService extends BaseService<String, IncomingOutgoing>{
 
-
+    /**
+     * 分页查询被禁用的记录
+     */
+    public List<IncomingOutgoing> queryByPagerDisable(Pager pager);
+    /**
+     * 分页查询被禁用的记录
+     */
+    public int countByDisable();
 
 
 }

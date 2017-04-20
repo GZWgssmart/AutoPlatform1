@@ -2,6 +2,7 @@ package com.gs.dao;
 
 import com.gs.bean.Checkin;
 import com.gs.bean.IncomingOutgoing;
+import com.gs.bean.OutgoingType;
 import com.gs.common.bean.Pager;
 import org.springframework.stereotype.Repository;
 
@@ -17,5 +18,12 @@ import java.util.List;
 @Repository
 public interface IncomingOutgoingDAO extends BaseDAO<String, IncomingOutgoing>{
 
-
+    /**
+     * 分页查询被禁用的记录
+     */
+    public List<IncomingOutgoing> queryByPagerDisable(Pager pager);
+    /**
+     * 分页查询被禁用的记录
+     */
+    public int countByDisable();
 }

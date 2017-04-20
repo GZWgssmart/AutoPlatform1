@@ -46,9 +46,15 @@
   <!-- 分页查询 -->
   <select id="queryByPager" resultMap="BaseResultMap" parameterType="com.gs.common.bean.Pager">
     <![CDATA[
-      select * from t_user u where u.userStatus = 'Y'
+      select * from t_user u where 1 = 1 and u.userStatus = 'Y'
     ]]>
       limit #{beginIndex}, #{pageSize};
+  </select>
+
+  <select id="count" resultType="int" >
+    <![CDATA[
+      select count(*) from t_user u where 1 =1 and u.userStatus = 'Y'
+    ]]>
   </select>
 
   <!-- 查询所有员工的基本信息 -->

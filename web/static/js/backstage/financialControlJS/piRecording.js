@@ -1,3 +1,12 @@
+
+/**
+ * 初始化表格
+ */
+$(function () {
+    initTable("table", "/incomingOutgoing/queryByPager"); // 初始化表格
+});
+
+
 $(function () {
     $('#table').bootstrapTable('hideColumn', 'id');
 

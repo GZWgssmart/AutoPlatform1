@@ -1,3 +1,6 @@
+/**
+ * 初始化表格
+ */
 $(function () {
     initTable("table", "/outGoingType/queryByPager"); // 初始化表格
 });
@@ -120,14 +123,33 @@ $(document).ready(function () {
         rules: {
             outTypeName: {
                 required: true,
-                minlength: 2
+                minlength: 2,
+                remote:{                         //自带远程验证存在的方法
+                    url:"/outGoingType/checkOutTypeName",
+                    type:"get",
+                    dataType:"json",
+                    async:false,
+                    data:{
+                        outTypeName:function(){return $("#outTypeName").val();}
+                    },
+                    dataFilter: function(data, type) {
+                        if (data == 'false'){
+                            return true;
+                        }else{
+                            return false;
+                        }
+
+
+                    }
+                }
             },
 
         },
         messages: {
             outTypeName: {
                 required: "请输入类型名称",
-                minlength: jQuery.format("类型名称不能少于{2}个字符")
+                minlength: jQuery.format("类型名称不能少于{2}个字符"),
+                remote:"该类型已存在"
             },
         },
         errorPlacement: function (error, element) {
@@ -178,14 +200,34 @@ $(document).ready(function () {
         rules: {
             outTypeName: {
                 required: true,
-                minlength: 2
+                minlength: 2,
+                remote:{                         //自带远程验证存在的方法
+                    url:"/outGoingType/checkOutTypeName",
+                    type:"get",
+                    dataType:"json",
+                    async:false,
+                    data:{
+                        outTypeName:function(){return $("#outUpdateTypeName").val();}
+                    },
+                    dataFilter: function(data, type) {
+                        if (data == 'false'){
+                            return true;
+                        }else{
+                            return false;
+                        }
+
+
+                    }
+                }
+
             },
 
         },
         messages: {
             outTypeName: {
                 required: "请输入类型名称",
-                minlength: jQuery.format("类型名称不能少于{2}个字符")
+                minlength: jQuery.format("类型名称不能少于{2}个字符"),
+                remote:"该类型已存在"
             },
         },
         errorPlacement: function (error, element) {

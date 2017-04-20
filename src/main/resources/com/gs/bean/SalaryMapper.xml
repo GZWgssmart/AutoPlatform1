@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.gs.dao.SalaryDAO" >
-  <resultMap id="BaseResultMap" type="com.gs.bean.Salary" >
+  <resultMap id="salaryMap" type="com.gs.bean.Salary" >
     <id column="salaryId" property="salaryId" jdbcType="VARCHAR" />
     <result column="userId" property="userId" jdbcType="VARCHAR" />
     <result column="prizeSalary" property="prizeSalary" jdbcType="DOUBLE" />
@@ -10,6 +10,47 @@
     <result column="salaryDes" property="salaryDes" jdbcType="VARCHAR" />
     <result column="salaryTime" property="salaryTime" jdbcType="TIMESTAMP" />
     <result column="salaryCreatedTime" property="salaryCreatedTime" jdbcType="TIMESTAMP" />
+
+
+    <association property="user" javaType="com.gs.bean.User">
+      <id column="user_id" property="userId"/>
+      <result column="user_name" property="userName"/>
+    </association>
+
   </resultMap>
+
+  <select id="count" resultType="int" >
+    <![CDATA[
+       select count(*) from t_salary s, t_user u where 1 =1 and u.userId = s.userId
+    ]]>
+  </select>
+
+  <select id="queryByPager" resultMap="salaryMap" parameterType="com.gs.common.bean.Pager">
+    <![CDATA[
+        select s.*, u.userId as user_id, u.userName as user_name  from t_salary s, t_user u where 1 =1 and u.userId = s.userId
+    ]]>
+    limit #{beginIndex}, #{pageSize}
+  </select>
+
+  <select id="queryById" resultMap="salaryMap">
+    <![CDATA[
+        select *  from t_salary where userId = #{userId};
+    ]]>
+
+  </select>
+
+
+  <insert id="insert" useGeneratedKeys="true" keyProperty="salaryId" parameterType="salary">
+    <![CDATA[
+        insert into t_salary(salaryId, userId, prizeSalary,minusSalay,totalSalary,salaryDes,salaryTime,salaryCreatedTime) values(#{salaryId}, #{userId}, #{prizeSalary}, #{minusSalay}, #{totalSalary}, #{salaryDes}, #{salaryTime}, now())
+        ]]>
+  </insert>
+
+  <update id="update" keyProperty="salaryId" parameterType="salary">
+    <![CDATA[
+        update t_salary set salaryId = #{salaryId}, userId = #{userId}, prizeSalary = #{prizeSalary}, minusSalay = #{minusSalay}, totalSalary = #{totalSalary}, salaryDes = #{salaryDes} where salaryId = #{salaryId}
+        ]]>
+  </update>
+
 
 </mapper>

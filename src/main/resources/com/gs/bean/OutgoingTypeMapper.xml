@@ -34,6 +34,12 @@
      limit #{beginIndex}, #{pageSize}
   </select>
 
+  <select id="queryById" parameterType="string" resultMap="outGoingTypeMap">
+    <![CDATA[
+        select *  from t_outgoing_type where outTypeName = #{outTypeName}
+    ]]>
+
+  </select>
 
   <insert id="insert" useGeneratedKeys="true" keyProperty="outTypeId" parameterType="outGoingType">
     <![CDATA[

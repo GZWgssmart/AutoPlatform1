@@ -123,14 +123,36 @@ $(document).ready(function() {
         rules : {
             inTypeName : {
                 required : true,
-                minlength : 2
+                minlength : 2,
+                remote:{                         //自带远程验证存在的方法
+                    url:"/incomingType/checkInTypeName",
+                    type:"get",
+                    dataType:"json",
+                    async:false,
+                    data:{
+                        inTypeName:function(){
+                            return $("#inTypeName").val();
+                        }
+                    },
+                    dataFilter: function(data, type) {
+                        if (data == 'false'){
+                            return true;
+                        }else{
+                            return false;
+                        }
+
+
+                    }
+                }
+
             },
 
         },
         messages : {
             inTypeName : {
                 required : "请输入类型名称",
-                minlength : jQuery.format("类型名称不能少于{2}个字符")
+                minlength : jQuery.format("类型名称不能少于{2}个字符"),
+                remote:'已经存在此类型'
             },
         },
         errorPlacement : function(error, element) {
@@ -178,14 +200,32 @@ $(document).ready(function() {
         rules : {
             inTypeName : {
                 required : true,
-                minlength : 2
+                minlength : 2,
+                remote:{                         //自带远程验证存在的方法
+                    url:"/incomingType/checkInTypeName",
+                    type:"get",
+                    dataType:"json",
+                    async:false,
+                    data:{
+                        inTypeName:function(){
+                            return $("#inUpdateTypeName").val();
+                        }
+                    },
+                    dataFilter: function(data, type) {
+                        if (data == 'false'){
+                            return true;
+                        }else{
+                            return false;
+                        }
+                    }
+                }
             },
-
         },
         messages : {
             inTypeName : {
                 required : "请输入类型名称",
-                minlength : jQuery.format("类型名称不能少于{2}个字符")
+                minlength : jQuery.format("类型名称不能少于{2}个字符"),
+                remote:"该类型已存在"
             },
         },
         errorPlacement : function(error, element) {

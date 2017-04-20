@@ -5,6 +5,8 @@
     <id column="inTypeId" property="inTypeId" jdbcType="VARCHAR" />
     <result column="inTypeName" property="inTypeName" jdbcType="VARCHAR" />
     <result column="inTypeStatus" property="inTypeStatus" jdbcType="VARCHAR" />
+
+
   </resultMap>
 
   <select id="count" resultType="int" >
@@ -31,6 +33,13 @@
          select * from t_incoming_type i where 1 =1 and i.inTypeStatus = 'N'
     ]]>
     limit #{beginIndex}, #{pageSize}
+  </select>
+
+  <select id="queryById" resultMap="incomingTypeMap">
+    <![CDATA[
+        select *  from t_incoming_type where inTypeName = #{inTypeName};
+    ]]>
+
   </select>
 
   <select id="queryAll" resultType="list" resultMap="incomingTypeMap">
