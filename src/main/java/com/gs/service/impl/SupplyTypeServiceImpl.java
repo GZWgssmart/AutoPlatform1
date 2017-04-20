@@ -45,4 +45,11 @@ public class SupplyTypeServiceImpl implements SupplyTypeService {
 	public int inactive(String id) { return supplyTypeDAO.inactive(id); }
 	public int active(String id) { return supplyTypeDAO.active(id); }
 
+	public List<SupplyType> queryByPagerDisable(Pager pager) {
+		return supplyTypeDAO.queryByPagerDisable(pager);
+	}
+
+	public int countByDisable() {
+		return supplyTypeDAO.countByDisable();
+	}
 }

@@ -2,10 +2,14 @@ package com.gs.controller.supplyManage;
 
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.AccessoriesBuy;
+import com.gs.bean.OutgoingType;
 import com.gs.bean.Supply;
 import com.gs.common.bean.ControllerResult;
+import com.gs.common.bean.Pager;
+import com.gs.common.bean.Pager4EasyUI;
 import com.gs.service.AccessoriesBuyService;
 import com.gs.service.SupplyService;
+import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,17 +35,31 @@ public class SupplyController {
     private Logger logger = (Logger) LoggerFactory.getLogger(SupplyController.class);
 
     /**
-     * 查询所有的供应商
+     * 分页查询所有的供应商
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "queryAllSupply", method = RequestMethod.POST)
-    public List<Supply> queryAllSupply() {
-        List<Supply> supplyList = supplyService.queryAll();
-        if (supplyList != null && !supplyList.equals("")) {
-            return supplyList;
-        }
-        return null;
+    @RequestMapping(value = "queryByPager",method = RequestMethod.GET)
+    public Pager4EasyUI<Supply> queryByPager(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
+        logger.info("供应商分页查询");
+        Pager pager = new Pager();
+        pager.setPageNo(Integer.valueOf(pageNumber));
+        pager.setPageSize(Integer.valueOf(pageSize));
+        pager.setTotalRecords(supplyService.count());
+        List<Supply> supplyList = supplyService.queryByPager(pager);
+        return new Pager4EasyUI<Supply>(pager.getTotalRecords(), supplyList);
+     }
+
+    @ResponseBody
+    @RequestMapping(value = "queryByPagerDisable",method = RequestMethod.GET)
+    public Pager4EasyUI<Supply> queryByPagerDisable(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
+        logger.info("供应商禁用分页查询");
+        Pager pager = new Pager();
+        pager.setPageNo(Integer.valueOf(pageNumber));
+        pager.setPageSize(Integer.valueOf(pageSize));
+        pager.setTotalRecords(supplyService.countByDisable());
+        List<Supply> supplyList = supplyService.queryByPagerDisable(pager);
+        return new Pager4EasyUI<Supply>(pager.getTotalRecords(), supplyList);
     }
 
     /**
@@ -58,23 +76,6 @@ public class SupplyController {
             return ControllerResult.getSuccessResult("添加成功");
         } else {
             return ControllerResult.getFailResult("添加失败，请输入必要的信息");
-        }
-    }
-
-    /**
-     * 删除供应商
-     *
-     * @return
-     */
-    @ResponseBody
-    @RequestMapping(value = "removeSupply", method = RequestMethod.POST)
-    public ControllerResult removeSupply(String id) {
-        if (id != null && !id.equals("")) {
-            supplyService.deleteById(id);
-            logger.info("删除成功");
-            return ControllerResult.getSuccessResult("删除成功");
-        } else {
-            return ControllerResult.getFailResult("删除失败");
         }
     }
 

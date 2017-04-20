@@ -9,15 +9,32 @@
     <result column="supplyTypeStatus" property="supplyTypeStatus" jdbcType="VARCHAR" />
   </resultMap>
 
-  <!--
-          查询所有供应商类型信息
-      -->
-  <select id="queryAll" resultMap="supplyTypeMap">
+
+  <select id="count" resultType="int" >
     <![CDATA[
-        SELECT * FROM auto_platform.t_supply_type
-        ]]>
+      select count(*) from t_supply_type st where st.supplyTypeStatus = 'Y'
+    ]]>
   </select>
 
+  <select id="queryByPager" resultMap="supplyTypeMap" parameterType="com.gs.common.bean.Pager">
+    <![CDATA[
+        select * from t_supply_type st where 1 =1 and st.supplyTypeStatus = 'Y'
+    ]]>
+    limit #{beginIndex}, #{pageSize}
+  </select>
+
+  <select id="countByDisable" resultType="int" >
+    <![CDATA[
+        select count(*) from t_supply_type st where st.supplyTypeStatus = 'N'
+    ]]>
+  </select>
+
+  <select id="queryByPagerDisable" resultMap="supplyTypeMap" parameterType="com.gs.common.bean.Pager">
+    <![CDATA[
+          select * from t_supply_type st where 1 =1 and st.supplyTypeStatus = 'N'
+    ]]>
+    limit #{beginIndex}, #{pageSize}
+  </select>
   <!--
       添加供应商类型信息,默认添加状态为可用状态
   -->
@@ -27,13 +44,6 @@
         values(uuid(),#{supplyTypeName},#{companyId},#{supplyTypeDes},'Y')
         ]]>
   </insert>
-
-  <!--
-      根据id删除供应商类型信息
-  -->
-  <delete id="deleteById">
-    DELETE FROM auto_platform.t_supply_type WHERE supplyTypeId=#{supplyTypeId}
-  </delete>
 
   <!--
       根据id更新供应商类型信息

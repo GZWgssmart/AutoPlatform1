@@ -18,15 +18,31 @@
     <result column="supplyStatus" property="supplyStatus" jdbcType="VARCHAR" />
   </resultMap>
 
-  <!--
-        查询所有供应商信息
-    -->
-  <select id="queryAll" resultMap="supplyMap">
+  <select id="count" resultType="int" >
     <![CDATA[
-        SELECT * FROM auto_platform.t_supply
-        ]]>
+      select count(*) from t_supply s where s.supplyStatus = 'Y'
+    ]]>
   </select>
 
+  <select id="queryByPager" resultMap="supplyMap" parameterType="com.gs.common.bean.Pager">
+    <![CDATA[
+        select * from t_supply s where 1 =1 and s.supplyStatus = 'Y'
+    ]]>
+    limit #{beginIndex}, #{pageSize}
+  </select>
+
+  <select id="countByDisable" resultType="int" >
+    <![CDATA[
+        select count(*) from t_supply s where s.supplyStatus = 'N'
+    ]]>
+  </select>
+
+  <select id="queryByPagerDisable" resultMap="supplyMap" parameterType="com.gs.common.bean.Pager">
+    <![CDATA[
+          select * from t_supply s where 1 =1 and s.supplyStatus = 'N'
+    ]]>
+    limit #{beginIndex}, #{pageSize}
+  </select>
   <!--
       添加供应商信息,默认添加状态为可用状态
   -->
@@ -38,13 +54,6 @@
         #{companyId},#{supplyAlipay},#{supplyBank},#{supplyBankAccount},#{supplyBankNo},'Y')
         ]]>
   </insert>
-
-  <!--
-      根据id删除供应商信息
-  -->
-  <delete id="deleteById">
-    DELETE FROM auto_platform.t_supply WHERE supplyId=#{supplyId}
-  </delete>
 
   <!--
       根据id更新供应商信息

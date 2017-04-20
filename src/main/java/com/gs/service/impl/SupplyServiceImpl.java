@@ -32,7 +32,6 @@ public class SupplyServiceImpl implements SupplyService {
 	public int batchUpdate(List<Supply> list) { return supplyDAO.batchUpdate(list); }
 	public List<Supply> queryAll() { return supplyDAO.queryAll(); }
 
-	@Override
 	public List<Supply> queryAll(String status) {
 		return supplyDAO.queryAll();
 	}
@@ -45,4 +44,12 @@ public class SupplyServiceImpl implements SupplyService {
 	public int inactive(String id) { return supplyDAO.inactive(id); }
 	public int active(String id) { return supplyDAO.active(id); }
 
+
+	public List<Supply> queryByPagerDisable(Pager pager) {
+		return supplyDAO.queryByPagerDisable(pager);
+	}
+
+	public int countByDisable() {
+		return supplyDAO.countByDisable();
+	}
 }
