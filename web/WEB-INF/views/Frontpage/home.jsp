@@ -109,7 +109,7 @@
                 </div>
             </div>
             <div class="button-box">
-                <a href="platformIntro" class="btn wow bounceInDown animated" data-wow-delay="1s" style="width: 200px;visibility: visible; animation-delay: 0.8s;animation-name: bounceInDown;">了解更多</a>
+                <a href="platformIntro" class="btn zoomIn wow animated" data-wow-delay="0.5s" style="width: 200px;">立即使用</a>
             </div>
         </div>
         <%--主内容二--%>
@@ -136,7 +136,7 @@
                 </div>
                 <div id="rt" class="col-md-5 col-sm-7 banner-img wow fadeInRight animated" data-wow-delay="0.4s" style="height: 100%;visibility: visible; animation-name: fadeInRight;">
                     <div class="right-img" >
-                        <a href="javaScript:;"><img src="/static/img/Frontpage/slider.png" style="width: 100%;height: 100%"/></a>
+                        <a href="platformIntro"><img src="/static/img/Frontpage/slider.png" style="width: 100%;height: 100%"/></a>
                     </div>
                 </div>
             </div>
@@ -185,7 +185,7 @@
                     </div>
                 </div>
                 <div class="button-box2" style="margin-top: 8%;">
-                    <button class="btn wow fadeInRight animated " data-wow-delay="0.5s" style="width: 200px;height: 50px;visibility: visible; animation-delay: 1s; animation-name: fadeInRight;">马上进入</button>
+                    <a href="platformIntro" class="btn wow fadeInRight animated " data-wow-delay="0.5s" style="width: 200px;height: 50px;visibility: visible; animation-delay: 1s; animation-name: fadeInRight;">马上进入</a>
                 </div>
         </div>
         <%--主内容四--%>
@@ -219,7 +219,7 @@
                 </div>
             </div>
             <div class="button-box2">
-                <button class="btn wow fadeInRight animated " style="width: 200px;height: 50px;visibility: visible; animation-name: fadeInRight;">马上进入</button>
+                <a href="platformIntro" class="btn zoomIn wow animated" style="width: 200px;height: 50px;">马上进入</a>
             </div>
         </div>
         <%--主内容五--%>

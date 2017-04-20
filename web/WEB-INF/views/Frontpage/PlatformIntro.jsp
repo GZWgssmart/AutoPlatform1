@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>平台介绍</title>
+    <title>平台下载</title>
 </head>
 <link rel="stylesheet" href="/static/css/bootstrap.css">
 <link rel="stylesheet" href="/static/css/animate.css">
@@ -30,7 +30,7 @@
         height: 90%;
     }
     .container{
-        padding-top: 50px;
+        padding-top: 100px;
         height: 95%;
     }
     .des-txt{
@@ -159,7 +159,7 @@
                             </li>
                         </ol>
                     </div>
-                    <button class="btn" style="background-color: burlywood;color: white;">立即试用</button>
+                    <button class="btn dl-btn" style="background-color:#696969 ;color: white;"><span style="font-size: 20px;" class="glyphicon glyphicon-download-alt"></span> 立即试用</button>
                     <div class="eweim">
                     </div>
                     <div class="clearfix"></div>
@@ -194,7 +194,7 @@
                             </li>
                         </ol>
                     </div>
-                    <button class="btn" style="background-color: burlywood;color: white;">立即试用</button>
+                    <button class="btn" style="background-color: green;color: white;"><span style="font-size: 20px;" class="glyphicon glyphicon-download-alt"></span> 立即试用</button>
                     <div class="eweim">
                     </div>
                     <div class="clearfix"></div>
@@ -229,7 +229,7 @@
                                 </li>
                             </ol>
                         </div>
-                        <button class="btn" style="background-color: burlywood;color: white;">立即试用</button>
+                        <button class="btn" style="background-color: burlywood;color: white;"><span style="font-size: 20px;" class="glyphicon glyphicon-download-alt"></span> 立即试用</button>
                         <div class="eweim">
                         </div>
                         <div class="clearfix"></div>
@@ -263,7 +263,7 @@
                                 </li>
                             </ol>
                         </div>
-                        <button class="btn" style="background-color: burlywood;color: white;">立即试用</button>
+                        <button class="btn" style="background-color: thistle;color: white;"><span style="font-size: 20px;" class="glyphicon glyphicon-download-alt"></span> 立即试用</button>
                         <div class="eweim">
                         </div>
                         <div class="clearfix"></div>
