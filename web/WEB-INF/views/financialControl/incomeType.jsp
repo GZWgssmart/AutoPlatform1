@@ -52,6 +52,12 @@
             <button id="btn_edit" type="button" class="btn btn-default" onclick="showEdit();">
                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
             </button>
+            <button id="searchDisable" type="button" class="btn btn-default" onclick="searchDisableStatus();">
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询禁用类型
+            </button>
+            <button id="searchRapid" type="button" class="btn btn-default" onclick="searchRapidStatus();">
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询激活类型
+            </button>
         </div>
     </div>
 </div>

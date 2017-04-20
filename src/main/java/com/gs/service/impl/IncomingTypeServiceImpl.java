@@ -1,5 +1,6 @@
 package com.gs.service.impl;
 
+import com.gs.bean.Checkin;
 import com.gs.bean.IncomingType;
 import com.gs.dao.IncomingTypeDAO;
 import com.gs.service.IncomingTypeService;
@@ -45,4 +46,13 @@ public class IncomingTypeServiceImpl implements IncomingTypeService {
 	public int inactive(String id) { return incomingTypeDAO.inactive(id); }
 	public int active(String id) { return incomingTypeDAO.active(id); }
 
+	@Override
+	public List<IncomingType> queryByPagerDisable(Pager pager) {
+		return incomingTypeDAO.queryByPagerDisable(pager);
+	}
+
+	@Override
+	public int countByDisable() {
+		return incomingTypeDAO.countByDisable();
+	}
 }

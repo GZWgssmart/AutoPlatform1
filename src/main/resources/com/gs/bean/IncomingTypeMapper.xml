@@ -15,7 +15,20 @@
 
   <select id="queryByPager" resultMap="incomingTypeMap" parameterType="com.gs.common.bean.Pager">
     <![CDATA[
-        select * from t_incoming_type i where 1 = 1
+        select * from t_incoming_type i where 1 =1 and i.inTypeStatus = 'Y'
+    ]]>
+    limit #{beginIndex}, #{pageSize}
+  </select>
+
+  <select id="countByDisable" resultType="int" >
+    <![CDATA[
+       select count(*) from t_incoming_type i where i.inTypeStatus = 'N'
+    ]]>
+  </select>
+
+  <select id="queryByPagerDisable" resultMap="incomingTypeMap" parameterType="com.gs.common.bean.Pager">
+    <![CDATA[
+         select * from t_incoming_type i where 1 =1 and i.inTypeStatus = 'N'
     ]]>
     limit #{beginIndex}, #{pageSize}
   </select>

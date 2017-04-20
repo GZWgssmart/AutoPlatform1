@@ -49,6 +49,19 @@ public class IncomingTypeController {
     }
 
     @ResponseBody
+    @RequestMapping(value = "queryByPagerDisable",method = RequestMethod.GET)
+    public Pager4EasyUI<IncomingType> queryByPagerDisable(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
+        logger.info("收入类型分页查询");
+        Pager pager = new Pager();
+        pager.setPageNo(Integer.valueOf(pageNumber));
+        pager.setPageSize(Integer.valueOf(pageSize));
+        pager.setTotalRecords(incomingTypeService.countByDisable());
+        List<IncomingType> incomingTypes = incomingTypeService.queryByPagerDisable(pager);
+        return new Pager4EasyUI<IncomingType>(pager.getTotalRecords(), incomingTypes);
+    }
+
+
+    @ResponseBody
     @RequestMapping(value = "inactive",method = RequestMethod.POST)
     public ControllerResult inactive(String id) {
         logger.info("禁用");

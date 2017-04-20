@@ -22,8 +22,7 @@
         <table id="table"
                data-toggle="table"
                data-toolbar="#toolbar"
-               data-url="/outGoingType/queryAll"
-               data-method="post"
+               data-method="get"
                data-query-params="queryParams"
                data-pagination="true"
                data-search="true"
@@ -52,6 +51,12 @@
             </button>
             <button id="btn_edit" type="button" class="btn btn-default" onclick="showEdit();">
                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
+            </button>
+            <button id="searchDisable" type="button" class="btn btn-default" onclick="searchDisableStatus();">
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询禁用类型
+            </button>
+            <button id="searchRapid" type="button" class="btn btn-default" onclick="searchRapidStatus();">
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询激活类型
             </button>
         </div>
 
@@ -115,25 +120,6 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-<!-- 删除弹窗 -->
-<div class="modal fade" id="del" aria-hidden="true">
-    <div class="modal-dialog">
-        <form action="/table/edit" method="post">
-            <div class="modal-content">
-                <input type="hidden" id="delNoticeId"/>
-                <div class="modal-footer" style="text-align: center;">
-                    <h2>确认删除吗?</h2>
-                    <button type="button" class="btn btn-default"
-                            data-dismiss="modal">关闭
-                    </button>
-                    <button type="sumbit" class="btn btn-primary" onclick="del()">
-                        确认
-                    </button>
-                </div>
-            </div><!-- /.modal-content -->
-        </form>
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
 
 <!-- 提示弹窗 -->
 <div class="modal fade" id="tanchuang" aria-hidden="true">
@@ -154,6 +140,7 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+
 <script src="/static/js/jquery.min.js"></script>
 <script src="/static/js/bootstrap.min.js"></script>
 <script src="/static/js/bootstrap-table/bootstrap-table.js"></script>
@@ -165,6 +152,7 @@
 <script src="/static/js/backstage/financialControlJS/payOutType.js"></script>
 <script src="/static/js/bootstrap-select/bootstrap-select.js"></script>
 <script src="/static/js/form/jquery.validate.js"></script>
+<script src="/static/js/backstage/main.js"></script>
 
 </body>
 </html>
