@@ -6,12 +6,18 @@ import com.gs.bean.AccessoriesSale;
 import com.gs.common.bean.ControllerResult;
 import com.gs.service.AccessoriesSaleService;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -89,4 +95,31 @@ public class AccessoriesSaleController {
         }
     }
 
+    /**
+     * 对状态的激活和启用，只使用一个方法进行切换。
+     */
+    @ResponseBody
+    @RequestMapping(value = "statusOperate",method = RequestMethod.POST)
+    public ControllerResult inactive(String accSaleId,String accSaleStatus){
+        if(accSaleId!=null&&!accSaleId.equals("")&&accSaleStatus!=null&&!accSaleStatus.equals("")){
+            if (accSaleStatus.equals("N")){
+                accessoriesSaleService.active(accSaleId);
+                logger.info("激活成功");
+                return ControllerResult.getSuccessResult("激活成功");
+            }else{
+                accessoriesSaleService.inactive(accSaleId);
+                logger.info("禁用成功");
+                return ControllerResult.getSuccessResult("禁用成功");
+            }
+        }else{
+            return ControllerResult.getFailResult("操作失败");
+        }
+    }
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        dateFormat.setLenient(false);
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
+    }
 }

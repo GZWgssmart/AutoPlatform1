@@ -28,7 +28,7 @@
         <table id="table"
                data-toggle="table"
                data-toolbar="#toolbar"
-               data-url="/table/query"
+               data-url="/accSale/queryAllAccSale"
                data-method="post"
                data-query-params="queryParams"
                data-pagination="true"
@@ -50,14 +50,15 @@
                 <th data-checkbox="true" data-field="status"></th>
                 <th data-field="companyId">所属公司</th>
                 <th data-field="accId">配件编号</th>
-                <th data-field="accSaledTime">配件销售时间</th>
+                <th data-field="accSaledTime" data-formatter="formatterDate">配件销售时间</th>
                 <th data-field="accSaleCount">配件销售数量</th>
                 <th data-field="accSalePrice">配件销售单价</th>
                 <th data-field="accSaleTotal">配件销售总价</th>
                 <th data-field="accSaleDiscount">配件销售折扣</th>
                 <th data-field="accSaleMoney">配件销售最终价</th>
-                <th data-field="accSaleCreatedTime">销售记录创建时间</th>
-                <th data-field="accSaleStatus">销售记录状态</th>
+                <th data-field="accSaleCreatedTime" data-formatter="formatterDateTime">销售记录创建时间</th>
+                <th data-field="accSaleStatus" data-formatter="formatterStatus">销售记录状态</th>
+                <th data-formatter="openStatusFormatter">操作</th>
             </tr>
             </thead>
         </table>
@@ -78,7 +79,7 @@
 <div class="modal fade" id="addWindow" aria-hidden="true" style="overflow:auto; ">
     <div class="modal-dialog" style="width: 700px;height: auto;">
         <div class="modal-content" style="overflow:hidden;">
-            <form class="form-horizontal" role="form" onsubmit="return checkAdd()" id="addForm" method="post">
+            <form class="form-horizontal" role="form" id="addForm" method="post">
                 <div class="modal-header" style="overflow:auto;">
                     <h4>请填写配件销售信息</h4>
                 </div>
@@ -98,7 +99,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">配件销售时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="accSaledTime" value="2012-05-15 21:05" id="addDateTimePicker" class="form-control">
+                        <input type="date" name="accSaledTime" placeholder="请输入配件销售时间" value="" id="addDateTimePicker" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
@@ -129,18 +130,6 @@
                     <label class="col-sm-3 control-label">配件销售最终价：</label>
                     <div class="col-sm-7">
                         <input type="text" name="accSaleMoney" placeholder="请输入配件销售最终价" class="form-control">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">销售记录创建时间：</label>
-                    <div class="col-sm-7">
-                        <input type="text" name="accSaleCreatedTime" value="2012-05-15 21:05" id="addDateTimePicker2" class="form-control">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">销售记录状态：</label>
-                    <div class="col-sm-7">
-                        <input type="text" name="accSaleStatus" placeholder="销售记录状态" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
@@ -157,7 +146,8 @@
 <div class="modal fade" id="editWindow" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form class="form-horizontal" role="form" onsubmit="return checkAdd()" id="editForm" method="post">
+            <form class="form-horizontal" role="form" id="editForm" method="post">
+                <input type="hidden" name="accSaleId" define="AccessoriesSale.accSaleId"/>
                 <div class="modal-header" style="overflow:auto;">
                     <h4>请填写配件销售信息</h4>
                 </div>
@@ -165,61 +155,57 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">所属公司：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="companyId" placeholder="请输入所属公司" class="form-control">
+                        <input type="text" name="companyId" define="AccessoriesSale.companyId" placeholder="请输入所属公司"
+                               class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">配件编号：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="accId" placeholder="请输入配件编号" class="form-control">
+                        <input type="text" name="accId" define="AccessoriesSale.accId" placeholder="请输入配件编号"
+                               class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">配件销售时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="accSaledTime" value="2012-05-15 21:05" id="editDateTimePicker" class="form-control">
+                        <input type="date" name="accSaledTime" define="AccessoriesSale.accSaledTime" value=""
+                               id="editDateTimePicker" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">配件销售数量：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="accSaleCount" placeholder="请输入配件销售数量" class="form-control">
+                        <input type="text" name="accSaleCount" define="AccessoriesSale.accSaleCount"
+                               placeholder="请输入配件销售数量" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">配件销售单价：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="accSalePrice" placeholder="请输入配件销售单价" class="form-control">
+                        <input type="text" name="accSalePrice" define="AccessoriesSale.accSalePrice"
+                               placeholder="请输入配件销售单价" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">配件销售总价：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="accSaleTotal" placeholder="请输入配件销售总价" class="form-control">
+                        <input type="text" name="accSaleTotal" define="AccessoriesSale.accSaleTotal"
+                               placeholder="请输入配件销售总价" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">配件销售折扣：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="accSaleDiscount" placeholder="请输入配件销售折扣" class="form-control">
+                        <input type="text" name="accSaleDiscount" define="AccessoriesSale.accSaleDiscount"
+                               placeholder="请输入配件销售折扣" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">配件销售最终价：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="accSaleMoney" placeholder="请输入配件销售最终价" class="form-control">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">销售记录创建时间：</label>
-                    <div class="col-sm-7">
-                        <input type="text" name="accSaleCreatedTime" value="2012-05-15 21:05" id="editDateTimePicker2" class="form-control">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">销售记录状态：</label>
-                    <div class="col-sm-7">
-                        <input type="text" name="accSaleStatus" placeholder="销售记录状态" class="form-control">
+                        <input type="text" name="accSaleMoney" define="AccessoriesSale.accSaleMoney"
+                               placeholder="请输入配件销售最终价" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">

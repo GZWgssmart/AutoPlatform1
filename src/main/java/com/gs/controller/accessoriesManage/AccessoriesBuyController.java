@@ -48,6 +48,7 @@ public class AccessoriesBuyController {
     @RequestMapping(value = "addAccBuy", method = RequestMethod.POST)
     public ControllerResult addAccBuy(AccessoriesBuy accessoriesBuy) {
         if (accessoriesBuy != null && !accessoriesBuy.equals("")) {
+            System.out.println("传到后天的数据为："+accessoriesBuy.toString());
             System.out.println(accessoriesBuy.toString());
             accessoriesBuyService.insert(accessoriesBuy);
             logger.info("添加成功");

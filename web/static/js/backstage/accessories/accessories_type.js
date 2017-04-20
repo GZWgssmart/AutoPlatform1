@@ -68,7 +68,6 @@ function openStatusFormatter(index, row) {
     } else {
         return "&nbsp;&nbsp;<a href='javascript:;' onclick='active(\"" + row.accTypeId + "\")'>激活</a>";
     }
-
 }
 
 //禁用状态

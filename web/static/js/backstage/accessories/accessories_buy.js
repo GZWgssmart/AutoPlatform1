@@ -1,3 +1,5 @@
+var contentPath = ''
+
 $(function () {
     $('#table').bootstrapTable('hideColumn', 'accBuyId');
 
@@ -143,38 +145,38 @@ $('#editDateTimePicker2').datetimepicker({
 
 //前端验证
 $(document).ready(function () {
-    $("#addFrom").validate({
+    $("#addForm").validate({
         errorElement: 'span',
         errorClass: 'help-block',
 
         rules: {
             companyId: {
                 required: true,
-                minlength: 2
+                minlength: 1
             },
             accId: {
                 required: true,
-                minlength: 2
+                minlength: 1
             },
             accBuyCount: {
                 required: true,
-                minlength: 2
+                minlength: 1
             },
             accBuyPrice: {
                 required: true,
-                minlength: 2
+                minlength: 1
             },
             accBuyTotal: {
                 required: true,
-                minlength: 2
+                minlength: 1
             },
             accBuyDiscount: {
                 required: true,
-                minlength: 2
+                minlength: 1
             },
             accBuyMoney: {
                 required: true,
-                minlength: 2
+                minlength: 1
             }
         },
         messages: {
@@ -202,7 +204,23 @@ $(document).ready(function () {
             label.remove();
         },
         submitHandler: function (form) {
-            alert("submitted!");
+            $.post(contentPath + "/accBuy/addAccBuy", $("#addForm").serialize(), function (data) {
+                if (data.result == "success") {
+                    $("#addWindow").modal('hide'); // 关闭指定的窗口
+                    $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
+                    swal({
+                        title: "",
+                        text: data.message,
+                        type: "success"
+                    })
+                } else {
+                    swal({
+                        title: "",
+                        text: data.message,
+                        type: "fail"
+                    })
+                }
+            });
         }
     })
     $("#eidtFrom").validate({
@@ -212,31 +230,31 @@ $(document).ready(function () {
         rules: {
             companyId: {
                 required: true,
-                minlength: 2
+                minlength: 1
             },
             accId: {
                 required: true,
-                minlength: 2
+                minlength: 1
             },
             accBuyCount: {
                 required: true,
-                minlength: 2
+                minlength: 1
             },
             accBuyPrice: {
                 required: true,
-                minlength: 2
+                minlength: 1
             },
             accBuyTotal: {
                 required: true,
-                minlength: 2
+                minlength: 1
             },
             accBuyDiscount: {
                 required: true,
-                minlength: 2
+                minlength: 1
             },
             accBuyMoney: {
                 required: true,
-                minlength: 2
+                minlength: 1
             }
         },
         messages: {
@@ -264,7 +282,23 @@ $(document).ready(function () {
             label.remove();
         },
         submitHandler: function (form) {
-            alert("submitted!");
+            $.post(contentPath + "/accBuy/updateAccBuy", $("#editForm").serialize(), function (data) {
+                if (data.result == "success") {
+                    $("#editWindow").modal('hide'); // 关闭指定的窗口
+                    $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
+                    swal({
+                        title: "",
+                        text: data.message,
+                        type: "success"
+                    })
+                } else {
+                    swal({
+                        title: "",
+                        text: data.message,
+                        type: "fail"
+                    })// 提示窗口, 修改成功
+                }
+            });
         }
     })
 });

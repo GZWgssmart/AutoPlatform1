@@ -1,3 +1,5 @@
+var contentPath = '';
+
 $(function () {
     $('#table').bootstrapTable('hideColumn', 'accSaleId');
     $("#addSelect").select2({
@@ -23,12 +25,11 @@ $(function () {
 function showEdit() {
     var row = $('table').bootstrapTable('getSelections');
     if (row.length > 0) {
-//                $('#editId').val(row[0].id);
-//                $('#editName').val(row[0].name);
-//                $('#editPrice').val(row[0].price);
         $("#editWindow").modal('show'); // 显示弹窗
         var ceshi = row[0];
+        var editDate = document.getElementById("editDateTimePicker");
         $("#editForm").fill(ceshi);
+        editDate.value = formatterDate(row[0].accSaledTime);
     } else {
         swal({
             "title": "",
@@ -49,6 +50,94 @@ function formatRepo(repo) {
 }
 function formatRepoSelection(repo) {
     return repo.text
+}
+
+//格式化页面上的配件分类状态
+function formatterStatus(value) {
+    if (value == "Y") {
+        return "可用";
+    } else {
+        return "不可用";
+    }
+}
+
+function openStatusFormatter(index, row) {
+    /*处理数据*/
+    if (row.accSaleStatus == 'Y') {
+        return "&nbsp;&nbsp;<a href='javascript:;' onclick='inactive(\"" + row.accSaleId + "\")'>禁用</a>";
+    } else {
+        return "&nbsp;&nbsp;<a href='javascript:;' onclick='active(\"" + row.accSaleId + "\")'>激活</a>";
+    }
+}
+
+//禁用状态
+function inactive(accSaleId) {
+    $.post(contentPath + "/accSale/statusOperate?accSaleId=" + accSaleId + "&" + "accSaleStatus=" + "Y", function (data) {
+        if (data.result == "success") {
+            $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
+        }
+    })
+}
+
+//激活状态
+function active(accSaleId) {
+    $.post(contentPath + "/accSale/statusOperate?accSaleId=" + accSaleId + "&" + "accSaleStatus=" + 'N', function (data) {
+        if (data.result == "success") {
+            $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
+        }
+    })
+}
+
+
+//格式化带时分秒的时间值。
+function formatterDateTime(value) {
+    if (value == undefined || value == null || value == '') {
+        return "";
+    }
+    else {
+        var date = new Date(value);
+        var year = date.getFullYear().toString();
+        var month = (date.getMonth() + 1);
+        var day = date.getDate().toString();
+        var hour = date.getHours().toString();
+        var minutes = date.getMinutes().toString();
+        var seconds = date.getSeconds().toString();
+        if (month < 10) {
+            month = "0" + month;
+        }
+        if (day < 10) {
+            day = "0" + day;
+        }
+        if (hour < 10) {
+            hour = "0" + hour;
+        }
+        if (minutes < 10) {
+            minutes = "0" + minutes;
+        }
+        if (seconds < 10) {
+            seconds = "0" + seconds;
+        }
+        return year + "-" + month + "-" + day + " " + hour + ":" + minutes + ":" + seconds;
+    }
+}
+
+//格式化不带时分秒的时间值
+function formatterDate(value) {
+    if (value == undefined || value == null || value == '') {
+        return "";
+    } else {
+        var date = new Date(value);
+        var year = date.getFullYear().toString();
+        var month = (date.getMonth() + 1);
+        var day = date.getDate().toString();
+        if (month < 10) {
+            month = "0" + month;
+        }
+        if (day < 10) {
+            day = "0" + day;
+        }
+        return year + "-" + month + "-" + day + ""
+    }
 }
 
 //显示删除
@@ -101,12 +190,18 @@ function checkEdit() {
 }
 
 $('#addDateTimePicker').datetimepicker({
+    minView: "month", //选择日期后，不会再跳转去选择时分秒
     language: 'zh-CN',
-    format: 'yyyy-mm-dd hh:ii'
+    format: 'yyyy-mm-dd',
+    todayBtn: 1,
+    autoclose: 1,
 });
 $('#editDateTimePicker').datetimepicker({
+    minView: "month", //选择日期后，不会再跳转去选择时分秒
     language: 'zh-CN',
-    format: 'yyyy-mm-dd hh:ii'
+    format: 'yyyy-mm-dd',
+    todayBtn: 1,
+    autoclose: 1,
 });
 
 
@@ -136,13 +231,16 @@ $(document).ready(function () {
     $("#addForm").validate({
         errorElement: 'span',
         errorClass: 'help-block',
-
         rules: {
             companyId: {
                 required: true,
                 minlength: 2
             },
             accId: {
+                required: true,
+                minlength: 2
+            },
+            accSaledTime: {
                 required: true,
                 minlength: 2
             },
@@ -170,6 +268,7 @@ $(document).ready(function () {
         messages: {
             companyId: "请输入所属公司",
             accId: "请输入配件编号",
+            accSaledTime: "请输入销售时间",
             accSaleCount: "请输入配件销售数量",
             accSalePrice: "请输入配件销售单价",
             accSaleTotal: "请输入配件销售总价",
@@ -192,19 +291,38 @@ $(document).ready(function () {
             label.remove();
         },
         submitHandler: function (form) {
-            alert("submitted!");
+            $.post(contentPath + "/accSale/addAccSale", $("#addForm").serialize(), function (data) {
+                if (data.result == "success") {
+                    $("#addWindow").modal('hide'); // 关闭指定的窗口
+                    $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
+                    swal({
+                        title: "",
+                        text: data.message,
+                        type: "success"
+                    })
+                } else {
+                    swal({
+                        title: "",
+                        text: data.message,
+                        type: "fail"
+                    })
+                }
+            })
         }
     })
     $("#editForm").validate({
         errorElement: 'span',
         errorClass: 'help-block',
-
         rules: {
             companyId: {
                 required: true,
                 minlength: 2
             },
             accId: {
+                required: true,
+                minlength: 2
+            },
+            accSaledTime: {
                 required: true,
                 minlength: 2
             },
@@ -232,6 +350,7 @@ $(document).ready(function () {
         messages: {
             companyId: "请输入所属公司",
             accId: "请输入配件编号",
+            accSaledTime: "请输入销售时间",
             accSaleCount: "请输入配件销售数量",
             accSalePrice: "请输入配件销售单价",
             accSaleTotal: "请输入配件销售总价",
@@ -254,7 +373,23 @@ $(document).ready(function () {
             label.remove();
         },
         submitHandler: function (form) {
-            alert("submitted!");
+            $.post(contentPath + "/accSale/updateAccSale", $("#editForm").serialize(), function (data) {
+                if (data.result == "success") {
+                    $("#editWindow").modal('hide'); // 关闭指定的窗口
+                    $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
+                    swal({
+                        title: "",
+                        text: data.message,
+                        type: "success"
+                    })
+                } else {
+                    swal({
+                        title: "",
+                        text: data.message,
+                        type: "fail"
+                    })// 提示窗口, 修改成功
+                }
+            })
         }
     })
 });

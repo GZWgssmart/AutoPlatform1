@@ -16,16 +16,63 @@
         <result column="accBuyStatus" property="accBuyStatus"/>
     </resultMap>
 
+    <!--
+        查询所有的采购记录
+    -->
     <select id="queryAll" resultMap="AccessoriesBuyMap">
         <![CDATA[
             select * from auto_platform.t_accessories_buy
         ]]>
     </select>
 
+    <!--
+        添加采购记录
+    -->
     <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="AccessoriesBuy">
         <![CDATA[
-
+            INSERT INTO auto_platform.t_accessories_buy
+            (accId, accBuyCount, accBuyPrice, accBuyTotal,accBuyDiscount, accBuyMoney, accBuyTime, accBuyCreatedTime,companyId, accBuyStatus)
+            VALUES
+            (#{accId},#{accBuyCount},#{accBuyPrice},#{accBuyTotal},#{accBuyDiscount},#{accBuyMoney},#{accBuyTime},CURRENT_TIMESTAMP ,#{companyId},'Y')
         ]]>
     </insert>
+
+    <!--
+        更新采购记录信息
+    -->
+    <update id="update" keyProperty="id" parameterType="java.util.Map">
+        UPDATE auto_platform.t_accessories_buy
+        SET accBuyCount=#{accBuyCount}, accBuyPrice=#{accBuyPrice},
+        accBuyTotal=#{accBuyTotal},accBuyDiscount=#{accBuyDiscount},
+        accBuyMoney=#{accBuyMoney},accBuyTime=#{accBuyTime},
+        companyId=#{companyId}
+        WHERE accBuyId=#{accBuyId}
+    </update>
+
+    <!--
+        根据id删除对应的配件采购记录
+    -->
+    <delete id="deleteById">
+        DELETE FROM auto_platform.t_accessories_buy WHERE accBuyId=#{accBuyId}
+    </delete>
+
+
+    <!--
+        冻结配件采购信息
+    -->
+    <update id="inactive" keyProperty="id" parameterType="string">
+        <![CDATA[
+        update auto_platform.t_accessories_buy set accBuyStatus = 'N' where accBuyId = #{accBuyId}
+        ]]>
+    </update>
+
+    <!--
+        激活配件采购信息
+    -->
+    <update id="active" keyProperty="id" parameterType="string">
+        <![CDATA[
+        update auto_platform.t_accessories_buy set accBuyStatus = 'Y' where accBuyId = #{accBuyId}
+        ]]>
+    </update>
 
 </mapper>
