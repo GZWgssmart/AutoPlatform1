@@ -1,7 +1,7 @@
 var contentPath = ''
-/*$(function () {
+$(function () {
     initTable("table", "/supply/queryByPager"); // 初始化表格
-});*/
+});
 $(document).ready(function() {
     // 手机号码验证
     jQuery.validator.addMethod("isPhone", function(value, element) {

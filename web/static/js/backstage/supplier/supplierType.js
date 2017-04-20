@@ -1,5 +1,8 @@
 var contentPath = ''
 $(function () {
+    initTable("table", "/supplyType/queryByPager"); // 初始化表格
+});
+$(function () {
     $('#table').bootstrapTable('hideColumn', 'supplyTypeId');
 
     $("#addSelect").select2({
