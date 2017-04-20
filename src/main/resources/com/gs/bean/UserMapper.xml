@@ -26,7 +26,7 @@
 
   <!-- 添加员工的基本信息 -->
   <insert id="insert" useGeneratedKeys="true" keyProperty="userId" parameterType="user">
-    ![CDATA[
+    <![CDATA[
         insert into t_user(userEmail, userPhone, userPwd, userNickName,
           userIdentity, userName, userGender,userBirthday, userBirthday,
           userAddress, qqOpenId, weiboOpenId, weChatOpenId, userIcon,
@@ -36,29 +36,31 @@
           #{userAddress}, #{qqOpenId}, #{weiboOpenId}, #{weChatOpenId}, #{userIcon},
           #{userDes}, #{companyId}, #{userSalary}, #{userCreatedTime}, #{userLoginedTime},
           #{userStatus});
-      ]]
+      ]]>
   </insert>
 
   <!-- 修改员工的基本信息 -->
   <update id="update" keyProperty="userId" parameterType="">
---     ![CDATA[
+--     <![CDATA[
 --       update t_user u set u.userEmail = #{userEmail}, u.userPhone = #{userPhone},
 --         u.userPwd = #{userPwd}, u.userNickName = #{userNickName}, u.userGender = #{userGender},
 --         u.userBirthDay = #{userBirthday}, u.userAddress = #{userAddress}
---     ]]
+--     ]]>
   </update>
 
   <!-- 分页查询 -->
-  <select id="queryByPager" resultMap="BaseResultMap" parameterType="com.gs.common.bean.Pager4EasyUI">
-    ![CDATA[
+  <select id="queryByPager" resultMap="BaseResultMap" parameterType="com.gs.common.bean.Pager">
+    <![CDATA[
       select * from t_user u where u.userStatus = 'Y'
-    ]]
+    ]]>
       limit #{beginIndex}, #{pageSize};
   </select>
 
   <!-- 查询所有员工的基本信息 -->
   <select id="queryAll" resultMap="BaseResultMap">
-    select * from t_user;
+    <![CDATA[
+      select * from t_user;
+    ]]>
   </select>
 
 
