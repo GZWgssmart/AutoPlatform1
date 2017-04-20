@@ -1,4 +1,8 @@
 $(function () {
+    initTable('table', '/arBrand/queryByPager'); // 初始化表格
+});
+
+$(function () {
    $('#table').bootstrapTable('hideColumn', 'brandId');
     $("#addSelect").select2({
             language: 'zh-CN'
