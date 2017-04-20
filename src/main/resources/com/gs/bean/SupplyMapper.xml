@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.gs.dao.SupplyDAO" >
-  <resultMap id="BaseResultMap" type="com.gs.bean.Supply" >
+  <resultMap id="supplyMap" type="com.gs.bean.Supply" >
     <id column="supplyId" property="supplyId" jdbcType="VARCHAR" />
     <result column="supplyName" property="supplyName" jdbcType="VARCHAR" />
     <result column="supplyTel" property="supplyTel" jdbcType="VARCHAR" />
@@ -18,4 +18,58 @@
     <result column="supplyStatus" property="supplyStatus" jdbcType="VARCHAR" />
   </resultMap>
 
+  <!--
+        查询所有供应商信息
+    -->
+  <select id="queryAll" resultMap="supplyMap">
+    <![CDATA[
+        SELECT * FROM auto_platform.t_supply
+        ]]>
+  </select>
+
+  <!--
+      添加供应商信息,默认添加状态为可用状态
+  -->
+  <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="Supply">
+    <![CDATA[
+        insert into auto_platform.t_supply(supplyId, supplyName, supplyTel, supplyPricipal, supplyAddress,
+          supplyWeChat,companyId,supplyAlipay,supplyBank,supplyBankAccount,supplyBankNo,supplyStatus)
+        values(uuid(),#{supplyName},#{supplyTel},#{supplyPricipal},#{supplyAddress},#{supplyWeChat},
+        #{companyId},#{supplyAlipay},#{supplyBank},#{supplyBankAccount},#{supplyBankNo},'Y')
+        ]]>
+  </insert>
+
+  <!--
+      根据id删除供应商信息
+  -->
+  <delete id="deleteById">
+    DELETE FROM auto_platform.t_supply WHERE supplyId=#{supplyId}
+  </delete>
+
+  <!--
+      根据id更新供应商信息
+  -->
+  <update id="update" keyProperty="id" parameterType="java.util.Map">
+    UPDATE auto_platform.t_supply SET supplyName=#{supplyName},supplyTel=#{supplyTel},supplyPricipal=#{supplyPricipal},
+    supplyAddress=#{supplyAddress},supplyWeChat=#{supplyWeChat},supplyTypeId=#{supplyTypeId},companyId=#{companyId},
+    supplyAlipay=#{supplyAlipay},supplyBank=#{supplyBank},supplyBankAccount=#{supplyBankAccount},supplyBankNo=#{supplyBankNo}WHERE supplyId=#{supplyId}
+  </update>
+
+  <!--
+      冻结供应商信息
+  -->
+  <update id="inactive" keyProperty="id" parameterType="string">
+    <![CDATA[
+        update auto_platform.t_supply set supplyStatus = 'N' where supplyId = #{supplyId}
+        ]]>
+  </update>
+
+  <!--
+      激活供应商信息
+  -->
+  <update id="active" keyProperty="id" parameterType="string">
+    <![CDATA[
+        update auto_platform.t_supply set supplyStatus = 'Y' where supplyId = #{supplyId}
+        ]]>
+  </update>
 </mapper>
