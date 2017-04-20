@@ -51,10 +51,10 @@
 </div>
 
 <!-- 添加弹窗 -->
-<div class="modal fade" id="addWindow" aria-hidden="true" style="overflow:auto; ">
+<div class="modal fade" id="add" aria-hidden="true" style="overflow:auto; ">
     <div class="modal-dialog" style="width: 700px;height: auto;">
         <div class="modal-content" style="overflow:hidden;">
-            <form class="form-horizontal" role="form" onsubmit="return checkAdd()" id="showAddFormWar" method="post">
+            <form class="form-horizontal" id="showAddFormWar" method="post">
                 <div class="modal-header" style="overflow:auto;">
                     <h4>请填写汽车车牌的相关信息</h4>
                 </div>
@@ -84,10 +84,12 @@
 </div><!-- /.modal -->
 
 <!-- 修改弹窗 -->
-<div class="modal fade" id="editWindow" aria-hidden="true">
+<div class="modal fade" id="edit" aria-hidden="true">
     <div class="modal-dialog" style="width: 700px;height: auto;">
         <div class="modal-content" style="overflow:hidden;">
-            <form class="form-horizontal" role="form" onsubmit="return checkAdd()" id="showEditFormWar" method="post">
+            <form class="form-horizontal"id="showEditFormWar" method="post">
+                <input type="hidden"name="plateId" define="carPlate.plateId">
+                <input type="hidden"name="plateStatus" define="carPlate.brandStatus">
                 <div class="modal-header" style="overflow:auto;">
                     <h4>请修改汽车车牌的相关信息</h4>
                 </div>
@@ -95,13 +97,13 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">车牌名称：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="plateName" placeholder="请输入该车牌的名称" class="form-control">
+                        <input type="text" name="plateName" define="carPlate.plateName" placeholder="请输入该车牌的名称" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">车型描述：</label>
                     <div class="col-sm-7">
-                        <textarea type="text" name="plateDes" placeholder="请输入关于该车牌的描述" style="height: 100px;"
+                        <textarea type="text" name="plateDes" define="carPlate.plateDes" placeholder="请输入关于该车牌的描述" style="height: 100px;"
                                   class="form-control"></textarea>
                     </div>
                 </div>

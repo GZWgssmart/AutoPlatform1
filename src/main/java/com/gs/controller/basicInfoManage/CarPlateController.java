@@ -2,8 +2,10 @@ package com.gs.controller.basicInfoManage;
 
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.CarPlate;
+import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
+import com.gs.common.util.UUIDUtil;
 import com.gs.service.CarPlateService;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
@@ -38,5 +40,29 @@ public class CarPlateController {
         pager.setTotalRecords(carPlateService.count());
         List<CarPlate> carPlates = carPlateService.queryByPager(pager);
         return new Pager4EasyUI<CarPlate>(pager.getTotalRecords(), carPlates);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "addCarPlate",method = RequestMethod.POST)
+    public ControllerResult add(CarPlate carPlate) {
+        if (carPlate != null && !carPlate.equals("")) {
+            logger.info("添加车牌信息");
+            carPlateService.insert(carPlate);
+            return ControllerResult.getSuccessResult("添加成功");
+        }else {
+            return ControllerResult.getFailResult("添加失败，请输入必要的信息");
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "updateCarPlate", method = RequestMethod.POST)
+    public ControllerResult updateCarPlate(CarPlate carPlate) {
+        if (carPlate != null && !carPlate.equals("")) {
+            logger.info("修改车牌信息");
+            carPlateService.update(carPlate);
+            return ControllerResult.getSuccessResult("修改成功");
+        }else {
+            return ControllerResult.getFailResult("修改失败，请输入必要的信息");
+        }
     }
 }

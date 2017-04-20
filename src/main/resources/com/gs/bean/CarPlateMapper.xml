@@ -22,14 +22,14 @@
     </select>
 
       <insert id="insert" parameterType="carplate">
-          <![CDATA[
-        insert into t_car_plate(plateId,plateName,plateDes,plateStatus) values (uuid(),plateName,plateDes,plateStatus)
+         <![CDATA[
+        insert into t_car_plate(plateId, plateName, plateDes, plateStatus) values(uuid(), #{plateName}, #{plateDes}, 'Y')
          ]]>
       </insert>
 
       <update id="update" parameterType="carplate">
           <![CDATA[
-        update t_car_plate set plateName = #{plateName},plateDes = #{plateDes},plateStatus = #{plateStatus} where plateId = #{plateId}
+        update t_car_plate set plateName = #{plateName},plateDes = #{plateDes} where plateId = #{plateId}
           ]]>
       </update>
 
