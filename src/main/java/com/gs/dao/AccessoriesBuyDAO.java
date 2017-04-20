@@ -14,5 +14,5 @@ import java.util.List;
 */
 @Repository
 public interface AccessoriesBuyDAO extends BaseDAO<String, AccessoriesBuy>{
-
+    public List<AccessoriesBuy> queryAllStatus(String accBuyStatus);
 }

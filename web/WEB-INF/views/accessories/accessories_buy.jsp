@@ -55,9 +55,10 @@
                 <th data-field="accBuyTotal">购买总价</th>
                 <th data-field="accBuyDiscount">购买折扣</th>
                 <th data-field="accBuyMoney">购买最终价</th>
-                <th data-field="accBuyTime">购买时间</th>
-                <th data-field="accBuyCreatedTime">购买记录创建时间</th>
-                <th data-field="accBuyStatus">购买记录状态</th>
+                <th data-field="accBuyTime" data-formatter="formatterDate">购买时间</th>
+                <th data-field="accBuyCreatedTime" data-formatter="formatterDateTime">购买记录创建时间</th>
+                <th data-field="accBuyStatus" data-formatter="formatterStatus">购买记录状态</th>
+                <th data-formatter="openStatusFormatter">操作</th>
             </tr>
             </thead>
         </table>
@@ -68,9 +69,12 @@
             <button id="btn_edit" type="button" class="btn btn-default" onclick="showEdit();">
                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
             </button>
-            <button id="btn_delete" type="button" class="btn btn-default" onclick="showDel();">
-                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
-            </button>
+            <%--<button id="btn_serachInactive" type="button" class="btn btn-default" onclick="showInactiveAccBuy();">--%>
+                <%--<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>查看冻结的采购记录--%>
+            <%--</button>--%>
+            <%--<button id="btn_serachActive" type="button" class="btn btn-default" onclick="showActiveAccBuy();">--%>
+                <%--<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>查看激活的采购记录--%>
+            <%--</button>--%>
         </div>
     </div>
 </div>
@@ -93,6 +97,12 @@
                     <label class="col-sm-3 control-label">配件编号：</label>
                     <div class="col-sm-7">
                         <input type="text" name="accId" placeholder="请输入配件编号" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">购买时间：</label>
+                    <div class="col-sm-7">
+                        <input type="date" name="accBuyTime" placeholder="请输入购买时间" value="" id="addDateTimePicker" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
@@ -126,12 +136,6 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">购买时间：</label>
-                    <div class="col-sm-7">
-                        <input type="text" name="accBuyTime" placeholder="请输入购买时间" value="" id="addDateTimePicker" class="form-control">
-                    </div>
-                </div>
-                <div class="form-group">
                     <div class="col-sm-offset-8">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                         <button class="btn btn-sm btn-success" type="submit">保 存</button>
@@ -145,7 +149,8 @@
 <div class="modal fade" id="editWindow" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form class="form-horizontal" role="form" id="eidtFrom" method="post">
+            <form class="form-horizontal" role="form" id="editForm" method="post">
+                <input type="hidden" name="accBuyId" define="AccessoriesBuy.accBuyId"/>
                 <div class="modal-header" style="overflow:auto;">
                     <h4>请填写配件采购信息</h4>
                 </div>
@@ -160,6 +165,12 @@
                     <label class="col-sm-3 control-label">配件编号：</label>
                     <div class="col-sm-7">
                         <input type="text" name="accId" define="AccessoriesBuy.accId" placeholder="请输入配件编号" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">购买时间：</label>
+                    <div class="col-sm-7">
+                        <input type="date" name="accBuyTime" define="AccessoriesBuy.accBuyTime" placeholder="请输入购买时间" value="" id="editDateTimePicker" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
@@ -192,12 +203,7 @@
                         <input type="text" name="accBuyMoney" define="AccessoriesBuy.accBuyMoney" placeholder="请输入购买最终价" class="form-control">
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">购买时间：</label>
-                    <div class="col-sm-7">
-                        <input type="text" name="accBuyTime" define="AccessoriesBuy.accBuyTime" placeholder="请输入购买时间" value="" id="editDateTimePicker" class="form-control">
-                    </div>
-                </div>
+
                 <div class="form-group">
                     <div class="col-sm-offset-8">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>

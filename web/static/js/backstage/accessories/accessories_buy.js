@@ -26,12 +26,11 @@ $(function () {
 function showEdit() {
     var row = $('table').bootstrapTable('getSelections');
     if (row.length > 0) {
-//                $('#editId').val(row[0].id);
-//                $('#editName').val(row[0].name);
-//                $('#editPrice').val(row[0].price);
         $("#editWindow").modal('show'); // 显示弹窗
         var ceshi = row[0];
+        var editDate = document.getElementById("editDateTimePicker");
         $("#editForm").fill(ceshi);
+        editDate.value = formatterDate(row[0].accBuyTime);
     } else {
         swal({
             "title": "",
@@ -54,6 +53,95 @@ function formatRepoSelection(repo) {
     return repo.text
 }
 
+//格式化页面上的配件分类状态
+function formatterStatus(value) {
+    if (value == "Y") {
+        return "可用";
+    } else {
+        return "不可用";
+    }
+}
+
+function openStatusFormatter(index, row) {
+    /*处理数据*/
+    if (row.accBuyStatus == 'Y') {
+        return "&nbsp;&nbsp;<a href='javascript:;' onclick='inactive(\"" + row.accBuyId + "\")'>禁用</a>";
+    } else {
+        return "&nbsp;&nbsp;<a href='javascript:;' onclick='active(\"" + row.accBuyId + "\")'>激活</a>";
+    }
+}
+
+//禁用状态
+function inactive(accBuyId) {
+    $.post(contentPath + "/accBuy/statusOperate?accBuyId=" + accBuyId + "&" + "accBuyStatus=" + "Y", function (data) {
+        if (data.result == "success") {
+            $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
+        }
+    })
+}
+
+//激活状态
+function active(accBuyId) {
+    $.post(contentPath + "/accBuy/statusOperate?accBuyId=" + accBuyId + "&" + "accBuyStatus=" + 'N', function (data) {
+        if (data.result == "success") {
+            $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
+        }
+    })
+}
+
+
+//格式化带时分秒的时间值。
+function formatterDateTime(value) {
+    if (value == undefined || value == null || value == '') {
+        return "";
+    }
+    else {
+        var date = new Date(value);
+        var year = date.getFullYear().toString();
+        var month = (date.getMonth() + 1);
+        var day = date.getDate().toString();
+        var hour = date.getHours().toString();
+        var minutes = date.getMinutes().toString();
+        var seconds = date.getSeconds().toString();
+        if (month < 10) {
+            month = "0" + month;
+        }
+        if (day < 10) {
+            day = "0" + day;
+        }
+        if (hour < 10) {
+            hour = "0" + hour;
+        }
+        if (minutes < 10) {
+            minutes = "0" + minutes;
+        }
+        if (seconds < 10) {
+            seconds = "0" + seconds;
+        }
+        return year + "-" + month + "-" + day + " " + hour + ":" + minutes + ":" + seconds;
+    }
+}
+
+//格式化不带时分秒的时间值
+function formatterDate(value) {
+    if (value == undefined || value == null || value == '') {
+        return "";
+    } else {
+        var date = new Date(value);
+        var year = date.getFullYear().toString();
+        var month = (date.getMonth() + 1);
+        var day = date.getDate().toString();
+        if (month < 10) {
+            month = "0" + month;
+        }
+        if (day < 10) {
+            day = "0" + day;
+        }
+        return year + "-" + month + "-" + day + ""
+    }
+}
+
+
 //显示删除
 function showDel() {
     var row = $('table').bootstrapTable('getSelections');
@@ -67,6 +155,20 @@ function showDel() {
         })
     }
 }
+
+//展示冻结状态的采购记录
+function showInactiveAccBuy() {
+    $.post(contentPath+"/accBuy/queryAccBuyStatus?accBuyStatus=N",function (data) {
+        $("#table").load(data);
+    })
+}
+//展示激活状态的采购记录
+function showActiveAccBuy() {
+    $.post(contentPath+"/accBuy/queryAccBuyStatus?accBuyStatus=Y",function (data) {
+        $("#table").load(data);
+    })
+}
+
 
 //检查添加
 function checkAdd() {
@@ -105,22 +207,20 @@ function checkEdit() {
 
 
 $('#addDateTimePicker').datetimepicker({
+    minView: "month", //选择日期后，不会再跳转去选择时分秒
     language: 'zh-CN',
-    format: 'yyyy-mm-dd hh:ii'
-});
-$('#addDateTimePicker2').datetimepicker({
-    language: 'zh-CN',
-    format: 'yyyy-mm-dd hh:ii'
-});
-$('#editDateTimePicker').datetimepicker({
-    language: 'zh-CN',
-    format: 'yyyy-mm-dd hh:ii'
-});
-$('#editDateTimePicker2').datetimepicker({
-    language: 'zh-CN',
-    format: 'yyyy-mm-dd hh:ii'
+    format: 'yyyy-mm-dd',
+    todayBtn: 1,
+    autoclose: 1,
 });
 
+$('#editDateTimePicker').datetimepicker({
+    minView: "month", //选择日期后，不会再跳转去选择时分秒
+    language: 'zh-CN',
+    format: 'yyyy-mm-dd',
+    todayBtn: 1,
+    autoclose: 1,
+});
 
 // //日期时间控件初始化
 // $(document).ready(function () {
@@ -223,7 +323,7 @@ $(document).ready(function () {
             });
         }
     })
-    $("#eidtFrom").validate({
+    $("#editForm").validate({
         errorElement: 'span',
         errorClass: 'help-block',
 

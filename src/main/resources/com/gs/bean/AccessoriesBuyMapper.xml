@@ -31,9 +31,9 @@
     <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="AccessoriesBuy">
         <![CDATA[
             INSERT INTO auto_platform.t_accessories_buy
-            (accId, accBuyCount, accBuyPrice, accBuyTotal,accBuyDiscount, accBuyMoney, accBuyTime, accBuyCreatedTime,companyId, accBuyStatus)
+            (accBUyId,accId, accBuyCount, accBuyPrice, accBuyTotal,accBuyDiscount, accBuyMoney, accBuyTime, accBuyCreatedTime,companyId, accBuyStatus)
             VALUES
-            (#{accId},#{accBuyCount},#{accBuyPrice},#{accBuyTotal},#{accBuyDiscount},#{accBuyMoney},#{accBuyTime},CURRENT_TIMESTAMP ,#{companyId},'Y')
+            (uuid(),#{accId},#{accBuyCount},#{accBuyPrice},#{accBuyTotal},#{accBuyDiscount},#{accBuyMoney},#{accBuyTime},CURRENT_TIMESTAMP ,#{companyId},'Y')
         ]]>
     </insert>
 
@@ -41,19 +41,23 @@
         更新采购记录信息
     -->
     <update id="update" keyProperty="id" parameterType="java.util.Map">
+        <![CDATA[
         UPDATE auto_platform.t_accessories_buy
         SET accBuyCount=#{accBuyCount}, accBuyPrice=#{accBuyPrice},
         accBuyTotal=#{accBuyTotal},accBuyDiscount=#{accBuyDiscount},
         accBuyMoney=#{accBuyMoney},accBuyTime=#{accBuyTime},
         companyId=#{companyId}
         WHERE accBuyId=#{accBuyId}
+        ]]>
     </update>
 
     <!--
         根据id删除对应的配件采购记录
     -->
     <delete id="deleteById">
+        <![CDATA[
         DELETE FROM auto_platform.t_accessories_buy WHERE accBuyId=#{accBuyId}
+        ]]>
     </delete>
 
 
@@ -74,5 +78,11 @@
         update auto_platform.t_accessories_buy set accBuyStatus = 'Y' where accBuyId = #{accBuyId}
         ]]>
     </update>
+
+    <select id="queryAllStatus" parameterType="string" resultMap="AccessoriesBuyMap">
+        <![CDATA[
+        select * from auto_platform.t_accessories_buy WHERE accBuyStatus=#{accBuyStatus};
+        ]]>
+    </select>
 
 </mapper>

@@ -43,4 +43,9 @@ public class AccessoriesBuyServiceImpl implements AccessoriesBuyService {
 	public int count() { return accessoriesBuyDAO.count(); }
 	public int inactive(String id) { return accessoriesBuyDAO.inactive(id); }
 	public int active(String id) { return accessoriesBuyDAO.active(id); }
+
+	@Override
+	public List<AccessoriesBuy> queryAllStatus(String accBuyStatus) {
+		return accessoriesBuyDAO.queryAllStatus(accBuyStatus);
+	}
 }
