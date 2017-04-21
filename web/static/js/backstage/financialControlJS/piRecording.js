@@ -275,6 +275,97 @@ function inCheckPersonnel () {
 
 
 
+/** 选择支出类型窗体 */
+function updateOpenCheckOutType() {
+    initTableNotTollbar("updateOutTable", "/outGoingType/queryByPager");
+    $("#editIOWin").modal('hide');
+    $("#updateOutWin").modal('show');
+}
+
+
+/** 关闭支出类型 */
+function updateCloseOutTypeWin() {
+    $("#updateOutWin").modal('hide');
+    $("#editIOWin").modal('show')
+}
+
+/** 选择支出类型 */
+function updateCheckOutType () {
+    var selectRow = $("#updateOutTable").bootstrapTable('getSelections');
+    if (selectRow.length != 1) {
+        swal('选择失败', "只能选择一条数据", "error");
+        return false;
+    } else {
+        $("#updateOutWin").modal('hide');
+        $("#editIOWin").modal('show');
+        var outType = selectRow[0];
+        $("#outType").val(outType.outTypeName);
+        $("#updateOutTypeId").val(outType.outTypeId);
+    }
+}
+
+/**
+ * 选择人员
+ */
+function updateCheckAppointment() {
+    initTableNotTollbar("updateAppTable", "/userBasicManage/queryByPager");
+    $("#editIOWin").modal('hide');
+    $("#updatePersonnelWin").modal('show');
+}
+
+
+/** 关闭人员管理窗口 */
+function updateClosePersonnelWin() {
+    $("#updatePersonnelWin").modal('hide');
+    $("#editIOWin").modal('show')
+}
+
+/** 选择人员 */
+function updateCheckPersonnel () {
+    var selectRow = $("#updateAppTable").bootstrapTable('getSelections');
+    if (selectRow.length != 1) {
+        swal('选择失败', "只能选择一条数据", "error");
+        return false;
+    } else {
+        $("#updatePersonnelWin").modal('hide');
+        var user = selectRow[0];
+        $("#updateUserName").val(user.userName);
+        $("#updateUserId").val(user.userId);
+        $("#editIOWin").modal('show');
+    }
+}
+
+
+function updateInOpenCheckInType() {
+    initTableNotTollbar("updateInTable", "/incomingType/queryByPager");
+    $("#editIOWin").modal('hide');
+    $("#updateInWin").modal('show');
+}
+
+
+/** 关闭收入类型 */
+function updateInCloseInTypeWin() {
+    $("#updateInWin").modal('hide');
+    $("#editIOWin").modal('show')
+}
+
+
+
+/** 选择收入类型 */
+function updateInCheckInType () {
+    var selectRow = $("#updateInTable").bootstrapTable('getSelections');
+    if (selectRow.length != 1) {
+        swal('选择失败', "只能选择一条数据", "error");
+        return false;
+    } else {
+        $("#updateInWin").modal('hide');
+        var inType = selectRow[0];
+        $("#inType").val(inType.inTypeName);
+        $("#updateInTypeId").val(inType.inTypeId);
+        $("#editIOWin").modal('show');
+    }
+}
+
 /**
  * 前台验证及form提交
  */

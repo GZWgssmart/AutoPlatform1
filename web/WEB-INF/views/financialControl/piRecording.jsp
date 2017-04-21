@@ -317,6 +317,118 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+
+<%--支出管理弹窗显示--%>
+<div id="updateOutWin" class="modal fade" aria-hidden="true" style="overflow:scroll" data-backdrop="static" keyboard:false>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12 b-r">
+                        <h3 class="m-t-none m-b">选择支出类型</h3>
+                        <table class="table table-hover" id="updateOutTable"
+                               data-height="550">
+                            <thead>
+                            <tr>
+                                <th data-checkbox="true"></th>
+                                <th  data-field="outTypeName">
+                                    收支类型
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+
+                        </table>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" onclick="updateCloseOutTypeWin()">关闭
+                            </button>
+                            <input type="button" class="btn btn-primary" onclick="updateCheckOutType()" value="确定">
+                            </input>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div id="updatePersonnelWin" class="modal fade" aria-hidden="true" style="overflow:scroll" data-backdrop="static" keyboard:false>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12 b-r">
+                        <h3 class="m-t-none m-b">选择人员</h3>
+                        <table class="table table-hover" id="updateAppTable"
+                               data-height="550">
+                            <thead>
+                            <tr>
+                                <th data-radio="true" data-field="status"></th>
+                                <th  data-field="userPhone">用户手机号</th>
+                                <th data-field="userName">姓名</th>
+                                <th  data-field="userIdentity">身份证号</th>
+                                <th data-field="wechatOpenId">微信</th>
+                                <th data-field="companyId">所属公司</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+
+                        </table>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" onclick="updateClosePersonnelWin()">关闭
+                            </button>
+                            <input type="button" class="btn btn-primary" onclick="updateCheckPersonnel()" value="确定">
+                            </input>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%--收入管理弹窗显示--%>
+<div id="updateInWin" class="modal fade" aria-hidden="true" style="overflow:scroll" data-backdrop="static" keyboard:false>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12 b-r">
+                        <h3 class="m-t-none m-b">选择支出类型</h3>
+                        <table class="table table-hover" id="updateInTable"
+                               data-height="550">
+                            <thead>
+                            <tr>
+                                <th data-checkbox="true"></th>
+                                <th  data-field="inTypeName">
+                                    收入类型
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+
+                        </table>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" onclick="updateInCloseInTypeWin()">关闭
+                            </button>
+                            <input type="button" class="btn btn-primary" onclick="updateInCheckInType()" value="确定">
+                            </input>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- 修改弹窗 -->
 <div class="modal fade" id="editIOWin" aria-hidden="true">
     <div class="modal-dialog">
@@ -331,8 +443,11 @@
                     <div id="inTypeDiv" class="form-group">
                         <label class="col-sm-3 control-label" for="userName">收入类型：</label>
                         <div class="col-sm-7">
-                            <input  type="hidden" define="io.incomingType.inTypeId" name="inTypeId">
+                            <input  type="hidden" id="updateInTypeId" define="io.incomingType.inTypeId" name="inTypeId">
                             <input define="io.incomingType.inTypeName" id="inType"  type="text" readonly="true" class="form-control">
+                            <button  type="button" class="btn btn-default" onclick="updateInOpenCheckInType();">
+                                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>选择收入类型
+                            </button>
                         </div>
                     </div>
 
@@ -340,8 +455,11 @@
                         <div id="outTypeDiv" class="form-group">
                             <label class="col-sm-3 control-label" for="userName">支出类型：</label>
                             <div class="col-sm-7">
-                                <input  type="hidden" define="io.outgoingType.outTypeId" name="outTypeId">
-                                <input define="io.outgoingType.outTypeName"  type="text" id="outType" readonly="true" class="form-control">
+                                <input  type="hidden"id="updateOutTypeId" define="io.outgoingType.outTypeId" name="outTypeId">
+                                <input  define="io.outgoingType.outTypeName"  type="text" id="outType" readonly="true" class="form-control">
+                                <button  type="button" class="btn btn-default" onclick="updateOpenCheckOutType();">
+                                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>选择支出类型
+                                </button>
                             </div>
                         </div>
 
@@ -354,8 +472,11 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">收支记录创建人：</label>
                         <div class="col-sm-7">
-                            <input  type="hidden" define="io.inOutCreatedUser" name="inOutCreatedUser">
-                            <input define="io.user.userName"  type="text" readonly="true" class="form-control">
+                            <input  type="hidden" id="updateUserId" define="io.inOutCreatedUser" name="inOutCreatedUser">
+                            <input define="io.user.userName" id="updateUserName"  type="text" readonly="true" class="form-control">
+                            <button  type="button" class="btn btn-default" onclick="updateCheckAppointment();">
+                                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>选择创建人
+                            </button>
                         </div>
                     </div>
                     <div class="modal-footer">
