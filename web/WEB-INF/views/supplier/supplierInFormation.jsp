@@ -43,17 +43,42 @@
                data-single-select="true">
             <thead>
             <tr>
-                <th data-radio="true" data-field="status"></th>
-                <th data-field="supplyName">供应商名称</th>
-                <th data-field="supplyTel">供应商联系电话</th>
-                <th data-field="supplyPricipal">供应商负责人</th>
-                <th data-field="supplyAddress">供应商地址</th>
-                <th data-field="supplyWeChat">供应商微信号</th>
-                <th data-field="supplyCreatedTime" data-formatter="formatterDateTime">&nbsp;&nbsp;创建时间</th>
-                <th data-field="supplyTypeId">供应商类型</th>
-                <th data-field="companyId">供应商所属公司</th>
-                <th data-formatter="formatterStatus">供应商状态</th>
-                <th data-width="12%" data-formatter="openStatusFormatter">操作</th>
+                <th data-checkbox="true"></th>
+                <th data-field="supplyName">
+                    供应商名称
+                </th>
+                <th data-field="supplyTel">
+                    供应商联系电话
+                </th>
+                <th data-field="supplyPricipal">
+                    供应商负责人
+                </th>
+                <th data-field="supplyAddress">
+                    供应商地址
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </th>
+                <th data-field="supplyWeChat">
+                    供应商微信号
+                </th>
+                <th data-field="supplyCreatedTime"data-formatter="formatterDateTime">
+                    创建时间
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </th>
+                <th data-field="supplyTypeId">
+                    供应商类型
+                </th>
+                <th data-field="companyId">
+                    供应商所属公司
+                </th>
+                <th data-formatter="formatterStatus">
+                    供应商状态
+                </th>
+                <th data-formatter="openStatusFormatter">
+                    操作
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </th>
             </tr>
             </thead>
         </table>
@@ -67,6 +92,8 @@
             <button id="searchDisable" type="button" class="btn btn-danger" onclick="searchDisableStatus();">
                 <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询禁用类型
             </button>
+            <button id="searchRapid" type="button" class="btn btn-success" onclick="searchRapidStatus();">
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询激活类型
             </button>
         </div>
     </div>
