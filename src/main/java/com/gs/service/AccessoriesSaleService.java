@@ -1,6 +1,9 @@
 package com.gs.service;
 
 import com.gs.bean.AccessoriesSale;
+import com.gs.common.bean.Pager;
+
+import java.util.List;
 
 /**
 *由CSWangBin技术支持
@@ -10,5 +13,12 @@ import com.gs.bean.AccessoriesSale;
 *@des 配件销售service
 */
 public interface AccessoriesSaleService extends BaseService<String, AccessoriesSale>{
-
+    /**
+     * 分页查询被禁用的记录
+     */
+    public List<AccessoriesSale> queryByPagerDisable(Pager pager);
+    /**
+     * 分页查询被禁用的记录
+     */
+    public int countByDisable();
 }

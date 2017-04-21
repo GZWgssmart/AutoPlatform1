@@ -26,24 +26,7 @@
     <div class="panel-body" style="padding-bottom:0px;">
         <!--show-refresh, show-toggle的样式可以在bootstrap-table.js的948行修改-->
         <!-- table里的所有属性在bootstrap-table.js的240行-->
-        <table id="table"
-               data-toggle="table"
-               data-toolbar="#toolbar"
-               data-url="/accType/queryAllAccType"
-               data-method="post"
-               data-query-params="queryParams"
-               data-pagination="true"
-               data-search="true"
-               data-show-refresh="true"
-               data-show-toggle="true"
-               data-show-columns="true"
-               data-page-size="10"
-               data-height="543"
-               data-id-field="id"
-               data-page-list="[5, 10, 20]"
-               data-cach="false"
-               data-click-to-select="true"
-               data-single-select="true">
+        <table id="table">
             <thead>
             <tr>
                 <th data-checkbox="true" data-field="status"></th>
@@ -56,6 +39,12 @@
             </thead>
         </table>
         <div id="toolbar" class="btn-group">
+            <button id="btn_available" type="button" class="btn btn-default" onclick="showAvailable();">
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>可用登记记录
+            </button>
+            <button id="btn_disable" type="button" class="btn btn-default" onclick="showDisable();">
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>禁用登记记录
+            </button>
             <button id="btn_add" type="button" class="btn btn-default" onclick="showAdd();">
                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
             </button>
@@ -192,6 +181,7 @@
 <script src="/static/js/contextmenu.js"></script>
 <script src="/static/js/bootstrap-select/bootstrap-select.js"></script>
 <script src="/static/js/form/jquery.validate.js"></script>
+<script src="/static/js/backstage/main.js"></script>
 <script src="/static/js/backstage/accessories/accessories_type.js"></script>
 </body>
 </html>

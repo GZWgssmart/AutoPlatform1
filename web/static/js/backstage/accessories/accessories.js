@@ -1,6 +1,21 @@
 
 var contentPath=''
 
+
+//初始化表格
+$(function () {
+    initTable('table', '/accInv/queryByPage'); // 初始化表格
+});
+
+// 查看全部可用
+function showAvailable(){
+    initTable('table', '/accInv/queryByPage');
+}
+// 查看全部禁用
+function showDisable(){
+    initTable('table', '/accInv/queryByPagerDisable');
+}
+
 $(function () {
     $('#table').bootstrapTable('hideColumn', 'accId');
     $("#addSelect").select2({

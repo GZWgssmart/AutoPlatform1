@@ -25,6 +25,21 @@
         ]]>
     </select>
 
+    <!-- 分页查询 -->
+    <select id="queryByPager" resultMap="AccessoriesBuyMap" parameterType="com.gs.common.bean.Pager">
+        <![CDATA[
+      select * from auto_platform.t_accessories_buy u where 1 = 1 and u.accBuyStatus = 'Y'
+    ]]>
+        limit #{beginIndex}, #{pageSize};
+    </select>
+
+    <!-- 查询有多少配件销售采购信息 -->
+    <select id="count" resultType="int" >
+        <![CDATA[
+      select count(*) from auto_platform.t_accessories_buy u where 1 =1 and u.accBuyStatus = 'Y'
+    ]]>
+    </select>
+
     <!--
         添加采购记录
     -->
@@ -83,6 +98,19 @@
         <![CDATA[
         select * from auto_platform.t_accessories_buy WHERE accBuyStatus=#{accBuyStatus};
         ]]>
+    </select>
+
+    <select id="queryByPagerDisable" resultMap="AccessoriesBuyMap" parameterType="com.gs.common.bean.Pager">
+        <![CDATA[
+       SELECT *FROM auto_platform.t_accessories_buy WHERE accBuyStatus='N'
+    ]]>
+        limit #{beginIndex}, #{pageSize}
+    </select>
+
+    <select id="countByDisable" resultType="int" >
+        <![CDATA[
+      select count(accBuyId) from auto_platform.t_accessories_buy ck where ck.accBuyStatus = 'N'
+    ]]>
     </select>
 
 </mapper>

@@ -88,4 +88,13 @@ public class AccessoriesTypeServiceImpl implements AccessoriesTypeService {
         return accessoriesTypeDAO.active(id);
     }
 
+    @Override
+    public List<AccessoriesType> queryByPagerDisable(Pager pager) {
+        return accessoriesTypeDAO.queryByPagerDisable(pager);
+    }
+
+    @Override
+    public int countByDisable() {
+        return accessoriesTypeDAO.countByDisable();
+    }
 }

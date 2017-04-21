@@ -44,4 +44,13 @@ public class AccessoriesServiceImpl implements AccessoriesService {
 	public int inactive(String id) { return accessoriesDAO.inactive(id); }
 	public int active(String id) { return accessoriesDAO.active(id); }
 
+	@Override
+	public List<Accessories> queryByPagerDisable(Pager pager) {
+		return accessoriesDAO.queryByPagerDisable(pager);
+	}
+
+	@Override
+	public int countByDisable() {
+		return accessoriesDAO.countByDisable();
+	}
 }

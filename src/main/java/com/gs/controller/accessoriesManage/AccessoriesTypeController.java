@@ -1,8 +1,12 @@
 package com.gs.controller.accessoriesManage;
 
+import com.gs.bean.Accessories;
 import com.gs.bean.AccessoriesType;
 import com.gs.common.bean.ControllerResult;
+import com.gs.common.bean.Pager;
+import com.gs.common.bean.Pager4EasyUI;
 import com.gs.service.AccessoriesTypeService;
+import org.apache.ibatis.annotations.Param;
 import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -44,6 +48,22 @@ public class AccessoriesTypeController {
             return accessoriesTypeList;
         }
         return null;
+    }
+
+
+    /**
+     * 分页查询配件分类信息
+     */
+    @ResponseBody
+    @RequestMapping(value="queryByPage", method = RequestMethod.GET)
+    public Pager4EasyUI queryByPager(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
+        Pager pager = new Pager();
+        pager.setPageNo(Integer.valueOf(pageNumber));
+        pager.setPageSize(Integer.valueOf(pageSize));
+        pager.setTotalRecords(accessoriesTypeService.count());
+        logger.info("分页查询配件分类信息成功");
+        List<AccessoriesType> accTypes = accessoriesTypeService.queryByPager(pager);
+        return new Pager4EasyUI<AccessoriesType>(pager.getTotalRecords(), accTypes);
     }
 
 
@@ -96,6 +116,24 @@ public class AccessoriesTypeController {
             return ControllerResult.getSuccessResult("更新失败");
         }
     }
+
+
+    /**
+     * 查询所有被禁用的登记记录
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value="queryByPagerDisable", method = RequestMethod.GET)
+    public Pager4EasyUI<AccessoriesType> queryByPagerDisable(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
+        logger.info("分页查询所有被禁用登记记录");
+        Pager pager = new Pager();
+        pager.setPageNo(Integer.valueOf(pageNumber));
+        pager.setPageSize(Integer.valueOf(pageSize));
+        pager.setTotalRecords(accessoriesTypeService.countByDisable());
+        List<AccessoriesType> accessoriesTypes = accessoriesTypeService.queryByPagerDisable(pager);
+        return new Pager4EasyUI<AccessoriesType>(pager.getTotalRecords(), accessoriesTypes);
+    }
+
 
     /**
      * 对状态的激活和启用，只使用一个方法进行切换。

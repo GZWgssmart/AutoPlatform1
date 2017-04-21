@@ -4,7 +4,10 @@ import ch.qos.logback.classic.Logger;
 import com.gs.bean.Accessories;
 import com.gs.bean.AccessoriesSale;
 import com.gs.common.bean.ControllerResult;
+import com.gs.common.bean.Pager;
+import com.gs.common.bean.Pager4EasyUI;
 import com.gs.service.AccessoriesSaleService;
+import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
@@ -47,6 +50,23 @@ public class AccessoriesSaleController {
         }
         return null;
     }
+
+
+    /**
+     * 分页查询配件销售信息
+     */
+    @ResponseBody
+    @RequestMapping(value="queryByPage", method = RequestMethod.GET)
+    public Pager4EasyUI queryByPager(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
+        Pager pager = new Pager();
+        pager.setPageNo(Integer.valueOf(pageNumber));
+        pager.setPageSize(Integer.valueOf(pageSize));
+        pager.setTotalRecords(accessoriesSaleService.count());
+        logger.info("分页查询配件销售信息成功");
+        List<AccessoriesSale> accessoriesSales = accessoriesSaleService.queryByPager(pager);
+        return new Pager4EasyUI<AccessoriesSale>(pager.getTotalRecords(), accessoriesSales);
+    }
+
     /**
      * 添加配件销售记录
      * @return
@@ -94,6 +114,24 @@ public class AccessoriesSaleController {
             return ControllerResult.getFailResult("更新失败");
         }
     }
+
+
+    /**
+     * 查询所有被禁用的登记记录
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value="queryByPagerDisable", method = RequestMethod.GET)
+    public Pager4EasyUI<AccessoriesSale> queryByPagerDisable(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
+        logger.info("分页查询所有被禁用登记记录");
+        Pager pager = new Pager();
+        pager.setPageNo(Integer.valueOf(pageNumber));
+        pager.setPageSize(Integer.valueOf(pageSize));
+        pager.setTotalRecords(accessoriesSaleService.countByDisable());
+        List<AccessoriesSale> accessoriesSales = accessoriesSaleService.queryByPagerDisable(pager);
+        return new Pager4EasyUI<AccessoriesSale>(pager.getTotalRecords(), accessoriesSales);
+    }
+
 
     /**
      * 对状态的激活和启用，只使用一个方法进行切换。

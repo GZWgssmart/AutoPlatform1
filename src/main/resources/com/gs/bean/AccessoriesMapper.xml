@@ -29,6 +29,22 @@
         ]]>
   </select>
 
+
+  <!-- 分页查询 -->
+  <select id="queryByPager" resultMap="AccessoriesMap" parameterType="com.gs.common.bean.Pager">
+    <![CDATA[
+      select * from auto_platform.t_accessories u where 1 = 1 and u.accStatus = 'Y'
+    ]]>
+    limit #{beginIndex}, #{pageSize};
+  </select>
+
+  <!--查询有多少配件信息-->
+  <select id="count" resultType="int" >
+    <![CDATA[
+      select count(*) from auto_platform.t_accessories u where 1 =1 and u.accStatus = 'Y'
+    ]]>
+  </select>
+
   <!--
       添加销售记录
   -->
@@ -77,4 +93,17 @@
         update auto_platform.t_accessories set accStatus = 'Y' where accId = #{accId}
         ]]>
   </update>
+
+  <select id="queryByPagerDisable" resultMap="AccessoriesMap" parameterType="com.gs.common.bean.Pager">
+    <![CDATA[
+       SELECT *FROM auto_platform.t_accessories WHERE accStatus='N'
+    ]]>
+    limit #{beginIndex}, #{pageSize}
+  </select>
+
+  <select id="countByDisable" resultType="int" >
+    <![CDATA[
+      select count(accId) from auto_platform.t_accessories ck where ck.accStatus = 'N'
+    ]]>
+  </select>
 </mapper>

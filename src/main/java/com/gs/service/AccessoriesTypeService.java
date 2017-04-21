@@ -1,6 +1,7 @@
 package com.gs.service;
 
 import com.gs.bean.AccessoriesType;
+import com.gs.common.bean.Pager;
 
 import java.util.List;
 
@@ -12,5 +13,12 @@ import java.util.List;
  * @since 2017-04-17 15:49:18
  */
 public interface AccessoriesTypeService extends BaseService<String, AccessoriesType> {
-
+    /**
+     * 分页查询被禁用的记录
+     */
+    public List<AccessoriesType> queryByPagerDisable(Pager pager);
+    /**
+     * 分页查询被禁用的记录
+     */
+    public int countByDisable();
 }

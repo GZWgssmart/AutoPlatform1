@@ -1,6 +1,7 @@
 package com.gs.service;
 
 import com.gs.bean.AccessoriesBuy;
+import com.gs.common.bean.Pager;
 
 import java.util.List;
 
@@ -12,5 +13,12 @@ import java.util.List;
 *@des 配件采购Service
 */
 public interface AccessoriesBuyService extends BaseService<String, AccessoriesBuy>{
-    public List<AccessoriesBuy> queryAllStatus(String accBuyStatus);
+    /**
+     * 分页查询被禁用的记录
+     */
+    public List<AccessoriesBuy> queryByPagerDisable(Pager pager);
+    /**
+     * 分页查询被禁用的记录
+     */
+    public int countByDisable();
 }

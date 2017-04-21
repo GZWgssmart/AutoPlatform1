@@ -1,6 +1,7 @@
 package com.gs.dao;
 
 import com.gs.bean.AccessoriesBuy;
+import com.gs.common.bean.Pager;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -14,5 +15,12 @@ import java.util.List;
 */
 @Repository
 public interface AccessoriesBuyDAO extends BaseDAO<String, AccessoriesBuy>{
-    public List<AccessoriesBuy> queryAllStatus(String accBuyStatus);
+    /**
+     * 分页查询被禁用的记录
+     */
+    public List<AccessoriesBuy> queryByPagerDisable(Pager pager);
+    /**
+     * 分页查询被禁用的记录
+     */
+    public int countByDisable();
 }

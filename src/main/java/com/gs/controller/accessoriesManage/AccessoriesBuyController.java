@@ -3,7 +3,10 @@ package com.gs.controller.accessoriesManage;
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.AccessoriesBuy;
 import com.gs.common.bean.ControllerResult;
+import com.gs.common.bean.Pager;
+import com.gs.common.bean.Pager4EasyUI;
 import com.gs.service.AccessoriesBuyService;
+import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
@@ -45,6 +48,22 @@ public class AccessoriesBuyController {
             return accessoriesBuyList;
         }
         return null;
+    }
+
+
+    /**
+     * 分页查询配件采购信息
+     */
+    @ResponseBody
+    @RequestMapping(value="queryByPage", method = RequestMethod.GET)
+    public Pager4EasyUI queryByPager(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
+        Pager pager = new Pager();
+        pager.setPageNo(Integer.valueOf(pageNumber));
+        pager.setPageSize(Integer.valueOf(pageSize));
+        pager.setTotalRecords(accessoriesBuyService.count());
+        logger.info("分页查询配件采购信息成功");
+        List<AccessoriesBuy> accessoriesBuys = accessoriesBuyService.queryByPager(pager);
+        return new Pager4EasyUI<AccessoriesBuy>(pager.getTotalRecords(), accessoriesBuys);
     }
 
     /**
@@ -100,18 +119,20 @@ public class AccessoriesBuyController {
         }
     }
 
+    /**
+     * 查询所有被禁用的登记记录
+     * @return
+     */
     @ResponseBody
-    @RequestMapping(value = "queryAccBuyStatus", method = RequestMethod.POST)
-    public List<AccessoriesBuy> queryInactiveAccBuy(String accBuyStatus) {
-        if (accBuyStatus != null && !accBuyStatus.equals("")) {
-            List<AccessoriesBuy> accessoriesBuyList = accessoriesBuyService.queryAllStatus(accBuyStatus);
-            if (accessoriesBuyList != null && !equals("")) {
-                logger.info("查询状态成功");
-                return accessoriesBuyList;
-            }
-            return null;
-        }
-        return null;
+    @RequestMapping(value="queryByPagerDisable", method = RequestMethod.GET)
+    public Pager4EasyUI<AccessoriesBuy> queryByPagerDisable(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
+        logger.info("分页查询所有被禁用登记记录");
+        Pager pager = new Pager();
+        pager.setPageNo(Integer.valueOf(pageNumber));
+        pager.setPageSize(Integer.valueOf(pageSize));
+        pager.setTotalRecords(accessoriesBuyService.countByDisable());
+        List<AccessoriesBuy> accessoriesBuys = accessoriesBuyService.queryByPagerDisable(pager);
+        return new Pager4EasyUI<AccessoriesBuy>(pager.getTotalRecords(), accessoriesBuys);
     }
 
     /**

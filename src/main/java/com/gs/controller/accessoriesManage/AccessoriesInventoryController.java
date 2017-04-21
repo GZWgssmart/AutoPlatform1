@@ -3,8 +3,11 @@ package com.gs.controller.accessoriesManage;
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.Accessories;
 import com.gs.common.bean.ControllerResult;
+import com.gs.common.bean.Pager;
+import com.gs.common.bean.Pager4EasyUI;
 import com.gs.service.AccessoriesService;
 import com.gs.service.AccessoriesTypeService;
+import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
@@ -44,6 +47,21 @@ public class AccessoriesInventoryController {
             return accessoriesList;
         }
         return null;
+    }
+
+    /**
+     * 分页查询配件库存信息
+     */
+    @ResponseBody
+    @RequestMapping(value="queryByPage", method = RequestMethod.GET)
+    public Pager4EasyUI queryByPager(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
+        Pager pager = new Pager();
+        pager.setPageNo(Integer.valueOf(pageNumber));
+        pager.setPageSize(Integer.valueOf(pageSize));
+        pager.setTotalRecords(accessoriesService.count());
+        logger.info("分页查询配件库存信息成功");
+        List<Accessories> accessories = accessoriesService.queryByPager(pager);
+        return new Pager4EasyUI<Accessories>(pager.getTotalRecords(), accessories);
     }
 
     /**
@@ -92,6 +110,22 @@ public class AccessoriesInventoryController {
         }else{
             return ControllerResult.getFailResult("更新失败");
         }
+    }
+
+    /**
+     * 查询所有被禁用的登记记录
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value="queryByPagerDisable", method = RequestMethod.GET)
+    public Pager4EasyUI<Accessories> queryByPagerDisable(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
+        logger.info("分页查询所有被禁用登记记录");
+        Pager pager = new Pager();
+        pager.setPageNo(Integer.valueOf(pageNumber));
+        pager.setPageSize(Integer.valueOf(pageSize));
+        pager.setTotalRecords(accessoriesService.countByDisable());
+        List<Accessories> accessories = accessoriesService.queryByPagerDisable(pager);
+        return new Pager4EasyUI<Accessories>(pager.getTotalRecords(), accessories);
     }
 
     /**
