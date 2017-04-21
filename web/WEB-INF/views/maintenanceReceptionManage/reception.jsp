@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="/static/css/table/table.css">
     <link rel="stylesheet" href="/static/css/bootstrap-validate/bootstrapValidator.min.css">
     <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.css">
-    <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/datetimepicker.less">
+    <link rel="stylesheet/less" href="/static/css/bootstrap-dateTimePicker/datetimepicker.less">
 
     <title>接待登记管理</title>
 </head>
@@ -133,7 +133,7 @@
 
 
 
-<div id="addWindow" class="modal fade" style="overflow:scroll" aria-hidden="true">
+<div id="addWindow" class="modal fade" style="overflow:scroll" data-backdrop="static" >
     <div class="modal-dialog">
         <div class="modal-content">
                         <form role="form" class="form-horizontal" id="addForm">
@@ -234,9 +234,6 @@
                                 <input type="number" name="nowOil" class="form-control" style="width:100%"/>
                                 </div>
                             </div>
-
-
-
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">车上物品描述：</label>
                                 <div class="col-sm-7">

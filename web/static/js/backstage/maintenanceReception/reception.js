@@ -200,6 +200,7 @@ function showEdit(){
 
 function showAdd(){
     $("#addWindow").modal('show');
+    $("#addButton").removeAttr("disabled");
     validator('addForm');
 }
 
@@ -430,14 +431,17 @@ function formSubmit(url, formId, winId){
                     confirmButtonText:"确定", // 提示按钮上的文本
                     type:"success"})// 提示窗口, 修改成功
                 $('#table').bootstrapTable('refresh');
-                if (formId == "addForm") {
-                    $('#input[type=reset]').data('bootstrapValidator').resetForm(true);
+                if(formId == 'addForm'){
+                    $("input[type=reset]").trigger("click");
+                    $('#addForm').data('bootstrapValidator').resetForm(true);
+                    $("#addButton").removeAttr("disabled");
                 }
             } else if (data.result == "fail") {
                 swal({title:"",
                     text:"添加失败",
                     confirmButtonText:"确认",
                     type:"error"})
+                $("#addButton").removeAttr("disabled");
             }
         }, "json");
 }
