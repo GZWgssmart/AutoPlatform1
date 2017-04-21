@@ -1,3 +1,6 @@
+
+var contentPath=''
+
 $(function () {
     $('#table').bootstrapTable('hideColumn', 'accId');
     $("#addSelect").select2({
@@ -41,6 +44,95 @@ function showEdit() {
 //显示添加
 function showAdd() {
     $("#addWindow").modal('show');
+}
+
+
+//格式化页面上的配件分类状态
+function formatterStatus(value) {
+    if (value == "Y") {
+        return "可用";
+    } else {
+        return "不可用";
+    }
+}
+
+function openStatusFormatter(index, row) {
+    /*处理数据*/
+    if (row.accStatus == 'Y') {
+        return "&nbsp;&nbsp;<a href='javascript:;' onclick='inactive(\"" + row.accId + "\")'>禁用</a>";
+    } else {
+        return "&nbsp;&nbsp;<a href='javascript:;' onclick='active(\"" + row.accId + "\")'>激活</a>";
+    }
+}
+
+//禁用状态
+function inactive(accId) {
+    $.post(contentPath + "/accInv/statusOperate?accId=" + accId + "&" + "accStatus=" + "Y", function (data) {
+        if (data.result == "success") {
+            $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
+        }
+    })
+}
+
+//激活状态
+function active(accId) {
+    $.post(contentPath + "/accInv/statusOperate?accId=" + accId + "&" + "accStatus=" + 'N', function (data) {
+        if (data.result == "success") {
+            $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
+        }
+    })
+}
+
+
+//格式化带时分秒的时间值。
+function formatterDateTime(value) {
+    if (value == undefined || value == null || value == '') {
+        return "";
+    }
+    else {
+        var date = new Date(value);
+        var year = date.getFullYear().toString();
+        var month = (date.getMonth() + 1);
+        var day = date.getDate().toString();
+        var hour = date.getHours().toString();
+        var minutes = date.getMinutes().toString();
+        var seconds = date.getSeconds().toString();
+        if (month < 10) {
+            month = "0" + month;
+        }
+        if (day < 10) {
+            day = "0" + day;
+        }
+        if (hour < 10) {
+            hour = "0" + hour;
+        }
+        if (minutes < 10) {
+            minutes = "0" + minutes;
+        }
+        if (seconds < 10) {
+            seconds = "0" + seconds;
+        }
+        return year + "-" + month + "-" + day + " " + hour + ":" + minutes + ":" + seconds;
+    }
+}
+
+//格式化不带时分秒的时间值
+function formatterDate(value) {
+    if (value == undefined || value == null || value == '') {
+        return "";
+    } else {
+        var date = new Date(value);
+        var year = date.getFullYear().toString();
+        var month = (date.getMonth() + 1);
+        var day = date.getDate().toString();
+        if (month < 10) {
+            month = "0" + month;
+        }
+        if (day < 10) {
+            day = "0" + day;
+        }
+        return year + "-" + month + "-" + day + ""
+    }
 }
 
 
@@ -219,7 +311,23 @@ $(document).ready(function () {
             label.remove();
         },
         submitHandler: function (form) {
-            alert("submitted!");
+            $.post(contentPath+"/accInv/addAccInv",$("#addForm").serialize(),function (data) {
+                if(data.result=="success"){
+                    $("#addWindow").modal('hide'); // 关闭指定的窗口
+                    $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
+                    swal({
+                        title: "",
+                        text: data.message,
+                        type: "success"
+                    })
+                }else{
+                    swal({
+                        title: "",
+                        text: data.message,
+                        type: "fail"
+                    })
+                }
+            })
         }
     })
     $("#editForm").validate({
@@ -291,7 +399,23 @@ $(document).ready(function () {
             label.remove();
         },
         submitHandler: function (form) {
-            alert("submitted!");
+            $.post(contentPath+"/accInv/updateAccInv",$("#editForm").serialize(),function (data) {
+                if(data.result=="success"){
+                    $("#editWindow").modal('hide'); // 关闭指定的窗口
+                    $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
+                    swal({
+                        title: "",
+                        text: data.message,
+                        type: "success"
+                    })
+                }else{
+                    swal({
+                        title: "",
+                        text: data.message,
+                        type: "fail"
+                    })
+                }
+            })
         }
     })
 });

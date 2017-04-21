@@ -29,7 +29,7 @@
         <table id="table"
                data-toggle="table"
                data-toolbar="#toolbar"
-               data-url="/table/query"
+               data-url="/accInv/queryAllAccInv"
                data-method="post"
                data-query-params="queryParams"
                data-pagination="true"
@@ -58,10 +58,11 @@
                 <th data-field="accSalePrice">配件售价</th>
                 <th data-field="accTotal">配件数量</th>
                 <th data-field="accIdle">配件可用数量</th>
-                <th data-field="accUsedTime">最近一次领料时间</th>
-                <th data-field="accBuyedTime">最近一次购买时间</th>
-                <th data-field="accCreatedTime">配件创建时间</th>
-                <th data-field="accStatus">配件状态</th>
+                <th data-field="accUsedTime" data-formatter="formatterDateTime">最近一次领料时间</th>
+                <th data-field="accBuyedTime" data-formatter="formatterDateTime">最近一次购买时间</th>
+                <th data-field="accCreatedTime" data-formatter="formatterDateTime">配件创建时间</th>
+                <th data-field="accStatus" data-formatter="formatterStatus">配件状态</th>
+                <th data-formatter="openStatusFormatter">操作</th>
             </tr>
             </thead>
         </table>
@@ -72,9 +73,6 @@
             <button id="btn_edit" type="button" class="btn btn-default" onclick="showEdit();">
                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
             </button>
-            <button id="btn_delete" type="button" class="btn btn-default" onclick="showDel();">
-                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
-            </button>
         </div>
     </div>
 </div>
@@ -83,7 +81,7 @@
 <div class="modal fade" id="addWindow" aria-hidden="true" style="overflow:auto; ">
     <div class="modal-dialog" style="width: 700px;height: auto;">
         <div class="modal-content" style="overflow:hidden;">
-            <form class="form-horizontal" role="form" onsubmit="return checkAdd()" id="addForm" method="post">
+            <form class="form-horizontal" role="form" id="addForm" method="post">
                 <div class="modal-header" style="overflow:auto;">
                     <h4>请填写库存信息</h4>
                 </div>
@@ -141,30 +139,6 @@
                     <label class="col-sm-3 control-label">配件可用数量：</label>
                     <div class="col-sm-7">
                         <input type="text" name="accIdle" placeholder="请输入配件可用数量" class="form-control">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">最近一次领料时间：</label>
-                    <div class="col-sm-7">
-                        <input type="text" name="accUsedTime" value="2012-05-15 21:05" id="addDateTimePicker" class="form-control">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">最近一次购买时间：</label>
-                    <div class="col-sm-7">
-                        <input type="text" name="accBuyedTime" value="2012-05-15 21:05" id="addDateTimePicker2" class="form-control">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">配件创建时间：</label>
-                    <div class="col-sm-7">
-                        <input type="text" name="accCreatedTime" value="2012-05-15 21:05" id="addDateTimePicker3" class="form-control">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">配件状态：</label>
-                    <div class="col-sm-7">
-                        <input type="text" name="accStatus" placeholder="配件状态" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
@@ -181,88 +155,65 @@
 <div class="modal fade" id="editWindow" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form class="form-horizontal" role="form" onsubmit="return checkAdd()" id="editForm" method="post">
+            <form class="form-horizontal" role="form" id="editForm" method="post">
                 <div class="modal-header" style="overflow:auto;">
+                    <input type="hidden" name="accId" define="Accessories.accId"/>
                     <h4>请填写库存信息</h4>
                 </div>
                 <br/>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">公司名称：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="companyId" placeholder="请输入公司名称" class="form-control">
+                        <input type="text" name="companyId" define="Accessories.companyId" placeholder="请输入公司名称" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">配件所属类别：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="accTypeId" placeholder="请输入配件所属类别" class="form-control">
+                        <input type="text" name="accTypeId" define="Accessories.accTypeId" placeholder="请输入配件所属类别" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">配件名称：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="accName" placeholder="请输入配件名称" class="form-control">
+                        <input type="text" name="accName" define="Accessories.accName" placeholder="请输入配件名称" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">配件商品条码：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="accCommodityCode" placeholder="请输入配件商品条码" class="form-control">
+                        <input type="text" name="accCommodityCode" define="Accessories.accCommodityCode" placeholder="请输入配件商品条码" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">配件描述：</label>
                     <div class="col-sm-7">
-                        <textarea type="text" name="accDes" placeholder="请输入相关内容" style="height: 100px;"
+                        <textarea type="text" name="accDes" define="Accessories.accDes" placeholder="请输入相关内容" style="height: 100px;"
                                   class="form-control"></textarea>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">配件价格：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="accPrice" placeholder="请输入配件价格" class="form-control">
+                        <input type="text" name="accPrice" define="Accessories.accPrice" placeholder="请输入配件价格" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">配件售价：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="accSalePrice" placeholder="请输入配件售价" class="form-control">
+                        <input type="text" name="accSalePrice" define="Accessories.accSalePrice" placeholder="请输入配件售价" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">配件数量：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="accTotal" placeholder="请输入配件数量" class="form-control">
+                        <input type="text" name="accTotal" define="Accessories.accTotal" placeholder="请输入配件数量" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">配件可用数量：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="accIdle" placeholder="请输入配件可用数量" class="form-control">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">最近一次领料时间：</label>
-                    <div class="col-sm-7">
-                        <input type="text" name="accUsedTime" value="2012-05-15 21:05" id="editDateTimePicker" class="form-control">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">最近一次购买时间：</label>
-                    <div class="col-sm-7">
-                        <input type="text" name="accBuyedTime" value="2012-05-15 21:05" id="editDateTimePicker2" class="form-control">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">配件创建时间：</label>
-                    <div class="col-sm-7">
-                        <input type="text" name="accCreatedTime" value="2012-05-15 21:05" id="editDateTimePicker3" class="form-control">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">配件状态：</label>
-                    <div class="col-sm-7">
-                        <input type="text" name="accStatus" placeholder="配件状态" class="form-control">
+                        <input type="text" name="accIdle" define="Accessories.accIdle" placeholder="请输入配件可用数量" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
