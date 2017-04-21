@@ -10,4 +10,30 @@
     <result column="workStatus" property="workStatus" jdbcType="VARCHAR" />
   </resultMap>
 
+  <select id="queryAll" resultMap="BaseResultMap">
+        SELECT * FROM activiti_proj.t_work_info
+  </select>
+
+  <insert id="insert" parameterType="com.gs.bean.WorkInfo">
+      INSERT INTO activiti_proj.t_work_info
+      (workId,recordId, userId, workAssignTime, workCreatedTime,workStatus)
+      VALUES
+      (uuid(),#{recordId},#{userId},#{workAssignTime},#{workCreatedTime},'Y')
+  </insert>
+
+    <delete id="deleteById">
+        DELETE FROM activiti_proj.t_work_info WHERE workId=#{workId}
+    </delete>
+    <update id="update">
+
+    </update>
+    <!--冻结工单-->
+    <update id="inactive" keyProperty="workId" parameterType="string">
+        UPDATE activiti_proj.t_work_info set workStatus='N' WHERE workId = #{workId}
+    </update>
+
+    <!--激活工单-->
+    <update id="active" keyProperty="workId" parameterType="string">
+        UPDATE activiti_proj.t_work_info set workStatus='Y' WHERE workId = #{workId}
+    </update>
 </mapper>

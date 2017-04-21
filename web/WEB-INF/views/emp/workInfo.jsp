@@ -8,9 +8,10 @@
     <link rel="stylesheet" href="/static/css/bootstrap-table.css">
     <link rel="stylesheet" href="/static/css/select2.min.css">
     <link rel="stylesheet" href="/static/css/sweetalert.css">
-    <link rel="stylesheet" href="/static/css/table/table.css">
     <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.css">
     <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/datetimepicker.less">
+
+<%--<link rel="stylesheet" href="/static/css/table/table.css">--%>
 </head>
 <body>
 <%@include file="../backstage/contextmenu.jsp"%>
@@ -22,7 +23,7 @@
         <table id="table"
                data-toggle="table"
                data-toolbar="#toolbar"
-               data-url="/table/query"
+               data-url="/Order/queryAll"
                data-method="post"
                data-query-params="queryParams"
                data-pagination="true"
@@ -40,12 +41,13 @@
             <thead>
             <tr>
                 <th data-radio="true" data-field="status"></th>
-                <th data-field="workId">工单编号</th>
+                <%--<th data-field="workId">工单编号</th>--%>
                 <th data-field="recordId">保养记录编号</th>
                 <th data-field="userId">工单指派用户编号</th>
-                <th data-field="workAssignTime">工单指派时间</th>
-                <th data-field="workcreateTime">工单创建时间</th>
-                <th data-field="workStatus">当前状态</th>
+                <th data-field="workAssignTime" data-formatter="formatterDate">工单指派时间</th>
+                <th data-field="workCreatedTime" data-formatter="formatterDateTime">工单创建时间</th>
+                <th data-field="workStatus" data-formatter="formatterStatus">当前状态</th>
+                <th data-width="12%" data-formatter="openStatusFormatter">操作</th>
             </tr>
             </thead>
         </table>
@@ -68,7 +70,7 @@
 <div class="modal fade" id="add" aria-hidden="true" style="overflow:auto; ">
     <div class="modal-dialog" style="height: auto; overflow:auto;">
         <div class="modal-content" style="overflow:auto;">
-            <form class="form-horizontal" role="form" onsubmit="return checkAdd()" id="addForm" method="post">
+            <form class="form-horizontal" role="form" id="addForm" method="post">
                 <div class="modal-header" style="overflow:auto;">
                     <h4>请填写订单信息</h4>
                 </div>
@@ -88,13 +90,13 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">工单指派时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="workAssignTime" id="addwrokAssignTime" value="2012-05-15 21:05" placeholder="请输入工单指派时间" class="form-control">
+                        <input type="date" name="workAssignTime" id="addworkAssignTime" placeholder="请输入工单指派时间" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">工单创建时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="workcreateTime" id="addworkcreateTime" value="2012-05-15 21:05" placeholder="请输入工单创建时间" class="form-control" max="11">
+                        <input type="date" name="workCreatedTime" id="addworkCreateTime"placeholder="请输入工单创建时间" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
@@ -114,7 +116,9 @@
 <div class="modal fade" id="edit" aria-hidden="true" style="overflow:auto; ">
     <div class="modal-dialog" style="height: auto; overflow:auto;">
         <div class="modal-content" style="overflow:auto;">
-            <form class="form-horizontal" role="form" onsubmit="return checkEdit()" id="editForm" method="post">
+            <form class="form-horizontal" role="form"id="editForm" method="post">
+                <input type="hidden" name="workId" define="Order.workId"/>
+                <input type="hidden"name="workStatus" define="Order.workStatus">
                 <div class="modal-header" style="overflow:auto;">
                     <h4>请修改订单信息</h4>
                 </div>
@@ -134,13 +138,13 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">工单指派时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="workAssignTime" id="editwrokAssignTime" value="2012-05-15 21:05" placeholder="请输入工单指派时间" class="form-control">
+                        <input type="date" name="workAssignTime" id="editwrokAssignTime" placeholder="请输入工单指派时间" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">工单创建时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="workcreateTime" id="editworkcreateTime" value="2012-05-15 21:05" placeholder="请输入工单创建时间" class="form-control" max="11">
+                        <input type="date" name="workCreateTime" id="editworkCreateTime" placeholder="请输入工单创建时间" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
@@ -208,4 +212,7 @@
 <script src="/static/js/bootstrap-dateTimePicker/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
 
 </body>
+<script>
+
+</script>
 </html>
