@@ -26,7 +26,7 @@
 
     <select id="queryAll" resultMap="colorMap">
          <![CDATA[
-          select * from t_car_color
+          select * from t_car_color;
         ]]>
     </select>
 

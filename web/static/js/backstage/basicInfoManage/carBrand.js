@@ -1,5 +1,5 @@
 $(function () {
-    initTable('table', '/arBrand/queryByPagerCarBrand'); // 初始化表格
+    initTable('table', '/carBrand/queryByPagerCarBrand'); // 初始化表格
 });
 
 $(function () {
@@ -147,7 +147,7 @@ $(document).ready(function () {
             label.remove();
         },
         submitHandler: function(form) {
-            $.post("/arBrand/addCarBrand",
+            $.post("/carBrand/addCarBrand",
                 $("#showAddFormWar").serialize(),
                 function (data) {
                     if (data.result == "success") {
@@ -204,7 +204,7 @@ $(document).ready(function () {
             label.remove();
         },
         submitHandler: function(form) {
-            $.post("/arBrand/updateCarBrand",
+            $.post("/carBrand/updateCarBrand",
                 $("#showEditFormWar").serialize(),
                 function (data) {
                     if (data.result == "success") {

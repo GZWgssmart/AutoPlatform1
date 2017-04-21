@@ -3,6 +3,7 @@ package com.gs.controller.basicInfoManage;
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.CarBrand;
 import com.gs.bean.Checkin;
+import com.gs.common.bean.ComboBox4EasyUI;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,7 +26,7 @@ import java.util.List;
  * Created by yaoyong on 2017/4/18.
  */
 @Controller
-@RequestMapping("/arBrand")
+@RequestMapping("/carBrand")
 public class CarBrandController {
 
     private Logger logger = (Logger) LoggerFactory.getLogger(CarBrandController.class);
@@ -47,10 +49,17 @@ public class CarBrandController {
 
     @ResponseBody
     @RequestMapping(value = "queryAllCarBrand",method = RequestMethod.GET)
-    public List<CarBrand> queryAll(){
+    public List<ComboBox4EasyUI> queryAll(){
         logger.info("查询所有汽车品牌");
         List<CarBrand> carBrands = carBrandService.queryAll();
-        return carBrands;
+        List<ComboBox4EasyUI> comboxs = new ArrayList<ComboBox4EasyUI>();
+        for(CarBrand c : carBrands){
+                ComboBox4EasyUI comboBox4EasyUI = new ComboBox4EasyUI();
+                comboBox4EasyUI.setId(c.getBrandId());
+                comboBox4EasyUI.setText(c.getBrandName());
+                comboxs.add(comboBox4EasyUI);
+        }
+        return comboxs;
     }
 
     @ResponseBody

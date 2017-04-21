@@ -44,5 +44,6 @@ public class CarModelServiceImpl implements CarModelService {
 	public int count() { return carModelDAO.count(); }
 	public int inactive(String id) { return carModelDAO.inactive(id); }
 	public int active(String id) { return carModelDAO.active(id); }
+	public List<CarModel> queryByBrandId(String id) { return carModelDAO.queryByBrandId(id); }
 
 }

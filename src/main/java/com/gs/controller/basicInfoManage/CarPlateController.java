@@ -2,6 +2,7 @@ package com.gs.controller.basicInfoManage;
 
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.CarPlate;
+import com.gs.common.bean.ComboBox4EasyUI;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -44,10 +46,17 @@ public class CarPlateController {
 
     @ResponseBody
     @RequestMapping(value = "queryAllCarPlate", method = RequestMethod.GET)
-    public List<CarPlate> queryAll(){
+    public List<ComboBox4EasyUI> queryAll(){
         logger.info("查询所有车牌");
         List<CarPlate> carPlates = carPlateService.queryAll();
-        return carPlates;
+        List<ComboBox4EasyUI> comboxs = new ArrayList<ComboBox4EasyUI>();
+        for(CarPlate c : carPlates){
+            ComboBox4EasyUI comboBox4EasyUI = new ComboBox4EasyUI();
+            comboBox4EasyUI.setId(c.getPlateId());
+            comboBox4EasyUI.setText(c.getPlateName());
+            comboxs.add(comboBox4EasyUI);
+        }
+        return comboxs;
     }
 
     @ResponseBody

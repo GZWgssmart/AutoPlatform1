@@ -2,6 +2,7 @@ package com.gs.controller.basicInfoManage;
 
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.CarColor;
+import com.gs.common.bean.ComboBox4EasyUI;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,10 +35,17 @@ public class CarColorController {
 
     @ResponseBody
     @RequestMapping(value = "queryAllCarColor",method = RequestMethod.GET)
-    public List<CarColor> queryAll(){
+    public List<ComboBox4EasyUI> queryAll(){
         logger.info("查询所有汽车颜色");
-        List<CarColor> carColorList = carColorService.queryAll();
-        return carColorList;
+        List<CarColor> carColors = carColorService.queryAll();
+        List<ComboBox4EasyUI> comboxs = new ArrayList<ComboBox4EasyUI>();
+        for(CarColor c : carColors){
+            ComboBox4EasyUI comboBox4EasyUI = new ComboBox4EasyUI();
+            comboBox4EasyUI.setId(c.getColorId());
+            comboBox4EasyUI.setText(c.getColorName());
+            comboxs.add(comboBox4EasyUI);
+        }
+        return comboxs;
     }
 
     @ResponseBody

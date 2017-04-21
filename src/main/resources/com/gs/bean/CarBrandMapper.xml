@@ -10,7 +10,7 @@
 
   <select id="queryAll" resultMap="carbrandMap">
     <![CDATA[
-    select * from t_car_brand
+          select * from t_car_brand;
       ]]>
   </select>
 

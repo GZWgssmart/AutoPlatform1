@@ -7,22 +7,54 @@
     <result column="modelDes" property="modelDes" jdbcType="VARCHAR" />
     <result column="brandId" property="brandId" jdbcType="VARCHAR" />
     <result column="modelStaus" property="modelStaus" jdbcType="VARCHAR" />
+      <association property="carBrand" javaType="com.gs.bean.CarBrand">
+          <id property="brandId" column="brandId"/>
+          <result property="brandName" column="brandName"/>
+      </association>
   </resultMap>
 
   <select id="queryAll" resultMap="carmodelMap">
-           select * from t_car_model
+      <![CDATA[
+           select m.*,b.brandName from t_car_model m,t_car_brand b where m.brandId=b.brandId
+        ]]>
   </select>
 
+    <select id="queryByBrandId" resultMap="carmodelMap">
+        <![CDATA[
+           select m.*,b.brandId from t_car_model m,t_car_brand b where m.brandId=b.brandId and b.brandId = #{id}
+
+        ]]>
+    </select>
+
+    <select id="queryByPager" resultMap="carmodelMap"  parameterType="com.gs.common.bean.Pager">
+        <![CDATA[
+          select m.*,b.brandName from t_car_model m,t_car_brand b where m.brandId=b.brandId and m.modelStaus = 'Y'
+           ]]>
+        limit #{beginIndex}, #{pageSize}
+    </select>
+
+    <select id="count" resultType="int" >
+        <![CDATA[
+      select count(colorId) from t_car_model cm where cm.modelStaus = 'Y'
+    ]]>
+    </select>
+
   <insert id="insert" parameterType="carmodel">
-            insert into t_car_model(modelId,modelName,modelDes,brandId,modelStaus) values (uuid(),modelName,modelDes,brandId,modelStaus)
+      <![CDATA[
+            insert into t_car_model(modelId,modelName,modelDes,brandId) values (uuid(),#{modelName},#{modelDes},#{brandId},'Y')
+       ]]>
   </insert>
 
   <update id="update" parameterType="carmodel">
+      <![CDATA[
             update t_car_model set modelName = #{modelName},modelDes = #{modelDes}, brandId = #{brandId},modelStaus = #{modelStaus} where modelId = #{modelId}
+      ]]>
   </update>
 
   <delete id="deleteById" parameterType="string">
+      <![CDATA[
             delete from t_car_model where modelId = #{modelId}
+       ]]>
   </delete>
 
 </mapper>
