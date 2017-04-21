@@ -282,7 +282,7 @@
             <div class="container" style="width: 80%;">
                 <form class="form-horizontal"  id="addInForm" method="post">
                     <div class="modal-header" style="overflow:auto;">
-                        <h4>其它支出添加</h4>
+                        <h4>其它收入添加</h4>
                     </div>
                     <br/>
                     <div class="form-group">
@@ -328,24 +328,20 @@
                         <p>修改收支记录</p>
                     </div>
 
-                    <div class="form-group">
+                    <div id="inTypeDiv" class="form-group">
                         <label class="col-sm-3 control-label" for="userName">收入类型：</label>
                         <div class="col-sm-7">
-                            <c:if test="${not empty inTypeId}">
                             <input  type="hidden" define="io.incomingType.inTypeId" name="inTypeId">
-                            <input define="io.incomingType.inTypeName"  type="text" readonly="true" class="form-control">
-                            </c:if>
+                            <input define="io.incomingType.inTypeName" id="inType"  type="text" readonly="true" class="form-control">
                         </div>
                     </div>
 
 
-                        <div class="form-group">
+                        <div id="outTypeDiv" class="form-group">
                             <label class="col-sm-3 control-label" for="userName">支出类型：</label>
                             <div class="col-sm-7">
-                                <c:if test="${not empty outTypeId}">
                                 <input  type="hidden" define="io.outgoingType.outTypeId" name="outTypeId">
-                                <input define="io.outgoingType.outTypeName"  type="text" readonly="true" class="form-control">
-                                </c:if>
+                                <input define="io.outgoingType.outTypeName"  type="text" id="outType" readonly="true" class="form-control">
                             </div>
                         </div>
 

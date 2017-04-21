@@ -125,9 +125,15 @@ function showEdit(){
 //                $('#editName').val(row[0].name);
 //                $('#editPrice').val(row[0].price);
         $("#editIOWin").modal('show'); // 显示弹窗
-
         var io = row[0];
         $("#editIOWin").fill(io);
+        if ($("#inType").val() == "") {
+            $("#inTypeDiv").hide();
+        }
+        if ($("#outType").val() == "") {
+            $("#outTypeDiv").hide();
+        }
+
     }else{
         swal({
             title:"",
