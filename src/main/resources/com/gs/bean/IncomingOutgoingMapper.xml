@@ -3,21 +3,19 @@
 <mapper namespace="com.gs.dao.IncomingOutgoingDAO" >
   <resultMap id="incomingOutgoingMap" type="com.gs.bean.IncomingOutgoing" >
     <id column="inOutId" property="inOutId" jdbcType="VARCHAR" />
-    <result column="inTypeId" property="inTypeId" jdbcType="VARCHAR" />
-    <result column="outTypeId" property="outTypeId" jdbcType="VARCHAR" />
     <result column="inOutMoney" property="inOutMoney" jdbcType="DOUBLE" />
     <result column="inOutCreatedUser" property="inOutCreatedUser" jdbcType="VARCHAR" />
     <result column="inOutCreatedTime" property="inOutCreatedTime" jdbcType="TIMESTAMP" />
     <result column="inOutStatus" property="inOutStatus" jdbcType="VARCHAR" />
 
     <association property="incomingType" javaType="com.gs.bean.IncomingType">
-      <id column="incomingType_id" property="inTypeId"/>
-      <result column="incomingType_name" property="inTypeName"/>
+      <id column="inType_id" property="inTypeId"/>
+      <result column="inTypeName" property="inTypeName"/>
+    </association>
 
-      <association property="outgoingType" javaType="com.gs.bean.OutgoingType">
-        <id column="outgoingType_id" property="outTypeId"/>
-        <result column="outgoingType_name" property="outTypeName"/>
-      </association>
+    <association property="outgoingType" javaType="com.gs.bean.OutgoingType">
+      <id column="outType_id" property="outTypeId"/>
+      <result column="outTypeName" property="outTypeName"/>
     </association>
 
     <association property="user" javaType="com.gs.bean.User">
@@ -34,7 +32,7 @@
 
   <select id="queryByPager" resultMap="incomingOutgoingMap" parameterType="com.gs.common.bean.Pager">
     <![CDATA[
-      select io.*,i.inTypeId as incomingType_id, i.inTypeName as incomingType_name,o.outTypeId as outgoingType_id,o.outTypeName as outgoingType_name,u.userId ,u.userName from t_incoming_outgoing io
+      select io.*,i.inTypeId as inType_id, i.inTypeName,o.outTypeId as outType_id,o.outTypeName,u.userId ,u.userName from t_incoming_outgoing io
 				LEFT JOIN t_incoming_type i on io.inTypeId = i.inTypeId
 				LEFT JOIN t_outgoing_type o on io.outTypeId = o.outTypeId
 				LEFT JOIN  t_user u on io.inOutCreatedUser = u.userId
@@ -52,7 +50,7 @@
 
   <select id="queryByPagerDisable" resultMap="incomingOutgoingMap" parameterType="com.gs.common.bean.Pager">
     <![CDATA[
-          select io.*,i.inTypeId as incomingType_id, i.inTypeName as incomingType_name,o.outTypeId as outgoingType_id,o.outTypeName as outgoingType_name,u.userId ,u.userName from t_incoming_outgoing io
+         select io.*,i.inTypeId as inType_id, i.inTypeName,o.outTypeId as outType_id,o.outTypeName,u.userId ,u.userName from t_incoming_outgoing io
 				LEFT JOIN t_incoming_type i on io.inTypeId = i.inTypeId
 				LEFT JOIN t_outgoing_type o on io.outTypeId = o.outTypeId
 				LEFT JOIN  t_user u on io.inOutCreatedUser = u.userId
@@ -65,7 +63,7 @@
 
   <insert id="insert" useGeneratedKeys="true" keyProperty="inOutId" parameterType="incomingOutgoing">
     <![CDATA[
-        insert into t_incoming_outgoing(inOutId, inTypeId, outTypeId,inOutMoney,inOutCreatedUser,inOutCreatedTime,inOutStatus) values(#{inOutId}, #{inTypeId}, #{outTypeId}, #{inOutMoney}, #{inOutCreatedUser}, #{inOutCreatedTime}, #{inOutStatus})
+        insert into t_incoming_outgoing(inOutId, inTypeId, outTypeId,inOutMoney,inOutCreatedUser,inOutCreatedTime,inOutStatus) values(uuid(), #{inTypeId}, #{outTypeId}, #{inOutMoney}, #{inOutCreatedUser}, now(),'Y')
         ]]>
   </insert>
 

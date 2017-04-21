@@ -20,41 +20,6 @@ public class IncomingOutgoing {
     private OutgoingType outgoingType;
     private IncomingType incomingType;
     private User user;
-    private String outTypeName;
-    private String inTypeName;
-    private String userName;
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getOutTypeName() {
-        return outTypeName;
-    }
-
-    public void setOutTypeName(String outTypeName) {
-        this.outTypeName = outTypeName;
-    }
-
-    public String getInTypeName() {
-        return inTypeName;
-    }
-
-    public void setInTypeName(String inTypeName) {
-        this.inTypeName = inTypeName;
-    }
 
     public OutgoingType getOutgoingType() {
         return outgoingType;
@@ -70,6 +35,14 @@ public class IncomingOutgoing {
 
     public void setIncomingType(IncomingType incomingType) {
         this.incomingType = incomingType;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getInOutId() {

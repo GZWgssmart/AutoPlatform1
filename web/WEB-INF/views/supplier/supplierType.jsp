@@ -87,7 +87,7 @@
                             <option>Relish</option>
                             <option>Relish</option>
                         </select>--%>
-                        <input type="text" name="supplyTypeName" id="name" placeholder="请选择供应商类型" class="form-control">
+                        <input type="text" name="supplyTypeName" id="name" placeholder="请输入供应商类型" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
@@ -135,7 +135,7 @@
                             <option>Relish</option>
                             <option>Relish</option>
                         </select>--%>
-                        <input type="text" name="supplyTypeName" define="supplyType.supplyTypeName"  placeholder="请选择供应商类型" class="form-control">
+                        <input type="text" name="supplyTypeName" define="supplyType.supplyTypeName"  placeholder="请输入供应商类型" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">

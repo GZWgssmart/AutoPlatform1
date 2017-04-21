@@ -4,25 +4,47 @@
   <resultMap id="colorMap" type="carcolor" >
     <id column="colorId" property="colorId" jdbcType="VARCHAR" />
     <result column="colorName" property="colorName" jdbcType="VARCHAR" />
-    <result column="colorRgb" property="colorRgb" jdbcType="VARCHAR" />
+    <result column="colorRGB" property="colorRgb" jdbcType="VARCHAR" />
     <result column="colorHex" property="colorHex" jdbcType="VARCHAR" />
     <result column="colorDes" property="colorDes" jdbcType="VARCHAR" />
     <result column="colorStatus" property="colorStatus" jdbcType="VARCHAR" />
   </resultMap>
 
+
+    <select id="queryByPager" resultMap="colorMap"  parameterType="com.gs.common.bean.Pager">
+        <![CDATA[
+          select * from t_car_color cc where cc.colorStatus = 'Y'
+           ]]>
+        limit #{beginIndex}, #{pageSize}
+    </select>
+
+    <select id="count" resultType="int" >
+        <![CDATA[
+      select count(colorId) from t_car_color cc where cc.colorStatus = 'Y'
+    ]]>
+    </select>
+
     <select id="queryAll" resultMap="colorMap">
-            select * from t_car_color
+         <![CDATA[
+          select * from t_car_color;
+        ]]>
     </select>
 
     <insert id="insert" parameterType="carcolor">
-            insert into t_car_color(colorId,colorName,colorRgb,colorHex,colorDes,colorStatus) values (uuid(),colorName,colorRgb,colorHex,colorDes,colorStatus)
+        <![CDATA[
+            insert into t_car_color(colorId, colorName, colorRGB, colorHex, colorDes, colorStatus) values(uuid(), #{colorName}, #{colorRgb}, #{colorHex}, #{colorDes}, 'Y')
+         ]]>
     </insert>
 
     <update id="update" parameterType="carcolor">
-            update t_car_color set colorName = #{colorName},colorRgb = #{colorRgb},colorHex = #{colorHex},colorDes = #{colorDes},colorStatus = #{colorStatus} where colorId = #{colorId}
+        <![CDATA[
+            update t_car_color set colorName = #{colorName},colorRGB = #{colorRgb},colorHex = #{colorHex},colorDes = #{colorDes} where colorId = #{colorId}
+         ]]>
     </update>
 
     <delete id="deleteById" parameterType="string">
+        <![CDATA[
             delete from t_car_color where colorId = #{colorId}
+             ]]>
     </delete>
 </mapper>

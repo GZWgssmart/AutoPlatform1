@@ -8,12 +8,18 @@ import com.gs.common.bean.Pager4EasyUI;
 import com.gs.service.CheckinService;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -61,6 +67,15 @@ public class CheckinController {
     }
 
     @ResponseBody
+    @RequestMapping(value = "add", method = RequestMethod.POST)
+    public ControllerResult addCheckin(Checkin checkin) {
+        logger.info("添加登记记录");
+        checkin.setCompanyId("c515f5d623e011e7a97af832e40312b3");
+        checkinService.insert(checkin);
+        return ControllerResult.getSuccessResult("添加成功");
+    }
+
+    @ResponseBody
     @RequestMapping(value = "inactive",method = RequestMethod.POST)
     public ControllerResult inactive(String id) {
         logger.info("禁用");
@@ -82,5 +97,12 @@ public class CheckinController {
         }else{
             return ControllerResult.getFailResult("激活失败");
         }
+    }
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        dateFormat.setLenient(false);
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
     }
 }

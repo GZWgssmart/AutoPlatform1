@@ -1,3 +1,21 @@
+.clear {
+    clear: both;
+}
+a:focus {
+    outline: none;
+}
+a{
+    color:#676a6c; text-decoration:none;
+}
+
+a:hover{
+    color:#676a6c; text-decoration:none;
+}
+
+a:active{
+    color:black;
+}
+
 .container {
     width:100%;
 
@@ -30,6 +48,18 @@
 
 .model-content input {
     width:30%;
+}
+
+.search-style{
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 3;
+    display: block;
+    width: 34px;
+    height: 34px;
+    line-height: 34px;
+    text-align: center;
 }
 
 

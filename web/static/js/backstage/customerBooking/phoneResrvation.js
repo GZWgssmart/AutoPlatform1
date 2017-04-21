@@ -7,6 +7,11 @@ $('#addArriveTime').datetimepicker({ // 初始化添加框中的时间框
     language: 'zh-CN',
     format: 'yyyy-mm-dd hh:ii'
 });
+
+$('#appCreatedTime').datetimepicker({ // 初始化添加框中的时间框
+    language: 'zh-CN',
+    format: 'yyyy-mm-dd hh:ii'
+});
 $('#addCheckinCreatedTime').datetimepicker({// 初始化添加框中的时间框
     language: 'zh-CN',
     format: 'yyyy-mm-dd hh:ii'
@@ -170,7 +175,6 @@ $(document).ready(function () {
             },
             arriveTime: {
                 required: true,
-                date: true
             },
             maintainOrFix: {
                 required: true,
@@ -178,7 +182,6 @@ $(document).ready(function () {
             },
             appCreatedTime: {
                 required: true,
-                date: true
             },
             companyId: {
                 required: true,
@@ -219,11 +222,11 @@ $(document).ready(function () {
             label.remove();
         },
         submitHandler: function (form) {
-            $.post("/arBrand/add",
+            $.post("/appointment/addApp",
                 $("#showAddFormWar").serialize(),
                 function (data) {
                     if (data.result == "success") {
-                        $("#add").modal('hide'); // 关闭指定的窗口
+                        $("#addWindow").modal('hide'); // 关闭指定的窗口
                         $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
                         swal({
                             title: "",
@@ -280,7 +283,6 @@ $(document).ready(function () {
             },
             arriveTime: {
                 required: true,
-                date: true
             },
             maintainOrFix: {
                 required: true,
@@ -288,7 +290,6 @@ $(document).ready(function () {
             },
             appCreatedTime: {
                 required: true,
-                date: true
             },
             companyId: {
                 required: true,
@@ -329,11 +330,11 @@ $(document).ready(function () {
             label.remove();
         },
         submitHandler: function (form) {
-            $.post("/arBrand/update",
+            $.post("/appointment/update",
                 $("#showEditFormWar").serialize(),
                 function (data) {
                     if (data.result == "success") {
-                        $("#edit").modal('hide'); // 关闭指定的窗口
+                        $("#editWindow").modal('hide'); // 关闭指定的窗口
                         $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
                         swal({
                             title: "",

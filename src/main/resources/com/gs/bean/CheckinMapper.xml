@@ -21,6 +21,8 @@
     <result column="checkinCreatedTime" property="checkinCreatedTime" jdbcType="TIMESTAMP" />
     <result column="companyId" property="companyId" jdbcType="VARCHAR" />
     <result column="checkinStatus" property="checkinStatus" jdbcType="VARCHAR" />
+    <result column="nowOil" property="nowOil" jdbcType="DOUBLE" />
+    <result column="ifClearCar" property="ifClearCar" jdbcType="VARCHAR" />
 
     <association property="brand" javaType="com.gs.bean.CarBrand">
       <id property="brandId" column="brandId"/>
@@ -68,6 +70,17 @@
       select count(checkinId) from t_checkin ck where ck.checkinStatus = 'Y'
     ]]>
   </select>
+
+  <insert id="insert"  parameterType="checkin">
+    <![CDATA[
+			insert into t_checkin(checkinId, userId, appointmentId, userName, userPhone, brandId, colorId,
+				modelId, plateId, carPlate, arriveTime, carMileage, carThings, intactDegrees, userRequests,
+				maintainOrFix, checkinCreatedTime, companyId, checkinStatus, ifClearCar, nowOil)
+				values(uuid(), #{userId}, #{appointmentId}, #{userName}, #{userPhone}, #{brandId}, #{colorId},
+				#{modelId}, #{plateId}, #{carPlate}, #{arriveTime}, #{carMileage}, #{carThings}, #{intactDegrees}, #{userRequests},
+				#{maintainOrFix}, now(), #{companyId}, 'Y', #{ifClearCar}, #{nowOil})
+		]]>
+  </insert>
 
   <select id="queryByPagerDisable" resultMap="checkinMap" parameterType="com.gs.common.bean.Pager">
     <![CDATA[

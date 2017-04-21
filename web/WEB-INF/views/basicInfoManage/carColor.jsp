@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Administrator
-  Date: 2017/4/11
-  Time: 15:59
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     String path = request.getContextPath();
@@ -28,33 +21,26 @@
     <div class="panel-body" style="padding-bottom:0px;">
         <!--show-refresh, show-toggle的样式可以在bootstrap-table.js的948行修改-->
         <!-- table里的所有属性在bootstrap-table.js的240行-->
-        <table id="table"
-               data-toggle="table"
-               data-toolbar="#toolbar"
-               data-url="/carColor/queryByPager"
-               data-method="post"
-               data-query-params="queryParams"
-               data-pagination="true"
-               data-search="true"
-               data-show-refresh="true"
-               data-show-toggle="true"
-               data-show-columns="true"
-               data-page-size="10"
-               data-height="543"
-               data-id-field="id"
-               data-page-list="[5, 10, 20]"
-               data-cach="false"
-               data-click-to-select="true"
-               data-single-select="true">
+        <table id="table">
             <thead>
-            <tr>
-                <th data-radio="true" data-field="status"></th>
-                <th data-field="colorName">颜色名称</th>
-                <th data-field="colorRgb">颜色的RBG值</th>
-                <th data-field="colorHex">颜色的16进制值</th>
-                <th data-field="colorDes">颜色描述</th>
-                <th data-field="colorStatus">颜色状态</th>
-            </tr>
+                <tr>
+                    <th data-checkbox="true"></th>
+                    <th data-field="colorName">
+                        颜色名称
+                    </th>
+                    <th data-field="colorRgb">
+                        颜色的RBG值
+                    </th>
+                    <th data-field="colorHex">
+                        颜色的16进制值
+                    </th>
+                    <th data-field="colorDes">
+                        颜色描述
+                    </th>
+                    <th data-field="colorStatus">
+                        颜色状态
+                    </th>
+                </tr>
             </thead>
         </table>
         <div id="toolbar" class="btn-group">
@@ -72,10 +58,10 @@
 </div>
 
 <%--添加窗口--%>
-<div class="modal fade" id="addWindow" aria-hidden="true" style="overflow:auto; ">
+<div class="modal fade" id="add" aria-hidden="true" style="overflow:auto; ">
     <div class="modal-dialog" style="width: 700px;height: auto;">
         <div class="modal-content" style="overflow:hidden;">
-            <form class="form-horizontal" role="form" onsubmit="return checkAdd()" id="showAddFormWar" method="post">
+            <form class="form-horizontal" id="showAddFormWar" method="post">
                 <div class="modal-header" style="overflow:auto;">
                     <h4>请填写汽车颜色的相关信息</h4>
                 </div>
@@ -89,7 +75,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">颜色的16进制值：</label>
                     <div class="col-sm-5" style="padding-right: 0px">
-                        <input name="colorHex" type="text" class="form-control addColor" data-control="hue" value="">
+                        <input id="addColor" name="colorHex" type="text" class="form-control" data-control="hue" value="">
                     </div>
                     <div class="col-sm-2" style="padding-left: 0px;">
                         <input type="button" class="btn btn-default" value="确认" onclick="showAddHex();">
@@ -98,7 +84,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">颜色的RGB值：</label>
                     <div class="col-sm-7">
-                        <input id="addrgbColor" type="text" placeholder="请选择颜色的RGB值" value="" class="form-control">
+                        <input id="addrgbColor" name="colorRgb" type="text" placeholder="请选择颜色的RGB值" value="" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
@@ -120,10 +106,12 @@
 </div><!-- /.modal -->
 
 <%--修改窗口--%>
-<div class="modal fade" id="editWindow" aria-hidden="true" style="overflow:auto; ">
+<div class="modal fade" id="edit" aria-hidden="true" style="overflow:auto; ">
     <div class="modal-dialog" style="width: 700px;height: auto;">
         <div class="modal-content" style="overflow:hidden;">
-            <form class="form-horizontal" role="form" onsubmit="return checkAdd()" id="showEditFormWar" method="post">
+            <form class="form-horizontal" id="showEditFormWar" method="post">
+                <input type="hidden" name="colorId" define="carColor.colorId">
+                <input type="hidden" name="colorStatus" define="carColor.colorStatus">
                 <div class="modal-header" style="overflow:auto;">
                     <h4>请填写汽车颜色的相关信息</h4>
                 </div>
@@ -138,7 +126,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">颜色的16进制值：</label>
                     <div class="col-sm-5" style="padding-right: 0px">
-                        <input name="colorHex" define="carColor.colorHex" type="text" class="form-control editColor" data-control="hue" value="">
+                        <input id="editColor" name="colorHex" define="carColor.colorHex" type="text" class="form-control" data-control="hue" value="">
                     </div>
                     <div class="col-sm-2" style="padding-left: 0px;">
                         <input type="button" class="btn btn-default" value="确认" onclick="showEditHex();">
@@ -147,7 +135,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">颜色的RGB值：</label>
                     <div class="col-sm-7">
-                        <input id="editrgbColor" define="carColor.colorRGB" type="text" placeholder="请选择颜色的RGB值" value="" class="form-control">
+                        <input id="editrgbColor" name="colorRgb" define="carColor.colorRgb" type="text" placeholder="请选择颜色的RGB值" value="" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
@@ -214,7 +202,10 @@
 <script src="/static/js/select2/select2.js"></script>
 <script src="/static/js/sweetalert/sweetalert.min.js"></script>
 <script src="/static/js/contextmenu.js"></script>
+<script src="/static/js/backstage/main.js"></script>
+<script src="/static/js/fileInput/fileinput.js"></script>
 <script src="/static/js/minicolors/jquery.minicolors.min.js"></script>
+<script src="/static/js/fileInput/zh.js"></script>
 <script src="/static/js/form/jquery.validate.js"></script>
 <script src="/static/js/backstage/basicInfoManage/carColor.js"></script>
 </body>
