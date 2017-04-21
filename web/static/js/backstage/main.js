@@ -1,3 +1,21 @@
+$(function () {
+});
+
+function initDateTimePicker(formId, field){
+    $(".datetimepicker").datetimepicker({
+        language: 'zh-CN',
+        format: 'yyyy-mm-dd hh:ii',
+        initialDate: new Date(),
+        autoclose: true,
+        todayHighligh:true,
+        todayBtn :true // 显示今日按钮
+    }).on('hide',function(e) {
+        $('#'+formId).data('bootstrapValidator')
+            .updateStatus(field, 'NOT_VALIDATED',null)
+            .validateField(field);
+    });
+}
+
 function initTable(tableId, url) {
     //先销毁表格
     $('#' + tableId).bootstrapTable('destroy');
@@ -10,7 +28,6 @@ function initTable(tableId, url) {
         pageSize: 10,  //每页显示的记录数
         pageNumber:1, //当前第几页
         pageList: [10, 15, 20, 25, 30],  //记录数可选列表
-        search: true,  //是否启用查询
         showColumns: true,  //显示下拉框勾选要显示的列
         showRefresh: true,  //显示刷新按钮
         showToggle: true, // 显示详情
@@ -48,7 +65,6 @@ function initTableNotTollbar(tableId, url) {
         pageSize: 10,  //每页显示的记录数
         pageNumber:1, //当前第几页
         pageList: [10, 15, 20, 25, 30],  //记录数可选列表
-        search: true,  //是否启用查询
         showColumns: true,  //显示下拉框勾选要显示的列
         showRefresh: true,  //显示刷新按钮
         showToggle: true, // 显示详情
@@ -75,7 +91,7 @@ function initTableNotTollbar(tableId, url) {
 
 // 获取当前时间
 function getDate(id){
-    $('#'+id).val((new Date()).toLocaleDateString() + " " + (new Date()).toLocaleTimeString());
+    $('#'+id).val(new Date());
 }
 
 /**
@@ -111,11 +127,17 @@ function formatterDate(value) {
         return year + "-" + month + "-" + day + " " + hour + ":" + minutes + ":" + seconds;
     }
 }
-
+// 当修改表单提交时, 按钮不可点击
 $("#editForm").submit(function(){
-    $(":submit",this).attr("disabled","disabled"); // 当修改表单提交时, 按钮不可点击
+    $(":submit",this).attr("disabled","disabled");
+});
+// 当添加表单提交时, 按钮不可点击
+$("#addForm").submit(function(){
+    $(":submit",this).attr("disabled","disabled");
 });
 
-$("#addForm").submit(function(){
-    $(":submit",this).attr("disabled","disabled");// 当添加表单提交时, 按钮不可点击
-});
+function onclikLi(lis) {
+    var button = $("#ulButton");
+    button.text($(lis).text());
+    button.append("<span class='caret'></span>");
+}

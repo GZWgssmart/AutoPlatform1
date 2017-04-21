@@ -41,6 +41,7 @@ function showPrint(){
     window.print();
 }
 
+
 $(document).ready(function() {
     // 手机号码验证
     jQuery.validator.addMethod("isPhone", function(value, element) {

@@ -44,6 +44,10 @@ public class Checkin {
 
     private String checkinStatus; //登记记录状态
 
+    private String ifClearCar; // 是否洗车
+
+    private Double nowOil; // 当前油量
+
     private CarBrand brand; // 汽车品牌
     private CarColor color; // 汽车颜色
     private CarModel model; // 汽车车型
@@ -240,6 +244,22 @@ public class Checkin {
 
     public void setCompany(Company company) {
         this.company = company;
+    }
+
+    public String getIfClearCar() {
+        return ifClearCar;
+    }
+
+    public void setIfClearCar(String ifClearCar) {
+        this.ifClearCar = ifClearCar;
+    }
+
+    public Double getNowOil() {
+        return nowOil;
+    }
+
+    public void setNowOil(Double nowOil) {
+        this.nowOil = nowOil;
     }
 
     @Override

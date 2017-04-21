@@ -163,8 +163,7 @@
 
         $("#addSelect").select2({
                 language: 'zh-CN'
-            }
-        );
+            });
 
         //绑定Ajax的内容
         $.getJSON("/table/queryType", function (data) {
