@@ -1,4 +1,7 @@
 $(function () {
+    initTable('table', '/carColor/queryByPagerCarColor'); // 初始化表格
+});
+$(function () {
     $('#table').bootstrapTable('hideColumn', 'colorId');
     //
     // $("#addSelect").select2({
@@ -26,9 +29,9 @@ function showEdit() {
 //                $('#editId').val(row[0].id);
 //                $('#editName').val(row[0].name);
 //                $('#editPrice').val(row[0].price);
-        $("#editWindow").modal('show'); // 显示弹窗
+        $("#edit").modal('show'); // 显示弹窗
         var ceshi = row[0];
-        $("#editForm").fill(ceshi);
+        $("#showEditFormWar").fill(ceshi);
     } else {
         swal({
             "title": "",
@@ -40,7 +43,7 @@ function showEdit() {
 
 function showAdd() {
 
-    $("#addWindow").modal('show');
+    $("#add").modal('show');
 }
 
 function formatRepo(repo) {
@@ -59,43 +62,9 @@ function showDel() {
     }
 }
 
-function checkAdd() {
-    var id = $('#addId').val();
-    var name = $('#addName').val();
-    var price = $('#addPrice').val();
-    var reslist = $("#addSelect").select2("data"); //获取多选的值
-    alert(reslist.length)
-    if (id != "" && name != "" && price != "") {
-        return true;
-    } else {
-        var error = document.getElementById("addError");
-        error.innerHTML = "请输入正确的数据";
-        return false;
-    }
-}
-
-function checkEdit() {
-    $.post("/table/edit",
-        $("#editForm").serialize(),
-        function (data) {
-            if (data.result == "success") {
-                $("#editWindow").modal('hide'); // 关闭指定的窗口
-                $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
-                swal({
-                    title: "",
-                    text: data.message,
-                    type: "success"
-                })// 提示窗口, 修改成功
-            } else if (data.result == "fail") {
-                //$.messager.alert("提示", data.result.message, "info");
-            }
-        }, "json"
-    );
-}
-
 //获取hex颜色值后转换成rgb颜色值后自动添加到rgb颜色框中
 function showAddHex() {
-    var a = document.getElementsByName("addColor")[0].value;
+    var a = document.getElementById("addColor").value;
     if (a.substr(0, 1) == "#") a = a.substring(1);
     if (a.length != 6)return alert("请输入正确的十六进制颜色码！")
     a = a.toLowerCase()
@@ -114,7 +83,7 @@ function showAddHex() {
 
 //获取hex颜色值后转换成rgb颜色值后自动添加到rgb颜色框中
 function showEditHex() {
-    var a = document.getElementsByName("editColor")[0].value;
+    var a = document.getElementById("editColor").value;
     if (a.substr(0, 1) == "#") a = a.substring(1);
     if (a.length != 6)return alert("请输入正确的十六进制颜色码！")
     a = a.toLowerCase()
@@ -127,8 +96,8 @@ function showEditHex() {
         b[20 + x] = b[3].indexOf(b[1]) * 16 + b[3].indexOf(b[2])
     }
     var rbgNumber = b[20] + "," + b[21] + "," + b[22];
-    var rgbColor = document.getElementById("editrgbColor");
-    rgbColor.value = rbgNumber;
+    var rgbColorinput = document.getElementById("editrgbColor");
+        rgbColorinput.value = rbgNumber;
 }
 
 
@@ -143,7 +112,7 @@ function getkey(e, n) {
 
 //颜色控件初始化
 $(document).ready(function () {
-    $('.addColor').each(function () {
+    $('#addColor').each(function () {
         $(this).minicolors({
             control: $(this).attr('data-control') || 'hue',
             defaultValue: $(this).attr('data-defaultValue') || '',
@@ -163,10 +132,11 @@ $(document).ready(function () {
         });
     });
 });
+
 
 //颜色控件初始化
 $(document).ready(function () {
-    $('.editColor').each(function () {
+    $('#editColor').each(function () {
         $(this).minicolors({
             control: $(this).attr('data-control') || 'hue',
             defaultValue: $(this).attr('data-defaultValue') || '',
@@ -186,7 +156,6 @@ $(document).ready(function () {
         });
     });
 });
-
 //前端验证
 $(document).ready(function () {
     $("#showAddFormWar").validate({
@@ -227,8 +196,26 @@ $(document).ready(function () {
             label.closest('.form-group').removeClass('has-error').addClass("has-feedback has-success");
             label.remove();
         },
-        submitHandler: function (form) {
-            alert("submitted!");
+        submitHandler: function(form) {
+            $.post("/carColor/addCarColor",
+                $("#showAddFormWar").serialize(),
+                function (data) {
+                    if (data.result == "success") {
+                        $("#add").modal('hide'); // 关闭指定的窗口
+                        $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
+                        swal({
+                            title:"",
+                            text: data.message,
+                            confirmButtonText:"确定", // 提示按钮上的文本
+                            type:"success"})// 提示窗口, 修改成功
+                    } else if (data.result == "fail") {
+                        swal({title:"",
+                            text:"添加失败",
+                            confirmButtonText:"确认",
+                            type:"error"})
+                    }
+                }, "json"
+            );
         }
     })
     $("#showEditFormWar").validate({
@@ -269,8 +256,27 @@ $(document).ready(function () {
             label.closest('.form-group').removeClass('has-error').addClass("has-feedback has-success");
             label.remove();
         },
-        submitHandler: function (form) {
-            alert("submitted!");
+        submitHandler: function(form) {
+            $.post("/carColor/updateCarColor",
+                $("#showEditFormWar").serialize(),
+                function (data) {
+                    if (data.result == "success") {
+                        $("#edit").modal('hide'); // 关闭指定的窗口
+                        $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
+                        swal({
+                            title:"",
+                            text: data.message,
+                            confirmButtonText:"确定", // 提示按钮上的文本
+                            type:"success"})// 提示窗口, 修改成功
+                    } else if (data.result == "fail") {
+                        swal({title:"",
+                            text:"修改失败",
+                            confirmButtonText:"确认",
+                            type:"error"})
+                    }
+                }, "json"
+            );
         }
+
     })
 });
