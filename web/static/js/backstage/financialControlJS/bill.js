@@ -1,58 +1,85 @@
+
+/**
+ * 初始化表格
+ */
 $(function () {
-    $('#table').bootstrapTable('hideColumn', 'id');
-
-    $("#addSelect").select2({
-            language: 'zh-CN'
-        }
-    );
-
-    //绑定Ajax的内容
-    $.getJSON("/table/queryType", function (data) {
-        $("#addSelect").empty();//清空下拉框
-        $.each(data, function (i, item) {
-            $("#addSelect").append("<option value='" + data[i].id + "'>&nbsp;" + data[i].name + "</option>");
-        });
-    })
-    //            $("#addSelect").on("select2:select",
-    //                    function (e) {
-    //                        alert(e)
-    //                        alert("select2:select", e);
-    //            });
+    initTable("table", "/chargeBill/queryByPager"); // 初始化表格
 });
 
-function formatRepo(repo) {
-    return repo.text
-}
-function formatRepoSelection(repo) {
-    return repo.text
-}
 
-function showDel(){
-    var row =  $('table').bootstrapTable('getSelections');
-    if(row.length >0) {
-        $("#del").modal('show');
-    }else{
-        swal({
-            title:"",
-            text:"请先选择一行数据",
-            type:"warning"})
+/**
+ * 禁用激活
+ * @param index
+ * @param row
+ * @returns {*}
+ */
+function statusFormatter(value) {
+    /*处理数据*/
+    if (value == 'Y') {
+        return "&nbsp;&nbsp;激活";
+    } else {
+        return "&nbsp;&nbsp;禁用";
     }
+
 }
 
-function checkEdit() {
-    $.post("/table/edit",
-        $("#editForm").serialize(),
+/**
+ * 操作禁用激活
+ * @param index
+ * @param row
+ * @returns {string}
+ */
+function openStatusFormatter(value, row) {
+    /*处理数据*/
+    if (value == 'Y') {
+        return "&nbsp;&nbsp;<a href='javascript:;' onclick='inactive(\"" + row.chargeBillId + "\")'>禁用</a>";
+    } else {
+        return "&nbsp;&nbsp;<a href='javascript:;' onclick='active(\"" + row.chargeBillId + "\")'>激活</a>";
+    }
+
+}
+
+
+/**
+ * 禁用支出类型
+ * @param id
+ */
+function inactive(id) {
+    $.post("/chargeBill/inactive?id=" + id,
         function (data) {
             if (data.result == "success") {
-                $("#edit").modal('hide'); // 关闭指定的窗口
                 $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
-                swal({
-                    title:"",
-                    text: data.message,
-                    type:"success"})// 提示窗口, 修改成功
-            } else if (data.result == "fail") {
-                //$.messager.alert("提示", data.result.message, "info");
             }
-        }, "json"
-    );
+        })
 }
+
+
+/**
+ * 激活支出类型
+ * @param id
+ */
+function active(id) {
+    $.post("/chargeBill/active?id=" + id,
+        function (data) {
+            if (data.result == "success") {
+                $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
+            }
+        })
+}
+
+/**
+ * 查询禁用支出类型
+ * @param id
+ */
+function searchDisableStatus() {
+    initTable('table', '/chargeBill/queryByPagerDisable');
+}
+
+/**
+ * 查询激活支出类型
+ * @param id
+ */
+function searchRapidStatus() {
+    initTable('table', '/chargeBill/queryByPager');
+}
+

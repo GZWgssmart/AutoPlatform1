@@ -24,6 +24,16 @@ public class ChargeBill {
 
     private String chargeBillStatus; //收费状态
 
+    private MaintainRecord maintainRecord;
+
+    public MaintainRecord getMaintainRecord() {
+        return maintainRecord;
+    }
+
+    public void setMaintainRecord(MaintainRecord maintainRecord) {
+        this.maintainRecord = maintainRecord;
+    }
+
     public String getChargeBillId() {
         return chargeBillId;
     }

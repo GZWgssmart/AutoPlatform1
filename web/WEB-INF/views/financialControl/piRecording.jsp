@@ -87,6 +87,7 @@
         <div class="modal-content" >
             <div class="container" style="width: 80%;">
                 <form class="form-horizontal" id="addOutForm" method="post">
+                    <input type="reset" name="reset" style="display: none;" />
                     <div class="modal-header" style="overflow:auto;">
                         <h4>其它支出添加</h4>
                     </div>
@@ -281,6 +282,7 @@
         <div class="modal-content" >
             <div class="container" style="width: 80%;">
                 <form class="form-horizontal"  id="addInForm" method="post">
+                    <input type="reset" name="reset" style="display: none;" />
                     <div class="modal-header" style="overflow:auto;">
                         <h4>其它收入添加</h4>
                     </div>
@@ -435,6 +437,7 @@
         <div class="modal-content">
             <div class="container" style="width: 80%;">
                 <form class="form-horizontal" role="form"  id="editIOForm" method="post">
+                    <input type="reset" name="reset" style="display: none;" />
                     <input  type="hidden" define="io.inOutId" name="inOutId">
                     <div class="modal-header" style="overflow:auto;">
                         <p>修改收支记录</p>

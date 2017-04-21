@@ -160,6 +160,7 @@ function openCheckOutType() {
 
 /** 关闭支出类型 */
 function closeOutTypeWin() {
+    $("input[type=reset]").trigger("click");
     $("#outWin").modal('hide');
     $("#addOutWin").modal('show')
 }
@@ -190,6 +191,7 @@ function checkAppointment() {
 
 /** 关闭人员管理窗口 */
 function closePersonnelWin() {
+    $("input[type=reset]").trigger("click");
     $("#personnelWin").modal('hide');
     $("#add").modal('show')
 }
@@ -220,6 +222,7 @@ function inOpenCheckInType() {
 
 /** 关闭收入类型 */
 function inCloseInTypeWin() {
+    $("input[type=reset]").trigger("click");
     $("#inWin").modal('hide');
     $("#addInWin").modal('show')
 }
@@ -252,6 +255,7 @@ function inCheckAppointment() {
 
 /** 关闭人员管理窗口 */
 function inClosePersonnelWin() {
+    $("input[type=reset]").trigger("click");
     $("#inPersonnelWin").modal('hide');
     $("#addInWin").modal('show')
 }
@@ -285,6 +289,7 @@ function updateOpenCheckOutType() {
 
 /** 关闭支出类型 */
 function updateCloseOutTypeWin() {
+    $("input[type=reset]").trigger("click");
     $("#updateOutWin").modal('hide');
     $("#editIOWin").modal('show')
 }
@@ -316,6 +321,7 @@ function updateCheckAppointment() {
 
 /** 关闭人员管理窗口 */
 function updateClosePersonnelWin() {
+    $("input[type=reset]").trigger("click");
     $("#updatePersonnelWin").modal('hide');
     $("#editIOWin").modal('show')
 }
@@ -345,6 +351,7 @@ function updateInOpenCheckInType() {
 
 /** 关闭收入类型 */
 function updateInCloseInTypeWin() {
+    $("input[type=reset]").trigger("click");
     $("#updateInWin").modal('hide');
     $("#editIOWin").modal('show')
 }
@@ -426,6 +433,7 @@ $(document).ready(function () {
                 $("#addOutForm").serialize(),
                 function (data) {
                     if (data.result == "success") {
+                        $("input[type=reset]").trigger("click");
                         $("#addOutWin").modal('hide'); // 关闭指定的窗口
                         $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
                         swal({
@@ -503,6 +511,7 @@ $(document).ready(function () {
                 $("#addInForm").serialize(),
                 function (data) {
                     if (data.result == "success") {
+                        $("input[type=reset]").trigger("click");
                         $("#addInWin").modal('hide'); // 关闭指定的窗口
                         $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
                         swal({
@@ -581,6 +590,7 @@ $(document).ready(function () {
                 $("#editIOForm").serialize(),
                 function (data) {
                     if (data.result == "success") {
+                        $("input[type=reset]").trigger("click");
                         $("#editIOWin").modal('hide'); // 关闭指定的窗口
                         $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
                         swal({

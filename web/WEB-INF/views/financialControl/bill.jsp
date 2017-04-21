@@ -31,44 +31,30 @@
                     <%-- 汽修店维修保养的收费单据统一在此处管理，只支持查看，不支持修改 --%>
                     <%-- 当汽车维修保养结束后，由汽修店员工确认结束，一旦确认则系统自动根据维修保养明细和维修保养单据生成收费单据 --%>
                     <th data-radio="true" data-field="status"></th>
-                    <th data-field="recordDes">维修保养记录描述</th>
-                    <th data-field="billMoney">收费总金额</th>
+                    <th data-field="maintainRecordId">维修保养记录编号</th>
+                    <th data-field="chargeBillMoney">收费总金额</th>
                     <th data-field="paymentMethod">付款方式</th>
                     <th data-field="actualPayment">实付款</th>
                     <th data-field="chargeTime">收费时间</th>
-                    <th data-field="chargeCreateTime">收费单据创建时间</th>
-                    <th data-field="billDes">收费单据描述</th>
-                    <th data-field="billStatus">收费状态</th>
+                    <th data-field="chargeCreatedTime">收费单据创建时间</th>
+                    <th data-field="chargeBillDes">收费单据描述</th>
+                    <th data-field="chargeBillStatus"data-formatter="statusFormatter">收费状态</th>
+                        <th data-field="chargeBillStatus" data-formatter="openStatusFormatter">操作</th>
                 </tr>
             </thead>
         </table>
         <div id="toolbar" class="btn-group">
-            <button id="btn_delete" type="button" class="btn btn-default" onclick="showDel();">
-                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
+            <button id="searchDisable" type="button" class="btn btn-default" onclick="searchDisableStatus();">
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询禁用类型
+            </button>
+            <button id="searchRapid" type="button" class="btn btn-default" onclick="searchRapidStatus();">
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询激活类型
             </button>
         </div>
+
     </div>
 </div>
 
-<!-- 删除弹窗 -->
-<div class="modal fade" id="del" aria-hidden="true">
-    <div class="modal-dialog" style="overflow:hidden;">
-        <form action="/table/edit" method="post">
-            <div class="modal-content">
-                <input type="hidden" id="delNoticeId"/>
-                <div class="modal-footer" style="text-align: center;">
-                    <h2>确认删除吗?</h2>
-                    <button type="button" class="btn btn-default"
-                            data-dismiss="modal">关闭
-                    </button>
-                    <button type="sumbit" class="btn btn-primary" onclick="del()">
-                        确认
-                    </button>
-                </div>
-            </div><!-- /.modal-content -->
-        </form>
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
 
 <!-- 提示弹窗 -->
 <div class="modal fade" id="tanchuang" aria-hidden="true">
@@ -102,6 +88,7 @@
 <script src="/static/js/bootstrap-select/bootstrap-select.js"></script>
 <script src="/static/js/form/jquery.validate.js"></script>
 <script src="/static/js/form/form.js"></script>
+<script src="/static/js/backstage/main.js"></script>
 
 </body>
 </html>

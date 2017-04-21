@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.gs.dao.ChargeBillDAO" >
-  <resultMap id="BaseResultMap" type="com.gs.bean.ChargeBill" >
+  <resultMap id="chargeBillMap" type="com.gs.bean.ChargeBill" >
     <id column="chargeBillId" property="chargeBillId" jdbcType="VARCHAR" />
     <result column="maintainRecordId" property="maintainRecordId" jdbcType="VARCHAR" />
     <result column="chargeBillMoney" property="chargeBillMoney" jdbcType="DOUBLE" />
@@ -11,6 +11,59 @@
     <result column="chargeCreatedTime" property="chargeCreatedTime" jdbcType="TIMESTAMP" />
     <result column="chargeBillDes" property="chargeBillDes" jdbcType="VARCHAR" />
     <result column="chargeBillStatus" property="chargeBillStatus" jdbcType="VARCHAR" />
+
+    <association property="maintainRecord" javaType="com.gs.bean.MaintainRecord">
+      <id column="record_id" property="recordId"/>
+    </association>
+
   </resultMap>
+
+  <select id="count" resultType="int" >
+    <![CDATA[
+      select count(*) from t_charge_bill c where c.chargeBillStatus = 'Y'
+    ]]>
+  </select>
+
+  <select id="queryByPager" resultMap="chargeBillMap" parameterType="com.gs.common.bean.Pager">
+    <![CDATA[
+      select c.*, m.recordId as record_id from t_charge_bill c, t_maintain_record m where c.maintainRecordId = m.recordId and c.chargeBillStatus = 'Y'
+    ]]>
+    limit #{beginIndex}, #{pageSize}
+  </select>
+
+  <select id="countByDisable" resultType="int" >
+    <![CDATA[
+        select count(*) from t_charge_bill c where c.chargeBillStatus = 'N'
+    ]]>
+  </select>
+
+  <select id="queryByPagerDisable" resultMap="chargeBillMap" parameterType="com.gs.common.bean.Pager">
+    <![CDATA[
+         select c.*, m.recordId as maintain_id from t_charge_bill c, t_maintain_record m where c.maintainRecordId = m.recordId and c.chargeBillStatus = 'N'
+    ]]>
+    limit #{beginIndex}, #{pageSize}
+  </select>
+
+
+  <insert id="insert" useGeneratedKeys="true" keyProperty="chargeBillId" parameterType="chargeBill">
+    <![CDATA[
+        insert into t_charge_bill(chargeBillId, maintainRecordId, chargeBillMoney,paymentMethod,actualPayment,chargeTime,chargeCreatedTime,chargeBillDes,chargeBillStatus)
+        values(uuid(), #{maintainRecordId}, #{chargeBillMoney}, #{paymentMethod},#{actualPayment},#{chargeTime}, #{chargeCreatedTime}, #{chargeBillDes}, #{chargeBillStatus})
+        ]]>
+  </insert>
+
+  <!--冻结数据-->
+  <update id="inactive" keyProperty="chargeBillId" parameterType="chargeBill">
+    <![CDATA[
+        update t_charge_bill set chargeBillStatus = 'N' where chargeBillId = #{chargeBillId}
+        ]]>
+  </update>
+
+  <!--激活数据-->
+  <update id="active" keyProperty="chargeBillId" parameterType="chargeBill">
+    <![CDATA[
+        update t_charge_bill set chargeBillStatus = 'Y' where chargeBillId = #{chargeBillId}
+        ]]>
+  </update>
 
 </mapper>
