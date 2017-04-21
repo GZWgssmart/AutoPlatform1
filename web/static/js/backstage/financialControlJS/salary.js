@@ -47,17 +47,6 @@ function showAdd(){
     $("input[type=reset]").trigger("click");
     $("#add").modal('show');
 }
-function showDel(){
-    var row =  $('table').bootstrapTable('getSelections');
-    if(row.length >0) {
-        $("#del").modal('show');
-    }else{
-        swal({
-            title:"",
-            text:"请先选择一行数据",
-            type:"warning"})
-    }
-}
 
 /** 选择人员 */
 function checkAppointment() {
