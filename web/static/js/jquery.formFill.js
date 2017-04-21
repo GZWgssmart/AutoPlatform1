@@ -91,6 +91,10 @@
 									}
 									break;
 
+                                case "number":
+                                    $(item).val(value);
+                                    break;
+
 								case "select-one":
 									if (value) {
 										$(item).val(value);

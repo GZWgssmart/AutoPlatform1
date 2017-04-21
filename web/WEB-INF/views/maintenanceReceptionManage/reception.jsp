@@ -22,10 +22,10 @@
     <div class="panel-body" style="padding-bottom:0px;"  >
         <!--show-refredata-single-sesh, show-toggle的样式可以在bootstrap-table.js的948行修改-->
         <!-- table里的所有属性在bootstrap-table.js的240行-->
-        <table id="table" >
+        <table id="table">
             <thead>
             <tr>
-                <th data-checkbox="true"></th>
+                <th data-radio="true"></th>
                 <th data-field="userName">
                     车主姓名
                 </th>
@@ -109,13 +109,12 @@
             <button id="btn_edit" type="button" class="btn btn-default" onclick="showEdit();">
                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
             </button>
-            <div class="input-group" style="width:300px;float:left;padding:0;margin:0 0 0 -1px;">
+            <div class="input-group" style="width:350px;float:left;padding:0;margin:0 0 0 -1px;">
                 <div class="input-group-btn">
-                    <button type="button" id="ulButton" class="btn btn-default" style="border-radius:0px;" data-toggle="dropdown">
-                        根据条件查询
-                        <span class="caret"></span>
-                    </button>
+                    <button type="button" id="ulButton" class="btn btn-default" style="border-radius:0px;" data-toggle="dropdown">车主/汽车公司/汽车车牌<span class="caret"></span></button>
                     <ul class="dropdown-menu pull-right">
+                        <li><a onclick="onclikLi(this)">车主/汽车公司/汽车车牌</a></li>
+                        <li class="divider"></li>
                         <li><a onclick="onclikLi(this)">车主</a></li>
                         <li class="divider"></li>
                         <li><a onclick="onclikLi(this)">汽车公司</a></li>
@@ -123,7 +122,7 @@
                         <li><a onclick="onclikLi(this)">汽车车牌</a></li>
                     </ul>
                 </div><!-- /btn-group -->
-                <input type="text" id="ulInput" class="form-control" >
+                <input id="ulInput" class="form-control" onkeypress="if(event.keyCode==13) {blurredQuery();}">
                     <a href="javaScript:;" onclick="blurredQuery()"><span class="glyphicon glyphicon-search search-style"></span></a>
                 </input>
             </div><!-- /input-group -->
@@ -133,7 +132,7 @@
 
 
 
-<div id="addWindow" class="modal fade" style="overflow:scroll" data-backdrop="static" >
+<div id="addWindow" class="modal fade" style="overflow-y:scroll" data-backdrop="static" >
     <div class="modal-dialog">
         <div class="modal-content">
                         <form role="form" class="form-horizontal" id="addForm">
@@ -171,87 +170,87 @@
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">车主姓名：</label>
                                 <div class="col-sm-7">
-                                    <input type="text" id="addUserName" name="userName" class="form-control"/>
+                                    <input type="text" id="addUserName" placeholder="请输入车主姓名" name="userName" class="form-control"/>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">车主电话：</label>
                                 <div class="col-sm-7">
-                                    <input type="number" id="addUserPhone" name="userPhone" class="form-control" style="width:100%"/>
+                                    <input type="number" id="addUserPhone" placeholder="请输入车主电话" name="userPhone" class="form-control" style="width:100%"/>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">汽车品牌：</label>
                                 <div class="col-sm-7">
-                                <select id="addCarBrand" class="js-example-tags" name="brandId" style="width:100%">
+                                <select id="addCarBrand" class="js-example-tags carBrand" name="brandId" style="width:100%">
                                 </select>
+                                </div>
+                            </div>
+                            <div id="addModelDiv" style="display: none" class="form-group">
+                                <label class="col-sm-3 control-label">汽车车型：</label>
+                                <div class="col-sm-7">
+                                    <select id="addCarModel" class="js-example-tags carModel" name="modelId" style="width:100%">
+                                    </select>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">汽车颜色：</label>
                                 <div class="col-sm-7">
-                                <select id="addCarColor" class="js-example-tags" name="colorId" style="width:100%">
-                                </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">汽车车型：</label>
-                                <div class="col-sm-7">
-                                <select id="addCarModel" class="js-example-tags" name="modelId" style="width:100%">
+                                <select id="addCarColor" class="js-example-tags carColor" name="colorId" style="width:100%">
                                 </select>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">汽车车牌：</label>
                                 <div class="col-sm-7">
-                                <select id="addCarPlate" class="js-example-tags" name="plateId" style="width:100%">
+                                <select id="addCarPlate" class="js-example-tags carPlate" name="plateId" style="width:100%">
                                 </select>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">车牌号码：</label>
                                 <div class="col-sm-7">
-                                <input type="text" name="carPlate" class="form-control"/>
+                                <input type="text" name="carPlate" placeholder="请输入车牌号码" class="form-control"/>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">到店时间：</label>
                                 <div class="col-sm-7">     <!-- 当设置不可编辑后, 会修改颜色, 在min.css里搜索.form-control{background-color:#eee;opacity:1} -->
-                                <input id="addDatetimepicker" onclick="getDate('addDatetimepicker')" readonly="true" type="text" name="arriveTime"
+                                <input id="addDatetimepicker" placeholder="请选择到店时间" onclick="getDate('addDatetimepicker')" readonly="true" type="text" name="arriveTime"
                                        class="form-control datetimepicker"/>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">汽车行驶里程：</label>
                                 <div class="col-sm-7">
-                                <input type="number" name="carMileage" class="form-control" style="width:100%"/>
+                                <input type="number" name="carMileage" placeholder="请输入汽车行驶里程" class="form-control" style="width:100%"/>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">汽车当前油量：</label>
                                 <div class="col-sm-7">
-                                <input type="number" name="nowOil" class="form-control" style="width:100%"/>
+                                <input type="number" name="nowOil" placeholder="请输入汽车当前油量" class="form-control" style="width:100%"/>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">车上物品描述：</label>
                                 <div class="col-sm-7">
-                                <textarea class="form-control" name="carThings"
+                                <textarea class="form-control" placeholder="请输入车上物品描述" name="carThings"
                                           rows="3" maxlength="500"></textarea>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">汽车完好度描述：</label>
                                 <div class="col-sm-7">
-                                <textarea class="form-control" name="intactDegrees"
+                                <textarea class="form-control" placeholder="请输入汽车完好度描述" name="intactDegrees"
                                           rows="3" maxlength="500"></textarea>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">用户要求描述：</label>
                                 <div class="col-sm-7">
-                                <textarea class="form-control" name="userRequests"
+                                <textarea class="form-control" placeholder="请输入用户要求描述" name="userRequests"
                                           rows="3" maxlength="500"></textarea>
                                 </div>
                             </div>
@@ -266,129 +265,132 @@
                             </div>
                         </form>
                     </div>
-
                 </div>
 </div>
 
 
 <!-- 修改弹窗 -->
-<div class="modal fade" id="editWindow" aria-hidden="true" data-backdrop="static">
+<div class="modal fade" id="editWindow" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form class="form-horizontal" id="editForm" method="post" onclick="return checkEdit('table/edit');">
+            <form role="form" class="form-horizontal" id="editForm">
                 <div class="modal-header" style="overflow:auto;">
-                    <h4>被接待的车主信息修改</h4>
+                    <h4>修改登记记录信息</h4>
                 </div>
-                <br/>
+                <input type="hidden" define="checkin.checkinId" name="checkinId" class="form-control"/>
+                <input type="hidden" define="checkin.userId" name="userId" class="form-control"/>
+                <input type="hidden" define="checkin.appointmentId" name="appointmentId" class="form-control"/>
                 <div class="form-group">
-                    <label class="col-sm-5 control-label">车主名字：</label>
+                    <label class="col-sm-3 control-label">保养&nbsp;|&nbsp;维修：</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="请输入车主姓名" class="form-control">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-5 control-label">车主E-Mail</label>
-                    <div class="col-sm-7">
-                        <input type="email" placeholder="请输入车主E-Mail" class="form-control">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-5 control-label">车主车牌号</label>
-                    <div class="col-sm-7">
-                        <input type="number" placeholder="请输入车主车牌号" class="form-control">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-5 control-label">车主手机号</label>
-                    <div class="col-sm-7">
-                        <input type="number" placeholder="请输入车主手机号" class="form-control" maxlength="11">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-5 control-label">车的品牌：</label>
-                    <div class="col-sm-7">
-                        <select>
-                            <option>请选择品牌</option>
-                            <option>品牌一</option>
-                            <option>品牌二</option>
+                        <select id="editMaintainOrFix" define="checkin.maintainOrFix" class="js-example-tags form-control" name="maintainOrFix">
+                            <option value="保养">保养</option>
+                            <option value="维修">维修</option>
                         </select>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-5 control-label">车的颜色：</label>
+                    <label class="col-sm-3 control-label">是否洗车：</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="请输入车的颜色" class="form-control">
+                        <select class="js-example-tags form-control" define="checkin.ifClearCar" name="ifClearCar">
+                            <option value="N">否</option>
+                            <option value="Y">是</option>
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-5 control-label">车型：</label>
+                    <label class="col-sm-3 control-label">车主姓名：</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="请输入车型" class="form-control">
+                        <input type="text" name="userName" placeholder="车主姓名" define="checkin.userName" class="form-control"/>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-5 control-label">车主到店时间：</label>
+                    <label class="col-sm-3 control-label">车主电话：</label>
                     <div class="col-sm-7">
-                        <input type="date" id="editArriveTime" onclick="getDate('editArriveTime')" class="form-control">
+                        <input type="number" name="userPhone" placeholder="车主电话" define="checkin.userPhone" class="form-control" style="width:100%"/>
+                    </div>
+                </div>
+
+                <div id="editModelDiv" class="form-group">
+                    <label class="col-sm-3 control-label">汽车品牌：</label>
+                    <div class="col-sm-7">
+                        <select id="editCarBrand" class="js-example-tags carBrand" define="checkin.brandId" name="brandId" style="width:100%">
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-5 control-label">汽车行驶里程：</label>
+                    <label class="col-sm-3 control-label">汽车车型：</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="请输入汽车行驶里程" class="form-control">
+                        <select id="editCarModel" class="js-example-tags carModel" define="checkin.modelId" name="modelId" style="width:100%">
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-5 control-label">车身完好度：</label>
+                    <label class="col-sm-3 control-label">汽车颜色：</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="请输入车身完好度" class="form-control">
+                        <select id="editCarColor" class="js-example-tags carColor" define="checkin.colorId" name="colorId" style="width:100%">
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-5 control-label">汽修公司名称：</label>
+                    <label class="col-sm-3 control-label">汽车车牌：</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="请输入汽修公司名称" class="form-control">
+                        <select id="editCarPlate" class="js-example-tags carPlate" define="checkin.plateId" name="plateId" style="width:100%">
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">当前油量</label>
+                    <label class="col-sm-3 control-label">车牌号码：</label>
                     <div class="col-sm-7">
-                        <input type="number" placeholder="请输入车主当前油量" class="form-control">
+                        <input type="text" name="carPlate" placeholder="车牌号码" define="checkin.carPlate" class="form-control"/>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-5 control-label">登记时间：</label>
-                    <div class="col-sm-7">
-                        <input type="date" id="editCheckinCreatedTime" onclick="getDate('editCheckinCreatedTime')" class="form-control">
+                    <label class="col-sm-3 control-label">到店时间：</label>
+                    <div class="col-sm-7">     <!-- 当设置不可编辑后, 会修改颜色, 在min.css里搜索.form-control{background-color:#eee;opacity:1} -->
+                        <input id="editDatetimepicker" placeholder="请选择到店时间" readonly="true" type="text" name="arriveTime"
+                               class="form-control datetimepicker"/>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">车内物品：</label>
+                    <label class="col-sm-3 control-label">汽车行驶里程：</label>
                     <div class="col-sm-7">
-                            <textarea type="text" placeholder="请输入车内物品" style="height: 50px;"
-                                      class="form-control"></textarea>
+                        <input type="number" name="carMileage" placeholder="请输入汽车行驶里程" define="checkin.carMileage" class="form-control" style="width:100%"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">汽车当前油量：</label>
+                    <div class="col-sm-7">
+                        <input type="number" name="nowOil" placeholder="请输入汽车当前油量" define="checkin.nowOil" class="form-control" style="width:100%"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">车上物品描述：</label>
+                    <div class="col-sm-7">
+                                <textarea type="textarea" class="form-control" placeholder="请输入车上物品描述" define="checkin.carThings" name="carThings"
+                                          rows="3" maxlength="500"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">汽车完好度描述：</label>
+                    <div class="col-sm-7">
+                                <textarea type="textarea" class="form-control" placeholder="请输入汽车完好度描述" define="checkin.intactDegrees" name="intactDegrees"
+                                          rows="3" maxlength="500"></textarea>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">用户要求描述：</label>
                     <div class="col-sm-7">
-                            <textarea type="text" placeholder="请输入用户要求描述" style="height: 50px;"
-                                      class="form-control"></textarea>
+                                <textarea type="textarea" class="form-control" placeholder="请输入用户要求描述" define="checkin.userRequests" name="userRequests"
+                                          rows="3" maxlength="500"></textarea>
                     </div>
                 </div>
-                <%-- 注: 暂时先这么写，颜色是选择不是输入,看到这句说明你要更改这部分 --%>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">车的颜色：</label>
-                    <div class="col-sm-7">
-                        <textarea type="text" placeholder="请输入车的颜色" style="height: 50px;"
-                                  class="form-control"></textarea>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-offset-8">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button id="editButton" onclick="editSubmit()" class="btn btn-sm btn-success" type="button">保 存</button>
-                    </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default"
+                            data-dismiss="modal">关闭
+                    </button>
+                    <button id="editButton" type="button" onclick="editSubmit()" class="btn btn-primary">保存
+                    </button>
                 </div>
             </form>
         </div><!-- /.modal-content -->

@@ -11,12 +11,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -76,6 +74,18 @@ public class CheckinController {
     }
 
     @ResponseBody
+    @RequestMapping(value = "edit", method = RequestMethod.POST)
+    public ControllerResult editCheckin(Checkin checkin) {
+        logger.info("修改登记记录");
+        checkin.setCompanyId("c515f5d623e011e7a97af832e40312b3");
+        checkinService.update(checkin);
+        return ControllerResult.getSuccessResult("修改成功");
+    }
+
+    /**
+     * 禁用
+     */
+    @ResponseBody
     @RequestMapping(value = "inactive",method = RequestMethod.POST)
     public ControllerResult inactive(String id) {
         logger.info("禁用");
@@ -87,6 +97,9 @@ public class CheckinController {
         }
     }
 
+    /**
+     * 激活
+     */
     @ResponseBody
     @RequestMapping(value = "active",method = RequestMethod.POST)
     public ControllerResult active(String id) {
@@ -99,6 +112,39 @@ public class CheckinController {
         }
     }
 
+    /**
+     * 登记记录模糊查询
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value="blurredQuery", method = RequestMethod.GET)
+    public Pager4EasyUI<Checkin> blurredQuery(HttpServletRequest request, @Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
+        logger.info("登记记录模糊查询");
+        String column = request.getParameter("column");
+        String value = request.getParameter("value");
+        if(column != null && value != null) {
+            Pager pager = new Pager();
+            pager.setPageNo(Integer.valueOf(pageNumber));
+            pager.setPageSize(Integer.valueOf(pageSize));
+            pager.setTotalRecords(checkinService.countByBlurred());
+            List<Checkin> checkins;
+            if(column.equals("all")){
+                String column1 = "userName";
+                String column2 = "companyId";
+                String column3 = "plateId";
+                checkins = checkinService.blurredQuery(pager, column, value);
+            }else{
+                checkins = checkinService.blurredQuery(pager, column, value);
+            }
+            return new Pager4EasyUI<Checkin>(pager.getTotalRecords(), checkins);
+        }else{
+            return null;
+        }
+    }
+
+    /**
+     * 时间格式化
+     */
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");

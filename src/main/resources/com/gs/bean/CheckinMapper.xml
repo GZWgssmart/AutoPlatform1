@@ -82,6 +82,15 @@
 		]]>
   </insert>
 
+  <update id="update" parameterType="checkin">
+    <![CDATA[
+			update t_checkin set userId = #{userId}, appointmentId = #{appointmentId}, userName = #{userName}, userPhone = #{userPhone},
+				brandId = #{brandId}, colorId = #{colorId}, modelId = #{modelId}, plateId = #{plateId}, carPlate = #{carPlate},
+				arriveTime = #{arriveTime}, carMileage = #{carMileage}, carThings = #{carThings}, intactDegrees = #{intactDegrees}, userRequests = #{userRequests},
+				maintainOrFix = #{maintainOrFix}, checkinCreatedTime = now(), companyId = #{companyId}, checkinStatus = 'Y', ifClearCar = #{ifClearCar}, nowOil = #{nowOil} where checkinId = #{checkinId}
+		]]>
+  </update>
+
   <select id="queryByPagerDisable" resultMap="checkinMap" parameterType="com.gs.common.bean.Pager">
     <![CDATA[
        select ck.*, cc.colorId, cc.colorName, cp.plateId, cp.plateName,

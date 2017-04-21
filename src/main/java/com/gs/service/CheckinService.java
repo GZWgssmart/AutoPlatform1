@@ -18,7 +18,16 @@ public interface CheckinService extends BaseService<String, Checkin>{
      */
     public List<Checkin> queryByPagerDisable(Pager pager);
     /**
-     * 分页查询被禁用的记录
+     * 分页查询被禁用的记录数
      */
     public int countByDisable();
+
+    /**
+     * 模糊查询
+     */
+    public List<Checkin> blurredQuery(Pager pager,String cloumn, String value);
+    /**
+     * 模糊查询的记录数
+     */
+    public int countByBlurred();
 }

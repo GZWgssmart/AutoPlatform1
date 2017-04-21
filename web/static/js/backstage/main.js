@@ -136,8 +136,33 @@ $("#addForm").submit(function(){
     $(":submit",this).attr("disabled","disabled");
 });
 
+//模糊查询li点击事件
 function onclikLi(lis) {
     var button = $("#ulButton");
     button.text($(lis).text());
     button.append("<span class='caret'></span>");
+}
+
+function initSelect2(clazz, title, url) {
+    $("." + clazz).select2({
+        // enable tagging
+        tags: true,
+        language: 'zh-CN',
+        minimumResultsForSearch: -1,
+        placeholder: title,
+        ajax: {
+            url: url,
+            processResults: function (data, page) {
+                var parsed = data;
+                var arr = [];
+                for(var x in parsed){
+                    arr.push(parsed[x]);
+                }
+                return {
+                    results: arr
+                };
+            }
+        },
+
+    });
 }
