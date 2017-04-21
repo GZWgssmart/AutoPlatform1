@@ -31,19 +31,19 @@
                 <th data-field="userPhone">
                     车主电话
                 </th>
-                <th data-field="brandName">
+                <th data-field="brandId">
                     汽车品牌
                 </th>
-                <th data-field="colorName">
+                <th data-field="colorId">
                     汽车颜色
                 </th>
-                <th data-field="model.modelName">
+                <th data-field="modelId">
                     汽车车型
                 </th>
-                <th data-field="plateName">
+                <th data-field="carPlate">
                     汽车车牌
                 </th>
-                <th data-field="carPlate">
+                <th data-field="plateId">
                     车牌号码
                 </th>
                 <th data-field="arriveTime" data-formatter="formatterDate">
@@ -55,7 +55,7 @@
                 <th data-hide="all" data-field="appCreatedTime" data-formatter="formatterDate">
                     登记时间
                 </th>
-                <th data-hide="all" data-field="companyName">
+                <th data-hide="all" data-field="companyId">
                     汽修公司
                 </th>
                 <th data-hide="all" data-field="appoitmentStatus" data-formatter="statusFormatter">
@@ -86,14 +86,14 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <hr/>
-            <form class="form-horizontal" onsubmit="return checkAdd()" id="showAddFormWar" method="post">
+            <form class="form-horizontal"  id="showAddFormWar" method="post">
                 <div class="modal-header" style="overflow:auto;">
                     <h4>添加登记记录信息</h4>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">车主名字：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="userName" define="emp.name" placeholder="请输入车主姓名" class="form-control" maxlength="20">
+                        <input type="text" name="userName" placeholder="请输入车主姓名" class="form-control" maxlength="20">
                     </div>
                 </div>
                 <div class="form-group">
@@ -105,72 +105,62 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">汽车品牌：</label>
                     <div class="col-sm-7">
-                        <select>
-                            <option>请选择品牌</option>
-                            <option>品牌一</option>
-                            <option>品牌二</option>
-                        </select>
+                        <input type="number" name="brandId" placeholder="请输入汽车品牌" class="form-control" maxlength="11">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">汽车颜色：</label>
                     <div class="col-sm-7">
-                        <select>
-                            <option>请选择颜色</option>
-                            <option>白色</option>
-                            <option>黑色</option>
-                        </select>
+                        <input type="number" name="colorId" placeholder="请输入汽车颜色" class="form-control" maxlength="11">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">汽车车型：</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="请选择车型" class="form-control">
+                        <input type="text" name="modelId" placeholder="请选择车型" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">汽车车牌：</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="请选择汽车车牌" class="form-control">
+                        <input type="text" name="carPlate"placeholder="请选择汽车车牌" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">汽车车牌号：</label>
                     <div class="col-sm-7">
-                        <input type="number" placeholder="请输入汽车车牌号" class="form-control">
+                        <input type="number" name="plateId" placeholder="请输入汽车车牌号" class="form-control">
                     </div>
                 </div>
-
-
                 <div class="form-group">
                     <label class="col-sm-3 control-label">到店时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" id="addArriveTime" onclick="getDate('addArriveTime')" placeholder="请选择到店时间" class="form-control">
+                        <input type="text" name="arriveTime" id="addArriveTime" placeholder="请选择到店时间" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">保养|维修：</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="请选择是保养或者维修" class="form-control">
+                        <input type="text" name="maintainOrFix" placeholder="请选择是保养或者维修" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">登记时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" id="addAppointmentCreatedTime" onclick="getDate('addAppointmentCreatedTime')" placeholder="请选择登记时间" class="form-control">
+                        <input type="text" name="appCreatedTime" id="appCreatedTime" placeholder="请选择登记时间" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">汽修公司名称：</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="请输入汽修公司名称" class="form-control">
+                        <input type="text" name="companyId" placeholder="请输入汽修公司名称" class="form-control">
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default"
                             data-dismiss="modal">关闭
                     </button>
-                    <button id="addButton" type="submit" class="btn btn-primary btn-sm">保存</button>
+                    <button class="btn btn-sm btn-success" type="submit">保 存</button>
                 </div>
             </form>
         </div><!-- /.modal-content -->
@@ -187,75 +177,71 @@
                 </div>
                 <br/>
                 <div class="form-group">
-                    <label class="col-sm-5 control-label">车主名字：</label>
+                    <label class="col-sm-3 control-label">车主名字：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="userName" placeholder="请输入车主姓名" class="form-control">
+                        <input type="text" name="userName" define="Appointment.userName" placeholder="请输入车主姓名" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-5 control-label">车主车牌号</label>
+                    <label class="col-sm-3 control-label">车主电话：</label>
                     <div class="col-sm-7">
-                        <input type="number" placeholder="请输入车主车牌号" class="form-control">
+                        <input type="text" name="userPhone" define="Appointment.userPhone" placeholder="请输入车主电话" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-5 control-label">车主手机号</label>
+                    <label class="col-sm-3 control-label">汽车的品牌：</label>
                     <div class="col-sm-7">
-                        <input type="number" placeholder="请输入车主手机号" class="form-control" maxlength="11">
+                        <input type="number" name="brandId" define="Appointment.brandId" placeholder="请输入汽车的品牌" class="form-control" maxlength="11">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-5 control-label">车的品牌：</label>
+                    <label class="col-sm-3 control-label">汽车的颜色：</label>
                     <div class="col-sm-7">
-                        <select>
-                            <option>请选择品牌</option>
-                            <option>品牌一</option>
-                            <option>品牌二</option>
-                        </select>
+                        <input type="text" name="colorId" define="Appointment.colorId" placeholder="请输入汽车的颜色" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-5 control-label">车的颜色：</label>
+                    <label class="col-sm-3 control-label">汽车车型：</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="请输入车的颜色" class="form-control">
+                        <input type="number" name="modelId" define="Appointment.modelId" placeholder="请输入汽车车型" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-5 control-label">车型：</label>
+                    <label class="col-sm-3 control-label">汽车车牌：</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="请输入车型" class="form-control">
+                        <input type="text" name="carPlate" define="Appointment.carPlate"placeholder="请输入汽车车牌" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-5 control-label">车主到店时间：</label>
+                    <label class="col-sm-3 control-label">汽车车牌号：</label>
                     <div class="col-sm-7">
-                        <input type="date" id="editArriveTime" onclick="getDate('editArriveTime')" class="form-control">
+                        <input type="text" name="plateId" define="Appointment.plateId" placeholder="请输入汽车车牌号" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-5 control-label">汽修公司名称：</label>
+                    <label class="col-sm-3 control-label">到店时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="请输入汽修公司名称" class="form-control">
+                        <input type="number" name="arriveTime" define="Appointment.arriveTime" id="editArriveTime" placeholder="请输入到店时间" class="form-control" maxlength="11">
                     </div>
                 </div>
-
                 <div class="form-group">
-                    <label class="col-sm-5 control-label">登记时间：</label>
+                    <label class="col-sm-3 control-label">维修|保养：</label>
                     <div class="col-sm-7">
-                        <input type="date" id="editCheckinCreatedTime" onclick="getDate('editCheckinCreatedTime')" class="form-control">
+                        <input type="text" name="maintainOrFix" define="Appointment.maintainOrFix"  placeholder="维修|保养" class="form-control">
                     </div>
                 </div>
-                <%-- 注: 暂时先这么写，颜色是选择不是输入,看到这句说明你要更改这部分 --%>
-                    <div class="form-group">
-                        <label class="col-sm-5 control-label">车的颜色：</label>
-                        <div class="col-sm-7">
-                            <select>
-                                <option>请选择品牌</option>
-                                <option>白色</option>
-                                <option>黑色</option>
-                            </select>
-                        </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">预约记录时间：</label>
+                    <div class="col-sm-7">
+                        <input type="text" name="appCreatedTime" define="Appointment.appCreatedTime" id="editCheckinCreatedTime" placeholder="请输入预约记录时间" class="form-control">
                     </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">汽修公司名称：</label>
+                    <div class="col-sm-7">
+                        <input type="text" name="companyId" define="Appointment.companyId" placeholder="请输入汽修公司名称" class="form-control">
+                    </div>
+                </div>
                 <div class="form-group">
                     <div class="col-sm-offset-8">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>

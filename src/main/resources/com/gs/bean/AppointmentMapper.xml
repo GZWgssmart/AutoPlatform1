@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.gs.dao.AppointmentDAO" >
-  <resultMap id="appointmentMap" type="com.gs.bean.Appointment" >
+  <resultMap id="appointmentMap" type="Appointment" >
     <id column="appointmentId" property="appointmentId" jdbcType="VARCHAR" />
     <result column="userId" property="userId" jdbcType="VARCHAR" />
     <result column="userName" property="userName" jdbcType="VARCHAR" />
@@ -45,7 +45,7 @@
 
   </resultMap>
 
-  <select id="queryByPager" resultMap="appointmentMap" parameterType="com.gs.common.bean.Pager">
+  <select id="queryByPager" resultMap="appointmentMap">
     <![CDATA[
        select am.*, cc.colorId, cc.colorName, cp.plateId, cp.plateName,
         cm.modelId, cm.modelName, company.companyId,
@@ -65,4 +65,23 @@
       select count(appointmentId) from t_appointment am where am.appoitmentStatus = 'Y'
     ]]>
   </select>
+
+  <insert id="insert" parameterType="Appointment">
+    <![CDATA[
+    insert into auto_platform.t_appointment(appointmentId,userId,userName,userPhone,brandId,colorId,modelId,
+    plateId,carPlate,arriveTime,maintainOrFix,appCreatedTime,companyId,appoitmentStatus)
+    values(uuid(),#{userId},#{userName},#{userPhone},#{brandId},#{colorId},#{modelId},#{plateId},#{carPlate},#{arriveTime},
+    #{maintainOrFix},CURRENT_TIMESTAMP,#{companyId},'Y');
+    ]]>
+  </insert>
+
+  <insert id="update" parameterType="Appointment">
+    <![CDATA[
+        UPDATE auto_platform.t_appointment SET userId = #{userId}, userName = #{userName}, userPhone = #{userPhone},
+        brandId = #{brandId}, colorId = #{colorId}, modelId = #{modelId}, plateId = #{plateId}, carPlate = #{carPlate},
+        arriveTime = #{arriveTime}, maintainOrFix = #{maintainOrFix}, appCreatedTime = #{appCreatedTime},
+         companyId = #{companyId}, appoitmentStatus = #{appoitmentStatus}
+         WHERE
+    ]]>
+  </insert>
 </mapper>

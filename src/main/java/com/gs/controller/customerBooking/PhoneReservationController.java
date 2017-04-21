@@ -5,17 +5,22 @@ import com.gs.bean.Appointment;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
-import com.gs.common.util.UUIDUtil;
 import com.gs.controller.CheckinController;
 import com.gs.service.AppointmentService;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -61,15 +66,39 @@ public class PhoneReservationController {
         return new Pager4EasyUI<Appointment>(pager.getTotalRecords(), appointments);
     }
 
+    /**
+     *
+     * 添加电话预约
+     * @return
+     */
     @ResponseBody
-    @RequestMapping(value = "addAppointment", method = RequestMethod.POST)
-    public ControllerResult addAppointment(Appointment appointment){
-        logger.info("添加电话预约");
-        appointment.setAppointmentId(UUIDUtil.uuid());
-        appointment.setAppoitmentStatus("Y");
-        appointmentService.insert(appointment);
-        return ControllerResult.getSuccessResult("添加成功");
+    @RequestMapping(value = "addApp",method = RequestMethod.POST)
+    public ControllerResult add(Appointment appointment){
+        if (appointment != null && !appointment.equals("")) {
+            logger.info("添加电话预约");
+            appointmentService.insert(appointment);
+            return ControllerResult.getSuccessResult("添加成功");
+        }else {
+            return ControllerResult.getFailResult("添加失败，请输入必要的信息");
+        }
     }
+
+    /**
+     *
+     * 修改电话预约
+     * @return
+     */
+     @ResponseBody
+     @RequestMapping(value = "update", method = RequestMethod.POST)
+     public ControllerResult update(Appointment appointment){
+         if(appointment != null && !appointment.equals("")){
+             logger.info("修改电话预约");
+             appointmentService.insert(appointment);
+             return ControllerResult.getSuccessResult("添加成功");
+         }else {
+             return ControllerResult.getFailResult("添加失败，请输入必要信息");
+         }
+     }
 
     @ResponseBody
     @RequestMapping(value = "inactive",method = RequestMethod.POST)
@@ -93,5 +122,11 @@ public class PhoneReservationController {
         }else{
             return ControllerResult.getFailResult("激活失败");
         }
+    }
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        dateFormat.setLenient(false);
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
     }
 }
