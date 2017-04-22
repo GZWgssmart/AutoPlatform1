@@ -6,6 +6,7 @@ $(function () {
     initSelect2("carPlate", "请选择车牌", "/carPlate/queryAllCarPlate");
 });
 
+// 这个方法别看
 $("#addCarBrand").change(function(){
     var div = $("#addModelDiv");
     var select = $("#addCarBrand").select2("val");
@@ -13,6 +14,7 @@ $("#addCarBrand").change(function(){
     $('#addCarModel').html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
     initSelect2("carModel", "请选择车型", "/carModel/queryByBrandId/"+ select);
 });
+// 这个别看
 $("#editCarBrand").change(function(){
     var div = $("#editModelDiv");
     var select = $("#editCarBrand").select2("val");
