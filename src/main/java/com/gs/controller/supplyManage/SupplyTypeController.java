@@ -1,8 +1,10 @@
 package com.gs.controller.supplyManage;
 
 import ch.qos.logback.classic.Logger;
+import com.gs.bean.CarColor;
 import com.gs.bean.Supply;
 import com.gs.bean.SupplyType;
+import com.gs.common.bean.ComboBox4EasyUI;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -29,6 +32,25 @@ public class SupplyTypeController {
     @Resource
     private SupplyTypeService supplyTypeService;
     private Logger logger = (Logger) LoggerFactory.getLogger(SupplyTypeController.class);
+
+    /*
+        查询全部供应商类型
+     */
+    @ResponseBody
+    @RequestMapping(value = "queryAllSupplyType",method = RequestMethod.GET)
+    public List<ComboBox4EasyUI> queryAll(){
+        logger.info("查询全部供应商类型");
+        List<SupplyType> supplyTypes = supplyTypeService.queryAll();
+        List<ComboBox4EasyUI> comboxs = new ArrayList<ComboBox4EasyUI>();
+        for(SupplyType st : supplyTypes){
+            ComboBox4EasyUI comboBox4EasyUI = new ComboBox4EasyUI();
+            comboBox4EasyUI.setId(st.getSupplyTypeId());
+            comboBox4EasyUI.setText(st.getSupplyTypeName());
+            comboxs.add(comboBox4EasyUI);
+        }
+        return comboxs;
+    }
+
 
     /**
      * 分页查询所有的供应商类型

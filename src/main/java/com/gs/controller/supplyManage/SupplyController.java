@@ -2,6 +2,7 @@ package com.gs.controller.supplyManage;
 
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.AccessoriesBuy;
+import com.gs.bean.Checkin;
 import com.gs.bean.OutgoingType;
 import com.gs.bean.Supply;
 import com.gs.common.bean.ControllerResult;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.logging.SimpleFormatter;
 
@@ -71,6 +73,7 @@ public class SupplyController {
     @RequestMapping(value = "addSupply", method = RequestMethod.POST)
     public ControllerResult addSupply(Supply supply) {
         if (supply != null && !supply.equals("")) {
+            supply.setCompanyId("c515f5d623e011e7a97af832e40312b3");
             System.out.println(supply.toString());
             supplyService.insert(supply);
             logger.info("添加成功");
@@ -89,6 +92,7 @@ public class SupplyController {
     @RequestMapping(value = "updateSupply", method = RequestMethod.POST)
     public ControllerResult updateSupply(Supply supply) {
         if (supply != null && !supply.equals("")) {
+            supply.setCompanyId("c515f5d623e011e7a97af832e40312b3");
             supplyService.update(supply);
             logger.info("修改成功");
             return ControllerResult.getSuccessResult("修改成功");
@@ -104,7 +108,7 @@ public class SupplyController {
     @RequestMapping(value = "statusOperate",method = RequestMethod.POST)
     public ControllerResult inactive(String supplyId,String supplyStatus){
         if(supplyId!=null&&!supplyId.equals("")&&supplyStatus!=null&&!supplyStatus.equals("")){
-            if (supplyStatus.equals("N")){
+            if (supplyStatus.equals("Y")){
                 supplyService.active(supplyId);
                 logger.info("激活成功");
                 return ControllerResult.getSuccessResult("激活成功");
@@ -115,6 +119,35 @@ public class SupplyController {
             }
         }else{
             return ControllerResult.getFailResult("操作失败");
+        }
+    }
+
+    /**
+     * 供应商记录模糊查询
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value="blurredQuery", method = RequestMethod.GET)
+    public Pager4EasyUI<Supply> blurredQuery(HttpServletRequest request, @Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
+        logger.info("供应商记录模糊查询");
+        String column = request.getParameter("column");
+        String value = request.getParameter("value");
+        if(column != null && value != null) {
+            Pager pager = new Pager();
+            pager.setPageNo(Integer.valueOf(pageNumber));
+            pager.setPageSize(Integer.valueOf(pageSize));
+            pager.setTotalRecords(supplyService.countByBlurred());
+            List<Supply> supplys;
+            if(column.equals("all")){
+                String column1 = "supplyName";
+                String column2 = "companyId";
+                supplys = supplyService.blurredQuery(pager, column, value);
+            }else{
+                supplys = supplyService.blurredQuery(pager, column, value);
+            }
+            return new Pager4EasyUI<Supply>(pager.getTotalRecords(), supplys);
+        }else{
+            return null;
         }
     }
 

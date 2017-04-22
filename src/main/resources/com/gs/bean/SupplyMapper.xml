@@ -16,33 +16,51 @@
     <result column="supplyTypeId" property="supplyTypeId" jdbcType="VARCHAR" />
     <result column="companyId" property="companyId" jdbcType="VARCHAR" />
     <result column="supplyStatus" property="supplyStatus" jdbcType="VARCHAR" />
-  </resultMap>
 
-  <select id="count" resultType="int" >
-    <![CDATA[
-      select count(*) from t_supply s where s.supplyStatus = 'Y'
-    ]]>
-  </select>
+    <association property="supplyType" javaType="com.gs.bean.SupplyType">
+      <id property="supplyTypeId" column="supplyTypeId"/>
+      <id property="supplyTypeName" column="supplyTypeName"/>
+    </association>
+
+    <association property="company" javaType="com.gs.bean.Company">
+      <id property="companyId" column="companyId"/>
+      <id property="companyName" column="companyName"/>
+    </association>
+
+  </resultMap>
 
   <select id="queryByPager" resultMap="supplyMap" parameterType="com.gs.common.bean.Pager">
     <![CDATA[
-        select * from t_supply s where 1 =1 and s.supplyStatus = 'Y'
+        select s.*, s.supplyTypeId, st.supplyTypeName as "supplyTypeName", s.companyId, co.companyName as "companyName" from t_supply s
+        LEFT JOIN t_supply_type st on s.supplyTypeId = st.supplyTypeId
+        LEFT JOIN t_company co on s.companyId = co.companyId
+        where s.supplyStatus = 'Y' order by s.supplyCreatedTime Desc
     ]]>
     limit #{beginIndex}, #{pageSize}
-  </select>
-
-  <select id="countByDisable" resultType="int" >
-    <![CDATA[
-        select count(*) from t_supply s where s.supplyStatus = 'N'
-    ]]>
   </select>
 
   <select id="queryByPagerDisable" resultMap="supplyMap" parameterType="com.gs.common.bean.Pager">
     <![CDATA[
-          select * from t_supply s where 1 =1 and s.supplyStatus = 'N'
+       select s.*, s.supplyTypeId, st.supplyTypeName as "supplyTypeName", s.companyId, co.companyName as "companyName" from t_supply s
+        LEFT JOIN t_supply_type st on s.supplyTypeId = st.supplyTypeId
+        LEFT JOIN t_company co on s.companyId = co.companyId
+        where s.supplyStatus = 'N' order by s.supplyCreatedTime Desc
     ]]>
     limit #{beginIndex}, #{pageSize}
   </select>
+
+  <select id="count" resultType="int" >
+    <![CDATA[
+      select count(supplyId) from t_supply s where s.supplyStatus = 'Y'
+    ]]>
+  </select>
+
+  <select id="countByDisable" resultType="int" >
+    <![CDATA[
+      select count(supplyId) from t_supply s where s.supplyStatus = 'N'
+    ]]>
+  </select>
+
   <!--
       添加供应商信息,默认添加状态为可用状态
   -->

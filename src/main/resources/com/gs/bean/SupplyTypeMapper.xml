@@ -9,6 +9,11 @@
     <result column="supplyTypeStatus" property="supplyTypeStatus" jdbcType="VARCHAR" />
   </resultMap>
 
+  <select id="queryAll" resultMap="supplyTypeMap">
+    <![CDATA[
+          select * from t_supply_type;
+        ]]>
+  </select>
 
   <select id="count" resultType="int" >
     <![CDATA[

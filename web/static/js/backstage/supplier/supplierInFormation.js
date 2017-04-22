@@ -1,268 +1,243 @@
 var contentPath = ''
 $(function () {
     initTable("table", "/supply/queryByPager"); // 初始化表格
-});
-$(document).ready(function() {
-    // 手机号码验证
-    jQuery.validator.addMethod("isPhone", function(value, element) {
-        var length = value.length;
-        return this.optional(element) || (length == 11 && /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/.test(value));
-    }, "请正确填写您的手机号码。");
 
-    // 电话号码验证
-    jQuery.validator.addMethod("isTel", function(value, element) {
-        var tel = /^(\d{3,4}-)?\d{7,8}$/g; // 区号－3、4位 号码－7、8位
-        return this.optional(element) || (tel.test(value));
-    }, "请正确填写您的电话号码。");
-    // 匹配密码，以字母开头，长度在6-12之间，必须包含数字和特殊字符。
-    jQuery.validator.addMethod("isPwd", function(value, element) {
-        var str = value;
-        if (str.length < 6 || str.length > 18)
-            return false;
-        if (!/^[a-zA-Z]/.test(str))
-            return false;
-        if (!/[0-9]/.test(str))
-            return fasle;
-        return this.optional(element) || /[^A-Za-z0-9]/.test(str);
-    }, "以字母开头，长度在6-12之间，必须包含数字和特殊字符。");
-
-// 身份证
-    jQuery.validator.addMethod("isIdCardNo", function (value, element, param){
-        var checkName = /^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/;
-        return this.optional(element) || (checkName.test(value));
-    },$.validator.format("请输入正确的身份证号码"));
-
-    $("#addForm").validate({
-        errorElement : 'span',
-        errorClass : 'help-block',
-        rules : {
-            supplyName : {
-                required : true,
-                minlength : 2
-            },
-            supplyTel : {
-                required : true,
-                minlength : 2
-            },
-            supplyPricipal : {
-                required : true,
-                minlength : 2
-            },
-            supplyAddress : {
-                required : true,
-                minlength : 2
-            },
-            supplyWeChat : {
-                required : true,
-                minlength : 2
-            },
-            supplyTypeId : {
-                required : true,
-                minlength : 2
-            },
-            companyId : {
-                required : true,
-                minlength : 2
-            },
-            supplyAlipay : {
-                required : true,
-                minlength : 2
-            },
-            supplyBank : {
-                required : true,
-                minlength : 2
-            },
-            supplyBankAccount : {
-                required : true,
-                minlength : 2
-            },
-            supplyBankNo : {
-                required : true,
-                minlength : 2
-            }
-        },
-        messages: {
-            supplyName: "请输入供应商名称",
-            supplyTel: "请输入供应商联系电话",
-            supplyPricipal: "请输入供应商负责人",
-            supplyAddress: "请输入供应商地址",
-            supplyWeChat: "请输入供应商微信号",
-            supplyTypeId: "请选择供应商类型",
-            companyId: "请选择供应商所属公司",
-            supplyAlipay: "请输入支付宝帐号",
-            supplyBank: "请输入开户银行全称",
-            supplyBankAccount: "请输入开户行名称",
-            supplyBankNo: "请输入银行卡号",
-        },
-        errorPlacement : function(error, element) {
-            element.next().remove();
-            element.after('<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>');
-            element.closest('.form-group').append(error);
-        },
-        highlight : function(element) {
-            $(element).closest('.form-group').addClass('has-error has-feedback');
-        },
-        success : function(label) {
-            var el=label.closest('.form-group').find("input");
-            el.next().remove();
-            el.after('<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>');
-            label.closest('.form-group').removeClass('has-error').addClass("has-feedback has-success");
-            label.remove();
-        },
-        submitHandler: function(form) {
-            $.post(contentPath + "/supply/addSupply", $("#addForm").serialize(), function (data) {
-                if (data.result == "success") {
-                    $("#addWindow").modal('hide'); // 关闭指定的窗口
-                    $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
-                    swal({
-                        title: "",
-                        text: data.message,
-                        type: "success"
-                    })
-                } else {
-                    swal({
-                        title: "",
-                        text: data.message,
-                        type: "fail"
-                    })
-                }
-            })
-        }
-    })
-
-    $("#editForm").validate({
-        errorElement : 'span',
-        errorClass : 'help-block',
-        rules : {
-            supplyName : {
-                required : true,
-                minlength : 2
-            },
-            supplyTel : {
-                required : true,
-                minlength : 2
-            },
-            supplyPricipal : {
-                required : true,
-                minlength : 2
-            },
-            supplyAddress : {
-                required : true,
-                minlength : 2
-            },
-            supplyWeChat : {
-                required : true,
-                minlength : 2
-            },
-            supplyTypeId : {
-                required : true,
-                minlength : 2
-            },
-            companyId : {
-                required : true,
-                minlength : 2
-            },
-            supplyAlipay : {
-                required : true,
-                minlength : 2
-            },
-            supplyBank : {
-                required : true,
-                minlength : 2
-            },
-            supplyBankAccount : {
-                required : true,
-                minlength : 2
-            },
-            supplyBankNo : {
-                required : true,
-                minlength : 2
-            }
-        },
-        messages: {
-            supplyName: "请输入供应商名称",
-            supplyTel: "请输入供应商联系电话",
-            supplyPricipal: "请输入供应商负责人",
-            supplyAddress: "请输入供应商地址",
-            supplyWeChat: "请输入供应商微信号",
-            supplyTypeId: "请选择供应商类型",
-            companyId: "请选择供应商所属公司",
-            supplyAlipay: "请输入支付宝帐号",
-            supplyBank: "请输入开户银行全称",
-            supplyBankAccount: "请输入开户行名称",
-            supplyBankNo: "请输入银行卡号",
-        },
-        errorPlacement : function(error, element) {
-            element.next().remove();
-            element.after('<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>');
-            element.closest('.form-group').append(error);
-        },
-        highlight : function(element) {
-            $(element).closest('.form-group').addClass('has-error has-feedback');
-        },
-        success : function(label) {
-            var el=label.closest('.form-group').find("input");
-            el.next().remove();
-            el.after('<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>');
-            label.closest('.form-group').removeClass('has-error').addClass("has-feedback has-success");
-            label.remove();
-        },
-        submitHandler: function(form) {
-            $.post(contentPath + "/supply/updateSupply", $("#editForm").serialize(), function (data) {
-                if (data.result == "success") {
-                    $("#editWindow").modal('hide'); // 关闭指定的窗口
-                    $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
-                    swal({
-                        title: "",
-                        text: data.message,
-                        type: "success"
-                    })
-                } else {
-                    swal({
-                        title: "",
-                        text: data.message,
-                        type: "fail"
-                    })// 提示窗口, 修改成功
-                }
-            })
-        }
-    })
+    initSelect2("supplyType", "请选择供应商类型", "/supplyType/queryAllSupplyType"); // 初始化select2, 第一个参数是class的名字, 第二个参数是select2的提示语, 第三个参数是select2的查询url
 });
 
-$(function () {
-    $('#table').bootstrapTable('hideColumn', 'supplyId');
-
-    $("#addSelect").select2({
-            language: 'zh-CN'
-        }
-    );
-
-    //绑定Ajax的内容
-    $.getJSON("/table/queryType", function (data) {
-        $("#addSelect").empty();//清空下拉框
-        $.each(data, function (i, item) {
-            $("#addSelect").append("<option value='" + data[i].id + "'>&nbsp;" + data[i].name + "</option>");
-        });
-    })
-//            $("#addSelect").on("select2:select",
-//                    function (e) {
-//                        alert(e)
-//                        alert("select2:select", e);
-//            });
+/*
+$("#addSupplyType").change(function(){
+    var div = $("#addModelDiv");
+    var select = $("#addsupplyType").select2("val");
+    div.css("display","block");
+    $('#addCarModel').html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
+    initSelect2("carModel", "请选择车型", "/carModel/queryByBrandId/"+ select);
 });
+$("#addSupplyType").change(function(){
+    var div = $("#editModelDiv");
+    var select = $("#addsupplyType").select2("val");
+    div.css("display","block");
+    $('#editCarModel').html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
+    initSelect2("carModel", "请选择车型", "/carModel/queryByBrandId/"+select);
+});*/
+
+// 模糊查询
+function blurredQuery(){
+    var button = $("#ulButton");// 获取模糊查询按钮
+    var text = button.text();// 获取模糊查询按钮文本
+    var vaule = $("#ulInput").val();// 获取模糊查询输入框文本
+    alert(text)
+    var column;
+    if(text == '供应商/供应商所属公司'){
+        column = 'all'
+    }else if(text == "供应商"){
+        column = 'supplyName';
+    }else if(text =="供应商所属公司"){
+        column = 'companyId';
+    }
+    initTable('table', '/supply/blurredQuery/'+column+'/'+vaule);
+}
 
 function showEdit(){
-    var row =  $('table').bootstrapTable('getSelections');
+    /*initDateTimePicker('editForm', 'arriveTime'); // 初始化时间框*/
+    var row =  $('#table').bootstrapTable('getSelections');
     if(row.length >0) {
         $("#editWindow").modal('show'); // 显示弹窗
-        var ceshi = row[0];
-        $("#editForm").fill(ceshi);
+        $("#editButton").removeAttr("disabled");
+        var supply = row[0];
+        $('#editSupplyType').html('<option value="' + supply.supplyType.supplyTypeId + '">' + supply.supplyType.supplyTypeName + '</option>').trigger("change");
+        /*$('#editCompanyName').html('<option value="' + supply.company.companyId + '">' + supply.company.companyName + '</option>').trigger("change");*/
+        alert(supply.supplyId)
+        $("#editForm").fill(supply);
+        validator('editForm');
     }else{
         swal({
             title:"",
-            text:"请先选择一行数据",
-            type:"warning"})// 提示窗口, 修改成功
+            text: "请选择要修改的供应商记录", // 主要文本
+            confirmButtonColor: "#DD6B55", // 提示按钮的颜色
+            confirmButtonText:"确定", // 提示按钮上的文本
+            type:"warning"}) // 提示类型
     }
+}
+
+function showAdd(){
+    /*initDateTimePicker('addForm', 'arriveTime'); // 初始化时间框, 第一参数是form表单id, 第二参数是input的name*/
+    $("#addWindow").modal('show');
+    $("#addButton").removeAttr("disabled");
+    validator('addForm'); // 初始化验证
+}
+
+function validator(formId) {
+    $('#' + formId).bootstrapValidator({
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            supplyName: {
+                message: '供应商名称验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '供应商名称不能为空'
+                    },
+                    stringLength: {
+                        min: 1,
+                        max: 6,
+                        message: '供应商名称长度必须在1到6位之间'
+                    }
+                }
+            },
+            supplyTel: {
+                message: '供应商联系电话验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '供应商联系电话不能为空'
+                    },
+                    stringLength: {
+                        min: 11,
+                        max: 11,
+                        message: '手机号码必须为11位'
+                    },
+                    regexp: {
+                        regexp: /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/,
+                        message: '请输入正确的手机号'
+                    }
+                }
+            },
+            supplyPricipal: {
+                message: '供应商负责人验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '供应商负责人不能为空'
+                    }
+                }
+            },
+            supplyAddress: {
+                message: '供应商地址验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '供应商地址不能为空'
+                    }
+                }
+            },
+            supplyWeChat: {
+                message: '供应商微信号验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '供应商微信号不能为空'
+                    }
+                }
+            },
+            supplyTypeId: {
+                message: '供应商类型验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '供应商类型不能为空'
+                    }
+                }
+            },
+            companyId: {
+                message: '供应商所属公司验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '供应商所属公司不能为空'
+                    }
+                }
+            },
+            supplyAlipay: {
+                message: '供应商支付宝验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '供应商支付宝不能为空'
+                    }
+                }
+            },
+            supplyBank: {
+                message: '开户银行全称验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '开户银行全称不能为空'
+                    }
+                }
+            },
+            supplyBankAccount: {
+                message: '开户人姓名验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '开户人姓名不能为空'
+                    }
+                }
+            },
+            supplyBankNo: {
+                message: '开户卡号验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '开户卡号不能为空'
+                    }
+                }
+            }
+        }
+    })
+
+        .on('success.form.bv', function (e) {
+            if (formId == "addForm") {
+                formSubmit("/supply/add", formId, "addWindow");
+
+            } else if (formId == "editForm") {
+                formSubmit("/supply/edit", formId, "editWindow");
+
+            }
+        })
+
+}
+
+function addSubmit(){
+    $("#addForm").data('bootstrapValidator').validate();
+    if ($("#addForm").data('bootstrapValidator').isValid()) {
+        $("#addButton").attr("disabled","disabled");
+    } else {
+        $("#addButton").removeAttr("disabled");
+    }
+}
+
+function editSubmit(){
+    $("#editForm").data('bootstrapValidator').validate();
+    if ($("#editForm").data('bootstrapValidator').isValid()) {
+        $("#editButton").attr("disabled","disabled");
+    } else {
+        $("#editButton").removeAttr("disabled");
+    }
+}
+
+function formSubmit(url, formId, winId) {
+    $.post(url,
+        $("#" + formId).serialize(),
+        function (data) {
+            if (data.result == "success") {
+                $('#' + winId).modal('hide');
+                swal({
+                    title: "",
+                    text: data.message,
+                    confirmButtonText: "确定", // 提示按钮上的文本
+                    type: "success"
+                })// 提示窗口, 修改成功
+                $('#table').bootstrapTable('refresh');
+                if (formId == 'addForm') {
+                    $("input[type=reset]").trigger("click"); // 移除表单中填的值
+                    $('#addForm').data('bootstrapValidator').resetForm(true); // 移除所有验证样式
+                    $("#addButton").removeAttr("disabled"); // 移除不可点击
+                }
+            } else if (data.result == "fail") {
+                swal({
+                    title: "",
+                    text: "添加失败",
+                    confirmButtonText: "确认",
+                    type: "error"
+                })
+                $("#" + formId).removeAttr("disabled");
+            }
+        }, "json");
 }
 
 //格式化带时分秒的时间值。
@@ -297,11 +272,6 @@ function formatterDateTime(value) {
     }
 }
 
-
-function showAdd(){
-    $("#addWindow").modal('show');
-}
-
 //格式化页面上的配件分类状态
 function formatterStatus(index,row) {
     if (row.supplyStatus == "Y") {
@@ -314,29 +284,56 @@ function formatterStatus(index,row) {
 function openStatusFormatter(index, row) {
     /*处理数据*/
     if (row.supplyStatus == 'Y') {
-        return "&nbsp;&nbsp;<a href='javascript:;' onclick='inactive(\"" + row.supplyId + "\")'>禁用</a>";
+        return "&nbsp;&nbsp;<button type='button' class='btn btn-danger' onclick='inactive(\""+row.supplyId+ "\")'>禁用</a>";
     } else {
-        return "&nbsp;&nbsp;<a href='javascript:;' onclick='active(\"" + row.supplyId + "\")'>激活</a>";
+        return "&nbsp;&nbsp;<button type='button' class='btn btn-success' onclick='inactive(\""+row.supplyId+ "\")'>激活</a>";
     }
 
 }
 
 //禁用状态
 function inactive(supplyId) {
-    $.post(contentPath + "/supply/statusOperate?supplyId=" + supplyId + "&" + "supplyStatus=" + "Y", function (data) {
-        if (data.result == "success") {
-            $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
-        }
-    })
+    $.post("/supply/statusOperate?supplyId="+ supplyId + "&" + "supplyStatus=" + 'N',
+        function(data){
+            if(data.result == 'success'){
+                $('#table').bootstrapTable("refresh");
+                swal({
+                    title:"",
+                    text: data.message,
+                    confirmButtonText:"确定", // 提示按钮上的文本
+                    type:"success"})// 提示窗口, 修改成功
+            }else{
+                swal({title:"",
+                    text:"禁用失败",
+                    confirmButtonText:"确认",
+                    type:"error"})
+            }
+        },"json");
 }
 
 //激活状态
 function active(supplyId) {
-    $.post(contentPath + "/supply/statusOperate?supplyId=" + supplyId + "&" + "supplyStatus=" + 'N', function (data) {
+    /*$.post(contentPath + "/supply/statusOperate?supplyId=" + supplyId + "&" + "supplyStatus=" + 'N', function (data) {
         if (data.result == "success") {
             $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
         }
-    })
+    })*/
+    $.post("/supply/statusOperate?supplyId=" + supplyId + "&" + "supplyStatus=" + 'Y',
+        function(data){
+            if(data.result == 'success'){
+                $('#table').bootstrapTable("refresh");
+                swal({
+                    title:"",
+                    text: data.message,
+                    confirmButtonText:"确定", // 提示按钮上的文本
+                    type:"success"})// 提示窗口, 修改成功
+            }else{
+                swal({title:"",
+                    text:"激活失败",
+                    confirmButtonText:"确认",
+                    type:"error"})
+            }
+        },"json");
 }
 
 /**
@@ -354,48 +351,8 @@ function searchDisableStatus() {
 function searchRapidStatus() {
     initTable('table', '/supply/queryByPager');
 }
+/*
 
 function formatRepo(repo){return repo.text}
 function formatRepoSelection(repo){return repo.text}
-
-function showDel(){
-    var row =  $('table').bootstrapTable('getSelections');
-    if(row.length >0) {
-        $("#del").modal('show');
-    }else{
-        $("#tanchuang").modal('show');
-    }
-}
-
-function checkAdd(){
-    var id = $('#addId').val();
-    var name = $('#addName').val();
-    var price = $('#addPrice').val();
-    var reslist=$("#addSelect").select2("data"); //获取多选的值
-    if(id != "" && name != "" && price != ""){
-        return true;
-    }else{
-        var error = document.getElementById("addError");
-        error.innerHTML = "请输入正确的数据";
-        return false;
-    }
-}
-
-function checkEdit() {
-    $.post("/table/edit",
-        $("#editForm").serialize(),
-        function (data) {
-            if (data.result == "success") {
-                $("#edit").modal('hide'); // 关闭指定的窗口
-                $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
-                swal({
-                    title:"",
-                    text: data.message,
-                    type:"success"})// 提示窗口, 修改成功
-            } else if (data.result == "fail") {
-                //$.messager.alert("提示", data.result.message, "info");
-            }
-        }, "json"
-    );
-}
-
+*/

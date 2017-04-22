@@ -1,5 +1,6 @@
 package com.gs.service;
 
+import com.gs.bean.Checkin;
 import com.gs.bean.Supply;
 import com.gs.common.bean.Pager;
 
@@ -22,5 +23,14 @@ public interface SupplyService extends BaseService<String, Supply>{
      * 分页查询被禁用的记录
      */
     public int countByDisable();
+
+    /**
+     * 模糊查询
+     */
+    public List<Supply> blurredQuery(Pager pager, String cloumn, String value);
+    /**
+     * 模糊查询的记录数
+     */
+    public int countByBlurred();
 
 }
