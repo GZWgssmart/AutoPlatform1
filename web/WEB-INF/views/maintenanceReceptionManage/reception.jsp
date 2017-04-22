@@ -11,7 +11,6 @@
     <link rel="stylesheet" href="/static/css/bootstrap-validate/bootstrapValidator.min.css">
     <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.css">
     <link rel="stylesheet/less" href="/static/css/bootstrap-dateTimePicker/datetimepicker.less">
-
     <title>接待登记管理</title>
 </head>
 <body>
@@ -22,75 +21,62 @@
     <div class="panel-body" style="padding-bottom:0px;"  >
         <!--show-refredata-single-sesh, show-toggle的样式可以在bootstrap-table.js的948行修改-->
         <!-- table里的所有属性在bootstrap-table.js的240行-->
-        <table id="table">
+        <table id="table" style="table-layout: fixed">
             <thead>
-            <tr>
+            <tr >
                 <th data-radio="true"></th>
-                <th data-field="userName">
+                <th data-width="100" data-field="userName">
                     车主姓名
                 </th>
-                <th data-field="userPhone">
+                <th data-width="110" data-field="userPhone">
                     车主电话
                 </th>
-                <th data-field="brand.brandName">
+                <th data-width="100" data-field="brand.brandName">
                     汽车品牌
                 </th>
-                <th data-field="color.colorName">
+                <th data-width="100" data-field="color.colorName">
                     汽车颜色
                 </th>
-                <th data-width="500"  data-field="model.modelName">
+                <th data-width="100" data-field="model.modelName">
                     汽车车型
                 </th>
-                <th data-field="plate.plateName">
+                <th data-width="100" data-field="plate.plateName">
                     汽车车牌
                 </th>
-                <th data-field="carPlate">
+                <th data-width="100" data-field="carPlate">
                     车牌号码
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 </th>
-                <th data-field="arriveTime" data-formatter="formatterDate">
+                <th data-width="180" data-field="arriveTime" data-formatter="formatterDate">
                     到店时间
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 </th>
-                <th data-hide="all" data-field="carMileage">
+                <th data-width="120" data-hide="all" data-field="carMileage">
                     汽车行驶里程
                 </th>
-                <th data-hide="all" data-field="nowOil">
+                <th data-width="120" data-hide="all" data-field="nowOil">
                     汽车当前油量
                 </th>
-                <th data-hide="all" data-field="ifClearCar" data-formatter="showStatusFormatter">
+                <th data-width="100" data-hide="all" data-field="ifClearCar" data-formatter="showStatusFormatter">
                     是否洗车
                 </th>
-                <th data-hide="all" data-field="carThings">
+                <th data-width="150" data-hide="all" data-field="carThings">
                     车上物品描述
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 </th>
-                <th data-hide="all" data-field="intactDegrees">
+                <th data-width="150"  data-hide="all" data-field="intactDegrees">
                     汽车完好度描述
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 </th>
-                <th data-hide="all" data-field="userRequests">
+                <th data-width="150" data-hide="all" data-field="userRequests">
                     用户要求描述
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 </th>
-                <th data-hide="all" data-field="maintainOrFix">
+                <th data-width="100" data-hide="all" data-field="maintainOrFix">
                     保养&nbsp;|&nbsp;维修
                 </th>
-                <th data-hide="all" data-field="checkinCreatedTime" data-formatter="formatterDate">
+                <th data-width="180" data-hide="all" data-field="checkinCreatedTime" data-formatter="formatterDate">
                     登记时间
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 </th>
-                <th data-hide="all" data-field="company.companyName">
+                <th data-width="120" data-hide="all" data-field="company.companyName">
                     汽修公司
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 </th>
-                <th data-hide="all" data-field="checkinStatus" data-formatter="statusFormatter">
+                <th data-width="100" data-hide="all" data-field="checkinStatus" data-formatter="statusFormatter">
                     记录状态
                 </th>
             </tr>
