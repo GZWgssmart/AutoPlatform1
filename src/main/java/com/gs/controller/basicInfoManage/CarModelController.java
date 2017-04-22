@@ -3,6 +3,7 @@ package com.gs.controller.basicInfoManage;
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.CarModel;
 import com.gs.common.bean.ComboBox4EasyUI;
+import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
 import com.gs.service.CarBrandService;
@@ -40,9 +41,9 @@ public class CarModelController {
 
 
     @ResponseBody
-    @RequestMapping(value="queryByPagerCarModel")
+    @RequestMapping(value="queryByPagerCarModel",method = RequestMethod.GET)
     public Pager4EasyUI<CarModel> queryByPager(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
-        logger.info("分页查询所有汽车颜色");
+        logger.info("分页查询所有车型");
         Pager pager = new Pager();
         pager.setPageNo(Integer.valueOf(pageNumber));
         pager.setPageSize(Integer.valueOf(pageSize));
@@ -65,4 +66,28 @@ public class CarModelController {
         return comboxs;
     }
 
+    @ResponseBody
+    @RequestMapping(value = "addCarModel",method = RequestMethod.POST)
+    public ControllerResult add(CarModel carModel){
+        if (carModel != null && !carModel.equals("")) {
+            logger.info("添加汽车车型");
+            carModelService.insert(carModel);
+            return ControllerResult.getSuccessResult("添加成功");
+        }else {
+            return ControllerResult.getFailResult("添加失败，请输入必要的信息");
+        }
+    }
+
+
+    @ResponseBody
+    @RequestMapping(value = "updateCarModel",method = RequestMethod.POST)
+    public ControllerResult update(CarModel carModel){
+        if (carModel != null && !carModel.equals("")) {
+            logger.info("修改汽车车型");
+            carModelService.update(carModel);
+            return ControllerResult.getSuccessResult("修改成功");
+        }else {
+            return ControllerResult.getFailResult("修改失败，请输入必要的信息");
+        }
+    }
 }

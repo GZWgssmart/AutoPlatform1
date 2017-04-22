@@ -1,4 +1,3 @@
-(function ($) {
   'use strict';
 
   //<editor-fold desc="Shims">

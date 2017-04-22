@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Administrator
-  Date: 2017/4/11
-  Time: 15:59
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     String path = request.getContextPath();
@@ -18,6 +11,8 @@
     <link rel="stylesheet" href="/static/css/bootstrap-table.css">
     <link rel="stylesheet" href="/static/css/select2.min.css">
     <link rel="stylesheet" href="/static/css/sweetalert.css">
+    <link rel="stylesheet" href="/static/css/bootstrap-validate/bootstrapValidator.min.css">
+    <link rel="stylesheet" href="/static/css/fileinput.css">
     <link rel="stylesheet" href="/static/css/table/table.css">
 </head>
 <body>
@@ -27,32 +22,23 @@
     <div class="panel-body" style="padding-bottom:0px;">
         <!--show-refresh, show-toggle的样式可以在bootstrap-table.js的948行修改-->
         <!-- table里的所有属性在bootstrap-table.js的240行-->
-        <table id="table"
-               data-toggle="table"
-               data-toolbar="#toolbar"
-               data-url="/carModel/queryAllCarModel"
-               data-method="post"
-               data-query-params="queryParams"
-               data-pagination="true"
-               data-search="true"
-               data-show-refresh="true"
-               data-show-toggle="true"
-               data-show-columns="true"
-               data-page-size="10"
-               data-height="543"
-               data-id-field="id"
-               data-page-list="[5, 10, 20]"
-               data-cach="false"
-               data-click-to-select="true"
-               data-single-select="true">
+        <table id="table">
             <thead>
-            <tr>
-                <th data-radio="true" data-field="status"></th>
-                <th data-field="modelName">车型名字</th>
-                <th data-field="modelDes">车型描述</th>
-                <th data-field="CarBrand.brandName">品牌名称</th>
-                <th data-field="modelStaus">车型状态</th>
-            </tr>
+                <tr>
+                    <th data-checkbox="true"></th>
+                    <th data-field="modelName">
+                        车型名字
+                    </th>
+                    <th data-field="modelDes">
+                        车型描述
+                    </th>
+                    <th data-field="carBrand.brandName">
+                        品牌名称
+                    </th>
+                    <th data-field="modelStaus">
+                        车型状态
+                    </th>
+                </tr>
             </thead>
         </table>
         <div id="toolbar" class="btn-group">
@@ -70,10 +56,10 @@
 </div>
 
 <!-- 添加弹窗 -->
-<div class="modal fade" id="addWindow" aria-hidden="true" style="overflow:auto; ">
+<div class="modal fade" id="addWindow" style="overflow-y:scroll" data-backdrop="static" >
     <div class="modal-dialog" style="width: 700px;height: auto;">
         <div class="modal-content" style="overflow:hidden;">
-            <form class="form-horizontal" role="form" onsubmit="return checkAdd()" id="showAddFormWar" method="post">
+            <form class="form-horizontal" role="form" id="showAddFormWar" method="post">
                 <div class="modal-header" style="overflow:auto;">
                     <h4>请填写汽车车型的相关信息</h4>
                 </div>
@@ -85,11 +71,18 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">品牌id：</label>
+                    <label class="col-sm-3 control-label">汽车品牌：</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="请选择隶属的品牌" class="form-control"></input>
+                        <select id="addCarBrand" class="js-example-tags carBrand" name="brandId" style="width:100%">
+                        </select>
                     </div>
                 </div>
+                <%--<div class="form-group">--%>
+                    <%--<label class="col-sm-3 control-label">品牌id：</label>--%>
+                    <%--<div class="col-sm-7">--%>
+                        <%--<input type="text" placeholder="请选择隶属的品牌" class="form-control"></input>--%>
+                    <%--</div>--%>
+                <%--</div>--%>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">车型描述：</label>
                     <div class="col-sm-7">
@@ -100,7 +93,8 @@
                 <div class="form-group">
                     <div class="col-sm-offset-8">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button class="btn btn-sm btn-success" type="submit">保 存</button>
+                        <button class="btn btn-sm btn-success" id="addButton" onclick="addSubmit()">保 存</button>
+                        <input type="reset" name="reset" style="display: none;"/>
                     </div>
                 </div>
             </form>
@@ -110,10 +104,10 @@
 
 
 <!-- 修改弹窗 -->
-<div class="modal fade" id="editWindow" aria-hidden="true">
-    <div class="modal-dialog" style="width: 700px;height: auto;">
-        <div class="modal-content" style="overflow:hidden;">
-            <form class="form-horizontal" role="form" onsubmit="return checkEdit()" id="showEditFormWar" method="post">
+<div class="modal fade" id="editWindow" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form class="form-horizontal" role="form" onsubmit="return checkEdit('table/edit')" id="showEditFormWar" method="post">
                 <div class="modal-header" style="overflow:auto;">
                     <h4>请修改汽车车型的相关信息</h4>
                 </div>
@@ -194,7 +188,11 @@
 <script src="/static/js/select2/select2.js"></script>
 <script src="/static/js/sweetalert/sweetalert.min.js"></script>
 <script src="/static/js/contextmenu.js"></script>
+<script src="/static/js/backstage/main.js"></script>
 <script src="/static/js/form/jquery.validate.js"></script>
+<script src="/static/js/bootstrap-validate/bootstrapValidator.js"></script>
+<script src="/static/js/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.js"></script>
+<script src="/static/js/bootstrap-dateTimePicker/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
 <script src="/static/js/backstage/basicInfoManage/carModel.js"></script>
 </body>
 </html>

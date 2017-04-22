@@ -1,11 +1,17 @@
 $(function () {
+    initTable('table', '/carModel/queryByPagerCarModel'); // 初始化表格
+
+    initSelect2("carBrand", "请选择品牌", "/carBrand/queryAllCarBrand");
+});
+
+$(function () {
     $('#table').bootstrapTable('hideColumn', 'modelId');
-    //
-    // $("#addSelect").select2({
-    //         language: 'zh-CN'
-    //     }
-    // );
-    //
+
+    $("#addSelect").select2({
+            language: 'zh-CN'
+        }
+    );
+
     // //绑定Ajax的内容
     // $.getJSON("/table/queryType", function (data) {
     //     $("#addSelect").empty();//清空下拉框
@@ -39,8 +45,9 @@ function showEdit() {
 }
 
 function showAdd() {
-
     $("#addWindow").modal('show');
+    $("#addButton").removeAttr("disabled");
+    validator('addForm'); // 初始化验证
 }
 
 function formatRepo(repo) {
@@ -74,99 +81,103 @@ function checkAdd() {
     }
 }
 
-function checkEdit() {
-    $.post("/table/edit",
-        $("#editForm").serialize(),
-        function (data) {
-            if (data.result == "success") {
-                $("#editWindow").modal('hide'); // 关闭指定的窗口
-                $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
-                swal({
-                    title: "",
-                    text: data.message,
-                    type: "success"
-                })// 提示窗口, 修改成功
-            } else if (data.result == "fail") {
-                //$.messager.alert("提示", data.result.message, "info");
+//前端验证
+function validator(formId) {
+    $('#' + formId).bootstrapValidator({
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+            fields: {
+                modelName: {
+                    message: '车型名称验证失败',
+                    validators: {
+                        notEmpty: {
+                            message: '车型名称不能为空'
+                        },
+                        stringLength: {
+                            min: 1,
+                            max: 6,
+                            message: '车型名称长度必须在1到6位之间'
+                        }
+                    }
+                },
+            brandId: {
+                message: '汽车品牌验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '汽车品牌不能为空'
+                    }
+                }
+            },
+                modelDes: {
+                message: '车型描述验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '车型描述不能为空'
+                    }
+                }
+            },
+
+        }
+    })
+
+        .on('success.form.bv', function (e) {
+            if (formId == "showAddFormWar") {
+                formSubmit("/carModel/addCarModel", formId, "addWindow");
+
+            } else if (formId == "editForm") {
+                formSubmit("/carModel/updateCarModel", formId, "editWindow");
+
             }
-        }, "json"
-    );
+        })
+
 }
 
-//前端验证
-$(document).ready(function () {
-    $("#showAddFormWar").validate({
-        errorElement: 'span',
-        errorClass: 'help-block',
 
-        rules: {
-            modelName: {
-                required: true,
-                minlength: 2
-            },
-            modelDes: {
-                required: true,
-                minlength: 2
-            },
-        },
-        messages: {
-            modelName: "请输入车型名称",
-            modelDes: "请输入车型描述",
-        },
-        errorPlacement: function (error, element) {
-            element.next().remove();
-            element.after('<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>');
-            element.closest('.form-group').append(error);
-        },
-        highlight: function (element) {
-            $(element).closest('.form-group').addClass('has-error has-feedback');
-        },
-        success: function (label) {
-            var el = label.closest('.form-group').find("input");
-            el.next().remove();
-            el.after('<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>');
-            label.closest('.form-group').removeClass('has-error').addClass("has-feedback has-success");
-            label.remove();
-        },
-        submitHandler: function (form) {
-            alert("submitted!");
-        }
-    })
-    $("#showEditFormWar").validate({
-        errorElement: 'span',
-        errorClass: 'help-block',
 
-        rules: {
-            modelName: {
-                required: true,
-                minlength: 2
-            },
-            modelDes: {
-                required: true,
-                minlength: 2
-            },
-        },
-        messages: {
-            modelName: "请输入车型名称",
-            modelDes: "请输入车型描述",
-        },
-        errorPlacement: function (error, element) {
-            element.next().remove();
-            element.after('<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>');
-            element.closest('.form-group').append(error);
-        },
-        highlight: function (element) {
-            $(element).closest('.form-group').addClass('has-error has-feedback');
-        },
-        success: function (label) {
-            var el = label.closest('.form-group').find("input");
-            el.next().remove();
-            el.after('<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>');
-            label.closest('.form-group').removeClass('has-error').addClass("has-feedback has-success");
-            label.remove();
-        },
-        submitHandler: function (form) {
-            alert("submitted!");
-        }
-    })
-});
+function addSubmit(){
+    $("#showAddFormWar").data('bootstrapValidator').validate();
+    if ($("#showAddFormWar").data('bootstrapValidator').isValid()) {
+        $("#addButton").attr("disabled","disabled");
+    } else {
+        $("#addButton").removeAttr("disabled");
+    }
+}
+
+function editSubmit(){
+    $("#editForm").data('bootstrapValidator').validate();
+    if ($("#editForm").data('bootstrapValidator').isValid()) {
+        $("#editButton").attr("disabled","disabled");
+    } else {
+        $("#editButton").removeAttr("disabled");
+    }
+}
+
+function formSubmit(url, formId, winId){
+    $.post(url,
+        $("#" + formId).serialize(),
+        function (data) {
+            if (data.result == "success") {
+                $('#' + winId).modal('hide');
+                swal({
+                    title:"",
+                    text: data.message,
+                    confirmButtonText:"确定", // 提示按钮上的文本
+                    type:"success"})// 提示窗口, 修改成功
+                $('#table').bootstrapTable('refresh');
+                if(formId == 'addForm'){
+                    $("input[type=reset]").trigger("click");
+                    $('#showAddFormWar').data('bootstrapValidator').resetForm(true);
+                    $("#addButton").removeAttr("disabled");
+                }
+            } else if (data.result == "fail") {
+                swal({title:"",
+                    text:"添加失败",
+                    confirmButtonText:"确认",
+                    type:"error"})
+                $("#addButton").removeAttr("disabled");
+            }
+        }, "json");
+}
