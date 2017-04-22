@@ -106,13 +106,13 @@
 
 .fixed-table-container tbody td {
     border-left: 1px solid #dddddd;
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
 }
 
 .fixed-table-container tbody tr:first-child td {
     border-top: none;
-    overflow:hidden;
-    white-space:nowrap;
-    text-overflow:ellipsis;
 }
 
 .fixed-table-container tbody td:first-child {

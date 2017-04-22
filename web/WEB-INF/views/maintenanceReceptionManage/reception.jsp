@@ -470,7 +470,6 @@
     <script src="/static/js/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.js"></script>
     <script src="/static/js/bootstrap-dateTimePicker/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
     <script src="/static/js/backstage/maintenanceReception/reception.js"></script>
-    <script src="/static/js/bootstrap-select/bootstrap-select.js"></script>
 
 </body>
 </html>
