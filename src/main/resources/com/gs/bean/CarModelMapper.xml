@@ -22,7 +22,6 @@
     <select id="queryByBrandId" resultMap="carmodelMap">
         <![CDATA[
            select m.*,b.brandId from t_car_model m,t_car_brand b where m.brandId=b.brandId and b.brandId = #{id}
-
         ]]>
     </select>
 
@@ -35,7 +34,7 @@
 
     <select id="count" resultType="int" >
         <![CDATA[
-      select count(colorId) from t_car_model cm where cm.modelStaus = 'Y'
+      select count(modelId) from t_car_model cm where cm.modelStaus = 'Y'
     ]]>
     </select>
 
