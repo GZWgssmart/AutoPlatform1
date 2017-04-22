@@ -34,7 +34,7 @@ public class ModuleServiceImpl implements ModuleService {
 
 	@Override
 	public List<Module> queryAll(String status) {
-		return moduleDAO.queryAll();
+		return moduleDAO.queryAll(status);
 	}
 
 	public List<Module> queryByStatus(String status) { return moduleDAO.queryAll(status); }

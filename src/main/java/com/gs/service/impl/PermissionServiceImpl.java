@@ -34,7 +34,7 @@ public class PermissionServiceImpl implements PermissionService {
 
 	@Override
 	public List<Permission> queryAll(String status) {
-		return permissionDAO.queryAll();
+		return permissionDAO.queryAll(status);
 	}
 
 	public List<Permission> queryByStatus(String status) { return permissionDAO.queryAll(status); }
@@ -45,15 +45,5 @@ public class PermissionServiceImpl implements PermissionService {
 	public int inactive(String id) { return permissionDAO.inactive(id); }
 	public int active(String id) { return permissionDAO.active(id); }
 
-	public List<Permission> queryPermissionById(Integer id) {
-		return permissionDAO.queryPermissionById(id);
-	}
 
-	public void addPermission(int roleId, int permissionId) {
-		permissionDAO.addPermission(roleId, permissionId);
-	}
-
-	public void removePermission(int roleId, int permissionId) {
-		permissionDAO.removePermission(roleId, permissionId);
-	}
 }

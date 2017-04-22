@@ -7,7 +7,26 @@
     <result column="roleDes" property="roleDes" jdbcType="VARCHAR" />
     <result column="roleStatus" property="roleStatus" jdbcType="VARCHAR" />
   </resultMap>
-  <select id="queryAll" resultMap="roleMap">
-    select * from t_role r;
+  <select id="queryAll" resultMap="roleMap" >
+    select * from t_role r
+    <where>
+      <if test="roleStatus!=null">
+        r.roleStatus = #{roleStatus}
+      </if>
+    </where>
   </select>
+
+  <insert id="insert" parameterType="role">
+    insert into t_role(roleId, roleName, roleDes, roleStatus)
+						values(#{roleId},#{roleName}, #{roleDes}, 'Y');
+  </insert>
+  
+  <update id="update" parameterType="role">
+    update t_role set roleName = #{roleName}, roleDes =#{roleDes}
+     where roleId = #{roleId}
+  </update>
+
+
+
+
 </mapper>

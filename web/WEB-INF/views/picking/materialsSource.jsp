@@ -51,10 +51,14 @@
             <thead>
             <tr>
                 <th data-radio="true" data-field="status"></th>
-                <th data-field="materialName">记录ID</th>
-                <th data-field="materielState">记录创建时间</th>
-                <th ddata-field="materielCount">所需工时</th>
-                <th data-field="maintain">车型</th>
+                <th data-field="materialName">物料名称</th>
+                <th data-field="materielState">物料说明</th>
+                <th ddata-field="materielCount">物料数量</th>
+                <th data-field="maintain">维修保养记录</th>
+                <th data-field="materiel_Receive_Time">领料时间</th>
+                <th data-field="accCount">退料数量</th>
+                <th data-field="mrReturnDate">退料时间</th>
+                <th data-field="materielStatus">状态</th>
             </tr>
             </thead>
         </table>

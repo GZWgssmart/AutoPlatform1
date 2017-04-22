@@ -1,5 +1,7 @@
 package com.gs.bean;
 
+import java.util.List;
+
 public class Module {
     private String moduleId;
 
@@ -8,6 +10,8 @@ public class Module {
     private String moduleDes;
 
     private String moduleStatus;
+
+    private List<Permission> permissions;
 
     public String getModuleId() {
         return moduleId;
@@ -39,5 +43,13 @@ public class Module {
 
     public void setModuleStatus(String moduleStatus) {
         this.moduleStatus = moduleStatus;
+    }
+
+    public List<Permission> getPermissions() {
+        return permissions;
+    }
+
+    public void setPermissions(List<Permission> permissions) {
+        this.permissions = permissions;
     }
 }

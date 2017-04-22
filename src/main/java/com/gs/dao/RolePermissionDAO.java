@@ -1,5 +1,6 @@
 package com.gs.dao;
 
+import com.gs.bean.Permission;
 import com.gs.bean.RolePermission;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -21,4 +22,14 @@ public interface RolePermissionDAO extends BaseDAO<String, RolePermission>{
      * @return
      */
     public List<String> queryAllPermissionByRoleName(@Param("roleName")String roleName);
+
+    public List<Permission> queryPermissionById(Integer id);
+    public void addPermission(@Param("roleId")int roleId, @Param("permissionId")int permissionId);
+    public void removePermission(@Param("roleId")int roleId, @Param("permissionId")int permissionId);
+
+    /**
+     *
+     * append
+     */
+    public List<Permission> queryPermissions(@Param("roleId") String roleId, @Param("roleStatus") String roleStatus);
 }

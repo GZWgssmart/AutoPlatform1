@@ -1,5 +1,6 @@
 package com.gs.service.impl;
 
+import com.gs.bean.Permission;
 import com.gs.bean.Role;
 import com.gs.dao.RoleDAO;
 import com.gs.service.RoleService;
@@ -34,8 +35,10 @@ public class RoleServiceImpl implements RoleService {
 
 	@Override
 	public List<Role> queryAll(String status) {
-		return roleDAO.queryAll();
+		return roleDAO.queryAll(status);
 	}
+
+
 
 	public List<Role> queryByStatus(String status) { return roleDAO.queryAll(status); }
 	public Role query(Role role) { return roleDAO.query(role); }
@@ -44,5 +47,8 @@ public class RoleServiceImpl implements RoleService {
 	public int count() { return roleDAO.count(); }
 	public int inactive(String id) { return roleDAO.inactive(id); }
 	public int active(String id) { return roleDAO.active(id); }
+
+
+
 
 }

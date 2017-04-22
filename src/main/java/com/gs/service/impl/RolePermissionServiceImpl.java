@@ -28,4 +28,24 @@ public class RolePermissionServiceImpl implements RolePermissionService {
 		return permissions;
 	}
 
+	@Override
+	public List<com.gs.bean.Permission> queryPermissionById(Integer id) {
+		return rolePermissionDAO.queryPermissionById(id);
+	}
+
+	@Override
+	public void addPermission(int roleId, int permissionId) {
+		rolePermissionDAO.addPermission(roleId,permissionId);
+	}
+
+	@Override
+	public void removePermission(int roleId, int permissionId) {
+		rolePermissionDAO.removePermission(roleId,permissionId);
+	}
+
+	@Override
+	public List<com.gs.bean.Permission> queryPermissions(String roleId, String roleStatus) {
+		return rolePermissionDAO.queryPermissions(roleId,roleStatus);
+	}
+
 }

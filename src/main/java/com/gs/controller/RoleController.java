@@ -2,8 +2,10 @@ package com.gs.controller;
 
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.Permission;
+import com.gs.bean.Role;
 import com.gs.common.bean.ControllerResult;
 import com.gs.service.PermissionService;
+import com.gs.service.RolePermissionService;
 import com.gs.service.RoleService;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -27,6 +29,8 @@ public class RoleController {
     private RoleService roleService;
     @Resource
     private PermissionService permissionService;
+    @Resource
+    private RolePermissionService rolePermissionService;
 
     @RequestMapping(value = "roleIndex" ,method = RequestMethod.GET)
     public ModelAndView tableIndex(){
@@ -35,29 +39,49 @@ public class RoleController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/permission/{id}" ,method = RequestMethod.POST)
-    public List<Permission> insert(@PathVariable("id") int id){
-        logger.info("展示角色权限");
-        List<Permission> ps = permissionService.queryAll();
-        System.out.print(ps+"__________");
-        List<Permission> ps1 = permissionService.queryPermissionById(id);
-        System.out.print(ps1+"__________");
-        for(Permission p : ps){
-            for (Permission p1 : ps1){
-                if(p.getPermissionId() == p1.getPermissionId()){
-                    p.setStatus("true");
-                }
-            }
-        }
-        System.out.print(ps+"__________");
-        return ps;
+    @RequestMapping(value = "queryAll")
+    public List<Role> queryAll(){
+        return roleService.queryAll("Y");
     }
+
+    @ResponseBody
+    @RequestMapping(value = "recycle")
+    public List<Role> queryRecycle(){
+        return roleService.queryAll("N");
+    }
+
+
+    @ResponseBody
+    @RequestMapping(value = "/permissions/{id}")
+    public List<Permission> queryPermissions(@PathVariable("id") String id){
+        return rolePermissionService.queryPermissions(id, "Y");
+    }
+
+
+//    @ResponseBody
+//    @RequestMapping(value = "/permission/{id}" ,method = RequestMethod.GET)
+//    public List<Permission> insert(@PathVariable("id") int id){
+//        logger.info("展示角色权限");
+//        List<Permission> ps = permissionService.queryAll();
+//        System.out.print(ps+"__________");
+//        List<Permission> ps1 = permissionService.queryPermissionById(id);
+//        System.out.print(ps1+"__________");
+//        for(Permission p : ps){
+//            for (Permission p1 : ps1){
+//                if(p.getPermissionId() == p1.getPermissionId()){
+//                    p.setStatus("true");
+//                }
+//            }
+//        }
+//        System.out.print(ps+"__________");
+//        return ps;
+//    }
 
     @ResponseBody
     @RequestMapping(value = "/addPermission/{roleId}/{permissionId}" ,method = RequestMethod.GET)
     public ControllerResult addPermission(@PathVariable("roleId") int roleId, @PathVariable("permissionId") int permissionId){
         logger.info("添加角色权限");
-        permissionService.addPermission(roleId, permissionId);
+        rolePermissionService.addPermission(roleId, permissionId);
         return ControllerResult.getSuccessResult("添加权限成功");
     }
 
@@ -65,7 +89,7 @@ public class RoleController {
     @RequestMapping(value = "/removePermission/{roleId}/{permissionId}" ,method = RequestMethod.GET)
     public ControllerResult removePermission(@PathVariable("roleId") int roleId, @PathVariable("permissionId") int permissionId){
         logger.info("删除角色权限");
-        permissionService.removePermission(roleId, permissionId);
+        rolePermissionService.removePermission(roleId, permissionId);
         return ControllerResult.getSuccessResult("删除权限成功");
     }
 

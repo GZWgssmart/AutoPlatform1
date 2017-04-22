@@ -6,6 +6,18 @@
     <result column="moduleName" property="moduleName" jdbcType="VARCHAR" />
     <result column="moduleDes" property="moduleDes" jdbcType="VARCHAR" />
     <result column="moduleStatus" property="moduleStatus" jdbcType="VARCHAR" />
+      <association resultMap="com.gs.dao.PermissionDAO.permissionMap" property="permissions"></association>
   </resultMap>
+
+  <select id="queryAll" resultType="module">
+      select * from t_module m
+      <where>
+        <if test="moduleStatus!=null">
+          m.moduleStatus = #{moduleStatus}
+        </if>
+      </where>
+  </select>
+
+
 
 </mapper>

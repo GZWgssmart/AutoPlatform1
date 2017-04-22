@@ -8,21 +8,32 @@
     <result column="permissionDes" property="permissionDes" jdbcType="VARCHAR" />
     <result column="moduleId" property="moduleId" jdbcType="VARCHAR" />
     <result column="permissionStatus" property="permissionStatus" jdbcType="VARCHAR" />
+    <association property="module" resultMap="com.gs.dao.ModuleDAO.moduleMap" ></association>
   </resultMap>
-  <select id="queryAll" resultMap="permissionMap">
-    select * from t_permission;
+  <select id="queryAll" resultType="permission">
+    select * from t_permission
+    <where>
+      <if test="permissionStatus!=null" >
+        permissionStatus = #{permissionStatus}
+      </if>
+    </where>
   </select>
 
-  <select id="queryPermissionById" resultMap="permissionMap">
-    select * from t_permission p where permissionId in (select permissionId from t_role_permission rp where roleId in (select r.roleId from t_role r where roleId = #{id}))
+  <select id="queryByPager" resultType="permission">
+    select * from t_permission
+      limit #{beginIndex}, #{pageSize}
   </select>
 
-  <delete id="removePermission">
-    delete from t_role_permission where roleId = #{roleId} and permissionId = #{permissionId}
-  </delete>
-
-  <insert id="addPermission">
-    insert into t_role_permission(rpId, roleId,permissionId,rpCreatedTime) values(uuid(),#{roleId}, #{permissionId}, now())
+  <insert id="insert" parameterType="permission">
+    insert into t_permission values(#{permissionId}, #{permissionName},#{permissionZhname},#{permissionDes},#{module.moduleId}, 'Y')
   </insert>
+
+  <update id="update" parameterType="permission">
+    update t_permission set permissionName= #{permissionName}, permissionZHName=#{permissionZHName}, permissionDes=#{permissionDes}
+  </update>
+
+  <update id="updStatus" >
+    update t_permission set permissionStatus = #{permissionStatus} where permissionId = #{permissionId};
+  </update>
 
 </mapper>

@@ -1,7 +1,12 @@
 package com.gs.dao;
 
+import com.gs.bean.Permission;
 import com.gs.bean.Role;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
 /**
 *由CSWangBin技术支持
 *
@@ -11,5 +16,5 @@ import org.springframework.stereotype.Repository;
 */
 @Repository
 public interface RoleDAO extends BaseDAO<String, Role>{
-
+    public List<Role> queryAll(@Param("roleStatus") String roleStatus);
 }

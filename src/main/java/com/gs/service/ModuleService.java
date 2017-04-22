@@ -10,5 +10,4 @@ import com.gs.bean.Module;
 *@des 模块表Service
 */
 public interface ModuleService extends BaseService<String, Module>{
-
 }

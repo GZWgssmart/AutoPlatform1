@@ -15,9 +15,16 @@ public class Permission {
 
     private String status;
 
-    public String getPermissionId() {
-        return permissionId;
+    public Module module;
+
+    /**
+     *
+     *  append
+     */
+    public Module getModule() {
+        return module;
     }
+
 
     public void setPermissionId(String permissionId) {
         this.permissionId = permissionId;
@@ -81,5 +88,14 @@ public class Permission {
                 ", permissionStatus='" + permissionStatus + '\'' +
                 ", status='" + status + '\'' +
                 '}';
+    }
+
+
+    public void setModule(Module module) {
+        this.module = module;
+    }
+
+    public String getPermissionId() {
+        return permissionId;
     }
 }

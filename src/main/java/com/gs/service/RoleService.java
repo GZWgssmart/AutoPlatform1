@@ -1,6 +1,8 @@
 package com.gs.service;
 
+import com.gs.bean.Permission;
 import com.gs.bean.Role;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -12,5 +14,7 @@ import java.util.List;
 *@des 
 */
 public interface RoleService extends BaseService<String, Role>{
-    public List<Role> queryAll();
+    public List<Role> queryAll(String rolestatus);
+
+
 }
