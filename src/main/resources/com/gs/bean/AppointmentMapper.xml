@@ -81,7 +81,8 @@
         brandId = #{brandId}, colorId = #{colorId}, modelId = #{modelId}, plateId = #{plateId}, carPlate = #{carPlate},
         arriveTime = #{arriveTime}, maintainOrFix = #{maintainOrFix}, appCreatedTime = #{appCreatedTime},
          companyId = #{companyId}, appoitmentStatus = #{appoitmentStatus}
-         WHERE
+         WHERE userId = #{userId}
     ]]>
   </insert>
+  
 </mapper>

@@ -77,6 +77,9 @@
             <button id="btn_edit" type="button" class="btn btn-default" onclick="showEdit();">
                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
             </button>
+            <button id="btn_del" type="button" class="btn btn-default" onclick="showDel();">
+                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>删除
+            </button>
         </div>
     </div>
 </div>
@@ -185,13 +188,13 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">车主电话：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="userPhone" define="Appointment.userPhone" placeholder="请输入车主电话" class="form-control">
+                        <input type="text" name="userPhone" define="Appointment.userPhone" placeholder="请输入车主电话" class="form-control" maxlength="11">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">汽车的品牌：</label>
+                    <label class="col-sm-3 control-label">汽车品牌：</label>
                     <div class="col-sm-7">
-                        <input type="number" name="brandId" define="Appointment.brandId" placeholder="请输入汽车的品牌" class="form-control" maxlength="11">
+                        <input type="text" name="brandId" define="Appointment.brandId" placeholder="请输入汽车的品牌" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
@@ -203,7 +206,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">汽车车型：</label>
                     <div class="col-sm-7">
-                        <input type="number" name="modelId" define="Appointment.modelId" placeholder="请输入汽车车型" class="form-control">
+                        <input type="text" name="modelId" define="Appointment.modelId" placeholder="请输入汽车车型" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
@@ -221,7 +224,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">到店时间：</label>
                     <div class="col-sm-7">
-                        <input type="number" name="arriveTime" define="Appointment.arriveTime" id="editArriveTime" placeholder="请输入到店时间" class="form-control" maxlength="11">
+                        <input type="text" name="arriveTime" define="Appointment.arriveTime" id="editArriveTime" placeholder="请输入到店时间" class="form-control" >
                     </div>
                 </div>
                 <div class="form-group">
@@ -252,6 +255,27 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+<!-- 删除弹窗 -->
+<div class="modal fade" id="del" aria-hidden="true">
+    <div class="modal-dialog">
+        <form action="/table/edit" method="post">
+            <div class="modal-content">
+                <input type="hidden" id="delNoticeId"/>
+                <div class="modal-footer" style="text-align: center;">
+                    <h2>确认删除吗?</h2>
+                    <button type="button" class="btn btn-default"
+                            data-dismiss="modal">关闭
+                    </button>
+                    <button type="sumbit" class="btn btn-primary" onclick="del()">
+                        确认
+                    </button>
+                </div>
+            </div><!-- /.modal-content -->
+        </form>
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 <script src="/static/js/jquery.min.js"></script>
 <script src="/static/js/bootstrap.min.js"></script>
 <script src="/static/js/bootstrap-table/bootstrap-table.js"></script>

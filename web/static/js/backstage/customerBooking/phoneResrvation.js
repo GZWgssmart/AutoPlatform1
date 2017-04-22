@@ -125,13 +125,19 @@ function checkEdit(url) {
         function (data) {
             if (data.result == "success") {
                 $("#editWindow").modal('hide'); // 关闭指定的窗口
+
                 $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
                 swal({
                     title:"",
                     text: data.message,
                     type:"success"})// 提示窗口, 修改成功
             } else if (data.result == "fail") {
-                //$.messager.alert("提示", data.result.message, "info");
+                swal({
+                    title: "",
+                    text: "",
+                    confirmButtonText: "删除成功",
+                    type: "error"
+                })
             }
         }, "json"
     );
