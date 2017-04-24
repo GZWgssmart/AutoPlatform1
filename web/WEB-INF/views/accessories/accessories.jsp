@@ -96,13 +96,7 @@
                         <input type="text" name="accCommodityCode" placeholder="请输入配件商品条码" class="form-control">
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">配件描述：</label>
-                    <div class="col-sm-7">
-                        <textarea type="text" name="accDes" placeholder="请输入相关内容" style="height: 100px;"
-                                  class="form-control"></textarea>
-                    </div>
-                </div>
+
                 <div class="form-group">
                     <label class="col-sm-3 control-label">配件价格：</label>
                     <div class="col-sm-7">
@@ -128,9 +122,16 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <label class="col-sm-3 control-label">配件描述：</label>
+                    <div class="col-sm-7">
+                        <textarea type="text" name="accDes" placeholder="请输入相关内容" style="height: 100px;"
+                                  class="form-control"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
                     <div class="col-sm-offset-8">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button class="btn btn-sm btn-success" type="submit">保 存</button>
+                        <button class="btn btn-sm btn-success" onclick="addSubmit();" type="button">保 存</button>
                     </div>
                 </div>
             </form>
@@ -150,62 +151,72 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">公司名称：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="companyId" define="Accessories.companyId" placeholder="请输入公司名称" class="form-control">
+                        <input type="text" name="companyId" define="Accessories.companyId" placeholder="请输入公司名称"
+                               class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">配件所属类别：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="accTypeId" define="Accessories.accTypeId" placeholder="请输入配件所属类别" class="form-control">
+                        <input type="text" name="accTypeId" define="Accessories.accTypeId" placeholder="请输入配件所属类别"
+                               class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">配件名称：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="accName" define="Accessories.accName" placeholder="请输入配件名称" class="form-control">
+                        <input type="text" name="accName" define="Accessories.accName" placeholder="请输入配件名称"
+                               class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">配件商品条码：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="accCommodityCode" define="Accessories.accCommodityCode" placeholder="请输入配件商品条码" class="form-control">
+                        <input type="text" name="accCommodityCode" define="Accessories.accCommodityCode"
+                               placeholder="请输入配件商品条码" class="form-control">
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">配件描述：</label>
-                    <div class="col-sm-7">
-                        <textarea type="text" name="accDes" define="Accessories.accDes" placeholder="请输入相关内容" style="height: 100px;"
-                                  class="form-control"></textarea>
-                    </div>
-                </div>
+
                 <div class="form-group">
                     <label class="col-sm-3 control-label">配件价格：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="accPrice" define="Accessories.accPrice" placeholder="请输入配件价格" class="form-control">
+                        <input type="text" name="accPrice" define="Accessories.accPrice" placeholder="请输入配件价格"
+                               class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">配件售价：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="accSalePrice" define="Accessories.accSalePrice" placeholder="请输入配件售价" class="form-control">
+                        <input type="text" name="accSalePrice" define="Accessories.accSalePrice" placeholder="请输入配件售价"
+                               class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">配件数量：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="accTotal" define="Accessories.accTotal" placeholder="请输入配件数量" class="form-control">
+                        <input type="text" name="accTotal" define="Accessories.accTotal" placeholder="请输入配件数量"
+                               class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">配件可用数量：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="accIdle" define="Accessories.accIdle" placeholder="请输入配件可用数量" class="form-control">
+                        <input type="text" name="accIdle" define="Accessories.accIdle" placeholder="请输入配件可用数量"
+                               class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">配件描述：</label>
+                    <div class="col-sm-7">
+                        <textarea type="text" name="accDes" define="Accessories.accDes" placeholder="请输入相关内容"
+                                  style="height: 100px;"
+                                  class="form-control"></textarea>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-8">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button class="btn btn-sm btn-success" type="submit">保 存</button>
+                        <button class="btn btn-sm btn-success" onclick="editSubmit();" type="button">保 存</button>
                     </div>
                 </div>
             </form>
