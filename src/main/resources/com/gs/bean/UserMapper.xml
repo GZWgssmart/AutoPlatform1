@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gs.dao.UserDAO">
-  <resultMap id="BaseResultMap" type="com.gs.bean.User">
+  <resultMap id="userBasicManageMap" type="com.gs.bean.User">
     <id column="userId" jdbcType="VARCHAR" property="userId" />
     <result column="userEmail" jdbcType="VARCHAR" property="userEmail" />
     <result column="userPhone" jdbcType="VARCHAR" property="userPhone" />
@@ -22,33 +22,74 @@
     <result column="userCreatedTime" jdbcType="TIMESTAMP" property="userCreatedTime" />
     <result column="userLoginedTime" jdbcType="TIMESTAMP" property="userLoginedTime" />
     <result column="userStatus" jdbcType="VARCHAR" property="userStatus" />
+
+    <association property="company" javaType="com.gs.bean.Company">
+      <id property="companyId" column="companyId"></id>
+      <result property="companyName" column="companyName"></result>
+      <result property="companyDes" column="compangyDes"></result>
+    </association>
+    
+    <association property="role" javaType="com.gs.bean.Role">
+      <id property="roleId" column="roleId"></id>
+      <result property="roleName" column="roleName"></result>
+    </association>
+
   </resultMap>
 
   <!-- 添加员工的基本信息 -->
   <insert id="insert" useGeneratedKeys="true" keyProperty="userId" parameterType="user">
     <![CDATA[
-        insert into t_user(userEmail, userPhone, userPwd, userNickName,
-          userIdentity, userName, userGender,userBirthday, userBirthday,
+        insert into t_user(userId, userEmail, userPhone, userPwd, userNickName,
+          userIdentity, userName, userGender,userBirthday,
           userAddress, qqOpenId, weiboOpenId, weChatOpenId, userIcon,
           userDes, companyId, userSalary, userCreatedTime, userLoginedTime,
-          userStatus) vlaues(#{userEmail}, #{userPhone}, #{userPwd}, #{userNickName},
-          #{userIdentity}, #{userName}, #{userGender},#{userBirthday}, #{userBirthday},
+          userStatus) vlaues(uuid(), #{userEmail}, #{userPhone}, #{userPwd}, #{userNickName},
+          #{userIdentity}, #{userName}, #{userGender},#{userBirthday},
           #{userAddress}, #{qqOpenId}, #{weiboOpenId}, #{weChatOpenId}, #{userIcon},
-          #{userDes}, #{companyId}, #{userSalary}, #{userCreatedTime}, #{userLoginedTime},
-          #{userStatus});
+          #{userDes}, #{companyId}, #{userSalary}, now(), #{userLoginedTime},'Y');
       ]]>
   </insert>
 
   <!-- 修改员工的基本信息 -->
   <update id="update" keyProperty="userId" parameterType="user">
+     <![CDATA[
+       update t_user u set u.userEmail = #{userEmail}, u.userPhone = #{userPhone},
+         u.userPwd = #{userPwd}, u.userNickName = #{userNickName}, u.userGender = #{userGender},
+         u.userBirthDay = #{userBirthday}, u.userAddress = #{userAddress}, u.userIcon = #{userIcon},
+         u.userDes = #{userDes}, u.userSalary = #{usersalary} where u.userId = #{userId};
+     ]]>
   </update>
 
-  <!-- 分页查询 -->
-  <select id="queryByPager" resultMap="BaseResultMap" parameterType="com.gs.common.bean.Pager">
+  <!-- 禁用 -->
+  <update id="setDisabled" parameterType="user" keyProperty="userId">
     <![CDATA[
-      select * from t_user u where 1 = 1 and u.userStatus = 'Y'
+      update t_user u set u.userStatus = 'N' where u.userId = #{userId};
     ]]>
-      limit #{beginIndex}, #{pageSize};
+  </update>
+
+  <!-- 激活 -->
+  <update id="setActivate" parameterType="user" keyProperty="userId">
+    <![CDATA[
+      update t_user u set u.userStatus = 'Y' where u.userId = #{userId};
+    ]]>
+  </update>
+
+  <!-- 分页查询全部 -->
+  <select id="queryByPagerAll" resultMap="userBasicManageMap" parameterType="com.gs.common.bean.Pager">
+    <![CDATA[
+      select * from t_user u left join t_company c on u.companyId = c.companyId
+    ]]>
+     limit #{beginIndex}, #{pageSize};
+  </select>
+
+  <!-- 分页查询状态为可用的员工及角色名称 -->
+  <select id="queryByPager" resultMap="userBasicManageMap" parameterType="com.gs.common.bean.Pager">
+    <![CDATA[
+      select u.*, r.roleName, c.companyId, c.companyName from t_user u, t_user_role ur, t_role r, t_company c
+        where u.userStatus = 'Y' and ur.userId = u.userId
+          and r.roleId = ur.roleId and u.companyId = c.companyId
+    ]]>
+     limit #{beginIndex}, #{pageSize};
   </select>
 
   <select id="count" resultType="int" >
@@ -58,11 +99,10 @@
   </select>
 
   <!-- 查询所有员工的基本信息 -->
-  <select id="queryAll" resultMap="BaseResultMap">
+  <select id="queryAll" resultMap="userBasicManageMap">
     <![CDATA[
       select * from t_user;
     ]]>
   </select>
-
 
 </mapper>
