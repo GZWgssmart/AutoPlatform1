@@ -54,7 +54,7 @@
       select count(supplyId) from t_supply s where s.supplyStatus = 'Y'
     ]]>
   </select>
-
+ 
   <select id="countByDisable" resultType="int" >
     <![CDATA[
       select count(supplyId) from t_supply s where s.supplyStatus = 'N'
