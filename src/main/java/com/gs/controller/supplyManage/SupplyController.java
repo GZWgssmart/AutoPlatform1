@@ -53,6 +53,10 @@ public class SupplyController {
         return new Pager4EasyUI<Supply>(pager.getTotalRecords(), supplyList);
      }
 
+    /**
+     * 分页查询禁用的供应商
+     * @return
+     */
     @ResponseBody
     @RequestMapping(value = "queryByPagerDisable",method = RequestMethod.GET)
     public Pager4EasyUI<Supply> queryByPagerDisable(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
@@ -108,7 +112,7 @@ public class SupplyController {
     @RequestMapping(value = "statusOperate",method = RequestMethod.POST)
     public ControllerResult inactive(String supplyId,String supplyStatus){
         if(supplyId!=null&&!supplyId.equals("")&&supplyStatus!=null&&!supplyStatus.equals("")){
-            if (supplyStatus.equals("Y")){
+            if (supplyStatus.equals("N")){
                 supplyService.active(supplyId);
                 logger.info("激活成功");
                 return ControllerResult.getSuccessResult("激活成功");

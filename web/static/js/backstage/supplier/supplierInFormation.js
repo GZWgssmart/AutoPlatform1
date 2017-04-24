@@ -47,7 +47,6 @@ function showEdit(){
         var supply = row[0];
         $('#editSupplyType').html('<option value="' + supply.supplyType.supplyTypeId + '">' + supply.supplyType.supplyTypeName + '</option>').trigger("change");
         /*$('#editCompanyName').html('<option value="' + supply.company.companyId + '">' + supply.company.companyName + '</option>').trigger("change");*/
-        alert(supply.supplyId)
         $("#editForm").fill(supply);
         validator('editForm');
     }else{
@@ -66,6 +65,18 @@ function showAdd(){
     $("#addButton").removeAttr("disabled");
     validator('addForm'); // 初始化验证
 }
+
+/*$("#bankAccountNumber").change(function(){
+    alert("1");
+    var account = $("addForm.bankAccount.account").val();
+    alert("2");
+    var reg = /^\d{19}$/g;   // 以19位数字开头，以19位数字结尾
+    if( !reg.test(account) )
+    {
+        alert("格式错误，应该是19位数字！");
+    }
+
+})*/
 
 function validator(formId) {
     $('#' + formId).bootstrapValidator({
@@ -126,6 +137,14 @@ function validator(formId) {
                 validators: {
                     notEmpty: {
                         message: '供应商微信号不能为空'
+                    },
+                    stringLength: {
+                        min: 5,
+                        message: '微信号必须在5位以上，只支持数字，英文以及下划线'
+                    },
+                    regexp: {
+                        regexp: /^[a-zA-Z\d_]{5,}$/,
+                        message: '请输入正确的微信号'
                     }
                 }
             },
@@ -150,6 +169,15 @@ function validator(formId) {
                 validators: {
                     notEmpty: {
                         message: '供应商支付宝不能为空'
+                    },
+                    stringLength: {
+                        min: 11,
+                        max: 11,
+                        message: '支付宝账号必须为11位'
+                    },
+                    regexp: {
+                        regexp: /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/,
+                        message: '请输入正确的支付宝帐号'
                     }
                 }
             },
@@ -174,6 +202,15 @@ function validator(formId) {
                 validators: {
                     notEmpty: {
                         message: '开户卡号不能为空'
+                    },
+                    stringLength: {
+                        min: 16,
+                        max: 19,
+                        message: '开户卡号长度保持在16-19位'
+                    },
+                    regexp: {
+                        regexp: /^(\d{16}|\d{19})$/,
+                        message: '请输入正确的卡号'
                     }
                 }
             }
@@ -182,10 +219,10 @@ function validator(formId) {
 
         .on('success.form.bv', function (e) {
             if (formId == "addForm") {
-                formSubmit("/supply/add", formId, "addWindow");
+                formSubmit("/supply/addSupply", formId, "addWindow");
 
             } else if (formId == "editForm") {
-                formSubmit("/supply/edit", formId, "editWindow");
+                formSubmit("/supply/updateSupply", formId, "editWindow");
 
             }
         })
@@ -283,15 +320,15 @@ function formatterStatus(index,row) {
 
 function openStatusFormatter(index, row) {
     /*处理数据*/
-    if (row.supplyStatus == 'Y') {
+    if (row.supplyStatus == 'N') {
         return "&nbsp;&nbsp;<button type='button' class='btn btn-danger' onclick='inactive(\""+row.supplyId+ "\")'>禁用</a>";
     } else {
-        return "&nbsp;&nbsp;<button type='button' class='btn btn-success' onclick='inactive(\""+row.supplyId+ "\")'>激活</a>";
+        return "&nbsp;&nbsp;<button type='button' class='btn btn-success' onclick='active(\""+row.supplyId+ "\")'>激活</a>";
     }
 
 }
 
-//禁用状态
+//冻结状态
 function inactive(supplyId) {
     $.post("/supply/statusOperate?supplyId="+ supplyId + "&" + "supplyStatus=" + 'N',
         function(data){
