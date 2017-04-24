@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -93,7 +94,7 @@ public class PhoneReservationController {
      public ControllerResult update(Appointment appointment){
          if(appointment != null && !appointment.equals("")){
              logger.info("修改电话预约");
-             appointmentService.insert(appointment);
+             appointmentService.update(appointment);
              return ControllerResult.getSuccessResult("添加成功");
          }else {
              return ControllerResult.getFailResult("添加失败，请输入必要信息");
@@ -113,19 +114,37 @@ public class PhoneReservationController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "active",method = RequestMethod.POST)
-    public ControllerResult active(String id) {
-        logger.info("激活");
-        if(id !=null) {
-            appointmentService.active(id);
-            return ControllerResult.getSuccessResult("激活成功");
+    @RequestMapping(value="blurredQuery", method = RequestMethod.GET)
+    public Pager4EasyUI<Appointment> blurredQuery(HttpServletRequest request, @Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
+        logger.info("登记记录模糊查询");
+        String column = request.getParameter("column");
+        String value = request.getParameter("value");
+        if(column != null && value != null) {
+            Pager pager = new Pager();
+            pager.setPageNo(Integer.valueOf(pageNumber));
+            pager.setPageSize(Integer.valueOf(pageSize));
+            pager.setTotalRecords(appointmentService.countByBlurred());
+            List<Appointment> appointments;
+            if(column.equals("all")){
+                String column1 = "userName";
+                String column2 = "companyId";
+                String column3 = "plateId";
+                appointments = appointmentService.blurredQuery(pager, column, value);
+            }else{
+                appointments = appointmentService.blurredQuery(pager, column, value);
+            }
+            return new Pager4EasyUI<Appointment>(pager.getTotalPages(), appointments);
         }else{
-            return ControllerResult.getFailResult("激活失败");
+            return null;
         }
     }
+
+    /**
+     * 时间格式化
+     */
     @InitBinder
     public void initBinder(WebDataBinder binder) {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         dateFormat.setLenient(false);
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
     }

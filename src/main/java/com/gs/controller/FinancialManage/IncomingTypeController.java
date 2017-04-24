@@ -95,6 +95,7 @@ public class IncomingTypeController {
     @ResponseBody
     @RequestMapping(value = "checkInTypeName", method = RequestMethod.GET)
     public boolean checkInTypeName(String inTypeName) {
+        System.out.printf("lllll", inTypeName + "dgdsgfdgfdg");
         IncomingType incomingType = incomingTypeService.queryById(inTypeName);
         if(incomingType != null){
             return true;

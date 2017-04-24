@@ -33,6 +33,25 @@ public class Supply {
 
     private String supplyStatus;        // 供应商状态
 
+    private SupplyType supplyType;      // 供应商类型
+    private Company company;            // 供应商公司
+
+    public SupplyType getSupplyType() {
+        return supplyType;
+    }
+
+    public void setSupplyType(SupplyType supplyType) {
+        this.supplyType = supplyType;
+    }
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
+    }
+
     public String getSupplyId() {
         return supplyId;
     }

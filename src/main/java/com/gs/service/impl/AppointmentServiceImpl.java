@@ -51,4 +51,12 @@ public class AppointmentServiceImpl implements AppointmentService {
 	public int countByDisable() {
 		return appointmentDAO.countByDisable();
 	}
+
+	public List<Appointment> blurredQuery(Pager pager, String cloumn, String value) {
+		return null;
+	}
+
+	public int countByBlurred() {
+		return 0;
+	}
 }

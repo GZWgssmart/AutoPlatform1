@@ -1,6 +1,7 @@
 $(function () {
 });
 
+// 初始化带有分秒的时间框
 function initDateTimePicker(formId, field){
     $(".datetimepicker").datetimepicker({
         language: 'zh-CN',
@@ -8,7 +9,26 @@ function initDateTimePicker(formId, field){
         initialDate: new Date(),
         autoclose: true,
         todayHighligh:true,
-        todayBtn :true // 显示今日按钮
+        todayBtn :true, // 显示今日按钮
+        autoclose: 1
+    }).on('hide',function(e) {
+        $('#'+formId).data('bootstrapValidator')
+            .updateStatus(field, 'NOT_VALIDATED',null)
+            .validateField(field);
+    });
+}
+
+// 初始化没有分秒的时间框
+function initDatePicker(formId, field){
+    $(".datetimepicker").datetimepicker({
+        minView: "month", //选择日期后，不会再跳转去选择时分秒
+        language: 'zh-CN',
+        format: 'yyyy-mm-dd',
+        initialDate: new Date(),
+        autoclose: true,
+        todayHighligh:true,
+        todayBtn :true, // 显示今日按钮
+        autoclose: 1
     }).on('hide',function(e) {
         $('#'+formId).data('bootstrapValidator')
             .updateStatus(field, 'NOT_VALIDATED',null)

@@ -2,16 +2,21 @@ package com.gs.controller;
 
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.Checkin;
+import com.gs.bean.MaintainRecord;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
 import com.gs.service.CheckinService;
+import com.gs.service.MaintainRecordService;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -29,8 +34,12 @@ public class CheckinController {
 
     private Logger logger = (Logger) LoggerFactory.getLogger(CheckinController.class);
 
+    // 登记service
     @Resource
     private CheckinService checkinService;
+    // 维修保养记录service
+    @Resource
+    private MaintainRecordService maintainRecordService;
 
     /**
      * 查询所有登记记录
@@ -70,6 +79,9 @@ public class CheckinController {
         logger.info("添加登记记录");
         checkin.setCompanyId("c515f5d623e011e7a97af832e40312b3");
         checkinService.insert(checkin);
+        MaintainRecord maintainRecode = new MaintainRecord();
+
+        maintainRecordService.insert(maintainRecode);
         return ControllerResult.getSuccessResult("添加成功");
     }
 
@@ -120,22 +132,32 @@ public class CheckinController {
     @RequestMapping(value="blurredQuery", method = RequestMethod.GET)
     public Pager4EasyUI<Checkin> blurredQuery(HttpServletRequest request, @Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
         logger.info("登记记录模糊查询");
-        String column = request.getParameter("column");
+        String text = request.getParameter("text");
         String value = request.getParameter("value");
-        if(column != null && value != null) {
+        System.out.print(text+value+"-------------------");
+        if(text != null && text!="") {
             Pager pager = new Pager();
             pager.setPageNo(Integer.valueOf(pageNumber));
             pager.setPageSize(Integer.valueOf(pageSize));
-            pager.setTotalRecords(checkinService.countByBlurred());
-            List<Checkin> checkins;
-            if(column.equals("all")){
-                String column1 = "userName";
-                String column2 = "companyId";
-                String column3 = "plateId";
-                checkins = checkinService.blurredQuery(pager, column, value);
-            }else{
-                checkins = checkinService.blurredQuery(pager, column, value);
+            List<Checkin> checkins = null;
+            Checkin checkin = new Checkin();
+            if(text.equals("车主/电话/汽车公司/车牌号")){ // 当多种模糊搜索条件时
+                checkin.setUserName(value);
+                checkin.setCompanyId(value);
+                checkin.setCarPlate(value);
+                checkin.setUserPhone(value);
+            }else if(text.equals("车主")){
+                checkin.setUserName(value);
+            }else if(text.equals("汽车公司")){
+                checkin.setCompanyId(value);
+            }else if(text.equals("车牌号")){
+                checkin.setCarPlate(value);
+            }else if(text.equals("电话")){
+                checkin.setUserPhone(value);
             }
+            checkins = checkinService.blurredQuery(pager, checkin);
+            pager.setTotalRecords(checkinService.countByBlurred(checkin));
+            System.out.print(checkins);
             return new Pager4EasyUI<Checkin>(pager.getTotalRecords(), checkins);
         }else{
             return null;

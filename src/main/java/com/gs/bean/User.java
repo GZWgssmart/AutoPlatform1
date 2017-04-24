@@ -43,6 +43,11 @@ public class User {
 
     private String userStatus;
 
+    private String roleId;
+
+    private Company company;    // 汽修公司
+    private Role role;        // 角色
+
     public String getUserId() {
         return userId;
     }
@@ -201,5 +206,53 @@ public class User {
 
     public void setUserStatus(String userStatus) {
         this.userStatus = userStatus;
+    }
+
+    public Company getCompany() {
+        return company;
+    }
+    public void setCompany(Company company) {
+        this.company = company;
+    }
+
+    public String getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(String roleId) {
+        this.roleId = roleId;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId='" + userId + '\'' +
+                ", userEmail='" + userEmail + '\'' +
+                ", userPhone='" + userPhone + '\'' +
+                ", userPwd='" + userPwd + '\'' +
+                ", userNickName='" + userNickName + '\'' +
+                ", userIdentity='" + userIdentity + '\'' +
+                ", userName='" + userName + '\'' +
+                ", userGender='" + userGender + '\'' +
+                ", userBirthday=" + userBirthday +
+                ", userAddress='" + userAddress + '\'' +
+                ", qqOpenId='" + qqOpenId + '\'' +
+                ", weiboOpenId='" + weiboOpenId + '\'' +
+                ", weChatOpenId='" + weChatOpenId + '\'' +
+                ", userIcon='" + userIcon + '\'' +
+                ", userDes='" + userDes + '\'' +
+                ", companyId='" + companyId + '\'' +
+                ", userSalary=" + userSalary +
+                ", userCreatedTime=" + userCreatedTime +
+                ", userLoginedTime=" + userLoginedTime +
+                ", userStatus='" + userStatus + '\'' +
+                '}';
     }
 }

@@ -2,6 +2,7 @@ package com.gs.dao;
 
 import com.gs.bean.Checkin;
 import com.gs.common.bean.Pager;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -23,4 +24,13 @@ public interface CheckinDAO extends BaseDAO<String, Checkin>{
      * 分页查询被禁用的记录
      */
     public int countByDisable();
+    /**
+     * 模糊查询
+     */
+    public List<Checkin> blurredQuery(@Param("pager")Pager pager,@Param("checkin")Checkin checkin);
+
+    /**
+     * 模糊查询的记录数
+     */
+    public int countByBlurred(@Param("checkin")Checkin checkin);
 }

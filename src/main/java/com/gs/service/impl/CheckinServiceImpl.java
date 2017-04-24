@@ -51,11 +51,12 @@ public class CheckinServiceImpl implements CheckinService {
 		return checkinDAO.countByDisable();
 	}
 
-	public List<Checkin> blurredQuery(Pager pager, String cloumn, String value) {
-		return null;
+	public List<Checkin> blurredQuery(Pager pager, Checkin checkin) {
+		return checkinDAO.blurredQuery(pager, checkin);
 	}
 
-	public int countByBlurred() {
-		return 0;
+	public int countByBlurred(Checkin checkin) {
+		return checkinDAO.countByBlurred(checkin);
 	}
+
 }

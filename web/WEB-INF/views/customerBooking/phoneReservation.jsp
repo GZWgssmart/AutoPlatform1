@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="/static/css/select2.min.css">
     <link rel="stylesheet" href="/static/css/sweetalert.css">
     <link rel="stylesheet" href="/static/css/table/table.css">
+    <link rel="stylesheet" href="/static/css/bootstrap-validate/bootstrapValidator.min.css">
     <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.css">
     <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/datetimepicker.less">
 
@@ -25,40 +26,40 @@
             <thead>
             <tr>
                 <th data-checkbox="true"></th>
-                <th data-field="userName">
+                <th data-width="100" data-field="userName" >
                     车主姓名
                 </th>
-                <th data-field="userPhone">
+                <th data-width="100" data-field="userPhone">
                     车主电话
                 </th>
-                <th data-field="brandId">
+                <th data-width="100" data-field="brandId">
                     汽车品牌
                 </th>
-                <th data-field="colorId">
+                <th data-width="100" data-field="colorId">
                     汽车颜色
                 </th>
-                <th data-field="modelId">
+                <th data-width="100" data-field="modelId">
                     汽车车型
                 </th>
-                <th data-field="carPlate">
+                <th data-width="100" data-field="carPlate">
                     汽车车牌
                 </th>
-                <th data-field="plateId">
+                <th data-width="100" data-field="plateId">
                     车牌号码
                 </th>
-                <th data-field="arriveTime" data-formatter="formatterDate">
+                <th data-width="180" data-field="arriveTime" data-formatter="formatterDate">
                     到店时间
                 </th>
-                <th data-hide="all" data-field="maintainOrFix">
+                <th data-width="100" data-hide="all" data-field="maintainOrFix">
                     保养&nbsp;|&nbsp;维修
                 </th>
-                <th data-hide="all" data-field="appCreatedTime" data-formatter="formatterDate">
+                <th data-width="180" data-hide="all" data-field="appCreatedTime" data-formatter="formatterDate">
                     登记时间
                 </th>
-                <th data-hide="all" data-field="companyId">
+                <th data-width="100" data-hide="all" data-field="companyId">
                     汽修公司
                 </th>
-                <th data-hide="all" data-field="appoitmentStatus" data-formatter="statusFormatter">
+                <th data-width="100" data-hide="all" data-field="appoitmentStatus" data-formatter="statusFormatter">
                     记录状态
                 </th>
             </tr>
@@ -77,9 +78,23 @@
             <button id="btn_edit" type="button" class="btn btn-default" onclick="showEdit();">
                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
             </button>
-            <button id="btn_del" type="button" class="btn btn-default" onclick="showDel();">
-                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>删除
-            </button>
+            <div class="input-group" style="width:350px;float:left;padding:0;margin:0 0 0 -1px;">
+                <div class="input-group-btn">
+                    <button type="button" id="ulButton" class="btn btn-default" style="border-radius:0px;" data-toggle="dropdown">车主/汽车公司/汽车车牌<span class="caret"></span></button>
+                    <ul class="dropdown-menu pull-right">
+                        <li><a onclick="onclikLi(this)">车主/汽车公司/汽车车牌</a></li>
+                        <li class="divider"></li>
+                        <li><a onclick="onclikLi(this)">车主</a></li>
+                        <li class="divider"></li>
+                        <li><a onclick="onclikLi(this)">汽车公司</a></li>
+                        <li class="divider"></li>
+                        <li><a onclick="onclikLi(this)">汽车车牌</a></li>
+                    </ul>
+                </div><!-- /btn-group -->
+                <input id="ulInput" class="form-control" onkeypress="if(event.keyCode==13) {blurredQuery();}">
+                <a href="javaScript:;" onclick="blurredQuery()"><span class="glyphicon glyphicon-search search-style"></span></a>
+                </input>
+            </div><!-- /input-group -->
         </div>
     </div>
 </div>
@@ -89,68 +104,71 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <hr/>
-            <form class="form-horizontal"  id="showAddFormWar" method="post">
+            <form class="form-horizontal"  id="addForm" method="post">
                 <div class="modal-header" style="overflow:auto;">
                     <h4>添加登记记录信息</h4>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">车主名字：</label>
+                    <label class="col-sm-3 control-label">车主姓名：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="userName" placeholder="请输入车主姓名" class="form-control" maxlength="20">
+                        <input type="text" id="UserName" placeholder="请输入车主姓名" name="userName" class="form-control"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">车主电话：</label>
                     <div class="col-sm-7">
-                        <input type="number" name="userPhone" placeholder="请输入车主手机号" class="form-control" maxlength="11">
+                        <input type="number" id="userPhone" name="userPhone" placeholder="请输入车主手机号" class="form-control" maxlength="11">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">汽车品牌：</label>
                     <div class="col-sm-7">
-                        <input type="number" name="brandId" placeholder="请输入汽车品牌" class="form-control" maxlength="11">
+                        <input type="number" id="brandId"name="brandId" placeholder="请输入汽车品牌" class="form-control" maxlength="11">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">汽车颜色：</label>
                     <div class="col-sm-7">
-                        <input type="number" name="colorId" placeholder="请输入汽车颜色" class="form-control" maxlength="11">
+                        <input type="number" id="colorId" name="colorId" placeholder="请输入汽车颜色" class="form-control" maxlength="11">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">汽车车型：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="modelId" placeholder="请选择车型" class="form-control">
+                        <input type="text" id="dmodelId" name="modelId" placeholder="请选择车型" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">汽车车牌：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="carPlate"placeholder="请选择汽车车牌" class="form-control">
+                        <input type="text" id="carPlate" name="carPlate"placeholder="请选择汽车车牌" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">汽车车牌号：</label>
                     <div class="col-sm-7">
-                        <input type="number" name="plateId" placeholder="请输入汽车车牌号" class="form-control">
+                        <input type="number" id="plateId" name="plateId" placeholder="请输入汽车车牌号" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">到店时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="arriveTime" id="addArriveTime" placeholder="请选择到店时间" class="form-control">
+                        <input type="text" name="arriveTime" onclick="getDate('addArriveTime')" id="addArriveTime" placeholder="请选择到店时间" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">保养|维修：</label>
+                    <label class="col-sm-3 control-label">保养&nbsp;|&nbsp;维修：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="maintainOrFix" placeholder="请选择是保养或者维修" class="form-control">
+                        <select id="MaintainOrFix" class="form-control" name="maintainOrFix">
+                            <option value="保养">保养</option>
+                            <option value="维修">维修</option>
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">登记时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="appCreatedTime" id="appCreatedTime" placeholder="请选择登记时间" class="form-control">
+                        <input type="text" name="appCreatedTime" onclick="getDate('appCreatedTime')"  id="appCreatedTime" placeholder="请选择登记时间" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
@@ -174,11 +192,10 @@
 <div class="modal fade" id="editWindow" aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form class="form-horizontal" id="showEditFormWar" method="post" onclick="return checkEdit('table/edit');">
+            <form class="form-horizontal" id="editForm" method="post">
                 <div class="modal-header" style="overflow:auto;">
-                    <h4>被接待的车主信息修改</h4>
+                    <h4>预约车主信息修改</h4>
                 </div>
-                <br/>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">车主名字：</label>
                     <div class="col-sm-7">
@@ -224,7 +241,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">到店时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="arriveTime" define="Appointment.arriveTime" id="editArriveTime" placeholder="请输入到店时间" class="form-control" >
+                        <input type="text" name="arriveTime" onclick="getDate('arriveTime')" define="Appointment.arriveTime" id="addCheckinCreatedTime" placeholder="请输入到店时间" class="form-control" >
                     </div>
                 </div>
                 <div class="form-group">
@@ -236,7 +253,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">预约记录时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="appCreatedTime" define="Appointment.appCreatedTime" id="editCheckinCreatedTime" placeholder="请输入预约记录时间" class="form-control">
+                        <input type="text" name="appCreatedTime" onclick="getDate('editCheckinCreatedTime')" define="Appointment.appCreatedTime" id="editCheckinCreatedTime" placeholder="请输入预约记录时间" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
@@ -256,26 +273,6 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<!-- 删除弹窗 -->
-<div class="modal fade" id="del" aria-hidden="true">
-    <div class="modal-dialog">
-        <form action="/table/edit" method="post">
-            <div class="modal-content">
-                <input type="hidden" id="delNoticeId"/>
-                <div class="modal-footer" style="text-align: center;">
-                    <h2>确认删除吗?</h2>
-                    <button type="button" class="btn btn-default"
-                            data-dismiss="modal">关闭
-                    </button>
-                    <button type="sumbit" class="btn btn-primary" onclick="del()">
-                        确认
-                    </button>
-                </div>
-            </div><!-- /.modal-content -->
-        </form>
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
 <script src="/static/js/jquery.min.js"></script>
 <script src="/static/js/bootstrap.min.js"></script>
 <script src="/static/js/bootstrap-table/bootstrap-table.js"></script>
@@ -286,6 +283,7 @@
 <script src="/static/js/contextmenu.js"></script>
 <script src="/static/js/backstage/main.js"></script>
 <script src="/static/js/form/jquery.validate.js"></script>
+<script src="/static/js/bootstrap-validate/bootstrapValidator.js"></script>
 <script src="/static/js/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.js"></script>
 <script src="/static/js/bootstrap-dateTimePicker/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
 <script src="/static/js/backstage/customerBooking/phoneResrvation.js"></script>

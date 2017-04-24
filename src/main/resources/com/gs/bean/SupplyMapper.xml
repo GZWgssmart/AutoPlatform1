@@ -31,7 +31,7 @@
 
   <select id="queryByPager" resultMap="supplyMap" parameterType="com.gs.common.bean.Pager">
     <![CDATA[
-        select s.*, s.supplyTypeId, st.supplyTypeName as "supplyTypeName", s.companyId, co.companyName as "companyName" from t_supply s
+        select s.*, st.supplyTypeId, st.supplyTypeName, co.companyId, co.companyName from t_supply s
         LEFT JOIN t_supply_type st on s.supplyTypeId = st.supplyTypeId
         LEFT JOIN t_company co on s.companyId = co.companyId
         where s.supplyStatus = 'Y' order by s.supplyCreatedTime Desc
@@ -41,7 +41,7 @@
 
   <select id="queryByPagerDisable" resultMap="supplyMap" parameterType="com.gs.common.bean.Pager">
     <![CDATA[
-       select s.*, s.supplyTypeId, st.supplyTypeName as "supplyTypeName", s.companyId, co.companyName as "companyName" from t_supply s
+       select s.*, st.supplyTypeId, st.supplyTypeName, co.companyId, co.companyName  from t_supply s
         LEFT JOIN t_supply_type st on s.supplyTypeId = st.supplyTypeId
         LEFT JOIN t_company co on s.companyId = co.companyId
         where s.supplyStatus = 'N' order by s.supplyCreatedTime Desc
@@ -54,7 +54,7 @@
       select count(supplyId) from t_supply s where s.supplyStatus = 'Y'
     ]]>
   </select>
-
+ 
   <select id="countByDisable" resultType="int" >
     <![CDATA[
       select count(supplyId) from t_supply s where s.supplyStatus = 'N'
@@ -67,8 +67,8 @@
   <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="Supply">
     <![CDATA[
         insert into auto_platform.t_supply(supplyId, supplyName, supplyTel, supplyPricipal, supplyAddress,
-          supplyWeChat,supplyCreatedTime,companyId,supplyAlipay,supplyBank,supplyBankAccount,supplyBankNo,supplyStatus)
-        values(uuid(),#{supplyName},#{supplyTel},#{supplyPricipal},#{supplyAddress},#{supplyWeChat},CURRENT_TIMESTAMP,
+          supplyWeChat,supplyCreatedTime,supplyTypeId,companyId,supplyAlipay,supplyBank,supplyBankAccount,supplyBankNo,supplyStatus)
+        values(uuid(),#{supplyName},#{supplyTel},#{supplyPricipal},#{supplyAddress},#{supplyWeChat},now(),#{supplyTypeId},
         #{companyId},#{supplyAlipay},#{supplyBank},#{supplyBankAccount},#{supplyBankNo},'Y')
         ]]>
   </insert>
@@ -78,7 +78,7 @@
   -->
   <update id="update" keyProperty="id" parameterType="java.util.Map">
     UPDATE auto_platform.t_supply SET supplyName=#{supplyName},supplyTel=#{supplyTel},supplyPricipal=#{supplyPricipal},
-    supplyAddress=#{supplyAddress},supplyWeChat=#{supplyWeChat},supplyTypeId=#{supplyTypeId},companyId=#{companyId},
+    supplyAddress=#{supplyAddress},supplyWeChat=#{supplyWeChat},supplyCreatedTime=now(),supplyTypeId=#{supplyTypeId},companyId=#{companyId},
     supplyAlipay=#{supplyAlipay},supplyBank=#{supplyBank},supplyBankAccount=#{supplyBankAccount},supplyBankNo=#{supplyBankNo}WHERE supplyId=#{supplyId}
   </update>
 

@@ -32,7 +32,6 @@ public class MaintainRecordServiceImpl implements MaintainRecordService {
 	public int batchUpdate(List<MaintainRecord> list) { return maintainRecordDAO.batchUpdate(list); }
 	public List<MaintainRecord> queryAll() { return maintainRecordDAO.queryAll(); }
 
-	@Override
 	public List<MaintainRecord> queryAll(String status) {
 		return maintainRecordDAO.queryAll();
 	}
@@ -45,4 +44,11 @@ public class MaintainRecordServiceImpl implements MaintainRecordService {
 	public int inactive(String id) { return maintainRecordDAO.inactive(id); }
 	public int active(String id) { return maintainRecordDAO.active(id); }
 
+	public List<MaintainRecord> queryByPagerDisable(Pager pager) {
+		return maintainRecordDAO.queryByPagerDisable(pager);
+	}
+
+	public int countDisable() {
+		return maintainRecordDAO.countDisable();
+	}
 }

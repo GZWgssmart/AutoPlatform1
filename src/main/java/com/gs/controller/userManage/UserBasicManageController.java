@@ -2,6 +2,7 @@ package com.gs.controller.userManage;
 
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.User;
+import com.gs.common.bean.ComboBox4EasyUI;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -36,14 +39,10 @@ public class UserBasicManageController {
     @ResponseBody
     @RequestMapping(value = "addUser", method = RequestMethod.POST)
     public ControllerResult addUser(User user) {
-        if(user != null && !user.equals("")) {
-            userService.insert(user);
-            logger.info("添加成功, 添加的对象: " + user.toString());
-            return ControllerResult.getSuccessResult("添加成功");
-        }
-        return ControllerResult.getFailResult("添加失败");
+        logger.info("添加人员");
+        userService.insert(user);
+        return ControllerResult.getSuccessResult("添加成功");
     }
-
 
     /**
      * 修改人员基本信息
@@ -51,12 +50,28 @@ public class UserBasicManageController {
     @ResponseBody
     @RequestMapping(value = "updateUser", method =RequestMethod.POST)
     public ControllerResult updateUser(User user) {
-        if(user != null && !user.equals("")) {
-            userService.update(user);
-            logger.info("修改成功：" + user.toString());
-            return ControllerResult.getSuccessResult("修改成功");
-        }
-        return ControllerResult.getFailResult("修改失败");
+        userService.update(user);
+        logger.info("修改成功：" + user.toString());
+        return ControllerResult.getSuccessResult("修改成功");
+    }
+
+    /**
+     * setDisabled  禁用
+     */
+    @ResponseBody
+    @RequestMapping(value = "setDisabled", method = RequestMethod.POST)
+    public ControllerResult setDisabled(String id) {
+        userService.inactive(id);
+        logger.info("修改状态成功，已禁用");
+        return ControllerResult.getSuccessResult("修改状态成功，已禁用");
+    }
+
+    /**
+     * setActivate 激活
+     */
+    public ControllerResult setActivate(String id) {
+        logger.info("修改状态成功，已激活");
+        return ControllerResult.getSuccessResult("修改状态成功，已激活");
     }
 
     /**
@@ -79,13 +94,16 @@ public class UserBasicManageController {
      */
     @ResponseBody
     @RequestMapping(value = "queryAll", method = RequestMethod.POST)
-    public List<User> queryAll() {
+    public List<ComboBox4EasyUI> queryAll() {
         List<User> users = userService.queryAll();
-        if(users != null && users.size() > 0) {
-            return users;
+        List<ComboBox4EasyUI> combo = new ArrayList<ComboBox4EasyUI>();
+        for(User u: users) {
+            ComboBox4EasyUI c = new ComboBox4EasyUI();
+            c.setId(u.getUserId());
+            c.setText(u.getUserName());
+            combo.add(c);
         }
-        return  null;
+        return combo;
     }
-
 
 }
