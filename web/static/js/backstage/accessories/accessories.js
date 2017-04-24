@@ -15,6 +15,7 @@ function showDisable() {
     initTable('table', '/accInv/queryByPagerDisable');
 }
 
+
 //显示弹窗
 function showEdit() {
     var row = $('table').bootstrapTable('getSelections');
@@ -171,56 +172,56 @@ function validator(formId) {
                 notEmpty: {
                     message: '配件分类名称不能为空'
                 }
-            }
-        },
-        accName: {
-            message: '配件名称不能为空',
-            validators: {
-                notEmpty: {
-                    message: '配件名称不能为空'
+            },
+            accName: {
+                message: '配件名称不能为空',
+                validators: {
+                    notEmpty: {
+                        message: '配件名称不能为空'
+                    }
                 }
-            }
-        },
-        accCommodityCode: {
-            message: '配件商品条形码不能为空',
-            validators: {
-                notEmpty: {
-                    message: '配件商品条形码不能为空'
+            },
+            accCommodityCode: {
+                message: '配件商品条形码不能为空',
+                validators: {
+                    notEmpty: {
+                        message: '配件商品条形码不能为空'
+                    }
                 }
-            }
-        },
-        accPrice: {
-            message: '配件价格不能为空',
-            validators: {
-                notEmpty: {
-                    message: '配件价格不能为空'
+            },
+            accPrice: {
+                message: '配件价格不能为空',
+                validators: {
+                    notEmpty: {
+                        message: '配件价格不能为空'
+                    }
                 }
-            }
-        },
-        accSalePrice: {
-            message: '配件售价不能为空',
-            validators: {
-                notEmpty: {
-                    message: '配件售价不能为空'
+            },
+            accSalePrice: {
+                message: '配件售价不能为空',
+                validators: {
+                    notEmpty: {
+                        message: '配件售价不能为空'
+                    }
                 }
-            }
-        },
-        accTotal: {
-            message: '配件数量不能为空',
-            validators: {
-                notEmpty: {
-                    message: '配件数量不能为空'
+            },
+            accTotal: {
+                message: '配件数量不能为空',
+                validators: {
+                    notEmpty: {
+                        message: '配件数量不能为空'
+                    }
                 }
-            }
-        },
-        accIdle: {
-            message: '配件可用数量不能为空',
-            validators: {
-                notEmpty: {
-                    message: '配件可用数量不能为空'
+            },
+            accIdle: {
+                message: '配件可用数量不能为空',
+                validators: {
+                    notEmpty: {
+                        message: '配件可用数量不能为空'
+                    }
                 }
-            }
-        },
+            },
+        }
     }).on('success.form.bv', function (e) {
         if (formId == "addForm") {
             formSubmit(contentPath+"/accInv/addAccInv", formId, "addWindow");
