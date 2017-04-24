@@ -186,3 +186,43 @@ function initSelect2(clazz, title, url) {
 
     });
 }
+
+// 禁用
+function inactive(url) {
+    $.post(url,
+        function(data){
+            if(data.result == 'success'){
+                $('#table').bootstrapTable("refresh");
+                swal({
+                    title:"",
+                    text: data.message,
+                    confirmButtonText:"确定", // 提示按钮上的文本
+                    type:"success"})// 提示窗口, 修改成功
+            }else{
+                swal({title:"",
+                    text:"禁用失败",
+                    confirmButtonText:"确认",
+                    type:"error"})
+            }
+        },"json");
+}
+// 激活
+function active(url) {
+    $.post(url,
+        function(data){
+            if(data.result == 'success'){
+                $('#table').bootstrapTable("refresh");
+                swal({
+                    title:"",
+                    text: data.message,
+                    confirmButtonText:"确定", // 提示按钮上的文本
+                    type:"success"})// 提示窗口, 修改成功
+            }else{
+                swal({title:"",
+                    text:"激活失败",
+                    confirmButtonText:"确认",
+                    type:"error"})
+            }
+        },"json");
+}
+

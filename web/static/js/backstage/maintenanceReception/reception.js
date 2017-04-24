@@ -35,50 +35,10 @@ function showStatusFormatter(value) {
 // 激活或禁用
 function statusFormatter(value, row, index) {
     if(value == 'Y') {
-        return "&nbsp;&nbsp;<button type='button' class='btn btn-danger' onclick='inactive(\""+row.checkinId+ "\")'>禁用</a>";
+        return "&nbsp;&nbsp;<button type='button' class='btn btn-danger' onclick='inactive(\""+'/checkin/statusOperate?id='+row.checkinId+'&status=Y'+"\")'>禁用</a>";
     } else {
-        return "&nbsp;&nbsp;<button type='button' class='btn btn-success' onclick='active(\""+row.checkinId+ "\")'>激活</a>";
+        return "&nbsp;&nbsp;<button type='button' class='btn btn-success' onclick='active(\""+'/checkin/statusOperate?id='+ row.checkinId+'&status=N'+ "\")'>激活</a>";
     }
-
-}
-
-// 禁用
-function inactive(id) {
-    $.post("/checkin/statusOperate?id="+id+"&status=Y",
-        function(data){
-            if(data.result == 'success'){
-                $('#table').bootstrapTable("refresh");
-                swal({
-                    title:"",
-                    text: data.message,
-                    confirmButtonText:"确定", // 提示按钮上的文本
-                    type:"success"})// 提示窗口, 修改成功
-            }else{
-                swal({title:"",
-                    text:"禁用失败",
-                    confirmButtonText:"确认",
-                    type:"error"})
-            }
-        },"json");
-}
-// 激活
-function active(id) {
-    $.post("/checkin/statusOperate?id="+id+"&status=N",
-        function(data){
-            if(data.result == 'success'){
-                $('#table').bootstrapTable("refresh");
-                swal({
-                    title:"",
-                    text: data.message,
-                    confirmButtonText:"确定", // 提示按钮上的文本
-                    type:"success"})// 提示窗口, 修改成功
-            }else{
-                swal({title:"",
-                    text:"激活失败",
-                    confirmButtonText:"确认",
-                    type:"error"})
-            }
-        },"json");
 }
 
 // 查看全部可用
@@ -359,6 +319,13 @@ function formSubmit(url, formId, winId){
                     $("input[type=reset]").trigger("click"); // 移除表单中填的值
                     $('#addForm').data('bootstrapValidator').resetForm(true); // 移除所有验证样式
                     $("#addButton").removeAttr("disabled"); // 移除不可点击
+                    $("#" + formId).data('bootstrapValidator').destroy(); // 销毁此form表单
+                    $('#' + formId).data('bootstrapValidator', null);// 此form表单设置为空
+                    // 设置select2的值为空
+                    $("#addCarBrand").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
+                    $("#addCarModel").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
+                    $("#addCarColor").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
+                    $("#addCarPlate").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
                 }
             } else if (data.result == "fail") {
                 swal({title:"",
