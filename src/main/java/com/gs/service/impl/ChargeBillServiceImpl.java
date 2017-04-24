@@ -1,7 +1,6 @@
 package com.gs.service.impl;
 
 import com.gs.bean.ChargeBill;
-import com.gs.bean.Checkin;
 import com.gs.common.bean.Pager;
 import com.gs.dao.ChargeBillDAO;
 import com.gs.service.ChargeBillService;
@@ -95,7 +94,7 @@ public class ChargeBillServiceImpl implements ChargeBillService {
         return chargeBillDAO.countByDisable();
     }
 
-    public List<Checkin> blurredQuery(Pager pager, ChargeBill chargeBill) {
+    public List<ChargeBill> blurredQuery(Pager pager, ChargeBill chargeBill) {
         return null;
     }
 

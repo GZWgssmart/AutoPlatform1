@@ -99,7 +99,7 @@ public class AccessoriesTypeServiceImpl implements AccessoriesTypeService {
         return accessoriesTypeDAO.countByDisable();
     }
 
-    public List<Checkin> blurredQuery(Pager pager, AccessoriesType accessoriesType) {
+    public List<AccessoriesType> blurredQuery(Pager pager, AccessoriesType accessoriesType) {
         return null;
     }
 

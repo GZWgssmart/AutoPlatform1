@@ -1,7 +1,6 @@
 package com.gs.service.impl;
 
 import com.gs.bean.AccessoriesBuy;
-import com.gs.bean.Checkin;
 import com.gs.common.bean.Pager;
 import com.gs.dao.AccessoriesBuyDAO;
 import com.gs.service.AccessoriesBuyService;
@@ -54,7 +53,7 @@ public class AccessoriesBuyServiceImpl implements AccessoriesBuyService {
 		return accessoriesBuyDAO.countByDisable();
 	}
 
-	public List<Checkin> blurredQuery(Pager pager, AccessoriesBuy accessoriesBuy) {
+	public List<AccessoriesBuy> blurredQuery(Pager pager, AccessoriesBuy accessoriesBuy) {
 		return null;
 	}
 

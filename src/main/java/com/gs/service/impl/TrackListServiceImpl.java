@@ -54,7 +54,7 @@ public class TrackListServiceImpl implements TrackListService {
 		return trackListDAO.countByDisable();
 	}
 
-	public List<Checkin> blurredQuery(Pager pager, TrackList trackList) {
+	public List<TrackList> blurredQuery(Pager pager, TrackList trackList) {
 		return null;
 	}
 

@@ -54,7 +54,7 @@ public class MaintainFixAccServiceImpl implements MaintainFixAccService {
 		return maintainFixAccDAO.countByDisable();
 	}
 
-	public List<Checkin> blurredQuery(Pager pager, MaintainFixAcc maintainFixAcc) {
+	public List<MaintainFixAcc> blurredQuery(Pager pager, MaintainFixAcc maintainFixAcc) {
 		return null;
 	}
 

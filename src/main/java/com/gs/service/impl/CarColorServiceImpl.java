@@ -54,7 +54,7 @@ public class CarColorServiceImpl implements CarColorService {
 		return carColorDAO.countByDisable();
 	}
 
-	public List<Checkin> blurredQuery(Pager pager, CarColor carColor) {
+	public List<CarColor> blurredQuery(Pager pager, CarColor carColor) {
 		return null;
 	}
 

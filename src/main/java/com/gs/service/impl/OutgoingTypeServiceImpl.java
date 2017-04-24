@@ -1,16 +1,13 @@
 package com.gs.service.impl;
 
-import com.gs.bean.Checkin;
-import com.gs.bean.IncomingType;
 import com.gs.bean.OutgoingType;
-import com.gs.common.bean.Pager4EasyUI;
+import com.gs.common.bean.Pager;
 import com.gs.dao.OutgoingTypeDAO;
 import com.gs.service.OutgoingTypeService;
 import org.springframework.stereotype.Service;
+
 import javax.annotation.Resource;
 import java.util.List;
-
-import com.gs.common.bean.Pager;
 /**
 *由CSWangBin技术支持
 *
@@ -59,7 +56,7 @@ public class OutgoingTypeServiceImpl implements OutgoingTypeService {
 		return outgoingTypeDAO.countByDisable();
 	}
 
-	public List<Checkin> blurredQuery(Pager pager, OutgoingType outgoingType) {
+	public List<OutgoingType> blurredQuery(Pager pager, OutgoingType outgoingType) {
 		return null;
 	}
 

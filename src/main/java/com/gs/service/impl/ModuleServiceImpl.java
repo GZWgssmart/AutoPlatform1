@@ -54,7 +54,7 @@ public class ModuleServiceImpl implements ModuleService {
 		return moduleDAO.countByDisable();
 	}
 
-	public List<Checkin> blurredQuery(Pager pager, Module module) {
+	public List<Module> blurredQuery(Pager pager, Module module) {
 		return null;
 	}
 

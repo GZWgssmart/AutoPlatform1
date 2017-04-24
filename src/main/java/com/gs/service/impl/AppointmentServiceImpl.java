@@ -61,7 +61,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 		return 0;
 	}
 
-	public List<Checkin> blurredQuery(Pager pager, Appointment appointment) {
+	public List<Appointment> blurredQuery(Pager pager, Appointment appointment) {
 		return null;
 	}
 

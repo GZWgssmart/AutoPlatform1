@@ -54,7 +54,7 @@ public class PermissionServiceImpl implements PermissionService {
 		return permissionDAO.countByDisable();
 	}
 
-	public List<Checkin> blurredQuery(Pager pager, Permission permission) {
+	public List<Permission> blurredQuery(Pager pager, Permission permission) {
 		return null;
 	}
 

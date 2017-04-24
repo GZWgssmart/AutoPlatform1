@@ -1,14 +1,13 @@
 package com.gs.service.impl;
 
-import com.gs.bean.Checkin;
 import com.gs.bean.Company;
+import com.gs.common.bean.Pager;
 import com.gs.dao.CompanyDAO;
 import com.gs.service.CompanyService;
 import org.springframework.stereotype.Service;
+
 import javax.annotation.Resource;
 import java.util.List;
-
-import com.gs.common.bean.Pager;
 /**
 *由CSWangBin技术支持
 *
@@ -54,7 +53,7 @@ public class CompanyServiceImpl implements CompanyService {
 		return companyDAO.countByDisable();
 	}
 
-	public List<Checkin> blurredQuery(Pager pager, Company company) {
+	public List<Company> blurredQuery(Pager pager, Company company) {
 		return null;
 	}
 

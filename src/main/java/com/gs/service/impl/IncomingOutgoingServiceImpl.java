@@ -1,14 +1,13 @@
 package com.gs.service.impl;
 
-import com.gs.bean.Checkin;
 import com.gs.bean.IncomingOutgoing;
+import com.gs.common.bean.Pager;
 import com.gs.dao.IncomingOutgoingDAO;
 import com.gs.service.IncomingOutgoingService;
 import org.springframework.stereotype.Service;
+
 import javax.annotation.Resource;
 import java.util.List;
-
-import com.gs.common.bean.Pager;
 /**
 *由CSWangBin技术支持
 *
@@ -56,7 +55,7 @@ public class IncomingOutgoingServiceImpl implements IncomingOutgoingService {
 		return incomingOutgoingDAO.countByDisable();
 	}
 
-	public List<Checkin> blurredQuery(Pager pager, IncomingOutgoing incomingOutgoing) {
+	public List<IncomingOutgoing> blurredQuery(Pager pager, IncomingOutgoing incomingOutgoing) {
 		return null;
 	}
 

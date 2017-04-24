@@ -55,7 +55,7 @@ public class AccessoriesSaleServiceImpl implements AccessoriesSaleService {
 		return accessoriesSaleDAO.countByDisable();
 	}
 
-	public List<Checkin> blurredQuery(Pager pager, AccessoriesSale accessoriesSale) {
+	public List<AccessoriesSale> blurredQuery(Pager pager, AccessoriesSale accessoriesSale) {
 		return null;
 	}
 

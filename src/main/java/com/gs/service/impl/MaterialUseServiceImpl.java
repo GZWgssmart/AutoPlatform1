@@ -1,16 +1,15 @@
 package com.gs.service.impl;
 
-import com.gs.bean.Checkin;
 import com.gs.bean.MaterialUse;
 import com.gs.bean.User;
 import com.gs.bean.view.RecordBaseView;
+import com.gs.common.bean.Pager;
 import com.gs.dao.MaterialUseDAO;
 import com.gs.service.MaterialUseService;
 import org.springframework.stereotype.Service;
+
 import javax.annotation.Resource;
 import java.util.List;
-
-import com.gs.common.bean.Pager;
 /**
 *由CSWangBin技术支持
 *
@@ -56,7 +55,7 @@ public class MaterialUseServiceImpl implements MaterialUseService {
 		return materialUseDAO.countByDisable();
 	}
 
-	public List<Checkin> blurredQuery(Pager pager, MaterialUse materialUse) {
+	public List<MaterialUse> blurredQuery(Pager pager, MaterialUse materialUse) {
 		return null;
 	}
 

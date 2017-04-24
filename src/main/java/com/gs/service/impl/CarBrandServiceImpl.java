@@ -1,7 +1,6 @@
 package com.gs.service.impl;
 
 import com.gs.bean.CarBrand;
-import com.gs.bean.Checkin;
 import com.gs.common.bean.Pager;
 import com.gs.dao.CarBrandDAO;
 import com.gs.service.CarBrandService;
@@ -54,7 +53,7 @@ public class CarBrandServiceImpl implements CarBrandService {
 		return carBrandDAO.countByDisable();
 	}
 
-	public List<Checkin> blurredQuery(Pager pager, CarBrand carBrand) {
+	public List<CarBrand> blurredQuery(Pager pager, CarBrand carBrand) {
 		return null;
 	}
 

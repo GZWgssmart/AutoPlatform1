@@ -54,7 +54,7 @@ public class CarPlateServiceImpl implements CarPlateService {
 		return carPlateDAO.countByDisable();
 	}
 
-	public List<Checkin> blurredQuery(Pager pager, CarPlate carPlate) {
+	public List<CarPlate> blurredQuery(Pager pager, CarPlate carPlate) {
 		return null;
 	}
 

@@ -54,7 +54,7 @@ public class MaterialReturnServiceImpl implements MaterialReturnService {
 		return materialReturnDAO.countByDisable();
 	}
 
-	public List<Checkin> blurredQuery(Pager pager, MaterialReturn materialReturn) {
+	public List<MaterialReturn> blurredQuery(Pager pager, MaterialReturn materialReturn) {
 		return null;
 	}
 

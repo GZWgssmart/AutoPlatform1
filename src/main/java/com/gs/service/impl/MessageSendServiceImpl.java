@@ -1,14 +1,13 @@
 package com.gs.service.impl;
 
-import com.gs.bean.Checkin;
 import com.gs.bean.MessageSend;
+import com.gs.common.bean.Pager;
 import com.gs.dao.MessageSendDAO;
 import com.gs.service.MessageSendService;
 import org.springframework.stereotype.Service;
+
 import javax.annotation.Resource;
 import java.util.List;
-
-import com.gs.common.bean.Pager;
 /**
 *由CSWangBin技术支持
 *
@@ -54,7 +53,7 @@ public class MessageSendServiceImpl implements MessageSendService {
 		return messageSendDAO.countByDisable();
 	}
 
-	public List<Checkin> blurredQuery(Pager pager, MessageSend messageSend) {
+	public List<MessageSend> blurredQuery(Pager pager, MessageSend messageSend) {
 		return null;
 	}
 

@@ -54,7 +54,7 @@ public class UserRoleServiceImpl implements UserRoleService {
 		return userRoleDAO.countByDisable();
 	}
 
-	public List<Checkin> blurredQuery(Pager pager, UserRole userRole) {
+	public List<UserRole> blurredQuery(Pager pager, UserRole userRole) {
 		return null;
 	}
 

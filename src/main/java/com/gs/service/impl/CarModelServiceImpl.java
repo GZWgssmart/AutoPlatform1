@@ -55,7 +55,7 @@ public class CarModelServiceImpl implements CarModelService {
 		return carModelDAO.countByDisable();
 	}
 
-	public List<Checkin> blurredQuery(Pager pager, CarModel carModel) {
+	public List<CarModel> blurredQuery(Pager pager, CarModel carModel) {
 		return null;
 	}
 

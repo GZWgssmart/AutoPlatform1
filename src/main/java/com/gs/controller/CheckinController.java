@@ -6,6 +6,7 @@ import com.gs.bean.MaintainRecord;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
+import com.gs.common.util.UUIDUtil;
 import com.gs.service.CheckinService;
 import com.gs.service.MaintainRecordService;
 import org.apache.ibatis.annotations.Param;
@@ -77,9 +78,11 @@ public class CheckinController {
     @RequestMapping(value = "add", method = RequestMethod.POST)
     public ControllerResult addCheckin(Checkin checkin) {
         logger.info("添加登记记录");
+        checkin.setCheckinId(UUIDUtil.uuid());
         checkin.setCompanyId("c515f5d623e011e7a97af832e40312b3");
         checkinService.insert(checkin);
         MaintainRecord maintainRecode = new MaintainRecord();
+        maintainRecode.setCheckinId(checkin.getCheckinId());
 
         maintainRecordService.insert(maintainRecode);
         return ControllerResult.getSuccessResult("添加成功");

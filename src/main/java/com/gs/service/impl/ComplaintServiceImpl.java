@@ -1,14 +1,13 @@
 package com.gs.service.impl;
 
-import com.gs.bean.Checkin;
 import com.gs.bean.Complaint;
+import com.gs.common.bean.Pager;
 import com.gs.dao.ComplaintDAO;
 import com.gs.service.ComplaintService;
 import org.springframework.stereotype.Service;
+
 import javax.annotation.Resource;
 import java.util.List;
-
-import com.gs.common.bean.Pager;
 /**
 *由CSWangBin技术支持
 *
@@ -54,7 +53,7 @@ public class ComplaintServiceImpl implements ComplaintService {
 		return complaintDAO.countByDisable();
 	}
 
-	public List<Checkin> blurredQuery(Pager pager, Complaint complaint) {
+	public List<Complaint> blurredQuery(Pager pager, Complaint complaint) {
 		return null;
 	}
 

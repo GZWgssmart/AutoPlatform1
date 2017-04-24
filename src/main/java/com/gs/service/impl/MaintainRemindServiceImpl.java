@@ -1,14 +1,13 @@
 package com.gs.service.impl;
 
-import com.gs.bean.Checkin;
 import com.gs.bean.MaintainRemind;
+import com.gs.common.bean.Pager;
 import com.gs.dao.MaintainRemindDAO;
 import com.gs.service.MaintainRemindService;
 import org.springframework.stereotype.Service;
+
 import javax.annotation.Resource;
 import java.util.List;
-
-import com.gs.common.bean.Pager;
 /**
 *由CSWangBin技术支持
 *
@@ -54,7 +53,7 @@ public class MaintainRemindServiceImpl implements MaintainRemindService {
 		return maintainRemindDAO.countByDisable();
 	}
 
-	public List<Checkin> blurredQuery(Pager pager, MaintainRemind maintainRemind) {
+	public List<MaintainRemind> blurredQuery(Pager pager, MaintainRemind maintainRemind) {
 		return null;
 	}
 

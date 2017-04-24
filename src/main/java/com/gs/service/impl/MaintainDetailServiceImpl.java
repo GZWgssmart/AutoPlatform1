@@ -54,7 +54,7 @@ public class MaintainDetailServiceImpl implements MaintainDetailService {
 		return maintainDetailDAO.countByDisable();
 	}
 
-	public List<Checkin> blurredQuery(Pager pager, MaintainDetail maintainDetail) {
+	public List<MaintainDetail> blurredQuery(Pager pager, MaintainDetail maintainDetail) {
 		return null;
 	}
 

@@ -54,7 +54,7 @@ public class MaterialListServiceImpl implements MaterialListService {
 		return materialListDAO.countByDisable();
 	}
 
-	public List<Checkin> blurredQuery(Pager pager, MaterialList materialList) {
+	public List<MaterialList> blurredQuery(Pager pager, MaterialList materialList) {
 		return null;
 	}
 

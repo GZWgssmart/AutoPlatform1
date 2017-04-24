@@ -1,14 +1,13 @@
 package com.gs.service.impl;
 
-import com.gs.bean.Checkin;
 import com.gs.bean.MaintainFix;
+import com.gs.common.bean.Pager;
 import com.gs.dao.MaintainFixDAO;
 import com.gs.service.MaintainFixService;
 import org.springframework.stereotype.Service;
+
 import javax.annotation.Resource;
 import java.util.List;
-
-import com.gs.common.bean.Pager;
 /**
 *由CSWangBin技术支持
 *
@@ -54,7 +53,7 @@ public class MaintainFixServiceImpl implements MaintainFixService {
 		return maintainFixDAO.countByDisable();
 	}
 
-	public List<Checkin> blurredQuery(Pager pager, MaintainFix maintainFix) {
+	public List<MaintainFix> blurredQuery(Pager pager, MaintainFix maintainFix) {
 		return null;
 	}
 

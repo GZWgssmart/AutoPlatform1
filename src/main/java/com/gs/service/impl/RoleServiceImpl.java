@@ -57,7 +57,7 @@ public class RoleServiceImpl implements RoleService {
 		return roleDAO.countByDisable();
 	}
 
-	public List<Checkin> blurredQuery(Pager pager, Role role) {
+	public List<Role> blurredQuery(Pager pager, Role role) {
 		return null;
 	}
 

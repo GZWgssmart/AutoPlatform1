@@ -1,14 +1,13 @@
 package com.gs.service.impl;
 
-import com.gs.bean.Checkin;
 import com.gs.bean.Supply;
+import com.gs.common.bean.Pager;
 import com.gs.dao.SupplyDAO;
 import com.gs.service.SupplyService;
 import org.springframework.stereotype.Service;
+
 import javax.annotation.Resource;
 import java.util.List;
-
-import com.gs.common.bean.Pager;
 /**
 *由CSWangBin技术支持
 *
@@ -64,7 +63,7 @@ public class SupplyServiceImpl implements SupplyService {
 		return 0;
 	}
 
-	public List<Checkin> blurredQuery(Pager pager, Supply supply) {
+	public List<Supply> blurredQuery(Pager pager, Supply supply) {
 		return null;
 	}
 

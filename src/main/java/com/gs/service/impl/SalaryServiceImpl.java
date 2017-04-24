@@ -54,7 +54,7 @@ public class SalaryServiceImpl implements SalaryService {
 		return salaryDAO.countByDisable();
 	}
 
-	public List<Checkin> blurredQuery(Pager pager, Salary salary) {
+	public List<Salary> blurredQuery(Pager pager, Salary salary) {
 		return null;
 	}
 

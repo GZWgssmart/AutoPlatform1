@@ -61,7 +61,7 @@ public class UserServiceImpl implements UserService {
 		return userDAO.countByDisable();
 	}
 
-	public List<Checkin> blurredQuery(Pager pager, User user) {
+	public List<User> blurredQuery(Pager pager, User user) {
 		return null;
 	}
 

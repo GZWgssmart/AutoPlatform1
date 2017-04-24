@@ -1,13 +1,13 @@
 package com.gs.service.impl;
 
 import com.gs.bean.Accessories;
-import com.gs.bean.Checkin;
+import com.gs.common.bean.Pager;
 import com.gs.dao.AccessoriesDAO;
 import com.gs.service.AccessoriesService;
 import org.springframework.stereotype.Service;
+
 import javax.annotation.Resource;
 import java.util.List;
-import com.gs.common.bean.Pager;
 /**
 *由CSWangBin技术支持
 *
@@ -55,7 +55,7 @@ public class AccessoriesServiceImpl implements AccessoriesService {
 		return accessoriesDAO.countByDisable();
 	}
 
-	public List<Checkin> blurredQuery(Pager pager, Accessories accessories) {
+	public List<Accessories> blurredQuery(Pager pager, Accessories accessories) {
 		return null;
 	}
 

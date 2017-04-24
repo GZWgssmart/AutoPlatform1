@@ -57,7 +57,7 @@ public class MaintainRecordServiceImpl implements MaintainRecordService {
 		return maintainRecordDAO.countByDisable();
 	}
 
-	public List<Checkin> blurredQuery(Pager pager, MaintainRecord maintainRecord) {
+	public List<MaintainRecord> blurredQuery(Pager pager, MaintainRecord maintainRecord) {
 		return null;
 	}
 
