@@ -39,7 +39,6 @@ function statusFormatter(value, row, index) {
     } else {
         return "&nbsp;&nbsp;<button type='button' class='btn btn-success' onclick='active(\""+'/checkin/statusOperate?id='+ row.checkinId+'&status=N'+ "\")'>激活</a>";
     }
-
 }
 
 // 查看全部可用
@@ -302,4 +301,38 @@ function editSubmit(){
     } else {
         $("#editButton").removeAttr("disabled");
     }
+}
+
+function formSubmit(url, formId, winId){
+    $.post(url,
+        $("#" + formId).serialize(),
+        function (data) {
+            if (data.result == "success") {
+                $('#' + winId).modal('hide');
+                swal({
+                    title:"",
+                    text: data.message,
+                    confirmButtonText:"确定", // 提示按钮上的文本
+                    type:"success"})// 提示窗口, 修改成功
+                $('#table').bootstrapTable('refresh');
+                if(formId == 'addForm'){
+                    $("input[type=reset]").trigger("click"); // 移除表单中填的值
+                    $('#addForm').data('bootstrapValidator').resetForm(true); // 移除所有验证样式
+                    $("#addButton").removeAttr("disabled"); // 移除不可点击
+                    $("#" + formId).data('bootstrapValidator').destroy(); // 销毁此form表单
+                    $('#' + formId).data('bootstrapValidator', null);// 此form表单设置为空
+                    // 设置select2的值为空
+                    $("#addCarBrand").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
+                    $("#addCarModel").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
+                    $("#addCarColor").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
+                    $("#addCarPlate").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
+                }
+            } else if (data.result == "fail") {
+                swal({title:"",
+                    text:"添加失败",
+                    confirmButtonText:"确认",
+                    type:"error"})
+                $("#"+formId).removeAttr("disabled");
+            }
+        }, "json");
 }

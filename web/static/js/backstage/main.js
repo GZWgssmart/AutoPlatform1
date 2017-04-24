@@ -226,30 +226,3 @@ function active(url) {
         },"json");
 }
 
-
-function formSubmit(url, formId, winId){
-    $.post(url,
-        $("#" + formId).serialize(),
-        function (data) {
-            if (data.result == "success") {
-                $('#' + winId).modal('hide');
-                swal({
-                    title:"",
-                    text: data.message,
-                    confirmButtonText:"确定", // 提示按钮上的文本
-                    type:"success"})// 提示窗口, 修改成功
-                $('#table').bootstrapTable('refresh');
-                if(formId == 'addForm'){
-                    $("input[type=reset]").trigger("click"); // 移除表单中填的值
-                    $('#addForm').data('bootstrapValidator').resetForm(true); // 移除所有验证样式
-                    $("#addButton").removeAttr("disabled"); // 移除不可点击
-                }
-            } else if (data.result == "fail") {
-                swal({title:"",
-                    text:"添加失败",
-                    confirmButtonText:"确认",
-                    type:"error"})
-                $("#"+formId).removeAttr("disabled");
-            }
-        }, "json");
-}
