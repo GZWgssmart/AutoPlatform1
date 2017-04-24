@@ -4,43 +4,22 @@ $(function () {
     initSelect2("carBrand", "请选择品牌", "/carBrand/queryAllCarBrand");
 });
 
-$(function () {
-    $('#table').bootstrapTable('hideColumn', 'modelId');
-
-    $("#addSelect").select2({
-            language: 'zh-CN'
-        }
-    );
-
-    // //绑定Ajax的内容
-    // $.getJSON("/table/queryType", function (data) {
-    //     $("#addSelect").empty();//清空下拉框
-    //     $.each(data, function (i, item) {
-    //         $("#addSelect").append("<option value='" + data[i].id + "'>&nbsp;" + data[i].name + "</option>");
-    //     });
-    // })
-//            $("#addSelect").on("select2:select",
-//                    function (e) {
-//                        alert(e)
-//                        alert("select2:select", e);
-//            });
-});
-
 function showEdit() {
     var row = $('table').bootstrapTable('getSelections');
     if (row.length > 0) {
-//                $('#editId').val(row[0].id);
-//                $('#editName').val(row[0].name);
-//                $('#editPrice').val(row[0].price);
         $("#editWindow").modal('show'); // 显示弹窗
-        var ceshi = row[0];
-        $("#editForm").fill(ceshi);
+        $("#editButton").removeAttr("disabled");
+        var carModel = row[0];
+        $('#editCarBrand').html('<option value="' + carModel.carBrand.brandId + '">' + carModel.carBrand.brandName + '</option>').trigger("change");
+        $("#editForm").fill(carModel);
+        validator('editForm');
     } else {
         swal({
-            "title": "",
-            "text": "请先选择一条数据",
-            "type": "warning"
-        })
+            title:"",
+            text: "请先选择要修改的汽车车型的相关信息", // 主要文本
+            confirmButtonColor: "#DD6B55", // 提示按钮的颜色
+            confirmButtonText:"确定", // 提示按钮上的文本
+            type:"warning"}) // 提示类型
     }
 }
 
@@ -48,22 +27,6 @@ function showAdd() {
     $("#addWindow").modal('show');
     $("#addButton").removeAttr("disabled");
     validator('addForm'); // 初始化验证
-}
-
-function formatRepo(repo) {
-    return repo.text
-}
-function formatRepoSelection(repo) {
-    return repo.text
-}
-
-function showDel() {
-    var row = $('table').bootstrapTable('getSelections');
-    if (row.length > 0) {
-        $("#del").modal('show');
-    } else {
-        $("#tanchuang").modal('show');
-    }
 }
 
 function checkAdd() {
@@ -124,7 +87,7 @@ function validator(formId) {
     })
 
         .on('success.form.bv', function (e) {
-            if (formId == "showAddFormWar") {
+            if (formId == "addForm") {
                 formSubmit("/carModel/addCarModel", formId, "addWindow");
 
             } else if (formId == "editForm") {
@@ -138,8 +101,8 @@ function validator(formId) {
 
 
 function addSubmit(){
-    $("#showAddFormWar").data('bootstrapValidator').validate();
-    if ($("#showAddFormWar").data('bootstrapValidator').isValid()) {
+    $("#addForm").data('bootstrapValidator').validate();
+    if ($("#addForm").data('bootstrapValidator').isValid()) {
         $("#addButton").attr("disabled","disabled");
     } else {
         $("#addButton").removeAttr("disabled");
@@ -169,7 +132,7 @@ function formSubmit(url, formId, winId){
                 $('#table').bootstrapTable('refresh');
                 if(formId == 'addForm'){
                     $("input[type=reset]").trigger("click");
-                    $('#showAddFormWar').data('bootstrapValidator').resetForm(true);
+                    $('#addForm').data('bootstrapValidator').resetForm(true);
                     $("#addButton").removeAttr("disabled");
                 }
             } else if (data.result == "fail") {
