@@ -45,4 +45,11 @@ public class MaintainFixServiceImpl implements MaintainFixService {
 	public int inactive(String id) { return maintainFixDAO.inactive(id); }
 	public int active(String id) { return maintainFixDAO.active(id); }
 
+	public List<MaintainFix> queryByPagerDisable(Pager pager) {
+		return maintainFixDAO.queryByPagerDisable(pager);
+	}
+
+	public int countByDisable() {
+		return maintainFixDAO.countByDisable();
+	}
 }

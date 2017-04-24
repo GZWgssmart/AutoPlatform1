@@ -11,9 +11,9 @@ import java.util.List;
 /**
 *由CSWangBin技术支持
 *
-*@author CSWangBin
+*@author 程燕
 *@since 2017-04-17 16:10:27
-*@des 模块表Service实现
+*@des 权限Service实现
 */
 @Service
 public class PermissionServiceImpl implements PermissionService {

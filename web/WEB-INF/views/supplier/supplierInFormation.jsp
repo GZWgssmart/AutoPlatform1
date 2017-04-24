@@ -156,7 +156,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">支付宝账号：</label>
                     <div class="col-sm-7">
-                        <input type="number"  name="supplyAlipay" placeholder="请输入支付宝账号" class="form-control">
+                        <input type="text"  name="supplyAlipay" placeholder="请输入支付宝账号" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
@@ -174,7 +174,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">开户卡号：</label>
                     <div class="col-sm-7">
-                        <input type="number" placeholder="请输入开户卡号" name="supplyBankNo"  class="form-control">
+                        <input type="text" placeholder="请输入开户卡号" name="supplyBankNo"  class="form-control">
                     </div>
                 </div>
                 <div class="modal-footer" >
@@ -244,7 +244,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">支付宝账号：</label>
                     <div class="col-sm-7">
-                        <input type="number" define="supply.supplyAlipay"  name="supplyAlipay"  class="form-control">
+                        <input type="text" define="supply.supplyAlipay"  name="supplyAlipay"  class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
@@ -262,7 +262,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">开户卡号：</label>
                     <div class="col-sm-7">
-                        <input type="number" define="supply.supplyBankNo" name="supplyBankNo"  class="form-control">
+                        <input type="text" define="supply.supplyBankNo" name="supplyBankNo"  class="form-control">
                     </div>
                 </div>
                 <div class="modal-footer" >
@@ -325,8 +325,6 @@
 <script src="/static/js/contextmenu.js"></script>
 <script src="/static/js/backstage/supplier/supplierInFormation.js"></script>
 <script src="/static/js/bootstrap-validate/bootstrapValidator.js"></script>
-<script src="/static/js/bootstrap-select/bootstrap-select.js"></script>
-<%--<script src="/static/js/form/jquery.validate.js"></script>--%>
 <script src="/static/js/backstage/main.js"></script>
 
 </body>

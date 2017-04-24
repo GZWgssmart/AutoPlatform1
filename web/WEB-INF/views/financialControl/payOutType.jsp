@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="/static/css/select2.min.css">
     <link rel="stylesheet" href="/static/css/sweetalert.css">
     <link rel="stylesheet" href="/static/css/table/table.css">
+    <link rel="stylesheet" href="/static/css/bootstrap-validate/bootstrapValidator.min.css">
 
     <title>支出类型管理</title>
 </head>
@@ -19,26 +20,10 @@
     <div class="panel-body" style="padding-bottom:0px;"  >
         <!--show-refresh, show-toggle的样式可以在bootstrap-table.js的948行修改-->
         <!-- table里的所有属性在bootstrap-table.js的240行-->
-        <table id="table"
-               data-toggle="table"
-               data-toolbar="#toolbar"
-               data-method="get"
-               data-query-params="queryParams"
-               data-pagination="true"
-               data-search="true"
-               data-show-refresh="true"
-               data-show-toggle="true"
-               data-show-columns="true"
-               data-page-size="10"
-               data-height="600"
-               data-id-field="id"
-               data-page-list="[5, 10, 20]"
-               data-cach="false"
-               data-click-to-select="true"
-               data-single-select="true">
+        <table id="table">
             <thead>
                 <tr>
-                    <th data-radio="true" data-field="status"></th>
+                    <th data-radio="true"></th>
                     <th data-field="outTypeName">支出类型</th>
                     <th data-formatter="statusFormatter">支出类型状态</th>
                     <th data-formatter="openStatusFormatter">操作</th>
@@ -68,7 +53,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="container" style="width: 80%;">
-                <form class="form-horizontal" id="outTypeInsertForm" method="post">
+                <form class="form-horizontal" role="form" id="addForm" method="post">
                     <div class="modal-header" style="overflow:auto;">
                         <h4>添加支出类型</h4>
                     </div>
@@ -82,7 +67,7 @@
                     <div class="form-group">
                         <div class="col-sm-offset-8">
                             <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                            <button class="btn btn-sm btn-success" type="submit">保 存</button>
+                            <button id="addButton" class="btn btn-sm btn-success" onclick="addSubmit()" type="button">保 存</button>
                         </div>
                     </div>
                 </form>
@@ -92,11 +77,11 @@
 </div><!-- /.modal -->
 
 <!-- 修改弹窗 -->
-<div class="modal fade" id="edit" aria-hidden="true" style="overflow:auto;">
+<div class="modal fade" id="edit" role="form" aria-hidden="true" style="overflow:auto;">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="container" style="width: 80%;">
-                <form class="form-horizontal" id="outTypeUpdateForm">
+                <form class="form-horizontal" id="editForm">
                     <input type="hidden"name="outTypeId" define="outGoingType.outTypeId">
                     <input type="hidden"name="outTypeStatus" define="outGoingType.outTypeStatus">
                     <div class="modal-header" style="overflow:auto;">
@@ -112,7 +97,7 @@
                     <div class="form-group">
                         <div class="col-sm-offset-8">
                             <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                            <button class="btn btn-sm btn-success" type="submit">保 存</button>
+                            <button id="editButton" class="btn btn-sm btn-success" onclick="editSubmit()" type="button">保 存</button>
                         </div>
                     </div>
                 </form>
@@ -151,7 +136,7 @@
 <script src="/static/js/contextmenu.js"></script>
 <script src="/static/js/backstage/financialControlJS/payOutType.js"></script>
 <script src="/static/js/bootstrap-select/bootstrap-select.js"></script>
-<script src="/static/js/form/jquery.validate.js"></script>
+<script src="/static/js/bootstrap-validate/bootstrapValidator.js"></script>
 <script src="/static/js/backstage/main.js"></script>
 
 </body>

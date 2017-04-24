@@ -1,4 +1,3 @@
-
 /**
  * 初始化表格
  */
@@ -26,26 +25,39 @@ function formatterDate(value) {
     }
 }
 
+/**
+ * 导出
+ */
+function exportFile() {
+    window.location.href = "/salary/export";
+}
 
-
-function showEdit(){
+function showEdit() {
+    $("#editButton").removeAttr("disabled");
     $("input[type=reset]").trigger("click");
-    var row =  $('table').bootstrapTable('getSelections');
-    if(row.length >0) {
+    var row = $('table').bootstrapTable('getSelections');
+    if (row.length > 0) {
         $("#edit").modal('show'); // 显示弹窗
+        var editDate = document.getElementById("salaryTimeUpdate");
         var salary = row[0];
-        $("#salaryUpdateForm").fill(salary);
-    }else{
+        editDate.val = formatterDate(row[0].salaryTime);
+        $("#editForm").fill(salary);
+        validator("editForm");
+
+    } else {
         swal({
-            title:"",
-            text:"请先选择一行数据",
-            type:"warning"})
+            title: "",
+            text: "请先选择一行数据",
+            type: "warning"
+        })
     }
 }
 
-function showAdd(){
+function showAdd() {
     $("input[type=reset]").trigger("click");
     $("#add").modal('show');
+    $("#addButton").removeAttr("disabled");
+    validator("addForm");
 }
 
 /** 选择人员 */
@@ -63,7 +75,7 @@ function closePersonnelWin() {
 }
 
 /** 选择人员 */
-function checkPersonnel () {
+function checkPersonnel() {
     var selectRow = $("#appTable").bootstrapTable('getSelections');
     if (selectRow.length != 1) {
         swal('选择失败', "只能选择一条数据", "error");
@@ -86,9 +98,10 @@ function checkEdit() {
                 $("#edit").modal('hide'); // 关闭指定的窗口
                 $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
                 swal({
-                    title:"",
+                    title: "",
                     text: data.message,
-                    type:"success"})// 提示窗口, 修改成功
+                    type: "success"
+                })// 提示窗口, 修改成功
             } else if (data.result == "fail") {
                 //$.messager.alert("提示", data.result.message, "info");
             }
@@ -98,200 +111,128 @@ function checkEdit() {
 
 function addWinClose() {
     $("#add").modal('hide'); // 关闭指定的窗口
-    $("#userId").val("");
+
 }
 
 
 /**
- * 前台验证及form提交
+ * 前台验证
+ * @param formId
  */
-$(document).ready(function () {
-
-    $("#salaryInsertForm").validate({
-        errorElement: 'span',
-        errorClass: 'help-block',
-        rules: {
+function validator(formId) {
+    $('#' + formId).bootstrapValidator({
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
             userName: {
-                required: true,
-                remote:{                         //自带远程验证存在的方法
-                    url:"/salary/checkUserId",
-                    type:"get",
-                    dataType:"json",
-                    async:false,
-                    data:{
-                        userId:function(){return $("#userId").val();}
-                    },
-                    dataFilter: function(data, type) {
-                        if (data == 'false'){
-                            return true;
-                        }else{
-                            return false;
-                        }
+                message: '人员不能为空',
 
-
+                validators: {
+                    notEmpty: {
+                        message: '请点击选择人员',
                     }
+
+                }
+            },
+            minusSalay: {
+                validators: {
+                    numeric: {message: '请输入合法的数字'}
+                }
+            },
+            prizeSalary: {
+                validators: {
+                    numeric: {message: '请输入合法的数字'}
                 }
             },
 
-            minusSalay: {
-                number: true,
-
-            },
-
-            prizeSalary: {
-                number: true,
-            },
-
             totalSalary: {
-                required: true,
+                message: '请输入总工资',
                 number: true,
-            },
-
-
-        },
-        messages: {
-            userName: {
-                required: "请点击你要选择的员工",
-                remote:"该员工已经录入过工资信息"
-            },
-
-            minusSalay: {
-                number: '请输入合法的数字',
-            },
-
-            prizeSalary: {
-                number: '请输入合法的数字',
-            },
-
-            totalSalary: {
-                required: '请输入员工总工资确定数字无误',
-                number: '请输入合法的数字',
-            },
-        },
-        errorPlacement: function (error, element) {
-            element.next().remove();
-            element.after('<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>');
-            element.closest('.form-group').append(error);
-        },
-        highlight: function (element) {
-            $(element).closest('.form-group').addClass('has-error has-feedback');
-        },
-        success: function (label) {
-            var el = label.closest('.form-group').find("input");
-            el.next().remove();
-            el.after('<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>');
-            label.closest('.form-group').removeClass('has-error').addClass("has-feedback has-success");
-            label.remove();
-        },
-        submitHandler: function (form) {
-            $.post("/salary/add",
-                $("#salaryInsertForm").serialize(),
-                function (data) {
-                    if (data.result == "success") {
-                        $("#add").modal('hide'); // 关闭指定的窗口
-                        $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
-                        swal({
-                            title: "",
-                            text: data.message,
-                            confirmButtonText: "确定", // 提示按钮上的文本
-                            type: "success"
-                        })// 提示窗口, 修改成功
-                    } else if (data.result == "fail") {
-                        swal({
-                            title: "",
-                            text: "添加失败",
-                            confirmButtonText: "确认",
-                            type: "error"
-                        })
+                validators: {
+                    notEmpty: {
+                        message: '请输入总工资',
+                        number: '请输入合法的数字'
                     }
-                }, "json"
-            );
-        }
 
+                }
+            },
+
+            salaryTime: {
+                message: '请选择工资发放时间',
+                data: true,
+                validators: {
+                    notEmpty: {
+                        message: '请选择工资发放时间',
+                        data: '请选择正确的时间格式'
+                    }
+
+                }
+            }
+        }
     })
 
-    $("#salaryUpdateForm").validate({
-        errorElement: 'span',
-        errorClass: 'help-block',
-        rules: {
-            userName: {
-                required: true,
+        .on('success.form.bv', function (e) {
+            if (formId == "addForm") {
+                formSubmit("/salary/add", formId, "add");
 
-            },
+            } else if (formId == "editForm") {
+                formSubmit("/salary/update", formId, "edit");
 
-            minusSalay: {
-                number: true,
+            }
+        })
 
-            },
+}
 
-            prizeSalary: {
-                number: true,
-            },
+function addSubmit() {
+    $("#addForm").data('bootstrapValidator').validate();
+    if ($("#addForm").data('bootstrapValidator').isValid()) {
+        $("#addButton").attr("disabled", "disabled");
+    } else {
+        $("#addButton").removeAttr("disabled");
+    }
+}
 
-            totalSalary: {
-                required: true,
-                number: true,
-            },
+function editSubmit() {
+    $("#editForm").data('bootstrapValidator').validate();
+    if ($("#editForm").data('bootstrapValidator').isValid()) {
+        $("#editButton").attr("disabled", "disabled");
+    } else {
+        $("#editButton").removeAttr("disabled");
+    }
+}
+
+function formSubmit(url, formId, winId) {
+    $.post(url,
+        $("#" + formId).serialize(),
+        function (data) {
+            if (data.result == "success") {
+                $('#' + winId).modal('hide');
+                swal({
+                    title: "",
+                    text: data.message,
+                    confirmButtonText: "确定", // 提示按钮上的文本
+                    type: "success"
+                })// 提示窗口, 修改成功
+                $('#table').bootstrapTable('refresh');
+                if (formId == 'addForm') {
+                    $("input[type=reset]").trigger("click"); // 移除表单中填的值
+                    $('#addForm').data('bootstrapValidator').resetForm(true); // 移除所有验证样式
+                    $("#addButton").removeAttr("disabled"); // 移除不可点击
+                }
+            } else if (data.result == "fail") {
+                swal({
+                    title: "",
+                    text: "添加失败",
+                    confirmButtonText: "确认",
+                    type: "error"
+                })
+                $("#" + formId).removeAttr("disabled");
+            }
+        }, "json");
+}
 
 
-        },
-        messages: {
-            userName: {
-                required: "请点击你要选择的员工",
-            },
 
-            minusSalay: {
-                number: '请输入合法的数字',
-            },
-
-            prizeSalary: {
-                number: '请输入合法的数字',
-            },
-
-            totalSalary: {
-                required: '请输入员工总工资确定数字无误',
-                number: '请输入合法的数字',
-            },
-        },
-        errorPlacement: function (error, element) {
-            element.next().remove();
-            element.after('<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>');
-            element.closest('.form-group').append(error);
-        },
-        highlight: function (element) {
-            $(element).closest('.form-group').addClass('has-error has-feedback');
-        },
-        success: function (label) {
-            var el = label.closest('.form-group').find("input");
-            el.next().remove();
-            el.after('<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>');
-            label.closest('.form-group').removeClass('has-error').addClass("has-feedback has-success");
-            label.remove();
-        },
-        submitHandler: function (form) {
-            $.post("/salary/update",
-                $("#salaryUpdateForm").serialize(),
-                function (data) {
-                    if (data.result == "success") {
-                        $("#edit").modal('hide'); // 关闭指定的窗口
-                        $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
-                        swal({
-                            title: "",
-                            text: data.message,
-                            confirmButtonText: "确定", // 提示按钮上的文本
-                            type: "success"
-                        })// 提示窗口, 修改成功
-                    } else if (data.result == "fail") {
-                        swal({
-                            title: "",
-                            text: "添加失败",
-                            confirmButtonText: "确认",
-                            type: "error"
-                        })
-                    }
-                }, "json"
-            );
-        }
-
-    })
-});

@@ -1,17 +1,28 @@
 $(function () {
-    $('#table').bootstrapTable('hideColumn', 'recordId');
+    initTable('table', '/maintainRecord/queryByPager'); // 初始化表格
 });
+
+// 查看全部可用
+function showAvailable(){
+    initTable('table', '/maintainRecord/queryByPager');
+}
+// 查看全部禁用
+function showDisable(){
+    initTable('table', '/maintainRecord/queryByPagerDisable');
+}
 
 //显示弹窗
 function showEdit() {
     var row = $('table').bootstrapTable('getSelections');
     if (row.length > 0) {
-//                $('#editId').val(row[0].id);
-//                $('#editName').val(row[0].name);
-//                $('#editPrice').val(row[0].price);
         $("#editWindow").modal('show'); // 显示弹窗
-        var ceshi = row[0];
-        $("#editForm").fill(ceshi);
+        var MaintainRecord = row[0];
+        $("#editForm").fill(MaintainRecord);
+        $("#start_edit").val(formatterDate(MaintainRecord.startTime));
+        $("#end_edit").val(formatterDate(MaintainRecord.endTime));
+        $("#end2_edit").val(formatterDate(MaintainRecord.actualEndTime));
+        $("#created_edit").val(formatterDate(MaintainRecord.recordCreatedTime));
+        $("#pickup_edit").val(formatterDate(MaintainRecord.pickupTime));
     } else {
         swal({
             "title": "",
@@ -35,7 +46,7 @@ function formatRepoSelection(repo) {
 }
 
 //显示删除
-function showInactive() {
+function showInactive(id) {
     var row = $('#table').bootstrapTable('getSelections');
     if (row.length > 0) {
         swal({
@@ -45,14 +56,15 @@ function showInactive() {
             showCancelButton: true,
             closeOnConfirm: false,
             cancelButtonText: "取消",
-            confirmButtonText: "是的，要我冻结",
+            confirmButtonText: "是的，我要冻结",
             confirmButtonColor: "#ec6c62"
         }, function() {
             $.ajax({
-                url: "/custManage/inactive?recordId="+row[0].recordId,
+                url: "/maintainRecord/inactive/"+id,
                 type: "DELETE"
             }).done(function(data) {
                 swal("操作成功!", "已成功冻结数据！", "success");
+                $('#table').bootstrapTable("refresh");
             }).error(function(data) {
                 swal("OMG", "冻结操作失败了!", "error");
             });
@@ -66,18 +78,20 @@ function showInactive() {
     }
 }
 
-function showActive() {
+function showActive(id) {
     var row = $('#table').bootstrapTable('getSelections');
     if (row.length > 0) {
         $(function() {
             $.ajax({
-                url: "/custManage/active?recordId="+row[0].recordId,
+                url: "/maintainRecord/active/"+id,
                 type: "DELETE"
             }).done(function(data) {
                 swal("操作成功!", "已成功解冻数据！", "success");
+                $('#table').bootstrapTable("refresh");
             }).error(function(data) {
                 swal("OMG", "解冻操作失败了!", "error");
             });
+            $('#table').bootstrapTable("refresh");
         });
     } else {
         swal({
@@ -90,71 +104,11 @@ function showActive() {
 
 function formatterStatus(value, row, index) {
     if (row.recordStatus == 'Y') {
-        return "可用"
+        return "&nbsp;&nbsp;<button type='button' class='btn btn-danger' onclick='showInactive(\""+row.recordId+ "\")'>禁用</a>"
     } else if (row.recordStatus == 'N') {
-        return "不可用";
+        return "&nbsp;&nbsp;<button type='button' class='btn btn-success' onclick='showActive(\""+row.recordId+ "\")'>激活</a>";
     }
 }
-
-//检查添加
-function checkAdd() {
-    var id = $('#addId').val();
-    var name = $('#addName').val();
-    var price = $('#addPrice').val();
-    var reslist = $("#addSelect").select2("data"); //获取多选的值
-    if (id != "" && name != "" && price != "") {
-        return true;
-    } else {
-        var error = document.getElementById("addError");
-        error.innerHTML = "请输入正确的数据";
-        return false;
-    }
-}
-
-//检查修改
-function checkEdit() {
-    $.post("/table/edit",
-        $("#editForm").serialize(),
-        function (data) {
-            if (data.result == "success") {
-                $("#editWindow").modal('hide'); // 关闭指定的窗口
-                $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
-                swal({
-                    title: "",
-                    text: data.message,
-                    type: "success"
-                })// 提示窗口, 修改成功
-            } else if (data.result == "fail") {
-                //$.messager.alert("提示", data.result.message, "info");
-            }
-        }, "json"
-    );
-}
-
-$('#addDateTimePicker').datetimepicker({
-    language: 'zh-CN',
-    format: 'yyyy-mm-dd hh:ii'
-});
-$('#editDateTimePicker').datetimepicker({
-    language: 'zh-CN',
-    format: 'yyyy-mm-dd hh:ii'
-});
-$('#addDateTimePicker1').datetimepicker({
-    language: 'zh-CN',
-    format: 'yyyy-mm-dd hh:ii'
-});
-$('#editDateTimePicker1').datetimepicker({
-    language: 'zh-CN',
-    format: 'yyyy-mm-dd hh:ii'
-});
-$('#addDateTimePicker2').datetimepicker({
-    language: 'zh-CN',
-    format: 'yyyy-mm-dd hh:ii'
-});
-$('#editDateTimePicker2').datetimepicker({
-    language: 'zh-CN',
-    format: 'yyyy-mm-dd hh:ii'
-});
 
 //前端验证
 $(document).ready(function () {
@@ -217,7 +171,25 @@ $(document).ready(function () {
             label.remove();
         },
         submitHandler: function (form) {
-            alert("submitted!");
+            $.post("/maintainRecord/insert",
+                $("#addForm").serialize(),
+                function (data) {
+                    if (data.result == "success") {
+                        $("#addWindow").modal('hide'); // 关闭指定的窗口
+                        $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
+                        swal({
+                            title:"",
+                            text: data.message,
+                            confirmButtonText:"确定", // 提示按钮上的文本
+                            type:"success"})// 提示窗口, 修改成功
+                    } else if (data.result == "fail") {
+                        swal({title:"",
+                            text:"添加失败",
+                            confirmButtonText:"确认",
+                            type:"error"})
+                    }
+                }, "json"
+            );
         }
     })
     $("#editForm").validate({
@@ -279,7 +251,25 @@ $(document).ready(function () {
             label.remove();
         },
         submitHandler: function (form) {
-            alert("submitted!");
+            $.post("/maintainRecord/update",
+                $("#editForm").serialize(),
+                function (data) {
+                    if (data.result == "success") {
+                        $("#editWindow").modal('hide'); // 关闭指定的窗口
+                        $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
+                        swal({
+                            title:"",
+                            text: data.message,
+                            confirmButtonText:"确定", // 提示按钮上的文本
+                            type:"success"})// 提示窗口, 修改成功
+                    } else if (data.result == "fail") {
+                        swal({title:"",
+                            text:"修改失败",
+                            confirmButtonText:"确认",
+                            type:"error"})
+                    }
+                }, "json"
+            );
         }
     })
 });

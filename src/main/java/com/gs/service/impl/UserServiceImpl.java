@@ -1,6 +1,7 @@
 package com.gs.service.impl;
 
 import com.gs.bean.User;
+import com.gs.common.bean.Pager4EasyUI;
 import com.gs.dao.UserDAO;
 import com.gs.service.UserService;
 import org.springframework.stereotype.Service;
@@ -44,5 +45,11 @@ public class UserServiceImpl implements UserService {
 	public int count() { return userDAO.count(); }
 	public int inactive(String id) { return userDAO.inactive(id); }
 	public int active(String id) { return userDAO.active(id); }
+
+	//  分页查询全部，不分状态
+	@Override
+	public Pager4EasyUI queryByPagerAll(Pager pager) {
+		return userDAO.queryByPagerAll(pager);
+	}
 
 }

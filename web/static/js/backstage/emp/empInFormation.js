@@ -1,89 +1,262 @@
 $(function () {
-    $('#table').bootstrapTable('hideColumn', 'id');
+    initTable('table', '/userBasicManage/queryByPager'); // 初始化表格
 
-    $("#addSelect").select2({
-            language: 'zh-CN'
-        }
-    );
-
-    //绑定Ajax的内容
-    $.getJSON("/table/queryType", function (data) {
-        $("#addSelect").empty();//清空下拉框
-        $.each(data, function (i, item) {
-            $("#addSelect").append("<option value='" + data[i].id + "'>&nbsp;" + data[i].name + "</option>");
-        });
-    })
-//            $("#addSelect").on("select2:select",
-//                    function (e) {
-//                        alert(e)
-//                        alert("select2:select", e);
-//            });
+    // 初始化select2, 第一个参数是class的名字, 第二个参数是select2的提示语, 第三个参数是select2的查询url
+    initSelect2("userRole", "请选择角色", "/role/role2CheckBox");
+    // initSelect2("userCompany", "请选择所属公司", "/role/role2CheckBox");
 });
+
+function addSubmit() {
+    $("#addForm").data('bootstrapValidator').validate();
+    if ($("#addForm").data('bootstrapValidator').isValid()) {
+        $("#addButton").attr("disabled","disabled");
+    } else {
+        $("#addButton").removeAttr("disabled");
+    }
+}
+
+function editSubmit() {
+    $("#editForm").data('bootstrapValidator').validate();
+    if ($("#editForm").data('bootstrapValidator').isValid()) {
+        $("#editButton").attr("disabled","disabled");
+    } else {
+        $("#editButton").removeAttr("disabled");
+    }
+}
+
+function showAvailable(){
+    alert("可用");
+}
+
+function showDisable(){
+    alert("禁用");
+}
 
 function showEdit(){
     var row =  $('table').bootstrapTable('getSelections');
     if(row.length >0) {
-//                $('#editId').val(row[0].id);
-//                $('#editName').val(row[0].name);
-//                $('#editPrice').val(row[0].price);
-        $("#edit").modal('show'); // 显示弹窗
+        $("#editWindow").modal('show'); // 显示弹窗
+        $("#editButton").removeAttr("disabled");
         var emp = row[0];
+        $('#editUserRole').html('<option value="' + emp.role.roleId + '">' + emp.role.roleName + '</option>').trigger("change");
         $("#editForm").fill(emp);
+        validator('editForm');
     }else{
         swal({
-            title:"",
-            text:"请先选择一行数据",
-            type:"warning"})// 提示窗口, 修改成功
+            title:"警告",
+            text: "请先选择要修改的员工信息", // 主要文本
+            confirmButtonColor: "#DD6B55", // 提示按钮的颜色
+            confirmButtonText:"确定", // 提示按钮上的文本
+            type:"warning"}) // 提示类型
     }
 }
 
 function showAdd(){
-
-    $("#add").modal('show');
+    initDatePicker('addForm', 'userBirthday'); // 初始化时间框, 第一参数是form表单id, 第二参数是input的name
+    $("#addWindow").modal('show');
+    $("#addButton").removeAttr("disabled");
+    validator('addForm'); // 初始化验证
 }
 
-function formatRepo(repo){return repo.text}
-function formatRepoSelection(repo){return repo.text}
-
-function showDel(){
-    var row =  $('table').bootstrapTable('getSelections');
-    if(row.length >0) {
-        $("#del").modal('show');
-    }else{
-        $("#tanchuang").modal('show');
-    }
+function validator(formId) {
+    $('#' + formId).bootstrapValidator({
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            userName: {
+                message: '用户名验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '用户名不能为空'
+                    },
+                    stringLength: {
+                        min: 1,
+                        max: 10,
+                        message: '用户名长度必须在1到10位之间'
+                    }
+                }
+            },
+            userEmail: {
+                message: '邮箱验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '邮箱不能为空'
+                    }
+                }
+            },
+            // company: {
+            //     message: '所属公司验证失败',
+            //     validators: {
+            //         notEmpty: {
+            //             message: '所属公司不能为空'
+            //         }
+            //     }
+            // },
+            userAddress: {
+                message: '地址验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '地址不能为空'
+                    }
+                }
+            },
+            userIdentity: {
+                message: '身份证验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '身份证不能为空'
+                    },
+                    stringLength: {
+                        min:18,
+                        max: 18,
+                        message: '身份证长度必须在18位之间'
+                    }
+                }
+            },
+            userPhone: {
+                message: '手机号验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '用户手机号码不能为空'
+                    },
+                    stringLength: {
+                        min: 11,
+                        max: 11,
+                        message: '手机号码必须为11位'
+                    },
+                    regexp: {
+                        regexp: /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/,
+                        message: '请输入正确的手机号'
+                    }
+                }
+            },
+            userSalary: {
+                message: '底薪验证失败',
+                validators: {
+                    stringLength: {
+                        min:0,
+                        message:'底薪要 >= 0'
+                    },
+                    notEmpty: {
+                        message: '底薪不能为空'
+                    }
+                }
+            },
+            userBirthday:{
+                message: '生日验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '生日不能为空'
+                    }
+                }
+            },
+            roleId: {
+                message: '角色验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '员工角色不能为空'
+                    }
+                }
+            },
+            userPwd: {
+                message: '密码验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '密码不能为空'
+                    }
+                }
+            },
+            confirm_password: {
+                message: '确认密码失败',
+                validators: {
+                    notEmpty: {
+                        message: '确认密码不能为空'
+                    },
+                    identical: {
+                        field: 'userPwd',
+                        message: '*两次输入密码不一致'
+                    }
+                }
+            }
+        }
+    })
+    .on('success.form.bv', function (e) {
+        if (formId == "addForm") {
+            formSubmit("/userBasicManage/addUser", formId, "addWindow");
+        } else if (formId == "editForm") {
+            formSubmit("/userBasicManage/updateUser", formId, "editWindow");
+        }
+    })
 }
 
-function checkAdd(){
-    var id = $('#addId').val();
-    var name = $('#addName').val();
-    var price = $('#addPrice').val();
-    var reslist=$("#addSelect").select2("data"); //获取多选的值
-    alert(reslist.length)
-    if(id != "" && name != "" && price != ""){
-        return true;
-    }else{
-        var error = document.getElementById("addError");
-        error.innerHTML = "请输入正确的数据";
-        return false;
-    }
-}
-
-function checkEdit() {
-    $.post("/table/edit",
-        $("#editForm").serialize(),
+function formSubmit(url, formId, winId) {
+    $.post(url, $("#" + formId).serialize(),
         function (data) {
             if (data.result == "success") {
-                $("#edit").modal('hide'); // 关闭指定的窗口
-                $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
+                $('#' + winId).modal('hide');
                 swal({
                     title:"",
                     text: data.message,
+                    confirmButtonText:"确定", // 提示按钮上的文本
                     type:"success"})// 提示窗口, 修改成功
+                $('#table').bootstrapTable('refresh');
+                if(formId == 'addForm'){
+                    $("input[type=reset]").trigger("click"); // 移除表单中填的值
+                    $('#addForm').data('bootstrapValidator').resetForm(true); // 移除所有验证样式
+                    $("#addButton").removeAttr("disabled"); // 移除不可点击
+                }
             } else if (data.result == "fail") {
-                //$.messager.alert("提示", data.result.message, "info");
+                swal({title:"",
+                    text:"添加失败",
+                    confirmButtonText:"确认",
+                    type:"error"})
+                $("#"+formId).removeAttr("disabled");
             }
         }, "json"
     );
 }
 
+
+function showReturn(){
+    var row =  $('table').bootstrapTable('getSelections');
+    if(row.length >0) {
+        swal(
+            {title:"",
+                text:"您确定要辞退此员工吗",
+                type:"warning",
+                showCancelButton:true,
+                confirmButtonColor:"#DD6B55",
+                confirmButtonText:"我确定",
+                cancelButtonText:"再考虑一下",
+                closeOnConfirm:false,
+                closeOnCancel:false
+            },function(isConfirm){
+                if (isConfirm) {
+                    swal({
+                        title: "提示",
+                        text: "禁用成功",
+                        type: "success",
+                        confirmButtonText: "确认",
+                    }, function () {
+                    })
+                }
+                else{
+                    swal({title:"提示",
+                        text:"已取消",
+                        confirmButtonText:"确认",
+                        type:"error"})
+                }
+            }
+        )
+    }else{
+        swal({
+            title:"",
+            text: "请先选择要辞退的员工", // 主要文本
+            confirmButtonColor: "#DD6B55", // 提示按钮的颜色
+            confirmButtonText:"确定", // 提示按钮上的文本
+            type:"warning"}) // 提示类型
+    }
+}

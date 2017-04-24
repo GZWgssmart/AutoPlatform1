@@ -9,5 +9,77 @@
     <result column="muCreatedTime" property="muCreatedTime" jdbcType="TIMESTAMP" />
     <result column="muUseDate" property="muUseDate" jdbcType="TIMESTAMP" />
   </resultMap>
+  
+  <resultMap id="baseRecordView" type="com.gs.bean.view.RecordBaseView">
+    <result column="needHours" property="hours"></result>
+    <result column="carplate" property="carplate"></result>
+    <result column="carmodel" property="carmodel"></result>
+    <association resultMap="com.gs.dao.MaintainRecordDAO.BaseResultMap" property="record" />
+  </resultMap>
+  
+  <select id="queryByPager">
+    select mu.* ,acc.accName from t_material_use mu left join t_accessories acc on mu.accId = acc.accId
+     left join t_company comp on acc.companyId = comp.companyId
+    where comp.companyId  = #{companyId} order by mu.muCreatedTime desc
+  </select>
+
+
+
+
+  <!-- 其它的 不与这个表相关的-->
+    <select id="queryNoUseRecord" resultMap="baseRecordView">
+  	select record.recordCreatedTime,
+				(select sum(fix.maintainHour) from t_maintain_detail detail
+					Left JOIN t_maintain_fix fix 	on detail.maintainItemId = fix.maintainId
+					where detail.maintainRecordId = record.recordId) as 'needHours',
+      record.recordId,
+      checkin.carPlate as 'carplate' ,
+      model.modelName 'carmodel'
+	from t_checkin checkin
+	left JOIN t_maintain_record record on checkin.checkinId = record.checkinId
+	left JOIN t_company com on com.companyId = checkin.companyId
+	left join t_car_model model on checkin.modelId = model.modelId
+	where com.companyId = #{companyId} and  record.recordStatus='Y' and record.recordId not in(
+		select workinfo.recordId from t_work_info workinfo
+	) order by  record.recordCreatedTime desc
+	 limit #{pager.beginIndex}, #{pager.pageSize}
+  </select>
+
+    <select id="countNoUseRecord" resultType="int">
+       select count(record.recordId)
+        from t_checkin checkin
+        left JOIN t_maintain_record record on checkin.checkinId = record.checkinId
+        where checkin.companyId =#{companyId} and record.recordStatus='Y' and record.recordId not in(
+                  select workinfo.recordId from t_work_info workinfo)
+    </select>
+
+    <select id="recordAccByPager">
+        select
+		mf.maintainName '保养维修名',
+		mf.maintainOrFix '保养维修标识',
+		mfa.accCount
+     from t_work_info wi left join
+        t_maintain_detail md on wi.recordId = md.maintainRecordId
+        left join t_maintain_fix mf on md.maintainItemId = mf.maintainId
+      left join t_maintain_fix_acc mfa on mf.maintainId = mfa.maintainId
+      left join t_accessories a on mfa.accId = a.accId
+      where mf.companyId = a.companyId and md.maintainRecordId = #{recordId}
+      limit #{pager.beginIndex}, #{pager.pageSize}
+
+    </select>
+
+    <select id="companyEmps" resultType="user"> /* 后期可能会加上员工角色 */
+      select t_user.userId , t_user.userName from t_user left join t_company on t_company.companyId = t_user.companyId
+      where t_company.companyId = #{companyId};
+    </select>
+
+
+    <insert id="insertWorkInfo" parameterType="com.gs.bean.WorkInfo">
+        INSERT INTO t_work_info
+        (workId,recordId, userId, workAssignTime, workCreatedTime,workStatus)
+        VALUES
+        (uuid(),#{recordId},#{userId},#{workAssignTime},#{workCreatedTime},'Y')
+    </insert>
+
 
 </mapper>

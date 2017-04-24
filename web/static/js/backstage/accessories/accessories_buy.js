@@ -67,15 +67,6 @@ function formatRepoSelection(repo) {
     return repo.text
 }
 
-//格式化页面上的配件分类状态
-function formatterStatus(value) {
-    if (value == "Y") {
-        return "可用";
-    } else {
-        return "不可用";
-    }
-}
-
 function openStatusFormatter(index, row) {
     /*处理数据*/
     if (row.accBuyStatus == 'Y') {

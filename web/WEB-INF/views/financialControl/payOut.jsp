@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="/static/css/select2.min.css">
     <link rel="stylesheet" href="/static/css/sweetalert.css">
     <link rel="stylesheet" href="/static/css/table/table.css">
+    <link rel="stylesheet" href="/static/css/bootstrap-validate/bootstrapValidator.min.css">
 
     <title>支出管理</title>
 </head>

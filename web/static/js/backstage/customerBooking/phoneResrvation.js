@@ -1,3 +1,4 @@
+var contentPath='';
 $(function () {
     initTable('table', '/appointment/queryByPager'); // 初始化表格
 });
@@ -25,13 +26,22 @@ $('#editCheckinCreatedTime').datetimepicker({// 初始化修改框中的时间�
     format: 'yyyy-mm-dd hh:ii'
 });
 
+// 激活或禁用
+function showStatusFormatter(value) {
+    if(value == 'Y') {
+        return "是";
+    } else {
+        return "否";
+    }
+
+}
 
 // 激活或禁用
 function statusFormatter(value, row, index) {
     if(value == 'Y') {
-        return "&nbsp;&nbsp;<a href='javascript:;' onclick='inactive(\""+row.checkinId+ "\")'>禁用</a>";
+        return "&nbsp;&nbsp;<a href='javascript:;' onclick='inactive(\""+row.userName+ "\")'>禁用</a>";
     } else {
-        return "&nbsp;&nbsp;<a href='javascript:;' onclick='active(\""+row.checkinId+ "\")'>激活</a>";
+        return "&nbsp;&nbsp;<a href='javascript:;' onclick='active(\""+row.userName+ "\")'>激活</a>";
     }
 
 }
@@ -85,38 +95,31 @@ function showDisable(){
 }
 
 function showEdit(){
+    initDateTimePicker('editForm', 'arriveTime'); // 初始化时间框
     var row =  $('#table').bootstrapTable('getSelections');
     console.log($('#table').bootstrapTable("getOptions"));
     //alert(row)
     if(row.length >0) {
-//                $('#editId').val(row[0].id);
-//                $('#editName').val(row[0].name);
-//                $('#editPrice').val(row[0].price);
         $("#editWindow").modal('show'); // 显示弹窗
+        $("#editButton").removeAttr("disabled");
         var ceshi = row[0];
         $("#editForm").fill(ceshi);
+        validator('editForm'); // 初始化验证
     }else{
         swal({
             title:"",
-            text:"请先选择一行数据",
-            type:"warning"})
+            text: "请选择要修改的登记记录", // 主要文本
+            confirmButtonColor: "#DD6B55", // 提示按钮的颜色
+            confirmButtonText:"确定", // 提示按钮上的文本
+            type:"warning"}) // 提示类型
     }
 }
 
 function showAdd(){
+    initDateTimePicker('addForm', 'arriveTime');
+    $("#addButton").removeAttr("disabled");
     $("#addWindow").modal('show');
-}
-
-function showDel(){
-    var row =  $('table').bootstrapTable('getSelections');
-    if(row.length >0) {
-        $("#del").modal('show');
-    }else{
-        swal({
-            title:"",
-            text:"请先选择一行数据",
-            type:"warning"})
-    }
+    validator('addForm'); // 初始化验证
 }
 
 function checkEdit(url) {
@@ -146,7 +149,7 @@ function checkEdit(url) {
 //前端验证
 $(document).ready(function () {
 
-    $("#showAddFormWar").validate({
+    $("#addForm").validate({
         errorElement: 'span',
         errorClass: 'help-block',
 
@@ -229,7 +232,7 @@ $(document).ready(function () {
         },
         submitHandler: function (form) {
             $.post("/appointment/addApp",
-                $("#showAddFormWar").serialize(),
+                $("#addForm").serialize(),
                 function (data) {
                     if (data.result == "success") {
                         $("#addWindow").modal('hide'); // 关闭指定的窗口
@@ -254,7 +257,7 @@ $(document).ready(function () {
     })
 
 
-    $("#showEditFormWar").validate({
+    $("#editForm").validate({
         errorElement: 'span',
         errorClass: 'help-block',
 
@@ -336,8 +339,8 @@ $(document).ready(function () {
             label.remove();
         },
         submitHandler: function (form) {
-            $.post("/appointment/update",
-                $("#showEditFormWar").serialize(),
+            $.post(contentPath+"/appointment/update",
+                $("#editForm").serialize(),
                 function (data) {
                     if (data.result == "success") {
                         $("#editWindow").modal('hide'); // 关闭指定的窗口

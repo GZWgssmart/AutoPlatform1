@@ -30,7 +30,6 @@ function showStatusFormatter(value) {
     } else {
         return "否";
     }
-
 }
 
 // 激活或禁用
@@ -96,18 +95,7 @@ function blurredQuery(){
     var button = $("#ulButton");// 获取模糊查询按钮
     var text = button.text();// 获取模糊查询按钮文本
     var vaule = $("#ulInput").val();// 获取模糊查询输入框文本
-    alert(text)
-    var column;
-    if(text == '车主/汽车公司/汽车车牌'){
-        column = 'all'
-    }else if(text == "车主"){
-        column = 'userName';
-    }else if(text =="汽车公司"){
-        column = 'companyId';
-    }else if(text == "汽车车牌"){
-        column = 'plateId';
-    }
-    initTable('table', '/checkin/blurredQuery/'+column+'/'+vaule);
+    initTable('table', '/checkin/blurredQuery?text='+text+'&value='+vaule);
 }
 
 /** 判断是否选中 */

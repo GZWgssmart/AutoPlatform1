@@ -2,19 +2,36 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.gs.dao.MaintainRecordDAO" >
   <resultMap id="BaseResultMap" type="MaintainRecord" >
-    <id column="recordId" property="recordId" jdbcType="VARCHAR" />
-    <result column="startTime" property="startTime" jdbcType="TIMESTAMP" />
-    <result column="endTime" property="endTime" jdbcType="TIMESTAMP" />
-    <result column="actualEndTime" property="actualEndTime" jdbcType="TIMESTAMP" />
-    <result column="recordCreatedTime" property="recordCreatedTime" jdbcType="TIMESTAMP" />
-    <result column="pickupTime" property="pickupTime" jdbcType="TIMESTAMP" />
-    <result column="recordDes" property="recordDes" jdbcType="VARCHAR" />
-    <result column="recordStatus" property="recordStatus" jdbcType="VARCHAR" />
+    <id column="recordId" property="recordId" />
+    <result column="checkinId" property="checkinId" />
+    <result column="startTime" property="startTime" />
+    <result column="endTime" property="endTime" />
+    <result column="actualEndTime" property="actualEndTime" />
+    <result column="recordCreatedTime" property="recordCreatedTime" />
+    <result column="pickupTime" property="pickupTime" />
+    <result column="recordDes" property="recordDes" />
+    <result column="recordStatus" property="recordStatus" />
     <association property="checkin" javaType="com.gs.bean.Checkin">
       <id column="checkin_id" property="checkinId"></id>
       <result column="user_name" property="userName"></result>
     </association>
   </resultMap>
+
+  <select id="queryByPager" resultMap="BaseResultMap" parameterType="com.gs.common.bean.Pager">
+    select m.*,c.checkinId as checkin_id,c.userName as user_name from t_maintain_record m, t_checkin c where m.checkinId = c.checkinId and m.recordStatus = 'Y' limit #{beginIndex}, #{pageSize}
+  </select>
+
+  <select id="queryByPagerDisable" resultMap="BaseResultMap" parameterType="com.gs.common.bean.Pager">
+    select m.*,c.checkinId as checkin_id,c.userName as user_name from t_maintain_record m, t_checkin c where m.checkinId = c.checkinId and m.recordStatus = 'N' limit #{beginIndex}, #{pageSize}
+  </select>
+
+  <select id="count" resultType="int" >
+    select count(recordId) from t_maintain_record where recordStatus = 'Y'
+  </select>
+
+  <select id="countDisable" resultType="int" >
+    select count(recordId) from t_maintain_record where recordStatus = 'N'
+  </select>
 
   <select id="queryAll" resultMap="BaseResultMap">
     select m.*,c.checkinId as checkin_id,c.userName as user_name from t_maintain_record m, t_checkin c where m.checkinId = c.checkinId
@@ -26,6 +43,15 @@
 
   <update id="active" parameterType="string">
     update t_maintain_record set recordStatus = 'Y' where recordId = #{recordId}
+  </update>
+
+  <insert id="insert" parameterType="MaintainRecord">
+    insert into t_maintain_record(recordId,checkinId,startTime,endTime,actualEndTime,recordCreatedTime,pickupTime,recordDes,recordStatus)
+    values(uuid(),#{checkinId},#{startTime},#{endTime},#{actualEndTime},#{recordCreatedTime},#{pickupTime},#{recordDes},'Y');
+  </insert>
+
+  <update id="update" parameterType="MaintainRecord">
+    update t_maintain_record set startTime=#{startTime},endTime=#{endTime},actualEndTime=#{actualEndTime},recordCreatedTime=#{recordCreatedTime},pickupTime=#{pickupTime},recordDes=#{recordDes} where recordId = #{recordId}
   </update>
 
 </mapper>

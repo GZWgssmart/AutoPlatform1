@@ -12,8 +12,9 @@ import javax.annotation.Resource;
 import java.util.List;
 
 /**
- * @author Administrator
- * @create 2017-04-22 10:08 模块管理
+ * @author 程燕
+ * @create 2017-04-22 10:08
+ * @des 模块管理
  */
 @Controller
 @RequestMapping("/module")

@@ -19,27 +19,10 @@
     <div class="panel-body" style="padding-bottom:0px;"  >
         <!--show-refresh, show-toggle的样式可以在bootstrap-table.js的948行修改-->
         <!-- table里的所有属性在bootstrap-table.js的240行-->
-        <table id="table"
-               data-toggle="table"
-               data-toolbar="#toolbar"
-               data-url="/table/query"
-               data-method="post"
-               data-query-params="queryParams"
-               data-pagination="true"
-               data-search="true"
-               data-show-refresh="true"
-               data-show-toggle="true"
-               data-show-columns="true"
-               data-page-size="10"
-               data-height="700"
-               data-id-field="id"
-               data-page-list="[5, 10, 20]"
-               data-cach="false"
-               data-click-to-select="true"
-               data-single-select="true">
+        <table id="table">
             <thead>
             <tr>
-                <th data-radio="true" data-field="status"></th>
+                <th data-radio="true"></th>
                 <th  data-field="user.userName">姓名</th>
                 <th data-field="prizeSalary">奖金</th>
                 <th data-field="minusSalay">罚款</th>
@@ -57,6 +40,9 @@
             <button id="btn_edit" type="button" class="btn btn-default" onclick="showEdit();">
                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
             </button>
+            <button type="button" class="btn btn-default"onclick="exportFile();">
+                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>导出
+            </button>
         </div>
     </div>
 </div>
@@ -66,8 +52,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="container" style="width: 80%;">
-                <form class="form-horizontal" role="form" id="salaryInsertForm" method="post">
-                    <input type="reset" name="reset" style="display: none;"/>
+                <form class="form-horizontal" role="form" id="addForm">
                     <div class="modal-header" style="overflow:auto;">
                         <p>员工工资录入</p>
                     </div>
@@ -105,11 +90,18 @@
                         </div>
                     </div>
 
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">工资发放时间：</label>
+                        <div class="col-sm-7">
+                            <input type="date" name="salaryTime" placeholder="请选择工资发放时间"  id="salaryTime" class="form-control">
+                        </div>
+                    </div>
+
                     <div class="modal-footer">
                         <span id="addError"></span>
                         <button type="button" class="btn btn-default" onclick="addWinClose()">关闭
                         </button>
-                        <button type="submit" class="btn btn-primary btn-sm">保存</button>
+                        <button type="button" id="addButton" onclick="addSubmit()" class="btn btn-primary btn-sm">保存</button>
                     </div>
                 </form>
             </div>
@@ -162,8 +154,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="container" style="width: 80%;">
-                <form class="form-horizontal" role="form"  id="salaryUpdateForm" method="post">
-                    <input type="reset" name="reset" style="display: none;"/>
+                <form class="form-horizontal" role="form"  id="editForm" method="post">
                     <input  type="hidden" define="salary.salaryId" name="salaryId">
                     <div class="modal-header" style="overflow:auto;">
                         <p>修改员工工资录入</p>
@@ -200,12 +191,19 @@
                             <input type="text"  define="salary.salaryDes"  name="salaryDes"  class="form-control">
                         </div>
                     </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">工资发放时间：</label>
+                        <div class="col-sm-7">
+                            <input type="date" define="salary.salaryTime" id="salaryTimeUpdate" value="" name="salaryTime" class="form-control">
+                        </div>
+                    </div>
                     <div class="modal-footer">
                         <span id="editError"></span>
                         <button type="button" class="btn btn-default"
                                 data-dismiss="modal">关闭
                         </button>
-                        <button type="submit" class="btn btn-primary btn-sm">保存</button>
+                        <button type="button" id="editButton" onclick="editSubmit()" class="btn btn-primary btn-sm">保存</button>
                     </div>
                 </form>
             </div>
@@ -244,6 +242,6 @@
 <script src="/static/js/backstage/financialControlJS/salary.js"></script>
 <script src="/static/js/bootstrap-select/bootstrap-select.js"></script>
 <script src="/static/js/backstage/main.js"></script>
-<script src="/static/js/form/jquery.validate.js"></script>
+<script src="/static/js/bootstrap-validate/bootstrapValidator.js"></script>
 </body>
 </html>
