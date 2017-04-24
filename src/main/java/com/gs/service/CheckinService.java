@@ -25,9 +25,10 @@ public interface CheckinService extends BaseService<String, Checkin>{
     /**
      * 模糊查询
      */
-    public List<Checkin> blurredQuery(Pager pager,String cloumn, String value);
+    public List<Checkin> blurredQuery(Pager pager,Checkin checkin);
+
     /**
      * 模糊查询的记录数
      */
-    public int countByBlurred();
+    public int countByBlurred(Checkin checkin);
 }
