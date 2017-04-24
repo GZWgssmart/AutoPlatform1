@@ -18,19 +18,36 @@
   </resultMap>
 
   <select id="queryAll" resultMap="companyMap">
+    <![CDATA[
     select * from t_company
+    ]]>
+  </select>
+
+  <select id="queryByPager" resultMap="companyMap" parameterType="com.gs.common.bean.Pager">
+    <![CDATA[
+       select * from t_company tc  where tc.companyStatus = 'Y'
+     ]]>
+    limit #{beginIndex}, #{pageSize}
+  </select>
+
+  <select id="count" resultType="int" >
+    <![CDATA[
+      select count(companyId) from t_company tc where tc.companyStatus = 'Y'
+    ]]>
   </select>
 
   <insert id="insert"  parameterType="company">
-			INSERT into t_company(companyId, companyName, companyAddress, companyTel,companyPricipal,companyOpendate,companyLogo) values(uuid(), #{companyName}, #{companyAddress}, #{companyTel}, #{companyPricipal}, #{companyOpendate}, #{companyLogo})
+    <![CDATA[
+			INSERT into t_company(companyId, companyName, companyAddress, companyTel,companyPricipal,companyWebsite,companyLogo,companyOpendate,companySize,companyLongitude,companyLatitude,companyDes,companyStatus)
+			values(uuid(), #{companyName}, #{companyAddress}, #{companyTel}, #{companyPricipal}, #{companyWebsite}, #{companyLogo}, #{companyOpendate}, #{companySize}, #{companyLongitude}, #{companyLatitude}, #{companyDes},'Y')
+     ]]>
   </insert>
 
   <update id="update" parameterType="company">
-			update t_company set companyName = #{companyName},companyAddress = #{companyAddress},companyTel = #{companyTel},companyPricipal = #{companyPricipal},companyOpendate = #{companyOpendate},companyLogo = #{companyLogo}where companyId = #{companyId}
+    <![CDATA[
+			update t_company set companyName = #{companyName},companyAddress = #{companyAddress},companyTel = #{companyTel},companyPricipal = #{companyPricipal},
+			companyWebsite = #{companyWebsite},companyLogo = #{companyLogo},companyOpendate = #{companyOpendate},companySize = #{companySize}, companyLongitude = {companyLongitude},
+			companyLatitude = #{companyLatitude}, companyDes = #{companyDes} where companyId = #{companyId}
+     ]]>
   </update>
-
-  <delete id="deleteById" parameterType="string">
-           delete from t_company where companyId = #{companyId}
-  </delete>
-
 </mapper>

@@ -66,7 +66,7 @@ function validator(formId) {
                         }
                     }
                 },
-            brandId: {
+            brandName: {
                 message: '汽车品牌验证失败',
                 validators: {
                     notEmpty: {

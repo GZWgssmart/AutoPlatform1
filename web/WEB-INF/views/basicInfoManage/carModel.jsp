@@ -114,7 +114,7 @@
                 <div id="editModelDiv" class="form-group">
                     <label class="col-sm-3 control-label">品牌名称：</label>
                     <div class="col-sm-7">
-                        <select id="editCarBrand" class="js-example-tags carBrand" name="brandId" style="width:100%">
+                        <select id="editCarBrand" class="js-example-tags carBrand" name="brandName" style="width:100%">
                         </select>
                     </div>
                 </div>

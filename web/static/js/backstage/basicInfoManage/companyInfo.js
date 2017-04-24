@@ -1,63 +1,122 @@
 $(function () {
-    $('#table').bootstrapTable('hideColumn', 'companyId');
-    $("#addSelect").select2({
-            language: 'zh-CN'
-        }
-    );
-    //绑定Ajax的内容
-    // $.getJSON("/table/queryAll", function (data) {
-    //     $("#addSelect").empty();//清空下拉框
-    //     $.each(data, function (i, item) {
-    //         $("#addSelect").append("<option value='" + data[i].id + "'>&nbsp;" + data[i].name + "</option>");
-    //     });
-    // })
-//            $("#addSelect").on("select2:select",
-//                    function (e) {
-//                        alert(e)
-//                        alert("select2:select", e);
-//            });
+    initTable('table', '/company/queryByPagerCompany'); // 初始化表格
 });
 
 //显示弹窗
 function showEdit() {
-    var row = $('table').bootstrapTable('getSelections');
+    initDateTimePicker('editForm', 'companyOpendate'); // 初始化时间框
+    var row = $('#table').bootstrapTable('getSelections');
     if (row.length > 0) {
-//                $('#editId').val(row[0].id);
-//                $('#editName').val(row[0].name);
-//                $('#editPrice').val(row[0].price);
-        $("#edit").modal('show'); // 显示弹窗
+        $("#editWindow").modal('show'); // 显示弹窗
+        $("#editButton").removeAttr("disabled");
         var ceshi = row[0];
-        $("#showEditFormWar").fill(ceshi);
+        $('#editDatetimepicker').val(formatterDate(ceshi.companyOpendate));
+        $("#editForm").fill(ceshi);
     } else {
         swal({
-            "title": "",
-            "text": "请先选择一条数据",
-            "type": "warning"
-        })
+            title:"",
+            text: "请选择要修改的公司信息", // 主要文本
+            confirmButtonColor: "#DD6B55", // 提示按钮的颜色
+            confirmButtonText:"确定", // 提示按钮上的文本
+            type:"warning"}) // 提示类型
     }
 }
 
 //显示添加
-function showAdd() {
-    $("#add").modal('show');
+function showAdd(){
+    initDateTimePicker('addForm', 'companyOpendate'); // 初始化时间框, 第一参数是form表单id, 第二参数是input的name
+    $("#addWindow").modal('show');
+    $("#addButton").removeAttr("disabled");
+    validator('addForm'); // 初始化验证
 }
 
-function formatRepo(repo) {
-    return repo.text
-}
-function formatRepoSelection(repo) {
-    return repo.text
+function validator(formId) {
+    $('#' + formId).bootstrapValidator({
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            companyName: {
+                message: '公司名称验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '公司名称不能为空'
+                    },
+                    stringLength: {
+                        min: 1,
+                        max: 10,
+                        message: '公司名称长度必须在1到10位之间'
+                    }
+                }
+            },
+
+            companyAddress: {
+                message: '公司地址验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '公司地址不能为空'
+                    }
+                }
+            },
+            companyTel: {
+                message: '联系电话验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '联系电话不能为空'
+                    },
+                    stringLength: {
+                        min: 11,
+                        max: 11,
+                        message: '联系电话必须为11位'
+                    },
+                    regexp: {
+                        regexp: /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/,
+                        message: '请输入正确的手机号'
+                    }
+                }
+            },
+            companyPricipal: {
+                message: '负责人验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '负责人不能为空'
+                    },
+                }
+            },
+            companyOpendate: {
+                message: '公司成立时间验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '公司成立时间不能为空'
+                    }
+                }
+            },
+
+            companyLogo:{
+                message: '公司LOGO验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '公司LOGO不能为空'
+                    }
+                }
+            }
+        }
+    })
+
+        .on('success.form.bv', function (e) {
+            if (formId == "addForm") {
+                formSubmit("/company/addCompany", formId, "addWindow");
+
+            } else if (formId == "editForm") {
+                formSubmit("/company/updateCompany", formId, "editWindow");
+
+            }
+        })
+
 }
 
-//显示删除
-function showDel() {
-    var row = $('table').bootstrapTable('getSelections');
-    if (row.length > 0) {
-        $("#del").modal('show');
-    } else {
-        $("#tanchuang").modal('show');
-    }
-}
 
 //初始化文件上传控件
 $(function () {
@@ -108,188 +167,47 @@ var FileInput = function () {
     return oFile;
 };
 
-$('#addDateTimePicker').datetimepicker({
-    language: 'zh-CN',
-    format: 'yyyy-mm-dd hh:ii'
-});
-$('#editDateTimePicker').datetimepicker({
-    language: 'zh-CN',
-    format: 'yyyy-mm-dd hh:ii'
-});
+function addSubmit(){
+    $("#addForm").data('bootstrapValidator').validate();
+    if ($("#addForm").data('bootstrapValidator').isValid()) {
+        $("#addButton").attr("disabled","disabled");
+    } else {
+        $("#addButton").removeAttr("disabled");
+    }
+}
 
+function editSubmit(){
+    $("#editForm").data('bootstrapValidator').validate();
+    if ($("#editForm").data('bootstrapValidator').isValid()) {
+        $("#editButton").attr("disabled","disabled");
+    } else {
+        $("#editButton").removeAttr("disabled");
+    }
+}
 
-// //日期时间控件初始化
-// $(document).ready(function () {
-//     // 带时间的控件
-//     // if ($(".iDate.full").length > 0) {
-//     //     $(".iDate.full").datetimepicker({
-//     //         locale: "zh-cn",
-//     //         format: "YYYY-MM-DD a hh:mm",
-//     //         dayViewHeaderFormat: "YYYY年 MMMM"
-//     //     });
-//     // }
-//
-//     //不带时间的控件
-//     if ($(".iDate.date").length > 0) {
-//         $(".iDate.date").datetimepicker({
-//             locale: "zh-cn",
-//             format: "YYYY-MM-DD",
-//             dayViewHeaderFormat: "YYYY年 MMMM"
-//         });
-//     }
-// })
-
-$(document).ready(function () {
-    jQuery.validator.addMethod("isPhone", function (value, element) {
-        var length = value.length;
-        return this.optional(element) || (length == 11 && /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/.test(value));
-    }, "请正确填写您的手机号码。");
-
-    $("#showAddFormWar").validate({
-        errorElement: 'span',
-        errorClass: 'help-block',
-
-        rules: {
-            companyName: {
-                required: true,
-                minlength: 2
-            },
-            companyAddress: {
-                required: true,
-                minlength: 2
-            },
-            companyTel: {
-                required: true,
-                isPhone: true,
-            },
-            companyPricipal: {
-                required: true,
-                minlength: 2
-            },
-            companyOpenDate: {
-                required: true,
-                date: true
+function formSubmit(url, formId, winId){
+    $.post(url,
+        $("#" + formId).serialize(),
+        function (data) {
+            if (data.result == "success") {
+                $('#' + winId).modal('hide');
+                swal({
+                    title:"",
+                    text: data.message,
+                    confirmButtonText:"确定", // 提示按钮上的文本
+                    type:"success"})// 提示窗口, 修改成功
+                $('#table').bootstrapTable('refresh');
+                if(formId == 'addForm'){
+                    $("input[type=reset]").trigger("click"); // 移除表单中填的值
+                    $('#addForm').data('bootstrapValidator').resetForm(true); // 移除所有验证样式
+                    $("#addButton").removeAttr("disabled"); // 移除不可点击
+                }
+            } else if (data.result == "fail") {
+                swal({title:"",
+                    text:"添加失败",
+                    confirmButtonText:"确认",
+                    type:"error"})
+                $("#"+formId).removeAttr("disabled");
             }
-        },
-        messages: {
-            companyName: "请输入你的公司名",
-            companyAddress: "请输入你的公司地址",
-            companyTel: {
-                required: "请输入你的联系方式",
-            },
-            companyPricipal: "请输入你的公司负责人",
-            companyOpenDate: "请输入公司成立时间"
-        },
-        errorPlacement: function (error, element) {
-            element.next().remove();
-            element.after('<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>');
-            element.closest('.form-group').append(error);
-        },
-        highlight: function (element) {
-            $(element).closest('.form-group').addClass('has-error has-feedback');
-        },
-        success: function (label) {
-            var el = label.closest('.form-group').find("input");
-            el.next().remove();
-            el.after('<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>');
-            label.closest('.form-group').removeClass('has-error').addClass("has-feedback has-success");
-            label.remove();
-        },
-        submitHandler: function(form) {
-            $.post("/company/add",
-                $("#showAddFormWar").serialize(),
-                function (data) {
-                    if (data.result == "success") {
-                        $("#add").modal('hide'); // 关闭指定的窗口
-                        $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
-                        swal({
-                            title:"",
-                            text: data.message,
-                            confirmButtonText:"确定", // 提示按钮上的文本
-                            type:"success"})// 提示窗口, 修改成功
-                    } else if (data.result == "fail") {
-                        swal({title:"",
-                            text:"添加失败",
-                            confirmButtonText:"确认",
-                            type:"error"})
-                    }
-                }, "json"
-            );
-        }
-    }),
-
-
-    $("#showEditFormWar").validate({
-        errorElement: 'span',
-        errorClass: 'help-block',
-
-        rules: {
-            companyName: {
-                required: true,
-                minlength: 2
-            },
-            companyAddress: {
-                required: true,
-                minlength: 2
-            },
-            companyTel: {
-                required: true,
-                isPhone: true,
-            },
-            companyPricipal: {
-                required: true,
-                minlength: 2
-            },
-            companyOpenDate: {
-                required: true,
-                date: true
-            }
-        },
-        messages: {
-            companyName: "请输入你的公司名",
-            companyAddress: "请输入你的公司地址",
-            companyTel: {
-                required: "请输入你的联系方式",
-            },
-            companyPricipal: "请输入你的公司负责人",
-            companyOpenDate: "请输入公司成立时间"
-        },
-        errorPlacement: function (error, element) {
-            element.next().remove();
-            element.after('<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>');
-            element.closest('.form-group').append(error);
-        },
-        highlight: function (element) {
-            $(element).closest('.form-group').addClass('has-error has-feedback');
-        },
-        success: function (label) {
-            var el = label.closest('.form-group').find("input");
-            el.next().remove();
-            el.after('<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>');
-            label.closest('.form-group').removeClass('has-error').addClass("has-feedback has-success");
-            label.remove();
-        },
-        submitHandler: function(form) {
-            $.post("/company/update",
-                $("#showEditFormWar").serialize(),
-                function (data) {
-                    if (data.result == "success") {
-                        $("#edit").modal('hide'); // 关闭指定的窗口
-                        $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
-                        swal({
-                            title:"",
-                            text: data.message,
-                            confirmButtonText:"确定", // 提示按钮上的文本
-                            type:"success"})// 提示窗口, 修改成功
-                    } else if (data.result == "fail") {
-                        swal({title:"",
-                            text:"修改失败",
-                            confirmButtonText:"确认",
-                            type:"error"})
-                    }
-                }, "json"
-            );
-        }
-
-    })
-});
+        }, "json");
+}

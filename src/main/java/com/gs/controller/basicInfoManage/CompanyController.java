@@ -3,8 +3,11 @@ package com.gs.controller.basicInfoManage;
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.Company;
 import com.gs.common.bean.ControllerResult;
+import com.gs.common.bean.Pager;
+import com.gs.common.bean.Pager4EasyUI;
 import com.gs.common.util.UUIDUtil;
 import com.gs.service.CompanyService;
+import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,7 +32,7 @@ public class CompanyController {
     private CompanyService companyService;
 
     @ResponseBody
-    @RequestMapping(value = "queryByPager",method = RequestMethod.POST)
+    @RequestMapping(value = "queryAllCompany",method = RequestMethod.POST)
     public List<Company> queryAll() {
         logger.info("查询所有公司信息");
         List<Company> companyList = companyService.queryAll();
@@ -37,28 +40,38 @@ public class CompanyController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "add", method = RequestMethod.POST)
-    public ControllerResult insertCompany(Company company){
+    @RequestMapping(value="queryByPagerCompany", method = RequestMethod.GET)
+    public Pager4EasyUI<Company> queryAll(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
+        logger.info("分页查询所有公司信息");
+        Pager pager = new Pager();
+        pager.setPageNo(Integer.valueOf(pageNumber));
+        pager.setPageSize(Integer.valueOf(pageSize));
+        pager.setTotalRecords(companyService.count());
+        List<Company> companys = companyService.queryByPager(pager);
+        return new Pager4EasyUI<Company>(pager.getTotalRecords(), companys);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "addCompany",method = RequestMethod.POST)
+    public ControllerResult add(Company company){
+        if (company != null && !company.equals("")) {
             logger.info("添加公司信息");
-            company.setCompanyId(UUIDUtil.uuid());
-            company.setCompanyStatus("Y");
             companyService.insert(company);
             return ControllerResult.getSuccessResult("添加成功");
+        }else {
+            return ControllerResult.getFailResult("添加失败，请输入必要的信息");
+        }
     }
 
     @ResponseBody
     @RequestMapping(value = "updateCompany",method = RequestMethod.POST)
-    public ControllerResult updateCompany(Company company){
-        companyService.update(company);
-        logger.info("修改成功");
-        return ControllerResult.getSuccessResult("修改成功");
-    }
-
-    @ResponseBody
-    @RequestMapping(value = "deleteByIdCompany",method = RequestMethod.POST)
-    public ControllerResult deleteConmpany(Company company){
-        companyService.delete(company);
-        logger.info( "删除成功");
-        return ControllerResult.getSuccessResult("删除成功");
+    public ControllerResult update(Company company){
+        if (company != null && !company.equals("")) {
+            logger.info("修改汽车品牌");
+            companyService.update(company);
+            return ControllerResult.getSuccessResult("修改成功");
+        }else {
+            return ControllerResult.getFailResult("修改失败，请输入必要的信息");
+        }
     }
 }
