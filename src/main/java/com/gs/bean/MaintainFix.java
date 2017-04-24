@@ -93,4 +93,19 @@ public class MaintainFix {
     public void setMaintainStatus(String maintainStatus) {
         this.maintainStatus = maintainStatus;
     }
+
+    @Override
+    public String toString() {
+        return "MaintainFix{" +
+                "maintainId='" + maintainId + '\'' +
+                ", maintainName='" + maintainName + '\'' +
+                ", maintainHour=" + maintainHour +
+                ", maintainMoney=" + maintainMoney +
+                ", maintainManhourFee=" + maintainManhourFee +
+                ", maintainOrFix='" + maintainOrFix + '\'' +
+                ", maintainDes='" + maintainDes + '\'' +
+                ", companyId='" + companyId + '\'' +
+                ", maintainStatus='" + maintainStatus + '\'' +
+                '}';
+    }
 }

@@ -1,34 +1,15 @@
 $(function () {
-    $('#table').bootstrapTable('hideColumn', 'id');
-
-    $("#addSelect").select2({
-            language: 'zh-CN'
-        }
-    );
-
-    //绑定Ajax的内容
-    $.getJSON("/table/queryType", function (data) {
-        $("#addSelect").empty();//清空下拉框
-        $.each(data, function (i, item) {
-            $("#addSelect").append("<option value='" + data[i].id + "'>&nbsp;" + data[i].name + "</option>");
-        });
-    })
-//            $("#addSelect").on("select2:select",
-//                    function (e) {
-//                        alert(e)
-//                        alert("select2:select", e);
-//            });
+    initTable('table', '/maintainfix/queryByPage'); // 初始化表格
 });
+
 
 function showEdit() {
     var row = $('table').bootstrapTable('getSelections');
     if (row.length > 0) {
-//                $('#editId').val(row[0].id);
-//                $('#editName').val(row[0].name);
-//                $('#editPrice').val(row[0].price);
         $("#editWindow").modal('show'); // 显示弹窗
         var ceshi = row[0];
         $("#editForm").fill(ceshi);
+        validator('editForm');
     } else {
         swal({
             "title": "",
@@ -38,9 +19,20 @@ function showEdit() {
     }
 }
 
-function showAdd() {
 
+// 查看全部可用
+function showAvailable(){
+    initTable('table', '/maintainfix/queryByPage');
+}
+// 查看全部禁用
+function showDisable(){
+    initTable('table', '/maintainfix/queryByPagerDisable');
+}
+
+function showAdd() {
     $("#addWindow").modal('show');
+    $("#addButton").removeAttr("disabled");
+    validator('addForm'); // 初始化验证
 }
 
 function formatRepo(repo) {
@@ -74,6 +66,109 @@ function checkAdd() {
     }
 }
 
+
+function validator(formId) {
+    $('#' + formId).bootstrapValidator({
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            maintainName: {
+                message: '项目名称不能为空',
+                validators: {
+                    notEmpty: {
+                        message: '项目名称不能为空'
+                    },
+                    stringLength: {
+                        min: 1,
+                        max: 6,
+                        message: '项目名称长度必须在1到6位之间'
+                    }
+                }
+            },
+            maintainHour: {
+                message: '项目工时不能为空',
+                validators: {
+                    notEmpty: {
+                        message: '项目工时不能为空'
+                    }
+                }
+            },
+            maintainMoney: {
+                message: '基础费用不能为空',
+                validators: {
+                    notEmpty: {
+                        message: '基础费用不能为空'
+                    }
+                }
+            },
+            maintainManHourFee: {
+                message: '工时费不能为空',
+                validators: {
+                    notEmpty: {
+                        message: '工时费不能为空'
+                    }
+                }
+            },
+            maintainOrFix: {
+                message: '项目选项不能为空',
+                validators: {
+                    notEmpty: {
+                        message: '项目选项不能为空'
+                    }
+                }
+            },
+            maintainDes: {
+                message: '项目描述不能为空',
+                validators: {
+                    notEmpty: {
+                        message: '项目描述不能为空'
+                    }
+                }
+            },
+            companyId: {
+                message: '所属公司不能为空',
+                validators: {
+                    notEmpty: {
+                        message: '所属公司不能为空'
+                    }
+                }
+            }
+        }
+    }).on('success.form.bv', function (e) {
+        if (formId == "addForm") {
+            formSubmit("/maintainfix/addMaintainFix", formId, "addWindow");
+
+        } else if (formId == "editForm") {
+            formSubmit("/maintainfix/updateMaintainFix", formId, "editWindow");
+
+        }
+    })
+
+}
+
+
+function addSubmit() {
+    $("#addForm").data('bootstrapValidator').validate();
+    if ($("#addForm").data('bootstrapValidator').isValid()) {
+        $("#addButton").attr("disabled", "disabled");
+    } else {
+        $("#addButton").removeAttr("disabled");
+    }
+}
+
+function editSubmit() {
+    $("#editForm").data('bootstrapValidator').validate();
+    if ($("#editForm").data('bootstrapValidator').isValid()) {
+        $("#editButton").attr("disabled", "disabled");
+    } else {
+        $("#editButton").removeAttr("disabled");
+    }
+}
+
+
 function checkEdit() {
     $.post("/table/edit",
         $("#editForm").serialize(),
@@ -93,110 +188,32 @@ function checkEdit() {
     );
 }
 
-$('#addDateTimePicker').datetimepicker({
-    language: 'zh-CN',
-    format: 'yyyy-mm-dd hh:ii'
-});
-$('#editDateTimePicker').datetimepicker({
-    language: 'zh-CN',
-    format: 'yyyy-mm-dd hh:ii'
-});
-
-
-//前端验证
-$(document).ready(function () {
-    $("#showAddFormWar").validate({
-        errorElement: 'span',
-        errorClass: 'help-block',
-
-        rules: {
-            maintainName: {
-                required: true,
-                minlength: 2
-            },
-            maintainHour: {
-                required: true,
-                minlength: 2
-            },
-            maintainMoney: {
-                required: true,
-                minlength: 2
-            },
-            maintainDes:{
-                required: true,
-                minlength: 2
+function formSubmit(url, formId, winId) {
+    $.post(url,
+        $("#" + formId).serialize(),
+        function (data) {
+            if (data.result == "success") {
+                $('#' + winId).modal('hide');
+                swal({
+                    title: "",
+                    text: data.message,
+                    confirmButtonText: "确定", // 提示按钮上的文本
+                    type: "success"
+                })// 提示窗口, 修改成功
+                $('#table').bootstrapTable('refresh');
+                if (formId == 'addForm') {
+                    $("input[type=reset]").trigger("click"); // 移除表单中填的值
+                    $('#addForm').data('bootstrapValidator').resetForm(true); // 移除所有验证样式
+                    $("#addButton").removeAttr("disabled"); // 移除不可点击
+                }
+            } else if (data.result == "fail") {
+                swal({
+                    title: "",
+                    text: "添加失败",
+                    confirmButtonText: "确认",
+                    type: "error"
+                })
+                $("#" + formId).removeAttr("disabled");
             }
-        },
-        messages: {
-            maintainName: "请输入保养项目名称",
-            maintainHour: "请输入所需时间",
-            maintainMoney: "请输入所需费用",
-            maintainDes:"请输入相关描述"
-        },
-        errorPlacement: function (error, element) {
-            element.next().remove();
-            element.after('<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>');
-            element.closest('.form-group').append(error);
-        },
-        highlight: function (element) {
-            $(element).closest('.form-group').addClass('has-error has-feedback');
-        },
-        success: function (label) {
-            var el = label.closest('.form-group').find("input");
-            el.next().remove();
-            el.after('<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>');
-            label.closest('.form-group').removeClass('has-error').addClass("has-feedback has-success");
-            label.remove();
-        },
-        submitHandler: function (form) {
-            alert("submitted!");
-        }
-    })
-    $("#showEditFormWar").validate({
-        errorElement: 'span',
-        errorClass: 'help-block',
-
-        rules: {
-            maintainName: {
-                required: true,
-                minlength: 2
-            },
-            maintainHour: {
-                required: true,
-                minlength: 2
-            },
-            maintainMoney: {
-                required: true,
-                minlength: 2
-            },
-            maintainDes:{
-                required: true,
-                minlength: 2
-            }
-        },
-        messages: {
-            maintainName: "请输入保养项目名称",
-            maintainHour: "请输入所需时间",
-            maintainMoney: "请输入所需费用",
-            maintainDes:"请输入相关描述"
-        },
-        errorPlacement: function (error, element) {
-            element.next().remove();
-            element.after('<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>');
-            element.closest('.form-group').append(error);
-        },
-        highlight: function (element) {
-            $(element).closest('.form-group').addClass('has-error has-feedback');
-        },
-        success: function (label) {
-            var el = label.closest('.form-group').find("input");
-            el.next().remove();
-            el.after('<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>');
-            label.closest('.form-group').removeClass('has-error').addClass("has-feedback has-success");
-            label.remove();
-        },
-        submitHandler: function (form) {
-            alert("submitted!");
-        }
-    })
-});
+        }, "json");
+}

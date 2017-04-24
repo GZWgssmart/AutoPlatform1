@@ -1,7 +1,13 @@
 package com.gs.dao;
 
 import com.gs.bean.MaintainFix;
+import com.gs.common.bean.Pager;
+import org.activiti.engine.impl.Page;
 import org.springframework.stereotype.Repository;
+import sun.applet.Main;
+
+import java.util.List;
+
 /**
 *由CSWangBin技术支持
 *
@@ -11,5 +17,12 @@ import org.springframework.stereotype.Repository;
 */
 @Repository
 public interface MaintainFixDAO extends BaseDAO<String, MaintainFix>{
-
+    /**
+     * 分页查询被禁用的记录
+     */
+    public List<MaintainFix> queryByPagerDisable(Pager pager);
+    /**
+     * 分页查询被禁用的记录
+     */
+    public int countByDisable();
 }

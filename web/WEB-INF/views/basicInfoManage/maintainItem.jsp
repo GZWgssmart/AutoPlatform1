@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="/static/css/select2.min.css">
     <link rel="stylesheet" href="/static/css/sweetalert.css">
     <link rel="stylesheet" href="/static/css/table/table.css">
+    <link rel="stylesheet" href="/static/css/bootstrap-validate/bootstrapValidator.min.css">
     <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.css">
     <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/datetimepicker.less">
 </head>
@@ -27,45 +28,33 @@
 
 <div class="container">
     <div class="panel-body" style="padding-bottom:0px;">
-        <!--show-refresh, show-toggle的样式可以在bootstrap-table.js的948行修改-->
-        <!-- table里的所有属性在bootstrap-table.js的240行-->
-        <table id="table"
-               data-toggle="table"
-               data-toolbar="#toolbar"
-               data-url="/table/query"
-               data-method="post"
-               data-query-params="queryParams"
-               data-pagination="true"
-               data-search="true"
-               data-show-refresh="true"
-               data-show-toggle="true"
-               data-show-columns="true"
-               data-page-size="10"
-               data-height="543"
-               data-id-field="id"
-               data-page-list="[5, 10, 20]"
-               data-cach="false"
-               data-click-to-select="true"
-               data-single-select="true">
+        <table id="table">
             <thead>
             <tr>
                 <th data-radio="true" data-field="status"></th>
                 <th data-field="maintainName">保养名称</th>
                 <th data-field="maintainHour">所需时间</th>
                 <th data-field="maintainMoney">所需费用</th>
+                <th data-field="maintainManhourFee">工时费</th>
+                <th data-field="maintainOrFix">维修保养选项</th>
+                <th data-field="companyId">所属公司</th>
                 <th data-field="maintainDes">相关描述</th>
+                <th data-field="maintainStatus">项目状态</th>
             </tr>
             </thead>
         </table>
         <div id="toolbar" class="btn-group">
+            <button id="btn_available" type="button" class="btn btn-default" onclick="showAvailable();">
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>可用维修保养记录
+            </button>
+            <button id="btn_disable" type="button" class="btn btn-default" onclick="showDisable();">
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>禁用维修保养记录
+            </button>
             <button id="btn_add" type="button" class="btn btn-default" onclick="showAdd();">
                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
             </button>
             <button id="btn_edit" type="button" class="btn btn-default" onclick="showEdit();">
                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
-            </button>
-            <button id="btn_delete" type="button" class="btn btn-default" onclick="showDel();">
-                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
             </button>
         </div>
     </div>
@@ -73,9 +62,9 @@
 
 <!-- 添加弹窗 -->
 <div class="modal fade" id="addWindow" aria-hidden="true" style="overflow:auto; ">
-    <div class="modal-dialog" style="width: 700px;height: auto;">
-        <div class="modal-content" style="overflow:hidden;">
-            <form class="form-horizontal" role="form" onsubmit="return checkAdd()" id="showAddFormWar" method="post">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form class="form-horizontal" id="addForm" method="post">
                 <div class="modal-header" style="overflow:auto;">
                     <h4>请填写该保养项目的信息</h4>
                 </div>
@@ -89,25 +78,44 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">所需时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="maintainHour" value="2012-05-15 21:05" id="addDateTimePicker" class="form-control">
+                        <input type="text" name="maintainHour" placeholder="请预估所需的时间" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">所需费用：</label>
+                    <label class="col-sm-3 control-label">基础费用：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="maintainMoney" placeholder="请预估所需的费用" class="form-control"></input>
+                        <input type="text" name="maintainMoney" placeholder="请预估所需的费用" class="form-control"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">工时费：</label>
+                    <div class="col-sm-7">
+                        <input type="text" name="maintainManhourFee" placeholder="请输入工时费" class="form-control"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">项目选项：</label>
+                    <div class="col-sm-7">
+                        <input type="text" name="maintainOrFix" placeholder="请选择项目选项" class="form-control"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">所属公司：</label>
+                    <div class="col-sm-7">
+                        <input type="text" name="companyId" placeholder="请选择所属公司" class="form-control"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">相关描述：</label>
                     <div class="col-sm-7">
-                        <textarea type="text" name="maintainDes" placeholder="请输入该项目相关的描述" style="height: 100px;" class="form-control"></textarea>
+                        <textarea type="text" name="maintainDes" placeholder="请输入该项目相关的描述" style="height: 100px;"
+                                  class="form-control"></textarea>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-8">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button class="btn btn-sm btn-success" type="submit">保 存</button>
+                        <button id="addButton" type="button" onclick="addSubmit()" class="btn btn-primary">保存</button>
                     </div>
                 </div>
             </form>
@@ -120,7 +128,7 @@
 <div class="modal fade" id="editWindow" aria-hidden="true">
     <div class="modal-dialog" style="width: 700px;height: auto;">
         <div class="modal-content" style="overflow:hidden;">
-            <form class="form-horizontal" role="form" onsubmit="return checkAdd()" id="showEditFormWar" method="post">
+            <form class="form-horizontal" id="editForm" method="post">
                 <div class="modal-header" style="overflow:auto;">
                     <h4>请修改该保养项目的信息</h4>
                 </div>
@@ -128,31 +136,49 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">保养项目名称：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="maintainName" define="" placeholder="请输入保养项目的名称" class="form-control">
+                        <input type="text" name="maintainName" define="MaintainFix.maintainName"
+                               placeholder="请输入保养项目的名称" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">所需时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="maintainHour" value="2012-05-15 21:05" id="editDateTimePicker" class="form-control">
+                        <input type="text" name="maintainHour" define="MaintainFix.maintainHour" placeholder="请预估所需的时间"
+                               class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">所需费用：</label>
+                    <label class="col-sm-3 control-label">基础费用：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="maintainMoney" define="" placeholder="请预估所需的费用" class="form-control"></input>
+                        <input type="text" name="maintainMoney" define="MaintainFix.maintainMoney"
+                               placeholder="请预估所需的费用" class="form-control"/>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">相关描述：</label>
+                    <label class="col-sm-3 control-label">工时费：</label>
                     <div class="col-sm-7">
-                        <textarea type="text" name="maintainDes" define="" placeholder="请输入该项目相关的描述" style="height: 100px;" class="form-control"></textarea>
+                        <input type="text" name="maintainManhourFee" define="MaintainFix.maintainManhourFee"
+                               placeholder="请输入工时费" class="form-control"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">项目选项：</label>
+                    <div class="col-sm-7">
+                        <input type="text" name="maintainOrFix" define="MaintainFix.maintainOrFix" placeholder="请选择项目选项"
+                               class="form-control"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">所属公司：</label>
+                    <div class="col-sm-7">
+                        <input type="text" name="companyId" define="MaintainFix.companyId" placeholder="请选择所属公司"
+                               class="form-control"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-8">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button class="btn btn-sm btn-success" type="submit">保 存</button>
+                        <button id="editButton" type="button" onclick="editSubmit()" class="btn btn-primary">保存</button>
                     </div>
                 </div>
             </form>
@@ -208,7 +234,8 @@
 <script src="/static/js/contextmenu.js"></script>
 <script src="/static/js/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.js"></script>
 <script src="/static/js/bootstrap-dateTimePicker/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
-<script src="/static/js/form/jquery.validate.js"></script>
+<script src="/static/js/bootstrap-validate/bootstrapValidator.js"></script>
+<script src="/static/js/backstage/main.js"></script>
 <script src="/static/js/backstage/basicInfoManage/maintainItem.js"></script>
 </body>
 </html>

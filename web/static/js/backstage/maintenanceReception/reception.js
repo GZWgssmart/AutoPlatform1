@@ -30,7 +30,6 @@ function showStatusFormatter(value) {
     } else {
         return "否";
     }
-
 }
 
 // 激活或禁用
