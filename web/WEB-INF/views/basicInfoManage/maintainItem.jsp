@@ -39,7 +39,8 @@
                 <th data-field="maintainOrFix">维修保养选项</th>
                 <th data-field="companyId">所属公司</th>
                 <th data-field="maintainDes">相关描述</th>
-                <th data-field="maintainStatus">项目状态</th>
+                <th data-field="maintainStatus" data-formatter="formatterStatus">项目状态</th>
+                <th data-formatter="openStatusFormatter">操作</th>
             </tr>
             </thead>
         </table>
@@ -129,6 +130,7 @@
     <div class="modal-dialog" style="width: 700px;height: auto;">
         <div class="modal-content" style="overflow:hidden;">
             <form class="form-horizontal" id="editForm" method="post">
+                <input type="hidden" name="maintainId" define="MaintainFix.maintainId"/>
                 <div class="modal-header" style="overflow:auto;">
                     <h4>请修改该保养项目的信息</h4>
                 </div>

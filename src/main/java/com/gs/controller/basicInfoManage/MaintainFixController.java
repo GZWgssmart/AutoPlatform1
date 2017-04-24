@@ -125,14 +125,15 @@ public class MaintainFixController {
      */
     @ResponseBody
     @RequestMapping(value = "statusOperate", method = RequestMethod.POST)
-    public ControllerResult inactive(String maintainfixId, String maintainfixStatus) {
-        if (maintainfixId != null && !maintainfixId.equals("") && maintainfixStatus != null && !maintainfixStatus.equals("")) {
-            if (maintainfixStatus.equals("N")) {
-                maintainFixService.active(maintainfixId);
+    public ControllerResult inactive(String maintainId, String maintainStatus) {
+        System.out.println("前台传过来来的值为"+maintainId+",状态为"+maintainStatus);
+        if (maintainId != null && !maintainId.equals("") && maintainStatus != null && !maintainStatus.equals("")) {
+            if (maintainStatus.equals("N")) {
+                maintainFixService.active(maintainId);
                 logger.info("激活成功");
                 return ControllerResult.getSuccessResult("激活成功");
             } else {
-                maintainFixService.inactive(maintainfixId);
+                maintainFixService.inactive(maintainId);
                 logger.info("禁用成功");
                 return ControllerResult.getSuccessResult("禁用成功");
             }

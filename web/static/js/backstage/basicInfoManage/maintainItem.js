@@ -1,3 +1,5 @@
+var contentPath='';
+
 $(function () {
     initTable('table', '/maintainfix/queryByPage'); // 初始化表格
 });
@@ -19,6 +21,41 @@ function showEdit() {
     }
 }
 
+//格式化页面上的配件分类状态
+function formatterStatus(value) {
+    if (value == "Y") {
+        return "可用";
+    } else {
+        return "不可用";
+    }
+}
+
+function openStatusFormatter(index, row) {
+    /*处理数据*/
+    if (row.maintainStatus == 'Y') {
+        return "&nbsp;&nbsp;<a href='javascript:;' onclick='inactive(\"" + row.maintainId + "\")'>禁用</a>";
+    } else {
+        return "&nbsp;&nbsp;<a href='javascript:;' onclick='active(\"" + row.maintainId + "\")'>激活</a>";
+    }
+}
+
+//禁用状态
+function inactive(maintainId) {
+    $.post(contentPath + "/maintainfix/statusOperate?maintainId=" + maintainId + "&" + "maintainStatus=" + "Y", function (data) {
+        if (data.result == "success") {
+            $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
+        }
+    })
+}
+
+//激活状态
+function active(maintainId) {
+    $.post(contentPath + "/maintainfix/statusOperate?maintainId=" + maintainId + "&" + "maintainStatus=" + 'N', function (data) {
+        if (data.result == "success") {
+            $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
+        }
+    })
+}
 
 // 查看全部可用
 function showAvailable(){
