@@ -1,14 +1,14 @@
 package com.gs.service.impl;
 
 import com.gs.bean.ChargeBill;
+import com.gs.bean.Checkin;
+import com.gs.common.bean.Pager;
 import com.gs.dao.ChargeBillDAO;
 import com.gs.service.ChargeBillService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
-
-import com.gs.common.bean.Pager;
 
 /**
  * 由CSWangBin技术支持
@@ -93,5 +93,13 @@ public class ChargeBillServiceImpl implements ChargeBillService {
 
     public int countByDisable() {
         return chargeBillDAO.countByDisable();
+    }
+
+    public List<Checkin> blurredQuery(Pager pager, ChargeBill chargeBill) {
+        return null;
+    }
+
+    public int countByBlurred(ChargeBill chargeBill) {
+        return 0;
     }
 }

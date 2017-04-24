@@ -1,13 +1,14 @@
 package com.gs.service.impl;
 
+import com.gs.bean.Checkin;
 import com.gs.bean.MaintainRecord;
+import com.gs.common.bean.Pager;
 import com.gs.dao.MaintainRecordDAO;
 import com.gs.service.MaintainRecordService;
 import org.springframework.stereotype.Service;
+
 import javax.annotation.Resource;
 import java.util.List;
-
-import com.gs.common.bean.Pager;
 /**
 *由CSWangBin技术支持
 *
@@ -50,5 +51,17 @@ public class MaintainRecordServiceImpl implements MaintainRecordService {
 
 	public int countDisable() {
 		return maintainRecordDAO.countDisable();
+	}
+
+	public int countByDisable() {
+		return maintainRecordDAO.countByDisable();
+	}
+
+	public List<Checkin> blurredQuery(Pager pager, MaintainRecord maintainRecord) {
+		return null;
+	}
+
+	public int countByBlurred(MaintainRecord maintainRecord) {
+		return 0;
 	}
 }

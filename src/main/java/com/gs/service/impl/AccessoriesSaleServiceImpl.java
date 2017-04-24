@@ -1,12 +1,15 @@
 package com.gs.service.impl;
 
+import com.gs.bean.AccessoriesBuy;
 import com.gs.bean.AccessoriesSale;
+import com.gs.bean.Checkin;
+import com.gs.common.bean.Pager;
 import com.gs.dao.AccessoriesSaleDAO;
 import com.gs.service.AccessoriesSaleService;
 import org.springframework.stereotype.Service;
+
 import javax.annotation.Resource;
 import java.util.List;
-import com.gs.common.bean.Pager;
 /**
 *由CSWangBin技术支持
 *
@@ -44,13 +47,19 @@ public class AccessoriesSaleServiceImpl implements AccessoriesSaleService {
 	public int inactive(String id) { return accessoriesSaleDAO.inactive(id); }
 	public int active(String id) { return accessoriesSaleDAO.active(id); }
 
-	@Override
 	public List<AccessoriesSale> queryByPagerDisable(Pager pager) {
 		return accessoriesSaleDAO.queryByPagerDisable(pager);
 	}
 
-	@Override
 	public int countByDisable() {
 		return accessoriesSaleDAO.countByDisable();
+	}
+
+	public List<Checkin> blurredQuery(Pager pager, AccessoriesSale accessoriesSale) {
+		return null;
+	}
+
+	public int countByBlurred(AccessoriesSale accessoriesSale) {
+		return 0;
 	}
 }

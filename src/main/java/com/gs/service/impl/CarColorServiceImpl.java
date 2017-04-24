@@ -1,6 +1,7 @@
 package com.gs.service.impl;
 
 import com.gs.bean.CarColor;
+import com.gs.bean.Checkin;
 import com.gs.dao.CarColorDAO;
 import com.gs.service.CarColorService;
 import org.springframework.stereotype.Service;
@@ -45,4 +46,19 @@ public class CarColorServiceImpl implements CarColorService {
 	public int inactive(String id) { return carColorDAO.inactive(id); }
 	public int active(String id) { return carColorDAO.active(id); }
 
+	public List<CarColor> queryByPagerDisable(Pager pager) {
+		return carColorDAO.queryByPagerDisable(pager);
+	}
+
+	public int countByDisable() {
+		return carColorDAO.countByDisable();
+	}
+
+	public List<Checkin> blurredQuery(Pager pager, CarColor carColor) {
+		return null;
+	}
+
+	public int countByBlurred(CarColor carColor) {
+		return 0;
+	}
 }

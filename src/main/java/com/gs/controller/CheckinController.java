@@ -95,32 +95,23 @@ public class CheckinController {
     }
 
     /**
-     * 禁用
+     * 对状态的激活和启用，只使用一个方法进行切换。
      */
     @ResponseBody
-    @RequestMapping(value = "inactive",method = RequestMethod.POST)
-    public ControllerResult inactive(String id) {
-        logger.info("禁用");
-        if(id !=null) {
-            checkinService.inactive(id);
-            return ControllerResult.getSuccessResult("禁用成功");
-        }else{
-            return ControllerResult.getFailResult("禁用失败");
-        }
-    }
-
-    /**
-     * 激活
-     */
-    @ResponseBody
-    @RequestMapping(value = "active",method = RequestMethod.POST)
-    public ControllerResult active(String id) {
-        logger.info("激活");
-        if(id !=null) {
-            checkinService.active(id);
-            return ControllerResult.getSuccessResult("激活成功");
-        }else{
-            return ControllerResult.getFailResult("激活失败");
+    @RequestMapping(value = "statusOperate", method = RequestMethod.POST)
+    public ControllerResult inactive(String id, String status) {
+        if (id != null && !id.equals("") && status != null && !status.equals("")) {
+            if (status.equals("N")) {
+                checkinService.active(id);
+                logger.info("激活成功");
+                return ControllerResult.getSuccessResult("激活成功");
+            } else {
+                checkinService.inactive(id);
+                logger.info("禁用成功");
+                return ControllerResult.getSuccessResult("禁用成功");
+            }
+        } else {
+            return ControllerResult.getFailResult("操作失败");
         }
     }
 

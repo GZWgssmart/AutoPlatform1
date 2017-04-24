@@ -1,5 +1,6 @@
 package com.gs.service.impl;
 
+import com.gs.bean.Checkin;
 import com.gs.bean.MaterialList;
 import com.gs.dao.MaterialListDAO;
 import com.gs.service.MaterialListService;
@@ -45,4 +46,19 @@ public class MaterialListServiceImpl implements MaterialListService {
 	public int inactive(String id) { return materialListDAO.inactive(id); }
 	public int active(String id) { return materialListDAO.active(id); }
 
+	public List<MaterialList> queryByPagerDisable(Pager pager) {
+		return materialListDAO.queryByPagerDisable(pager);
+	}
+
+	public int countByDisable() {
+		return materialListDAO.countByDisable();
+	}
+
+	public List<Checkin> blurredQuery(Pager pager, MaterialList materialList) {
+		return null;
+	}
+
+	public int countByBlurred(MaterialList materialList) {
+		return 0;
+	}
 }

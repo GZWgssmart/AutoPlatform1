@@ -1,5 +1,6 @@
 package com.gs.service.impl;
 
+import com.gs.bean.Checkin;
 import com.gs.bean.MaintainDetail;
 import com.gs.dao.MaintainDetailDAO;
 import com.gs.service.MaintainDetailService;
@@ -45,4 +46,19 @@ public class MaintainDetailServiceImpl implements MaintainDetailService {
 	public int inactive(String id) { return maintainDetailDAO.inactive(id); }
 	public int active(String id) { return maintainDetailDAO.active(id); }
 
+	public List<MaintainDetail> queryByPagerDisable(Pager pager) {
+		return maintainDetailDAO.queryByPagerDisable(pager);
+	}
+
+	public int countByDisable() {
+		return maintainDetailDAO.countByDisable();
+	}
+
+	public List<Checkin> blurredQuery(Pager pager, MaintainDetail maintainDetail) {
+		return null;
+	}
+
+	public int countByBlurred(MaintainDetail maintainDetail) {
+		return 0;
+	}
 }

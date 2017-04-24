@@ -17,17 +17,9 @@ import java.util.List;
 @Repository
 public interface CheckinDAO extends BaseDAO<String, Checkin>{
     /**
-     * 分页查询被禁用的记录
-     */
-    public List<Checkin> queryByPagerDisable(Pager pager);
-    /**
-     * 分页查询被禁用的记录
-     */
-    public int countByDisable();
-    /**
      * 模糊查询
      */
-    public List<Checkin> blurredQuery(@Param("pager")Pager pager,@Param("checkin")Checkin checkin);
+    public List<Checkin> blurredQuery(@Param("pager")Pager pager, @Param("checkin")Checkin checkin);
 
     /**
      * 模糊查询的记录数

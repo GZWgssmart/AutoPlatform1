@@ -1,5 +1,6 @@
 package com.gs.service.impl;
 
+import com.gs.bean.Checkin;
 import com.gs.bean.MaintainFix;
 import com.gs.dao.MaintainFixDAO;
 import com.gs.service.MaintainFixService;
@@ -51,5 +52,13 @@ public class MaintainFixServiceImpl implements MaintainFixService {
 
 	public int countByDisable() {
 		return maintainFixDAO.countByDisable();
+	}
+
+	public List<Checkin> blurredQuery(Pager pager, MaintainFix maintainFix) {
+		return null;
+	}
+
+	public int countByBlurred(MaintainFix maintainFix) {
+		return 0;
 	}
 }

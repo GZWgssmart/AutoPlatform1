@@ -113,4 +113,14 @@ public interface BaseDAO<PK extends Serializable, T> {
      */
     public int active(String id);
 
+    /**
+     * 分页查询被禁用的记录
+     */
+    public List<T> queryByPagerDisable(Pager pager);
+
+    /**
+     * 分页查询被禁用的记录
+     */
+    public int countByDisable();
+
 }

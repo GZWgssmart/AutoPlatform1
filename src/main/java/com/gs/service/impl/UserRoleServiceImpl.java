@@ -1,5 +1,6 @@
 package com.gs.service.impl;
 
+import com.gs.bean.Checkin;
 import com.gs.bean.UserRole;
 import com.gs.dao.UserRoleDAO;
 import com.gs.service.UserRoleService;
@@ -45,4 +46,19 @@ public class UserRoleServiceImpl implements UserRoleService {
 	public int inactive(String id) { return userRoleDAO.inactive(id); }
 	public int active(String id) { return userRoleDAO.active(id); }
 
+	public List<UserRole> queryByPagerDisable(Pager pager) {
+		return userRoleDAO.queryByPagerDisable(pager);
+	}
+
+	public int countByDisable() {
+		return userRoleDAO.countByDisable();
+	}
+
+	public List<Checkin> blurredQuery(Pager pager, UserRole userRole) {
+		return null;
+	}
+
+	public int countByBlurred(UserRole userRole) {
+		return 0;
+	}
 }

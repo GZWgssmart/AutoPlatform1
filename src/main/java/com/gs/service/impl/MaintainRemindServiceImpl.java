@@ -1,5 +1,6 @@
 package com.gs.service.impl;
 
+import com.gs.bean.Checkin;
 import com.gs.bean.MaintainRemind;
 import com.gs.dao.MaintainRemindDAO;
 import com.gs.service.MaintainRemindService;
@@ -45,4 +46,19 @@ public class MaintainRemindServiceImpl implements MaintainRemindService {
 	public int inactive(String id) { return maintainRemindDAO.inactive(id); }
 	public int active(String id) { return maintainRemindDAO.active(id); }
 
+	public List<MaintainRemind> queryByPagerDisable(Pager pager) {
+		return maintainRemindDAO.queryByPagerDisable(pager);
+	}
+
+	public int countByDisable() {
+		return maintainRemindDAO.countByDisable();
+	}
+
+	public List<Checkin> blurredQuery(Pager pager, MaintainRemind maintainRemind) {
+		return null;
+	}
+
+	public int countByBlurred(MaintainRemind maintainRemind) {
+		return 0;
+	}
 }

@@ -44,7 +44,7 @@ function statusFormatter(value, row, index) {
 
 // 禁用
 function inactive(id) {
-    $.post("/checkin/inactive?id="+id,
+    $.post("/checkin/statusOperate?id="+id+"&status=Y",
         function(data){
             if(data.result == 'success'){
                 $('#table').bootstrapTable("refresh");
@@ -63,7 +63,7 @@ function inactive(id) {
 }
 // 激活
 function active(id) {
-    $.post("/checkin/active?id="+id,
+    $.post("/checkin/statusOperate?id="+id+"&status=N",
         function(data){
             if(data.result == 'success'){
                 $('#table').bootstrapTable("refresh");

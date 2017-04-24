@@ -1,5 +1,6 @@
 package com.gs.service.impl;
 
+import com.gs.bean.Checkin;
 import com.gs.bean.Salary;
 import com.gs.dao.SalaryDAO;
 import com.gs.service.SalaryService;
@@ -45,4 +46,19 @@ public class SalaryServiceImpl implements SalaryService {
 	public int inactive(String id) { return salaryDAO.inactive(id); }
 	public int active(String id) { return salaryDAO.active(id); }
 
+	public List<Salary> queryByPagerDisable(Pager pager) {
+		return salaryDAO.queryByPagerDisable(pager);
+	}
+
+	public int countByDisable() {
+		return salaryDAO.countByDisable();
+	}
+
+	public List<Checkin> blurredQuery(Pager pager, Salary salary) {
+		return null;
+	}
+
+	public int countByBlurred(Salary salary) {
+		return 0;
+	}
 }

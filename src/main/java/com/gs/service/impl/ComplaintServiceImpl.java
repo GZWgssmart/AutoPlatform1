@@ -1,5 +1,6 @@
 package com.gs.service.impl;
 
+import com.gs.bean.Checkin;
 import com.gs.bean.Complaint;
 import com.gs.dao.ComplaintDAO;
 import com.gs.service.ComplaintService;
@@ -45,4 +46,19 @@ public class ComplaintServiceImpl implements ComplaintService {
 	public int inactive(String id) { return complaintDAO.inactive(id); }
 	public int active(String id) { return complaintDAO.active(id); }
 
+	public List<Complaint> queryByPagerDisable(Pager pager) {
+		return complaintDAO.queryByPagerDisable(pager);
+	}
+
+	public int countByDisable() {
+		return complaintDAO.countByDisable();
+	}
+
+	public List<Checkin> blurredQuery(Pager pager, Complaint complaint) {
+		return null;
+	}
+
+	public int countByBlurred(Complaint complaint) {
+		return 0;
+	}
 }

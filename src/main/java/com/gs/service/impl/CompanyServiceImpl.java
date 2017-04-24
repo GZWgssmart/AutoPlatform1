@@ -1,5 +1,6 @@
 package com.gs.service.impl;
 
+import com.gs.bean.Checkin;
 import com.gs.bean.Company;
 import com.gs.dao.CompanyDAO;
 import com.gs.service.CompanyService;
@@ -45,4 +46,19 @@ public class CompanyServiceImpl implements CompanyService {
 	public int inactive(String id) { return companyDAO.inactive(id); }
 	public int active(String id) { return companyDAO.active(id); }
 
+	public List<Company> queryByPagerDisable(Pager pager) {
+		return companyDAO.queryByPagerDisable(pager);
+	}
+
+	public int countByDisable() {
+		return companyDAO.countByDisable();
+	}
+
+	public List<Checkin> blurredQuery(Pager pager, Company company) {
+		return null;
+	}
+
+	public int countByBlurred(Company company) {
+		return 0;
+	}
 }

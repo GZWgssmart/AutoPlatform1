@@ -1,6 +1,7 @@
 package com.gs.service.impl;
 
 import com.gs.bean.CarPlate;
+import com.gs.bean.Checkin;
 import com.gs.dao.CarPlateDAO;
 import com.gs.service.CarPlateService;
 import org.springframework.stereotype.Service;
@@ -45,4 +46,19 @@ public class CarPlateServiceImpl implements CarPlateService {
 	public int inactive(String id) { return carPlateDAO.inactive(id); }
 	public int active(String id) { return carPlateDAO.active(id); }
 
+	public List<CarPlate> queryByPagerDisable(Pager pager) {
+		return carPlateDAO.queryByPagerDisable(pager);
+	}
+
+	public int countByDisable() {
+		return carPlateDAO.countByDisable();
+	}
+
+	public List<Checkin> blurredQuery(Pager pager, CarPlate carPlate) {
+		return null;
+	}
+
+	public int countByBlurred(CarPlate carPlate) {
+		return 0;
+	}
 }

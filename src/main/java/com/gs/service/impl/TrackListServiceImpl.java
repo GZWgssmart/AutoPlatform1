@@ -1,5 +1,6 @@
 package com.gs.service.impl;
 
+import com.gs.bean.Checkin;
 import com.gs.bean.TrackList;
 import com.gs.dao.TrackListDAO;
 import com.gs.service.TrackListService;
@@ -45,4 +46,19 @@ public class TrackListServiceImpl implements TrackListService {
 	public int inactive(String id) { return trackListDAO.inactive(id); }
 	public int active(String id) { return trackListDAO.active(id); }
 
+	public List<TrackList> queryByPagerDisable(Pager pager) {
+		return trackListDAO.queryByPagerDisable(pager);
+	}
+
+	public int countByDisable() {
+		return trackListDAO.countByDisable();
+	}
+
+	public List<Checkin> blurredQuery(Pager pager, TrackList trackList) {
+		return null;
+	}
+
+	public int countByBlurred(TrackList trackList) {
+		return 0;
+	}
 }

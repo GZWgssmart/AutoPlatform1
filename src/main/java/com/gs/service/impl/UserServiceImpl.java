@@ -1,5 +1,6 @@
 package com.gs.service.impl;
 
+import com.gs.bean.Checkin;
 import com.gs.bean.User;
 import com.gs.common.bean.Pager4EasyUI;
 import com.gs.dao.UserDAO;
@@ -52,4 +53,19 @@ public class UserServiceImpl implements UserService {
 		return userDAO.queryByPagerAll(pager);
 	}
 
+	public List<User> queryByPagerDisable(Pager pager) {
+		return userDAO.queryByPagerDisable(pager);
+	}
+
+	public int countByDisable() {
+		return userDAO.countByDisable();
+	}
+
+	public List<Checkin> blurredQuery(Pager pager, User user) {
+		return null;
+	}
+
+	public int countByBlurred(User user) {
+		return 0;
+	}
 }

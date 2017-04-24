@@ -1,5 +1,6 @@
 package com.gs.service.impl;
 
+import com.gs.bean.Checkin;
 import com.gs.bean.Permission;
 import com.gs.common.bean.Pager;
 import com.gs.dao.PermissionDAO;
@@ -45,5 +46,19 @@ public class PermissionServiceImpl implements PermissionService {
 	public int inactive(String id) { return permissionDAO.inactive(id); }
 	public int active(String id) { return permissionDAO.active(id); }
 
+	public List<Permission> queryByPagerDisable(Pager pager) {
+		return permissionDAO.queryByPagerDisable(pager);
+	}
 
+	public int countByDisable() {
+		return permissionDAO.countByDisable();
+	}
+
+	public List<Checkin> blurredQuery(Pager pager, Permission permission) {
+		return null;
+	}
+
+	public int countByBlurred(Permission permission) {
+		return 0;
+	}
 }

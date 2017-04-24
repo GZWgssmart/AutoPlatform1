@@ -1,5 +1,6 @@
 package com.gs.service.impl;
 
+import com.gs.bean.Checkin;
 import com.gs.bean.MaintainFixAcc;
 import com.gs.dao.MaintainFixAccDAO;
 import com.gs.service.MaintainFixAccService;
@@ -45,4 +46,19 @@ public class MaintainFixAccServiceImpl implements MaintainFixAccService {
 	public int inactive(String id) { return maintainFixAccDAO.inactive(id); }
 	public int active(String id) { return maintainFixAccDAO.active(id); }
 
+	public List<MaintainFixAcc> queryByPagerDisable(Pager pager) {
+		return maintainFixAccDAO.queryByPagerDisable(pager);
+	}
+
+	public int countByDisable() {
+		return maintainFixAccDAO.countByDisable();
+	}
+
+	public List<Checkin> blurredQuery(Pager pager, MaintainFixAcc maintainFixAcc) {
+		return null;
+	}
+
+	public int countByBlurred(MaintainFixAcc maintainFixAcc) {
+		return 0;
+	}
 }

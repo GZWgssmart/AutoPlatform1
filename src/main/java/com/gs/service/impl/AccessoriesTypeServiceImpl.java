@@ -1,6 +1,7 @@
 package com.gs.service.impl;
 
 import com.gs.bean.AccessoriesType;
+import com.gs.bean.Checkin;
 import com.gs.dao.AccessoriesTypeDAO;
 import com.gs.service.AccessoriesTypeService;
 import org.springframework.stereotype.Service;
@@ -96,5 +97,13 @@ public class AccessoriesTypeServiceImpl implements AccessoriesTypeService {
     @Override
     public int countByDisable() {
         return accessoriesTypeDAO.countByDisable();
+    }
+
+    public List<Checkin> blurredQuery(Pager pager, AccessoriesType accessoriesType) {
+        return null;
+    }
+
+    public int countByBlurred(AccessoriesType accessoriesType) {
+        return 0;
     }
 }

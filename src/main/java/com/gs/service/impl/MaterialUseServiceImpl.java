@@ -1,5 +1,6 @@
 package com.gs.service.impl;
 
+import com.gs.bean.Checkin;
 import com.gs.bean.MaterialUse;
 import com.gs.bean.User;
 import com.gs.bean.view.RecordBaseView;
@@ -46,6 +47,22 @@ public class MaterialUseServiceImpl implements MaterialUseService {
 	public int count() { return materialUseDAO.count(); }
 	public int inactive(String id) { return materialUseDAO.inactive(id); }
 	public int active(String id) { return materialUseDAO.active(id); }
+
+	public List<MaterialUse> queryByPagerDisable(Pager pager) {
+		return materialUseDAO.queryByPagerDisable(pager);
+	}
+
+	public int countByDisable() {
+		return materialUseDAO.countByDisable();
+	}
+
+	public List<Checkin> blurredQuery(Pager pager, MaterialUse materialUse) {
+		return null;
+	}
+
+	public int countByBlurred(MaterialUse materialUse) {
+		return 0;
+	}
 
 	/**
 	 *

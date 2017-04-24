@@ -1,5 +1,6 @@
 package com.gs.service.impl;
 
+import com.gs.bean.Checkin;
 import com.gs.bean.Module;
 import com.gs.dao.ModuleDAO;
 import com.gs.service.ModuleService;
@@ -45,4 +46,19 @@ public class ModuleServiceImpl implements ModuleService {
 	public int inactive(String id) { return moduleDAO.inactive(id); }
 	public int active(String id) { return moduleDAO.active(id); }
 
+	public List<Module> queryByPagerDisable(Pager pager) {
+		return moduleDAO.queryByPagerDisable(pager);
+	}
+
+	public int countByDisable() {
+		return moduleDAO.countByDisable();
+	}
+
+	public List<Checkin> blurredQuery(Pager pager, Module module) {
+		return null;
+	}
+
+	public int countByBlurred(Module module) {
+		return 0;
+	}
 }

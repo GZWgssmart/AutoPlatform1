@@ -1,5 +1,6 @@
 package com.gs.service.impl;
 
+import com.gs.bean.Checkin;
 import com.gs.bean.MaterialReturn;
 import com.gs.dao.MaterialReturnDAO;
 import com.gs.service.MaterialReturnService;
@@ -45,4 +46,19 @@ public class MaterialReturnServiceImpl implements MaterialReturnService {
 	public int inactive(String id) { return materialReturnDAO.inactive(id); }
 	public int active(String id) { return materialReturnDAO.active(id); }
 
+	public List<MaterialReturn> queryByPagerDisable(Pager pager) {
+		return materialReturnDAO.queryByPagerDisable(pager);
+	}
+
+	public int countByDisable() {
+		return materialReturnDAO.countByDisable();
+	}
+
+	public List<Checkin> blurredQuery(Pager pager, MaterialReturn materialReturn) {
+		return null;
+	}
+
+	public int countByBlurred(MaterialReturn materialReturn) {
+		return 0;
+	}
 }

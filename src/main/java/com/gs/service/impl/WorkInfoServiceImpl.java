@@ -1,5 +1,6 @@
 package com.gs.service.impl;
 
+import com.gs.bean.Checkin;
 import com.gs.bean.WorkInfo;
 import com.gs.dao.WorkInfoDAO;
 import com.gs.service.WorkInfoService;
@@ -45,4 +46,19 @@ public class WorkInfoServiceImpl implements WorkInfoService {
 	public int inactive(String id) { return workInfoDAO.inactive(id); }
 	public int active(String id) { return workInfoDAO.active(id); }
 
+	public List<WorkInfo> queryByPagerDisable(Pager pager) {
+		return workInfoDAO.queryByPagerDisable(pager);
+	}
+
+	public int countByDisable() {
+		return workInfoDAO.countByDisable();
+	}
+
+	public List<Checkin> blurredQuery(Pager pager, WorkInfo workInfo) {
+		return null;
+	}
+
+	public int countByBlurred(WorkInfo workInfo) {
+		return 0;
+	}
 }

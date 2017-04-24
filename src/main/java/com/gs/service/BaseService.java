@@ -1,5 +1,6 @@
 package com.gs.service;
 
+import com.gs.bean.Checkin;
 import com.gs.common.bean.Pager;
 
 import java.io.Serializable;
@@ -127,5 +128,24 @@ public interface BaseService<PK extends Serializable, T> {
      * @return
      */
     public int active(String id);
+
+    /**
+     * 分页查询被禁用的记录
+     */
+    public List<T> queryByPagerDisable(Pager pager);
+
+    /**
+     * 分页查询被禁用的记录
+     */
+    public int countByDisable();
+    /**
+     * 模糊查询
+     */
+    public List<Checkin> blurredQuery(Pager pager,T t);
+
+    /**
+     * 模糊查询的记录数
+     */
+    public int countByBlurred(T t);
 
 }

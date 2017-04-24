@@ -58,4 +58,12 @@ public class OutgoingTypeServiceImpl implements OutgoingTypeService {
 	public int countByDisable() {
 		return outgoingTypeDAO.countByDisable();
 	}
+
+	public List<Checkin> blurredQuery(Pager pager, OutgoingType outgoingType) {
+		return null;
+	}
+
+	public int countByBlurred(OutgoingType outgoingType) {
+		return 0;
+	}
 }

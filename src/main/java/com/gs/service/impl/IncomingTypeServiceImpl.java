@@ -55,4 +55,12 @@ public class IncomingTypeServiceImpl implements IncomingTypeService {
 	public int countByDisable() {
 		return incomingTypeDAO.countByDisable();
 	}
+
+	public List<Checkin> blurredQuery(Pager pager, IncomingType incomingType) {
+		return null;
+	}
+
+	public int countByBlurred(IncomingType incomingType) {
+		return 0;
+	}
 }

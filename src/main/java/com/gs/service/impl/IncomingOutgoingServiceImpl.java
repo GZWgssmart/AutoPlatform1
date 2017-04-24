@@ -1,5 +1,6 @@
 package com.gs.service.impl;
 
+import com.gs.bean.Checkin;
 import com.gs.bean.IncomingOutgoing;
 import com.gs.dao.IncomingOutgoingDAO;
 import com.gs.service.IncomingOutgoingService;
@@ -53,5 +54,13 @@ public class IncomingOutgoingServiceImpl implements IncomingOutgoingService {
 	@Override
 	public int countByDisable() {
 		return incomingOutgoingDAO.countByDisable();
+	}
+
+	public List<Checkin> blurredQuery(Pager pager, IncomingOutgoing incomingOutgoing) {
+		return null;
+	}
+
+	public int countByBlurred(IncomingOutgoing incomingOutgoing) {
+		return 0;
 	}
 }

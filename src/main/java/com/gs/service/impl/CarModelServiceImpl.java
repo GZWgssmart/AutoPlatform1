@@ -1,6 +1,7 @@
 package com.gs.service.impl;
 
 import com.gs.bean.CarModel;
+import com.gs.bean.Checkin;
 import com.gs.dao.CarModelDAO;
 import com.gs.service.CarModelService;
 import org.springframework.stereotype.Service;
@@ -46,4 +47,19 @@ public class CarModelServiceImpl implements CarModelService {
 	public int active(String id) { return carModelDAO.active(id); }
 	public List<CarModel> queryByBrandId(String id) { return carModelDAO.queryByBrandId(id); }
 
+	public List<CarModel> queryByPagerDisable(Pager pager) {
+		return carModelDAO.queryByPagerDisable(pager);
+	}
+
+	public int countByDisable() {
+		return carModelDAO.countByDisable();
+	}
+
+	public List<Checkin> blurredQuery(Pager pager, CarModel carModel) {
+		return null;
+	}
+
+	public int countByBlurred(CarModel carModel) {
+		return 0;
+	}
 }

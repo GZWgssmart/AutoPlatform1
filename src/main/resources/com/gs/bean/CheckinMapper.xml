@@ -114,7 +114,7 @@
 
   <!-- 分页模糊查询 -->
   <select id="blurredQuery" resultMap="checkinMap" >
-        <![CDATA[
+    <![CDATA[
            select ck.*, cc.colorId, cc.colorName, cp.plateId, cp.plateName,
             cm.modelId, cm.modelName, company.companyId,
             company.companyName, cb.brandId, cb.brandName from t_checkin ck
@@ -125,7 +125,7 @@
            LEFT JOIN t_company company on ck.companyId = company.companyId
            LEFT JOIN t_car_brand cb on ck.brandId = cb.brandId
            where 1=1 and
-       ]]>
+      ]]>
             <if test="checkin.userName != '' and checkin.userName != null">
               ck.userName like '%${checkin.userName}%'
             </if>
@@ -144,7 +144,7 @@
               ck.carPlate like '%${checkin.carPlate}%'
             </if>
             <if test="checkin.carPlate != '' and checkin.carPlate != null and
-             checkin.userPhone != '' and checkin.userPhone != null">
+            checkin.userPhone != '' and checkin.userPhone != null">
               or
             </if>
             <if test="checkin.userPhone != '' and checkin.userPhone != null">

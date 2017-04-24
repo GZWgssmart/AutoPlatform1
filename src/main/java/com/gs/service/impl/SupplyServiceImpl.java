@@ -1,5 +1,6 @@
 package com.gs.service.impl;
 
+import com.gs.bean.Checkin;
 import com.gs.bean.Supply;
 import com.gs.dao.SupplyDAO;
 import com.gs.service.SupplyService;
@@ -60,6 +61,14 @@ public class SupplyServiceImpl implements SupplyService {
 
 	@Override
 	public int countByBlurred() {
+		return 0;
+	}
+
+	public List<Checkin> blurredQuery(Pager pager, Supply supply) {
+		return null;
+	}
+
+	public int countByBlurred(Supply supply) {
 		return 0;
 	}
 }

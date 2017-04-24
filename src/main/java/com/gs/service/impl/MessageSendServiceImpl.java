@@ -1,5 +1,6 @@
 package com.gs.service.impl;
 
+import com.gs.bean.Checkin;
 import com.gs.bean.MessageSend;
 import com.gs.dao.MessageSendDAO;
 import com.gs.service.MessageSendService;
@@ -45,4 +46,19 @@ public class MessageSendServiceImpl implements MessageSendService {
 	public int inactive(String id) { return messageSendDAO.inactive(id); }
 	public int active(String id) { return messageSendDAO.active(id); }
 
+	public List<MessageSend> queryByPagerDisable(Pager pager) {
+		return messageSendDAO.queryByPagerDisable(pager);
+	}
+
+	public int countByDisable() {
+		return messageSendDAO.countByDisable();
+	}
+
+	public List<Checkin> blurredQuery(Pager pager, MessageSend messageSend) {
+		return null;
+	}
+
+	public int countByBlurred(MessageSend messageSend) {
+		return 0;
+	}
 }
