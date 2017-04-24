@@ -19,24 +19,19 @@
     <div class="panel-body" style="padding-bottom:0px;"  >
         <!--show-refresh, show-toggle的样式可以在bootstrap-table.js的948行修改-->
         <!-- table里的所有属性在bootstrap-table.js的240行-->
-        <table id="table" data-toggle="table" data-toolbar="#toolbar" data-url="/table/query"
-               data-method="post" data-query-params="queryParams" data-pagination="true"
-               data-search="true" data-show-refresh="true" data-show-toggle="true"
-               data-show-columns="true" data-page-size="10" data-height="600"
-               data-id-field="id" data-page-list="[5, 10, 20]" data-cach="false"
-               data-click-to-select="true" data-single-select="true">
+        <table id="table">
             <thead>
                 <tr>
                     <%-- 时间控件都没加 --%>
                     <%-- 汽修店维修保养的收费单据统一在此处管理，只支持查看，不支持修改 --%>
                     <%-- 当汽车维修保养结束后，由汽修店员工确认结束，一旦确认则系统自动根据维修保养明细和维修保养单据生成收费单据 --%>
-                    <th data-radio="true" data-field="status"></th>
+                        <th data-radio="true">
                     <th data-field="maintainRecordId">维修保养记录编号</th>
                     <th data-field="chargeBillMoney">收费总金额</th>
                     <th data-field="paymentMethod">付款方式</th>
                     <th data-field="actualPayment">实付款</th>
-                    <th data-field="chargeTime">收费时间</th>
-                    <th data-field="chargeCreatedTime">收费单据创建时间</th>
+                    <th data-field="chargeTime" data-formatter="formatterDate">收费时间</th>
+                    <th data-field="chargeCreatedTime" data-formatter="formatterDate">收费单据创建时间</th>
                     <th data-field="chargeBillDes">收费单据描述</th>
                     <th data-field="chargeBillStatus"data-formatter="statusFormatter">收费状态</th>
                         <th data-field="chargeBillStatus" data-formatter="openStatusFormatter">操作</th>
