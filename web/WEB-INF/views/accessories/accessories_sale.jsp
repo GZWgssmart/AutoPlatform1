@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="/static/css/select2.min.css">
     <link rel="stylesheet" href="/static/css/sweetalert.css">
     <link rel="stylesheet" href="/static/css/table/table.css">
+    <link rel="stylesheet" href="/static/css/bootstrap-validate/bootstrapValidator.min.css">
     <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.css">
     <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/datetimepicker.less">
 </head>
@@ -23,12 +24,10 @@
 <%@include file="../backstage/contextmenu.jsp" %>
 <div class="container ">
     <div class="panel-body" style="padding-bottom:0px;">
-        <!--show-refresh, show-toggle的样式可以在bootstrap-table.js的948行修改-->
-        <!-- table里的所有属性在bootstrap-table.js的240行-->
         <table id="table">
             <thead>
             <tr>
-                <th data-checkbox="true" data-field="status"></th>
+                <th data-radio="true" data-field="status"></th>
                 <th data-field="companyId">所属公司</th>
                 <th data-field="accId">配件编号</th>
                 <th data-field="accSaledTime" data-formatter="formatterDate">配件销售时间</th>
@@ -83,7 +82,9 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">配件销售时间：</label>
                     <div class="col-sm-7">
-                        <input type="date" name="accSaledTime" placeholder="请输入配件销售时间" value="" id="addDateTimePicker" class="form-control">
+                        <input id="addDateTimePicker" placeholder="请选择配件销售时间" onclick="getDate('addDateTimePicker')"
+                               readonly="true" type="text" name="accSaledTime"
+                               class="form-control datetimepicker"/>
                     </div>
                 </div>
                 <div class="form-group">
@@ -119,7 +120,7 @@
                 <div class="form-group">
                     <div class="col-sm-offset-8">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button class="btn btn-sm btn-success" type="submit">保 存</button>
+                        <button class="btn btn-sm btn-success" onclick="addSubmit();" type="button">保 存</button>
                     </div>
                 </div>
             </form>
@@ -153,8 +154,9 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">配件销售时间：</label>
                     <div class="col-sm-7">
-                        <input type="date" name="accSaledTime" define="AccessoriesSale.accSaledTime" value=""
-                               id="editDateTimePicker" class="form-control">
+                        <input id="editDateTimePicker" placeholder="请选择配件销售时间"
+                               readonly="true" type="text" name="accSaledTime"
+                               class="form-control datetimepicker"/>
                     </div>
                 </div>
                 <div class="form-group">
@@ -195,7 +197,7 @@
                 <div class="form-group">
                     <div class="col-sm-offset-8">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button class="btn btn-sm btn-success" type="submit">保 存</button>
+                        <button class="btn btn-sm btn-success" onclick="editSubmit();" type="button">保 存</button>
                     </div>
                 </div>
             </form>
@@ -252,7 +254,7 @@
 <script src="/static/js/bootstrap-select/bootstrap-select.js"></script>
 <script src="/static/js/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.js"></script>
 <script src="/static/js/bootstrap-dateTimePicker/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
-<script src="/static/js/form/jquery.validate.js"></script>
+<script src="/static/js/bootstrap-validate/bootstrapValidator.js"></script>
 <script src="/static/js/backstage/main.js"></script>
 <script src="/static/js/backstage/accessories/accessories_sale.js"></script>
 </body>

@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="/static/css/select2.min.css">
     <link rel="stylesheet" href="/static/css/sweetalert.css">
     <link rel="stylesheet" href="/static/css/table/table.css">
+    <link rel="stylesheet" href="/static/css/bootstrap-validate/bootstrapValidator.min.css">
     <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.css">
     <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/datetimepicker.less">
 </head>
@@ -23,12 +24,10 @@
 <%@include file="../backstage/contextmenu.jsp" %>
 <div class="container ">
     <div class="panel-body" style="padding-bottom:0px;">
-        <!--show-refresh, show-toggle的样式可以在bootstrap-table.js的948行修改-->
-        <!-- table里的所有属性在bootstrap-table.js的240行-->
         <table id="table">
             <thead>
             <tr>
-                <th data-checkbox="true" data-field="status"></th>
+                <th data-radio="true" data-field="status"></th>
                 <th data-field="companyId">所属公司</th>
                 <th data-field="accId">配件编号</th>
                 <th data-field="accBuyCount">购买数量</th>
@@ -245,8 +244,8 @@
 <script src="/static/js/bootstrap-select/bootstrap-select.js"></script>
 <script src="/static/js/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.js"></script>
 <script src="/static/js/bootstrap-dateTimePicker/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
-<script src="/static/js/form/jquery.validate.js"></script>
 <script src="/static/js/backstage/main.js"></script>
+<script src="/static/js/bootstrap-validate/bootstrapValidator.js"></script>
 <script src="/static/js/backstage/accessories/accessories_buy.js"></script>
 </body>
 </html>

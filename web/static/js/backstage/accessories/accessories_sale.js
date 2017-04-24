@@ -14,37 +14,16 @@ function showDisable(){
     initTable('table', '/accSale/queryByPagerDisable');
 }
 
-
-$(function () {
-    $('#table').bootstrapTable('hideColumn', 'accSaleId');
-    $("#addSelect").select2({
-            language: 'zh-CN'
-        }
-    );
-
-    //绑定Ajax的内容
-    $.getJSON("/table/queryType", function (data) {
-        $("#addSelect").empty();//清空下拉框
-        $.each(data, function (i, item) {
-            $("#addSelect").append("<option value='" + data[i].id + "'>&nbsp;" + data[i].name + "</option>");
-        });
-    })
-//            $("#addSelect").on("select2:select",
-//                    function (e) {
-//                        alert(e)
-//                        alert("select2:select", e);
-//            });
-});
-
 //显示弹窗
 function showEdit() {
     var row = $('table').bootstrapTable('getSelections');
     if (row.length > 0) {
         $("#editWindow").modal('show'); // 显示弹窗
+        $("#editButton").removeAttr("disabled");
         var ceshi = row[0];
-        var editDate = document.getElementById("editDateTimePicker");
+        $('#editDateTimePicker').val(formatterDate(ceshi.accSaledTime));
         $("#editForm").fill(ceshi);
-        editDate.value = formatterDate(row[0].accSaledTime);
+        validator('editForm'); // 初始化验证
     } else {
         swal({
             "title": "",
@@ -57,6 +36,8 @@ function showEdit() {
 //显示添加
 function showAdd() {
     $("#addWindow").modal('show');
+    $("#addButton").removeAttr("disabled");
+    validator('addForm'); // 初始化验证
 }
 
 
@@ -169,40 +150,6 @@ function showDel() {
     }
 }
 
-//检查添加
-function checkAdd() {
-    var id = $('#addId').val();
-    var name = $('#addName').val();
-    var price = $('#addPrice').val();
-    var reslist = $("#addSelect").select2("data"); //获取多选的值
-    if (id != "" && name != "" && price != "") {
-        return true;
-    } else {
-        var error = document.getElementById("addError");
-        error.innerHTML = "请输入正确的数据";
-        return false;
-    }
-}
-
-//检查修改
-function checkEdit() {
-    $.post("/table/edit",
-        $("#editForm").serialize(),
-        function (data) {
-            if (data.result == "success") {
-                $("#editWindow").modal('hide'); // 关闭指定的窗口
-                $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
-                swal({
-                    title: "",
-                    text: data.message,
-                    type: "success"
-                })// 提示窗口, 修改成功
-            } else if (data.result == "fail") {
-                //$.messager.alert("提示", data.result.message, "info");
-            }
-        }, "json"
-    );
-}
 
 $('#addDateTimePicker').datetimepicker({
     minView: "month", //选择日期后，不会再跳转去选择时分秒
@@ -219,192 +166,134 @@ $('#editDateTimePicker').datetimepicker({
     autoclose: 1,
 });
 
+function addSubmit() {
+    $("#addForm").data('bootstrapValidator').validate();
+    if ($("#addForm").data('bootstrapValidator').isValid()) {
+        $("#addButton").attr("disabled", "disabled");
+    } else {
+        $("#addButton").removeAttr("disabled");
+    }
+}
 
-// //日期时间控件初始化
-// $(document).ready(function () {
-//     // 带时间的控件
-//     // if ($(".iDate.full").length > 0) {
-//     //     $(".iDate.full").datetimepicker({
-//     //         locale: "zh-cn",
-//     //         format: "YYYY-MM-DD a hh:mm",
-//     //         dayViewHeaderFormat: "YYYY年 MMMM"
-//     //     });
-//     // }
-//
-//     //不带时间的控件
-//     if ($(".iDate.date").length > 0) {
-//         $(".iDate.date").datetimepicker({
-//             locale: "zh-cn",
-//             format: "YYYY-MM-DD",
-//             dayViewHeaderFormat: "YYYY年 MMMM"
-//         });
-//     }
-// })
+function editSubmit() {
+    $("#editForm").data('bootstrapValidator').validate();
+    if ($("#editForm").data('bootstrapValidator').isValid()) {
+        $("#editButton").attr("disabled", "disabled");
+    } else {
+        $("#editButton").removeAttr("disabled");
+    }
+}
 
-//前端验证
-$(document).ready(function () {
-    $("#addForm").validate({
-        errorElement: 'span',
-        errorClass: 'help-block',
-        rules: {
+function formSubmit(url, formId, winId) {
+    $.post(url,
+        $("#" + formId).serialize(),
+        function (data) {
+            if (data.result == "success") {
+                $('#' + winId).modal('hide');
+                swal({
+                    title: "",
+                    text: data.message,
+                    confirmButtonText: "确定", // 提示按钮上的文本
+                    type: "success"
+                })// 提示窗口, 修改成功
+                $('#table').bootstrapTable('refresh');
+                if (formId == 'addForm') {
+                    $("input[type=reset]").trigger("click"); // 移除表单中填的值
+                    $('#addForm').data('bootstrapValidator').resetForm(true); // 移除所有验证样式
+                    $("#addButton").removeAttr("disabled"); // 移除不可点击
+                }
+            } else if (data.result == "fail") {
+                swal({
+                    title: "",
+                    text: "添加失败",
+                    confirmButtonText: "确认",
+                    type: "error"
+                })
+                $("#" + formId).removeAttr("disabled");
+            }
+        }, "json");
+}
+
+function validator(formId) {
+    $('#' + formId).bootstrapValidator({
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
             companyId: {
-                required: true,
-                minlength: 2
+                message: '所属公司不能为空',
+                validators: {
+                    notEmpty: {
+                        message: '所属公司不能为空'
+                    }
+                }
             },
             accId: {
-                required: true,
-                minlength: 2
+                message: '配件编号不能为空',
+                validators: {
+                    notEmpty: {
+                        message: '配件编号不能为空'
+                    }
+                }
             },
             accSaledTime: {
-                required: true,
-                minlength: 2
+                message: '配件销售时间不能为空',
+                validators: {
+                    notEmpty: {
+                        message: '配件销售时间不能为空'
+                    }
+                }
             },
             accSaleCount: {
-                required: true,
-                minlength: 2
+                message: '配件销售数量不能为空',
+                validators: {
+                    notEmpty: {
+                        message: '配件销售数量不能为空'
+                    }
+                }
             },
             accSalePrice: {
-                required: true,
-                minlength: 2
+                message: '配件销售单价不能为空',
+                validators: {
+                    notEmpty: {
+                        message: '配件销售单价不能为空'
+                    }
+                }
             },
             accSaleTotal: {
-                required: true,
-                minlength: 2
+                message: '配件销售总价不能为空',
+                validators: {
+                    notEmpty: {
+                        message: '配件销售总价不能为空'
+                    }
+                }
             },
             accSaleDiscount: {
-                required: true,
-                minlength: 2
+                message: '配件销售折扣不能为空',
+                validators: {
+                    notEmpty: {
+                        message: '配件销售折扣不能为空'
+                    }
+                }
             },
             accSaleMoney: {
-                required: true,
-                minlength: 2
-            }
-        },
-        messages: {
-            companyId: "请输入所属公司",
-            accId: "请输入配件编号",
-            accSaledTime: "请输入销售时间",
-            accSaleCount: "请输入配件销售数量",
-            accSalePrice: "请输入配件销售单价",
-            accSaleTotal: "请输入配件销售总价",
-            accSaleDiscount: "请输入配件销售折扣",
-            accSaleMoney: "请输入配件销售最终价"
-        },
-        errorPlacement: function (error, element) {
-            element.next().remove();
-            element.after('<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>');
-            element.closest('.form-group').append(error);
-        },
-        highlight: function (element) {
-            $(element).closest('.form-group').addClass('has-error has-feedback');
-        },
-        success: function (label) {
-            var el = label.closest('.form-group').find("input");
-            el.next().remove();
-            el.after('<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>');
-            label.closest('.form-group').removeClass('has-error').addClass("has-feedback has-success");
-            label.remove();
-        },
-        submitHandler: function (form) {
-            $.post(contentPath + "/accSale/addAccSale", $("#addForm").serialize(), function (data) {
-                if (data.result == "success") {
-                    $("#addWindow").modal('hide'); // 关闭指定的窗口
-                    $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
-                    swal({
-                        title: "",
-                        text: data.message,
-                        type: "success"
-                    })
-                } else {
-                    swal({
-                        title: "",
-                        text: data.message,
-                        type: "fail"
-                    })
+                message: '配件销售最终价不能为空',
+                validators: {
+                    notEmpty: {
+                        message: '配件销售最终价不能为空'
+                    }
                 }
-            })
+            },
+        }
+    }).on('success.form.bv', function (e) {
+        if (formId == "addForm") {
+            formSubmit("/accSale/addAccSale", formId, "addWindow");
+
+        } else if (formId == "editForm") {
+            formSubmit("/accSale/updateAccSale", formId, "editWindow");
+
         }
     })
-    $("#editForm").validate({
-        errorElement: 'span',
-        errorClass: 'help-block',
-        rules: {
-            companyId: {
-                required: true,
-                minlength: 2
-            },
-            accId: {
-                required: true,
-                minlength: 2
-            },
-            accSaledTime: {
-                required: true,
-                minlength: 2
-            },
-            accSaleCount: {
-                required: true,
-                minlength: 2
-            },
-            accSalePrice: {
-                required: true,
-                minlength: 2
-            },
-            accSaleTotal: {
-                required: true,
-                minlength: 2
-            },
-            accSaleDiscount: {
-                required: true,
-                minlength: 2
-            },
-            accSaleMoney: {
-                required: true,
-                minlength: 2
-            }
-        },
-        messages: {
-            companyId: "请输入所属公司",
-            accId: "请输入配件编号",
-            accSaledTime: "请输入销售时间",
-            accSaleCount: "请输入配件销售数量",
-            accSalePrice: "请输入配件销售单价",
-            accSaleTotal: "请输入配件销售总价",
-            accSaleDiscount: "请输入配件销售折扣",
-            accSaleMoney: "请输入配件销售最终价"
-        },
-        errorPlacement: function (error, element) {
-            element.next().remove();
-            element.after('<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>');
-            element.closest('.form-group').append(error);
-        },
-        highlight: function (element) {
-            $(element).closest('.form-group').addClass('has-error has-feedback');
-        },
-        success: function (label) {
-            var el = label.closest('.form-group').find("input");
-            el.next().remove();
-            el.after('<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>');
-            label.closest('.form-group').removeClass('has-error').addClass("has-feedback has-success");
-            label.remove();
-        },
-        submitHandler: function (form) {
-            $.post(contentPath + "/accSale/updateAccSale", $("#editForm").serialize(), function (data) {
-                if (data.result == "success") {
-                    $("#editWindow").modal('hide'); // 关闭指定的窗口
-                    $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
-                    swal({
-                        title: "",
-                        text: data.message,
-                        type: "success"
-                    })
-                } else {
-                    swal({
-                        title: "",
-                        text: data.message,
-                        type: "fail"
-                    })// 提示窗口, 修改成功
-                }
-            })
-        }
-    })
-});
+}

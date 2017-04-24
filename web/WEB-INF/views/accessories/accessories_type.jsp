@@ -19,17 +19,16 @@
     <link rel="stylesheet" href="/static/css/select2.min.css">
     <link rel="stylesheet" href="/static/css/sweetalert.css">
     <link rel="stylesheet" href="/static/css/table/table.css">
+    <link rel="stylesheet" href="/static/css/bootstrap-validate/bootstrapValidator.min.css">
 </head>
 <body>
 <%@include file="../backstage/contextmenu.jsp" %>
 <div class="container">
     <div class="panel-body" style="padding-bottom:0px;">
-        <!--show-refresh, show-toggle的样式可以在bootstrap-table.js的948行修改-->
-        <!-- table里的所有属性在bootstrap-table.js的240行-->
         <table id="table">
             <thead>
             <tr>
-                <th data-checkbox="true" data-field="status"></th>
+                <th data-radio="true" data-field="status"></th>
                 <th data-field="companyId">所属公司</th>
                 <th data-field="accTypeName">配件分类名称</th>
                 <th data-field="accTypeDes">配件分类描述</th>
@@ -86,7 +85,7 @@
                 <div class="form-group">
                     <div class="col-sm-offset-8">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button class="btn btn-sm btn-success" type="submit">保 存</button>
+                        <button class="btn btn-sm btn-success" onclick="addSubmit();" type="button">保 存</button>
                     </div>
                 </div>
             </form>
@@ -125,7 +124,7 @@
                 <div class="form-group">
                     <div class="col-sm-offset-8">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button class="btn btn-sm btn-success" type="submit">保 存</button>
+                        <button class="btn btn-sm btn-success" onclick="editSubmit();" type="button">保 存</button>
                     </div>
                 </div>
             </form>
@@ -180,8 +179,8 @@
 <script src="/static/js/sweetalert/sweetalert.min.js"></script>
 <script src="/static/js/contextmenu.js"></script>
 <script src="/static/js/bootstrap-select/bootstrap-select.js"></script>
-<script src="/static/js/form/jquery.validate.js"></script>
 <script src="/static/js/backstage/main.js"></script>
+<script src="/static/js/bootstrap-validate/bootstrapValidator.js"></script>
 <script src="/static/js/backstage/accessories/accessories_type.js"></script>
 </body>
 </html>

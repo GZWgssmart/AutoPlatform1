@@ -57,6 +57,7 @@ function showEdit() {
 //显示添加
 function showAdd() {
     $("#addWindow").modal('show');
+    validator('addForm'); // 初始化验证
 }
 
 
@@ -174,43 +175,6 @@ function showActiveAccBuy() {
     })
 }
 
-
-//检查添加
-function checkAdd() {
-    var id = $('#addId').val();
-    var name = $('#addName').val();
-    var price = $('#addPrice').val();
-    var reslist = $("#addSelect").select2("data"); //获取多选的值
-    if (id != "" && name != "" && price != "") {
-        return true;
-    } else {
-        var error = document.getElementById("addError");
-        error.innerHTML = "请输入正确的数据";
-        return false;
-    }
-}
-
-//检查修改
-function checkEdit() {
-    $.post("/table/edit",
-        $("#editForm").serialize(),
-        function (data) {
-            if (data.result == "success") {
-                $("#editWindow").modal('hide'); // 关闭指定的窗口
-                $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
-                swal({
-                    title: "",
-                    text: data.message,
-                    type: "success"
-                })// 提示窗口, 修改成功
-            } else if (data.result == "fail") {
-                //$.messager.alert("提示", data.result.message, "info");
-            }
-        }, "json"
-    );
-}
-
-
 $('#addDateTimePicker').datetimepicker({
     minView: "month", //选择日期后，不会再跳转去选择时分秒
     language: 'zh-CN',
@@ -226,27 +190,6 @@ $('#editDateTimePicker').datetimepicker({
     todayBtn: 1,
     autoclose: 1,
 });
-
-// //日期时间控件初始化
-// $(document).ready(function () {
-//     // 带时间的控件
-//     // if ($(".iDate.full").length > 0) {
-//     //     $(".iDate.full").datetimepicker({
-//     //         locale: "zh-cn",
-//     //         format: "YYYY-MM-DD a hh:mm",
-//     //         dayViewHeaderFormat: "YYYY年 MMMM"
-//     //     });
-//     // }
-//
-//     //不带时间的控件
-//     if ($(".iDate.date").length > 0) {
-//         $(".iDate.date").datetimepicker({
-//             locale: "zh-cn",
-//             format: "YYYY-MM-DD",
-//             dayViewHeaderFormat: "YYYY年 MMMM"
-//         });
-//     }
-// })
 
 //前端验证
 $(document).ready(function () {

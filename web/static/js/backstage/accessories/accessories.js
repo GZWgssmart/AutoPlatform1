@@ -1,5 +1,4 @@
-
-var contentPath=''
+var contentPath = ''
 
 
 //初始化表格
@@ -8,11 +7,11 @@ $(function () {
 });
 
 // 查看全部可用
-function showAvailable(){
+function showAvailable() {
     initTable('table', '/accInv/queryByPage');
 }
 // 查看全部禁用
-function showDisable(){
+function showDisable() {
     initTable('table', '/accInv/queryByPagerDisable');
 }
 
@@ -30,23 +29,16 @@ $(function () {
             $("#addSelect").append("<option value='" + data[i].id + "'>&nbsp;" + data[i].name + "</option>");
         });
     })
-//            $("#addSelect").on("select2:select",
-//                    function (e) {
-//                        alert(e)
-//                        alert("select2:select", e);
-//            });
 });
 
 //显示弹窗
 function showEdit() {
     var row = $('table').bootstrapTable('getSelections');
     if (row.length > 0) {
-//                $('#editId').val(row[0].id);
-//                $('#editName').val(row[0].name);
-//                $('#editPrice').val(row[0].price);
         $("#editWindow").modal('show'); // 显示弹窗
         var ceshi = row[0];
         $("#editForm").fill(ceshi);
+        validator('editForm'); // 初始化验证
     } else {
         swal({
             "title": "",
@@ -59,6 +51,8 @@ function showEdit() {
 //显示添加
 function showAdd() {
     $("#addWindow").modal('show');
+    $("#addButton").removeAttr("disabled");
+    validator('addForm'); // 初始化验证
 }
 
 
@@ -172,265 +166,133 @@ function showDel() {
     }
 }
 
-//检查添加
-function checkAdd() {
-    var id = $('#addId').val();
-    var name = $('#addName').val();
-    var price = $('#addPrice').val();
-    var reslist = $("#addSelect").select2("data"); //获取多选的值
-    if (id != "" && name != "" && price != "") {
-        return true;
+function validator(formId) {
+    $('#' + formId).bootstrapValidator({
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            companyId: {
+                message: '所属公司名称不能为空',
+                validators: {
+                    notEmpty: {
+                        message: '所属公司名称不能为空'
+                    }
+                }
+            },
+            accTypeId: {
+                message: '配件分类名称不能为空',
+                notEmpty: {
+                    message: '配件分类名称不能为空'
+                }
+            }
+        },
+        accName: {
+            message: '配件名称不能为空',
+            validators: {
+                notEmpty: {
+                    message: '配件名称不能为空'
+                }
+            }
+        },
+        accCommodityCode: {
+            message: '配件商品条形码不能为空',
+            validators: {
+                notEmpty: {
+                    message: '配件商品条形码不能为空'
+                }
+            }
+        },
+        accPrice: {
+            message: '配件价格不能为空',
+            validators: {
+                notEmpty: {
+                    message: '配件价格不能为空'
+                }
+            }
+        },
+        accSalePrice: {
+            message: '配件售价不能为空',
+            validators: {
+                notEmpty: {
+                    message: '配件售价不能为空'
+                }
+            }
+        },
+        accTotal: {
+            message: '配件数量不能为空',
+            validators: {
+                notEmpty: {
+                    message: '配件数量不能为空'
+                }
+            }
+        },
+        accIdle: {
+            message: '配件可用数量不能为空',
+            validators: {
+                notEmpty: {
+                    message: '配件可用数量不能为空'
+                }
+            }
+        },
+    }).on('success.form.bv', function (e) {
+        if (formId == "addForm") {
+            formSubmit(contentPath+"/accInv/addAccInv", formId, "addWindow");
+
+        } else if (formId == "editForm") {
+            formSubmit(contentPath+"/accInv/updateAccInv", formId, "editWindow");
+
+        }
+    })
+}
+
+
+function addSubmit() {
+    $("#addForm").data('bootstrapValidator').validate();
+    if ($("#addForm").data('bootstrapValidator').isValid()) {
+        $("#addButton").attr("disabled", "disabled");
     } else {
-        var error = document.getElementById("addError");
-        error.innerHTML = "请输入正确的数据";
-        return false;
+        $("#addButton").removeAttr("disabled");
     }
 }
 
-//检查修改
-function checkEdit() {
-    $.post("/table/edit",
-        $("#editForm").serialize(),
+function editSubmit() {
+    $("#editForm").data('bootstrapValidator').validate();
+    if ($("#editForm").data('bootstrapValidator').isValid()) {
+        $("#editButton").attr("disabled", "disabled");
+    } else {
+        $("#editButton").removeAttr("disabled");
+    }
+}
+
+function formSubmit(url, formId, winId) {
+    $.post(url,
+        $("#" + formId).serialize(),
         function (data) {
             if (data.result == "success") {
-                $("#editWindow").modal('hide'); // 关闭指定的窗口
-                $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
+                $('#' + winId).modal('hide');
                 swal({
                     title: "",
                     text: data.message,
+                    confirmButtonText: "确定", // 提示按钮上的文本
                     type: "success"
                 })// 提示窗口, 修改成功
+                $('#table').bootstrapTable('refresh');
+                if (formId == 'addForm') {
+                    $("input[type=reset]").trigger("click"); // 移除表单中填的值
+                    $('#addForm').data('bootstrapValidator').resetForm(true); // 移除所有验证样式
+                    $("#addButton").removeAttr("disabled"); // 移除不可点击
+                }
             } else if (data.result == "fail") {
-                //$.messager.alert("提示", data.result.message, "info");
+                swal({
+                    title: "",
+                    text: "添加失败",
+                    confirmButtonText: "确认",
+                    type: "error"
+                })
+                $("#" + formId).removeAttr("disabled");
             }
-        }, "json"
-    );
+        }, "json");
 }
-
-
-$('#addDateTimePicker').datetimepicker({
-    language: 'zh-CN',
-    format: 'yyyy-mm-dd hh:ii'
-});
-$('#addDateTimePicker2').datetimepicker({
-    language: 'zh-CN',
-    format: 'yyyy-mm-dd hh:ii'
-});
-$('#addDateTimePicker3').datetimepicker({
-    language: 'zh-CN',
-    format: 'yyyy-mm-dd hh:ii'
-});
-$('#editDateTimePicker').datetimepicker({
-    language: 'zh-CN',
-    format: 'yyyy-mm-dd hh:ii'
-});
-$('#editDateTimePicker2').datetimepicker({
-    language: 'zh-CN',
-    format: 'yyyy-mm-dd hh:ii'
-});
-$('#editDateTimePicker3').datetimepicker({
-    language: 'zh-CN',
-    format: 'yyyy-mm-dd hh:ii'
-});
-
-
-// //日期时间控件初始化
-// $(document).ready(function () {
-//     // 带时间的控件
-//     // if ($(".iDate.full").length > 0) {
-//     //     $(".iDate.full").datetimepicker({
-//     //         locale: "zh-cn",
-//     //         format: "YYYY-MM-DD a hh:mm",
-//     //         dayViewHeaderFormat: "YYYY年 MMMM"
-//     //     });
-//     // }
-//
-//     //不带时间的控件
-//     if ($(".iDate.date").length > 0) {
-//         $(".iDate.date").datetimepicker({
-//             locale: "zh-cn",
-//             format: "YYYY-MM-DD",
-//             dayViewHeaderFormat: "YYYY年 MMMM"
-//         });
-//     }
-// })
-
-//前端验证
-$(document).ready(function () {
-    $("#addForm").validate({
-        errorElement: 'span',
-        errorClass: 'help-block',
-
-        rules: {
-            companyId: {
-                required: true,
-                minlength: 2
-            },
-            accTypeId: {
-                required: true,
-                minlength: 2
-            },
-            accName: {
-                required: true,
-                minlength: 2
-            },
-            accCommodityCode: {
-                required: true,
-                minlength: 2
-            },
-            accDes: {
-                required: true,
-                minlength: 2
-            },
-            accPrice: {
-                required: true,
-                minlength: 2
-            },
-            accSalePrice: {
-                required: true,
-                minlength: 2
-            },
-            accTotal: {
-                required: true,
-                minlength: 2
-            },
-            accIdle: {
-                required: true,
-                minlength: 2
-            }
-        },
-        messages: {
-            companyId: "请输入公司名称",
-            accTypeId: "请输入配件所属类别",
-            accName: "请输入配件名称",
-            accCommodityCode: "请输入配件商品条码",
-            accDes: "请输入配件描述",
-            accPrice: "请输入配件价格",
-            accSalePrice: "请输入配件售价",
-            accTotal: "请输入配件数量",
-            accIdle: "请输入配件可用数量",
-        },
-        errorPlacement: function (error, element) {
-            element.next().remove();
-            element.after('<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>');
-            element.closest('.form-group').append(error);
-        },
-        highlight: function (element) {
-            $(element).closest('.form-group').addClass('has-error has-feedback');
-        },
-        success: function (label) {
-            var el = label.closest('.form-group').find("input");
-            el.next().remove();
-            el.after('<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>');
-            label.closest('.form-group').removeClass('has-error').addClass("has-feedback has-success");
-            label.remove();
-        },
-        submitHandler: function (form) {
-            $.post(contentPath+"/accInv/addAccInv",$("#addForm").serialize(),function (data) {
-                if(data.result=="success"){
-                    $("#addWindow").modal('hide'); // 关闭指定的窗口
-                    $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
-                    swal({
-                        title: "",
-                        text: data.message,
-                        type: "success"
-                    })
-                }else{
-                    swal({
-                        title: "",
-                        text: data.message,
-                        type: "fail"
-                    })
-                }
-            })
-        }
-    })
-    $("#editForm").validate({
-        errorElement: 'span',
-        errorClass: 'help-block',
-
-        rules: {
-            companyId: {
-                required: true,
-                minlength: 2
-            },
-            accTypeId: {
-                required: true,
-                minlength: 2
-            },
-            accName: {
-                required: true,
-                minlength: 2
-            },
-            accCommodityCode: {
-                required: true,
-                minlength: 2
-            },
-            accDes: {
-                required: true,
-                minlength: 2
-            },
-            accPrice: {
-                required: true,
-                minlength: 2
-            },
-            accSalePrice: {
-                required: true,
-                minlength: 2
-            },
-            accTotal: {
-                required: true,
-                minlength: 2
-            },
-            accIdle: {
-                required: true,
-                minlength: 2
-            }
-        },
-        messages: {
-            companyId: "请输入公司名称",
-            accTypeId: "请输入配件所属类别",
-            accName: "请输入配件名称",
-            accCommodityCode: "请输入配件商品条码",
-            accDes: "请输入配件描述",
-            accPrice: "请输入配件价格",
-            accSalePrice: "请输入配件售价",
-            accTotal: "请输入配件数量",
-            accIdle: "请输入配件可用数量"
-        },
-        errorPlacement: function (error, element) {
-            element.next().remove();
-            element.after('<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>');
-            element.closest('.form-group').append(error);
-        },
-        highlight: function (element) {
-            $(element).closest('.form-group').addClass('has-error has-feedback');
-        },
-        success: function (label) {
-            var el = label.closest('.form-group').find("input");
-            el.next().remove();
-            el.after('<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>');
-            label.closest('.form-group').removeClass('has-error').addClass("has-feedback has-success");
-            label.remove();
-        },
-        submitHandler: function (form) {
-            $.post(contentPath+"/accInv/updateAccInv",$("#editForm").serialize(),function (data) {
-                if(data.result=="success"){
-                    $("#editWindow").modal('hide'); // 关闭指定的窗口
-                    $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
-                    swal({
-                        title: "",
-                        text: data.message,
-                        type: "success"
-                    })
-                }else{
-                    swal({
-                        title: "",
-                        text: data.message,
-                        type: "fail"
-                    })
-                }
-            })
-        }
-    })
-});

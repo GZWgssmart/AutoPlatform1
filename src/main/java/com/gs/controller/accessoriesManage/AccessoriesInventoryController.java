@@ -61,6 +61,7 @@ public class AccessoriesInventoryController {
         pager.setTotalRecords(accessoriesService.count());
         logger.info("分页查询配件库存信息成功");
         List<Accessories> accessories = accessoriesService.queryByPager(pager);
+        System.out.println("查询出的信息为"+accessories.toString());
         return new Pager4EasyUI<Accessories>(pager.getTotalRecords(), accessories);
     }
 
