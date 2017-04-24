@@ -2,6 +2,7 @@ package com.gs.controller.basicInfoManage;
 
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.Company;
+import com.gs.common.bean.ComboBox4EasyUI;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -32,11 +34,18 @@ public class CompanyController {
     private CompanyService companyService;
 
     @ResponseBody
-    @RequestMapping(value = "queryAllCompany",method = RequestMethod.POST)
-    public List<Company> queryAll() {
+    @RequestMapping(value = "queryAllCompany",method = RequestMethod.GET)
+    public List<ComboBox4EasyUI> queryAll(){
         logger.info("查询所有公司信息");
-        List<Company> companyList = companyService.queryAll();
-            return companyList;
+        List<Company> companys = companyService.queryAll();
+        List<ComboBox4EasyUI> comboxs = new ArrayList<ComboBox4EasyUI>();
+        for(Company c : companys){
+            ComboBox4EasyUI comboBox4EasyUI = new ComboBox4EasyUI();
+            comboBox4EasyUI.setId(c.getCompanyId());
+            comboBox4EasyUI.setText(c.getCompanyName());
+            comboxs.add(comboBox4EasyUI);
+        }
+        return comboxs;
     }
 
     @ResponseBody
