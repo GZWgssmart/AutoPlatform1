@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="/static/css/select2.min.css">
     <link rel="stylesheet" href="/static/css/sweetalert.css">
     <link rel="stylesheet" href="/static/css/table/table.css">
+    <link rel="stylesheet" href="/static/css/bootstrap-validate/bootstrapValidator.min.css">
 
     <title>支出管理</title>
 </head>
@@ -22,24 +23,10 @@
     <div class="panel-body">
         <!--show-refresh, show-toggle的样式可以在bootstrap-table.js的948行修改-->
         <!-- table里的所有属性在bootstrap-table.js的240行-->
-        <table id="table"
-               data-toggle="table"
-               data-toolbar="#toolbar"
-               data-pagination="true"
-               data-search="true"
-               data-show-refresh="true"
-               data-show-toggle="true"
-               data-show-columns="true"
-               data-page-size="10"
-               data-height="600"
-               data-id-field="id"
-               data-page-list="[5, 10, 20]"
-               data-cach="false"
-               data-click-to-select="true"
-               data-single-select="true">
+        <table id="table">
             <thead>
             <tr>
-                <th data-checkbox="true"></th>
+                <th data-radio="true"></th>
                 <th  data-formatter="ioTypeFormatter">
                     收支类型
                 </th>
@@ -86,8 +73,7 @@
     <div class="modal-dialog" >
         <div class="modal-content" >
             <div class="container" style="width: 80%;">
-                <form class="form-horizontal" id="addOutForm" method="post">
-                    <input type="reset" name="reset" style="display: none;" />
+                <form class="form-horizontal"  role="form" id="addOutForm" method="post">
                     <div class="modal-header" style="overflow:auto;">
                         <h4>其它支出添加</h4>
                     </div>
@@ -115,7 +101,7 @@
                     <div class="form-group">
                         <div class="col-sm-offset-8">
                             <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                            <button class="btn btn-sm btn-success" type="submit">保 存</button>
+                            <button class="btn btn-sm btn-success" id="addOutButton" onclick="addOutSubmit()" type="button">保 存</button>
                         </div>
                     </div>
                 </form>
@@ -310,7 +296,7 @@
                     <div class="form-group">
                         <div class="col-sm-offset-8">
                             <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                            <button class="btn btn-sm btn-success" type="submit">保 存</button>
+                            <button class="btn btn-sm btn-success" type="button" id="addInButton" onclick="addInSubmit()">保 存</button>
                         </div>
                     </div>
                 </form>
@@ -487,7 +473,7 @@
                         <button type="button" class="btn btn-default"
                                 data-dismiss="modal">关闭
                         </button>
-                        <button type="submit" class="btn btn-primary btn-sm">保存</button>
+                        <button type="button" id="editButton" onclick="editSubmit()" class="btn btn-primary btn-sm">保存</button>
                     </div>
                 </form>
             </div>
@@ -543,9 +529,8 @@
 <script src="/static/js/sweetalert/sweetalert.min.js"></script>
 <script src="/static/js/contextmenu.js"></script>
 <script src="/static/js/backstage/financialControlJS/piRecording.js"></script>
-<script src="/static/js/bootstrap-select/bootstrap-select.js"></script>
-<script src="/static/js/form/jquery.validate.js"></script>
 <script src="/static/js/backstage/main.js"></script>
+<script src="/static/js/bootstrap-validate/bootstrapValidator.js"></script>
 
 </body>
 </html>

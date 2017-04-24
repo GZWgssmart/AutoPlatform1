@@ -1,22 +1,29 @@
 package com.gs.controller.FinancialManage;
 
-import com.gs.bean.OutgoingType;
 import com.gs.bean.Salary;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
-import com.gs.common.util.UUIDUtil;
+import com.gs.common.util.ViewExcel;
 import com.gs.service.SalaryService;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
-import java.util.Calendar;
+import javax.servlet.http.HttpServletRequest;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -34,6 +41,9 @@ public class SalaryController{
     @Resource
     public SalaryService salaryService;
 
+
+
+
     @ResponseBody
     @RequestMapping(value = "queryByPager",method = RequestMethod.GET)
     public Pager4EasyUI<Salary> queryByPager(@Param("pageNumber") String pageNumber, @Param("pageSize")String pageSize) {
@@ -46,13 +56,18 @@ public class SalaryController{
         return new Pager4EasyUI<Salary>(pager.getTotalRecords(), salaries);
     }
 
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        dateFormat.setLenient(false);
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
+    }
     @ResponseBody
     @RequestMapping(value = "add",method = RequestMethod.POST)
     public ControllerResult add(Salary salary) {
         logger.info("添加工资信息");
-        salary.setSalaryId(UUIDUtil.uuid());
-        salary.setSalaryTime(Calendar.getInstance().getTime());
-
+        salaryService.insert(salary);
         return ControllerResult.getSuccessResult("添加成功");
     }
 
@@ -74,6 +89,16 @@ public class SalaryController{
         System.out.printf(salary.getUserId()+ "ddddddd" +  salary.getSalaryId() + "ccc" + salary.getPrizeSalary());
         salaryService.update(salary);
         return ControllerResult.getSuccessResult("修改成功");
+    }
+
+
+    @RequestMapping(value ="/export",method=RequestMethod.GET)
+    public ModelAndView export(ModelMap model, HttpServletRequest request){
+        List<Salary> list = salaryService.queryAll();
+        ViewExcel viewExcel = new ViewExcel();
+        //将查询出的list集合存入ModelMap 对象中，此时的key就是ViewExcel类中Map所对应的key
+        model.put("list", list);
+        return new ModelAndView(viewExcel, model);
     }
 
 

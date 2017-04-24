@@ -82,9 +82,9 @@ function searchRapidStatus() {
 function openStatusFormatter(value, row) {
     /*处理数据*/
     if (value == 'Y') {
-        return "&nbsp;&nbsp;<a href='javascript:;' onclick='inactive(\"" + row.inOutId + "\")'>禁用</a>";
+        return "&nbsp;&nbsp;<button type='button' class='btn btn-danger' onclick='inactive(\""+ row.inOutId + "\")'>禁用</a>";
     } else {
-        return "&nbsp;&nbsp;<a href='javascript:;' onclick='active(\"" + row.inOutId + "\")'>激活</a>";
+        return "&nbsp;&nbsp;<button type='button' class='btn btn-danger' onclick='active(\""+ row.inOutId + "\")'>激活</a>";
     }
 
 }
@@ -119,6 +119,7 @@ function active(id) {
 
 
 function showEdit(){
+    $("#editButton").removeAttr("disabled");
     var row =  $('table').bootstrapTable('getSelections');
     if(row.length >0) {
 //                $('#editId').val(row[0].id);
@@ -127,6 +128,7 @@ function showEdit(){
         $("#editIOWin").modal('show'); // 显示弹窗
         var io = row[0];
         $("#editIOWin").fill(io);
+        validator("editIOForm");
         if ($("#inType").val() == "") {
             $("#inTypeDiv").hide();
         }
@@ -144,11 +146,28 @@ function showEdit(){
 
 function outAddWin(){
     $("#addOutWin").modal('show');
+    $("#addOutButton").removeAttr("disabled");
+    validator("addOutForm");
 }
 
 function inAddWin(){
     $("#addInWin").modal('show');
+    $("#addInButton").removeAttr("disabled");
+    validator("addInForm");
 }
+
+$("#addOutForm").submit(function(){
+    $(":submit",this).attr("disabled","disabled");
+});
+
+$("#addInForm").submit(function(){
+    $(":submit",this).attr("disabled","disabled");
+});
+
+$("#editIOForm").submit(function(){
+    $(":submit",this).attr("disabled","disabled");
+});
+
 
 /** 选择支出类型窗体 */
 function openCheckOutType() {
@@ -373,244 +392,125 @@ function updateInCheckInType () {
     }
 }
 
+
+
 /**
- * 前台验证及form提交
+ * 前台验证
+ * @param formId
  */
-$(document).ready(function () {
-
-    $("#addOutForm").validate({
-        errorElement: 'span',
-        errorClass: 'help-block',
-        rules: {
+function validator(formId) {
+    $('#' + formId).bootstrapValidator({
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            inTypeId: {
+                validators: {
+                    notEmpty: {
+                        message: '请选择收支类型',
+                    },
+                }
+            },
             outTypeId: {
-                required: true,
+                validators: {
+                    notEmpty: {
+                        message: '请选择收支类型',
+                    },
+                }
             },
-
             inOutMoney: {
-                required: true,
-                number: true,
-
+                validators: {
+                    notEmpty: {
+                        message: '请输入收支金额',
+                    },
+                    numeric: {message: '请输入合法的数字'}
+                }
             },
 
             inOutCreatedUser: {
-                required: true,
-            },
-
-
-
-        },
-        messages: {
-            outTypeId: {
-                required: "请点击选择支出类型",
-            },
-
-            inOutMoney: {
-                required: '请输入支出的金额',
-                number:'请输入合法的数字'
-            },
-
-            inOutCreatedUser: {
-                required: '请点击选择创建的人',
-            },
-        },
-        errorPlacement: function (error, element) {
-            element.next().remove();
-            element.after('<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>');
-            element.closest('.form-group').append(error);
-        },
-        highlight: function (element) {
-            $(element).closest('.form-group').addClass('has-error has-feedback');
-        },
-        success: function (label) {
-            var el = label.closest('.form-group').find("input");
-            el.next().remove();
-            el.after('<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>');
-            label.closest('.form-group').removeClass('has-error').addClass("has-feedback has-success");
-            label.remove();
-        },
-        submitHandler: function (form) {
-            $.post("/incomingOutgoing/add",
-                $("#addOutForm").serialize(),
-                function (data) {
-                    if (data.result == "success") {
-                        $("input[type=reset]").trigger("click");
-                        $("#addOutWin").modal('hide'); // 关闭指定的窗口
-                        $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
-                        swal({
-                            title: "",
-                            text: data.message,
-                            confirmButtonText: "确定", // 提示按钮上的文本
-                            type: "success"
-                        })// 提示窗口, 修改成功
-                    } else if (data.result == "fail") {
-                        swal({
-                            title: "",
-                            text: "添加失败",
-                            confirmButtonText: "确认",
-                            type: "error"
-                        })
+                message: '请选择创建人',
+                validators: {
+                    notEmpty: {
+                        message: '请选择创建人',
                     }
-                }, "json"
-            );
-        }
 
+                }
+            },
+        }
     })
 
-    $("#addInForm").validate({
-        errorElement: 'span',
-        errorClass: 'help-block',
-        rules: {
-            inTypeId: {
-                required: true,
-            },
+        .on('success.form.bv', function (e) {
+            if (formId == "addOutForm") {
+                formSubmit("/incomingOutgoing/add", formId, "addOutWin");
+            } else if (formId == "addInForm") {
+                formSubmit("/incomingOutgoing/add", formId, "addInWin");
+            } else if (formId == "editIOForm") {
+                formSubmit("/incomingOutgoing/update", formId, "editIOWin");
+            }
+        })
 
-            inOutMoney: {
-                required: true,
-                number: true,
+}
 
-            },
+function addInSubmit() {
+    $("#addInForm").data('bootstrapValidator').validate();
+    if ($("#addInForm").data('bootstrapValidator').isValid()) {
+        $("#addInButton").attr("disabled", "disabled");
+    } else {
+        $("#addInButton").removeAttr("disabled");
+    }
+}
 
-            inOutCreatedUser: {
-                required: true,
-            },
+function addOutSubmit() {
+    $("#addOutForm").data('bootstrapValidator').validate();
+    if ($("#addOutForm").data('bootstrapValidator').isValid()) {
+        $("#addOutButton").attr("disabled", "disabled");
+    } else {
+        $("#addOutButton").removeAttr("disabled");
+    }
+}
 
+function editSubmit() {
+    $("#editIOForm").data('bootstrapValidator').validate();
+    if ($("#editIOForm").data('bootstrapValidator').isValid()) {
+        $("#editButton").attr("disabled", "disabled");
+    } else {
+        $("#editButton").removeAttr("disabled");
+    }
+}
 
-
-        },
-        messages: {
-            inTypeId: {
-                required: "请点击选择收入类型",
-            },
-
-            inOutMoney: {
-                required: '请输入支出的金额',
-                number:'请输入合法的数字'
-            },
-
-            inOutCreatedUser: {
-                required: '请点击选择创建的人',
-            },
-        },
-        errorPlacement: function (error, element) {
-            element.next().remove();
-            element.after('<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>');
-            element.closest('.form-group').append(error);
-        },
-        highlight: function (element) {
-            $(element).closest('.form-group').addClass('has-error has-feedback');
-        },
-        success: function (label) {
-            var el = label.closest('.form-group').find("input");
-            el.next().remove();
-            el.after('<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>');
-            label.closest('.form-group').removeClass('has-error').addClass("has-feedback has-success");
-            label.remove();
-        },
-        submitHandler: function (form) {
-            $.post("/incomingOutgoing/add",
-                $("#addInForm").serialize(),
-                function (data) {
-                    if (data.result == "success") {
-                        $("input[type=reset]").trigger("click");
-                        $("#addInWin").modal('hide'); // 关闭指定的窗口
-                        $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
-                        swal({
-                            title: "",
-                            text: data.message,
-                            confirmButtonText: "确定", // 提示按钮上的文本
-                            type: "success"
-                        })// 提示窗口, 修改成功
-                    } else if (data.result == "fail") {
-                        swal({
-                            title: "",
-                            text: "添加失败",
-                            confirmButtonText: "确认",
-                            type: "error"
-                        })
-                    }
-                }, "json"
-            );
-        }
-
-    })
-
-
-    $("#editIOForm").validate({
-        errorElement: 'span',
-        errorClass: 'help-block',
-        rules: {
-            inTypeId: {
-                required: true,
-            },
-
-            inOutMoney: {
-                required: true,
-                number: true,
-
-            },
-
-            inOutCreatedUser: {
-                required: true,
-            },
-
-
-
-        },
-        messages: {
-            inTypeId: {
-                required: "请点击选择收入类型",
-            },
-
-            inOutMoney: {
-                required: '请输入支出的金额',
-                number:'请输入合法的数字'
-            },
-
-            inOutCreatedUser: {
-                required: '请点击选择创建的人',
-            },
-        },
-        errorPlacement: function (error, element) {
-            element.next().remove();
-            element.after('<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>');
-            element.closest('.form-group').append(error);
-        },
-        highlight: function (element) {
-            $(element).closest('.form-group').addClass('has-error has-feedback');
-        },
-        success: function (label) {
-            var el = label.closest('.form-group').find("input");
-            el.next().remove();
-            el.after('<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>');
-            label.closest('.form-group').removeClass('has-error').addClass("has-feedback has-success");
-            label.remove();
-        },
-        submitHandler: function (form) {
-            $.post("/incomingOutgoing/update",
-                $("#editIOForm").serialize(),
-                function (data) {
-                    if (data.result == "success") {
-                        $("input[type=reset]").trigger("click");
-                        $("#editIOWin").modal('hide'); // 关闭指定的窗口
-                        $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
-                        swal({
-                            title: "",
-                            text: data.message,
-                            confirmButtonText: "确定", // 提示按钮上的文本
-                            type: "success"
-                        })// 提示窗口, 修改成功
-                    } else if (data.result == "fail") {
-                        swal({
-                            title: "",
-                            text: "添加失败",
-                            confirmButtonText: "确认",
-                            type: "error"
-                        })
-                    }
-                }, "json"
-            );
-        }
-
-    })
-});
+function formSubmit(url, formId, winId) {
+    $.post(url,
+        $("#" + formId).serialize(),
+        function (data) {
+            if (data.result == "success") {
+                $('#' + winId).modal('hide');
+                swal({
+                    title: "",
+                    text: data.message,
+                    confirmButtonText: "确定", // 提示按钮上的文本
+                    type: "success"
+                })// 提示窗口, 修改成功
+                $('#table').bootstrapTable('refresh');
+                if (formId == 'addOutForm') {
+                    $("input[type=reset]").trigger("click"); // 移除表单中填的值
+                    $('#addOutForm').data('bootstrapValidator').resetForm(true); // 移除所有验证样式
+                    $("#addOutButton").removeAttr("disabled"); // 移除不可点击
+                } else if  (formId == 'addInForm') {
+                    $("input[type=reset]").trigger("click"); // 移除表单中填的值
+                    $('#addInForm').data('bootstrapValidator').resetForm(true); // 移除所有验证样式
+                    $("#addInButton").removeAttr("disabled"); // 移除不可点击
+                }
+            } else if (data.result == "fail") {
+                swal({
+                    title: "",
+                    text: "添加失败",
+                    confirmButtonText: "确认",
+                    type: "error"
+                })
+                $("#" + formId).removeAttr("disabled");
+            }
+        }, "json");
+}
 

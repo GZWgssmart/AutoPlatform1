@@ -34,7 +34,7 @@ public class IncomingOutgoingController {
     @ResponseBody
     @RequestMapping(value = "queryByPager",method = RequestMethod.GET)
     public Pager4EasyUI<IncomingOutgoing> queryByPager(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
-        logger.info("收入类型分页查询");
+        logger.info("收支记录分页查询");
         Pager pager = new Pager();
         pager.setPageNo(Integer.valueOf(pageNumber));
         pager.setPageSize(Integer.valueOf(pageSize));
@@ -46,7 +46,7 @@ public class IncomingOutgoingController {
     @ResponseBody
     @RequestMapping(value = "queryByPagerDisable",method = RequestMethod.GET)
     public Pager4EasyUI<IncomingOutgoing> queryByPagerDisable(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
-        logger.info("收入类型分页查询");
+        logger.info("收支记录分页查询");
         Pager pager = new Pager();
         pager.setPageNo(Integer.valueOf(pageNumber));
         pager.setPageSize(Integer.valueOf(pageSize));
@@ -75,7 +75,7 @@ public class IncomingOutgoingController {
     @ResponseBody
     @RequestMapping(value = "add",method = RequestMethod.POST)
     public ControllerResult add(IncomingOutgoing incomingOutgoing) {
-        logger.info("添加收入类型");
+        logger.info("添加收支记录");
         incomingOutgoingService.insert(incomingOutgoing);
         return ControllerResult.getSuccessResult("添加成功");
     }
@@ -85,7 +85,7 @@ public class IncomingOutgoingController {
     @ResponseBody
     @RequestMapping(value = "update", method = RequestMethod.POST)
     public ControllerResult update(IncomingOutgoing incomingOutgoing) {
-        logger.info("修改收入类型");
+        logger.info("修改收支记录");
         incomingOutgoingService.update(incomingOutgoing);
         return ControllerResult.getSuccessResult("修改成功");
     }

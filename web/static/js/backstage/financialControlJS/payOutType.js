@@ -30,9 +30,9 @@ function statusFormatter(index, row) {
 function openStatusFormatter(index, row) {
     /*处理数据*/
     if (row.outTypeStatus == 'Y') {
-        return "&nbsp;&nbsp;<a href='javascript:;' onclick='inactive(\"" + row.outTypeId + "\")'>禁用</a>";
+        return "&nbsp;&nbsp;<button type='button' class='btn btn-danger' onclick='inactive(\""+row.outTypeId+ "\")'>禁用</a>";
     } else {
-        return "&nbsp;&nbsp;<a href='javascript:;' onclick='active(\"" + row.outTypeId + "\")'>激活</a>";
+        return "&nbsp;&nbsp;<button type='button' class='btn btn-danger' onclick='active(\""+row.outTypeId+ "\")'>激活</a>";
     }
 
 }
@@ -86,6 +86,7 @@ function searchRapidStatus() {
  * 点击修改窗口
  */
 function showEdit() {
+    $("#editButton").removeAttr("disabled");
     var row = $('table').bootstrapTable('getSelections');
     if (row.length > 0) {
 //                $('#editId').val(row[0].id);
@@ -93,7 +94,8 @@ function showEdit() {
 //                $('#editPrice').val(row[0].price);
         $("#edit").modal('show'); // 显示弹窗
         var outGoingType = row[0];
-        $("#outTypeUpdateForm").fill(outGoingType);
+        $("#editForm").fill(outGoingType);
+        validator("editForm");
     } else {
         swal({
             title: "",
@@ -107,168 +109,89 @@ function showEdit() {
  * 点击添加窗口
  */
 function showAdd() {
+    $("#addButton").removeAttr("disabled");
     $("#outTypeName").val("");
     $("#add").modal('show');
+    validator("addForm");
 }
 
-
 /**
- * 前台验证及form提交
+ * 前台验证
+ * @param formId
  */
-$(document).ready(function () {
-
-    $("#outTypeInsertForm").validate({
-        errorElement: 'span',
-        errorClass: 'help-block',
-        rules: {
+function validator(formId) {
+    $('#' + formId).bootstrapValidator({
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
             outTypeName: {
-                required: true,
-                minlength: 2,
-                remote:{                         //自带远程验证存在的方法
-                    url:"/outGoingType/checkOutTypeName",
-                    type:"get",
-                    dataType:"json",
-                    async:false,
-                    data:{
-                        outTypeName:function(){return $("#outTypeName").val();}
-                    },
-                    dataFilter: function(data, type) {
-                        if (data == 'false'){
-                            return true;
-                        }else{
-                            return false;
-                        }
-
-
+                message: '类型名称不能为空',
+                validators: {
+                    notEmpty: {
+                        message: '类型名称不能为空',
                     }
+
                 }
             },
-
-        },
-        messages: {
-            outTypeName: {
-                required: "请输入类型名称",
-                minlength: jQuery.format("类型名称不能少于{2}个字符"),
-                remote:"该类型已存在"
-            },
-        },
-        errorPlacement: function (error, element) {
-            element.next().remove();
-            element.after('<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>');
-            element.closest('.form-group').append(error);
-        },
-        highlight: function (element) {
-            $(element).closest('.form-group').addClass('has-error has-feedback');
-        },
-        success: function (label) {
-            var el = label.closest('.form-group').find("input");
-            el.next().remove();
-            el.after('<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>');
-            label.closest('.form-group').removeClass('has-error').addClass("has-feedback has-success");
-            label.remove();
-        },
-        submitHandler: function (form) {
-            $.post("/outGoingType/add",
-                $("#outTypeInsertForm").serialize(),
-                function (data) {
-                    if (data.result == "success") {
-                        $("#add").modal('hide'); // 关闭指定的窗口
-                        $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
-                        swal({
-                            title: "",
-                            text: data.message,
-                            confirmButtonText: "确定", // 提示按钮上的文本
-                            type: "success"
-                        })// 提示窗口, 修改成功
-                    } else if (data.result == "fail") {
-                        swal({
-                            title: "",
-                            text: "添加失败",
-                            confirmButtonText: "确认",
-                            type: "error"
-                        })
-                    }
-                }, "json"
-            );
         }
-
     })
 
-    $("#outTypeUpdateForm").validate({
-        errorElement: 'span',
-        errorClass: 'help-block',
-        rules: {
-            outTypeName: {
-                required: true,
-                minlength: 2,
-                remote:{                         //自带远程验证存在的方法
-                    url:"/outGoingType/checkOutTypeName",
-                    type:"get",
-                    dataType:"json",
-                    async:false,
-                    data:{
-                        outTypeName:function(){return $("#outUpdateTypeName").val();}
-                    },
-                    dataFilter: function(data, type) {
-                        if (data == 'false'){
-                            return true;
-                        }else{
-                            return false;
-                        }
+        .on('success.form.bv', function (e) {
+            if (formId == "addForm") {
+                formSubmit("/outGoingType/add", formId, "add");
 
+            } else if (formId == "editForm") {
+                formSubmit("/outGoingType/update", formId, "edit");
 
-                    }
+            }
+        })
+
+}
+
+function addSubmit(){
+    $("#addForm").data('bootstrapValidator').validate();
+    if ($("#addForm").data('bootstrapValidator').isValid()) {
+        $("#addButton").attr("disabled","disabled");
+    } else {
+        $("#addButton").removeAttr("disabled");
+    }
+}
+
+function editSubmit(){
+    $("#editForm").data('bootstrapValidator').validate();
+    if ($("#editForm").data('bootstrapValidator').isValid()) {
+        $("#editButton").attr("disabled","disabled");
+    } else {
+        $("#editButton").removeAttr("disabled");
+    }
+}
+
+function formSubmit(url, formId, winId){
+    $.post(url,
+        $("#" + formId).serialize(),
+        function (data) {
+            if (data.result == "success") {
+                $('#' + winId).modal('hide');
+                swal({
+                    title:"",
+                    text: data.message,
+                    confirmButtonText:"确定", // 提示按钮上的文本
+                    type:"success"})// 提示窗口, 修改成功
+                $('#table').bootstrapTable('refresh');
+                if(formId == 'addForm'){
+                    $("input[type=reset]").trigger("click"); // 移除表单中填的值
+                    $('#addForm').data('bootstrapValidator').resetForm(true); // 移除所有验证样式
+                    $("#addButton").removeAttr("disabled"); // 移除不可点击
                 }
-
-            },
-
-        },
-        messages: {
-            outTypeName: {
-                required: "请输入类型名称",
-                minlength: jQuery.format("类型名称不能少于{2}个字符"),
-                remote:"该类型已存在"
-            },
-        },
-        errorPlacement: function (error, element) {
-            element.next().remove();
-            element.after('<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>');
-            element.closest('.form-group').append(error);
-        },
-        highlight: function (element) {
-            $(element).closest('.form-group').addClass('has-error has-feedback');
-        },
-        success: function (label) {
-            var el = label.closest('.form-group').find("input");
-            el.next().remove();
-            el.after('<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>');
-            label.closest('.form-group').removeClass('has-error').addClass("has-feedback has-success");
-            label.remove();
-        },
-        submitHandler: function (form) {
-            $.post("/outGoingType/update",
-                $("#outTypeUpdateForm").serialize(),
-                function (data) {
-                    if (data.result == "success") {
-                        $("#edit").modal('hide'); // 关闭指定的窗口
-                        $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
-                        swal({
-                            title: "",
-                            text: data.message,
-                            confirmButtonText: "确定", // 提示按钮上的文本
-                            type: "success"
-                        })// 提示窗口, 修改成功
-                    } else if (data.result == "fail") {
-                        swal({
-                            title: "",
-                            text: "添加失败",
-                            confirmButtonText: "确认",
-                            type: "error"
-                        })
-                    }
-                }, "json"
-            );
-        }
-
-    })
-});
+            } else if (data.result == "fail") {
+                swal({title:"",
+                    text:"添加失败",
+                    confirmButtonText:"确认",
+                    type:"error"})
+                $("#"+formId).removeAttr("disabled");
+            }
+        }, "json");
+}
