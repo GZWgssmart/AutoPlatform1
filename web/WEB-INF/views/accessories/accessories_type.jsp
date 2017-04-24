@@ -50,6 +50,22 @@
             <button id="btn_edit" type="button" class="btn btn-default" onclick="showEdit();">
                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
             </button>
+            <div class="input-group" style="width:350px;float:left;padding:0;margin:0 0 0 -1px;">
+                <div class="input-group-btn">
+                    <button type="button" id="ulButton" class="btn btn-default" style="border-radius:0px;" data-toggle="dropdown">所属公司/配件名称<span class="caret"></span></button>
+                    <ul class="dropdown-menu pull-right">
+                        <li><a onclick="onclikLi(this)">所属公司/配件名称</a></li>
+                        <li class="divider"></li>
+                        <li><a onclick="onclikLi(this)">所属公司</a></li>
+                        <li class="divider"></li>
+                        <li><a onclick="onclikLi(this)">配件名称</a></li>
+                        <li class="divider"></li>
+                    </ul>
+                </div><!-- /btn-group -->
+                <input id="ulInput" class="form-control" onkeypress="if(event.keyCode==13) {blurredQuery();}">
+                <a href="javaScript:;" onclick="blurredQuery()"><span class="glyphicon glyphicon-search search-style"></span></a>
+                </input>
+            </div><!-- /input-group -->
         </div>
     </div>
 </div>
