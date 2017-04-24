@@ -15,6 +15,25 @@ public class WorkInfo {
 
     private String workStatus;
 
+    private MaintainRecord maintainRecord;//维修保养记录表
+    private User user;
+
+    public MaintainRecord getMaintainRecord() {
+        return maintainRecord;
+    }
+
+    public void setMaintainRecord(MaintainRecord maintainRecord) {
+        this.maintainRecord = maintainRecord;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public String getWorkId() {
         return workId;
     }

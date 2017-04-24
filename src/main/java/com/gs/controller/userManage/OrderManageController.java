@@ -3,8 +3,11 @@ package com.gs.controller.userManage;
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.WorkInfo;
 import com.gs.common.bean.ControllerResult;
+import com.gs.common.bean.Pager;
+import com.gs.common.bean.Pager4EasyUI;
 import com.gs.common.util.UUIDUtil;
 import com.gs.service.WorkInfoService;
+import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
@@ -32,7 +35,7 @@ public class OrderManageController {
     @Resource
     private WorkInfoService workInfoService;
 
-    /**
+  /* *
      * 查询所有订单
      * @return
      */
@@ -44,17 +47,36 @@ public class OrderManageController {
         return workInfosList;
     }
 
+
+    /**
+     * 分页查询
+     * @param pageNumber
+     * @param pageSize
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "queryByPager",method = RequestMethod.GET)
+    public Pager4EasyUI<WorkInfo> queryByPager(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
+        logger.info("收入类型分页查询");
+        Pager pager = new Pager();
+        pager.setPageNo(Integer.valueOf(pageNumber));
+        pager.setPageSize(Integer.valueOf(pageSize));
+        pager.setTotalRecords(workInfoService.count());
+        List<WorkInfo> workInfosList = workInfoService.queryByPager(pager);
+        return new Pager4EasyUI<WorkInfo>(pager.getTotalRecords(), workInfosList);
+    }
+
     /**
      *添加订单
      * @param workInfo
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "add",method = RequestMethod.POST)
+    @RequestMapping(value = "add",method = RequestMethod.GET)
     public ControllerResult addWork(WorkInfo workInfo) {
         logger.info("添加订单");
         workInfo.setUserId(UUIDUtil.uuid());
-        workInfo.setWorkStatus("Y");
+        workInfo.setWorkStatus("N");
         workInfoService.insert(workInfo);
         return ControllerResult.getSuccessResult("添加成功");
     }
@@ -65,7 +87,7 @@ public class OrderManageController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "update", method = RequestMethod.POST)
+    @RequestMapping(value = "edit", method = RequestMethod.POST)
     public ControllerResult updateWork(WorkInfo workInfo) {
         logger.info("修改订单");
         workInfoService.update(workInfo);
@@ -105,6 +127,11 @@ public class OrderManageController {
             return ControllerResult.getFailResult("操作失败");
         }
     }
+
+    /**
+     *日期格式
+     * @param binder
+     */
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
