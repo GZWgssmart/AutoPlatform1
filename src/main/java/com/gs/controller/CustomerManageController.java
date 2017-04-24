@@ -1,18 +1,9 @@
 package com.gs.controller;
 
 import ch.qos.logback.classic.Logger;
-import com.gs.bean.MaintainRecord;
-import com.gs.common.bean.Pager;
-import com.gs.service.MaintainRecordService;
-import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import javax.annotation.Resource;
-import java.util.List;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * 客户关系管理
@@ -23,44 +14,19 @@ public class CustomerManageController {
 
     private Logger logger = (Logger) LoggerFactory.getLogger(CustomerManageController.class);
 
-    @Resource
-    private MaintainRecordService maintainRecordService;
-
     /**
      * 维修保养记录管理
      */
-    @RequestMapping(value = "maintainrecordIndex", method = RequestMethod.GET)
+    @RequestMapping("maintainrecordIndex")
     public String maintainrecordIndex() {
         logger.info("跳转到维修保养记录管理");
         return "custManage/maintainrecord";
     }
 
-    @ResponseBody
-    @RequestMapping("queryByPager")
-    public List<MaintainRecord> queryAll() {
-        List<MaintainRecord> queryList = maintainRecordService.queryAll();
-        return queryList;
-    }
-
-    @ResponseBody
-    @RequestMapping("inactive")
-    public int inactive(@Param("recordId") String recordId) {
-        int inactive = maintainRecordService.inactive(recordId);
-        System.out.print("aaaaaaaaaaa"+recordId);
-        return inactive;
-    }
-
-    @ResponseBody
-    @RequestMapping("active")
-    public int active(@Param("recordId") String recordId) {
-        int active = maintainRecordService.active(recordId);
-        return active;
-    }
-
     /**
      * 维修保养明细管理
      */
-    @RequestMapping(value = "maintaindetailsIndex", method = RequestMethod.GET)
+    @RequestMapping("maintaindetailsIndex")
     public String maintaindetailsIndex() {
         logger.info("跳转到维修保养明细管理");
         return "custManage/maintaindetails";
@@ -69,7 +35,7 @@ public class CustomerManageController {
     /**
      * 维修保养提醒
      */
-    @RequestMapping(value = "maintainremindIndex", method = RequestMethod.GET)
+    @RequestMapping("maintainremindIndex")
     public String maintainremindIndex() {
         logger.info("跳转到维修保养提醒");
         return "custManage/maintainremind";
@@ -78,7 +44,7 @@ public class CustomerManageController {
     /**
      * 短信群发提醒
      */
-    @RequestMapping(value = "messagesendIndex", method = RequestMethod.GET)
+    @RequestMapping("messagesendIndex")
     public String messagesendIndex() {
         logger.info("跳转到短信群发提醒");
         return "custManage/messagesend";
@@ -88,7 +54,7 @@ public class CustomerManageController {
     /**
      * 投诉管理
      */
-    @RequestMapping(value = "complaintIndex", method = RequestMethod.GET)
+    @RequestMapping("complaintIndex")
     public String complaintIndex() {
         logger.info("跳转到投诉管理");
         return "custManage/complaint";
@@ -97,7 +63,7 @@ public class CustomerManageController {
     /**
      * 跟踪回访管理
      */
-    @RequestMapping(value = "tracklistIndex", method = RequestMethod.GET)
+    @RequestMapping("tracklistIndex")
     public String tracklistIndex() {
         logger.info("跳转到跟踪回访管理");
         return "custManage/tracklist";
@@ -106,7 +72,7 @@ public class CustomerManageController {
     /**
      * 微信公众号查看
      */
-    @RequestMapping(value = "wechatpublicIndex", method = RequestMethod.GET)
+    @RequestMapping("wechatpublicIndex")
     public String wechatpublicIndex() {
         logger.info("跳转到微信公众号查看");
         return "custManage/wechatpublic";
