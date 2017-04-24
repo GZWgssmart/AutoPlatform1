@@ -11,6 +11,13 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ *由CSWangBin技术支持
+ *
+ *@author 程燕
+ *@since 2017-04-17 16:10:47
+ *@des 角色权限Service实现
+ */
 @Service
 public class RolePermissionServiceImpl implements RolePermissionService {
 

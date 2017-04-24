@@ -11,9 +11,8 @@
     <link rel="stylesheet" href="/static/css/bootstrap-table.css">
     <link rel="stylesheet" href="/static/css/select2.min.css">
     <link rel="stylesheet" href="/static/css/sweetalert.css">
-    <link rel="stylesheet" href="/static/css/bootstrap-validate/bootstrapValidator.min.css">
-    <link rel="stylesheet" href="/static/css/fileinput.css">
     <link rel="stylesheet" href="/static/css/table/table.css">
+    <link rel="stylesheet" href="/static/css/bootstrap-validate/bootstrapValidator.min.css">
 </head>
 <body>
 <%@include file="../backstage/contextmenu.jsp" %>
@@ -25,7 +24,7 @@
         <table id="table">
             <thead>
                 <tr>
-                    <th data-checkbox="true"></th>
+                    <th data-radio="true"></th>
                     <th data-field="modelName">
                         车型名字
                     </th>
@@ -48,9 +47,6 @@
             <button id="btn_edit" type="button" class="btn btn-default" onclick="showEdit();">
                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
             </button>
-            <button id="btn_delete" type="button" class="btn btn-default" onclick="showDel();">
-                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
-            </button>
         </div>
     </div>
 </div>
@@ -59,7 +55,7 @@
 <div class="modal fade" id="addWindow" style="overflow-y:scroll" data-backdrop="static" >
     <div class="modal-dialog" style="width: 700px;height: auto;">
         <div class="modal-content" style="overflow:hidden;">
-            <form class="form-horizontal" role="form" id="showAddFormWar" method="post">
+            <form class="form-horizontal" role="form" id="addForm" method="post">
                 <div class="modal-header" style="overflow:auto;">
                     <h4>请填写汽车车型的相关信息</h4>
                 </div>
@@ -77,12 +73,7 @@
                         </select>
                     </div>
                 </div>
-                <%--<div class="form-group">--%>
-                    <%--<label class="col-sm-3 control-label">品牌id：</label>--%>
-                    <%--<div class="col-sm-7">--%>
-                        <%--<input type="text" placeholder="请选择隶属的品牌" class="form-control"></input>--%>
-                    <%--</div>--%>
-                <%--</div>--%>
+
                 <div class="form-group">
                     <label class="col-sm-3 control-label">车型描述：</label>
                     <div class="col-sm-7">
@@ -93,7 +84,7 @@
                 <div class="form-group">
                     <div class="col-sm-offset-8">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button class="btn btn-sm btn-success" id="addButton" onclick="addSubmit()">保 存</button>
+                        <button id="addButton" type="button" onclick="addSubmit()" class="btn btn-sm btn-success">添加</button>
                         <input type="reset" name="reset" style="display: none;"/>
                     </div>
                 </div>
@@ -104,79 +95,43 @@
 
 
 <!-- 修改弹窗 -->
-<div class="modal fade" id="editWindow" aria-hidden="true" data-backdrop="static">
+<div class="modal fade" id="editWindow" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form class="form-horizontal" role="form" onsubmit="return checkEdit('table/edit')" id="showEditFormWar" method="post">
+            <form class="form-horizontal" role="form" id="editForm">
                 <div class="modal-header" style="overflow:auto;">
                     <h4>请修改汽车车型的相关信息</h4>
                 </div>
-                <br/>
+                <input type="hidden" name="modelId" define="carModel.modelId">
+                <input type="hidden" name="brandId" define="carBrand.brandId">
+                <input type="hidden" name="modelStaus" define="carModel.modelStaus">
                 <div class="form-group">
                     <label class="col-sm-3 control-label">车型命名：</label>
                     <div class="col-sm-7">
                         <input type="text" name="modelName" define="carModel.modelName" placeholder="请输入该车型名字" class="form-control">
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">品牌id：</label>
+                <div id="editModelDiv" class="form-group">
+                    <label class="col-sm-3 control-label">品牌名称：</label>
                     <div class="col-sm-7">
-                        <input type="text" define="carModel.brandId" placeholder="请选择隶属的品牌" class="form-control"></input>
+                        <select id="editCarBrand" class="js-example-tags carBrand" name="brandId" style="width:100%">
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">车型描述：</label>
                     <div class="col-sm-7">
-                        <textarea type="text" name="modelDes" define="carModel.modelDes" placeholder="请输入关于该车型的描述" style="height: 100px;"
+                        <textarea type="textarea" name="modelDes" define="carModel.modelDes" placeholder="请输入关于该车型的描述" style="height: 100px;"
                                   class="form-control"></textarea>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-8">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button class="btn btn-sm btn-success" type="submit">保 存</button>
+                        <button id="editButton" type="button" onclick="editSubmit()" class="btn btn-sm btn-success">保存</button>
                     </div>
                 </div>
             </form>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
-<!-- 删除弹窗 -->
-<div class="modal fade" id="del" aria-hidden="true">
-    <div class="modal-dialog" style="overflow:hidden;">
-        <form action="/table/edit" method="post">
-            <div class="modal-content">
-                <input type="hidden" id="delNoticeId"/>
-                <div class="modal-footer" style="text-align: center;">
-                    <h2>确认删除吗?</h2>
-                    <button type="button" class="btn btn-default"
-                            data-dismiss="modal">关闭
-                    </button>
-                    <button type="sumbit" class="btn btn-primary" onclick="del()">
-                        确认
-                    </button>
-                </div>
-            </div><!-- /.modal-content -->
-        </form>
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
-<!-- 提示弹窗 -->
-<div class="modal fade" id="tanchuang" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                提示
-            </div>
-            <div class="modal-body">
-                请先选择某一行
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default"
-                        data-dismiss="modal">关闭
-                </button>
-            </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
@@ -189,10 +144,7 @@
 <script src="/static/js/sweetalert/sweetalert.min.js"></script>
 <script src="/static/js/contextmenu.js"></script>
 <script src="/static/js/backstage/main.js"></script>
-<script src="/static/js/form/jquery.validate.js"></script>
 <script src="/static/js/bootstrap-validate/bootstrapValidator.js"></script>
-<script src="/static/js/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.js"></script>
-<script src="/static/js/bootstrap-dateTimePicker/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
 <script src="/static/js/backstage/basicInfoManage/carModel.js"></script>
 </body>
 </html>

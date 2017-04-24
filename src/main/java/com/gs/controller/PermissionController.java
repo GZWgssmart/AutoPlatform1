@@ -21,7 +21,11 @@ import javax.annotation.Resource;
 import java.util.List;
 
 /**
- *  角色controller
+ *
+ *
+ * @author 程燕
+ * @create 2017-04-23 18:57
+ * @des 权限Controller
  */
 @Controller
 @RequestMapping("/permission")

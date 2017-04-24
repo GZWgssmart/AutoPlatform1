@@ -8,9 +8,9 @@ import java.util.List;
 /**
  *由CSWangBin技术支持
  *
- *@author CSWangBin
+ *@author 程燕
  *@since 2017-04-17 16:11:01
- *@des
+ *@des 角色权限Service
  */
 public interface RolePermissionService{
     Collection<org.apache.shiro.authz.Permission> queryAllPermissionByRoleName(String roleName);

@@ -7,12 +7,12 @@ $(function () {
     );
 
     //绑定Ajax的内容
-    $.getJSON("/table/queryType", function (data) {
-        $("#addSelect").empty();//清空下拉框
-        $.each(data, function (i, item) {
-            $("#addSelect").append("<option value='" + data[i].id + "'>&nbsp;" + data[i].name + "</option>");
-        });
-    })
+    // $.getJSON("/dispatching/users", function (data) {
+    //     $("#addSelect").empty();//清空下拉框
+    //     $.each(data, function (i, item) {
+    //         $("#addSelect").append("<option value='" + data[i].id + "'>&nbsp;" + data[i].name + "</option>");
+    //     });
+    // })
 //            $("#addSelect").on("select2:select",
 //                    function (e) {
 //                        alert(e)
@@ -140,9 +140,9 @@ function checkAdd(){
     }
 }
 
-function checkEdit() {
-    $.post("/table/edit",
-        $("#editForm").serialize(),
+function submitDispatcher() {
+    $.post("/dispatching/insert",
+        $("#appointForm").serialize(),
         function (data) {
             if (data.result == "success") {
                 $("#editWindow").modal('hide'); // 关闭指定的窗口
@@ -152,7 +152,7 @@ function checkEdit() {
                     text: data.message,
                     type:"success"})// 提示窗口, 修改成功
             } else if (data.result == "fail") {
-                //$.messager.alert("提示", data.result.message, "info");
+                $.messager.alert("提示", data.result.message, "info");
             }
         }, "json"
     );

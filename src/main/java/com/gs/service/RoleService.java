@@ -9,9 +9,9 @@ import java.util.List;
 /**
 *由CSWangBin技术支持
 *
-*@author CSWangBin
+*@author 程燕
 *@since 2017-04-17 16:10:47
-*@des 
+*@des 角色Service
 */
 public interface RoleService extends BaseService<String, Role>{
     public List<Role> queryAll(String rolestatus);
