@@ -15,6 +15,13 @@ function showDisable() {
     initTable('table', '/accInv/queryByPagerDisable');
 }
 
+// 模糊查询
+function blurredQuery(){
+    var button = $("#ulButton");// 获取模糊查询按钮
+    var text = button.text();// 获取模糊查询按钮文本
+    var vaule = $("#ulInput").val();// 获取模糊查询输入框文本
+    initTable('table', '/checkin/blurredQuery?text='+text+'&value='+vaule);
+}
 
 //显示弹窗
 function showEdit() {

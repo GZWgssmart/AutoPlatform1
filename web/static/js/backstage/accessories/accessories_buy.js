@@ -14,22 +14,13 @@ function showDisable() {
     initTable('table', '/accBuy/queryByPagerDisable');
 }
 
-$(function () {
-    $('#table').bootstrapTable('hideColumn', 'accBuyId');
-
-    $("#addSelect").select2({
-            language: 'zh-CN'
-        }
-    );
-
-    //绑定Ajax的内容
-    $.getJSON("/table/queryType", function (data) {
-        $("#addSelect").empty();//清空下拉框
-        $.each(data, function (i, item) {
-            $("#addSelect").append("<option value='" + data[i].id + "'>&nbsp;" + data[i].name + "</option>");
-        });
-    })
-});
+// 模糊查询
+function blurredQuery(){
+    var button = $("#ulButton");// 获取模糊查询按钮
+    var text = button.text();// 获取模糊查询按钮文本
+    var vaule = $("#ulInput").val();// 获取模糊查询输入框文本
+    initTable('table', '/checkin/blurredQuery?text='+text+'&value='+vaule);
+}
 
 //显示弹窗
 function showEdit() {

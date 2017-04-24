@@ -2,6 +2,7 @@ package com.gs.dao;
 
 import com.gs.bean.Accessories;
 import com.gs.common.bean.Pager;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -23,4 +24,15 @@ public interface AccessoriesDAO extends BaseDAO<String, Accessories>{
      * 分页查询被禁用的记录
      */
     public int countByDisable();
+
+    /**
+     * 模糊查询
+     */
+    public List<Accessories> blurredQuery(@Param("pager")Pager pager, @Param("accInv")Accessories accessories);
+
+    /**
+     * 模糊查询的记录数
+     */
+    public int countByBlurred(@Param("accInv")Accessories accessories);
+
 }

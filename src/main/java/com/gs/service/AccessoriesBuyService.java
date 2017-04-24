@@ -2,6 +2,7 @@ package com.gs.service;
 
 import com.gs.bean.AccessoriesBuy;
 import com.gs.common.bean.Pager;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -21,4 +22,5 @@ public interface AccessoriesBuyService extends BaseService<String, AccessoriesBu
      * 分页查询被禁用的记录
      */
     public int countByDisable();
+
 }

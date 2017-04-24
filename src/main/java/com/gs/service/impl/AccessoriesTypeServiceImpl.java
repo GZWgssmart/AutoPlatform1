@@ -100,10 +100,10 @@ public class AccessoriesTypeServiceImpl implements AccessoriesTypeService {
     }
 
     public List<AccessoriesType> blurredQuery(Pager pager, AccessoriesType accessoriesType) {
-        return null;
+        return accessoriesTypeDAO.blurredQuery(pager, accessoriesType);
     }
 
     public int countByBlurred(AccessoriesType accessoriesType) {
-        return 0;
+        return accessoriesTypeDAO.countByBlurred(accessoriesType);
     }
 }

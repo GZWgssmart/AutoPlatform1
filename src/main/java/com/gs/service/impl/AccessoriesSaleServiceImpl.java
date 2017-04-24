@@ -56,10 +56,10 @@ public class AccessoriesSaleServiceImpl implements AccessoriesSaleService {
 	}
 
 	public List<AccessoriesSale> blurredQuery(Pager pager, AccessoriesSale accessoriesSale) {
-		return null;
+		return accessoriesSaleDAO.blurredQuery(pager,accessoriesSale);
 	}
 
 	public int countByBlurred(AccessoriesSale accessoriesSale) {
-		return 0;
+		return accessoriesSaleDAO.countByBlurred(accessoriesSale);
 	}
 }
