@@ -40,7 +40,7 @@ public class OrderManageController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "queryAll",method = RequestMethod.POST)
+    @RequestMapping(value = "queryAll",method = RequestMethod.GET)
     public List<WorkInfo> queryAllWork(){
         logger.info("查询所有订单");
         List<WorkInfo> workInfosList = workInfoService.queryAll();
@@ -87,7 +87,7 @@ public class OrderManageController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "edit", method = RequestMethod.POST)
+    @RequestMapping(value = "edit", method = RequestMethod.GET)
     public ControllerResult updateWork(WorkInfo workInfo) {
         logger.info("修改订单");
         workInfoService.update(workInfo);
@@ -100,7 +100,7 @@ public class OrderManageController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "deleteById", method = RequestMethod.POST)
+    @RequestMapping(value = "deleteById", method = RequestMethod.GET)
     public ControllerResult deleteWork(String id) {
         logger.info("删除");
         workInfoService.deleteById(id);
@@ -111,7 +111,7 @@ public class OrderManageController {
      * 对状态的激活和启用，只使用一个方法进行切换。
      */
     @ResponseBody
-    @RequestMapping(value = "statusWork",method = RequestMethod.POST)
+    @RequestMapping(value = "statusWork",method = RequestMethod.GET)
     public ControllerResult inactive(String workId,String workStatus){
         if(workId!=null&&!workId.equals("")&&workStatus!=null&&!workStatus.equals("")){
             if (workStatus.equals("N")){
