@@ -7,9 +7,9 @@ import java.util.List;
 /**
 *由CSWangBin技术支持
 *
-*@author CSWangBin
+*@author 程燕
 *@since 2017-04-17 16:10:26
-*@des 模块表Service
+*@des 权限Service
 */
 public interface PermissionService extends BaseService<String, Permission>{
 

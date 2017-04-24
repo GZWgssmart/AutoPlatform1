@@ -3,6 +3,7 @@ package com.gs.controller;
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.Permission;
 import com.gs.bean.Role;
+import com.gs.common.bean.ComboBox4EasyUI;
 import com.gs.common.bean.ControllerResult;
 import com.gs.service.PermissionService;
 import com.gs.service.RolePermissionService;
@@ -16,10 +17,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
- *  角色controller
+ *
+ *
+ * @author 程燕
+ * @create 2017-04-23 18:57
+ * @des 角色Controller
  */
 @Controller
 @RequestMapping("/role")
@@ -50,12 +56,28 @@ public class RoleController {
         return roleService.queryAll("N");
     }
 
+    @ResponseBody
+    @RequestMapping(value = "role2CheckBox")
+    public  List<ComboBox4EasyUI> queryAll2CheckBox(){
+        List<Role> roles= roleService.queryAll("Y");
+        List<ComboBox4EasyUI> comboBoxes = new ArrayList<ComboBox4EasyUI>();
+        for(Role role: roles) {
+            ComboBox4EasyUI comboBox4EasyUI = new ComboBox4EasyUI();
+            comboBox4EasyUI.setId(role.getRoleId());
+            comboBox4EasyUI.setText(role.getRoleName());
+            comboBoxes.add(comboBox4EasyUI);
+        }
+        return comboBoxes;
+    }
+
 
     @ResponseBody
     @RequestMapping(value = "/permissions/{id}")
     public List<Permission> queryPermissions(@PathVariable("id") String id){
         return rolePermissionService.queryPermissions(id, "Y");
     }
+
+
 
 
 //    @ResponseBody

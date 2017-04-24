@@ -10,9 +10,9 @@ import java.util.List;
 /**
 *由CSWangBin技术支持
 *
-*@author CSWangBin
+*@author 程燕
 *@since 2017-04-17 16:10:46
-*@des 
+*@des  角色DAO
 */
 @Repository
 public interface RoleDAO extends BaseDAO<String, Role>{

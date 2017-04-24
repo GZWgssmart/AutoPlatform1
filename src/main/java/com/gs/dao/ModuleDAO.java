@@ -9,9 +9,9 @@ import java.util.List;
 /**
 *由CSWangBin技术支持
 *
-*@author CSWangBin
+*@author 程燕
 *@since 2017-04-17 16:09:51
-*@des 模块表dao
+*@des 模块DAO
 */
 @Repository
 public interface ModuleDAO extends BaseDAO<String, Module>{
