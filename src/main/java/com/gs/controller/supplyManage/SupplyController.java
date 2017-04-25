@@ -1,14 +1,11 @@
 package com.gs.controller.supplyManage;
 
 import ch.qos.logback.classic.Logger;
-import com.gs.bean.AccessoriesBuy;
-import com.gs.bean.Checkin;
-import com.gs.bean.OutgoingType;
 import com.gs.bean.Supply;
 import com.gs.common.bean.ControllerResult;
+import com.gs.common.bean.ComboBox4EasyUI;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
-import com.gs.service.AccessoriesBuyService;
 import com.gs.service.SupplyService;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
@@ -19,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.SimpleFormatter;
 
@@ -36,6 +34,25 @@ public class SupplyController {
     private SupplyService supplyService;
 
     private Logger logger = (Logger) LoggerFactory.getLogger(SupplyController.class);
+
+    /**
+     * 查询全部的配件信息
+     */
+    @ResponseBody
+    @RequestMapping(value = "queryAllAccType",method = RequestMethod.GET)
+    public List<ComboBox4EasyUI> queryAllAccType(){
+        logger.info("查询所有供应商信息");
+        List<Supply> supplys = supplyService.queryAll();
+        List<ComboBox4EasyUI> comboxs =  new ArrayList<ComboBox4EasyUI>();
+        for(Supply s : supplys){
+            ComboBox4EasyUI comboBox4EasyUI = new ComboBox4EasyUI();
+            comboBox4EasyUI.setId(s.getSupplyId());
+            comboBox4EasyUI.setText(s.getSupplyId());
+            comboxs.add(comboBox4EasyUI);
+        }
+        return comboxs;
+    }
+
 
     /**
      * 分页查询所有的供应商
