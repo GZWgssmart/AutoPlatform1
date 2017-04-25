@@ -76,7 +76,7 @@
 			insert into t_checkin(checkinId, userId, appointmentId, userName, userPhone, brandId, colorId,
 				modelId, plateId, carPlate, arriveTime, carMileage, carThings, intactDegrees, userRequests,
 				maintainOrFix, checkinCreatedTime, companyId, checkinStatus, ifClearCar, nowOil)
-				values(#{checkId}, #{userId}, #{appointmentId}, #{userName}, #{userPhone}, #{brandId}, #{colorId},
+				values(#{checkinId}, #{userId}, #{appointmentId}, #{userName}, #{userPhone}, #{brandId}, #{colorId},
 				#{modelId}, #{plateId}, #{carPlate}, #{arriveTime}, #{carMileage}, #{carThings}, #{intactDegrees}, #{userRequests},
 				#{maintainOrFix}, now(), #{companyId}, 'Y', #{ifClearCar}, #{nowOil})
 		]]>

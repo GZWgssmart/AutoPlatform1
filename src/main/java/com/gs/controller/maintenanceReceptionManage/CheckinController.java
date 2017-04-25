@@ -1,4 +1,4 @@
-package com.gs.controller;
+package com.gs.controller.maintenanceReceptionManage;
 
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.Checkin;
@@ -78,12 +78,12 @@ public class CheckinController {
     @RequestMapping(value = "add", method = RequestMethod.POST)
     public ControllerResult addCheckin(Checkin checkin) {
         logger.info("添加登记记录");
+        System.out.print(UUIDUtil.uuid());
         checkin.setCheckinId(UUIDUtil.uuid());
         checkin.setCompanyId("c515f5d623e011e7a97af832e40312b3");
         checkinService.insert(checkin);
         MaintainRecord maintainRecode = new MaintainRecord();
         maintainRecode.setCheckinId(checkin.getCheckinId());
-
         maintainRecordService.insert(maintainRecode);
         return ControllerResult.getSuccessResult("添加成功");
     }

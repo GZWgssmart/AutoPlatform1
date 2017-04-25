@@ -1,14 +1,13 @@
 package com.gs.service.impl;
 
-import com.gs.bean.Checkin;
 import com.gs.bean.MaintainDetail;
+import com.gs.common.bean.Pager;
 import com.gs.dao.MaintainDetailDAO;
 import com.gs.service.MaintainDetailService;
 import org.springframework.stereotype.Service;
+
 import javax.annotation.Resource;
 import java.util.List;
-
-import com.gs.common.bean.Pager;
 /**
 *由CSWangBin技术支持
 *
@@ -60,5 +59,15 @@ public class MaintainDetailServiceImpl implements MaintainDetailService {
 
 	public int countByBlurred(MaintainDetail maintainDetail) {
 		return 0;
+	}
+
+	@Override
+	public List<MaintainDetail> queryByDetailByPager(Pager pager, String maintainRecordId) {
+		return maintainDetailDAO.queryByDetailByPager(pager, maintainRecordId);
+	}
+
+	@Override
+	public int countByDetail(String maintainRecordId) {
+		return maintainDetailDAO.countByDetail(maintainRecordId);
 	}
 }

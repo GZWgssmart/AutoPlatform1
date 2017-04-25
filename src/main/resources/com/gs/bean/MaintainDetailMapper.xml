@@ -1,12 +1,61 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.gs.dao.MaintainDetailDAO" >
-  <resultMap id="BaseResultMap" type="com.gs.bean.MaintainDetail" >
+  <resultMap id="maintainDetailMap" type="com.gs.bean.MaintainDetail" >
     <id column="maintainDetailId" property="maintainDetailId" jdbcType="VARCHAR" />
     <result column="maintainRecordId" property="maintainRecordId" jdbcType="VARCHAR" />
     <result column="maintainItemId" property="maintainItemId" jdbcType="VARCHAR" />
     <result column="maintainDiscount" property="maintainDiscount" jdbcType="DOUBLE" />
     <result column="mdcreatedTime" property="mdcreatedTime" jdbcType="TIMESTAMP" />
+
+    <association property="maintainFix" javaType="com.gs.bean.MaintainFix">
+      <id property="maintainId" column="maintainId"/>
+      <id property="maintainName" column="maintainName"/>
+    </association>
   </resultMap>
 
+  <select id="queryByPager" resultMap="maintainDetailMap" parameterType="com.gs.common.bean.Pager">
+    <![CDATA[
+       select md.*, mf.maintainId, mf.maintainName from t_maintain_detail md
+       LEFT JOIN t_maintain_fix mf on md.maintainItemId = mf.maintainId
+       order by md.mdCreatedTime Desc
+    ]]>
+    limit #{beginIndex}, #{pageSize}
+  </select>
+
+  <select id="count" resultType="int" >
+    <![CDATA[
+      select count(maintainDetailId) from t_maintain_detail
+    ]]>
+  </select>
+
+  <select id="queryByDetailByPager" resultMap="maintainDetailMap">
+    <![CDATA[
+       select md.*, mf.maintainId, mf.maintainName from t_maintain_detail md
+       LEFT JOIN t_maintain_fix mf on md.maintainItemId = mf.maintainId
+       where md.maintainRecordId = #{maintainRecordId}
+       order by md.mdCreatedTime Desc
+    ]]>
+    limit #{pager.beginIndex}, #{pager.pageSize}
+  </select>
+
+  <select id="countByDetail" resultType="int" >
+    <![CDATA[
+      select count(maintainDetailId) from t_maintain_detail where maintainRecordId = #{maintainRecordId}
+    ]]>
+  </select>
+
+  <insert id="insert"  parameterType="MaintainDetail">
+    <![CDATA[
+			insert into t_maintain_detail(maintainDetailId, maintainRecordId, maintainItemId, maintainDiscount, mdCreatedTime)
+				values(uuid(), #{maintainRecordId}, #{maintainItemId}, #{maintainDiscount}, now())
+		]]>
+  </insert>
+
+  <update id="update" parameterType="MaintainDetail">
+    <![CDATA[
+			update t_maintain_detail set maintainDetailId = #{maintainDetailId}, maintainRecordId = #{maintainRecordId}, maintainItemId = #{maintainItemId}, maintainDiscount = #{maintainDiscount},
+				mdCreatedTime = now() where maintainDetailId = #{maintainDetailId}
+		]]>
+  </update>
 </mapper>

@@ -1,6 +1,9 @@
 package com.gs.service;
 
 import com.gs.bean.MaintainDetail;
+import com.gs.common.bean.Pager;
+
+import java.util.List;
 
 /**
 *由CSWangBin技术支持
@@ -10,5 +13,6 @@ import com.gs.bean.MaintainDetail;
 *@des 维修保养明细Service
 */
 public interface MaintainDetailService extends BaseService<String, MaintainDetail>{
-
+    public List<MaintainDetail> queryByDetailByPager(Pager pager, String maintainRecordId);
+    public int countByDetail(String maintainRecordId);
 }
