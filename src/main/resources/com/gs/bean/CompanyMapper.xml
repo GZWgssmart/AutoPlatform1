@@ -38,16 +38,14 @@
 
   <insert id="insert"  parameterType="company">
     <![CDATA[
-			INSERT into t_company(companyId, companyName, companyAddress, companyTel,companyPricipal,companyWebsite,companyLogo,companyOpendate,companySize,companyLongitude,companyLatitude,companyDes,companyStatus)
-			values(uuid(), #{companyName}, #{companyAddress}, #{companyTel}, #{companyPricipal}, #{companyWebsite}, #{companyLogo}, #{companyOpendate}, #{companySize}, #{companyLongitude}, #{companyLatitude}, #{companyDes},'Y')
+			INSERT into t_company(companyId, companyName, companyAddress, companyTel,companyPricipal,companyWebsite,companyOpendate,companySize,companyLongitude,companyLatitude,companyDes,companyStatus)
+			values(uuid(), #{companyName}, #{companyAddress}, #{companyTel}, #{companyPricipal}, #{companyWebsite}, #{companyOpendate}, #{companySize}, #{companyLongitude}, #{companyLatitude}, #{companyDes},'Y')
      ]]>
   </insert>
 
   <update id="update" parameterType="company">
     <![CDATA[
-			update t_company set companyName = #{companyName},companyAddress = #{companyAddress},companyTel = #{companyTel},companyPricipal = #{companyPricipal},
-			companyWebsite = #{companyWebsite},companyLogo = #{companyLogo},companyOpendate = #{companyOpendate},companySize = #{companySize}, companyLongitude = {companyLongitude},
-			companyLatitude = #{companyLatitude}, companyDes = #{companyDes} where companyId = #{companyId}
+			update t_company set companyName = #{companyName},companyAddress = #{companyAddress},companyTel = #{companyTel},companyPricipal = #{companyPricipal},companyWebsite = #{companyWebsite},companyOpendate = #{companyOpendate},companySize = #{companySize},companyLongitude = #{companyLongitude},companyLatitude = #{companyLatitude},companyDes = #{companyDes}where companyId = #{companyId}
      ]]>
   </update>
 </mapper>

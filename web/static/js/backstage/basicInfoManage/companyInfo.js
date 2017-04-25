@@ -4,7 +4,7 @@ $(function () {
 
 //显示弹窗
 function showEdit() {
-    initDateTimePicker('editForm', 'companyOpendate'); // 初始化时间框
+    initDatePicker('editForm', 'companyOpendate'); // 初始化时间框
     var row = $('#table').bootstrapTable('getSelections');
     if (row.length > 0) {
         $("#editWindow").modal('show'); // 显示弹窗
@@ -12,6 +12,7 @@ function showEdit() {
         var ceshi = row[0];
         $('#editDatetimepicker').val(formatterDate(ceshi.companyOpendate));
         $("#editForm").fill(ceshi);
+        validator("editForm")
     } else {
         swal({
             title:"",
@@ -22,9 +23,45 @@ function showEdit() {
     }
 }
 
+// 初始化没有分秒的时间框
+function initDatePicker(formId, field){
+    $(".datetimepicker").datetimepicker({
+        minView: "month", //选择日期后，不会再跳转去选择时分秒
+        language: 'zh-CN',
+        format: 'yyyy-mm-dd',
+        initialDate: new Date(),
+        autoclose: true,
+        todayHighligh:true,
+        todayBtn :true, // 显示今日按钮
+        autoclose: 1
+    }).on('hide',function(e) {
+        $('#'+formId).data('bootstrapValidator')
+            .updateStatus(field, 'NOT_VALIDATED',null)
+            .validateField(field);
+    });
+}
+//格式化不带时分秒的时间值。
+function formatterDate(value) {
+    if (value == undefined || value == null || value == '') {
+        return "";
+    } else {
+        var date = new Date(value);
+        var year = date.getFullYear().toString();
+        var month = (date.getMonth() + 1);
+        var day = date.getDate().toString();
+        if (month < 10) {
+            month = "0" + month;
+        }
+        if (day < 10) {
+            day = "0" + day;
+        }
+        return year + "-" + month + "-" + day + ""
+    }
+}
+
 //显示添加
 function showAdd(){
-    initDateTimePicker('addForm', 'companyOpendate'); // 初始化时间框, 第一参数是form表单id, 第二参数是input的name
+    initDatePicker('addForm', 'companyOpendate'); // 初始化时间框, 第一参数是form表单id, 第二参数是input的name
     $("#addWindow").modal('show');
     $("#addButton").removeAttr("disabled");
     validator('addForm'); // 初始化验证

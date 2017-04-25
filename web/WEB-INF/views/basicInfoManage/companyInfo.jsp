@@ -176,10 +176,10 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">联系电话：</label>
                     <div class="col-sm-7">
-                        <input type="number" name="companyTel" define="companyInfo.companyTel" placeholder="请输入联系方式"
-                               class="form-control" max="11">
+                        <input type="number" name="companyTel" placeholder="联系电话电话" define="companyInfo.companyTel" class="form-control" style="width:100%"/>
                     </div>
                 </div>
+
                 <div class="form-group">
                     <label class="col-sm-3 control-label">负责人：</label>
                     <div class="col-sm-7">
@@ -271,6 +271,5 @@
     <script src="/static/js/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.js"></script>
     <script src="/static/js/bootstrap-dateTimePicker/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
     <script src="/static/js/backstage/basicInfoManage/companyInfo.js"></script>
-
 </body>
 </html>
