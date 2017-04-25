@@ -39,24 +39,36 @@ public class MaintainController {
     private MaintainFixService maintainFixService;
 
     /**
-     * 分页查询维修保养项目信息
+     * 分页查询保养项目信息
      */
     @ResponseBody
-    @RequestMapping(value="queryByPage", method = RequestMethod.GET)
-    public Pager4EasyUI queryByPager(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
+    @RequestMapping(value="queryByPagerService", method = RequestMethod.GET)
+    public Pager4EasyUI queryByPagerService(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
         Pager pager = new Pager();
         pager.setPageNo(Integer.valueOf(pageNumber));
         pager.setPageSize(Integer.valueOf(pageSize));
         pager.setTotalRecords(maintainFixService.count());
-        logger.info("分页查询保养项目信息成功");
+        logger.info("分页查询维修项目信息");
         List<MaintainFix> maintainFixes = maintainFixService.queryByPager(pager);
+        return new Pager4EasyUI<MaintainFix>(pager.getTotalRecords(), maintainFixes);
+    }
+
+    @ResponseBody
+    @RequestMapping(value="queryByPagerMaintain", method = RequestMethod.GET)
+    public Pager4EasyUI queryByPagerMaintain(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
+        Pager pager = new Pager();
+        pager.setPageNo(Integer.valueOf(pageNumber));
+        pager.setPageSize(Integer.valueOf(pageSize));
+        pager.setTotalRecords(maintainFixService.count());
+        logger.info("分页查询保养项目信息");
+        List<MaintainFix> maintainFixes = maintainFixService.queryByPagerMaintain(pager);
         return new Pager4EasyUI<MaintainFix>(pager.getTotalRecords(), maintainFixes);
     }
 
     @ResponseBody
     @RequestMapping(value = "queryAllItem", method = RequestMethod.GET)
     public List<ComboBox4EasyUI> queryAll(){
-        logger.info("查询所有维修保养项目");
+        logger.info("查询所有保养项目");
         List<MaintainFix> MaintainFixs = maintainFixService.queryAll();
         List<ComboBox4EasyUI> comboxs = new ArrayList<ComboBox4EasyUI>();
         for(MaintainFix m : MaintainFixs){
@@ -69,7 +81,7 @@ public class MaintainController {
     }
 
     /**
-     * 添加维修保养项目信息
+     * 添加保养项目信息
      *
      * @return
      */
@@ -87,7 +99,7 @@ public class MaintainController {
     }
 
     /**
-     * 删除维修保养项目信息
+     * 删除保养项目信息
      *
      * @return
      */
@@ -105,7 +117,7 @@ public class MaintainController {
 
 
     /**
-     * 修改维修保养项目信息
+     * 修改保养项目信息
      *
      * @return
      */
@@ -122,13 +134,13 @@ public class MaintainController {
     }
 
     /**
-     * 查询所有被禁用的维修保养项目信息
+     * 查询所有被禁用的保养项目信息
      * @return
      */
     @ResponseBody
     @RequestMapping(value="queryByPagerDisable", method = RequestMethod.GET)
     public Pager4EasyUI<MaintainFix> queryByPagerDisable(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
-        logger.info("分页查询所有被禁用维修保养项目信息");
+        logger.info("分页查询所有被禁用保养项目信息");
         Pager pager = new Pager();
         pager.setPageNo(Integer.valueOf(pageNumber));
         pager.setPageSize(Integer.valueOf(pageSize));

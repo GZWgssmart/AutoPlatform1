@@ -22,6 +22,16 @@ public class MaintainFix {
 
     private String maintainStatus;//维修保养项目状态
 
+    private Company company;//关联Company表
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
+    }
+
     public String getMaintainId() {
         return maintainId;
     }

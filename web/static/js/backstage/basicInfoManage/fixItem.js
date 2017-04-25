@@ -1,23 +1,7 @@
 $(function () {
-    $('#table').bootstrapTable('hideColumn', 'id');
+    initTable('table', '/maintain/queryByPagerService'); // 初始化表格
 
-    $("#addSelect").select2({
-            language: 'zh-CN'
-        }
-    );
-
-    //绑定Ajax的内容
-    $.getJSON("/table/queryType", function (data) {
-        $("#addSelect").empty();//清空下拉框
-        $.each(data, function (i, item) {
-            $("#addSelect").append("<option value='" + data[i].id + "'>&nbsp;" + data[i].name + "</option>");
-        });
-    })
-//            $("#addSelect").on("select2:select",
-//                    function (e) {
-//                        alert(e)
-//                        alert("select2:select", e);
-//            });
+    initSelect2("Company", "请选择颜色", "/company/queryAllCompany"); // 初始化select2, 第一个参数是class的名字, 第二个参数是select2的提示语, 第三个参数是select2的查询url
 });
 
 function showEdit() {
