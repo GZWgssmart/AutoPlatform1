@@ -18,7 +18,23 @@
     <result column="accTypeId" property="accTypeId" jdbcType="VARCHAR" />
     <result column="companyId" property="companyId" jdbcType="VARCHAR" />
     <result column="accStatus" property="accStatus" jdbcType="VARCHAR" />
+
+    <association property="company" javaType="com.gs.bean.Company">
+      <id property="companyId" column="companyId"/>
+      <id property="companyName" column="companyName"/>
+    </association>
+
+    <association property="accessoriesType" javaType="com.gs.bean.AccessoriesType">
+      <id property="accTypeId" column="accTypeId"/>
+      <id property="accTypeName" column="accTypeName"/>
+    </association>
+
+    <association property="supply" javaType="com.gs.bean.Supply">
+      <id property="supplyId" column="supplyId"/>
+      <id property="supplyName" column="supplyName"/>
+    </association>
   </resultMap>
+
 
   <!--
 查询所有的销售记录
@@ -33,7 +49,12 @@
   <!-- 分页查询 -->
   <select id="queryByPager" resultMap="AccessoriesMap" parameterType="com.gs.common.bean.Pager">
     <![CDATA[
-      select * from auto_platform.t_accessories u where 1 = 1 and u.accStatus = 'Y'
+      select ac.*,atp.accTypeId,atp.accTypeName,cm.companyId,cm.companyName,sp.supplyId,sp.supplyName
+       from auto_platform.t_accessories ac
+       LEFT JOIN auto_platform.t_accessories_type atp on ac.accTypeId=atp.accTypeId
+       LEFT JOIN auto_platform.t_company cm on ac.companyId = cm.companyId
+       LEFT JOIN auto_platform.t_supply sp on ac.supplyId = sp.supplyId
+      where ac.accStatus = 'Y' order by ac.accCreatedTime Desc
     ]]>
     limit #{beginIndex}, #{pageSize};
   </select>
