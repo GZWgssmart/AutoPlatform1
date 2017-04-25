@@ -14,6 +14,17 @@
         <result column="accBuyCreatedTime" property="accBuyCreatedTime"/>
         <result column="companyId" property="companyId"/>
         <result column="accBuyStatus" property="accBuyStatus"/>
+
+        <association property="company" javaType="com.gs.bean.Company">
+            <id property="companyId" column="companyId"/>
+            <id property="companyName" column="companyName"/>
+        </association>
+
+        <association property="accessories" javaType="com.gs.bean.Accessories">
+            <id property="accId" column="accId"/>
+            <id property="accName" column="accName"/>
+        </association>
+
     </resultMap>
 
     <!--
@@ -28,8 +39,12 @@
     <!-- 分页查询 -->
     <select id="queryByPager" resultMap="AccessoriesBuyMap" parameterType="com.gs.common.bean.Pager">
         <![CDATA[
-      select * from auto_platform.t_accessories_buy u where 1 = 1 and u.accBuyStatus = 'Y'
-    ]]>
+          select ab.*,cp.companyId,cp.companyName,ac.accId,ac.accName
+           from auto_platform.t_accessories_buy ab
+           LEFT JOIN auto_platform.t_accessories ac on ab.accId=ac.accId
+           LEFT JOIN auto_platform.t_company cp on ab.companyId=cp.companyId
+           where ab.accBuyStatus = 'Y' order by ab.accBuyCreatedTime Desc
+        ]]>
         limit #{beginIndex}, #{pageSize};
     </select>
 
@@ -46,7 +61,7 @@
     <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="AccessoriesBuy">
         <![CDATA[
             INSERT INTO auto_platform.t_accessories_buy
-            (accBUyId,accId, accBuyCount, accBuyPrice, accBuyTotal,accBuyDiscount, accBuyMoney, accBuyTime, accBuyCreatedTime,companyId, accBuyStatus)
+            (accBuyId,accId, accBuyCount, accBuyPrice, accBuyTotal,accBuyDiscount, accBuyMoney, accBuyTime, accBuyCreatedTime,companyId, accBuyStatus)
             VALUES
             (uuid(),#{accId},#{accBuyCount},#{accBuyPrice},#{accBuyTotal},#{accBuyDiscount},#{accBuyMoney},#{accBuyTime},CURRENT_TIMESTAMP ,#{companyId},'Y')
         ]]>
@@ -61,7 +76,7 @@
         SET accBuyCount=#{accBuyCount}, accBuyPrice=#{accBuyPrice},
         accBuyTotal=#{accBuyTotal},accBuyDiscount=#{accBuyDiscount},
         accBuyMoney=#{accBuyMoney},accBuyTime=#{accBuyTime},
-        companyId=#{companyId}
+        companyId=#{companyId},accId=#{accId}
         WHERE accBuyId=#{accBuyId}
         ]]>
     </update>

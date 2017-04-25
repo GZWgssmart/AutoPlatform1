@@ -29,6 +29,10 @@ public class AccessoriesBuy {
 
     private String accBuyStatus;
 
+    private Company company;
+
+    private Accessories accessories;
+
     public String getAccBuyId() {
         return accBuyId;
     }
@@ -125,6 +129,22 @@ public class AccessoriesBuy {
         this.accBuyStatus = accBuyStatus;
     }
 
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
+    }
+
+    public Accessories getAccessories() {
+        return accessories;
+    }
+
+    public void setAccessories(Accessories accessories) {
+        this.accessories = accessories;
+    }
+
     @Override
     public String toString() {
         return "AccessoriesBuy{" +
@@ -140,6 +160,8 @@ public class AccessoriesBuy {
                 ", accBuyCreatedTime=" + accBuyCreatedTime +
                 ", companyId='" + companyId + '\'' +
                 ", accBuyStatus='" + accBuyStatus + '\'' +
+                ", company=" + company +
+                ", accessories=" + accessories +
                 '}';
     }
 }
