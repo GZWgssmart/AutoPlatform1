@@ -114,69 +114,51 @@
         LEFT JOIN t_company co on s.companyId = co.companyId
         where 1=1 and
       ]]>
-    <if test="checkin.userName != '' and checkin.userName != null">
-      ck.userName like '%${checkin.userName}%'
+    <if test="supply.supplyName != '' and supply.supplyName != null">
+      s.supplyName like '%${supply.supplyName}%'
     </if>
-    <if test="checkin.userName != '' and checkin.userName != null and
-            checkin.companyId != '' and checkin.companyId != null">
+    <if test="supply.supplyName != '' and supply.supplyName != null and
+            supply.companyId != '' and supply.companyId != null">
       or
     </if>
-    <if test="checkin.companyId != '' and checkin.companyId != null">
-      company.companyName like '%${checkin.companyId}%'
+    <if test="supply.companyId != '' and supply.companyId != null">
+      co.companyName like '%${supply.companyId}%'
     </if>
-    <if test="checkin.companyId != '' and checkin.companyId != null and
-            checkin.carPlate != '' and checkin.carPlate != null">
+    <if test="supply.companyId != '' and supply.companyId != null and
+            supply.supplyTypeId != '' and supply.supplyTypeId != null">
       or
     </if>
-    <if test="checkin.carPlate != '' and checkin.carPlate != null">
-      ck.carPlate like '%${checkin.carPlate}%'
+    <if test="supply.supplyTypeId != '' and supply.supplyTypeId != null">
+      st.supplyTypeName like '%${supply.supplyTypeId}%'
     </if>
-    <if test="checkin.carPlate != '' and checkin.carPlate != null and
-            checkin.userPhone != '' and checkin.userPhone != null">
-      or
-    </if>
-    <if test="checkin.userPhone != '' and checkin.userPhone != null">
-      ck.userPhone like '%${checkin.userPhone}%'
-    </if>
-    order by ck.checkinCreatedTime Desc
+    order by s.supplyCreatedTime Desc
     limit #{pager.beginIndex}, #{pager.pageSize}
   </select>
 
   <!-- 分页模糊查询个数 -->
   <select id="countByBlurred" resultType="int" >
     <![CDATA[
-      select count(checkinId) from t_checkin ck
-      LEFT JOIN t_user u on u.userId =ck.userId
-      LEFT JOIN t_car_color cc on ck.colorId =cc.colorId
-      LEFT JOIN t_car_model cm on ck.modelId = cm.modelId
-      LEFT JOIN t_car_plate cp on ck.plateId = cp.plateId
-      LEFT JOIN t_company company on ck.companyId = company.companyId
-      LEFT JOIN t_car_brand cb on ck.brandId = cb.brandId
+      select count(supplyId) from t_supply s
+      LEFT JOIN t_supply_type st on s.supplyTypeId = st.supplyTypeId
+      LEFT JOIN t_company co on s.companyId = co.companyId
       where 1=1 and
     ]]>
-    <if test="checkin.userName != '' and checkin.userName != null">
-      ck.userName like '%${checkin.userName}%'
+    <if test="supply.supplyName != '' and supply.supplyName != null">
+      s.supplyName like '%${supply.supplyName}%'
     </if>
-    <if test="checkin.userName != '' and checkin.userName != null and
-    checkin.companyId != '' and checkin.companyId != null">
+    <if test="supply.supplyName != '' and supply.supplyName != null and
+            supply.companyId != '' and supply.companyId != null">
       or
     </if>
-    <if test="checkin.companyId != '' and checkin.companyId != null">
-      company.companyName like '%${checkin.companyId}%'
+    <if test="supply.companyId != '' and supply.companyId != null">
+      co.companyName like '%${supply.companyId}%'
     </if>
-    <if test="checkin.companyId != '' and checkin.companyId != null and
-    checkin.carPlate != '' and checkin.carPlate != null">
+    <if test="supply.companyId != '' and supply.companyId != null and
+            supply.supplyTypeId != '' and supply.supplyTypeId != null">
       or
     </if>
-    <if test="checkin.carPlate != '' and checkin.carPlate != null">
-      ck.carPlate like '%${checkin.carPlate}%'
-    </if>
-    <if test="checkin.carPlate != '' and checkin.carPlate != null and
-    checkin.userPhone != '' and checkin.userPhone != null">
-      or
-    </if>
-    <if test="checkin.userPhone != '' and checkin.userPhone != null">
-      ck.userPhone like '%${checkin.userPhone}%'
+    <if test="supply.supplyTypeId != '' and supply.supplyTypeId != null">
+      st.supplyTypeName like '%${supply.supplyTypeId}%'
     </if>
   </select>
 
