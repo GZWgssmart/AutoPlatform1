@@ -152,7 +152,8 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">供应商所属公司：</label>
                     <div class="col-sm-7">
-                        <input type="text"  placeholder="请选择供应商所属公司" name="companyId"  class="form-control">
+                        <select id="addCompany" class="js-example-tags company" name="companyId" style="width:100%">
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">
@@ -240,7 +241,8 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">供应商所属公司：</label>
                     <div class="col-sm-7">
-                        <input type="text" define="supply.companyId" name="companyId"  class="form-control">
+                        <select id="editCompany" class="js-example-tags company" define="supply.companyId" name="companyId" style="width:100%">
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">
