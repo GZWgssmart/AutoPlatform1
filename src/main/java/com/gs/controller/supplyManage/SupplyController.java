@@ -36,18 +36,18 @@ public class SupplyController {
     private Logger logger = (Logger) LoggerFactory.getLogger(SupplyController.class);
 
     /**
-     * 查询全部的配件信息
+     * 查询全部的供应商信息
      */
     @ResponseBody
-    @RequestMapping(value = "queryAllAccType",method = RequestMethod.GET)
-    public List<ComboBox4EasyUI> queryAllAccType(){
-        logger.info("查询所有供应商信息");
+    @RequestMapping(value = "queryAllSupply",method = RequestMethod.GET)
+    public List<ComboBox4EasyUI> queryAllSupply(){
+        logger.info("查询所有的供应商信息");
         List<Supply> supplys = supplyService.queryAll();
         List<ComboBox4EasyUI> comboxs =  new ArrayList<ComboBox4EasyUI>();
         for(Supply s : supplys){
             ComboBox4EasyUI comboBox4EasyUI = new ComboBox4EasyUI();
             comboBox4EasyUI.setId(s.getSupplyId());
-            comboBox4EasyUI.setText(s.getSupplyId());
+            comboBox4EasyUI.setText(s.getSupplyName());
             comboxs.add(comboBox4EasyUI);
         }
         return comboxs;

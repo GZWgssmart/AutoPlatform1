@@ -29,6 +29,12 @@
 
   </resultMap>
 
+  <select id="queryAll" resultMap="supplyMap">
+    <![CDATA[
+      select *FROM auto_platform.t_supply
+    ]]>
+  </select>
+
   <select id="queryByPager" resultMap="supplyMap" parameterType="com.gs.common.bean.Pager">
     <![CDATA[
         select s.*, st.supplyTypeId, st.supplyTypeName, co.companyId, co.companyName from t_supply s
