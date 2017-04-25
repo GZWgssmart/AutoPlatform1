@@ -212,13 +212,13 @@
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">汽车行驶里程：</label>
                                 <div class="col-sm-7">
-                                <input type="number" name="carMileage" placeholder="请输入汽车行驶里程" class="form-control" style="width:100%"/>
+                                <input type="number" name="carMileage" placeholder="请输入汽车行驶里程" min="1" class="form-control" style="width:100%"/>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">汽车当前油量：</label>
                                 <div class="col-sm-7">
-                                <input type="number" name="nowOil" placeholder="请输入汽车当前油量" class="form-control" style="width:100%"/>
+                                <input type="number" name="nowOil" placeholder="请输入汽车当前油量" min="1" class="form-control" style="width:100%"/>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -247,7 +247,7 @@
                                 <button type="button" class="btn btn-default"
                                         data-dismiss="modal">关闭
                                 </button>
-                                <button id="addButton" type="button" onclick="addSubmit()" class="btn btn-primary">添加
+                                <button id="addButton" type="button" onclick="addSubmit()" class="btn btn-success">添加
                                 </button>
                                 <input type="reset" name="reset" style="display: none;"/>
                             </div>
@@ -343,13 +343,13 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">汽车行驶里程：</label>
                     <div class="col-sm-7">
-                        <input type="number" name="carMileage" placeholder="请输入汽车行驶里程" define="checkin.carMileage" class="form-control" style="width:100%"/>
+                        <input type="number" name="carMileage" placeholder="请输入汽车行驶里程" min="1" define="checkin.carMileage" class="form-control" style="width:100%"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">汽车当前油量：</label>
                     <div class="col-sm-7">
-                        <input type="number" name="nowOil" placeholder="请输入汽车当前油量" define="checkin.nowOil" class="form-control" style="width:100%"/>
+                        <input type="number" name="nowOil" placeholder="请输入汽车当前油量" min="1" define="checkin.nowOil" class="form-control" style="width:100%"/>
                     </div>
                 </div>
                 <div class="form-group">
@@ -377,7 +377,7 @@
                     <button type="button" class="btn btn-default"
                             data-dismiss="modal">关闭
                     </button>
-                    <button id="editButton" type="button" onclick="editSubmit()" class="btn btn-primary">保存
+                    <button id="editButton" type="button" onclick="editSubmit()" class="btn btn-success">保存
                     </button>
                 </div>
             </form>
@@ -385,7 +385,7 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<div id="appWindow" class="modal fade" aria-hidden="true" style="overflow:scroll" data-backdrop="static" keyboard:false>
+<div id="appWindow" class="modal fade" aria-hidden="true" style="overflow-y:scroll" data-backdrop="static" keyboard:false>
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">

@@ -71,7 +71,7 @@
     insert into auto_platform.t_appointment(appointmentId,userId,userName,userPhone,brandId,colorId,modelId,
     plateId,carPlate,arriveTime,maintainOrFix,appCreatedTime,companyId,appoitmentStatus)
     values(uuid(),#{userId},#{userName},#{userPhone},#{brandId},#{colorId},#{modelId},#{plateId},#{carPlate},#{arriveTime},
-    #{maintainOrFix},CURRENT_TIMESTAMP,#{companyId},'Y');
+    #{maintainOrFix},now(),#{companyId},'Y');
     ]]>
   </insert>
 

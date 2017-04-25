@@ -105,8 +105,7 @@ public class Appointment {
         return carPlate;
     }
 
-    public void setCarPlate(String carPlate) {
-        this.carPlate = carPlate;
+    public void setCarPlate(String carPlate) {this.carPlate = carPlate;
     }
 
     public Date getArriveTime() {

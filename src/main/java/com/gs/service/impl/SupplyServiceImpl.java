@@ -54,10 +54,10 @@ public class SupplyServiceImpl implements SupplyService {
 	}
 
 	public List<Supply> blurredQuery(Pager pager, Supply supply) {
-		return null;
+		return supplyDAO.blurredQuery(pager,supply);
 	}
 
 	public int countByBlurred(Supply supply) {
-		return 0;
+		return supplyDAO.countByBlurred(supply);
 	}
 }

@@ -16,6 +16,16 @@ public class MaintainDetail {
 
     private Date mdcreatedTime; //维修保养明细创建时间
 
+    private MaintainFix maintainFix;
+
+    public MaintainFix getMaintainFix() {
+        return maintainFix;
+    }
+
+    public void setMaintainFix(MaintainFix maintainFix) {
+        this.maintainFix = maintainFix;
+    }
+
     public String getMaintainDetailId() {
         return maintainDetailId;
     }
@@ -54,5 +64,16 @@ public class MaintainDetail {
 
     public void setMdcreatedTime(Date mdcreatedTime) {
         this.mdcreatedTime = mdcreatedTime;
+    }
+
+    @Override
+    public String toString() {
+        return "MaintainDetail{" +
+                "maintainDetailId='" + maintainDetailId + '\'' +
+                ", maintainRecordId='" + maintainRecordId + '\'' +
+                ", maintainItemId='" + maintainItemId + '\'' +
+                ", maintainDiscount=" + maintainDiscount +
+                ", mdcreatedTime=" + mdcreatedTime +
+                '}';
     }
 }

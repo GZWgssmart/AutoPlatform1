@@ -35,9 +35,9 @@ public class SupplyController {
 
     private Logger logger = (Logger) LoggerFactory.getLogger(SupplyController.class);
 
-    /**
-     * 查询全部的供应商信息
-     */
+   /*
+    查询全部的供应商信息
+    */
     @ResponseBody
     @RequestMapping(value = "queryAllSupply",method = RequestMethod.GET)
     public List<ComboBox4EasyUI> queryAllSupply(){
@@ -160,14 +160,14 @@ public class SupplyController {
             pager.setPageSize(Integer.valueOf(pageSize));
             List<Supply> supplys = null;
             Supply supply = new Supply();
-            if(text.equals("供应商/电话/所属公司")){
+            if(text.equals("供应商/供应商类型/所属公司")){
                 supply.setSupplyName(value);
-                supply.setSupplyTel(value);
+                supply.setSupplyTypeId(value);
                 supply.setCompanyId(value);
             }else if(text.equals("供应商")){
                 supply.setSupplyName(value);
-            }else if(text.equals("电话")){
-                supply.setSupplyTel(value);
+            }else if(text.equals("供应商类型")) {
+                supply.setSupplyTypeId(value);
             }else if(text.equals("所属公司")){
                 supply.setCompanyId(value);
             }

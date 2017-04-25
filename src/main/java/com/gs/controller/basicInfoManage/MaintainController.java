@@ -2,6 +2,7 @@ package com.gs.controller.basicInfoManage;
 
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.MaintainFix;
+import com.gs.common.bean.ComboBox4EasyUI;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
@@ -19,19 +20,20 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 /**
- * 维修保养项目管理
+ * 保养项目管理
  * Created by yaoyong on 2017/4/18.
  */
 
 @Controller
-@RequestMapping("/maintainfix")
-public class MaintainFixController {
+@RequestMapping("/maintain")
+public class MaintainController {
 
-    private Logger logger = (Logger) LoggerFactory.getLogger(MaintainFixController.class);
+    private Logger logger = (Logger) LoggerFactory.getLogger(MaintainController.class);
 
     @Resource
     private MaintainFixService maintainFixService;
@@ -46,9 +48,24 @@ public class MaintainFixController {
         pager.setPageNo(Integer.valueOf(pageNumber));
         pager.setPageSize(Integer.valueOf(pageSize));
         pager.setTotalRecords(maintainFixService.count());
-        logger.info("分页查询维修保养项目信息成功");
+        logger.info("分页查询保养项目信息成功");
         List<MaintainFix> maintainFixes = maintainFixService.queryByPager(pager);
         return new Pager4EasyUI<MaintainFix>(pager.getTotalRecords(), maintainFixes);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "queryAllItem", method = RequestMethod.GET)
+    public List<ComboBox4EasyUI> queryAll(){
+        logger.info("查询所有维修保养项目");
+        List<MaintainFix> MaintainFixs = maintainFixService.queryAll();
+        List<ComboBox4EasyUI> comboxs = new ArrayList<ComboBox4EasyUI>();
+        for(MaintainFix m : MaintainFixs){
+            ComboBox4EasyUI comboBox4EasyUI = new ComboBox4EasyUI();
+            comboBox4EasyUI.setId(m.getMaintainId());
+            comboBox4EasyUI.setText(m.getMaintainName());
+            comboxs.add(comboBox4EasyUI);
+        }
+        return comboxs;
     }
 
     /**
@@ -57,7 +74,7 @@ public class MaintainFixController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "addMaintainFix", method = RequestMethod.POST)
+    @RequestMapping(value = "addMaintain", method = RequestMethod.POST)
     public ControllerResult addAccBuy(MaintainFix maintainFix) {
         if (maintainFix != null && !maintainFix.equals("")) {
             System.out.println(maintainFix.toString());
@@ -75,7 +92,7 @@ public class MaintainFixController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "removeMaintainFix", method = RequestMethod.POST)
+    @RequestMapping(value = "removeMaintain", method = RequestMethod.POST)
     public ControllerResult removeAccBuy(String id) {
         if (id != null && !id.equals("")) {
             maintainFixService.deleteById(id);
@@ -93,7 +110,7 @@ public class MaintainFixController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "updateMaintainFix", method = RequestMethod.POST)
+    @RequestMapping(value = "updateMaintain", method = RequestMethod.POST)
     public ControllerResult updateAccBuy(MaintainFix maintainFix) {
         if (maintainFix != null && !maintainFix.equals("")) {
             maintainFixService.update(maintainFix);

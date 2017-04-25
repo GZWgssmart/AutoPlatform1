@@ -1,7 +1,12 @@
 package com.gs.dao;
 
 import com.gs.bean.MaintainDetail;
+import com.gs.common.bean.Pager;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
 /**
 *由CSWangBin技术支持
 *
@@ -11,5 +16,6 @@ import org.springframework.stereotype.Repository;
 */
 @Repository
 public interface MaintainDetailDAO extends BaseDAO<String, MaintainDetail>{
-
+    public List<MaintainDetail> queryByDetailByPager(@Param("pager")Pager pager, @Param("maintainRecordId") String maintainRecordId);
+    public int countByDetail(@Param("maintainRecordId") String maintainRecordId);
 }
