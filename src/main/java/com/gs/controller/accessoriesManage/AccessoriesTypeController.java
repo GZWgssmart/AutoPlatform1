@@ -60,7 +60,7 @@ public class AccessoriesTypeController {
         List<ComboBox4EasyUI> comboxs = new ArrayList<ComboBox4EasyUI>();
         for(AccessoriesType c : accessoriesTypes){
             ComboBox4EasyUI comboBox4EasyUI = new ComboBox4EasyUI();
-            comboBox4EasyUI.setId(c.getAccTypeName());
+            comboBox4EasyUI.setId(c.getAccTypeId());
             comboBox4EasyUI.setText(c.getAccTypeName());
             comboxs.add(comboBox4EasyUI);
         }

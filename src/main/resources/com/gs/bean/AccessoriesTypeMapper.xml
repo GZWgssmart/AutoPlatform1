@@ -7,6 +7,11 @@
         <result column="accTypeDes" property="accTypeDes" jdbcType="VARCHAR"/>
         <result column="companyId" property="companyId" jdbcType="VARCHAR"/>
         <result column="accTypeStatus" property="accTypeStatus" jdbcType="VARCHAR"/>
+
+        <association property="company" javaType="com.gs.bean.Company">
+            <id property="companyId" column="companyId"/>
+            <id property="companyName" column="companyName"/>
+        </association>
     </resultMap>
 
     <!--
@@ -21,8 +26,11 @@
     <!-- 分页查询 -->
     <select id="queryByPager" resultMap="AccessoriesTypeMap" parameterType="com.gs.common.bean.Pager">
         <![CDATA[
-      select * from auto_platform.t_accessories_type u where 1 = 1 and u.accTypeStatus = 'Y'
-    ]]>
+        select ast.*,cp.companyId,cp.companyName
+        from auto_platform.t_accessories_type ast
+        LEFT JOIN auto_platform.t_company cp on ast.companyId=cp.companyId
+        where ast.accTypeStatus = 'Y'
+        ]]>
         limit #{beginIndex}, #{pageSize};
     </select>
 

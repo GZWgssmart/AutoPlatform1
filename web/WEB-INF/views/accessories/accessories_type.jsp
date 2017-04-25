@@ -29,7 +29,7 @@
             <thead>
             <tr>
                 <th data-radio="true" data-field="status"></th>
-                <th data-field="companyId">所属公司</th>
+                <th data-field="company.companyName">所属公司</th>
                 <th data-field="accTypeName">配件分类名称</th>
                 <th data-field="accTypeDes">配件分类描述</th>
                 <th data-field="accTypeStatus" data-formatter="formatterStatus">配件分类状态</th>
@@ -82,7 +82,8 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">所属公司：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="companyId" placeholder="请输入所属公司" class="form-control">
+                        <select id="addCompany" class="js-example-tags company" name="companyId" style="width:100%">
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">
@@ -121,7 +122,8 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">所属公司：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="companyId" define="AccessoriesType.companyId" placeholder="请输入所属公司" class="form-control">
+                        <select id="editCompany" class="js-example-tags company" define="AccessoriesType.companyId" name="companyId" style="width:100%">
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">

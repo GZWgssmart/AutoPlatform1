@@ -3,6 +3,8 @@ var contentPath = ''
 //初始化表格
 $(function () {
     initTable('table', '/accType/queryByPage'); // 初始化表格
+
+    initSelect2("company", "请选择所属公司", "/company/queryAllCompany");
 });
 
 // 查看全部可用
@@ -19,7 +21,7 @@ function blurredQuery(){
     var button = $("#ulButton");// 获取模糊查询按钮
     var text = button.text();// 获取模糊查询按钮文本
     var vaule = $("#ulInput").val();// 获取模糊查询输入框文本
-    initTable('table', '/checkin/blurredQuery?text='+text+'&value='+vaule);
+    initTable('table', '/accType/blurredQuery?text='+text+'&value='+vaule);
 }
 
 //显示弹窗
@@ -27,8 +29,10 @@ function showEdit() {
     var row = $('table').bootstrapTable('getSelections');
     if (row.length > 0) {
         $("#editWindow").modal('show'); // 显示弹窗
+        $("#editButton").removeAttr("disabled");
         var ceshi = row[0];
         $("#editForm").fill(ceshi);
+        $('#editCompany').html('<option value="' + ceshi.company.companyId + '">' + ceshi.company.companyName + '</option>').trigger("change");
         validator('editForm');
     } else {
         swal({

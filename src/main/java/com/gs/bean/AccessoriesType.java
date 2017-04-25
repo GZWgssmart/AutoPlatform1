@@ -11,6 +11,8 @@ public class AccessoriesType {
 
     private String accTypeStatus;
 
+    private Company company;
+
     public String getAccTypeId() {
         return accTypeId;
     }
@@ -51,6 +53,14 @@ public class AccessoriesType {
         this.accTypeStatus = accTypeStatus;
     }
 
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
+    }
+
     @Override
     public String toString() {
         return "AccessoriesType{" +
@@ -59,6 +69,7 @@ public class AccessoriesType {
                 ", accTypeDes='" + accTypeDes + '\'' +
                 ", companyId='" + companyId + '\'' +
                 ", accTypeStatus='" + accTypeStatus + '\'' +
+                ", company=" + company +
                 '}';
     }
 }
