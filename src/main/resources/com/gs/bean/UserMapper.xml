@@ -37,38 +37,38 @@
   </resultMap>
 
   <!-- 添加员工的基本信息 -->
-  <insert id="insert" useGeneratedKeys="true" keyProperty="userId" parameterType="user">
+  <insert id="insert" parameterType="user">
     <![CDATA[
-        insert into t_user(userId, userEmail, userPhone, userPwd, userNickName,
-          userIdentity, userName, userGender,userBirthday,
-          userAddress, qqOpenId, weiboOpenId, weChatOpenId, userIcon,
-          userDes, companyId, userSalary, userCreatedTime, userLoginedTime,
-          userStatus) vlaues(uuid(), #{userEmail}, #{userPhone}, #{userPwd}, #{userNickName},
-          #{userIdentity}, #{userName}, #{userGender},#{userBirthday},
-          #{userAddress}, #{qqOpenId}, #{weiboOpenId}, #{weChatOpenId}, #{userIcon},
-          #{userDes}, #{companyId}, #{userSalary}, now(), #{userLoginedTime},'Y');
+        insert into t_user(userId, userEmail, userPhone, userPwd, userIdentity, userName,
+              userGender,userBirthday, userAddress, qqOpenId, weChatOpenId, weiboOpenId,
+              userDes, companyId, userSalary, userCreatedTime, userStatus)
+            values(#{userId}, #{userEmail}, #{userPhone}, #{userPwd}, #{userIdentity},
+              #{userName}, #{userGender},#{userBirthday}, #{userAddress}, #{qqOpenId},
+              #{weChatOpenId}, #{weiboOpenId}, #{userDes}, #{companyId}, #{userSalary}, now(),'Y');
       ]]>
   </insert>
 
   <!-- 修改员工的基本信息 -->
-  <update id="update" keyProperty="userId" parameterType="user">
+  <update id="update" parameterType="user">
      <![CDATA[
-       update t_user u set u.userEmail = #{userEmail}, u.userPhone = #{userPhone},
-         u.userPwd = #{userPwd}, u.userNickName = #{userNickName}, u.userGender = #{userGender},
-         u.userBirthDay = #{userBirthday}, u.userAddress = #{userAddress}, u.userIcon = #{userIcon},
-         u.userDes = #{userDes}, u.userSalary = #{usersalary} where u.userId = #{userId};
+       update t_user u set u.userName = #{userName}, u.userEmail = #{userEmail},
+            u.userPhone = #{userPhone}, u.userIdentity = #{userIdentity},
+           u.userPwd = #{userPwd}, u.userGender = #{userGender}, u.companyId=#{companyId},
+           u.userBirthDay = #{userBirthday}, u.userAddress = #{userAddress},
+           u.userDes = #{userDes}, u.userSalary = #{userSalary}, u.userStatus = #{userStatus}
+         where u.userId = #{userId};
      ]]>
   </update>
 
   <!-- 禁用 -->
-  <update id="setDisabled" parameterType="user" keyProperty="userId">
+  <update id="setDisabled" parameterType="user">
     <![CDATA[
       update t_user u set u.userStatus = 'N' where u.userId = #{userId};
     ]]>
   </update>
 
   <!-- 激活 -->
-  <update id="setActivate" parameterType="user" keyProperty="userId">
+  <update id="setActivate" parameterType="user">
     <![CDATA[
       update t_user u set u.userStatus = 'Y' where u.userId = #{userId};
     ]]>
@@ -77,7 +77,9 @@
   <!-- 分页查询全部 -->
   <select id="queryByPagerAll" resultMap="userBasicManageMap" parameterType="com.gs.common.bean.Pager">
     <![CDATA[
-      select * from t_user u left join t_company c on u.companyId = c.companyId
+      select u.*, r.roleName, c.companyId, c.companyName from t_user u, t_user_role ur, t_role r,
+            t_company c where ur.userId = u.userId and r.roleId = ur.roleId
+            and u.companyId = c.companyId
     ]]>
      limit #{beginIndex}, #{pageSize};
   </select>

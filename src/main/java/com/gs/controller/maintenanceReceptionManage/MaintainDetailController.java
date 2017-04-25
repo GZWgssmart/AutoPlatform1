@@ -7,6 +7,7 @@ import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
 import com.gs.service.MaintainDetailService;
+import com.gs.service.MaintainFixAccService;
 import com.gs.service.MaterialListService;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
@@ -36,6 +37,9 @@ public class MaintainDetailController {
     // 物料清单service
     @Resource
     private MaterialListService materialListService;
+    // 项目配件service
+    @Resource
+    private MaintainFixAccService maintainFixAccService;
 
     /**
      * 查询所有明细
@@ -96,10 +100,11 @@ public class MaintainDetailController {
      * 用户确认, 此时生成所有物料清单
      */
     @ResponseBody
-    @RequestMapping(value = "userConfirm", method = RequestMethod.POST)
-    public ControllerResult userConfirm() {
+    @RequestMapping(value = "userConfirm/{recordId}/{ids}", method = RequestMethod.POST)
+    public ControllerResult userConfirm(@PathVariable("recordId") String recordId,@PathVariable("ids") String ids) {
         logger.info("用户确认明细清单, 这时生成所有物料清单");
         MaterialList materialList = new MaterialList();
+        materialList.setMaintainRecordId(recordId);
        // materialListService.insert(materialList);
         return ControllerResult.getSuccessResult("确定成功");
     }

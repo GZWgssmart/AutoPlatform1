@@ -32,14 +32,13 @@
             <thead>
             <tr>
                 <th data-radio="true" data-field="status"></th>
-                <th data-field="maintainName">保养名称</th>
-                <th data-field="maintainHour">所需时间</th>
-                <th data-field="maintainMoney">所需费用</th>
-                <th data-field="maintainManhourFee">工时费</th>
-                <th data-field="maintainOrFix">维修保养选项</th>
-                <th data-field="companyId">所属公司</th>
-                <th data-field="maintainDes">相关描述</th>
-                <th data-field="maintainStatus" data-formatter="formatterStatus">项目状态</th>
+                <th data-field="maintainName">保养项目名称</th>
+                <th data-field="maintainHour">保养项目工时</th>
+                <th data-field="maintainMoney">保养项目基础费用</th>
+                <th data-field="maintainManhourFee">保养项目工时费</th>
+                <th data-field="maintainDes">保养项目描述</th>
+                <th data-field="company.companyName">保养项目所属公司</th>
+                <th data-field="maintainStatus" data-formatter="formatterStatus">保养项目状态</th>
                 <th data-formatter="openStatusFormatter">操作</th>
             </tr>
             </thead>

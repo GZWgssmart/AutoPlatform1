@@ -1,7 +1,7 @@
 var contentPath='';
 
 $(function () {
-    initTable('table', '/maintainfix/queryByPage'); // 初始化表格
+    initTable('table', '/maintain/queryByPagerMaintain'); // 初始化表格
 });
 
 

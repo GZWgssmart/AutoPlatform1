@@ -2,24 +2,10 @@ var contentPath = ''
 $(function () {
     initTable("table", "/supply/queryByPager"); // 初始化表格
 
+    initSelect2("company", "请选择所属公司", "/company/queryAllCompany");
     initSelect2("supplyType", "请选择供应商类型", "/supplyType/queryAllSupplyType"); // 初始化select2, 第一个参数是class的名字, 第二个参数是select2的提示语, 第三个参数是select2的查询url
 });
 
-/*
-$("#addSupplyType").change(function(){
-    var div = $("#addModelDiv");
-    var select = $("#addsupplyType").select2("val");
-    div.css("display","block");
-    $('#addCarModel').html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
-    initSelect2("carModel", "请选择车型", "/carModel/queryByBrandId/"+ select);
-});
-$("#addSupplyType").change(function(){
-    var div = $("#editModelDiv");
-    var select = $("#addsupplyType").select2("val");
-    div.css("display","block");
-    $('#editCarModel').html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
-    initSelect2("carModel", "请选择车型", "/carModel/queryByBrandId/"+select);
-});*/
 
 // 模糊查询
 function blurredQuery(){
@@ -37,7 +23,7 @@ function showEdit(){
         $("#editButton").removeAttr("disabled");
         var supply = row[0];
         $('#editSupplyType').html('<option value="' + supply.supplyType.supplyTypeId + '">' + supply.supplyType.supplyTypeName + '</option>').trigger("change");
-        /*$('#editCompanyName').html('<option value="' + supply.company.companyId + '">' + supply.company.companyName + '</option>').trigger("change");*/
+        $('#editCompanyName').html('<option value="' + supply.company.companyId + '">' + supply.company.companyName + '</option>').trigger("change");
         $("#editForm").fill(supply);
         validator('editForm');
     }else{
@@ -56,18 +42,6 @@ function showAdd(){
     $("#addButton").removeAttr("disabled");
     validator('addForm'); // 初始化验证
 }
-
-/*$("#bankAccountNumber").change(function(){
-    alert("1");
-    var account = $("addForm.bankAccount.account").val();
-    alert("2");
-    var reg = /^\d{19}$/g;   // 以19位数字开头，以19位数字结尾
-    if( !reg.test(account) )
-    {
-        alert("格式错误，应该是19位数字！");
-    }
-
-})*/
 
 function validator(formId) {
     $('#' + formId).bootstrapValidator({
@@ -319,49 +293,22 @@ function openStatusFormatter(index, row) {
 
 }
 
-//冻结状态
-function inactive(supplyId) {
-    $.post("/supply/statusOperate?supplyId="+ supplyId + "&" + "supplyStatus=" + 'N',
-        function(data){
-            if(data.result == 'success'){
-                $('#table').bootstrapTable("refresh");
-                swal({
-                    title:"",
-                    text: data.message,
-                    confirmButtonText:"确定", // 提示按钮上的文本
-                    type:"success"})// 提示窗口, 修改成功
-            }else{
-                swal({title:"",
-                    text:"禁用失败",
-                    confirmButtonText:"确认",
-                    type:"error"})
-            }
-        },"json");
-}
-
 //激活状态
-function active(supplyId) {
-    /*$.post(contentPath + "/supply/statusOperate?supplyId=" + supplyId + "&" + "supplyStatus=" + 'N', function (data) {
+function inactive(supplyId) {
+    $.post(contentPath + "/supply/statusOperate?supplyId=" + supplyId + "&" + "supplyStatus=" + "Y", function (data) {
         if (data.result == "success") {
             $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
         }
-    })*/
-    $.post("/supply/statusOperate?supplyId=" + supplyId + "&" + "supplyStatus=" + 'Y',
-        function(data){
-            if(data.result == 'success'){
-                $('#table').bootstrapTable("refresh");
-                swal({
-                    title:"",
-                    text: data.message,
-                    confirmButtonText:"确定", // 提示按钮上的文本
-                    type:"success"})// 提示窗口, 修改成功
-            }else{
-                swal({title:"",
-                    text:"激活失败",
-                    confirmButtonText:"确认",
-                    type:"error"})
-            }
-        },"json");
+    })
+}
+
+//冻结状态
+function active(supplyId) {
+    $.post(contentPath + "/supply/statusOperate?supplyId=" + supplyId + "&" + "supplyStatus=" + 'N', function (data) {
+        if (data.result == "success") {
+            $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
+        }
+    })
 }
 
 /**
