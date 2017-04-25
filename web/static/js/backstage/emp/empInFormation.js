@@ -28,6 +28,7 @@ function showEdit(){
     initDatePicker('editForm', 'userBirthday'); // 初始化时间框, 第一参数是form表单id, 第二参数是input的name
     var row =  $('table').bootstrapTable('getSelections');
     if(row.length >0) {
+        console.log(row)
         $("#editWindow").modal('show'); // 显示弹窗
         $("#editButton").removeAttr("disabled");
         var emp = row[0];
@@ -121,10 +122,6 @@ function validator(formId) {
             userSalary: {
                 message: '底薪验证失败',
                 validators: {
-                    stringLength: {
-                        min:0,
-                        message:'底薪要 >= 0'
-                    },
                     notEmpty: {
                         message: '底薪不能为空'
                     }

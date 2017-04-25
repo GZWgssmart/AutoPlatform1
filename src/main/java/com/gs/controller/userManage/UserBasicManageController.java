@@ -53,11 +53,10 @@ public class UserBasicManageController {
     @RequestMapping(value = "addUser", method = RequestMethod.POST)
     public ControllerResult addUser(User user) {
         logger.info("添加人员");
-
+        user.setUserId(UUIDUtil.uuid());
         UserRole userRole = new UserRole();
         userRole.setUserId(user.getUserId());
         userRole.setRoleId(user.getRoleId());
-
         userService.insert(user);
         userRoleService.insert(userRole);
         return ControllerResult.getSuccessResult("添加成功");
@@ -70,12 +69,11 @@ public class UserBasicManageController {
     @RequestMapping(value = "updateUser", method =RequestMethod.POST)
     public ControllerResult updateUser(User user) {
         UserRole userRole = new UserRole();
-        userRole.setUserId(user.getUserId());
         userRole.setRoleId(user.getRoleId());
 
         userService.update(user);
         userRoleService.update(userRole);
-        logger.info("修改成功：" + user.toString());
+        logger.info("修改成功");
         return ControllerResult.getSuccessResult("修改成功");
     }
 

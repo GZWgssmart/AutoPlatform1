@@ -42,7 +42,7 @@
         insert into t_user(userId, userEmail, userPhone, userPwd, userIdentity, userName,
               userGender,userBirthday, userAddress, qqOpenId, weChatOpenId, weiboOpenId,
               userDes, companyId, userSalary, userCreatedTime, userStatus)
-            values(uuid(), #{userEmail}, #{userPhone}, #{userPwd}, #{userIdentity},
+            values(#{userId}, #{userEmail}, #{userPhone}, #{userPwd}, #{userIdentity},
               #{userName}, #{userGender},#{userBirthday}, #{userAddress}, #{qqOpenId},
               #{weChatOpenId}, #{weiboOpenId}, #{userDes}, #{companyId}, #{userSalary}, now(),'Y');
       ]]>

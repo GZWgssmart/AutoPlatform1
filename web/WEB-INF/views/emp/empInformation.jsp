@@ -143,7 +143,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">底薪：</label>
                         <div class="col-sm-7">
-                            <input id="addUserSalary" type="number" name="userSalary" placeholder="请输入底薪" class="form-control">
+                            <input id="addUserSalary" type="number" min="0" name="userSalary" placeholder="请输入底薪" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
@@ -176,6 +176,7 @@
                     <div class="modal-header" style="overflow:auto;">
                         <p>修改人员信息</p>
                     </div>
+                    <input type="hidden" define="emp.userId" name="userId" class="form-control"/>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">姓名：</label>
                         <div class="col-sm-7">
