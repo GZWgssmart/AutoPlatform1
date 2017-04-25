@@ -25,4 +25,7 @@ public interface MaintainFixDAO extends BaseDAO<String, MaintainFix>{
      * 分页查询被禁用的记录
      */
     public int countByDisable();
+
+    public List<MaintainFix> queryByPagerMaintain(Pager pager);
+
 }

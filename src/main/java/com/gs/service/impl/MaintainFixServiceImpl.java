@@ -18,8 +18,14 @@ import java.util.List;
 @Service
 public class MaintainFixServiceImpl implements MaintainFixService {
 
+
 	@Resource
 	private MaintainFixDAO maintainFixDAO;
+
+	@Override
+	public List<MaintainFix> queryByPagerMaintain(Pager pager) {
+		return maintainFixDAO.queryByPagerMaintain(pager);
+	}
 
 	public int insert(MaintainFix maintainFix) { return maintainFixDAO.insert(maintainFix); }
 	public int batchInsert(List<MaintainFix> list) { return maintainFixDAO.batchInsert(list); }
@@ -36,7 +42,6 @@ public class MaintainFixServiceImpl implements MaintainFixService {
 	public List<MaintainFix> queryAll(String status) {
 		return maintainFixDAO.queryAll();
 	}
-
 	public List<MaintainFix> queryByStatus(String status) { return maintainFixDAO.queryAll(status); }
 	public MaintainFix query(MaintainFix maintainFix) { return maintainFixDAO.query(maintainFix); }
 	public MaintainFix queryById(String id) { return maintainFixDAO.queryById(id); }
@@ -60,4 +65,5 @@ public class MaintainFixServiceImpl implements MaintainFixService {
 	public int countByBlurred(MaintainFix maintainFix) {
 		return 0;
 	}
+
 }

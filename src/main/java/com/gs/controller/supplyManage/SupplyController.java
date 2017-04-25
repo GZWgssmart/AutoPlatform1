@@ -94,8 +94,6 @@ public class SupplyController {
     @RequestMapping(value = "addSupply", method = RequestMethod.POST)
     public ControllerResult addSupply(Supply supply) {
         if (supply != null && !supply.equals("")) {
-            supply.setCompanyId("c515f5d623e011e7a97af832e40312b3");
-            System.out.println(supply.toString());
             supplyService.insert(supply);
             logger.info("添加成功");
             return ControllerResult.getSuccessResult("添加成功");
@@ -113,7 +111,6 @@ public class SupplyController {
     @RequestMapping(value = "updateSupply", method = RequestMethod.POST)
     public ControllerResult updateSupply(Supply supply) {
         if (supply != null && !supply.equals("")) {
-            supply.setCompanyId("c515f5d623e011e7a97af832e40312b3");
             supplyService.update(supply);
             logger.info("修改成功");
             return ControllerResult.getSuccessResult("修改成功");

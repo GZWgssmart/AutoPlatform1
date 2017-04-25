@@ -11,12 +11,12 @@
     <result column="maintainDes" property="maintainDes" jdbcType="VARCHAR" />
     <result column="companyId" property="companyId" jdbcType="VARCHAR" />
     <result column="maintainStatus" property="maintainStatus" jdbcType="VARCHAR" />
+    <association property="company" javaType="com.gs.bean.Company">
+      <id property="companyId" column="companyId"/>
+      <result property="companyName" column="companyName"/>
+    </association>
   </resultMap>
 
-
-  <!--
-    查询所有的采购记录
--->
   <select id="queryAll" resultMap="MaintainFixMap">
     <![CDATA[
             select * from auto_platform.t_maintain_fix
@@ -24,54 +24,70 @@
   </select>
 
   <!-- 分页查询 -->
-  <select id="queryByPager" resultMap="MaintainFixMap" parameterType="com.gs.common.bean.Pager">
+  <!--<select id="queryByPager" resultMap="MaintainFixMap" parameterType="com.gs.common.bean.Pager">-->
+    <!--<![CDATA[-->
+      <!--select * from auto_platform.t_maintain_fix u where 1 = 1 and u.maintainStatus = 'Y'-->
+    <!--]]>-->
+    <!--limit #{beginIndex}, #{pageSize};-->
+  <!--</select>-->
+
+  <select id="queryByPager" resultType="list" resultMap="MaintainFixMap" parameterType="com.gs.common.bean.Pager">
     <![CDATA[
-      select * from auto_platform.t_maintain_fix u where 1 = 1 and u.maintainStatus = 'Y'
-    ]]>
-    limit #{beginIndex}, #{pageSize};
+			select mf.*, c.companyName from t_maintain_fix  mf, t_company  c where mf.companyId = c.companyId and mf.maintainOrFix = '维修' limit #{beginIndex}, #{pageSize}
+		]]>
   </select>
 
-  <!-- 查询有多少配件销售采购信息 -->
-  <select id="count" resultType="int" >
+
+  <select id="queryByPagerMaintain" resultType="list" resultMap="MaintainFixMap" parameterType="com.gs.common.bean.Pager">
     <![CDATA[
-      select count(*) from auto_platform.t_maintain_fix u where 1 =1 and u.maintainStatus = 'Y'
+            select mf.*, c.companyName from t_maintain_fix  mf, t_company  c where mf.companyId = c.companyId and mf.maintainOrFix = '保养' limit #{beginIndex}, #{pageSize}
     ]]>
   </select>
+
+  <select id="count" resultType="int">
+    <![CDATA[
+			select count(maintainStatus) from t_maintain_fix mf  where mf.maintainStatus = 'Y'
+		]]>
+  </select>
+
+  <!--<select id="count" resultType="int" >-->
+    <!--<![CDATA[-->
+      <!--select count(*) from auto_platform.t_maintain_fix u where 1 =1 and u.maintainStatus = 'Y'-->
+    <!--]]>-->
+  <!--</select>-->
 
   <!--
       添加采购记录
   -->
-  <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="MaintainFix">
-    <![CDATA[
-            INSERT INTO auto_platform.t_maintain_fix
-            (maintainId,maintainName, maintainHour, maintainMoney, maintainManhourFee,maintainOrFix, maintainDes,companyId, maintainStatus)
-            VALUES
-            (uuid(),#{maintainName},#{maintainHour},#{maintainMoney},#{maintainManhourFee},#{maintainOrFix},#{maintainDes},#{companyId},'Y')
-        ]]>
-  </insert>
+  <!--<insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="MaintainFix">-->
+    <!--<![CDATA[-->
+            <!--INSERT INTO auto_platform.t_maintain_fix-->
+            <!--(maintainId,maintainName, maintainHour, maintainMoney, maintainManhourFee,maintainOrFix, maintainDes,companyId, maintainStatus)-->
+            <!--VALUES-->
+            <!--(uuid(),#{maintainName},#{maintainHour},#{maintainMoney},#{maintainManhourFee},#{maintainOrFix},#{maintainDes},#{companyId},'Y')-->
+        <!--]]>-->
+  <!--</insert>-->
 
   <!--
       更新采购记录信息
   -->
-  <update id="update" keyProperty="id" parameterType="java.util.Map">
-    <![CDATA[
-        UPDATE auto_platform.t_maintain_fix
-        SET maintainName=#{maintainName}, maintainHour=#{maintainHour},
-        maintainMoney=#{maintainMoney},maintainManhourFee=#{maintainManhourFee},
-        maintainOrFix=#{maintainOrFix},maintainDes=#{maintainDes},
-        companyId=#{companyId}
-        WHERE maintainId=#{maintainId}
-        ]]>
-  </update>
+  <!--<update id="update" keyProperty="id" parameterType="java.util.Map">-->
+    <!--<![CDATA[-->
+        <!--UPDATE auto_platform.t_maintain_fix-->
+        <!--SET maintainName=#{maintainName}, maintainHour=#{maintainHour},-->
+        <!--maintainMoney=#{maintainMoney},maintainManhourFee=#{maintainManhourFee},-->
+        <!--maintainOrFix=#{maintainOrFix},maintainDes=#{maintainDes},-->
+        <!--companyId=#{companyId}-->
+        <!--WHERE maintainId=#{maintainId}-->
+        <!--]]>-->
+  <!--</update>-->
 
-  <!--
-      根据id删除对应的配件采购记录
-  -->
-  <delete id="deleteById">
-    <![CDATA[
-        DELETE FROM auto_platform.t_maintain_fix WHERE maintainId=#{maintainId}
-        ]]>
-  </delete>
+
+  <!--<delete id="deleteById">-->
+    <!--<![CDATA[-->
+        <!--DELETE FROM auto_platform.t_maintain_fix WHERE maintainId=#{maintainId}-->
+        <!--]]>-->
+  <!--</delete>-->
 
 
   <!--
