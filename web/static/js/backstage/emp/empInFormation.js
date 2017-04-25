@@ -3,7 +3,7 @@ $(function () {
 
     // 初始化select2, 第一个参数是class的名字, 第二个参数是select2的提示语, 第三个参数是select2的查询url
     initSelect2("userRole", "请选择角色", "/role/role2CheckBox");
-    // initSelect2("userCompany", "请选择所属公司", "/role/role2CheckBox");
+    initSelect2("userCompany", "请选择所属公司", "/company/queryAllCompany");
 });
 
 function addSubmit() {
@@ -24,15 +24,8 @@ function editSubmit() {
     }
 }
 
-function showAvailable(){
-    alert("可用");
-}
-
-function showDisable(){
-    alert("禁用");
-}
-
 function showEdit(){
+    initDatePicker('editForm', 'userBirthday'); // 初始化时间框, 第一参数是form表单id, 第二参数是input的name
     var row =  $('table').bootstrapTable('getSelections');
     if(row.length >0) {
         $("#editWindow").modal('show'); // 显示弹窗
@@ -87,14 +80,6 @@ function validator(formId) {
                     }
                 }
             },
-            // company: {
-            //     message: '所属公司验证失败',
-            //     validators: {
-            //         notEmpty: {
-            //             message: '所属公司不能为空'
-            //         }
-            //     }
-            // },
             userAddress: {
                 message: '地址验证失败',
                 validators: {
@@ -193,7 +178,8 @@ function validator(formId) {
 }
 
 function formSubmit(url, formId, winId) {
-    $.post(url, $("#" + formId).serialize(),
+    $.post(url,
+        $("#" + formId).serialize(),
         function (data) {
             if (data.result == "success") {
                 $('#' + winId).modal('hide');
@@ -201,12 +187,18 @@ function formSubmit(url, formId, winId) {
                     title:"",
                     text: data.message,
                     confirmButtonText:"确定", // 提示按钮上的文本
-                    type:"success"})// 提示窗口, 修改成功
+                    type:"success"
+                })// 提示窗口, 修改成功
                 $('#table').bootstrapTable('refresh');
                 if(formId == 'addForm'){
                     $("input[type=reset]").trigger("click"); // 移除表单中填的值
                     $('#addForm').data('bootstrapValidator').resetForm(true); // 移除所有验证样式
                     $("#addButton").removeAttr("disabled"); // 移除不可点击
+                    $("#" + formId).data('bootstrapValidator').destroy(); // 销毁此form表单
+                    $('#' + formId).data('bootstrapValidator', null);// 此form表单设置为空
+                    // 设置select2的值为空
+                    $("#addUserRole").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
+                    $("#addUserCompany").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
                 }
             } else if (data.result == "fail") {
                 swal({title:"",

@@ -2,23 +2,33 @@ package com.gs.controller.userManage;
 
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.User;
+import com.gs.bean.UserRole;
 import com.gs.common.bean.ComboBox4EasyUI;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
+import com.gs.common.util.UUIDUtil;
+import com.gs.service.UserRoleService;
 import com.gs.service.UserService;
 import org.activiti.engine.impl.Page;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import sun.plugin.util.UIUtil;
 
 import javax.annotation.Resource;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by 小蜜蜂 on 2017-04-19.
@@ -33,6 +43,9 @@ public class UserBasicManageController {
     @Resource
     private UserService userService;
 
+    @Resource
+    protected UserRoleService userRoleService;
+
     /**
      * 添加人员基本信息 返回json
      */
@@ -40,7 +53,13 @@ public class UserBasicManageController {
     @RequestMapping(value = "addUser", method = RequestMethod.POST)
     public ControllerResult addUser(User user) {
         logger.info("添加人员");
+
+        UserRole userRole = new UserRole();
+        userRole.setUserId(user.getUserId());
+        userRole.setRoleId(user.getRoleId());
+
         userService.insert(user);
+        userRoleService.insert(userRole);
         return ControllerResult.getSuccessResult("添加成功");
     }
 
@@ -50,7 +69,12 @@ public class UserBasicManageController {
     @ResponseBody
     @RequestMapping(value = "updateUser", method =RequestMethod.POST)
     public ControllerResult updateUser(User user) {
+        UserRole userRole = new UserRole();
+        userRole.setUserId(user.getUserId());
+        userRole.setRoleId(user.getRoleId());
+
         userService.update(user);
+        userRoleService.update(userRole);
         logger.info("修改成功：" + user.toString());
         return ControllerResult.getSuccessResult("修改成功");
     }
@@ -90,10 +114,10 @@ public class UserBasicManageController {
     }
 
     /**
-     * 查询全部人员基本信息   (若是有什么问题就用这个方法测试)
+     * 查询全部人员基本信息  下拉列表
      */
     @ResponseBody
-    @RequestMapping(value = "queryAll", method = RequestMethod.POST)
+    @RequestMapping(value = "queryAll", method = RequestMethod.GET)
     public List<ComboBox4EasyUI> queryAll() {
         List<User> users = userService.queryAll();
         List<ComboBox4EasyUI> combo = new ArrayList<ComboBox4EasyUI>();
@@ -104,6 +128,13 @@ public class UserBasicManageController {
             combo.add(c);
         }
         return combo;
+    }
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        dateFormat.setLenient(false);
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
     }
 
 }
