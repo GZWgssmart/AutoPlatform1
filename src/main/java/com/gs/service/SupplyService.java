@@ -15,22 +15,4 @@ import java.util.List;
 */
 public interface SupplyService extends BaseService<String, Supply>{
 
-    /**
-     * 分页查询被禁用的记录
-     */
-    public List<Supply> queryByPagerDisable(Pager pager);
-    /**
-     * 分页查询被禁用的记录
-     */
-    public int countByDisable();
-
-    /**
-     * 模糊查询
-     */
-    public List<Supply> blurredQuery(Pager pager, String cloumn, String value);
-    /**
-     * 模糊查询的记录数
-     */
-    public int countByBlurred();
-
 }

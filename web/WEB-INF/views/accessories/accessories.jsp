@@ -29,8 +29,9 @@
             <thead>
             <tr>
                 <th data-radio="true" data-field="status"></th>
-                <th data-field="companyId">所属公司名称</th>
-                <th data-field="accTypeId">配件所属类别</th>
+                <th data-field="company.companyName">所属公司名称</th>
+                <th data-field="accessoriesType.accTypeName">配件所属类别</th>
+                <th data-field="supply.supplyName">所属供应商</th>
                 <th data-field="accName">配件名称</th>
                 <th data-field="accCommodityCode">配件商品条码</th>
                 <th data-field="accDes">配件描述</th>
@@ -89,15 +90,24 @@
                 </div>
                 <br/>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">公司名称：</label>
+                    <label class="col-sm-3 control-label">所属公司：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="companyId" placeholder="请输入公司名称" class="form-control">
+                        <select id="addCompany" class="js-example-tags company" name="companyId" style="width:100%">
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">供应商：</label>
+                    <div class="col-sm-7">
+                        <select id="addSupply" class="js-example-tags supply" name="supplyId" style="width:100%">
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">配件所属类别：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="accTypeId" placeholder="请输入配件所属类别" class="form-control">
+                        <select id="addAccType" class="js-example-tags accType" name="accTypeId" style="width:100%">
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">
@@ -165,17 +175,24 @@
                 </div>
                 <br/>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">公司名称：</label>
+                    <label class="col-sm-3 control-label">所属公司：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="companyId" define="Accessories.companyId" placeholder="请输入公司名称"
-                               class="form-control">
+                        <select id="editCompany" class="js-example-tags company" define="Accessories.companyId" name="companyId" style="width:100%">
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">供应商：</label>
+                    <div class="col-sm-7">
+                        <select id="editSupply" class="js-example-tags supply" define="Accessories.supplyId" name="supplyId" style="width:100%">
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">配件所属类别：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="accTypeId" define="Accessories.accTypeId" placeholder="请输入配件所属类别"
-                               class="form-control">
+                        <select id="editAccType" class="js-example-tags accType" define="Accessories.accTypeId" name="accTypeId" style="width:100%">
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">

@@ -32,13 +32,19 @@ public class CarModelController {
     private CarModelService carModelService;
 
     @ResponseBody
-    @RequestMapping(value = "queryAllCarModel")
-    public List<CarModel> queryAll(){
+    @RequestMapping(value = "queryAllCarModel",method = RequestMethod.GET)
+    public List<ComboBox4EasyUI> queryAll(){
         logger.info("查询所有车型");
-        List<CarModel> carModelList = carModelService.queryAll();
-        return carModelList;
+        List<CarModel> carModels = carModelService.queryAll();
+        List<ComboBox4EasyUI> comboxs = new ArrayList<ComboBox4EasyUI>();
+        for(CarModel c : carModels){
+            ComboBox4EasyUI comboBox4EasyUI = new ComboBox4EasyUI();
+            comboBox4EasyUI.setId(c.getModelId());
+            comboBox4EasyUI.setText(c.getModelName());
+            comboxs.add(comboBox4EasyUI);
+        }
+        return comboxs;
     }
-
 
     @ResponseBody
     @RequestMapping(value="queryByPagerCarModel",method = RequestMethod.GET)

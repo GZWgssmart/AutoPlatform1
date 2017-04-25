@@ -4,6 +4,10 @@ var contentPath = ''
 //初始化表格
 $(function () {
     initTable('table', '/accInv/queryByPage'); // 初始化表格
+
+    initSelect2("company", "请选择所属公司", "/company/queryAllCompany");
+    initSelect2("accType", "请选择配件分类", "/accType/queryAllAccType");
+    initSelect2("supply", "请选择供应商", "/supply/queryAllSupply");
 });
 
 // 查看全部可用
@@ -16,11 +20,11 @@ function showDisable() {
 }
 
 // 模糊查询
-function blurredQuery(){
+function blurredQuery() {
     var button = $("#ulButton");// 获取模糊查询按钮
     var text = button.text();// 获取模糊查询按钮文本
     var vaule = $("#ulInput").val();// 获取模糊查询输入框文本
-    initTable('table', '/checkin/blurredQuery?text='+text+'&value='+vaule);
+    initTable('table', '/accInv/blurredQuery?text=' + text + '&value=' + vaule);
 }
 
 //显示弹窗
@@ -29,6 +33,9 @@ function showEdit() {
     if (row.length > 0) {
         $("#editWindow").modal('show'); // 显示弹窗
         var ceshi = row[0];
+        $('#editCompany').html('<option value="' + ceshi.company.companyId + '">' + ceshi.company.companyName + '</option>').trigger("change");
+        $('#editAccType').html('<option value="' + ceshi.accessoriesType.accTypeId + '">' + ceshi.accessoriesType.accTypeName + '</option>').trigger("change");
+        $('#editAccType').html('<option value="' + ceshi.supply.supplyId + '">' + ceshi.supply.supplyName + '</option>').trigger("change");
         $("#editForm").fill(ceshi);
         validator('editForm'); // 初始化验证
     } else {
@@ -176,8 +183,18 @@ function validator(formId) {
             },
             accTypeId: {
                 message: '配件分类名称不能为空',
-                notEmpty: {
-                    message: '配件分类名称不能为空'
+                validators: {
+                    notEmpty: {
+                        message: '配件分类名称不能为空'
+                    }
+                }
+            },
+            supplyId: {
+                message: '供应商不能为空',
+                validators: {
+                    notEmpty: {
+                        message: '供应商不能为空'
+                    }
                 }
             },
             accName: {
@@ -231,10 +248,10 @@ function validator(formId) {
         }
     }).on('success.form.bv', function (e) {
         if (formId == "addForm") {
-            formSubmit(contentPath+"/accInv/addAccInv", formId, "addWindow");
+            formSubmit(contentPath + "/accInv/addAccInv", formId, "addWindow");
 
         } else if (formId == "editForm") {
-            formSubmit(contentPath+"/accInv/updateAccInv", formId, "editWindow");
+            formSubmit(contentPath + "/accInv/updateAccInv", formId, "editWindow");
 
         }
     })

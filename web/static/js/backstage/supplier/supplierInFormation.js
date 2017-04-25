@@ -26,16 +26,7 @@ function blurredQuery(){
     var button = $("#ulButton");// 获取模糊查询按钮
     var text = button.text();// 获取模糊查询按钮文本
     var vaule = $("#ulInput").val();// 获取模糊查询输入框文本
-    alert(text)
-    var column;
-    if(text == '供应商/供应商所属公司'){
-        column = 'all'
-    }else if(text == "供应商"){
-        column = 'supplyName';
-    }else if(text =="供应商所属公司"){
-        column = 'companyId';
-    }
-    initTable('table', '/supply/blurredQuery/'+column+'/'+vaule);
+    initTable('table', '/supply/blurredQuery?text='+text+'&value='+vaule);
 }
 
 function showEdit(){
@@ -320,7 +311,7 @@ function formatterStatus(index,row) {
 
 function openStatusFormatter(index, row) {
     /*处理数据*/
-    if (row.supplyStatus == 'N') {
+    if (row.supplyStatus == 'Y') {
         return "&nbsp;&nbsp;<button type='button' class='btn btn-danger' onclick='inactive(\""+row.supplyId+ "\")'>禁用</a>";
     } else {
         return "&nbsp;&nbsp;<button type='button' class='btn btn-success' onclick='active(\""+row.supplyId+ "\")'>激活</a>";

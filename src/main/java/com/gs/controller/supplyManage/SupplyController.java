@@ -1,14 +1,11 @@
 package com.gs.controller.supplyManage;
 
 import ch.qos.logback.classic.Logger;
-import com.gs.bean.AccessoriesBuy;
-import com.gs.bean.Checkin;
-import com.gs.bean.OutgoingType;
 import com.gs.bean.Supply;
 import com.gs.common.bean.ControllerResult;
+import com.gs.common.bean.ComboBox4EasyUI;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
-import com.gs.service.AccessoriesBuyService;
 import com.gs.service.SupplyService;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
@@ -19,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.SimpleFormatter;
 
@@ -36,6 +34,25 @@ public class SupplyController {
     private SupplyService supplyService;
 
     private Logger logger = (Logger) LoggerFactory.getLogger(SupplyController.class);
+
+    /**
+     * 查询全部的供应商信息
+     */
+    @ResponseBody
+    @RequestMapping(value = "queryAllSupply",method = RequestMethod.GET)
+    public List<ComboBox4EasyUI> queryAllSupply(){
+        logger.info("查询所有的供应商信息");
+        List<Supply> supplys = supplyService.queryAll();
+        List<ComboBox4EasyUI> comboxs =  new ArrayList<ComboBox4EasyUI>();
+        for(Supply s : supplys){
+            ComboBox4EasyUI comboBox4EasyUI = new ComboBox4EasyUI();
+            comboBox4EasyUI.setId(s.getSupplyId());
+            comboBox4EasyUI.setText(s.getSupplyName());
+            comboxs.add(comboBox4EasyUI);
+        }
+        return comboxs;
+    }
+
 
     /**
      * 分页查询所有的供应商
@@ -134,21 +151,29 @@ public class SupplyController {
     @RequestMapping(value="blurredQuery", method = RequestMethod.GET)
     public Pager4EasyUI<Supply> blurredQuery(HttpServletRequest request, @Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
         logger.info("供应商记录模糊查询");
-        String column = request.getParameter("column");
+        String text = request.getParameter("text");
         String value = request.getParameter("value");
-        if(column != null && value != null) {
+        System.out.print(text+value+"-------------------");
+        if(text != null && text!="") {
             Pager pager = new Pager();
             pager.setPageNo(Integer.valueOf(pageNumber));
             pager.setPageSize(Integer.valueOf(pageSize));
-            pager.setTotalRecords(supplyService.countByBlurred());
-            List<Supply> supplys;
-            if(column.equals("all")){
-                String column1 = "supplyName";
-                String column2 = "companyId";
-                supplys = supplyService.blurredQuery(pager, column, value);
-            }else{
-                supplys = supplyService.blurredQuery(pager, column, value);
+            List<Supply> supplys = null;
+            Supply supply = new Supply();
+            if(text.equals("供应商/电话/所属公司")){
+                supply.setSupplyName(value);
+                supply.setSupplyTel(value);
+                supply.setCompanyId(value);
+            }else if(text.equals("供应商")){
+                supply.setSupplyName(value);
+            }else if(text.equals("电话")){
+                supply.setSupplyTel(value);
+            }else if(text.equals("所属公司")){
+                supply.setCompanyId(value);
             }
+            supplys = supplyService.blurredQuery(pager,supply);
+            pager.setTotalRecords(supplyService.countByBlurred(supply));
+            System.out.print(supplys);
             return new Pager4EasyUI<Supply>(pager.getTotalRecords(), supplys);
         }else{
             return null;

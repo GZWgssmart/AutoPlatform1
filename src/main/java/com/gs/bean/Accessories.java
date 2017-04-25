@@ -35,6 +35,12 @@ public class Accessories {
 
     private String accStatus;
 
+    private Company company;
+
+    private AccessoriesType accessoriesType;
+
+    private Supply supply;
+
     public String getAccId() {
         return accId;
     }
@@ -163,6 +169,30 @@ public class Accessories {
         this.accStatus = accStatus;
     }
 
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
+    }
+
+    public AccessoriesType getAccessoriesType() {
+        return accessoriesType;
+    }
+
+    public void setAccessoriesType(AccessoriesType accessoriesType) {
+        this.accessoriesType = accessoriesType;
+    }
+
+    public Supply getSupply() {
+        return supply;
+    }
+
+    public void setSupply(Supply supply) {
+        this.supply = supply;
+    }
+
     @Override
     public String toString() {
         return "Accessories{" +
@@ -182,6 +212,9 @@ public class Accessories {
                 ", accTypeId='" + accTypeId + '\'' +
                 ", companyId='" + companyId + '\'' +
                 ", accStatus='" + accStatus + '\'' +
+                ", company=" + company +
+                ", accessoriesType=" + accessoriesType +
+                ", supply=" + supply +
                 '}';
     }
 }

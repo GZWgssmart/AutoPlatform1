@@ -53,16 +53,6 @@ public class SupplyServiceImpl implements SupplyService {
 		return supplyDAO.countByDisable();
 	}
 
-	@Override
-	public List<Supply> blurredQuery(Pager pager, String cloumn, String value) {
-		return null;
-	}
-
-	@Override
-	public int countByBlurred() {
-		return 0;
-	}
-
 	public List<Supply> blurredQuery(Pager pager, Supply supply) {
 		return null;
 	}

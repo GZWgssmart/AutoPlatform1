@@ -62,7 +62,7 @@ public class AccessoriesInventoryController {
         List<ComboBox4EasyUI> comboxs = new ArrayList<ComboBox4EasyUI>();
         for(Accessories c : accessories){
             ComboBox4EasyUI comboBox4EasyUI = new ComboBox4EasyUI();
-            comboBox4EasyUI.setId(c.getAccName());
+            comboBox4EasyUI.setId(c.getAccId());
             comboBox4EasyUI.setText(c.getAccName());
             comboxs.add(comboBox4EasyUI);
         }
