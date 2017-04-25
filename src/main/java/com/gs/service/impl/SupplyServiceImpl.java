@@ -54,7 +54,7 @@ public class SupplyServiceImpl implements SupplyService {
 	}
 
 	@Override
-	public List<Supply> blurredQuery(Pager pager, String cloumn, String value) {
+	public List<Checkin> blurredQuery(Pager pager, Supply supply) {
 		return null;
 	}
 

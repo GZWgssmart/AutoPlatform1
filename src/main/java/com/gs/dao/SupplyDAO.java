@@ -1,7 +1,9 @@
 package com.gs.dao;
 
+import com.gs.bean.Checkin;
 import com.gs.bean.Supply;
 import com.gs.common.bean.Pager;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -24,5 +26,15 @@ public interface SupplyDAO extends BaseDAO<String, Supply>{
      * 分页查询被禁用的记录
      */
     public int countByDisable();
+
+    /**
+     * 模糊查询
+     */
+    public List<Supply> blurredQuery(@Param("pager")Pager pager, @Param("supply")Supply supply);
+
+    /**
+     * 模糊查询的记录数
+     */
+    public int countByBlurred(@Param("supply")Supply supply);
 
 }

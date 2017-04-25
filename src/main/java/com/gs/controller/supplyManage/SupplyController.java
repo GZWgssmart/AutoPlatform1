@@ -134,21 +134,29 @@ public class SupplyController {
     @RequestMapping(value="blurredQuery", method = RequestMethod.GET)
     public Pager4EasyUI<Supply> blurredQuery(HttpServletRequest request, @Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
         logger.info("供应商记录模糊查询");
-        String column = request.getParameter("column");
+        String text = request.getParameter("text");
         String value = request.getParameter("value");
-        if(column != null && value != null) {
+        System.out.print(text+value+"-------------------");
+        if(text != null && text!="") {
             Pager pager = new Pager();
             pager.setPageNo(Integer.valueOf(pageNumber));
             pager.setPageSize(Integer.valueOf(pageSize));
-            pager.setTotalRecords(supplyService.countByBlurred());
-            List<Supply> supplys;
-            if(column.equals("all")){
-                String column1 = "supplyName";
-                String column2 = "companyId";
-                supplys = supplyService.blurredQuery(pager, column, value);
-            }else{
-                supplys = supplyService.blurredQuery(pager, column, value);
+            List<Supply> supplys = null;
+            Supply supply = new Supply();
+            if(text.equals("供应商/电话/所属公司")){
+                supply.setSupplyName(value);
+                supply.setSupplyTel(value);
+                supply.setCompanyId(value);
+            }else if(text.equals("供应商")){
+                supply.setSupplyName(value);
+            }else if(text.equals("电话")){
+                supply.setSupplyTel(value);
+            }else if(text.equals("所属公司")){
+                supply.setCompanyId(value);
             }
+            supplys = supplyService.blurredQuery(pager,supply);
+            pager.setTotalRecords(supplyService.countByBlurred(supply));
+            System.out.print(supplys);
             return new Pager4EasyUI<Supply>(pager.getTotalRecords(), supplys);
         }else{
             return null;

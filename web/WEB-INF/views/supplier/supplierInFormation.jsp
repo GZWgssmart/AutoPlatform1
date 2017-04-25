@@ -83,13 +83,17 @@
             <div class="input-group" style="width:300px;float:left;padding:0;margin:0 0 0 -1px;">
                 <div class="input-group-btn">
                     <button type="button" id="ulButton" class="btn btn-default" style="border-radius:0px;" data-toggle="dropdown">
-                        供应商/供应商所属公司
+                        供应商/电话/所属公司
                         <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu pull-right">
+                        <li><a onclick="onclikLi(this)"> 供应商/电话/所属公司</a></li>
+                        <li class="divider"></li>
                         <li><a onclick="onclikLi(this)">供应商</a></li>
                         <li class="divider"></li>
-                        <li><a onclick="onclikLi(this)">供应商所属公司</a></li>
+                        <li><a onclick="onclikLi(this)">电话</a></li>
+                        <li class="divider"></li>
+                        <li><a onclick="onclikLi(this)">所属公司</a></li>
                         <li class="divider"></li>
                         <li><a onclick="onclikLi(this)"></a></li>
                     </ul>
