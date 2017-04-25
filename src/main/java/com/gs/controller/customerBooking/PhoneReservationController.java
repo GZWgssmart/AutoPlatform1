@@ -30,7 +30,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/appointment")
 public class PhoneReservationController {
-    private Logger logger = (Logger) LoggerFactory.getLogger(CheckinController.class);
+    private Logger logger = (Logger) LoggerFactory.getLogger(PhoneReservationController.class);
 
     @Resource
     private AppointmentService appointmentService;
@@ -73,15 +73,12 @@ public class PhoneReservationController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "addApp",method = RequestMethod.POST)
+    @RequestMapping(value = "add",method = RequestMethod.POST)
     public ControllerResult add(Appointment appointment){
-        if (appointment != null && !appointment.equals("")) {
-            logger.info("添加电话预约");
+            appointment.setCompanyId("c515f5d623e011e7a97af832e40312b3");
             appointmentService.insert(appointment);
+            logger.info("添加电话预约");
             return ControllerResult.getSuccessResult("添加成功");
-        }else {
-            return ControllerResult.getFailResult("添加失败，请输入必要的信息");
-        }
     }
 
     /**

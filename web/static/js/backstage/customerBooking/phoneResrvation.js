@@ -1,29 +1,27 @@
 var contentPath='';
 $(function () {
     initTable('table', '/appointment/queryByPager'); // 初始化表格
-});
 
-
-$('#addArriveTime').datetimepicker({ // 初始化添加框中的时间框
-    language: 'zh-CN',
-    format: 'yyyy-mm-dd hh:ii'
+    initSelect2("carBrand", "请选择品牌", "/carBrand/queryAllCarBrand");
+    initSelect2("carColor", "请选择颜色", "/carColor/queryAllCarColor");
+    initSelect2("carModel", "请选择车型", "/carModel/queryAllCarModel");
+    initSelect2("carPlate", "请选择车牌", "/carPlate/queryAllCarPlate");
 });
-
-$('#appCreatedTime').datetimepicker({ // 初始化添加框中的时间框
-    language: 'zh-CN',
-    format: 'yyyy-mm-dd hh:ii'
+// 这个方法别看
+$("#addCarBrand").change(function(){
+    var div = $("#addModelDiv");
+    var select = $("#addCarBrand").select2("val");
+    div.css("display","block");
+    $('#addCarModel').html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
+    initSelect2("carModel", "请选择车型", "/carModel/queryByBrandId/"+ select);
 });
-$('#addCheckinCreatedTime').datetimepicker({// 初始化添加框中的时间框
-    language: 'zh-CN',
-    format: 'yyyy-mm-dd hh:ii'
-});
-$('#editArriveTime').datetimepicker({// 初始化修改框中的时间框
-    language: 'zh-CN',
-    format: 'yyyy-mm-dd hh:ii'
-});
-$('#editCheckinCreatedTime').datetimepicker({// 初始化修改框中的时间框
-    language: 'zh-CN',
-    format: 'yyyy-mm-dd hh:ii'
+// 这个别看
+$("#editCarBrand").change(function(){
+    var div = $("#editModelDiv");
+    var select = $("#editCarBrand").select2("val");
+    div.css("display","block");
+    $('#editCarModel').html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
+    initSelect2("carModel", "请选择车型", "/carModel/queryByBrandId/"+select);
 });
 
 // 激活或禁用
@@ -85,6 +83,35 @@ function active(id) {
         },"json");
 }
 
+$('#addArriveTime').datetimepicker({
+    minView: "month", //选择日期后，不会再跳转去选择时分秒
+    language: 'zh-CN',
+    format: 'yyyy-mm-dd',
+    todayBtn: 1,
+    autoclose: 1,
+});
+$('#addAppCreatedTime').datetimepicker({
+    minView: "month", //选择日期后，不会再跳转去选择时分秒
+    language: 'zh-CN',
+    format: 'yyyy-mm-dd',
+    todayBtn: 1,
+    autoclose: 1,
+});
+$('#editArriveTime').datetimepicker({
+    minView: "month", //选择日期后，不会再跳转去选择时分秒
+    language: 'zh-CN',
+    format: 'yyyy-mm-dd',
+    todayBtn: 1,
+    autoclose: 1,
+});
+$('#editAppCreatedTime').datetimepicker({
+    minView: "month", //选择日期后，不会再跳转去选择时分秒
+    language: 'zh-CN',
+    format: 'yyyy-mm-dd',
+    todayBtn: 1,
+    autoclose: 1,
+});
+
 // 查看全部可用
 function showAvailable(){
     initTable('table', '/appointment/queryByPager');
@@ -93,11 +120,31 @@ function showAvailable(){
 function showDisable(){
     initTable('table', '/appointment/queryByPagerDisable');
 }
-
+// 选择预约记录
+function checkApp() {
+    var row = $("#appTable").bootstrapTable('getSelections');
+    if (row.length != 1) {
+        swal({title:"",
+            text:"只能选择一条数据",
+            confirmButtonText:"确认",
+            type:"error"})
+        return false;
+    } else {
+        $("#appWindow").modal('hide');
+        var appointment = row[0];
+        $("#addUserName").val(appointment.userName);
+        $("#addUserPhone").val(appointment.userPhone);
+        $('#addCarBrand').html('<option value="' + appointment.brand.brandId + '">' + appointment.brand.brandName + '</option>').trigger("change");
+        $('#addCarColor').html('<option value="' + appointment.color.colorId + '">' + appointment.color.colorName + '</option>').trigger("change");
+        $('#addCarModel').html('<option value="' + appointment.model.modelId + '">' + appointment.model.modelName + '</option>').trigger("change");
+        $('#addCarPlate').html('<option value="' + appointment.plate.plateId + '">' + appointment.plate.plateName + '</option>').trigger("change");
+        $("#addMaintainOrFix").val(appointment.maintainOrFix);
+        $("#addWindow").modal('show');
+    }
+}
 function showEdit(){
-    initDateTimePicker('editForm', 'arriveTime'); // 初始化时间框
+    initDateTimePicker('addForm', 'arriveTime');
     var row =  $('#table').bootstrapTable('getSelections');
-    console.log($('#table').bootstrapTable("getOptions"));
     //alert(row)
     if(row.length >0) {
         $("#editWindow").modal('show'); // 显示弹窗
@@ -116,252 +163,190 @@ function showEdit(){
 }
 
 function showAdd(){
-    initDateTimePicker('addForm', 'arriveTime');
     $("#addButton").removeAttr("disabled");
     $("#addWindow").modal('show');
     validator('addForm'); // 初始化验证
 }
 
-function checkEdit(url) {
+function validator(formId) {
+    $('#' + formId).bootstrapValidator({
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            userName: {
+                message: '用户名验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '用户名不能为空'
+                    },
+                    stringLength: {
+                        min: 1,
+                        max: 6,
+                        message: '用户名长度必须在1到6位之间'
+                    }
+                }
+            },
+            userPhone: {
+                message: '用户名验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '用户手机号码不能为空'
+                    },
+                    stringLength: {
+                        min: 11,
+                        max: 11,
+                        message: '手机号码必须为11位'
+                    },
+                    regexp: {
+                        regexp: /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/,
+                        message: '请输入正确的手机号'
+                    }
+                }
+            },
+            brandId: {
+                message: '汽车品牌验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '汽车品牌不能为空'
+                    }
+                }
+            },
+            colorId: {
+                message: '汽车颜色验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '汽车颜色不能为空'
+                    }
+                }
+            },
+            modelId: {
+                message: '汽车车型验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '汽车车型不能为空'
+                    }
+                }
+            },
+            carPlate: {
+                message: '汽车车牌验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '汽车车牌不能为空'
+                    }, stringLength: {
+                        min: 6,
+                        max: 6,
+                        message: '车牌号码必须为6位'
+                    },
+                }
+            },
+            carMileage: {
+                message: '汽车当前行驶里程验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '汽车当前行驶里程不能为空'
+                    }
+                }
+            },
+            plateId: {
+                message: '汽车车牌号验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '汽车车牌号不能为空'
+                    }
+                }
+            },
+            arriveTime: {
+                message: '汽车到店时间验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '汽车到店时间不能为空'
+                    }
+                }
+            },
+            maintainOrFix: {
+                message: '维修|保养验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '维修|保养不能为空'
+                    }
+                }
+            },
+            appCreatedTime: {
+                message: '预约记录时间验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '预约记录时间不能为空'
+                    }
+                }
+            },
+            companyId: {
+                message: '汽修公司验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '汽修公司不能为空'
+                    }
+                }
+            },
+
+        }
+    })
+
+        .on('success.form.bv', function (e) {
+            if (formId == "addForm") {
+                formSubmit("/appointment/add", formId, "addWindow");
+
+            } else if (formId == "update") {
+                formSubmit("/appointment/update", formId, "editWindow");
+
+            }
+        })
+
+}
+
+function addSubmit(){
+    $("#addForm").data('bootstrapValidator').validate();
+    if ($("#addForm").data('bootstrapValidator').isValid()) {
+        $("#addButton").attr("disabled","disabled");
+    } else {
+        $("#addButton").removeAttr("disabled");
+    }
+}
+
+function editSubmit(){
+    $("#editForm").data('bootstrapValidator').validate();
+    if ($("#editForm").data('bootstrapValidator').isValid()) {
+        $("#editButton").attr("disabled","disabled");
+    } else {
+        $("#editButton").removeAttr("disabled");
+    }
+}
+
+function formSubmit(url, formId, winId){
     $.post(url,
-        $("#editForm").serialize(),
+        $("#" + formId).serialize(),
         function (data) {
             if (data.result == "success") {
-                $("#editWindow").modal('hide'); // 关闭指定的窗口
-
-                $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
+                $('#' + winId).modal('hide');
                 swal({
                     title:"",
                     text: data.message,
+                    confirmButtonText:"确定", // 提示按钮上的文本
                     type:"success"})// 提示窗口, 修改成功
+                $('#table').bootstrapTable('refresh');
+                if(formId == 'addForm'){
+                    $("input[type=reset]").trigger("click"); // 移除表单中填的值
+                    $('#addForm').data('bootstrapValidator').resetForm(true); // 移除所有验证样式
+                    $("#addButton").removeAttr("disabled"); // 移除不可点击
+                }
             } else if (data.result == "fail") {
-                swal({
-                    title: "",
-                    text: "",
-                    confirmButtonText: "删除成功",
-                    type: "error"
-                })
+                swal({title:"",
+                    text:"添加失败",
+                    confirmButtonText:"确认",
+                    type:"error"})
+                $("#"+formId).removeAttr("disabled");
             }
-        }, "json"
-    );
+        }, "json");
 }
-
-//前端验证
-$(document).ready(function () {
-
-    $("#addForm").validate({
-        errorElement: 'span',
-        errorClass: 'help-block',
-
-        rules: {
-            userName: {
-                required: true,
-                minlength: 2
-            },
-            userPhone: {
-                required: true,
-                minlength: 2
-            },
-            brandId: {
-                required: true,
-                minlength: 2
-            },
-            colorId: {
-                required: true,
-                minlength: 2
-            },
-            modelId: {
-                required: true,
-                minlength: 2
-            },
-            plateId: {
-                required: true,
-                minlength: 2
-            },
-            carPlate: {
-                required: true,
-                minlength: 2
-            },
-            arriveTime: {
-                required: true,
-            },
-            maintainOrFix: {
-                required: true,
-                minlength: 2
-            },
-            appCreatedTime: {
-                required: true,
-            },
-            companyId: {
-                required: true,
-                minlength: 2
-            },
-            appoitmentStatus: {
-                required: true,
-                minlength: 2
-            },
-        },
-        messages: {
-            userName: "车主姓名",
-            userPhone: "车主电话",
-            brandId: "汽车品牌",
-            colorId: "车辆颜色",
-            modelId: "车辆车型",
-            carPlate: "汽车车牌",
-            plateId: "汽车车牌编号",
-            arriveTime: "到店时间",
-            maintainOrFix: "维修或保养",
-            appCreatedTime: "预约记录创建时间",
-            companyId: "汽车公司编号",
-            appoitmentStatus: "状态"
-        },
-        errorPlacement: function (error, element) {
-            element.next().remove();
-            element.after('<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>');
-            element.closest('.form-group').append(error);
-        },
-        highlight: function (element) {
-            $(element).closest('.form-group').addClass('has-error has-feedback');
-        },
-        success: function (label) {
-            var el = label.closest('.form-group').find("input");
-            el.next().remove();
-            el.after('<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>');
-            label.closest('.form-group').removeClass('has-error').addClass("has-feedback has-success");
-            label.remove();
-        },
-        submitHandler: function (form) {
-            $.post("/appointment/addApp",
-                $("#addForm").serialize(),
-                function (data) {
-                    if (data.result == "success") {
-                        $("#addWindow").modal('hide'); // 关闭指定的窗口
-                        $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
-                        swal({
-                            title: "",
-                            text: data.message,
-                            confirmButtonText: "确定", // 提示按钮上的文本
-                            type: "success"
-                        })// 提示窗口, 修改成功
-                    } else if (data.result == "fail") {
-                        swal({
-                            title: "",
-                            text: "添加失败",
-                            confirmButtonText: "确认",
-                            type: "error"
-                        })
-                    }
-                }, "json"
-            );
-        }
-    })
-
-
-    $("#editForm").validate({
-        errorElement: 'span',
-        errorClass: 'help-block',
-
-        rules: {
-            userName: {
-                required: true,
-                minlength: 2
-            },
-            userPhone: {
-                required: true,
-                minlength: 2
-            },
-            brandId: {
-                required: true,
-                minlength: 2
-            },
-            colorId: {
-                required: true,
-                minlength: 2
-            },
-            modelId: {
-                required: true,
-                minlength: 2
-            },
-            plateId: {
-                required: true,
-                minlength: 2
-            },
-            carPlate: {
-                required: true,
-                minlength: 2
-            },
-            arriveTime: {
-                required: true,
-            },
-            maintainOrFix: {
-                required: true,
-                minlength: 2
-            },
-            appCreatedTime: {
-                required: true,
-            },
-            companyId: {
-                required: true,
-                minlength: 2
-            },
-            appoitmentStatus: {
-                required: true,
-                minlength: 2
-            },
-        },
-        messages: {
-            userName: "车主姓名",
-            userPhone: "车主电话",
-            brandId: "汽车品牌编号",
-            colorId: "车辆颜色",
-            modelId: "车辆车型",
-            carPlate: "汽车车牌",
-            plateId: "汽车车牌编号",
-            arriveTime: "到店时间",
-            maintainOrFix: "维修或保养",
-            appCreatedTime: "预约记录创建时间",
-            companyId: "汽车公司编号",
-            appoitmentStatus: "状态"
-        },
-        errorPlacement: function (error, element) {
-            element.next().remove();
-            element.after('<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>');
-            element.closest('.form-group').append(error);
-        },
-        highlight: function (element) {
-            $(element).closest('.form-group').addClass('has-error has-feedback');
-        },
-        success: function (label) {
-            var el = label.closest('.form-group').find("input");
-            el.next().remove();
-            el.after('<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>');
-            label.closest('.form-group').removeClass('has-error').addClass("has-feedback has-success");
-            label.remove();
-        },
-        submitHandler: function (form) {
-            $.post(contentPath+"/appointment/update",
-                $("#editForm").serialize(),
-                function (data) {
-                    if (data.result == "success") {
-                        $("#editWindow").modal('hide'); // 关闭指定的窗口
-                        $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
-                        swal({
-                            title: "",
-                            text: data.message,
-                            confirmButtonText: "确定", // 提示按钮上的文本
-                            type: "success"
-                        })// 提示窗口, 修改成功
-                    } else if (data.result == "fail") {
-                        swal({
-                            title: "",
-                            text: "修改失败",
-                            confirmButtonText: "确认",
-                            type: "error"
-                        })
-                    }
-                }, "json"
-            );
-        }
-
-    })
-})

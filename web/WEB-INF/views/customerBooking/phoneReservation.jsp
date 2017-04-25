@@ -100,93 +100,86 @@
 </div>
 
 <!-- 添加弹窗 -->
-<div class="modal fade" id="addWindow" aria-hidden="true">
+<div id="addWindow" class="modal fade" style="overflow-y:scroll" data-backdrop="static" >
     <div class="modal-dialog">
         <div class="modal-content">
-            <hr/>
-            <form class="form-horizontal"  id="addForm" method="post">
+            <form role="form" class="form-horizontal" id="addForm">
                 <div class="modal-header" style="overflow:auto;">
-                    <h4>添加登记记录信息</h4>
+                    <h4>添加预约信息</h4>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">车主姓名：</label>
                     <div class="col-sm-7">
-                        <input type="text" id="UserName" placeholder="请输入车主姓名" name="userName" class="form-control"/>
+                        <input type="text" id="addUserName" placeholder="请输入车主姓名" name="userName" class="form-control"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">车主电话：</label>
                     <div class="col-sm-7">
-                        <input type="number" id="userPhone" name="userPhone" placeholder="请输入车主手机号" class="form-control" maxlength="11">
+                        <input type="number" id="addUserPhone" placeholder="请输入车主电话" name="userPhone" class="form-control" style="width:100%"/>
                     </div>
                 </div>
+
                 <div class="form-group">
                     <label class="col-sm-3 control-label">汽车品牌：</label>
                     <div class="col-sm-7">
-                        <input type="number" id="brandId"name="brandId" placeholder="请输入汽车品牌" class="form-control" maxlength="11">
+                        <select id="addCarBrand" class="js-example-tags carBrand" name="brandId" style="width:100%">
+                        </select>
+                    </div>
+                </div>
+                <div id="addModelDiv" style="display: none" class="form-group">
+                    <label class="col-sm-3 control-label">汽车车型：</label>
+                    <div class="col-sm-7">
+                        <select id="addCarModel" class="js-example-tags carModel" name="modelId" style="width:100%">
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">汽车颜色：</label>
                     <div class="col-sm-7">
-                        <input type="number" id="colorId" name="colorId" placeholder="请输入汽车颜色" class="form-control" maxlength="11">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">汽车车型：</label>
-                    <div class="col-sm-7">
-                        <input type="text" id="dmodelId" name="modelId" placeholder="请选择车型" class="form-control">
+                        <select id="addCarColor" class="js-example-tags carColor" name="colorId" style="width:100%">
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">汽车车牌：</label>
                     <div class="col-sm-7">
-                        <input type="text" id="carPlate" name="carPlate"placeholder="请选择汽车车牌" class="form-control">
+                        <select id="addCarPlate" class="js-example-tags carPlate" name="plateId" style="width:100%">
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">汽车车牌号：</label>
+                    <label class="col-sm-3 control-label">车牌号码：</label>
                     <div class="col-sm-7">
-                        <input type="number" id="plateId" name="plateId" placeholder="请输入汽车车牌号" class="form-control">
+                        <input type="text" id="addPlateId" name="carPlate" placeholder="请输入车牌号码" class="form-control"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">到店时间：</label>
-                    <div class="col-sm-7">
-                        <input type="text" name="arriveTime" onclick="getDate('addArriveTime')" id="addArriveTime" placeholder="请选择到店时间" class="form-control">
+                    <div class="col-sm-7">     <!-- 当设置不可编辑后, 会修改颜色, 在min.css里搜索.form-control{background-color:#eee;opacity:1} -->
+                        <input id="addArriveTime" placeholder="请选择到店时间" onclick="getDate('addDatetimepicker')" readonly="true" type="text" name="arriveTime"
+                               class="form-control datetimepicker"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">保养&nbsp;|&nbsp;维修：</label>
                     <div class="col-sm-7">
-                        <select id="MaintainOrFix" class="form-control" name="maintainOrFix">
+                        <select id="addMaintainOrFix" class="js-example-tags form-control" name="maintainOrFix">
                             <option value="保养">保养</option>
                             <option value="维修">维修</option>
                         </select>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">登记时间：</label>
-                    <div class="col-sm-7">
-                        <input type="text" name="appCreatedTime" onclick="getDate('appCreatedTime')"  id="appCreatedTime" placeholder="请选择登记时间" class="form-control">
+                    <div class="col-sm-offset-8">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button class="btn btn-sm btn-success" onclick="addSubmit();" type="button">保 存</button>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">汽修公司名称：</label>
-                    <div class="col-sm-7">
-                        <input type="text" name="companyId" placeholder="请输入汽修公司名称" class="form-control">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default"
-                            data-dismiss="modal">关闭
-                    </button>
-                    <button class="btn btn-sm btn-success" type="submit">保 存</button>
                 </div>
             </form>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+        </div>
+    </div>
+</div>
 
 <!-- 修改弹窗 -->
 <div class="modal fade" id="editWindow" aria-hidden="true" data-backdrop="static">
@@ -241,7 +234,8 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">到店时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="arriveTime" onclick="getDate('arriveTime')" define="Appointment.arriveTime" id="addCheckinCreatedTime" placeholder="请输入到店时间" class="form-control" >
+                        <input id="editArriveTime" placeholder="请选择到店时间" readonly="true" type="text" name="arriveTime"
+                               class="form-control"/>
                     </div>
                 </div>
                 <div class="form-group">
@@ -253,7 +247,9 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">预约记录时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="appCreatedTime" onclick="getDate('editCheckinCreatedTime')" define="Appointment.appCreatedTime" id="editCheckinCreatedTime" placeholder="请输入预约记录时间" class="form-control">
+                        <input id="editAppCreatedTime" placeholder="请选择配件销售时间"
+                               readonly="true" type="text" name="appCreatedTime"
+                               class="form-control datetimepicker"/>
                     </div>
                 </div>
                 <div class="form-group">
@@ -272,7 +268,6 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-
 <script src="/static/js/jquery.min.js"></script>
 <script src="/static/js/bootstrap.min.js"></script>
 <script src="/static/js/bootstrap-table/bootstrap-table.js"></script>
@@ -282,12 +277,10 @@
 <script src="/static/js/sweetalert/sweetalert.min.js"></script>
 <script src="/static/js/contextmenu.js"></script>
 <script src="/static/js/backstage/main.js"></script>
-<script src="/static/js/form/jquery.validate.js"></script>
 <script src="/static/js/bootstrap-validate/bootstrapValidator.js"></script>
+<script src="/static/js/bootstrap-select/bootstrap-select.js"></script>
 <script src="/static/js/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.js"></script>
 <script src="/static/js/bootstrap-dateTimePicker/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
 <script src="/static/js/backstage/customerBooking/phoneResrvation.js"></script>
-<script src="/static/js/bootstrap-select/bootstrap-select.js"></script>
-
 </body>
 </html>
