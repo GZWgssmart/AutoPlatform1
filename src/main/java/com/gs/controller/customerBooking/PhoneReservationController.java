@@ -5,11 +5,6 @@ import com.gs.bean.Appointment;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
-<<<<<<< .mine
-
-=======
-/*import com.gs.controller.CheckinController;*/
->>>>>>> .theirs
 import com.gs.service.AppointmentService;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
