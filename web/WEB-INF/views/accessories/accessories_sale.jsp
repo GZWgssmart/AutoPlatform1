@@ -28,8 +28,8 @@
             <thead>
             <tr>
                 <th data-radio="true" data-field="status"></th>
-                <th data-field="companyId">所属公司</th>
-                <th data-field="accId">配件编号</th>
+                <th data-field="company.companyName">所属公司</th>
+                <th data-field="accessories.accName">配件名称</th>
                 <th data-field="accSaledTime" data-formatter="formatterDate">配件销售时间</th>
                 <th data-field="accSaleCount">配件销售数量</th>
                 <th data-field="accSalePrice">配件销售单价</th>
@@ -88,13 +88,15 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">所属公司：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="companyId" placeholder="请输入所属公司" class="form-control">
+                        <select id="addCompany" class="js-example-tags company" name="companyId" style="width:100%">
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">配件编号：</label>
+                    <label class="col-sm-3 control-label">所属公司：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="accId" placeholder="请输入配件编号" class="form-control">
+                        <select id="addAccInv" class="js-example-tags accInv" name="accId" style="width:100%">
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">
@@ -138,7 +140,7 @@
                 <div class="form-group">
                     <div class="col-sm-offset-8">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button class="btn btn-sm btn-success" onclick="addSubmit();" type="button">保 存</button>
+                        <button id="addButton" type="button" onclick="addSubmit()" class="btn btn-success">保存</button>
                     </div>
                 </div>
             </form>
@@ -158,15 +160,15 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">所属公司：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="companyId" define="AccessoriesSale.companyId" placeholder="请输入所属公司"
-                               class="form-control">
+                        <select id="editCompany" class="js-example-tags company" define="AccessoriesSale.companyId" name="companyId" style="width:100%">
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">配件编号：</label>
+                    <label class="col-sm-3 control-label">所属公司：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="accId" define="AccessoriesSale.accId" placeholder="请输入配件编号"
-                               class="form-control">
+                        <select id="editAccInv" class="js-example-tags accInv" define="AccessoriesSale.accId" name="accId" style="width:100%">
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">
@@ -215,7 +217,7 @@
                 <div class="form-group">
                     <div class="col-sm-offset-8">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button class="btn btn-sm btn-success" onclick="editSubmit();" type="button">保 存</button>
+                        <button id="editButton" type="button" onclick="editSubmit()" class="btn btn-success">保存</button>
                     </div>
                 </div>
             </form>

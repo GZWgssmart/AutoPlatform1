@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.gs.dao.AccessoriesSaleDAO" >
   <resultMap id="AccessoriesSaleMap" type="com.gs.bean.AccessoriesSale" >
-    <id column="acc_Sale_Id" property="accSaleId" jdbcType="VARCHAR" />
+    <id column="accSaleId" property="accSaleId" jdbcType="VARCHAR" />
     <result column="accId" property="accId" jdbcType="VARCHAR" />
     <result column="accSaledTime" property="accSaledTime" jdbcType="TIMESTAMP" />
     <result column="accSaleCount" property="accSaleCount" jdbcType="INTEGER" />
@@ -13,6 +13,16 @@
     <result column="accSaleCreatedTime" property="accSaleCreatedTime" jdbcType="TIMESTAMP" />
     <result column="companyId" property="companyId" jdbcType="VARCHAR" />
     <result column="accSaleStatus" property="accSaleStatus" jdbcType="VARCHAR" />
+
+    <association property="company" javaType="com.gs.bean.Company">
+      <id property="companyId" column="companyId"/>
+      <id property="companyName" column="companyName"/>
+    </association>
+
+    <association property="accessories" javaType="com.gs.bean.Accessories">
+      <id property="accId" column="accId"/>
+      <id property="accName" column="accName"/>
+    </association>
   </resultMap>
 
   <!--
@@ -27,7 +37,11 @@
   <!-- 分页查询 -->
   <select id="queryByPager" resultMap="AccessoriesSaleMap" parameterType="com.gs.common.bean.Pager">
     <![CDATA[
-      select * from auto_platform.t_accessories_sale u where 1 = 1 and u.accSaleStatus = 'Y'
+      select aca.*,cp.companyId,cp.companyName,ac.accId,ac.accName
+      from auto_platform.t_accessories_sale aca
+      LEFT JOIN auto_platform.t_company cp ON aca.companyId=cp.companyId
+      LEFT JOIN auto_platform.t_accessories ac ON aca.accId=ac.accId
+      where aca.accSaleStatus = 'Y' order by aca.accSaleCreatedTime Desc
     ]]>
     limit #{beginIndex}, #{pageSize};
   </select>
@@ -56,10 +70,10 @@
   -->
   <update id="update" keyProperty="id" parameterType="java.util.Map">
     UPDATE auto_platform.t_accessories_sale
-    SET companyId=#{companyId}, accSaledTime=#{accSaledTime},
+    SET companyId=#{companyId},accId=#{accId}, accSaledTime=#{accSaledTime},
     accSaleCount=#{accSaleCount},accSalePrice=#{accSalePrice},
-    accSaleDiscount=#{accSaleDiscount},accSaleMoney=#{accSaleMoney}
-    WHERE accSaleId=#{accSaleId}
+    accSaleTotal=#{accSaleTotal},accSaleDiscount=#{accSaleDiscount},
+    accSaleMoney=#{accSaleMoney} WHERE accSaleId=#{accSaleId}
   </update>
 
   <!--

@@ -32,10 +32,11 @@ function showEdit() {
     var row = $('table').bootstrapTable('getSelections');
     if (row.length > 0) {
         $("#editWindow").modal('show'); // 显示弹窗
+        $("#editButton").removeAttr("disabled");
         var ceshi = row[0];
         $('#editCompany').html('<option value="' + ceshi.company.companyId + '">' + ceshi.company.companyName + '</option>').trigger("change");
         $('#editAccType').html('<option value="' + ceshi.accessoriesType.accTypeId + '">' + ceshi.accessoriesType.accTypeName + '</option>').trigger("change");
-        $('#editAccType').html('<option value="' + ceshi.supply.supplyId + '">' + ceshi.supply.supplyName + '</option>').trigger("change");
+        $('#editSupply').html('<option value="' + ceshi.supply.supplyId + '">' + ceshi.supply.supplyName + '</option>').trigger("change");
         $("#editForm").fill(ceshi);
         validator('editForm'); // 初始化验证
     } else {

@@ -17,15 +17,6 @@ import java.util.List;
 @Repository
 public interface AccessoriesDAO extends BaseDAO<String, Accessories>{
     /**
-     * 分页查询被禁用的记录
-     */
-    public List<Accessories> queryByPagerDisable(Pager pager);
-    /**
-     * 分页查询被禁用的记录
-     */
-    public int countByDisable();
-
-    /**
      * 模糊查询
      */
     public List<Accessories> blurredQuery(@Param("pager")Pager pager, @Param("accInv")Accessories accessories);
@@ -34,5 +25,4 @@ public interface AccessoriesDAO extends BaseDAO<String, Accessories>{
      * 模糊查询的记录数
      */
     public int countByBlurred(@Param("accInv")Accessories accessories);
-
 }

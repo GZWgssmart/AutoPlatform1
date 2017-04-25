@@ -25,6 +25,10 @@ public class AccessoriesSale {
 
     private String accSaleStatus;
 
+    private Company company;
+
+    private Accessories accessories;
+
     public String getAccSaleId() {
         return accSaleId;
     }
@@ -113,6 +117,22 @@ public class AccessoriesSale {
         this.accSaleStatus = accSaleStatus;
     }
 
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
+    }
+
+    public Accessories getAccessories() {
+        return accessories;
+    }
+
+    public void setAccessories(Accessories accessories) {
+        this.accessories = accessories;
+    }
+
     @Override
     public String toString() {
         return "AccessoriesSale{" +
@@ -127,6 +147,8 @@ public class AccessoriesSale {
                 ", accSaleCreatedTime=" + accSaleCreatedTime +
                 ", companyId='" + companyId + '\'' +
                 ", accSaleStatus='" + accSaleStatus + '\'' +
+                ", company=" + company +
+                ", accessories=" + accessories +
                 '}';
     }
 }

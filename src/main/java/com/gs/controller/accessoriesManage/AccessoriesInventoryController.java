@@ -55,9 +55,9 @@ public class AccessoriesInventoryController {
      * 查询全部的配件信息
      */
     @ResponseBody
-    @RequestMapping(value = "queryAllAccType",method = RequestMethod.GET)
+    @RequestMapping(value = "queryAllAccInv",method = RequestMethod.GET)
     public List<ComboBox4EasyUI> queryAllAccType(){
-        logger.info("查询所有配件分类信息");
+        logger.info("查询所有配件信息");
         List<Accessories> accessories = accessoriesService.queryAll();
         List<ComboBox4EasyUI> comboxs = new ArrayList<ComboBox4EasyUI>();
         for(Accessories c : accessories){
@@ -82,7 +82,6 @@ public class AccessoriesInventoryController {
         pager.setTotalRecords(accessoriesService.count());
         logger.info("分页查询配件库存信息成功");
         List<Accessories> accessories = accessoriesService.queryByPager(pager);
-        System.out.println("查询出的信息为"+accessories.toString());
         return new Pager4EasyUI<Accessories>(pager.getTotalRecords(), accessories);
     }
 

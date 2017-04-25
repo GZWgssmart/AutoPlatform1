@@ -29,7 +29,7 @@
             <tr>
                 <th data-radio="true" data-field="status"></th>
                 <th data-field="company.companyName">所属公司</th>
-                <th data-field="accessories.accId">配件编号</th>
+                <th data-field="accessories.accName">配件名称</th>
                 <th data-field="accBuyCount">购买数量</th>
                 <th data-field="accBuyPrice">购买单价</th>
                 <th data-field="accBuyTotal">购买总价</th>
@@ -139,7 +139,7 @@
                 <div class="form-group">
                     <div class="col-sm-offset-8">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button class="btn btn-sm btn-success" id="addButton" onclick="addSubmit();" type="button">保 存</button>
+                        <button id="addButton" type="button" onclick="addSubmit()" class="btn btn-success">保存</button>
                     </div>
                 </div>
             </form>
@@ -210,7 +210,7 @@
                 <div class="form-group">
                     <div class="col-sm-offset-8">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button class="btn btn-sm btn-success" id="editButton" onclick="editSubmit();" type="button">保 存</button>
+                        <button id="editButton" type="button" onclick="editSubmit()" class="btn btn-success">保存</button>
                     </div>
                 </div>
             </form>

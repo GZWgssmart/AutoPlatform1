@@ -58,6 +58,7 @@ public class AccessoriesSaleController {
     public List<ComboBox4EasyUI> queryAllAccType(){
         logger.info("所有配件销售信息");
         List<AccessoriesSale> accessoriesSales = accessoriesSaleService.queryAll();
+        System.out.println(accessoriesSales.toString());
         List<ComboBox4EasyUI> comboxs = new ArrayList<ComboBox4EasyUI>();
         for(AccessoriesSale c : accessoriesSales){
             ComboBox4EasyUI comboBox4EasyUI = new ComboBox4EasyUI();
@@ -81,6 +82,7 @@ public class AccessoriesSaleController {
         pager.setTotalRecords(accessoriesSaleService.count());
         logger.info("分页查询配件销售信息成功");
         List<AccessoriesSale> accessoriesSales = accessoriesSaleService.queryByPager(pager);
+        System.out.println(accessoriesSales.toString());
         return new Pager4EasyUI<AccessoriesSale>(pager.getTotalRecords(), accessoriesSales);
     }
 

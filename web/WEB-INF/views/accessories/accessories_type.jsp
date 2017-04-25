@@ -102,7 +102,7 @@
                 <div class="form-group">
                     <div class="col-sm-offset-8">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button class="btn btn-sm btn-success" onclick="addSubmit();" type="button">保 存</button>
+                        <button id="addButton" type="button" onclick="addSubmit()" class="btn btn-success">保存</button>
                     </div>
                 </div>
             </form>
@@ -142,7 +142,7 @@
                 <div class="form-group">
                     <div class="col-sm-offset-8">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button class="btn btn-sm btn-success" onclick="editSubmit();" type="button">保 存</button>
+                        <button id="editButton" type="button" onclick="editSubmit()" class="btn btn-success">保存</button>
                     </div>
                 </div>
             </form>
