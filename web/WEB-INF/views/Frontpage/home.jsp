@@ -2,7 +2,7 @@
 
 <html>
 <head>
-    <title>主页</title>
+    <title>欢迎主页</title>
 </head>
 <link rel="stylesheet" href="/static/css/bootstrap.css">
 <link rel="stylesheet" href="/static/css/animate.css">
@@ -21,8 +21,8 @@
                     <li class="icon-li"><a href="#mc4-des" id="gn">功能介绍</a></li>
                     <li class="icon-li"><a href="/backstageIndex">后台</a></li>
                     <li class="icon-li"><a href="javaScript:;">关于我们</a></li>
-                    <li id="menu-bg"><a href="javaScript:;">注册</a></li>
-                    <li id="menu-bg2"><a href="javaScript:;">帮助</a></li>
+                    <li id="menu-bg"><a href="javaScript:;">汽修厂入驻</a></li>
+                    <li id="menu-bg2"><a href="javaScript:;">汽配商入驻</a></li>
                 </ul>
             </div>
         </nav>
@@ -67,8 +67,9 @@
         </div>
         <%--主内容一--%>
         <div class="Maincontent">
-            <h2 class="title">汽车维修保养管理平台</h2>
-            <div class="row features-info banner-info text-left wow fadeInLeft animated"  data-wow-delay="0.5s" style="visibility: visible; animation-delay: 0.5s; animation-name: fadeInLeft;">
+            <h2 class="title">汽车维修保养网</h2>
+            <h2 style="text-align: center;color: white">预约保养，微信支付</h2>
+            <div class="row features-info banner-info text-left wow fadeInLeft animated" style="visibility: visible;animation-name: fadeInLeft;">
                 <div class="col-sm-4 col-md-4">
                     <div class="secicon1">
                         <i class="icon icon-quan"></i>
@@ -88,7 +89,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row features-info banner-img wow fadeInRight animated" data-wow-delay="0.5s" style="visibility: visible; animation-delay: 0.5s; animation-name: fadeInRight;">
+            <div class="row features-info wow fadeInRight animated" style="visibility: visible; animation-name: fadeInRight;">
                 <div class="col-sm-4 col-md-4">
                     <div class="secicon1">
                         <i class="icon" style="background:url(/static/img/Frontpage/zhun.png);"></i>
@@ -109,7 +110,7 @@
                 </div>
             </div>
             <div class="button-box">
-                <a href="platformIntro" class="btn zoomIn wow animated" data-wow-delay="0.5s" style="width: 200px;">立即使用</a>
+                <a href="carchoose" class="btn zoomIn wow animated" data-wow-delay="0.5s" style="width: 200px;">立即进入</a>
             </div>
         </div>
         <%--主内容二--%>
@@ -121,14 +122,14 @@
                             平台介绍
                         </h2>
                         <p>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"汽车维修管理系统"是一款面向汽修汽配行业的管理软件，本系统专注于车辆的信息化管理，
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"汽车维修管理平台"是一款面向汽修汽配行业的管理软件，本平台专注于车辆的信息化管理，
                             为加强企业对车辆维修的综合管理而提供全方位的解决方案，并且具有二次开发的独特特性，
                             独特的二次开发功能可以为新老用户在以后的使用过程中出现的新模块，新功能随时进行添加，
                             为用户的使用提供全面服务。</br>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"汽车维修管理系统"以对车辆的维修和管理为主线，
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"汽车维修管理平台"以对车辆的维修和管理为主线，
                             通过对信息的收集、存储、传递、统计、分析、综合查询、报表输出和信息共享，
                             及时为企业领导及各部门管理人员的决策提供全面、准确的信息数据。<br/>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;此汽车维修保养管理系统旨在提升汽修店的信息化水平及工作
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;此汽车维修保养管理平台旨在提升汽修店的信息化水平及工作
                             效率，提供便捷有效的方式管理从维修保养预约到维修完成产生收费单据并提车的整个过程。并附带汽修店基本信息的管理，汽车配件的库存管理等功能。
                         </p>
                     </div>
@@ -147,7 +148,7 @@
         <%--主内容三--%>
         <div class="Maincontent3">
                 <div class="title3">
-                    <h2>您的汽修管家系统</h2>
+                    <h2>商家入驻</h2>
                 </div>
                 <div class="row team-con">
                     <div class="col-md-12">

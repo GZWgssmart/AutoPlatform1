@@ -3,7 +3,6 @@ html,body{
     padding: 0;
     font-family: 'microsoft Yahei','Open Sans', sans-serif;
     width: 100%;
-    min-width: 1350px;
     height: auto;
     overflow-x:hidden;
 }

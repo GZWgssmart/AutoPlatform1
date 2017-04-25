@@ -24,8 +24,6 @@
     .content-left{
         height: 95%;
     }
-    .content-right{
-    }
     .first-left-bg img{
         height: 90%;
     }
@@ -75,6 +73,7 @@
         z-index:999;
         width: 100%;
         margin-top: -50px;
+        min-width:1350px;
         height:auto;
         border:solid #d4d4d4 0.5px;
         background-color: white;
@@ -114,7 +113,7 @@
                     <li class="icon-li"><a href="/backstageIndex">后台</a></li>
                     <li class="icon-li"><a href="javaScript:;">关于我们</a></li>
                     <li id="menu-bg"><a href="javaScript:;">注册</a></li>
-                    <li id="menu-bg2"><a href="javaScript:;">帮助</a></li>
+                    <li id="menu-bg2"><a href="javaScript:;">登录</a></li>
                 </ul>
             </div>
         </nav>
