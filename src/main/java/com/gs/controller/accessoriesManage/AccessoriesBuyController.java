@@ -2,6 +2,7 @@ package com.gs.controller.accessoriesManage;
 
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.AccessoriesBuy;
+import com.gs.common.bean.ComboBox4EasyUI;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -35,21 +37,38 @@ public class AccessoriesBuyController {
 
     private Logger logger = (Logger) LoggerFactory.getLogger(AccessoriesBuyController.class);
 
+//    /**
+//     * 查询所有的采购记录
+//     *
+//     * @return
+//     */
+//    @ResponseBody
+//    @RequestMapping(value = "queryAllAccBuy", method = RequestMethod.POST)
+//    public List<AccessoriesBuy> queryAllAccBuy() {
+//        List<AccessoriesBuy> accessoriesBuyList = accessoriesBuyService.queryAll();
+//        if (accessoriesBuyList != null && !accessoriesBuyList.equals("")) {
+//            return accessoriesBuyList;
+//        }
+//        return null;
+//    }
+
     /**
-     * 查询所有的采购记录
-     *
-     * @return
+     * 查询全部的配件信息
      */
     @ResponseBody
-    @RequestMapping(value = "queryAllAccBuy", method = RequestMethod.POST)
-    public List<AccessoriesBuy> queryAllAccBuy() {
-        List<AccessoriesBuy> accessoriesBuyList = accessoriesBuyService.queryAll();
-        if (accessoriesBuyList != null && !accessoriesBuyList.equals("")) {
-            return accessoriesBuyList;
+    @RequestMapping(value = "queryAllAccType",method = RequestMethod.GET)
+    public List<ComboBox4EasyUI> queryAllAccType(){
+        logger.info("查询所有配件分类信息");
+        List<AccessoriesBuy> accessoriesBuys = accessoriesBuyService.queryAll();
+        List<ComboBox4EasyUI> comboxs = new ArrayList<ComboBox4EasyUI>();
+        for(AccessoriesBuy c : accessoriesBuys){
+            ComboBox4EasyUI comboBox4EasyUI = new ComboBox4EasyUI();
+            comboBox4EasyUI.setId(c.getAccBuyId());
+            comboBox4EasyUI.setText(c.getAccBuyId());
+            comboxs.add(comboBox4EasyUI);
         }
-        return null;
+        return comboxs;
     }
-
 
     /**
      * 分页查询配件采购信息

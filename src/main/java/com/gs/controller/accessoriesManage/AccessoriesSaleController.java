@@ -3,6 +3,7 @@ package com.gs.controller.accessoriesManage;
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.Accessories;
 import com.gs.bean.AccessoriesSale;
+import com.gs.common.bean.ComboBox4EasyUI;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -37,18 +39,33 @@ public class AccessoriesSaleController {
     @Resource
     private AccessoriesSaleService accessoriesSaleService;
 
-    /**
-     * 查询所有的配件销售记录
-     * @return
-     */
+//    /**
+//     * 查询所有的配件销售记录
+//     * @return
+//     */
+//    @ResponseBody
+//    @RequestMapping(value = "queryAllAccSale",method = RequestMethod.POST)
+//    public List<AccessoriesSale> queryAllAccSale(){
+//        List<AccessoriesSale> accessoriesSaleList=accessoriesSaleService.queryAll();
+//        if(accessoriesSaleList!=null&&!accessoriesSaleList.equals("")){
+//            return accessoriesSaleList;
+//        }
+//        return null;
+//    }
+
     @ResponseBody
-    @RequestMapping(value = "queryAllAccSale",method = RequestMethod.POST)
-    public List<AccessoriesSale> queryAllAccSale(){
-        List<AccessoriesSale> accessoriesSaleList=accessoriesSaleService.queryAll();
-        if(accessoriesSaleList!=null&&!accessoriesSaleList.equals("")){
-            return accessoriesSaleList;
+    @RequestMapping(value = "queryAllAccSale",method = RequestMethod.GET)
+    public List<ComboBox4EasyUI> queryAllAccType(){
+        logger.info("所有配件销售信息");
+        List<AccessoriesSale> accessoriesSales = accessoriesSaleService.queryAll();
+        List<ComboBox4EasyUI> comboxs = new ArrayList<ComboBox4EasyUI>();
+        for(AccessoriesSale c : accessoriesSales){
+            ComboBox4EasyUI comboBox4EasyUI = new ComboBox4EasyUI();
+            comboBox4EasyUI.setId(c.getAccSaleId());
+            comboBox4EasyUI.setText(c.getAccSaleId());
+            comboxs.add(comboBox4EasyUI);
         }
-        return null;
+        return comboxs;
     }
 
 

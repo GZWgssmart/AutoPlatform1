@@ -2,6 +2,7 @@ package com.gs.controller.accessoriesManage;
 
 import com.gs.bean.Accessories;
 import com.gs.bean.AccessoriesType;
+import com.gs.common.bean.ComboBox4EasyUI;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
@@ -20,6 +21,7 @@ import ch.qos.logback.classic.Logger;
 import javax.annotation.Resource;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -36,20 +38,34 @@ public class AccessoriesTypeController {
     @Resource
     private AccessoriesTypeService accessoriesTypeService;
 
+//    @ResponseBody
+//    @RequestMapping(value = "queryAllAccType",method = RequestMethod.POST)
+//    public List<AccessoriesType> queryAllAccSale(){
+//        List<AccessoriesType> accessoriesTypes=accessoriesTypeService.queryAll();
+//        if(accessoriesTypes!=null&&!accessoriesTypes.equals("")){
+//            return accessoriesTypes;
+//        }
+//        return null;
+//    }
+
 
     /**
      * 查询全部的配件分类
      */
     @ResponseBody
-    @RequestMapping(value = "queryAllAccType",method = RequestMethod.POST)
-    public List<AccessoriesType> queryAllAccType(){
-        List<AccessoriesType> accessoriesTypeList=accessoriesTypeService.queryAll();
-        if (accessoriesTypeList!=null&&!accessoriesTypeList.equals("")){
-            return accessoriesTypeList;
+    @RequestMapping(value = "queryAllAccType",method = RequestMethod.GET)
+    public List<ComboBox4EasyUI> queryAllAccType(){
+        logger.info("查询所有配件分类信息");
+        List<AccessoriesType> accessoriesTypes = accessoriesTypeService.queryAll();
+        List<ComboBox4EasyUI> comboxs = new ArrayList<ComboBox4EasyUI>();
+        for(AccessoriesType c : accessoriesTypes){
+            ComboBox4EasyUI comboBox4EasyUI = new ComboBox4EasyUI();
+            comboBox4EasyUI.setId(c.getAccTypeName());
+            comboBox4EasyUI.setText(c.getAccTypeName());
+            comboxs.add(comboBox4EasyUI);
         }
-        return null;
+        return comboxs;
     }
-
 
     /**
      * 分页查询配件分类信息
