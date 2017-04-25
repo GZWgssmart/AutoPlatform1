@@ -94,18 +94,14 @@ public class OrderManageController {
         return ControllerResult.getSuccessResult("修改成功");
     }
 
-    /**
-     * 删除
-     * @param id
-     * @return
-     */
-    @ResponseBody
+
+   /* @ResponseBody
     @RequestMapping(value = "deleteById", method = RequestMethod.GET)
     public ControllerResult deleteWork(String id) {
         logger.info("删除");
         workInfoService.deleteById(id);
         return ControllerResult.getSuccessResult("删除成功");
-    }
+    }*/
 
     /**
      * 对状态的激活和启用，只使用一个方法进行切换。

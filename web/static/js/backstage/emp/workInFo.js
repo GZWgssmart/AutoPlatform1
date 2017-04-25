@@ -3,25 +3,18 @@
  * @type {string}
  */
 $(function () {
-    initTable("table","/Order/queryAll");
+    initTable("table","/Order/queryByPager");
+
+    initSelect2("record","请选择保养记录","/maintainRecord/queryAll");
+    initSelect2("user","请选择用户","/userBasicManage/queryAll");
 });
-var contentPath='';
-$(function () {
-    $('#table').bootstrapTable('hideColumn', 'wordId');
-
-    $("#addSelect").select2({
-            language: 'zh-CN'
-        }
-    );
-
-}
 
 //添加
 function showAdd(){
-    //initDateTimePicker('addForm','workAssignTime');
+    //initDateTimePicker('addForm', 'workAssignTime'); // 初始化时间框, 第一参数是form表单id, 第二参数是input的name
     $("#addWindow").modal('show');
     $("#addButton").removeAttr("disabled");
-    validator('addForm');//初始化验证
+    validator('addForm'); // 初始化验证
 }
 /*表格验证*/
 function validator(formId) {
@@ -83,6 +76,16 @@ function validator(formId) {
         })
 
 }
+
+function addSubmit(){
+    $("#addForm").data('bootstrapValidator').validate();
+    if($("#addForm").data('bootstrapValidator').isvalid()){//已验证
+        $("#addButton").attr("disbled","disabled");
+    }else{
+        $("#addButton").removeAttr("disabled");
+    }
+}
+
 function showEdit(){
     var row =  $('table').bootstrapTable('getSelections');
     if(row.length >0) {
@@ -98,11 +101,6 @@ function showEdit(){
             text:"请先选择一行数据",
             type:"warning"})// 提示窗口, 修改成功
     }
-}
-
-function showAdd(){
-
-    $("#add").modal('show');
 }
 
 function formatRepo(repo){return repo.text}
