@@ -15,6 +15,14 @@ public class MaterialReturn {
 
     private Date mrReturnDate;
 
+    /**
+     *  关联其它表的其它实例
+     */
+    private MaintainRecord record;
+
+    private Accessories accessories;
+
+
     public String getMaterialReturnId() {
         return materialReturnId;
     }
@@ -61,5 +69,24 @@ public class MaterialReturn {
 
     public void setMrReturnDate(Date mrReturnDate) {
         this.mrReturnDate = mrReturnDate;
+    }
+
+    /**
+     *  关联其它表的其它get / set
+     */
+    public MaintainRecord getRecord() {
+        return record;
+    }
+
+    public void setRecord(MaintainRecord record) {
+        this.record = record;
+    }
+
+    public Accessories getAccessories() {
+        return accessories;
+    }
+
+    public void setAccessories(Accessories accessories) {
+        this.accessories = accessories;
     }
 }

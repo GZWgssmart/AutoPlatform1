@@ -16,15 +16,95 @@
     <result column="carmodel" property="carmodel"></result>
     <association resultMap="com.gs.dao.MaintainRecordDAO.BaseResultMap" property="record" />
   </resultMap>
+
+
+    <resultMap id="userWorkView" type="com.gs.bean.view.WorkView">
+        <id column="workId" property="workId" jdbcType="VARCHAR" />
+        <result column = "recordId" property="recordId" />
+        <result column="colorRGB" property="colorRGB" />
+        <result column="colorName" property="colorName" />
+        <result column="carplate" property="carplate" />
+        <result column="carmodel" property="carmodel" />
+        <result column="carbrand" property="carbrand" />
+        <result column="userRequests" property="userRequests" />
+        <result column="workAssignTime" property="workAssignTime" />
+    </resultMap>
+
+    <resultMap id="materialTempView" type="com.gs.bean.view.MaterialURTemp">
+        <result column="materialUseId" property="materialUseId" jdbcType="VARCHAR" />
+        <result column="matainRecordId" property="matainRecordId" jdbcType="VARCHAR" />
+        <result column="accId" property="accId" jdbcType="VARCHAR" />
+        <result column="accCount" property="accCount" jdbcType="INTEGER" />
+        <result column="muCreatedTime" property="muCreatedTime" jdbcType="TIMESTAMP" />
+        <result column="muUseDate" property="muUseDate" jdbcType="TIMESTAMP" />
+        <result column="flag" property="flag" jdbcType="VARCHAR" />
+        <association property="record" javaType="maintainRecord" >
+            <id property="recordId" column="recordId" />
+            <association property="checkin" javaType="checkin">
+                <id property="checkinId" column="checkinId" />
+                <result property="carPlate" column="carPlate"/>
+            </association>
+        </association>
+        <association property="accessories" javaType="accessories">
+            <id property="accId" column="accId"/>
+            <result property="accName" column="accName" />
+        </association>
+        <association property="workInfo" javaType="workInfo">
+            <association property="user" javaType="user">
+                <id property="userId" column="userId" />
+                <result property="userName" column="userName" />
+            </association>
+        </association>
+    </resultMap>
+
+
   
-  <select id="queryByPager">
-    select mu.* ,acc.accName from t_material_use mu left join t_accessories acc on mu.accId = acc.accId
-     left join t_company comp on acc.companyId = comp.companyId
-    where comp.companyId  = #{companyId} order by mu.muCreatedTime desc
-  </select>
+    <select id="queryByPager">
+        select mu.* ,acc.accName from t_material_use mu left join t_accessories acc on mu.accId = acc.accId
+         left join t_company comp on acc.companyId = comp.companyId
+        where comp.companyId  = #{companyId} order by mu.muCreatedTime desc
+      </select>
 
+    <select id ="materialByPager" resultMap="materialTempView">
+        select
+          tuser.userId,
+          tuser.userName,
+          acc.accId,
+          acc.accName,
+          record.recordId,
+          checkin.checkinId,
+          checkin.carplate,
+          mater.*
+        from
+            (select *,'U' as 'flag' from t_material_use
+                union all
+                select  *,'R' as 'flag' from t_material_return) mater
+        left join t_work_info workinfo on  mater.matainRecordId= workinfo.recordId
+        left join t_accessories acc on acc.accId = mater.accId
+        left join t_user tuser on workinfo.userId = tuser.userId
+        left join t_maintain_record record on mater.matainRecordId = record.recordId
+        left join t_checkin checkin on record.checkinId = checkin.checkinId
+        <where>
+            <if test="userId!=null">
+                tuser.userId = #{userId}
+            </if>
+        </where>
+        ORDER BY mater.muUseDate desc
+        limit #{pager.beginIndex}, #{pager.pageSize}
+    </select>
 
-
+    <select id = "countMaterials" resultType="int">
+        select count(materialUseId) from
+            ( select *,'isuse' as 'flag' from t_material_use
+			  union all
+			  select  *,'isReturn' as 'flag' from t_material_return) mater
+        left join t_work_info workinfo on  mater.matainRecordId= workinfo.recordId
+        <where>
+            <if test="userId!=null">
+              workinfo.userId = #{userId}
+            </if>
+        </where>
+    </select>
 
   <!-- 其它的 不与这个表相关的-->
     <select id="queryNoUseRecord" resultMap="baseRecordView">
@@ -73,13 +153,52 @@
       where t_company.companyId = #{companyId};
     </select>
 
-
     <insert id="insertWorkInfo" parameterType="com.gs.bean.WorkInfo">
         INSERT INTO t_work_info
         (workId,recordId, userId, workAssignTime, workCreatedTime,workStatus)
         VALUES
         (uuid(),#{recordId},#{userId},#{workAssignTime},#{workCreatedTime},'Y')
     </insert>
+    
+    <select id="userWorksByPager" resultMap="userWorkView">
+        select
+            workinfo.workId 'workId',
+            record.recordId 'recordId',
+            color.colorRGB 'colorRGB',
+            color.colorName 'colorName',
+            checkin.carplate 'carplate',
+            model.modelName 'carmodel',
+            brand.brandName 'carbrand',
+            checkin.userRequests 'useRequests',
+            workinfo.workAssignTime 'workAssignTime'
+        from
+        t_work_info workinfo
+        left JOIN t_maintain_record record on workinfo.recordId = record.recordId
+        left JOIN t_checkin checkin on record.checkinId = checkin.checkinId
+        left join t_car_model model on checkin.modelId = model.modelId
+        left join t_car_color color on checkin.colorId = color.colorId
+        left join t_car_brand brand on checkin.brandId = brand.brandId
+        <where>
+            workinfo.userId = #{userId}
+            <if test="status!=null">
+                and workinfo.workStatus = #{status}
+            </if>
+        </where>
+        limit #{pager.beginIndex}, #{pager.pageSize}
+    </select>
+
+    <select id="countUserWorks" resultType="int" >
+        select
+        count(workinfo.workId)
+        from
+        t_work_info workinfo
+        <where>
+            workinfo.userId = #{userId}
+            <if test="status!=null">
+                and workinfo.workStatus = #{status}
+            </if>
+        </where>
+    </select>
 
 
 </mapper>

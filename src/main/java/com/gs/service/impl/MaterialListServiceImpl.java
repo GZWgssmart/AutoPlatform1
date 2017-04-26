@@ -2,8 +2,10 @@ package com.gs.service.impl;
 
 import com.gs.bean.Checkin;
 import com.gs.bean.MaterialList;
+import com.gs.bean.view.MaterialView;
 import com.gs.dao.MaterialListDAO;
 import com.gs.service.MaterialListService;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.List;
@@ -60,5 +62,25 @@ public class MaterialListServiceImpl implements MaterialListService {
 
 	public int countByBlurred(MaterialList materialList) {
 		return 0;
+	}
+
+	@Override
+	public List<MaterialView> queryByPager(String userId, Pager pager) {
+		return materialListDAO.queryByPager(userId,pager);
+	}
+
+	@Override
+	public int count(String userId) {
+		return materialListDAO.count(userId);
+	}
+
+	@Override
+	public List<MaterialList> recordAccsByPager(String recordId, Pager pager) {
+		return materialListDAO.recordAccsByPager(recordId, pager);
+	}
+
+	@Override
+	public int countRecordAccs(String recordId) {
+		return materialListDAO.countRecordAccs(recordId);
 	}
 }

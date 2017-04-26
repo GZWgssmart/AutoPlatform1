@@ -1,19 +1,19 @@
 package com.gs.service.impl;
 
 import com.gs.bean.WorkInfo;
-import com.gs.common.bean.Pager;
 import com.gs.dao.WorkInfoDAO;
 import com.gs.service.WorkInfoService;
 import org.springframework.stereotype.Service;
-
 import javax.annotation.Resource;
 import java.util.List;
+
+import com.gs.common.bean.Pager;
 /**
 *由CSWangBin技术支持
 *
-*@author CSWangBin
+*@author 程燕
 *@since 2017-04-17 16:12:26
-*@des 
+*@des 工单Service实现
 */
 @Service
 public class WorkInfoServiceImpl implements WorkInfoService {
@@ -45,19 +45,24 @@ public class WorkInfoServiceImpl implements WorkInfoService {
 	public int inactive(String id) { return workInfoDAO.inactive(id); }
 	public int active(String id) { return workInfoDAO.active(id); }
 
+	@Override
 	public List<WorkInfo> queryByPagerDisable(Pager pager) {
-		return workInfoDAO.queryByPagerDisable(pager);
+		return null;
 	}
 
+	@Override
 	public int countByDisable() {
-		return workInfoDAO.countByDisable();
+		return 0;
 	}
 
+	@Override
 	public List<WorkInfo> blurredQuery(Pager pager, WorkInfo workInfo) {
 		return null;
 	}
 
+	@Override
 	public int countByBlurred(WorkInfo workInfo) {
 		return 0;
 	}
+
 }

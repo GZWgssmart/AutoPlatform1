@@ -15,6 +15,14 @@ public class MaterialUse {
 
     private Date muUseDate;
 
+    /**
+     *  关联其它表的其它实例
+     */
+    private MaintainRecord record;
+
+    private Accessories accessories;
+
+
     public String getMaterialUseId() {
         return materialUseId;
     }
@@ -61,5 +69,26 @@ public class MaterialUse {
 
     public void setMuUseDate(Date muUseDate) {
         this.muUseDate = muUseDate;
+    }
+
+    /**
+     *
+     * 关联到其它表的get / set
+     */
+
+    public MaintainRecord getRecord() {
+        return record;
+    }
+
+    public void setRecord(MaintainRecord record) {
+        this.record = record;
+    }
+
+    public Accessories getAccessories() {
+        return accessories;
+    }
+
+    public void setAccessories(Accessories accessories) {
+        this.accessories = accessories;
     }
 }

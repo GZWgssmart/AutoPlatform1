@@ -66,6 +66,20 @@ public class WorkingDispatchingController {
         return null;
     }
 
+    @ResponseBody
+    @RequestMapping("userWorksByPager") // 用于页面显示员工工单,员工通过这个页面会点击查询该工单所需要的零件
+    public Pager4EasyUI userWorks(@RequestParam("pageNumber")String pageNo, @RequestParam("pageSize")String pageSize) {
+        final String tempUserid = "1";
+        Pager pager = new Pager();
+        pager.setPageNo(str2int(pageNo));
+        pager.setPageSize(str2int(pageSize));
+        List workInfos = materialUseService.userWorksStatusByPager(tempUserid, "Y",pager);
+        int total = materialUseService.countUserWorksStatus(tempUserid,"Y");
+        Pager4EasyUI pager4EasyUI = new Pager4EasyUI();
+        pager4EasyUI.setRows(workInfos);
+        pager4EasyUI.setTotal(total);
+        return pager4EasyUI;
+    }
 
     @ResponseBody
     @RequestMapping("emps") // 可能不会使用到
@@ -90,7 +104,7 @@ public class WorkingDispatchingController {
         workInfo.setUserId(userId);
         workInfo.setWorkCreatedTime(new Date());
         workInfo.setWorkAssignTime(new Date());
-        int result = workInfoService.insert(workInfo);
+        int result = materialUseService.insertWorkInfo(workInfo);
         if(result < 1) {
             return ControllerResult.getFailResult("添加失败");
         }

@@ -2,7 +2,11 @@ package com.gs.service.impl;
 
 import com.gs.bean.MaterialUse;
 import com.gs.bean.User;
+import com.gs.bean.WorkInfo;
+import com.gs.bean.view.MaterialURTemp;
+import com.gs.bean.view.MaterialView;
 import com.gs.bean.view.RecordBaseView;
+import com.gs.bean.view.WorkView;
 import com.gs.common.bean.Pager;
 import com.gs.dao.MaterialUseDAO;
 import com.gs.service.MaterialUseService;
@@ -63,6 +67,26 @@ public class MaterialUseServiceImpl implements MaterialUseService {
 		return 0;
 	}
 
+	@Override
+	public List<MaterialURTemp> histByPager(Pager pager) {
+		return materialUseDAO.materialByPager(pager);
+	}
+
+	@Override
+	public List<MaterialURTemp> userHistByPager(Pager pager, String userId) {
+		return materialUseDAO.materialByPager(pager,userId);
+	}
+
+	@Override
+	public int countHist() {
+		return materialUseDAO.countMaterials();
+	}
+
+	@Override
+	public int countUserHist(String userId) {
+		return materialUseDAO.countMaterials(userId);
+	}
+
 	/**
 	 *
 	 * 不是应该放在这个Bean中的,但是会与其他人的有碰撞,所以放在这里
@@ -80,6 +104,30 @@ public class MaterialUseServiceImpl implements MaterialUseService {
 		return materialUseDAO.companyEmps(companyId);
 	}
 
+	@Override
+	public int insertWorkInfo(WorkInfo workInfo) {
+		return materialUseDAO.insertWorkInfo(workInfo);
+	}
+
+	@Override
+	public List<WorkView> userWorksByPager(String userId, Pager pager) {
+		return materialUseDAO.userWorksByPager(userId,pager);
+	}
+
+	@Override
+	public List<WorkView> userWorksStatusByPager(String userId, String status, Pager pager) {
+		return materialUseDAO.userWorksByPager(userId,status,pager);
+	}
+
+	@Override
+	public int countUserWorks(String userId) {
+		return materialUseDAO.countUserWorks(userId);
+	}
+
+	@Override
+	public int countUserWorksStatus(String userId, String status) {
+		return materialUseDAO.countUserWorks(userId,status);
+	}
 
 
 }

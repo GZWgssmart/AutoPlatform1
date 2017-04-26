@@ -145,8 +145,8 @@ function submitDispatcher() {
         $("#appointForm").serialize(),
         function (data) {
             if (data.result == "success") {
-                $("#editWindow").modal('hide'); // 关闭指定的窗口
-                $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
+                $("#appointModal").modal('hide'); // 关闭指定的窗口
+                $('#recordTable').bootstrapTable("refresh"); // 重新加载指定数据网格数据
                 swal({
                     title:"",
                     text: data.message,

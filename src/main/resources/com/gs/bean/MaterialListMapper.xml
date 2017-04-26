@@ -8,6 +8,103 @@
     <result column="materialCount" property="materialCount" jdbcType="INTEGER" />
     <result column="materialCreatedTime" property="materialCreatedTime" jdbcType="TIMESTAMP" />
     <result column="materialStatus" property="materialStatus" jdbcType="VARCHAR" />
+    <association property="record" javaType="maintainRecord">
+        <id column="recordId" property="recordId" jdbcType="VARCHAR" />
+    </association>
+      <association  property="accessories" javaType="accessories">
+          <id column="accId" property="accId" jdbcType="VARCHAR" />
+          <result column = "accName" property="accName" />
+          <result column = "accTotal" property="accTotal" />
+      </association>
+      <association  property="materialUse" javaType="materialUse">
+         <result column="useCount" property="accCount" />
+      </association>
+      <association  property="materialReturn" javaType="materialReturn">
+          <result column="returnCount" property="accCount" />
+      </association>
   </resultMap>
+
+  <resultMap id="materialsView" type="com.gs.bean.view.MaterialView">
+    <result property="recordId" column="recordId" jdbcType="VARCHAR"></result>
+    <result property="accId" column = "accId" jdbcType="VARCHAR"></result>
+    <result property="carPlate" column="carPlate" jdbcType="VARCHAR"></result>
+    <result property="accName" column="accName" jdbcType="VARCHAR"></result>
+    <result property="accTotal" column="accTotal" jdbcType="INTEGER"></result>
+    <result property="needAccCount" column="needAccCount" jdbcType="INTEGER"></result>
+    <result property="useAccCount" column="useAccCount" jdbcType="INTEGER"></result>
+    <result property="returnAccCount" column="returnAccCount" jdbcType="INTEGER"></result>
+    <association property="user"  javaType="user">
+      <id property="userId" column="userId"></id>
+      <result property="userName" column="userName"></result>
+    </association>
+  </resultMap>
+
+  <select id="queryByPager" resultMap="materialsView">
+    select
+    checkin.carPlate 'carPlate',
+    acc.accId 'accId',
+    acc.accName 'accName',
+    acc.accTotal 'accTotal',
+    list.materialCount  'needAccCount',
+    mause.accCount 'useAccCount',
+    mare.accCount  'returnAccCount'
+    from t_work_info workinfo
+    left join t_maintain_record record  on workinfo.recordId = record.recordId
+    left join t_checkin checkin  on checkin.checkinId = record.checkinId
+    left join
+    (select materialId, maintainRecordId, accId, sum(materialCount) 'materialCount', materialCreatedTime, materialStatus from t_material_list
+    GROUP BY maintainRecordId , accId
+    ) list on list.maintainRecordId = record.recordId
+    left join  <include refid="distincyUseOrReturn"><property name="table" value="t_material_use"/></include> mause
+    on mause.matainRecordId = list.maintainRecordId and mause.accId = list.accId
+    left join  <include refid="distincyUseOrReturn"><property name="table" value="t_material_return"/></include> mare
+    on mare.matainRecordId = list.maintainRecordId and mare.accId = list.accId
+    left join t_accessories acc  on list.accId = acc.accId
+    where workinfo.workStatus = 'Y' and workinfo.userId = #{userId}
+    ORDER BY workinfo.workAssignTime asc
+    limit #{pager.beginIndex}, #{pager.pageSize}
+  </select>
+
+  <sql id="distincyUseOrReturn">
+    (select  matainRecordId, accId, sum(accCount) 'accCount' from ${table}	GROUP BY matainRecordId , accId)
+  </sql>
+
+  <select id="count" resultType="int">
+    select  count(t_material_list.materialId) from t_material_list
+    left join t_work_info on t_material_list.maintainRecordId = t_work_info.recordId
+    left join t_user u on t_work_info.userId = u.userId
+    where t_work_info.workStatus='Y' and  u.userId = #{userId};
+  </select>
+
+  <select id="recordAccsByPager" resultMap="BaseResultMap">
+      select
+      list.maintainRecordId 'recordId',
+      acc.accId,
+      acc.accName,
+      acc.accTotal,
+      list.materialCount,
+      mause.accCount 'useCount',
+      mare.accCount 'returnCount'
+      from
+        (select materialId, maintainRecordId , accId, sum(materialCount) 'materialCount' from t_material_list GROUP BY maintainRecordId, accId) list
+      LEFT JOIN
+          (select t_material_use.matainRecordId , t_material_use.accId, sum(t_material_use.accCount) 'accCount' from t_material_use GROUP BY t_material_use.matainRecordId, t_material_use.accId) mause
+          on mause.matainRecordId = list.maintainRecordId  and mause.accId = list.accId
+      left join
+          (select t_material_return.matainRecordId, t_material_return.accId, sum(t_material_return.accCount) 'accCount' from  t_material_return GROUP BY t_material_return.matainRecordId, t_material_return.accId) mare
+          on mare.matainRecordId = list.maintainRecordId and mare.accId = list.accId
+      left join t_accessories acc on list.accId = acc.accId
+      where list.maintainRecordId = #{recordId}
+      limit #{pager.beginIndex}, #{pager.pageSize}
+  </select>
+
+    <select id="countRecordAccs" resultType="int">
+          select count(materialId) from (
+            select *
+              from t_material_list
+              GROUP BY maintainRecordId, accId
+            ) a
+        where  a.maintainRecordId = #{recordId}
+    </select>
 
 </mapper>
