@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -167,6 +168,40 @@ public class AccessoriesInventoryController {
             }
         } else {
             return ControllerResult.getFailResult("操作失败");
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "blurredQuery", method = RequestMethod.GET)
+    public Pager4EasyUI<Accessories> blurredQuery(HttpServletRequest request, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
+        logger.info("配件库存模糊查询");
+        String text = request.getParameter("text");
+        String value = request.getParameter("value");
+        if (text != null && !text.equals("") && value != null && !value.equals("")) {
+            Pager pager = new Pager();
+            pager.setPageNo(Integer.parseInt(pageNumber));
+            pager.setPageSize(Integer.parseInt(pageSize));
+            List<Accessories> accessoriesList = null;
+            Accessories accessories = new Accessories();
+            if (text.equals("汽车公司/配件/供应商/配件类型")) {
+                accessories.setCompanyId(value);
+                accessories.setAccName(value);
+                accessories.setSupplyId(value);
+                accessories.setAccTypeId(value);
+            } else if (text.equals("汽车公司")) {
+                accessories.setCompanyId(value);
+            } else if (text.equals("配件")) {
+                accessories.setAccName(value);
+            }else if(text.equals("供应商")){
+                accessories.setSupplyId(value);
+            }else if(text.equals("配件类型")){
+                accessories.setAccTypeId(value);
+            }
+            accessoriesList = accessoriesService.blurredQuery(pager, accessories);
+            pager.setTotalRecords(accessoriesService.countByBlurred(accessories));
+            return new Pager4EasyUI<Accessories>(pager.getTotalRecords(), accessoriesList);
+        } else {
+            return null;
         }
     }
 

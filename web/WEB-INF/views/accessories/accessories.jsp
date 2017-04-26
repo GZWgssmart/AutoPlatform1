@@ -62,13 +62,17 @@
             </button>
             <div class="input-group" style="width:350px;float:left;padding:0;margin:0 0 0 -1px;">
                 <div class="input-group-btn">
-                    <button type="button" id="ulButton" class="btn btn-default" style="border-radius:0px;" data-toggle="dropdown">公司名称/配件名称<span class="caret"></span></button>
+                    <button type="button" id="ulButton" class="btn btn-default" style="border-radius:0px;" data-toggle="dropdown">汽车公司/配件/供应商/配件类型<span class="caret"></span></button>
                     <ul class="dropdown-menu pull-right">
-                        <li><a onclick="onclikLi(this)">公司名称/配件名称</a></li>
+                        <li><a onclick="onclikLi(this)">汽车公司/配件/供应商/配件类型</a></li>
                         <li class="divider"></li>
-                        <li><a onclick="onclikLi(this)">公司名称</a></li>
+                        <li><a onclick="onclikLi(this)">汽车公司</a></li>
                         <li class="divider"></li>
-                        <li><a onclick="onclikLi(this)">配件名称</a></li>
+                        <li><a onclick="onclikLi(this)">配件</a></li>
+                        <li class="divider"></li>
+                        <li><a onclick="onclikLi(this)">供应商</a></li>
+                        <li class="divider"></li>
+                        <li><a onclick="onclikLi(this)">配件类型</a></li>
                         <li class="divider"></li>
                     </ul>
                 </div><!-- /btn-group -->

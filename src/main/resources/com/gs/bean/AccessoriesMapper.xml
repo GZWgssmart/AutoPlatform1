@@ -127,4 +127,76 @@
       select count(accId) from auto_platform.t_accessories ck where ck.accStatus = 'N'
     ]]>
   </select>
+
+  <!-- 分页模糊查询 -->
+  <select id="blurredQuery" resultMap="AccessoriesMap" >
+    <![CDATA[
+           select ac.*,cp.companyId,cp.companyName,sp.supplyId,sp.supplyName,atp.accTypeId,atp.accTypeName from auto_platform.t_accessories ac
+           LEFT JOIN auto_platform.t_company cp on ac.companyId=cp.companyId
+           LEFT JOIN auto_platform.t_supply sp on ac.supplyId=sp.supplyId
+           LEFT JOIN auto_platform.t_accessories_type atp on ac.accTypeId=atp.accTypeId
+           where 1=1 AND
+        ]]>
+    <if test="accInv.companyId != '' and accInv.companyId != null">
+      cp.companyName like '%${accInv.companyId}%'
+    </if>
+    <if test="accInv.companyId != '' and accInv.companyId != null and
+            accInv.accName != '' and accInv.accName != null">
+      OR
+    </if>
+    <if test="accInv.accName!='' and accInv.accName!= null">
+      ac.accName LIKE '%${accInv.accName}%'
+    </if>
+    <if test="accInv.accName!='' and accInv.accName!= null and
+            accInv.supplyId!='' and accInv.supplyId!=null">
+      OR
+    </if>
+    <if test="accInv.supplyId!='' and accInv.supplyId!=null">
+      sp.supplyName LIKE '%${accInv.supplyId}%'
+    </if>
+    <if test="accInv.supplyId!='' and accInv.supplyId!= null and
+            accInv.accTypeId!='' and accInv.accTypeId!=null">
+      OR
+    </if>
+    <if test="accInv.accTypeId!='' and accInv.accTypeId!=null">
+      atp.accTypeName LIKE '%${accInv.accTypeId}%'
+    </if>
+    order by ac.accCreatedTime Desc
+    limit #{pager.beginIndex}, #{pager.pageSize}
+  </select>
+
+  <!-- 分页模糊查询个数 -->
+  <select id="countByBlurred" resultType="int" >
+    <![CDATA[
+           select count(accId) FROM auto_platform.t_accessories ac
+           LEFT JOIN auto_platform.t_company cp on cp.companyId=ac.companyId
+           LEFT JOIN auto_platform.t_supply sp on sp.supplyId=ac.supplyId
+           LEFT JOIN auto_platform.t_accessories_type atp on atp.accTypeId=ac.accTypeId
+           where 1=1 AND
+        ]]>
+    <if test="accInv.companyId != '' and accInv.companyId != null">
+      cp.companyName like '%${accInv.companyId}%'
+    </if>
+    <if test="accInv.companyId != '' and accInv.companyId != null and
+            accInv.accName != '' and accInv.accName != null">
+      OR
+    </if>
+    <if test="accInv.accName!='' and accInv.accName!= null">
+      ac.accName LIKE '%${accInv.accId}%'
+    </if>
+    <if test="accInv.accName!='' and accInv.accName!= null and
+            accInv.supplyId!='' and accInv.supplyId!=null">
+      OR
+    </if>
+    <if test="accInv.supplyId!='' and accInv.supplyId!=null">
+      sp.supplyName LIKE '%${accInv.supplyId}%'
+    </if>
+    <if test="accInv.supplyId!='' and accInv.supplyId!= null and
+            accInv.accTypeId!='' and accInv.accTypeId!=null">
+      OR
+    </if>
+    <if test="accInv.accTypeId!='' and accInv.accTypeId!=null">
+      atp.accTypeName LIKE '%${accInv.accTypeId}%'
+    </if>
+  </select>
 </mapper>
