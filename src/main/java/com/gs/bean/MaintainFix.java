@@ -12,7 +12,7 @@ public class MaintainFix {
 
     private Double maintainMoney;//维修保养项目基础费用
 
-    private Double maintainManhourFee;//维修保养项目工时费
+    private Double maintainManHourFee;//维修保养项目工时费
 
     private String maintainOrFix;//标识是保养还是维修
 
@@ -40,6 +40,14 @@ public class MaintainFix {
         this.maintainId = maintainId;
     }
 
+    public Double getMaintainManHourFee() {
+        return maintainManHourFee;
+    }
+
+    public void setMaintainManHourFee(Double maintainManHourFee) {
+        this.maintainManHourFee = maintainManHourFee;
+    }
+
     public String getMaintainName() {
         return maintainName;
     }
@@ -62,14 +70,6 @@ public class MaintainFix {
 
     public void setMaintainMoney(Double maintainMoney) {
         this.maintainMoney = maintainMoney;
-    }
-
-    public Double getMaintainManhourFee() {
-        return maintainManhourFee;
-    }
-
-    public void setMaintainManhourFee(Double maintainManhourFee) {
-        this.maintainManhourFee = maintainManhourFee;
     }
 
     public String getMaintainOrFix() {
@@ -111,7 +111,7 @@ public class MaintainFix {
                 ", maintainName='" + maintainName + '\'' +
                 ", maintainHour=" + maintainHour +
                 ", maintainMoney=" + maintainMoney +
-                ", maintainManhourFee=" + maintainManhourFee +
+                ", maintainManhourFee=" + maintainManHourFee +
                 ", maintainOrFix='" + maintainOrFix + '\'' +
                 ", maintainDes='" + maintainDes + '\'' +
                 ", companyId='" + companyId + '\'' +

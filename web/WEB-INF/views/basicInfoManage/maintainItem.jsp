@@ -35,7 +35,7 @@
                 <th data-field="maintainName">保养项目名称</th>
                 <th data-field="maintainHour">保养项目工时</th>
                 <th data-field="maintainMoney">保养项目基础费用</th>
-                <th data-field="maintainManhourFee">保养项目工时费</th>
+                <th data-field="maintainManHourFee">保养项目工时费</th>
                 <th data-field="maintainDes">保养项目描述</th>
                 <th data-field="company.companyName">保养项目所属公司</th>
                 <th data-field="maintainStatus" data-formatter="formatterStatus">保养项目状态</th>
@@ -76,39 +76,34 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">所需时间：</label>
+                    <label class="col-sm-3 control-label">保养项目工时：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="maintainHour" placeholder="请预估所需的时间" class="form-control">
+                        <input type="text" name="maintainHour" placeholder="请输入保养项目工时" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">基础费用：</label>
+                    <label class="col-sm-3 control-label">保养项目基础费用：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="maintainMoney" placeholder="请预估所需的费用" class="form-control"/>
+                        <input type="text" name="maintainMoney" placeholder="请输入保养项目基础费用" class="form-control"/>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">工时费：</label>
+                    <label class="col-sm-3 control-label">保养项目工时费：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="maintainManhourFee" placeholder="请输入工时费" class="form-control"/>
+                        <input type="text" name="maintainManHourFee" placeholder="请输入保养项目工时费" class="form-control"/>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">项目选项：</label>
+                    <label class="col-sm-3 control-label">保养项目所属公司：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="maintainOrFix" placeholder="请选择项目选项" class="form-control"/>
+                        <select id="addCompany" class="js-example-tags Company" name="companyId" style="width:100%">
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">所属公司：</label>
+                    <label class="col-sm-3 control-label">保养项目描述：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="companyId" placeholder="请选择所属公司" class="form-control"/>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">相关描述：</label>
-                    <div class="col-sm-7">
-                        <textarea type="text" name="maintainDes" placeholder="请输入该项目相关的描述" style="height: 100px;"
+                        <textarea type="text" name="maintainDes" placeholder="请输入保养项目描述" style="height: 100px;"
                                   class="form-control"></textarea>
                     </div>
                 </div>

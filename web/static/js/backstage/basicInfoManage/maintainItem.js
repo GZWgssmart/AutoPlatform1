@@ -2,6 +2,9 @@ var contentPath='';
 
 $(function () {
     initTable('table', '/maintain/queryByPagerMaintain'); // 初始化表格
+
+    // 初始化select2, 第一个参数是class的名字, 第二个参数是select2的提示语, 第三个参数是select2的查询url
+    initSelect2("Company", "请选择公司", "/company/queryAllCompany");
 });
 
 
@@ -113,70 +116,62 @@ function validator(formId) {
         },
         fields: {
             maintainName: {
-                message: '项目名称不能为空',
+                message: '保养项目名称不能为空',
                 validators: {
                     notEmpty: {
-                        message: '项目名称不能为空'
+                        message: '保养项目名称不能为空'
                     },
                     stringLength: {
                         min: 1,
-                        max: 6,
-                        message: '项目名称长度必须在1到6位之间'
+                        max: 10,
+                        message: '保养项目名称长度必须在1到10位之间'
                     }
                 }
             },
             maintainHour: {
-                message: '项目工时不能为空',
+                message: '保养项目工时不能为空',
                 validators: {
                     notEmpty: {
-                        message: '项目工时不能为空'
+                        message: '保养项目工时不能为空'
                     }
                 }
             },
             maintainMoney: {
-                message: '基础费用不能为空',
+                message: '保养项目基础费用不能为空',
                 validators: {
                     notEmpty: {
-                        message: '基础费用不能为空'
+                        message: '保养项目基础费用不能为空'
                     }
                 }
             },
             maintainManHourFee: {
-                message: '工时费不能为空',
+                message: '保养项目工时费不能为空',
                 validators: {
                     notEmpty: {
-                        message: '工时费不能为空'
-                    }
-                }
-            },
-            maintainOrFix: {
-                message: '项目选项不能为空',
-                validators: {
-                    notEmpty: {
-                        message: '项目选项不能为空'
+                        message: '保养项目工时费不能为空'
                     }
                 }
             },
             maintainDes: {
-                message: '项目描述不能为空',
+                message: '保养项目描述不能为空',
                 validators: {
                     notEmpty: {
-                        message: '项目描述不能为空'
+                        message: '保养项目描述不能为空'
                     }
                 }
             },
             companyId: {
-                message: '所属公司不能为空',
+                message: '保养项目所属公司不能为空',
                 validators: {
                     notEmpty: {
-                        message: '所属公司不能为空'
+                        message: '保养项目所属公司不能为空'
                     }
                 }
             }
         }
     }).on('success.form.bv', function (e) {
         if (formId == "addForm") {
-            formSubmit("/maintainfix/addMaintainFix", formId, "addWindow");
+            formSubmit("/maintain/addMaintain", formId, "addWindow");
 
         } else if (formId == "editForm") {
             formSubmit("/maintainfix/updateMaintainFix", formId, "editWindow");

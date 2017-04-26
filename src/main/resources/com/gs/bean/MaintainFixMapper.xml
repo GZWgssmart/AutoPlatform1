@@ -6,7 +6,7 @@
     <result column="maintainName" property="maintainName" jdbcType="VARCHAR" />
     <result column="maintainHour" property="maintainHour" jdbcType="DOUBLE" />
     <result column="maintainMoney" property="maintainMoney" jdbcType="DOUBLE" />
-    <result column="maintainManhourFee" property="maintainManhourFee" jdbcType="DOUBLE" />
+    <result column="maintainManHourFee" property="maintainManHourFee" jdbcType="DOUBLE" />
     <result column="maintainOrFix" property="maintainOrFix" jdbcType="VARCHAR" />
     <result column="maintainDes" property="maintainDes" jdbcType="VARCHAR" />
     <result column="companyId" property="companyId" jdbcType="VARCHAR" />
@@ -49,6 +49,13 @@
 			select count(maintainStatus) from t_maintain_fix mf  where mf.maintainStatus = 'Y'
 		]]>
   </select>
+
+
+  <insert id="insert"  parameterType="MaintainFix">
+    <![CDATA[
+			insert into t_maintain_fix (maintainId,maintainName,maintainHour,maintainMoney,maintainManHourFee,maintainOrFix,maintainDes,maintainStatus,companyId) values (UUID(),#{maintainName},#{maintainHour},#{maintainMoney},#{maintainManHourFee},#{maintainOrFix},#{maintainDes},'Y',#{companyId})
+		]]>
+  </insert>
 
   <!--<select id="count" resultType="int" >-->
     <!--<![CDATA[-->

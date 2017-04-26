@@ -39,7 +39,7 @@ public class MaintainController {
     private MaintainFixService maintainFixService;
 
     /**
-     * 分页查询保养项目信息
+     * 分页查询维修项目信息
      */
     @ResponseBody
     @RequestMapping(value="queryByPagerService", method = RequestMethod.GET)
@@ -53,6 +53,9 @@ public class MaintainController {
         return new Pager4EasyUI<MaintainFix>(pager.getTotalRecords(), maintainFixes);
     }
 
+    /**
+     * 分页查询保养项目信息
+     */
     @ResponseBody
     @RequestMapping(value="queryByPagerMaintain", method = RequestMethod.GET)
     public Pager4EasyUI queryByPagerMaintain(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
@@ -65,6 +68,9 @@ public class MaintainController {
         return new Pager4EasyUI<MaintainFix>(pager.getTotalRecords(), maintainFixes);
     }
 
+    /**
+     * 查询所有保养项目
+     */
     @ResponseBody
     @RequestMapping(value = "queryAllItem", method = RequestMethod.GET)
     public List<ComboBox4EasyUI> queryAll(){
@@ -80,38 +86,30 @@ public class MaintainController {
         return comboxs;
     }
 
-    /**
-     * 添加保养项目信息
-     *
-     * @return
-     */
+
     @ResponseBody
-    @RequestMapping(value = "addMaintain", method = RequestMethod.POST)
-    public ControllerResult addAccBuy(MaintainFix maintainFix) {
-        if (maintainFix != null && !maintainFix.equals("")) {
-            System.out.println(maintainFix.toString());
+    @RequestMapping(value = "addService",method = RequestMethod.POST)
+    public ControllerResult addService(MaintainFix maintainFix){
+        if(maintainFix != null && !maintainFix.equals("")){
+            logger.info("添加维修项目");
+            maintainFix.setMaintainOrFix("维修");
             maintainFixService.insert(maintainFix);
-            logger.info("添加成功");
-            return ControllerResult.getSuccessResult("添加成功");
-        } else {
+            return ControllerResult.getSuccessResult("添加维修项目成功");
+        }else {
             return ControllerResult.getFailResult("添加失败，请输入必要的信息");
         }
     }
 
-    /**
-     * 删除保养项目信息
-     *
-     * @return
-     */
     @ResponseBody
-    @RequestMapping(value = "removeMaintain", method = RequestMethod.POST)
-    public ControllerResult removeAccBuy(String id) {
-        if (id != null && !id.equals("")) {
-            maintainFixService.deleteById(id);
-            logger.info("删除成功");
-            return ControllerResult.getSuccessResult("删除成功");
-        } else {
-            return ControllerResult.getFailResult("删除失败");
+    @RequestMapping(value = "addMaintain",method = RequestMethod.POST)
+    public ControllerResult InsertMaintain(MaintainFix maintainFix){
+        if(maintainFix != null && !maintainFix.equals("")){
+            logger.info("添加保养项目");
+            maintainFix.setMaintainOrFix("保养");
+            maintainFixService.insert(maintainFix);
+            return ControllerResult.getSuccessResult("添加保养项目成功");
+        }else {
+            return ControllerResult.getFailResult("添加失败，请输入必要的信息");
         }
     }
 

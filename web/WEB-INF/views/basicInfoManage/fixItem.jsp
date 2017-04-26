@@ -12,9 +12,9 @@
     <link rel="stylesheet" href="/static/css/select2.min.css">
     <link rel="stylesheet" href="/static/css/sweetalert.css">
     <link rel="stylesheet" href="/static/css/table/table.css">
+    <link rel="stylesheet" href="/static/css/bootstrap-validate/bootstrapValidator.min.css">
     <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.css">
     <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/datetimepicker.less">
-    <link rel="stylesheet" href="/static/css/bootstrap-validate/bootstrapValidator.min.css">
 </head>
 <body>
 <%@include file="../backstage/contextmenu.jsp" %>
@@ -28,7 +28,7 @@
                 <th data-field="maintainName">维修项目名称</th>
                 <th data-field="maintainHour">维修项目工时</th>
                 <th data-field="maintainMoney">维修项目基础费用</th>
-                <th data-field="maintainManhourFee">维修项目工时费</th>
+                <th data-field="maintainManHourFee">维修项目工时费</th>
                 <th data-field="maintainDes">维修项目描述</th>
                 <th data-field="company.companyName">维修项目所属公司</th>
                 <th data-field="maintainStatus">维修项目状态</th>
@@ -167,6 +167,5 @@
 <script src="/static/js/bootstrap-dateTimePicker/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
 <script src="/static/js/form/jquery.validate.js"></script>
 <script src="/static/js/backstage/basicInfoManage/fixItem.js"></script>
-
 </body>
 </html>

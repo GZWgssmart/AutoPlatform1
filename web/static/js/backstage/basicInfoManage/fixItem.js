@@ -1,15 +1,13 @@
 $(function () {
     initTable('table', '/maintain/queryByPagerService'); // 初始化表格
 
-    initSelect2("Company", "请选择颜色", "/company/queryAllCompany"); // 初始化select2, 第一个参数是class的名字, 第二个参数是select2的提示语, 第三个参数是select2的查询url
+    // 初始化select2, 第一个参数是class的名字, 第二个参数是select2的提示语, 第三个参数是select2的查询url
+    initSelect2("Company", "请选择公司", "/company/queryAllCompany");
 });
 
 function showEdit() {
     var row = $('table').bootstrapTable('getSelections');
     if (row.length > 0) {
-//                $('#editId').val(row[0].id);
-//                $('#editName').val(row[0].name);
-//                $('#editPrice').val(row[0].price);
         $("#editWindow").modal('show'); // 显示弹窗
         var ceshi = row[0];
         $("#editForm").fill(ceshi);
@@ -23,26 +21,103 @@ function showEdit() {
 }
 
 function showAdd() {
-
     $("#addWindow").modal('show');
+    $("#addButton").removeAttr("disabled");
+    validator('addForm'); // 初始化验证
 }
 
-function formatRepo(repo) {
-    return repo.text
-}
-function formatRepoSelection(repo) {
-    return repo.text
+function validator(formId) {
+    $('#' + formId).bootstrapValidator({
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            maintainName: {
+                message: '维修项目名称验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '维修项目名称不能为空'
+                    },
+                    stringLength: {
+                        min: 1,
+                        max: 10,
+                        message: '维修项目名称长度必须在1到10位之间'
+                    }
+                }
+            },
+            maintainHour: {
+                message: '维修项目工时验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '维修项目工时不能为空'
+                    }
+                }
+            },
+            maintainManHourFee: {
+                message: '维修项目工时费验证失 败',
+                validators: {
+                    notEmpty: {
+                        message: '维修项目工时费不能为空'
+                    }
+                }
+            },
+            maintainMoney: {
+                message: '维修项目基础费用验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '维修项目基础费用不能为空'
+                    }
+                }
+            },
+            maintainDes :{
+                message: '维修项目描述验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '维修项目描述不能为空'
+                    }
+                }
+            },
+            companyId: {
+                message: '维修项目所属公司证失败',
+                validators: {
+                    notEmpty: {
+                        message: '维修项目所属公司不能为空'
+                    }
+                }
+            }
+        }
+    })
+        .on('success.form.bv', function (e) {
+            if (formId == "addForm") {
+                formSubmit("/maintain/addService", formId, "addWindow");
+
+            } else if (formId == "editForm") {
+                formSubmit("/checkin/edit", formId, "editWindow");
+
+            }
+        })
+
 }
 
-function showDel() {
-    var row = $('table').bootstrapTable('getSelections');
-    if (row.length > 0) {
-        $("#del").modal('show');
+function addSubmit(){
+    $("#addForm").data('bootstrapValidator').validate();
+    if ($("#addForm").data('bootstrapValidator').isValid()) {
+        $("#addButton").attr("disabled","disabled");
     } else {
-        $("#tanchuang").modal('show');
+        $("#addButton").removeAttr("disabled");
     }
 }
 
+function editSubmit(){
+    $("#editForm").data('bootstrapValidator').validate();
+    if ($("#editForm").data('bootstrapValidator').isValid()) {
+        $("#editButton").attr("disabled","disabled");
+    } else {
+        $("#editButton").removeAttr("disabled");
+    }
+}
 function checkAdd() {
     var id = $('#addId').val();
     var name = $('#addName').val();
@@ -77,100 +152,29 @@ function checkEdit() {
     );
 }
 
-$('#addDateTimePicker').datetimepicker({
-    language: 'zh-CN',
-    format: 'yyyy-mm-dd hh:ii'
-});
-$('#editDateTimePicker').datetimepicker({
-    language: 'zh-CN',
-    format: 'yyyy-mm-dd hh:ii'
-});
-
-
-//前端验证
-$(document).ready(function () {
-    $("#showAddFormWar").validate({
-        errorElement: 'span',
-        errorClass: 'help-block',
-
-        rules: {
-            fixName: {
-                required: true,
-                minlength: 2
-            },
-            fixHour: {
-                required: true,
-                minlength: 2
-            },
-            fixMoney: {
-                required: true,
-                minlength: 2
+function formSubmit(url, formId, winId){
+    $.post(url,
+        $("#" + formId).serialize(),
+        function (data) {
+            if (data.result == "success") {
+                $('#' + winId).modal('hide');
+                swal({
+                    title:"",
+                    text: data.message,
+                    confirmButtonText:"确定", // 提示按钮上的文本
+                    type:"success"})// 提示窗口, 修改成功
+                $('#table').bootstrapTable('refresh');
+                if(formId == 'addForm'){
+                    $("input[type=reset]").trigger("click"); // 移除表单中填的值
+                    $('#addForm').data('bootstrapValidator').resetForm(true); // 移除所有验证样式
+                    $("#addButton").removeAttr("disabled"); // 移除不可点击
+                }
+            } else if (data.result == "fail") {
+                swal({title:"",
+                    text:"添加失败",
+                    confirmButtonText:"确认",
+                    type:"error"})
+                $("#"+formId).removeAttr("disabled");
             }
-        },
-        messages: {
-            fixName: "请输入维修项目名称",
-            fixHour: "请输入维修时间",
-            fixMoney: "请输入维修费用",
-        },
-        errorPlacement: function (error, element) {
-            element.next().remove();
-            element.after('<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>');
-            element.closest('.form-group').append(error);
-        },
-        highlight: function (element) {
-            $(element).closest('.form-group').addClass('has-error has-feedback');
-        },
-        success: function (label) {
-            var el = label.closest('.form-group').find("input");
-            el.next().remove();
-            el.after('<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>');
-            label.closest('.form-group').removeClass('has-error').addClass("has-feedback has-success");
-            label.remove();
-        },
-        submitHandler: function (form) {
-            alert("submitted!");
-        }
-    })
-    $("#showEditFormWar").validate({
-        errorElement: 'span',
-        errorClass: 'help-block',
-
-        rules: {
-            fixName: {
-                required: true,
-                minlength: 2
-            },
-            fixHour: {
-                required: true,
-                minlength: 2
-            },
-            fixMoney: {
-                required: true,
-                minlength: 2
-            },
-        },
-        messages: {
-            fixName: "请输入维修项目名称",
-            fixHour: "请输入维修时间",
-            fixMoney: "请输入维修费用",
-        },
-        errorPlacement: function (error, element) {
-            element.next().remove();
-            element.after('<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>');
-            element.closest('.form-group').append(error);
-        },
-        highlight: function (element) {
-            $(element).closest('.form-group').addClass('has-error has-feedback');
-        },
-        success: function (label) {
-            var el = label.closest('.form-group').find("input");
-            el.next().remove();
-            el.after('<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>');
-            label.closest('.form-group').removeClass('has-error').addClass("has-feedback has-success");
-            label.remove();
-        },
-        submitHandler: function (form) {
-            alert("submitted!");
-        }
-    })
-});
+        }, "json");
+}
