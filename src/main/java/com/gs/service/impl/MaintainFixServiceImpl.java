@@ -18,6 +18,10 @@ import java.util.List;
 @Service
 public class MaintainFixServiceImpl implements MaintainFixService {
 
+	@Override
+	public List<MaintainFix> queryByPagerAll(Pager pager) {
+		return maintainFixDAO.queryByPagerAll(pager);
+	}
 
 	@Resource
 	private MaintainFixDAO maintainFixDAO;

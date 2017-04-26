@@ -68,6 +68,19 @@ public class MaintainController {
         return new Pager4EasyUI<MaintainFix>(pager.getTotalRecords(), maintainFixes);
     }
 
+
+    @ResponseBody
+    @RequestMapping(value = "queryByPagerAll",method = RequestMethod.GET)
+    public Pager4EasyUI queryByPagerAll(@Param("pageNumber") String pageNumber,@Param("pageSize") String pageSize) {
+        Pager pager = new Pager();
+        pager.setPageNo(Integer.valueOf(pageNumber));
+        pager.setPageSize(Integer.valueOf(pageSize));
+        pager.setTotalRecords(maintainFixService.count());
+        logger.info("分页查询所有维修保养项目信息");
+        List<MaintainFix> maintainFixes = maintainFixService.queryByPagerAll(pager);
+        return new Pager4EasyUI<MaintainFix>(pager.getTotalRecords(),maintainFixes);
+    }
+
     /**
      * 查询所有保养项目
      */
@@ -85,7 +98,6 @@ public class MaintainController {
         }
         return comboxs;
     }
-
 
     @ResponseBody
     @RequestMapping(value = "addService",method = RequestMethod.POST)
