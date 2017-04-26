@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-<head>
+<h ead>
     <title>员工工单管理</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -79,16 +79,20 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">保养记录编号：</label>
                     <div class="col-sm-7">
-                        <select id="addRecordId" class="js-example-tags record" name="recordId" style="width:100%;">
-                        </select>
+                       <%-- <select id="addRecordId" class="js-example-tags record" name="recordId" style="width:100%;">
+                        </select>--%>
+                        <input type="hidden"  id="addRecordId" readonly="true" name="recordId">
+                        <input type="text" onclick="openRecord();" readonly="true" id="checkinId" name="recordId" placeholder="请点击选择保养记录" class="form-control">
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="col-sm-3 control-label">指派用户编号：</label>
                     <div class="col-sm-7">
-                        <select id="addUserId" class="js-example-tags user" name="userId" style="width:100%;">
-                        </select>
+                        <%--<select id="addUserId" class="js-example-tags user" name="userId" style="width:100%;">
+                        </select>--%>
+                            <input type="hidden"  id="addUserId" readonly="true" name="userId">
+                            <input type="text" onclick="openUser();" readonly="true" id="addUserId" name="userId" placeholder="请点击选择用户" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
@@ -166,40 +170,94 @@
     </div>
 </div><!-- /.modal -->
 
-
+<%--维修保养记录弹窗--%>
 <div id="recordWindow" class="modal fade" aria-hidden="true" style="overflow:scroll" data-backdrop="static" keyboard:false>
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 b-r">
-                        <h3 class="m-t-none m-b">维修保养记录添加</h3>
-                        <table class="table table-hover" id="recordTable">
+                        <h3 class="m-t-none m-b">维修保养记录信息</h3>
+                        <table class="table table-hover" id="recordTable" data-height="550">
                             <thead>
                             <tr>
-                                <th data-radio="true"></th>
-                                <th data-width="100" data-formatter="maintainRecord.recordId">
+                                <th data-radio="true" data-field="status"></th>
+                                <th data-feild="maintainRecord.recordId">
                                     保养记录编号
                                 </th>
-                                <th data-width="100" data-field="user.userId">
-                                    指派工单编号
+                                <th data-feild="maintainRecord.startTime">
+                                    维修保养开始时间
                                 </th>
-                                <th data-width="100" data-field="workAssignTime" data-formatter="formatterDate">
-                                    工单指派时间
+                                <th data-feild="maintainRecord.endTime">
+                                    预估结束时间
                                 </th>
-                                <th data-width="100" data-field="workCreatedTime"  data-formatter="formatterDateTime">
-                                    工单创建时间
+                                <th data-feild="maintainRecord.recordCreatedTime">
+                                    实际结束时间
+                                </th>
+                                <th data-feild="maintainRecord.pickupTime">
+                                    车主提车时间
+                                </th>
+                                <th data-field="maintainRecord.recordDes">
+                                    维修保养记录描述
                                 </th>
                             </tr>
                             </thead>
                             <tbody>
                             </tbody>
                         </table>
-                        <div style="height: 100px;"></div>
                         <div class="modal-footer" style="overflow:hidden;">
-                            <button type="button" class="btn btn-default" onclick="closeAppWin()">关闭
+                            <button type="button" class="btn btn-default" onclick="closeRecord()">关闭
                             </button>
                             <input type="button" class="btn btn-primary" onclick="openRecord()" value="确定">
+                            </input>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%--工单指派用户弹窗--%>
+<div id="userWindow" class="modal fade" aria-hidden="true" style="overflow:scroll" data-backdrop="static" keyboard:false>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12 b-r">
+                        <h3 class="m-t-none m-b">工单指派用户信息</h3>
+                        <table class="table table-hover" id="userTable" data-height="550">
+                            <thead>
+                            <tr>
+                                <th data-radio="true" data-field="status"></th>
+                                <th data-feild="user.userEmail">
+                                    用户邮箱
+                                </th>
+                                <th data-feild="user.userPhone">
+                                    用户电话
+                                </th>
+                                <th data-feild="user.userName">
+                                    用户名字
+                                </th>
+                                <th data-feild="user.userGender">
+                                    用户性别
+                                </th>
+                                <th data-feild="user.userIdentity">
+                                    用户身份证
+                                </th>
+                                <th data-field="user.userAddress">
+                                    用户地址
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                        <div class="modal-footer" style="overflow:hidden;">
+                            <button type="button" class="btn btn-default" onclick="closeUser()">关闭
+                            </button>
+                            <input type="button" class="btn btn-primary" onclick="openUser()" value="确定">
                             </input>
                         </div>
                     </div>

@@ -8,11 +8,28 @@ $(function () {
     initSelect2("record","请选择保养记录","/maintainRecord/queryByPager");
     initSelect2("user","请选择用户","/userBasicManage/queryAll");
 });
-//选择维修保养记录窗体
+
+//选择维修保养记录弹窗
 function openRecord(){
     initTableNotTollbar("recordTable","maintainRecord/queryByPager")
     $("#addWindow").modal('hide');
     $("#recordWindow").modal('show');
+}
+//选择维修保养记录窗关闭
+function closeRecord(){
+    $("#recordWindow").modal('hide');
+    $("#addWindow").modal('show');
+}
+//选择用户弹窗
+function openUser(){
+    initTableNotTollbar("userTable","userBasicManage/queryByPager");
+    $("#addWindow").modal('hide');
+    $("#userWindow").modal('show');
+}
+//关闭用户弹窗
+function closeUser(){
+    $("#userWindow").modal('hide');
+    $("#addWindow").modal('show');
 }
 
 //选择记录
