@@ -5,9 +5,56 @@
 $(function () {
     initTable("table","/Order/queryByPager");
 
-    initSelect2("record","请选择保养记录","/maintainRecord/queryAll");
+    initSelect2("record","请选择保养记录","/maintainRecord/queryByPager");
     initSelect2("user","请选择用户","/userBasicManage/queryAll");
 });
+//选择维修保养记录窗体
+function openRecord(){
+    initTableNotTollbar("recordTable","maintainRecord/queryByPager")
+    $("#addWindow").modal('hide');
+    $("#recordWindow").modal('show');
+}
+
+//选择记录
+// function workApp(){
+//     var row =$("#appTable").bootstapTable('getSelections');
+//     if(row.length !=1){
+//         swal({
+//             title:"",
+//             text:"只能选择一条数据"
+//             confirmButtonText:"确认",
+//             type:"error";
+//         })
+//     }else{
+//         $("appWindow").modal('hide');
+//         var appointment = row[0];
+//         $("#addRecordId").html('<option value="' + appointment.record.checkinId + '">' + appointment.record.recordId + '</option>').trigger("change");
+//         $("#addUserId").html('<option value="' + appointment.user.userId + '">' + appointment.user.userName + '</option>').trigger("change");
+//         $("#addworkAssignTime").val(appointment.workAssignTime);
+//         $("#addworkCreateTime").val(appointment.workCreatedTime);
+//     }
+// }
+//
+// function showEdit(){
+//     var row =$("#table").bootstapTable('getSelections');
+//     if(row.length >0){
+//         $("edit").modal('show');//显示窗口
+//         var appointment = row[0];
+//         $("#addRecordId").html('<option value="' + appointment.record.checkinId + '">' + appointment.record.recordId + '</option>').trigger("change");
+//         $("#addUserId").html('<option value="' + appointment.user.userId + '">' + appointment.user.userName + '</option>').trigger("change");
+//         $("#addworkAssignTime").val(appointment.workAssignTime);
+//         $("#addworkCreateTime").val(appointment.workCreatedTime);
+//
+//     }else{
+//         swal({
+//             title:"",
+//             text:"请选择你要修改的工单记录" //主要文本
+//             confirmButtonColor:"#DD6B55"    //提示按钮的颜色
+//             confirmButtonText:"确认", //提示按钮上的文本
+//             type:"warning";   //提示类型
+//     })
+//     }
+// }
 
 //添加
 function showAdd(){
@@ -86,22 +133,32 @@ function addSubmit(){
     }
 }
 
-function showEdit(){
+function editSubmit(){
+    $("#editForm").data('bootstrapValidator').validate();
+    if($("#editForm").data('bootstrapValidator').isvalid()){//已验证
+        $("#editButton").attr("disbled","disabled");
+    }else{
+        $("#editButton").removeAttr("disabled");
+    }
+}
+
+/*function showEdit(){
     var row =  $('table').bootstrapTable('getSelections');
     if(row.length >0) {
 //                $('#editId').val(row[0].id);
 //                $('#editName').val(row[0].name);
 //                $('#editPrice').val(row[0].price);
         $("#editWindow").modal('show'); // 显示弹窗
-        var ceshi = row[0];
-        $("#editForm").fill(ceshi);
+        $("editButton").removeAttr("disabled");
+        var workInfo = row[0];
+        //$("#editForm").fill(ceshi);
     }else{
         swal({
             title:"",
             text:"请先选择一行数据",
             type:"warning"})// 提示窗口, 修改成功
     }
-}
+}*/
 
 function formatRepo(repo){return repo.text}
 function formatRepoSelection(repo){return repo.text}
@@ -275,7 +332,7 @@ function formatterStatus(index,row){
 
 //工单未完成状态
 function inactive(workId) {
-    $.post(contentPath + "/Order/statusWork?workId=" + workId + "&" + "workStatus=" + "Y",
+    $.post(contentPath + "/Order/statusWork?workId=" + workId,
         function (data) {
             if(data.result == "success"){
                 $('#table').bootstrapTable("refresh");//重新加载数据网格的数据

@@ -23,7 +23,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-/**
+/**工单管理
  * Created by jyy on 2017/4/20.
  */
 @Controller
@@ -36,7 +36,7 @@ public class OrderManageController {
     private WorkInfoService workInfoService;
 
   /* *
-     * 查询所有订单
+     * 查询所有工单
      * @return
      */
     @ResponseBody

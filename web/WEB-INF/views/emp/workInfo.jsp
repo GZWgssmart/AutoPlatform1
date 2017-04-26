@@ -29,10 +29,10 @@
             <thead>
             <tr>
                 <th data-radio="true"></th>
-                <th data-width="100" data-formatter="recordId">
+                <th data-width="100" data-field="maintainRecord.chickinId">
                     保养记录编号
                 </th>
-                <th data-width="100" data-field="userId">
+                <th data-width="100" data-field="user.userName">
                     指派工单编号
                 </th>
                 <th data-width="100" data-field="workAssignTime" data-formatter="formatterDate">
@@ -44,7 +44,7 @@
                 <th data-width="100" data-field="workStatus" data-formatter="formatterStatus">
                     工单状态
                 </th>
-                <th data-width="100" data-field="inOutStatus" data-formatter="openStatusFormatter">
+                <th data-width="100" data-field="workStatus" data-formatter="openStatusFormatter">
                     操作
                 </th>
             </tr>
@@ -57,8 +57,11 @@
             <button id="btn_edit" type="button" class="btn btn-default" onclick="showEdit();">
                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
             </button>
-            <button id="btn_delete" type="button" class="btn btn-default" onclick="showDel();">
-                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
+            <button id="searchDisable" type="button" class="btn btn-danger" onclick="">
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询未完成工单
+            </button>
+            <button id="searchRapid" type="button" class="btn btn-success" onclick="">
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询已完成工单
             </button>
         </div>
     </div>
@@ -113,46 +116,48 @@
     </div>
 </div>
 
-
 <!-- 修改弹窗 -->
 <div class="modal fade" id="editWindow" aria-hidden="true" style="overflow:auto; ">
     <div class="modal-dialog" style="height: auto; overflow:auto;">
         <div class="modal-content" style="overflow:auto;">
             <form class="form-horizontal" role="form"id="editForm">
                 <input type="hidden" name="workId" define="Order.workId"/>
-                <%--<input type="hidden"name="workStatus" define="Order.workStatus">--%>
+                <input type="hidden"name="workStatus" define="Order.workStatus">
                 <div class="modal-header" style="overflow:auto;">
-                    <h4>请修改订单信息</h4>
+                    <h4>请填写订单信息</h4>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">保养记录编号：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="recordId" define="WorkInfo.recordId" placeholder="请输入保养记录编号" class="form-control">
+                        <select id="editRecordId" class="js-example-tags record" name="recordId" style="width:100%;">
+                        </select>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="col-sm-3 control-label">指派用户编号：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="userId" define="WorkInfo.userId" placeholder="请输入工单指派用户编号" class="form-control">
+                        <select id="editUserId" class="js-example-tags user" name="userId" style="width:100%;">
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">工单指派时间：</label>
                     <div class="col-sm-7">
-                        <input type="date" name="workAssignTime" define="WorkInfo.workAssignTime" id="editwrokAssignTime" placeholder="请输入工单指派时间" class="form-control">
+                        <input type="date" name="workAssignTime" id="addworkAssignTime" placeholder="请输入工单指派时间" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">工单创建时间：</label>
                     <div class="col-sm-7">
-                        <input type="date" name="workCreatedTime" define="WorkInfo.workCreatedTime" id="editworkCreateTime" placeholder="请输入工单创建时间" class="form-control">
+                        <input type="date" name="workCreatedTime" id="addworkCreateTime"placeholder="请输入工单创建时间" class="form-control">
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="modal-footer">
                     <div class="col-sm-offset-8">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button class="btn btn-sm btn-success" type="submit">保 存</button>
+                        <button id="editButton" type="button" onclick="editSubmit()" class="btn btn-primary">添加</button>
+                        <input type="reset" name="reset" style="display: none;"/>
                     </div>
                 </div>
             </form>
@@ -160,6 +165,50 @@
         </div><!-- /.modal-content -->
     </div>
 </div><!-- /.modal -->
+
+
+<div id="recordWindow" class="modal fade" aria-hidden="true" style="overflow:scroll" data-backdrop="static" keyboard:false>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12 b-r">
+                        <h3 class="m-t-none m-b">维修保养记录添加</h3>
+                        <table class="table table-hover" id="recordTable">
+                            <thead>
+                            <tr>
+                                <th data-radio="true"></th>
+                                <th data-width="100" data-formatter="maintainRecord.recordId">
+                                    保养记录编号
+                                </th>
+                                <th data-width="100" data-field="user.userId">
+                                    指派工单编号
+                                </th>
+                                <th data-width="100" data-field="workAssignTime" data-formatter="formatterDate">
+                                    工单指派时间
+                                </th>
+                                <th data-width="100" data-field="workCreatedTime"  data-formatter="formatterDateTime">
+                                    工单创建时间
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                        <div style="height: 100px;"></div>
+                        <div class="modal-footer" style="overflow:hidden;">
+                            <button type="button" class="btn btn-default" onclick="closeAppWin()">关闭
+                            </button>
+                            <input type="button" class="btn btn-primary" onclick="openRecord()" value="确定">
+                            </input>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- 删除弹窗 -->
 <div class="modal fade" id="del" aria-hidden="true">
