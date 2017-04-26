@@ -83,35 +83,6 @@ function active(id) {
         },"json");
 }
 
-$('#addArriveTime').datetimepicker({
-    minView: "month", //选择日期后，不会再跳转去选择时分秒
-    language: 'zh-CN',
-    format: 'yyyy-mm-dd',
-    todayBtn: 1,
-    autoclose: 1,
-});
-$('#addAppCreatedTime').datetimepicker({
-    minView: "month", //选择日期后，不会再跳转去选择时分秒
-    language: 'zh-CN',
-    format: 'yyyy-mm-dd',
-    todayBtn: 1,
-    autoclose: 1,
-});
-$('#editArriveTime').datetimepicker({
-    minView: "month", //选择日期后，不会再跳转去选择时分秒
-    language: 'zh-CN',
-    format: 'yyyy-mm-dd',
-    todayBtn: 1,
-    autoclose: 1,
-});
-$('#editAppCreatedTime').datetimepicker({
-    minView: "month", //选择日期后，不会再跳转去选择时分秒
-    language: 'zh-CN',
-    format: 'yyyy-mm-dd',
-    todayBtn: 1,
-    autoclose: 1,
-});
-
 // 查看全部可用
 function showAvailable(){
     initTable('table', '/appointment/queryByPager');
@@ -143,14 +114,19 @@ function checkApp() {
     }
 }
 function showEdit(){
-    initDateTimePicker('addForm', 'arriveTime');
+    initDateTimePicker('editForm', 'arriveTime');
     var row =  $('#table').bootstrapTable('getSelections');
     //alert(row)
     if(row.length >0) {
         $("#editWindow").modal('show'); // 显示弹窗
         $("#editButton").removeAttr("disabled");
-        var ceshi = row[0];
-        $("#editForm").fill(ceshi);
+        var Appointment = row[0];
+        $("#editForm").fill(Appointment);
+        $('#editCarBrand').html('<option value="' + Appointment.brand.brandId + '">' + Appointment.brand.brandName + '</option>').trigger("change");
+        $('#editCarColor').html('<option value="' + Appointment.color.colorId + '">' + Appointment.color.colorName + '</option>').trigger("change");
+        $('#editCarModel').html('<option value="' + Appointment.model.modelId + '">' + Appointment.model.modelName + '</option>').trigger("change");
+        $('#editCarPlate').html('<option value="' + Appointment.plate.plateId + '">' + Appointment.plate.plateName + '</option>').trigger("change");
+        $('#editArriveTime').val(formatterDate(Appointment.arriveTime));
         validator('editForm'); // 初始化验证
     }else{
         swal({
@@ -163,6 +139,7 @@ function showEdit(){
 }
 
 function showAdd(){
+    initDateTimePicker('addForm', 'arriveTime');
     $("#addButton").removeAttr("disabled");
     $("#addWindow").modal('show');
     validator('addForm'); // 初始化验证
@@ -282,24 +259,15 @@ function validator(formId) {
                     }
                 }
             },
-            companyId: {
-                message: '汽修公司验证失败',
-                validators: {
-                    notEmpty: {
-                        message: '汽修公司不能为空'
-                    }
-                }
-            },
-
         }
     })
 
         .on('success.form.bv', function (e) {
             if (formId == "addForm") {
-                formSubmit("/appointment/add", formId, "addWindow");
+                formSubmit(contentPath+"/appointment/add", formId, "addWindow");
 
             } else if (formId == "update") {
-                formSubmit("/appointment/update", formId, "editWindow");
+                formSubmit(contentPath+"/appointment/update", formId, "editWindow");
 
             }
         })

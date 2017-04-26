@@ -74,10 +74,11 @@ public class PhoneReservationController {
     @ResponseBody
     @RequestMapping(value = "add",method = RequestMethod.POST)
     public ControllerResult add(Appointment appointment){
-            appointment.setCompanyId("c515f5d623e011e7a97af832e40312b3");
-            appointmentService.insert(appointment);
-            logger.info("添加电话预约");
-            return ControllerResult.getSuccessResult("添加成功");
+        System.out.println("前台数据为："+appointment.toString());
+        logger.info("添加电话预约");
+        appointment.setCompanyId("c515f5d623e011e7a97af832e40312b3");
+        appointmentService.insert(appointment);
+        return ControllerResult.getSuccessResult("添加成功");
     }
 
     /**
@@ -85,17 +86,17 @@ public class PhoneReservationController {
      * 修改电话预约
      * @return
      */
-     @ResponseBody
-     @RequestMapping(value = "update", method = RequestMethod.POST)
-     public ControllerResult update(Appointment appointment){
-         if(appointment != null && !appointment.equals("")){
-             logger.info("修改电话预约");
-             appointmentService.update(appointment);
-             return ControllerResult.getSuccessResult("添加成功");
-         }else {
-             return ControllerResult.getFailResult("添加失败，请输入必要信息");
-         }
-     }
+    @ResponseBody
+    @RequestMapping(value = "update", method = RequestMethod.POST)
+    public ControllerResult update(Appointment appointment){
+        if(appointment != null && !appointment.equals("")){
+            logger.info("修改电话预约");
+            appointmentService.update(appointment);
+            return ControllerResult.getSuccessResult("添加成功");
+        }else {
+            return ControllerResult.getFailResult("添加失败，请输入必要信息");
+        }
+    }
 
     @ResponseBody
     @RequestMapping(value = "inactive",method = RequestMethod.POST)
