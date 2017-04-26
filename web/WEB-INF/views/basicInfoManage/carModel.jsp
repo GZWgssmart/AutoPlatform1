@@ -103,7 +103,6 @@
                     <h4>请修改汽车车型的相关信息</h4>
                 </div>
                 <input type="hidden" name="modelId" define="carModel.modelId">
-                <input type="hidden" name="brandId" define="carBrand.brandId">
                 <input type="hidden" name="modelStaus" define="carModel.modelStaus">
                 <div class="form-group">
                     <label class="col-sm-3 control-label">车型命名：</label>
@@ -114,7 +113,7 @@
                 <div id="editModelDiv" class="form-group">
                     <label class="col-sm-3 control-label">品牌名称：</label>
                     <div class="col-sm-7">
-                        <select id="editCarBrand" class="js-example-tags carBrand" name="brandName" style="width:100%">
+                        <select id="editCarBrand" class="js-example-tags carBrand" name="brandId" style="width:100%">
                         </select>
                     </div>
                 </div>

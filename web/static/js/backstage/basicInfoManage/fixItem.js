@@ -2,15 +2,18 @@ $(function () {
     initTable('table', '/maintain/queryByPagerService'); // 初始化表格
 
     // 初始化select2, 第一个参数是class的名字, 第二个参数是select2的提示语, 第三个参数是select2的查询url
-    initSelect2("Company", "请选择公司", "/company/queryAllCompany");
+    initSelect2("company", "请选择公司", "/company/queryAllCompany");
 });
 
 function showEdit() {
-    var row = $('table').bootstrapTable('getSelections');
+    var row = $('#table').bootstrapTable('getSelections');
     if (row.length > 0) {
         $("#editWindow").modal('show'); // 显示弹窗
-        var ceshi = row[0];
-        $("#editForm").fill(ceshi);
+        $("#editButton").removeAttr("disabled");
+        var MaintainFixMap = row[0];
+        $('#editcompany').html('<option value="' + MaintainFixMap.company.companyId + '">' + MaintainFixMap.company.companyName + '</option>').trigger("change");
+        $("#editForm").fill(MaintainFixMap);
+        validator('editForm');
     } else {
         swal({
             "title": "",
@@ -94,7 +97,7 @@ function validator(formId) {
                 formSubmit("/maintain/addService", formId, "addWindow");
 
             } else if (formId == "editForm") {
-                formSubmit("/checkin/edit", formId, "editWindow");
+                formSubmit("/maintain/updateMaintain", formId, "editWindow");
 
             }
         })
@@ -117,39 +120,6 @@ function editSubmit(){
     } else {
         $("#editButton").removeAttr("disabled");
     }
-}
-function checkAdd() {
-    var id = $('#addId').val();
-    var name = $('#addName').val();
-    var price = $('#addPrice').val();
-    var reslist = $("#addSelect").select2("data"); //获取多选的值
-    alert(reslist.length)
-    if (id != "" && name != "" && price != "") {
-        return true;
-    } else {
-        var error = document.getElementById("addError");
-        error.innerHTML = "请输入正确的数据";
-        return false;
-    }
-}
-
-function checkEdit() {
-    $.post("/table/edit",
-        $("#editForm").serialize(),
-        function (data) {
-            if (data.result == "success") {
-                $("#editWindow").modal('hide'); // 关闭指定的窗口
-                $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
-                swal({
-                    title: "",
-                    text: data.message,
-                    type: "success"
-                })// 提示窗口, 修改成功
-            } else if (data.result == "fail") {
-                //$.messager.alert("提示", data.result.message, "info");
-            }
-        }, "json"
-    );
 }
 
 function formSubmit(url, formId, winId){
