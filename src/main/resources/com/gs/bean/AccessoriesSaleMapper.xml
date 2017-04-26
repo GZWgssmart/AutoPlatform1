@@ -136,6 +136,7 @@
     <if test="accSale.accId!='' and accSale.accId!= null">
       ac.accName LIKE '%${accSale.accId}%'
     </if>
+    ORDER by asa.accSaleCreatedTime DESC
     limit #{pager.beginIndex}, #{pager.pageSize}
   </select>
 

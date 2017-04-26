@@ -85,7 +85,9 @@
 
     <select id="queryByPagerDisable" resultMap="AccessoriesTypeMap" parameterType="com.gs.common.bean.Pager">
         <![CDATA[
-      SELECT *FROM auto_platform.t_accessories_type WHERE accTypeStatus='N'
+      SELECT atp.*,cp.companyId,cp.companyName FROM auto_platform.t_accessories_type atp
+       LEFT JOIN auto_platform.t_company cp on cp.companyId=atp.companyId
+      WHERE accTypeStatus='N'
     ]]>
         limit #{beginIndex}, #{pageSize}
     </select>
