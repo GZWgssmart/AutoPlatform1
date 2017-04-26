@@ -57,11 +57,8 @@
                 <th data-field="company.companyName">
                     供应商所属公司
                 </th>
-                <th data-formatter="formatterStatus">
-                    供应商状态
-                </th>
-                <th data-formatter="openStatusFormatter">
-                    操作
+                <th data-field="supplyStatus" data-formatter="statusFormatter">
+                    记录状态
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 </th>
             </tr>
@@ -153,7 +150,7 @@
                     <label class="col-sm-3 control-label">供应商所属公司：</label>
                     <div class="col-sm-7">
                         <select id="addCompany" class="js-example-tags company" name="companyId" style="width:100%">
-                        </select>
+                    </select>
                     </div>
                 </div>
                 <div class="form-group">
@@ -183,7 +180,7 @@
                 <div class="modal-footer" >
                     <span id="addError"></span>
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭 </button>
-                    <button id="addButton" type="button" onclick="addSubmit()" class="btn btn-primary">保存
+                    <button id="addButton" type="button" onclick="addSubmit()" class="btn btn-primary">保存</button>
                 </div>
             </form>
         </div><!-- /.modal-content -->
@@ -271,10 +268,9 @@
                 </div>
                 <div class="modal-footer" >
                     <span id="editError"></span>
-                    <button type="button" class="btn btn-default"
-                            data-dismiss="modal">关闭
-                    </button>
-                    <button id="editButton" type="button" onclick="editSubmit()" class="btn btn-primary">保存
+                    <button type="button" class="btn btn-default"data-dismiss="modal">关闭</button>
+
+                    <button id="editButton" type="button" onclick="editSubmit()" class="btn btn-primary">保存</button>
                 </div>
             </form>
         </div><!-- /.modal-content -->
@@ -327,9 +323,8 @@
 <script src="/static/js/select2/select2.js"></script>
 <script src="/static/js/sweetalert/sweetalert.min.js"></script>
 <script src="/static/js/contextmenu.js"></script>
-<script src="/static/js/backstage/supplier/supplierInFormation.js"></script>
 <script src="/static/js/bootstrap-validate/bootstrapValidator.js"></script>
 <script src="/static/js/backstage/main.js"></script>
-
+<script src="/static/js/backstage/supplier/supplierInFormation.js"></script>
 </body>
 </html>

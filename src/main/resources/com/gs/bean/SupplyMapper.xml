@@ -47,7 +47,10 @@
 
   <select id="queryByPagerDisable" resultMap="supplyMap" parameterType="com.gs.common.bean.Pager">
     <![CDATA[
-        SELECT *FROM auto_platform.t_supply WHERE supplyStatusss='N'
+         select s.*, st.supplyTypeId, st.supplyTypeName, co.companyId, co.companyName from auto_platform.t_supply s
+        LEFT JOIN t_supply_type st on s.supplyTypeId = st.supplyTypeId
+        LEFT JOIN t_company co on s.companyId = co.companyId
+        where s.supplyStatus = 'N' order by s.supplyCreatedTime Desc
     ]]>
     limit #{beginIndex}, #{pageSize}
   </select>

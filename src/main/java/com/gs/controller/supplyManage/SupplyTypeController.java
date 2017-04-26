@@ -120,18 +120,18 @@ public class SupplyTypeController {
      */
     @ResponseBody
     @RequestMapping(value = "statusOperate",method = RequestMethod.POST)
-    public ControllerResult inactive(String supplyTypeId,String supplyTypeStatus){
-        if(supplyTypeId!=null&&!supplyTypeId.equals("")&&supplyTypeStatus!=null&&!supplyTypeStatus.equals("")){
-            if (supplyTypeStatus.equals("N")){
-                supplyTypeService.active(supplyTypeId);
+    public ControllerResult inactive(String id,String status){
+        if (id != null && !id.equals("") && status != null && !status.equals("")) {
+            if (status.equals("N")) {
+                supplyTypeService.active(id);
                 logger.info("激活成功");
                 return ControllerResult.getSuccessResult("激活成功");
-            }else{
-                supplyTypeService.inactive(supplyTypeId);
+            } else {
+                supplyTypeService.inactive(id);
                 logger.info("禁用成功");
                 return ControllerResult.getSuccessResult("禁用成功");
             }
-        }else{
+        } else {
             return ControllerResult.getFailResult("操作失败");
         }
     }

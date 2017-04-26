@@ -33,8 +33,8 @@ public class Supply {
 
     private String supplyStatus;        // 供应商状态
 
-    private SupplyType supplyType;      // 供应商类型
-    private Company company;            // 供应商公司
+    private SupplyType supplyType;      // 关联到供应商类型表
+    private Company company;            // 关联到t_company表
 
     public SupplyType getSupplyType() {
         return supplyType;

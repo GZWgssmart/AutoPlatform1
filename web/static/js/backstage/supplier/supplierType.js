@@ -1,85 +1,158 @@
 var contentPath = ''
 $(function () {
     initTable("table", "/supplyType/queryByPager"); // 初始化表格
-});
-$(function () {
-    $('#table').bootstrapTable('hideColumn', 'supplyTypeId');
 
-    $("#addSelect").select2({
-            language: 'zh-CN'
-        }
-    );
-
-    //绑定Ajax的内容
-    $.getJSON("/table/queryType", function (data) {
-        $("#addSelect").empty();//清空下拉框
-        $.each(data, function (i, item) {
-            $("#addSelect").append("<option value='" + data[i].id + "'>&nbsp;" + data[i].name + "</option>");
-        });
-    })
-//            $("#addSelect").on("select2:select",
-//                    function (e) {
-//                        alert(e)
-//                        alert("select2:select", e);
-//            });
+    initSelect2("company", "请选择所属公司", "/company/queryAllCompany");
 });
+
+/*
+// 模糊查询
+function blurredQuery(){
+    var button = $("#ulButton");// 获取模糊查询按钮
+    var text = button.text();// 获取模糊查询按钮文本
+    var vaule = $("#ulInput").val();// 获取模糊查询输入框文本
+    initTable('table', '/supplyType/blurredQuery?text='+text+'&value='+vaule);
+}
+*/
 
 function showEdit(){
-    var row =  $('table').bootstrapTable('getSelections');
+    var row =  $('#table').bootstrapTable('getSelections');
     if(row.length >0) {
-//                $('#editId').val(row[0].id);
-//                $('#editName').val(row[0].name);
-//                $('#editPrice').val(row[0].price);
         $("#editWindow").modal('show'); // 显示弹窗
-        var ceshi = row[0];
-        $("#editForm").fill(ceshi);
+        $("#editButton").removeAttr("disabled");
+        var supplyType = row[0];
+        $('#editCompanyName').html('<option value="' + supplyType.company.companyId + '">' + supplyType.company.companyName + '</option>').trigger("change");
+        $("#editForm").fill(supplyType);
+        validator('editForm');
     }else{
         swal({
             title:"",
-            text:"请先选择一行数据",
-            type:"warning"})// 提示窗口, 修改成功
+            text: "请选择要修改的供应商类型记录", // 主要文本
+            confirmButtonColor: "#DD6B55", // 提示按钮的颜色
+            confirmButtonText:"确定", // 提示按钮上的文本
+            type:"warning"}) // 提示类型
     }
 }
 
 function showAdd(){
     $("#addWindow").modal('show');
+    $("#addButton").removeAttr("disabled");
+    validator('addForm'); // 初始化验证
 }
-//格式化页面上的配件分类状态
-function formatterStatus(index,row) {
-    if (row.supplyTypeStatus == "Y") {
-        return "可用";
+
+function validator(formId) {
+    $('#' + formId).bootstrapValidator({
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            supplyTypeName: {
+                message: '供应商类型名称验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '供应商类型名称不能为空'
+                    },
+                    stringLength: {
+                        min: 1,
+                        max: 6,
+                        message: '供应商类型名称长度必须在1到6位之间'
+                    }
+                }
+            },
+            companyId: {
+                message: '供应商类型所属公司验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '供应商类型所属公司不能为空'
+                    }
+                }
+            },
+            supplyTypeDes: {
+                message: '供应商类型描述内容验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '供应商类型描述内容不能为空'
+                    }
+                }
+            }
+        }
+    })
+
+        .on('success.form.bv', function (e) {
+            if (formId == "addForm") {
+                formSubmit("/supplyType/addSupplyType", formId, "addWindow");
+
+            } else if (formId == "editForm") {
+                formSubmit("/supplyType/updateSupplyType", formId, "editWindow");
+
+            }
+        })
+
+}
+
+function addSubmit(){
+    $("#addForm").data('bootstrapValidator').validate();
+    if ($("#addForm").data('bootstrapValidator').isValid()) {
+        $("#addButton").attr("disabled","disabled");
     } else {
-        return "不可用";
+        $("#addButton").removeAttr("disabled");
     }
 }
 
-function openStatusFormatter(index, row) {
-    /*处理数据*/
-    if (row.supplyTypeStatus == 'Y') {
-        return "&nbsp;&nbsp;<a href='javascript:;' onclick='inactive(\"" + row.supplyTypeId + "\")'>禁用</a>";
+function editSubmit(){
+    $("#editForm").data('bootstrapValidator').validate();
+    if ($("#editForm").data('bootstrapValidator').isValid()) {
+        $("#editButton").attr("disabled","disabled");
     } else {
-        return "&nbsp;&nbsp;<a href='javascript:;' onclick='active(\"" + row.supplyTypeId + "\")'>激活</a>";
+        $("#editButton").removeAttr("disabled");
     }
-
 }
 
-//禁用状态
-function inactive(supplyTypeId) {
-    $.post(contentPath + "/supplyType/statusOperate?supplyTypeId=" + supplyTypeId + "&" + "supplyTypeStatus=" + "Y", function (data) {
-        if (data.result == "success") {
-            $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
-        }
-    })
+function formSubmit(url, formId, winId) {
+    $.post(url,
+        $("#" + formId).serialize(),
+        function (data) {
+            if (data.result == "success") {
+                $('#' + winId).modal('hide');
+                swal({
+                    title: "",
+                    text: data.message,
+                    confirmButtonText: "确定", // 提示按钮上的文本
+                    type: "success"
+                })// 提示窗口, 修改成功
+                $('#table').bootstrapTable('refresh');
+                if (formId == 'addForm') {
+                    $("input[type=reset]").trigger("click"); // 移除表单中填的值
+                    $('#addForm').data('bootstrapValidator').resetForm(true); // 移除所有验证样式
+                    $("#addButton").removeAttr("disabled"); // 移除不可点击
+                    $("#" + formId).data('bootstrapValidator').destroy(); // 销毁此form表单
+                    $('#' + formId).data('bootstrapValidator', null);// 此form表单设置为空
+                    // 设置select2的值为空
+                    $("#addCompanyName").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
+                }
+            } else if (data.result == "fail") {
+                swal({
+                    title: "",
+                    text: "添加失败",
+                    confirmButtonText: "确认",
+                    type: "error"
+                })
+                $("#" + formId).removeAttr("disabled");
+            }
+        }, "json");
 }
 
-//激活状态
-function active(supplyTypeId) {
-    $.post(contentPath + "/supplyType/statusOperate?supplyTypeId=" + supplyTypeId + "&" + "supplyTypeStatus=" + 'N', function (data) {
-        if (data.result == "success") {
-            $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
-        }
-    })
+// 激活或禁用
+function statusFormatter(value, row, index) {
+    if(value == 'Y') {
+        return "&nbsp;&nbsp;<button type='button' class='btn btn-danger' onclick='inactive(\""+'/supplyType/statusOperate?id='+row.supplyTypeId+'&status=Y'+"\")'>禁用</a>";
+    } else {
+        return "&nbsp;&nbsp;<button type='button' class='btn btn-success' onclick='active(\""+'/supplyType/statusOperate?id='+ row.supplyTypeId+'&status=N'+ "\")'>激活</a>";
+    }
 }
+
 
 /**
  * 查询禁用支出类型
@@ -98,167 +171,4 @@ function searchRapidStatus() {
 }
 
 
-function formatRepo(repo){return repo.text}
-function formatRepoSelection(repo){return repo.text}
 
-function showDel(){
-    var row =  $('table').bootstrapTable('getSelections');
-    if(row.length >0) {
-        $("#del").modal('show');
-    }else{
-        $("#tanchuang").modal('show');
-    }
-}
-
-function checkAdd(){
-    var id = $('#addId').val();
-    var name = $('#addName').val();
-    var price = $('#addPrice').val();
-    var reslist=$("#addSelect").select2("data"); //获取多选的值
-    /*alert(reslist.length)*/
-    if(id != "" && name != "" && price != ""){
-        return true;
-    }else{
-        var error = document.getElementById("addError");
-        error.innerHTML = "请输入正确的数据";
-        return false;
-    }
-}
-
-function checkEdit() {
-    $.post("/table/edit",
-        $("#editForm").serialize(),
-        function (data) {
-            if (data.result == "success") {
-                $("#edit").modal('hide'); // 关闭指定的窗口
-                $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
-                swal({
-                    title:"",
-                    text: data.message,
-                    type:"success"})// 提示窗口, 修改成功
-            } else if (data.result == "fail") {
-                //$.messager.alert("提示", data.result.message, "info");
-            }
-        }, "json"
-    );
-}
-
-//前端验证
-$(document).ready(function () {
-    $("#addForm").validate({
-        errorElement: 'span',
-        errorClass: 'help-block',
-
-        rules: {
-            supplyTypeName: {
-                required: true,
-                minlength: 2
-            },
-            companyId: {
-                required: true,
-                minlength: 2
-            },
-            supplyTypeDes: {
-                required: true,
-                minlength: 2
-            }
-        },
-        messages: {
-            supplyTypeName: "请输入供应商类型",
-            companyId: "请选择供应商类型所属公司",
-            supplyTypeDes: "请输入供应商类型描述内容",
-        },
-        errorPlacement: function (error, element) {
-            element.next().remove();
-            element.after('<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>');
-            element.closest('.form-group').append(error);
-        },
-        highlight: function (element) {
-            $(element).closest('.form-group').addClass('has-error has-feedback');
-        },
-        success: function (label) {
-            var el = label.closest('.form-group').find("input");
-            el.next().remove();
-            el.after('<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>');
-            label.closest('.form-group').removeClass('has-error').addClass("has-feedback has-success");
-            label.remove();
-        },
-        submitHandler: function (form) {
-            $.post(contentPath + "/supplyType/addSupplyType", $("#addForm").serialize(), function (data) {
-                if (data.result == "success") {
-                    $("#addWindow").modal('hide'); // 关闭指定的窗口
-                    $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
-                    swal({
-                        title: "",
-                        text: data.message,
-                        type: "success"
-                    })
-                } else {
-                    swal({
-                        title: "",
-                        text: data.message,
-                        type: "fail"
-                    })
-                }
-            })
-        }
-    })
-    $("#editForm").validate({
-        errorElement: 'span',
-        errorClass: 'help-block',
-
-        rules: {
-            supplyTypeName: {
-                required: true,
-                minlength: 2
-            },
-            companyId: {
-                required: true,
-                minlength: 2
-            },
-            supplyTypeDes: {
-                required: true,
-                minlength: 2
-            }
-        },
-        messages: {
-            supplyTypeName: "请输入供应商类型",
-            companyId: "请选择供应商类型所属公司",
-            supplyTypeDes: "请输入供应商类型描述内容",
-        },
-        errorPlacement: function (error, element) {
-            element.next().remove();
-            element.after('<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>');
-            element.closest('.form-group').append(error);
-        },
-        highlight: function (element) {
-            $(element).closest('.form-group').addClass('has-error has-feedback');
-        },
-        success: function (label) {
-            var el = label.closest('.form-group').find("input");
-            el.next().remove();
-            el.after('<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>');
-            label.closest('.form-group').removeClass('has-error').addClass("has-feedback has-success");
-            label.remove();
-        },
-        submitHandler: function (form) {
-            $.post(contentPath + "/supplyType/updateSupplyType", $("#editForm").serialize(), function (data) {
-                if (data.result == "success") {
-                    $("#editWindow").modal('hide'); // 关闭指定的窗口
-                    $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
-                    swal({
-                        title: "",
-                        text: data.message,
-                        type: "success"
-                    })
-                } else {
-                    swal({
-                        title: "",
-                        text: data.message,
-                        type: "fail"
-                    })// 提示窗口, 修改成功
-                }
-            })
-        }
-    })
-});

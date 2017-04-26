@@ -14,6 +14,16 @@ public class SupplyType {
 
     private String supplyTypeStatus;   // 供应商类型状态
 
+    private Company company;            // 关联到t_company表
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
+    }
+
     public String getSupplyTypeId() {
         return supplyTypeId;
     }
