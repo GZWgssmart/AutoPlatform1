@@ -17,6 +17,26 @@ public class Complaint {
 
     private String complaintReplyUser;
 
+    private User user;
+
+    private User admin;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public User getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(User admin) {
+        this.admin = admin;
+    }
+
     public String getComplaintId() {
         return complaintId;
     }

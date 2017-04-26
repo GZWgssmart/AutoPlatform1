@@ -19,8 +19,7 @@
     <link rel="stylesheet" href="/static/css/select2.min.css">
     <link rel="stylesheet" href="/static/css/sweetalert.css">
     <link rel="stylesheet" href="/static/css/table/table.css">
-    <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.css">
-    <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/datetimepicker.less">
+    <link rel="stylesheet" href="/static/js/plugins/layui/css/layui.css">
 </head>
 <body>
 <%@include file="../backstage/contextmenu.jsp" %>
@@ -29,32 +28,15 @@
     <div class="panel-body" style="padding-bottom:0px;">
         <!--show-refresh, show-toggle的样式可以在bootstrap-table.js的948行修改-->
         <!-- table里的所有属性在bootstrap-table.js的240行-->
-        <table id="table"
-               data-toggle="table"
-               data-toolbar="#toolbar"
-               data-url="/table/query"
-               data-method="post"
-               data-query-params="queryParams"
-               data-pagination="true"
-               data-search="true"
-               data-show-refresh="true"
-               data-show-toggle="true"
-               data-show-columns="true"
-               data-page-size="10"
-               data-height="543"
-               data-id-field="id"
-               data-page-list="[5, 10, 20]"
-               data-cach="false"
-               data-click-to-select="true"
-               data-single-select="true">
+        <table id="table">
             <thead>
             <tr>
-                <th data-radio="true" data-field="status"></th>
-                <th data-field="userId">投诉人</th>
-                <th data-field="complaintCreatedTime">投诉时间</th>
+                <th data-checkbox="true"></th>
+                <th data-field="user.userName">投诉人</th>
+                <th data-field="complaintCreatedTime" data-formatter="formatterDate">投诉时间</th>
                 <th data-field="complaintContent">投诉内容</th>
-                <th data-field="complaintReplyUser">投诉回复人</th>
-                <th data-field="complaintReplyTime">投诉回复时间</th>
+                <th data-field="admin.userName">投诉回复人</th>
+                <th data-field="complaintReplyTime" data-formatter="formatterDate">投诉回复时间</th>
                 <th data-field="complaintReply">投诉回复内容</th>
             </tr>
             </thead>
@@ -63,11 +45,9 @@
             <button id="btn_add" type="button" class="btn btn-default" onclick="showAdd();">
                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
             </button>
+            <button id="btn_application" type="button" class="btn btn-success" onclick="showReply();">回复</button>
             <button id="btn_edit" type="button" class="btn btn-default" onclick="showEdit();">
                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
-            </button>
-            <button id="btn_delete" type="button" class="btn btn-default" onclick="showDel();">
-                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
             </button>
         </div>
     </div>
@@ -77,21 +57,22 @@
 <div class="modal fade" id="addWindow" aria-hidden="true" style="overflow:auto; ">
     <div class="modal-dialog" style="width: 780px;height: auto;">
         <div class="modal-content" style="overflow:hidden;">
-            <form class="form-horizontal" role="form" onsubmit="return checkAdd()" id="addForm" method="post">
+            <form class="form-horizontal" role="form" id="addForm" method="post">
                 <div class="modal-header" style="overflow:auto;">
-                    <h4>请填写投诉管理信息</h4>
+                    <h4>请填写投诉信息</h4>
                 </div>
                 <br/>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">投诉人：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="userId" placeholder="请选择投诉人" class="form-control">
+                        <select id="addUserName" name="userId" class="js-example-tags user" style="width:100%">
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">投诉时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="complaintCreatedTime" value="2012-05-15 21:05" id="addDateTimePicker" class="form-control">
+                        <input id="start" name="complaintCreatedTime" readonly class="layui-input" />
                     </div>
                 </div>
                 <div class="form-group">
@@ -101,16 +82,42 @@
                                   class="form-control"></textarea>
                     </div>
                 </div>
+
+                <div class="form-group">
+                    <div class="col-sm-offset-8">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button id="addButton" class="btn btn-sm btn-success" type="button" onclick="addSubmit()">保 存</button>
+                    </div>
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- 回复弹窗 -->
+<div class="modal fade" id="addReplyWindow" aria-hidden="true" style="overflow:auto; ">
+    <div class="modal-dialog" style="width: 780px;height: auto;">
+        <div class="modal-content" style="overflow:hidden;">
+            <form class="form-horizontal" role="form" id="addReplyForm" method="post">
+                <input type="hidden" name="complaintId" define="Complaint.complaintId" />
+                <input type="hidden" name="userId" define="Complaint.userId" />
+                <input type="hidden" name="complaintCreatedTime" define="Complaint.complaintCreatedTime" />
+                <input type="hidden" name="complaintContent" define="Complaint.complaintContent" />
+                <div class="modal-header" style="overflow:auto;">
+                    <h4>请填写回复信息</h4>
+                </div>
+                <br/>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">投诉回复人：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="complaintReplyUser" placeholder="请选择投诉回复人" class="form-control">
+                        <select id="addAdminName" name="complaintReplyUser" class="js-example-tags admin" style="width:100%">
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">投诉回复时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="complaintReplyTime" value="2012-05-15 21:05" id="addDateTimePicker1" class="form-control">
+                        <input id="end" name="complaintReplyTime" readonly class="layui-input">
                     </div>
                 </div>
                 <div class="form-group">
@@ -124,7 +131,7 @@
                 <div class="form-group">
                     <div class="col-sm-offset-8">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button class="btn btn-sm btn-success" type="submit">保 存</button>
+                        <button id="replyButton" class="btn btn-sm btn-success" type="button" onclick="addReplySubmit()">保 存</button>
                     </div>
                 </div>
             </form>
@@ -137,42 +144,26 @@
 <div class="modal fade" id="editWindow" aria-hidden="true">
     <div class="modal-dialog" style="width: 780px;height: auto;">
         <div class="modal-content">
-            <form class="form-horizontal" role="form" onsubmit="return checkAdd()" id="editForm" method="post">
+            <form class="form-horizontal" id="editForm" method="post">
+                <input type="text" name="complaintId" define="Complaint.complaintId" />
+                <input type="text" name="userId" define="Complaint.userId" />
+                <input id="start_edit" type="text" name="complaintCreatedTime" define="Complaint.complaintCreatedTime" />
+                <input type="text" name="complaintContent" define="Complaint.complaintContent" />
                 <div class="modal-header" style="overflow:auto;">
                     <h4>请修改投诉管理信息</h4>
                 </div>
                 <br/>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">投诉人：</label>
-                    <div class="col-sm-7">
-                        <input type="text" name="userId" define="Complaint.userId" placeholder="请选择投诉人" class="form-control">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">投诉时间：</label>
-                    <div class="col-sm-7">
-                        <input type="text" name="complaintCreatedTime" define="Complaint.complaintCreatedTime" value="2012-05-15 21:05"
-                               id="editDateTimePicker" class="form-control">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">投诉内容：</label>
-                    <div class="col-sm-7">
-                        <textarea type="text"  name="complaintContent" define="Complaint.complaintContent" placeholder="请输入投诉内容" style="height: 100px;"
-                                  class="form-control"></textarea>
-                    </div>
-                </div>
-                <div class="form-group">
                     <label class="col-sm-3 control-label">投诉回复人：</label>
                     <div class="col-sm-7">
-                        <input type="text"  name="complaintReplyUser" define="Complaint.complaintReplyUser" placeholder="请选择投诉回复人" class="form-control">
+                        <select id="editAdminName" name="complaintReplyUser" class="js-example-tags admin">
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">投诉回复时间：</label>
                     <div class="col-sm-7">
-                        <input type="text"  name="complaintReplyTime" define="Complaint.complaintReplyTime" value="2012-05-15 21:05"
-                               id="editDateTimePicker1" class="form-control">
+                        <input id="end_edit" name="complaintReplyTime" readonly  define="Complaint.complaintReplyTime" class="layui-input">
                     </div>
                 </div>
                 <div class="form-group">
@@ -185,7 +176,7 @@
                 <div class="form-group">
                     <div class="col-sm-offset-8">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button class="btn btn-sm btn-success" type="submit">保 存</button>
+                        <button id="editButton" class="btn btn-sm btn-success" type="button" onclick="editSubmit()">保 存</button>
                     </div>
                 </div>
             </form>
@@ -193,44 +184,6 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<!-- 删除弹窗 -->
-<div class="modal fade" id="del" aria-hidden="true">
-    <div class="modal-dialog" style="overflow:hidden;">
-        <form action="/table/edit" method="post">
-            <div class="modal-content">
-                <input type="hidden" id="delNoticeId"/>
-                <div class="modal-footer" style="text-align: center;">
-                    <h2>确认删除吗?</h2>
-                    <button type="button" class="btn btn-default"
-                            data-dismiss="modal">关闭
-                    </button>
-                    <button type="sumbit" class="btn btn-primary" onclick="del()">
-                        确认
-                    </button>
-                </div>
-            </div><!-- /.modal-content -->
-        </form>
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
-<!-- 提示弹窗 -->
-<div class="modal fade" id="tanchuang" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                提示
-            </div>
-            <div class="modal-body">
-                请先选择某一行
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default"
-                        data-dismiss="modal">关闭
-                </button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
 <script src="/static/js/jquery.min.js"></script>
 <script src="/static/js/bootstrap.min.js"></script>
 <script src="/static/js/bootstrap-table/bootstrap-table.js"></script>
@@ -239,9 +192,87 @@
 <script src="/static/js/select2/select2.js"></script>
 <script src="/static/js/sweetalert/sweetalert.min.js"></script>
 <script src="/static/js/contextmenu.js"></script>
-<script src="/static/js/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.js"></script>
-<script src="/static/js/bootstrap-dateTimePicker/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
 <script src="/static/js/backstage/custManage/complaint.js"></script>
-<script src="/static/js/form/jquery.validate.js"></script>
+<script src="/static/js/bootstrap-validate/bootstrapValidator.js"></script>
+<script src="/static/js/plugins/layui/layui.js" charset="utf-8"></script>
+<script src="/static/js/backstage/main.js"></script>
+<script>
+    layui.use('laydate', function () {
+        //日期范围限制
+        var start = {
+            elem: '#start',
+            format: 'yyyy-MM-dd hh:mm:ss',
+            min: laydate.now(), //设定最小日期为当前日期
+            max: '2099-12-30 23:59:59', //最大日期
+            istime: true,
+            istoday: false,
+            festival: true,
+            choose: function (datas) {
+                end.min = datas; //开始日选好后，重置结束日的最小日期
+                end.start = datas //将结束日的初始值设定为开始日
+            }
+        };
+        var end = {
+            elem: '#end',
+            format: 'yyyy-MM-dd hh:mm:ss',
+            min: laydate.now(),
+            max: '2099-12-30 23:59:59',
+            istime: true,
+            istoday: false,
+            festival: true,
+            choose: function (datas) {
+                start.max = datas; //结束日选好后，重置开始日的最大日期
+            }
+        };
+
+        document.getElementById('start').onclick = function(){
+            start.elem = this;
+            laydate(start);
+        }
+
+        document.getElementById('end').onclick = function(){
+            end.elem = this;
+            laydate(end);
+        }
+
+
+        //日期范围限制
+        var start_edit = {
+            elem: '#start_edit',
+            format: 'yyyy-MM-dd hh:mm:ss',
+            min: laydate.now(), //设定最小日期为当前日期
+            max: '2099-12-30 23:59:59', //最大日期
+            istime: true,
+            istoday: false,
+            festival: true,
+            choose: function (datas) {
+                end_edit.min = datas; //开始日选好后，重置结束日的最小日期
+                end_edit.start = datas //将结束日的初始值设定为开始日
+            }
+        };
+        var end_edit = {
+            elem: '#end_edit',
+            format: 'yyyy-MM-dd hh:mm:ss',
+            min: laydate.now(),
+            max: '2099-12-30 23:59:59',
+            istime: true,
+            istoday: false,
+            festival: true,
+            choose: function (datas) {
+                start_edit.max = datas; //结束日选好后，重置开始日的最大日期
+            }
+        };
+
+        document.getElementById('start_edit').onclick = function(){
+            start_edit.elem = this;
+            laydate(start_edit);
+        }
+
+        document.getElementById('end_edit').onclick = function(){
+            end_edit.elem = this;
+            laydate(end_edit);
+        }
+    });
+</script>
 </body>
 </html>
