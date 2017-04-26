@@ -52,13 +52,13 @@
             </button>
             <div class="input-group" style="width:350px;float:left;padding:0;margin:0 0 0 -1px;">
                 <div class="input-group-btn">
-                    <button type="button" id="ulButton" class="btn btn-default" style="border-radius:0px;" data-toggle="dropdown">所属公司/配件名称<span class="caret"></span></button>
+                    <button type="button" id="ulButton" class="btn btn-default" style="border-radius:0px;" data-toggle="dropdown">所属公司/配件分类名称<span class="caret"></span></button>
                     <ul class="dropdown-menu pull-right">
-                        <li><a onclick="onclikLi(this)">所属公司/配件名称</a></li>
+                        <li><a onclick="onclikLi(this)">所属公司/配件分类名称</a></li>
                         <li class="divider"></li>
                         <li><a onclick="onclikLi(this)">所属公司</a></li>
                         <li class="divider"></li>
-                        <li><a onclick="onclikLi(this)">配件名称</a></li>
+                        <li><a onclick="onclikLi(this)">配件分类名称</a></li>
                         <li class="divider"></li>
                     </ul>
                 </div><!-- /btn-group -->

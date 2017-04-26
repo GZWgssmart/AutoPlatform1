@@ -95,4 +95,44 @@
       select count(accTypeId) from auto_platform.t_accessories_type ck where ck.accTypeStatus = 'N'
     ]]>
     </select>
+
+    <!-- 分页模糊查询 -->
+    <select id="blurredQuery" resultMap="AccessoriesTypeMap" >
+        <![CDATA[
+           select atp.*,cp.companyId,cp.companyName from auto_platform.t_accessories_type atp
+           LEFT JOIN auto_platform.t_company cp on atp.companyId=cp.companyId
+           where 1=1 AND
+        ]]>
+        <if test="accType.companyId != '' and accType.companyId != null">
+            cp.companyName like '%${accType.companyId}%'
+        </if>
+        <if test="accType.companyId != '' and accType.companyId != null and
+            accType.accTypeName != '' and accType.accTypeName != null">
+            OR
+        </if>
+        <if test="accType.accTypeName!='' and accType.accTypeName!= null">
+            atp.accTypeName LIKE '%${accType.accTypeName}%'
+        </if>
+        limit #{pager.beginIndex}, #{pager.pageSize}
+    </select>
+
+    <!-- 分页模糊查询个数 -->
+    <select id="countByBlurred" resultType="int" >
+        <![CDATA[
+           select count(accTypeId) FROM auto_platform.t_accessories_type atp
+           LEFT JOIN auto_platform.t_company cp on cp.companyId=atp.companyId
+           where 1=1 AND
+        ]]>
+        <if test="accType.companyId != '' and accType.companyId != null">
+            cp.companyName like '%${accType.companyId}%'
+        </if>
+        <if test="accType.accTypeName != '' and accType.accTypeName != null and
+            accType.companyId != '' and accType.companyId != null">
+            OR
+        </if>
+        <if test="accType.accTypeName!='' and accType.accTypeName!=null">
+            atp.accTypeName LIKE '%${accType.accTypeName}%'
+        </if>
+    </select>
+
 </mapper>
