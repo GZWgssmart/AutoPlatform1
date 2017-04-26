@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="/static/css/table/table.css">
     <link rel="stylesheet" href="/static/css/bootstrap-validate/bootstrapValidator.min.css">
     <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.css">
-    <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/datetimepicker.less">
+    <link rel="stylesheet/less" href="/static/css/bootstrap-dateTimePicker/datetimepicker.less">
 
     <title>维修保养预约电话管理</title>
 </head>
@@ -32,19 +32,19 @@
                 <th data-width="100" data-field="userPhone">
                     车主电话
                 </th>
-                <th data-width="100" data-field="brandId">
+                <th data-width="100" data-field="brand.brandName">
                     汽车品牌
                 </th>
-                <th data-width="100" data-field="colorId">
+                <th data-width="100" data-field="color.colorName">
                     汽车颜色
                 </th>
-                <th data-width="100" data-field="modelId">
+                <th data-width="100" data-field="model.modelName">
                     汽车车型
                 </th>
-                <th data-width="100" data-field="carPlate">
+                <th data-width="100" data-field="plate.plateName">
                     汽车车牌
                 </th>
-                <th data-width="100" data-field="plateId">
+                <th data-width="100" data-field="carPlate">
                     车牌号码
                 </th>
                 <th data-width="180" data-field="arriveTime" data-formatter="formatterDate">
@@ -56,7 +56,7 @@
                 <th data-width="180" data-hide="all" data-field="appCreatedTime" data-formatter="formatterDate">
                     登记时间
                 </th>
-                <th data-width="100" data-hide="all" data-field="companyId">
+                <th data-width="100" data-hide="all" data-field="company.companyName">
                     汽修公司
                 </th>
                 <th data-width="100" data-hide="all" data-field="appoitmentStatus" data-formatter="statusFormatter">
@@ -103,7 +103,7 @@
 <div id="addWindow" class="modal fade" style="overflow-y:scroll" data-backdrop="static" >
     <div class="modal-dialog">
         <div class="modal-content">
-            <form role="form" class="form-horizontal" id="addForm">
+            <form role="form" class="form-horizontal" id="addForm" method="post">
                 <div class="modal-header" style="overflow:auto;">
                     <h4>添加预约信息</h4>
                 </div>
@@ -157,7 +157,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">到店时间：</label>
                     <div class="col-sm-7">     <!-- 当设置不可编辑后, 会修改颜色, 在min.css里搜索.form-control{background-color:#eee;opacity:1} -->
-                        <input id="addArriveTime" placeholder="请选择到店时间" onclick="getDate('addDatetimepicker')" readonly="true" type="text" name="arriveTime"
+                        <input id="addArriveTime" placeholder="请选择到店时间" onclick="getDate('addArriveTime')" readonly="true" type="text" name="arriveTime"
                                class="form-control datetimepicker"/>
                     </div>
                 </div>
@@ -182,92 +182,90 @@
 </div>
 
 <!-- 修改弹窗 -->
-<div class="modal fade" id="editWindow" aria-hidden="true" data-backdrop="static">
+<div class="modal fade" id="editWindow" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form class="form-horizontal" id="editForm" method="post">
+            <form role="form" class="form-horizontal" id="editForm">
                 <div class="modal-header" style="overflow:auto;">
-                    <h4>预约车主信息修改</h4>
+                    <h4>修改电话预约信息</h4>
                 </div>
+                <input type="hidden" define="appointment.userId" name="userId" class="form-control"/>
+                <input type="hidden" define="appointment.appointmentId" name="appointmentId" class="form-control"/>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">车主名字：</label>
+                    <label class="col-sm-3 control-label">车主姓名：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="userName" define="Appointment.userName" placeholder="请输入车主姓名" class="form-control">
+                        <input type="text" name="userName" placeholder="车主姓名" define="appointment.userName" class="form-control"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">车主电话：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="userPhone" define="Appointment.userPhone" placeholder="请输入车主电话" class="form-control" maxlength="11">
+                        <input type="number" name="userPhone" placeholder="车主电话" define="appointment.userPhone" class="form-control" style="width:100%"/>
                     </div>
                 </div>
-                <div class="form-group">
+
+                <div id="editModelDiv" class="form-group">
                     <label class="col-sm-3 control-label">汽车品牌：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="brandId" define="Appointment.brandId" placeholder="请输入汽车的品牌" class="form-control">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">汽车的颜色：</label>
-                    <div class="col-sm-7">
-                        <input type="text" name="colorId" define="Appointment.colorId" placeholder="请输入汽车的颜色" class="form-control">
+                        <select id="editCarBrand" class="js-example-tags carBrand" define="appointment.brandId" name="brandId" style="width:100%">
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">汽车车型：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="modelId" define="Appointment.modelId" placeholder="请输入汽车车型" class="form-control">
+                        <select id="editCarModel" class="js-example-tags carModel" define="appointment.modelId" name="modelId" style="width:100%">
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">汽车颜色：</label>
+                    <div class="col-sm-7">
+                        <select id="editCarColor" class="js-example-tags carColor" define="appointment.colorId" name="colorId" style="width:100%">
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">汽车车牌：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="carPlate" define="Appointment.carPlate"placeholder="请输入汽车车牌" class="form-control">
+                        <select id="editCarPlate" class="js-example-tags carPlate" define="appointment.plateId" name="plateId" style="width:100%">
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">汽车车牌号：</label>
+                    <label class="col-sm-3 control-label">车牌号码：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="plateId" define="Appointment.plateId" placeholder="请输入汽车车牌号" class="form-control">
+                        <input type="text" name="carPlate" placeholder="车牌号码" define="appointment.carPlate" class="form-control"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">到店时间：</label>
-                    <div class="col-sm-7">
-                        <input id="editArriveTime" placeholder="请选择到店时间" readonly="true" type="text" name="arriveTime"
-                               class="form-control"/>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">维修|保养：</label>
-                    <div class="col-sm-7">
-                        <input type="text" name="maintainOrFix" define="Appointment.maintainOrFix"  placeholder="维修|保养" class="form-control">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">预约记录时间：</label>
-                    <div class="col-sm-7">
-                        <input id="editAppCreatedTime" placeholder="请选择配件销售时间"
-                               readonly="true" type="text" name="appCreatedTime"
+                    <div class="col-sm-7">     <!-- 当设置不可编辑后, 会修改颜色, 在min.css里搜索.form-control{background-color:#eee;opacity:1} -->
+                        <input id="editDatetimepicker" placeholder="请选择到店时间" readonly="true" type="text" name="arriveTime"
                                class="form-control datetimepicker"/>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">汽修公司名称：</label>
+                    <label class="col-sm-3 control-label">保养&nbsp;|&nbsp;维修：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="companyId" define="Appointment.companyId" placeholder="请输入汽修公司名称" class="form-control">
+                        <select id="editMaintainOrFix" define="appointment.maintainOrFix" class="js-example-tags form-control" name="maintainOrFix">
+                            <option value="保养">保养</option>
+                            <option value="维修">维修</option>
+                        </select>
                     </div>
                 </div>
-                <div class="form-group">
-                    <div class="col-sm-offset-8">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button class="btn btn-sm btn-success" type="submit">保 存</button>
-                    </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default"
+                            data-dismiss="modal">关闭
+                    </button>
+                    <button id="editButton" type="button" onclick="editSubmit()" class="btn btn-success">保存
+                    </button>
                 </div>
             </form>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
 <script src="/static/js/jquery.min.js"></script>
 <script src="/static/js/bootstrap.min.js"></script>
 <script src="/static/js/bootstrap-table/bootstrap-table.js"></script>
@@ -276,11 +274,11 @@
 <script src="/static/js/select2/select2.js"></script>
 <script src="/static/js/sweetalert/sweetalert.min.js"></script>
 <script src="/static/js/contextmenu.js"></script>
-<script src="/static/js/backstage/main.js"></script>
-<script src="/static/js/bootstrap-validate/bootstrapValidator.js"></script>
 <script src="/static/js/bootstrap-select/bootstrap-select.js"></script>
 <script src="/static/js/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.js"></script>
 <script src="/static/js/bootstrap-dateTimePicker/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+<script src="/static/js/backstage/main.js"></script>
+<script src="/static/js/bootstrap-validate/bootstrapValidator.js"></script>
 <script src="/static/js/backstage/customerBooking/phoneResrvation.js"></script>
 </body>
 </html>
