@@ -2,36 +2,14 @@ $(function () {
     initTable('table', '/carBrand/queryByPagerCarBrand'); // 初始化表格
 });
 
-$(function () {
-   $('#table').bootstrapTable('hideColumn', 'brandId');
-    $("#addSelect").select2({
-            language: 'zh-CN'
-        }
-    );
-
-    //绑定Ajax的内容
-    // $.getJSON("/table/queryType", function (data) {
-    //     $("#addSelect").empty();//清空下拉框
-    //     $.each(data, function (i, item) {
-    //         $("#addSelect").append("<option value='" + data[i].id + "'>&nbsp;" + data[i].name + "</option>");
-    //     });
-    // })
-//            $("#addSelect").on("select2:select",
-//                    function (e) {
-//                        alert(e)
-//                        alert("select2:select", e);
-//            });
-});
-
 function showEdit() {
     var row = $('table').bootstrapTable('getSelections');
     if (row.length > 0) {
-               // $('#brandId').val(row[0].id);
-               // $('#brandName').val(row[0].name);
-               // $('#brandDes').val(row[0].des);
-        $("#edit").modal('show'); // 显示弹窗
+        $("#editWindow").modal('show'); // 显示弹窗
+        $("#editButton").removeAttr("disabled");
         var ceshi = row[0];
-        $("#showEditFormWar").fill(ceshi);
+        $("#editForm").fill(ceshi);
+        validator('editForm');
     } else {
         swal({
             "title": "",
@@ -42,188 +20,95 @@ function showEdit() {
 }
 
 function showAdd() {
-
-    $("#add").modal('show');
+    $("#addWindow").modal('show');
+    $("#addButton").removeAttr("disabled");
+    validator('addForm'); // 初始化验证
 }
 
-function formatRepo(repo) {
-    return repo.text
-}
-function formatRepoSelection(repo) {
-    return repo.text
+function validator(formId) {
+    $('#' + formId).bootstrapValidator({
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            brandName: {
+                message: '汽车品牌验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '汽车品牌不能为空'
+                    },
+                    stringLength: {
+                        min: 1,
+                        max: 6,
+                        message: '汽车品牌长度必须在1到6位之间'
+                    }
+                }
+            },
+            brandDes :{
+                message: '汽车品牌描述验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '汽车品牌描述不能为空'
+                    }
+                }
+            },
+        }
+    })
+        .on('success.form.bv', function (e) {
+            if (formId == "addForm") {
+                formSubmit("/carBrand/addCarBrand", formId, "addWindow");
+
+            } else if (formId == "editForm") {
+                formSubmit("/carBrand/updateCarBrand", formId, "editWindow");
+
+            }
+        })
+
 }
 
-function showDel() {
-    var row = $('table').bootstrapTable('getSelections');
-    if (row.length > 0) {
-        $("#del").modal('show');
+function addSubmit(){
+    $("#addForm").data('bootstrapValidator').validate();
+    if ($("#addForm").data('bootstrapValidator').isValid()) {
+        $("#addButton").attr("disabled","disabled");
     } else {
-        $("#tanchuang").modal('show');
+        $("#addButton").removeAttr("disabled");
     }
 }
 
-$(function () {
-    //0.初始化fileinput
-    var oFileInput = new FileInput();
-    oFileInput.Init("add_carBrandLogo", "/file/addFile");
-});
-
-$(function () {
-    //0.初始化fileinput
-    var oFileInput = new FileInput();
-    oFileInput.Init("edit_carBrandLogo", "/file/editFile");
-});
-
-//初始化fileinput
-var FileInput = function () {
-    var oFile = new Object();
-    //初始化fileinput控件（第一次初始化）
-    oFile.Init = function (ctrlName, uploadUrl) {
-        var control = $('#' + ctrlName);
-        //初始化上传控件的样式
-        control.fileinput({
-            language: 'zh', //设置语言
-            uploadUrl: uploadUrl, //上传的地址
-            allowedFileExtensions: ['jpg', 'gif', 'png'],//接收的文件后缀
-            showUpload: true, //是否显示上传按钮
-            showCaption: false,//是否显示标题
-            browseClass: "btn btn-primary", //按钮样式
-            dropZoneEnabled: true,//是否显示拖拽区域
-            //minImageWidth: 50, //图片的最小宽度
-            //minImageHeight: 50,//图片的最小高度
-            //maxImageWidth: 1000,//图片的最大宽度
-            //maxImageHeight: 1000,//图片的最大高度
-            //maxFileSize: 0,//单位为kb，如果为0表示不限制文件大小
-            //minFileCount: 0,
-            maxFileCount: 10, //表示允许同时上传的最大文件个数
-            enctype: 'multipart/form-data',
-            validateInitialCount: true,
-            previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
-            msgFilesTooMany: "选择上传的文件数量({n}) 超过允许的最大数值{m}！",
-        }).on("fileuploaded", function (event, data) {
-            // data 为controller返回的json
-            if (data.response.result == 'success') {
-                alert('处理成功');
-            }
-        });
+function editSubmit(){
+    $("#editForm").data('bootstrapValidator').validate();
+    if ($("#editForm").data('bootstrapValidator').isValid()) {
+        $("#editButton").attr("disabled","disabled");
+    } else {
+        $("#editButton").removeAttr("disabled");
     }
-    return oFile;
-};
+}
 
-//前端验证
-$(document).ready(function () {
-
-    $("#showAddFormWar").validate({
-        errorElement: 'span',
-        errorClass: 'help-block',
-
-        rules: {
-            brandName: {
-                required: true,
-                minlength: 2
-            },
-            brandDes: {
-                required: true,
-                minlength: 2
+function formSubmit(url, formId, winId){
+    $.post(url,
+        $("#" + formId).serialize(),
+        function (data) {
+            if (data.result == "success") {
+                $('#' + winId).modal('hide');
+                swal({
+                    title:"",
+                    text: data.message,
+                    confirmButtonText:"确定", // 提示按钮上的文本
+                    type:"success"})// 提示窗口, 修改成功
+                $('#table').bootstrapTable('refresh');
+                if(formId == 'addForm'){
+                    $("input[type=reset]").trigger("click"); // 移除表单中填的值
+                    $('#addForm').data('bootstrapValidator').resetForm(true); // 移除所有验证样式
+                    $("#addButton").removeAttr("disabled"); // 移除不可点击
+                }
+            } else if (data.result == "fail") {
+                swal({title:"",
+                    text:"添加失败",
+                    confirmButtonText:"确认",
+                    type:"error"})
+                $("#"+formId).removeAttr("disabled");
             }
-        },
-        messages: {
-            brandName: "请输入品牌名",
-            brandDes: "请输入品牌的描述",
-        },
-        errorPlacement: function (error, element) {
-            element.next().remove();
-            element.after('<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>');
-            element.closest('.form-group').append(error);
-        },
-        highlight: function (element) {
-            $(element).closest('.form-group').addClass('has-error has-feedback');
-        },
-        success: function (label) {
-            var el = label.closest('.form-group').find("input");
-            el.next().remove();
-            el.after('<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>');
-            label.closest('.form-group').removeClass('has-error').addClass("has-feedback has-success");
-            label.remove();
-        },
-        submitHandler: function(form) {
-            $.post("/carBrand/addCarBrand",
-                $("#showAddFormWar").serialize(),
-                function (data) {
-                    if (data.result == "success") {
-                        $("#add").modal('hide'); // 关闭指定的窗口
-                        $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
-                        swal({
-                            title:"",
-                            text: data.message,
-                            confirmButtonText:"确定", // 提示按钮上的文本
-                            type:"success"})// 提示窗口, 修改成功
-                    } else if (data.result == "fail") {
-                        swal({title:"",
-                            text:"添加失败",
-                            confirmButtonText:"确认",
-                            type:"error"})
-                    }
-                }, "json"
-            );
-        }
-    })
-
-
-    $("#showEditFormWar").validate({
-        errorElement: 'span',
-        errorClass: 'help-block',
-
-        rules: {
-            brandName: {
-                required: true,
-                minlength: 2
-            },
-            brandDes: {
-                required: true,
-                minlength: 2
-            }
-        },
-        messages: {
-            brandName: "请输入品牌名",
-            brandDes: "请输入品牌的描述",
-        },
-        errorPlacement: function (error, element) {
-            element.next().remove();
-            element.after('<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>');
-            element.closest('.form-group').append(error);
-        },
-        highlight: function (element) {
-            $(element).closest('.form-group').addClass('has-error has-feedback');
-        },
-        success: function (label) {
-            var el = label.closest('.form-group').find("input");
-            el.next().remove();
-            el.after('<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>');
-            label.closest('.form-group').removeClass('has-error').addClass("has-feedback has-success");
-            label.remove();
-        },
-        submitHandler: function(form) {
-            $.post("/carBrand/updateCarBrand",
-                $("#showEditFormWar").serialize(),
-                function (data) {
-                    if (data.result == "success") {
-                        $("#edit").modal('hide'); // 关闭指定的窗口
-                        $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
-                        swal({
-                            title:"",
-                            text: data.message,
-                            confirmButtonText:"确定", // 提示按钮上的文本
-                            type:"success"})// 提示窗口, 修改成功
-                    } else if (data.result == "fail") {
-                        swal({title:"",
-                            text:"修改失败",
-                            confirmButtonText:"确认",
-                            type:"error"})
-                    }
-                }, "json"
-            );
-        }
-
-    })
-});
+        }, "json");
+}

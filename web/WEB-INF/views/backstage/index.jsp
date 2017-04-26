@@ -100,9 +100,6 @@
                             <li>
                                 <a class="J_menuItem" href="/basicInfo/fixItem" target="_blank">维修项目管理</a>
                             </li>
-                            <li>
-                                <a class="J_menuItem" href="/basicInfo/commonFaults" target="_blank">常见故障管理</a>
-                            </li>
                         </ul>
 
                     </li>
