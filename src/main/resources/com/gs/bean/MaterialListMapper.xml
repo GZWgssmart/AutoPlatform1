@@ -107,6 +107,11 @@
         where  a.maintainRecordId = #{recordId}
     </select>
 
+    <insert id="insert"  parameterType="materialList">
+        insert into t_material_list (materialId,maintainRecordId,accId,materialCount, materialCreatedTime,materialStatus)values
+            (uuid(),#{item.maintainRecordId},#{item.accId},#{item.materialCount}, now(), 'Y')
+    </insert>
+
     <insert id="insertList"  parameterType="java.util.List">
 		insert into t_material_list (materialId,maintainRecordId,accId,materialCount, materialCreatedTime,materialStatus)values
         <foreach collection="list" item="item" index="index" separator="," >
