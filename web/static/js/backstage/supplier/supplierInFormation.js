@@ -229,6 +229,11 @@ function formSubmit(url, formId, winId) {
                     $("input[type=reset]").trigger("click"); // 移除表单中填的值
                     $('#addForm').data('bootstrapValidator').resetForm(true); // 移除所有验证样式
                     $("#addButton").removeAttr("disabled"); // 移除不可点击
+                    $("#" + formId).data('bootstrapValidator').destroy(); // 销毁此form表单
+                    $('#' + formId).data('bootstrapValidator', null);// 此form表单设置为空
+                    // 设置select2的值为空
+                    $("#addSupplyType").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
+                    $("#addCompanyName").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
                 }
             } else if (data.result == "fail") {
                 swal({
@@ -274,41 +279,22 @@ function formatterDateTime(value) {
     }
 }
 
-//格式化页面上的配件分类状态
-function formatterStatus(index,row) {
-    if (row.supplyStatus == "Y") {
-        return "可用";
+// 激活或禁用
+function showStatusFormatter(value) {
+    if(value == 'Y') {
+        return "是";
     } else {
-        return "不可用";
+        return "否";
     }
 }
 
-function openStatusFormatter(index, row) {
-    /*处理数据*/
-    if (row.supplyStatus == 'Y') {
-        return "&nbsp;&nbsp;<button type='button' class='btn btn-danger' onclick='inactive(\""+row.supplyId+ "\")'>禁用</a>";
+// 激活或禁用
+function statusFormatter(value, row, index) {
+    if(value == 'Y') {
+        return "&nbsp;&nbsp;<button type='button' class='btn btn-danger' onclick='inactive(\""+'/supply/statusOperate?id='+row.supplyId+'&status=Y'+"\")'>禁用</a>";
     } else {
-        return "&nbsp;&nbsp;<button type='button' class='btn btn-success' onclick='active(\""+row.supplyId+ "\")'>激活</a>";
+        return "&nbsp;&nbsp;<button type='button' class='btn btn-success' onclick='active(\""+'/supply/statusOperate?id='+ row.supplyId+'&status=N'+ "\")'>激活</a>";
     }
-
-}
-
-//激活状态
-function inactive(supplyId) {
-    $.post(contentPath + "/supply/statusOperate?supplyId=" + supplyId + "&" + "supplyStatus=" + "Y", function (data) {
-        if (data.result == "success") {
-            $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
-        }
-    })
-}
-
-//冻结状态
-function active(supplyId) {
-    $.post(contentPath + "/supply/statusOperate?supplyId=" + supplyId + "&" + "supplyStatus=" + 'N', function (data) {
-        if (data.result == "success") {
-            $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
-        }
-    })
 }
 
 /**

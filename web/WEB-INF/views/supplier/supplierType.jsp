@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="/static/css/select2.min.css">
     <link rel="stylesheet" href="/static/css/sweetalert.css">
     <link rel="stylesheet" href="/static/css/table/table.css">
+    <link rel="stylesheet" href="/static/css/bootstrap-validate/bootstrapValidator.min.css">
 </head>
 <body>
 <%@include file="../backstage/contextmenu.jsp"%>
@@ -24,31 +25,14 @@
     <div class="panel-body" style="padding-bottom:0px;"  >
         <!--show-refresh, show-toggle的样式可以在bootstrap-table.js的948行修改-->
         <!-- table里的所有属性在bootstrap-table.js的240行-->
-        <table id="table"
-               data-toggle="table"
-               data-toolbar="#toolbar"
-               data-method="get"
-               data-query-params="queryParams"
-               data-pagination="true"
-               data-search="true"
-               data-show-refresh="true"
-               data-show-toggle="true"
-               data-show-columns="true"
-               data-page-size="10"
-               data-height="600"
-               data-id-field="id"
-               data-page-list="[5, 10, 20]"
-               data-cach="false"
-               data-click-to-select="true"
-               data-single-select="true">
+        <table id="table">
             <thead>
             <tr>
-                <th data-radio="true" data-field="status"></th>
+                <th data-checkbox="true"></th>
                 <th data-field="supplyTypeName">供应商类型名称</th>
-                <th data-field="companyId">供应商类型所属公司</th>
+                <th data-field="company.companyName">供应商类型所属公司</th>
                 <th data-field="supplyTypeDes">供应商类型描述内容</th>
-                <th data-formatter="formatterStatus">类型状态</th>
-                <th data-width="12%" data-formatter="openStatusFormatter">操作</th>
+                <th data-width="12%" data-field="supplyTypeStatus" data-formatter="statusFormatter">记录状态</th>
             </tr>
             </thead>
         </table>
@@ -71,7 +55,7 @@
 
 <!-- 添加弹窗 -->
 
-<div class="modal fade" id="addWindow" aria-hidden="true" >
+<div id="addWindow" class="modal fade" style="overflow-y:scroll" data-backdrop="static" >
     <div class="modal-dialog"  style="width: 750px;height: auto;" >
         <div class="modal-content" >
                 <form class="form-horizontal"  role="form" id="addForm" method="post">
@@ -81,19 +65,14 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">供应商类型：</label>
                     <div class="col-sm-7">
-                        <%--<select class="form-control"  data-style="btn-info" name="supplyTypeName" placeholder="请选择供应商类型">
-                            <option>Mustard</option>
-                            <option>Ketchup</option>
-                            <option>Relish</option>
-                            <option>Relish</option>
-                        </select>--%>
                         <input type="text" name="supplyTypeName" id="name" placeholder="请输入供应商类型" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">供应商类型所属公司：</label>
                     <div class="col-sm-7">
-                        <input type="text"  name="companyId" placeholder="请选择供应商类型所属公司" class="form-control">
+                        <select id="addCompanyName" class="js-example-tags company" name="companyId" style="width:100%">
+                        </select>
                     </div>
                 </div>
                  <div class="form-group">
@@ -105,10 +84,8 @@
                   </div>
                 <div class="modal-footer" >
                     <span id="addError"></span>
-                    <button type="button" class="btn btn-default"
-                            data-dismiss="modal">关闭
-                    </button>
-                    <button type="submit" class="btn btn-primary btn-sm">保存</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭 </button>
+                    <button id="addButton" type="button" onclick="addSubmit()" class="btn btn-primary">保存</button>
                 </div>
             </form>
         </div><!-- /.modal-content -->
@@ -117,31 +94,25 @@
 
 
 <!-- 修改弹窗 -->
-<div class="modal fade" id="editWindow" aria-hidden="true">
+<div id="editWindow" class="modal fade" style="overflow-y:scroll" data-backdrop="static">
     <div class="modal-dialog"  style="width: 750px;height: auto;">
         <div class="modal-content">
             <form  class="form-horizontal"  id="editForm" method="post">
                 <input type="hidden" name="supplyTypeId" define="supplyType.supplyTypeId"/>
-                <input type="hidden"name="supplyTypeStatus" define="supplyType.supplyTypeStatus">
                 <div class="modal-header" style="overflow:auto;">
                     <p>修改供应商类型信息</p>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">供应商类型：</label>
                     <div class="col-sm-7">
-                       <%-- <select class="form-control"  data-style="btn-info" name="supplyTypeName" define="supplyType.supplyTypeName">
-                            <option>Mustard</option>
-                            <option>Ketchup</option>
-                            <option>Relish</option>
-                            <option>Relish</option>
-                        </select>--%>
                         <input type="text" name="supplyTypeName" define="supplyType.supplyTypeName"  placeholder="请输入供应商类型" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">供应商类型所属公司：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="companyId" define="supplyType.companyId" placeholder="请选择供应商类型所属公司" class="form-control">
+                        <select id="editCompanyName" class="js-example-tags company" define="supply.companyId" name="companyId" style="width:100%">
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">
@@ -153,10 +124,8 @@
                 </div>
                 <div class="modal-footer" >
                     <span id="editError"></span>
-                    <button type="button" class="btn btn-default"
-                            data-dismiss="modal">关闭
-                    </button>
-                    <input type="submit" class="btn btn-primary"/>
+                    <button type="button" class="btn btn-default"data-dismiss="modal">关闭</button>
+                    <button id="editButton" type="button" onclick="editSubmit()" class="btn btn-primary">保存</button>
                 </div>
             </form>
         </div><!-- /.modal-content -->
@@ -211,7 +180,7 @@
 <script src="/static/js/contextmenu.js"></script>
 <script src="/static/js/backstage/supplier/supplierType.js"></script>
 <script src="/static/js/bootstrap-select/bootstrap-select.js"></script>
-<script src="/static/js/form/jquery.validate.js"></script>
+<script src="/static/js/bootstrap-validate/bootstrapValidator.js"></script>
 <script src="/static/js/backstage/main.js"></script>
 
 </body>

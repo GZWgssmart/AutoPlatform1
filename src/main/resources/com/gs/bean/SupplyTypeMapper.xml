@@ -7,6 +7,12 @@
     <result column="supplyTypeDes" property="supplyTypeDes" jdbcType="VARCHAR" />
     <result column="companyId" property="companyId" jdbcType="VARCHAR" />
     <result column="supplyTypeStatus" property="supplyTypeStatus" jdbcType="VARCHAR" />
+
+    <association property="company" javaType="com.gs.bean.Company">
+      <id property="companyId" column="companyId"/>
+      <id property="companyName" column="companyName"/>
+    </association>
+
   </resultMap>
 
   <select id="queryAll" resultMap="supplyTypeMap">
@@ -23,7 +29,13 @@
 
   <select id="queryByPager" resultMap="supplyTypeMap" parameterType="com.gs.common.bean.Pager">
     <![CDATA[
-        select * from t_supply_type st where 1 =1 and st.supplyTypeStatus = 'Y'
+      /*  select st.*,co.companyId,co.companyName from t_supply_type st
+        LEFT JOIN t_company co on st.companyId = co.companyId
+        where st.supplyTypeStatus = "Y";*/
+        select st.*,cp.companyId,cp.companyName
+        from auto_platform.t_supply_type st
+        LEFT JOIN auto_platform.t_company cp on st.companyId=cp.companyId
+        where st.supplyTypeStatus = 'Y'
     ]]>
     limit #{beginIndex}, #{pageSize}
   </select>
@@ -36,7 +48,10 @@
 
   <select id="queryByPagerDisable" resultMap="supplyTypeMap" parameterType="com.gs.common.bean.Pager">
     <![CDATA[
-          select * from t_supply_type st where 1 =1 and st.supplyTypeStatus = 'N'
+       select st.*,cp.companyId,cp.companyName
+        from auto_platform.t_supply_type st
+        LEFT JOIN auto_platform.t_company cp on st.companyId=cp.companyId
+        where st.supplyTypeStatus = 'N'
     ]]>
     limit #{beginIndex}, #{pageSize}
   </select>
