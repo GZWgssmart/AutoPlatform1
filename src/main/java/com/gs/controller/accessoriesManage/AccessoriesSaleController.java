@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -58,7 +59,6 @@ public class AccessoriesSaleController {
     public List<ComboBox4EasyUI> queryAllAccType(){
         logger.info("所有配件销售信息");
         List<AccessoriesSale> accessoriesSales = accessoriesSaleService.queryAll();
-        System.out.println(accessoriesSales.toString());
         List<ComboBox4EasyUI> comboxs = new ArrayList<ComboBox4EasyUI>();
         for(AccessoriesSale c : accessoriesSales){
             ComboBox4EasyUI comboBox4EasyUI = new ComboBox4EasyUI();
@@ -170,6 +170,41 @@ public class AccessoriesSaleController {
             }
         }else{
             return ControllerResult.getFailResult("操作失败");
+        }
+    }
+
+    /**
+     * 销售记录的模糊查询
+     * @param request
+     * @param pageNumber
+     * @param pageSize
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "blurredQuery", method = RequestMethod.GET)
+    public Pager4EasyUI<AccessoriesSale> blurredQuery(HttpServletRequest request, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
+        logger.info("配件销售记录模糊查询");
+        String text = request.getParameter("text");
+        String value = request.getParameter("value");
+        if (text != null && !text.equals("") && value != null && !value.equals("")) {
+            Pager pager = new Pager();
+            pager.setPageNo(Integer.parseInt(pageNumber));
+            pager.setPageSize(Integer.parseInt(pageSize));
+            List<AccessoriesSale> accessoriesSales = null;
+            AccessoriesSale accessoriesSale = new AccessoriesSale();
+            if (text.equals("汽车公司/配件")) {
+                accessoriesSale.setCompanyId(value);
+                accessoriesSale.setAccId(value);
+            } else if (text.equals("汽车公司")) {
+                accessoriesSale.setCompanyId(value);
+            } else if (text.equals("配件")) {
+                accessoriesSale.setAccId(value);
+            }
+            accessoriesSales = accessoriesSaleService.blurredQuery(pager, accessoriesSale);
+            pager.setTotalRecords(accessoriesSaleService.countByBlurred(accessoriesSale));
+            return new Pager4EasyUI<AccessoriesSale>(pager.getTotalRecords(), accessoriesSales);
+        } else {
+            return null;
         }
     }
 

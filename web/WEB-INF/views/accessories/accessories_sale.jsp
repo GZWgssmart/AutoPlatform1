@@ -57,15 +57,13 @@
             </button>
             <div class="input-group" style="width:350px;float:left;padding:0;margin:0 0 0 -1px;">
                 <div class="input-group-btn">
-                    <button type="button" id="ulButton" class="btn btn-default" style="border-radius:0px;" data-toggle="dropdown">所属公司/配件编号/配件销售时间<span class="caret"></span></button>
+                    <button type="button" id="ulButton" class="btn btn-default" style="border-radius:0px;" data-toggle="dropdown">汽车公司/配件<span class="caret"></span></button>
                     <ul class="dropdown-menu pull-right">
-                        <li><a onclick="onclikLi(this)">所属公司/配件编号/配件销售时间</a></li>
+                        <li><a onclick="onclikLi(this)">汽车公司/配件</a></li>
                         <li class="divider"></li>
-                        <li><a onclick="onclikLi(this)">所属公司</a></li>
+                        <li><a onclick="onclikLi(this)">汽车公司</a></li>
                         <li class="divider"></li>
-                        <li><a onclick="onclikLi(this)">配件编号</a></li>
-                        <li class="divider"></li>
-                        <li><a onclick="onclikLi(this)">配件销售时间</a></li>
+                        <li><a onclick="onclikLi(this)">配件</a></li>
                         <li class="divider"></li>
                     </ul>
                 </div><!-- /btn-group -->
@@ -93,7 +91,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">所属公司：</label>
+                    <label class="col-sm-3 control-label">配件：</label>
                     <div class="col-sm-7">
                         <select id="addAccInv" class="js-example-tags accInv" name="accId" style="width:100%">
                         </select>
@@ -165,7 +163,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">所属公司：</label>
+                    <label class="col-sm-3 control-label">配件：</label>
                     <div class="col-sm-7">
                         <select id="editAccInv" class="js-example-tags accInv" define="AccessoriesSale.accId" name="accId" style="width:100%">
                         </select>
