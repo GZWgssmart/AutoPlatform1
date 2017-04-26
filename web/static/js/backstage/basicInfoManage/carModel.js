@@ -29,21 +29,6 @@ function showAdd() {
     validator('addForm'); // 初始化验证
 }
 
-function checkAdd() {
-    var id = $('#addId').val();
-    var name = $('#addName').val();
-    var price = $('#addPrice').val();
-    var reslist = $("#addSelect").select2("data"); //获取多选的值
-    alert(reslist.length)
-    if (id != "" && name != "" && price != "") {
-        return true;
-    } else {
-        var error = document.getElementById("addError");
-        error.innerHTML = "请输入正确的数据";
-        return false;
-    }
-}
-
 //前端验证
 function validator(formId) {
     $('#' + formId).bootstrapValidator({
@@ -134,6 +119,9 @@ function formSubmit(url, formId, winId){
                     $("input[type=reset]").trigger("click");
                     $('#addForm').data('bootstrapValidator').resetForm(true);
                     $("#addButton").removeAttr("disabled");
+                    $("#" + formId).data('bootstrapValidator').destroy(); // 销毁此form表单
+                    $('#' + formId).data('bootstrapValidator', null);// 此form表单设置为空
+                    $("#addCarBrand").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
                 }
             } else if (data.result == "fail") {
                 swal({title:"",

@@ -77,22 +77,6 @@ function showAdd() {
     validator('addForm'); // 初始化验证
 }
 
-function checkAdd() {
-    var id = $('#addId').val();
-    var name = $('#addName').val();
-    var price = $('#addPrice').val();
-    var reslist = $("#addSelect").select2("data"); //获取多选的值
-    alert(reslist.length)
-    if (id != "" && name != "" && price != "") {
-        return true;
-    } else {
-        var error = document.getElementById("addError");
-        error.innerHTML = "请输入正确的数据";
-        return false;
-    }
-}
-
-
 function validator(formId) {
     $('#' + formId).bootstrapValidator({
         feedbackIcons: {
@@ -186,26 +170,6 @@ function editSubmit() {
     }
 }
 
-
-function checkEdit() {
-    $.post("/table/edit",
-        $("#editForm").serialize(),
-        function (data) {
-            if (data.result == "success") {
-                $("#editWindow").modal('hide'); // 关闭指定的窗口
-                $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
-                swal({
-                    title: "",
-                    text: data.message,
-                    type: "success"
-                })// 提示窗口, 修改成功
-            } else if (data.result == "fail") {
-                //$.messager.alert("提示", data.result.message, "info");
-            }
-        }, "json"
-    );
-}
-
 function formSubmit(url, formId, winId) {
     $.post(url,
         $("#" + formId).serialize(),
@@ -223,6 +187,9 @@ function formSubmit(url, formId, winId) {
                     $("input[type=reset]").trigger("click"); // 移除表单中填的值
                     $('#addForm').data('bootstrapValidator').resetForm(true); // 移除所有验证样式
                     $("#addButton").removeAttr("disabled"); // 移除不可点击
+                    $("#" + formId).data('bootstrapValidator').destroy(); // 销毁此form表单
+                    $('#' + formId).data('bootstrapValidator', null);// 此form表单设置为空
+                    $("#addCompany").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
                 }
             } else if (data.result == "fail") {
                 swal({
