@@ -120,7 +120,7 @@ public class MaintainController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "updateMaintain", method = RequestMethod.POST)
+    @RequestMapping(value = "update", method = RequestMethod.POST)
     public ControllerResult updateAccBuy(MaintainFix maintainFix) {
         if (maintainFix != null && !maintainFix.equals("")) {
             maintainFixService.update(maintainFix);

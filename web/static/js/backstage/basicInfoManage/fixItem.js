@@ -97,7 +97,7 @@ function validator(formId) {
                 formSubmit("/maintain/addService", formId, "addWindow");
 
             } else if (formId == "editForm") {
-                formSubmit("/maintain/updateMaintain", formId, "editWindow");
+                formSubmit("/maintain/update", formId, "editWindow");
 
             }
         })

@@ -115,9 +115,8 @@
                 <div class="modal-header" style="overflow:auto;">
                     <h4>请填写该维修项目的相关信息</h4>
                 </div>
-                <input type="text" name="maintainId" define="MaintainFixMap.maintainId">
-                <input type="text" name="maintainStatus" define="MaintainFixMap.maintainStatus">
-                <input type="text" name="maintainOrFix" define="MaintainFixMap.maintainOrFix">
+                <input type="hidden" name="maintainId" define="MaintainFixMap.maintainId">
+                <input type="hidden" name="maintainStatus" define="MaintainFixMap.maintainStatus">
                 <div class="form-group">
                     <label class="col-sm-3 control-label">维修项目名称：</label>
                     <div class="col-sm-7">
