@@ -23,6 +23,12 @@
         ]]>
   </select>
 
+  <select id="queryByPagerAll" resultType="list" resultMap="MaintainFixMap" parameterType="com.gs.common.bean.Pager">
+     <![CDATA[
+          select * from auto_platform.t_maintain_fix limit #{beginIndex}, #{pageSize}
+    ]]>
+  </select>
+
   <select id="queryByPager" resultType="list" resultMap="MaintainFixMap" parameterType="com.gs.common.bean.Pager">
     <![CDATA[
 			select mf.*, c.companyName from t_maintain_fix  mf, t_company  c where mf.companyId = c.companyId and mf.maintainOrFix = '维修' limit #{beginIndex}, #{pageSize}
