@@ -9,11 +9,13 @@ $(function () {
 
 
 function showEdit() {
-    var row = $('table').bootstrapTable('getSelections');
+    var row = $('#table').bootstrapTable('getSelections');
     if (row.length > 0) {
         $("#editWindow").modal('show'); // 显示弹窗
-        var ceshi = row[0];
-        $("#editForm").fill(ceshi);
+        $("#editButton").removeAttr("disabled");
+        var MaintainFixMap = row[0];
+        $('#editcompany').html('<option value="' + MaintainFixMap.company.companyId + '">' + MaintainFixMap.company.companyName + '</option>').trigger("change");
+        $("#editForm").fill(MaintainFixMap);
         validator('editForm');
     } else {
         swal({
@@ -116,7 +118,7 @@ function validator(formId) {
         },
         fields: {
             maintainName: {
-                message: '保养项目名称不能为空',
+                message: '保养项目名称验证失败',
                 validators: {
                     notEmpty: {
                         message: '保养项目名称不能为空'
@@ -129,31 +131,31 @@ function validator(formId) {
                 }
             },
             maintainHour: {
-                message: '保养项目工时不能为空',
+                message: '保养项目工时验证失败',
                 validators: {
                     notEmpty: {
                         message: '保养项目工时不能为空'
                     }
                 }
             },
-            maintainMoney: {
-                message: '保养项目基础费用不能为空',
-                validators: {
-                    notEmpty: {
-                        message: '保养项目基础费用不能为空'
-                    }
-                }
-            },
             maintainManHourFee: {
-                message: '保养项目工时费不能为空',
+                message: '保养项目工时费验证失 败',
                 validators: {
                     notEmpty: {
                         message: '保养项目工时费不能为空'
                     }
                 }
             },
-            maintainDes: {
-                message: '保养项目描述不能为空',
+            maintainMoney: {
+                message: '保养项目基础费用验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '保养项目基础费用不能为空'
+                    }
+                }
+            },
+            maintainDes :{
+                message: '保养项目描述验证失败',
                 validators: {
                     notEmpty: {
                         message: '保养项目描述不能为空'
@@ -161,7 +163,7 @@ function validator(formId) {
                 }
             },
             companyId: {
-                message: '保养项目所属公司不能为空',
+                message: '保养项目所属公司证失败',
                 validators: {
                     notEmpty: {
                         message: '保养项目所属公司不能为空'
@@ -169,17 +171,18 @@ function validator(formId) {
                 }
             }
         }
-    }).on('success.form.bv', function (e) {
-        if (formId == "addForm") {
-            formSubmit("/maintain/addMaintain", formId, "addWindow");
-
-        } else if (formId == "editForm") {
-            formSubmit("/maintainfix/updateMaintainFix", formId, "editWindow");
-
-        }
     })
-}
+        .on('success.form.bv', function (e) {
+            if (formId == "addForm") {
+                formSubmit("/maintain/addMaintain", formId, "addWindow");
 
+            } else if (formId == "editForm") {
+                formSubmit("/maintain/update", formId, "editWindow");
+
+            }
+        })
+
+}
 
 function addSubmit() {
     $("#addForm").data('bootstrapValidator').validate();

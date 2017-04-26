@@ -120,61 +120,57 @@
 
 
 <!-- 修改弹窗 -->
-<div class="modal fade" id="editWindow" aria-hidden="true">
-    <div class="modal-dialog" style="width: 700px;height: auto;">
-        <div class="modal-content" style="overflow:hidden;">
-            <form class="form-horizontal" id="editForm" method="post">
-                <input type="hidden" name="maintainId" define="MaintainFix.maintainId"/>
+<div class="modal fade" id="editWindow" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form form role="form" class="form-horizontal" id="editForm">
                 <div class="modal-header" style="overflow:auto;">
-                    <h4>请修改该保养项目的信息</h4>
+                    <h4>请填写该维修项目的相关信息</h4>
                 </div>
-                <br/>
+                <input type="hidden" name="maintainId" define="MaintainFixMap.maintainId">
+                <input type="hidden" name="maintainStatus" define="MaintainFixMap.maintainStatus">
                 <div class="form-group">
                     <label class="col-sm-3 control-label">保养项目名称：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="maintainName" define="MaintainFix.maintainName"
-                               placeholder="请输入保养项目的名称" class="form-control">
+                        <input type="text" name="maintainName" define="MaintainFixMap.maintainName" placeholder="请输入保养项目名称" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">所需时间：</label>
+                    <label class="col-sm-3 control-label">保养项目工时：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="maintainHour" define="MaintainFix.maintainHour" placeholder="请预估所需的时间"
-                               class="form-control">
+                        <input type="text" name="maintainHour" define="MaintainFixMap.maintainHour" placeholder="请输入保养项目工时" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">基础费用：</label>
+                    <label class="col-sm-3 control-label">保养项目基础费用：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="maintainMoney" define="MaintainFix.maintainMoney"
-                               placeholder="请预估所需的费用" class="form-control"/>
+                        <input type="text" name="maintainMoney" define="MaintainFixMap.maintainMoney" placeholder="请输入保养项目基础费用" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">工时费：</label>
+                    <label class="col-sm-3 control-label">保养项目工时费：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="maintainManhourFee" define="MaintainFix.maintainManhourFee"
-                               placeholder="请输入工时费" class="form-control"/>
+                        <input type="text" name="maintainManHourFee" define="MaintainFixMap.maintainManHourFee" placeholder="请输入保养项目工时费" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">项目选项：</label>
+                    <label class="col-sm-3 control-label">保养项目描述：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="maintainOrFix" define="MaintainFix.maintainOrFix" placeholder="请选择项目选项"
-                               class="form-control"/>
+                                <textarea type="textarea" class="form-control" placeholder="请输入保养项目描述" define="MaintainFixMap.maintainDes" name="maintainDes"
+                                          rows="3" maxlength="500"></textarea>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">所属公司：</label>
+                    <label class="col-sm-3 control-label">保养项目所属公司：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="companyId" define="MaintainFix.companyId" placeholder="请选择所属公司"
-                               class="form-control"/>
+                        <select id="editcompany" class="js-example-tags company" define="MaintainFixMap.companyId" name="companyId" style="width:100%">
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-8">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button id="editButton" type="button" onclick="editSubmit()" class="btn btn-primary">保存</button>
+                        <button id="editButton" type="button" onclick="editSubmit()" class="btn btn-sm btn-success">保存</button>
                     </div>
                 </div>
             </form>

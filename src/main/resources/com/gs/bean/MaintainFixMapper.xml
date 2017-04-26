@@ -23,14 +23,6 @@
         ]]>
   </select>
 
-  <!-- 分页查询 -->
-  <!--<select id="queryByPager" resultMap="MaintainFixMap" parameterType="com.gs.common.bean.Pager">-->
-    <!--<![CDATA[-->
-      <!--select * from auto_platform.t_maintain_fix u where 1 = 1 and u.maintainStatus = 'Y'-->
-    <!--]]>-->
-    <!--limit #{beginIndex}, #{pageSize};-->
-  <!--</select>-->
-
   <select id="queryByPager" resultType="list" resultMap="MaintainFixMap" parameterType="com.gs.common.bean.Pager">
     <![CDATA[
 			select mf.*, c.companyName from t_maintain_fix  mf, t_company  c where mf.companyId = c.companyId and mf.maintainOrFix = '维修' limit #{beginIndex}, #{pageSize}
@@ -57,58 +49,18 @@
 		]]>
   </insert>
 
-  <!--<select id="count" resultType="int" >-->
-    <!--<![CDATA[-->
-      <!--select count(*) from auto_platform.t_maintain_fix u where 1 =1 and u.maintainStatus = 'Y'-->
-    <!--]]>-->
-  <!--</select>-->
+  <update id="update" parameterType="MaintainFix">
+    <![CDATA[
+			update t_maintain_fix set maintainName = #{maintainName} , maintainHour = #{maintainHour} , maintainMoney = #{maintainMoney} , maintainManHourFee = #{maintainManHourFee} , maintainDes = #{maintainDes} , companyId = #{companyId} , maintainStatus = 'Y' where maintainId = #{maintainId}
+		]]>
+  </update>
 
-  <!--
-      添加采购记录
-  -->
-  <!--<insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="MaintainFix">-->
-    <!--<![CDATA[-->
-            <!--INSERT INTO auto_platform.t_maintain_fix-->
-            <!--(maintainId,maintainName, maintainHour, maintainMoney, maintainManhourFee,maintainOrFix, maintainDes,companyId, maintainStatus)-->
-            <!--VALUES-->
-            <!--(uuid(),#{maintainName},#{maintainHour},#{maintainMoney},#{maintainManhourFee},#{maintainOrFix},#{maintainDes},#{companyId},'Y')-->
-        <!--]]>-->
-  <!--</insert>-->
-
-  <!--
-      更新采购记录信息
-  -->
-  <!--<update id="update" keyProperty="id" parameterType="java.util.Map">-->
-    <!--<![CDATA[-->
-        <!--UPDATE auto_platform.t_maintain_fix-->
-        <!--SET maintainName=#{maintainName}, maintainHour=#{maintainHour},-->
-        <!--maintainMoney=#{maintainMoney},maintainManhourFee=#{maintainManhourFee},-->
-        <!--maintainOrFix=#{maintainOrFix},maintainDes=#{maintainDes},-->
-        <!--companyId=#{companyId}-->
-        <!--WHERE maintainId=#{maintainId}-->
-        <!--]]>-->
-  <!--</update>-->
-
-
-  <!--<delete id="deleteById">-->
-    <!--<![CDATA[-->
-        <!--DELETE FROM auto_platform.t_maintain_fix WHERE maintainId=#{maintainId}-->
-        <!--]]>-->
-  <!--</delete>-->
-
-
-  <!--
-      冻结配件采购信息
-  -->
   <update id="inactive" keyProperty="id" parameterType="string">
     <![CDATA[
         update auto_platform.t_maintain_fix set maintainStatus = 'N' where maintainId = #{maintainId}
         ]]>
   </update>
 
-  <!--
-      激活配件采购信息
-  -->
   <update id="active" keyProperty="id" parameterType="string">
     <![CDATA[
         update auto_platform.t_maintain_fix set maintainStatus = 'Y' where maintainId = #{maintainId}

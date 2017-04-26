@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="/static/css/sweetalert.css">
     <link rel="stylesheet" href="/static/css/table/table.css">
     <link rel="stylesheet" href="/static/css/minicolors/jquery.minicolors.css">
+    <link rel="stylesheet" href="/static/css/bootstrap-validate/bootstrapValidator.min.css">
 </head>
 <body>
 <%@include file="../backstage/contextmenu.jsp" %>
@@ -25,21 +26,11 @@
             <thead>
                 <tr>
                     <th data-checkbox="true"></th>
-                    <th data-field="colorName">
-                        颜色名称
-                    </th>
-                    <th data-field="colorRgb">
-                        颜色的RBG值
-                    </th>
-                    <th data-field="colorHex">
-                        颜色的16进制值
-                    </th>
-                    <th data-field="colorDes">
-                        颜色描述
-                    </th>
-                    <th data-field="colorStatus">
-                        颜色状态
-                    </th>
+                    <th data-field="colorName">颜色名称</th>
+                    <th data-field="colorRgb">颜色的RBG值</th>
+                    <th data-field="colorHex">颜色的16进制值</th>
+                    <th data-field="colorDes">颜色描述</th>
+                    <th data-field="colorStatus">颜色状态/th>
                 </tr>
             </thead>
         </table>
@@ -50,18 +41,15 @@
             <button id="btn_edit" type="button" class="btn btn-default" onclick="showEdit();">
                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
             </button>
-            <button id="btn_delete" type="button" class="btn btn-default" onclick="showDel();">
-                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
-            </button>
         </div>
     </div>
 </div>
 
 <%--添加窗口--%>
-<div class="modal fade" id="add" aria-hidden="true" style="overflow:auto; ">
-    <div class="modal-dialog" style="width: 700px;height: auto;">
-        <div class="modal-content" style="overflow:hidden;">
-            <form class="form-horizontal" id="showAddFormWar" method="post">
+<div id="addWindow" class="modal fade" style="overflow-y:scroll" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form role="form" class="form-horizontal" id="addForm">
                 <div class="modal-header" style="overflow:auto;">
                     <h4>请填写汽车颜色的相关信息</h4>
                 </div>
@@ -94,11 +82,13 @@
                                   class="form-control"></textarea>
                     </div>
                 </div>
-                <div class="form-group">
-                    <div class="col-sm-offset-8">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button class="btn btn-sm btn-success" type="submit">保 存</button>
-                    </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default"
+                            data-dismiss="modal">关闭
+                    </button>
+                    <button id="addButton" type="button" onclick="addSubmit()" class="btn btn-primary">添加
+                    </button>
+                    <input type="reset" name="reset" style="display: none;"/>
                 </div>
             </form>
         </div><!-- /.modal-content -->
@@ -106,10 +96,10 @@
 </div><!-- /.modal -->
 
 <%--修改窗口--%>
-<div class="modal fade" id="edit" aria-hidden="true" style="overflow:auto; ">
-    <div class="modal-dialog" style="width: 700px;height: auto;">
-        <div class="modal-content" style="overflow:hidden;">
-            <form class="form-horizontal" id="showEditFormWar" method="post">
+<div class="modal fade" id="editWindow" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form form role="form" class="form-horizontal" id="editForm">
                 <input type="hidden" name="colorId" define="carColor.colorId">
                 <input type="hidden" name="colorStatus" define="carColor.colorStatus">
                 <div class="modal-header" style="overflow:auto;">
@@ -148,7 +138,7 @@
                 <div class="form-group">
                     <div class="col-sm-offset-8">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button class="btn btn-sm btn-success" type="submit">保 存</button>
+                        <button id="editButton" type="button" onclick="editSubmit()" class="btn btn-sm btn-success">保存</button>
                     </div>
                 </div>
             </form>
@@ -156,44 +146,6 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<!-- 删除弹窗 -->
-<div class="modal fade" id="del" aria-hidden="true">
-    <div class="modal-dialog" style="overflow:hidden;">
-        <form action="/table/edit" method="post">
-            <div class="modal-content">
-                <input type="hidden" id="delNoticeId"/>
-                <div class="modal-footer" style="text-align: center;">
-                    <h2>确认删除吗?</h2>
-                    <button type="button" class="btn btn-default"
-                            data-dismiss="modal">关闭
-                    </button>
-                    <button type="sumbit" class="btn btn-primary" onclick="del()">
-                        确认
-                    </button>
-                </div>
-            </div><!-- /.modal-content -->
-        </form>
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
-<!-- 提示弹窗 -->
-<div class="modal fade" id="tanchuang" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                提示
-            </div>
-            <div class="modal-body">
-                请先选择某一行
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default"
-                        data-dismiss="modal">关闭
-                </button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
 <script src="/static/js/jquery.min.js"></script>
 <script src="/static/js/bootstrap.min.js"></script>
 <script src="/static/js/bootstrap-table/bootstrap-table.js"></script>
@@ -207,6 +159,7 @@
 <script src="/static/js/minicolors/jquery.minicolors.min.js"></script>
 <script src="/static/js/fileInput/zh.js"></script>
 <script src="/static/js/form/jquery.validate.js"></script>
+<script src="/static/js/bootstrap-validate/bootstrapValidator.js"></script>
 <script src="/static/js/backstage/basicInfoManage/carColor.js"></script>
 </body>
 </html>

@@ -115,38 +115,51 @@
                 <div class="modal-header" style="overflow:auto;">
                     <h4>请填写该维修项目的相关信息</h4>
                 </div>
-                <br/>
+                <input type="hidden" name="maintainId" define="MaintainFixMap.maintainId">
+                <input type="hidden" name="maintainStatus" define="MaintainFixMap.maintainStatus">
                 <div class="form-group">
                     <label class="col-sm-3 control-label">维修项目名称：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="fixName" placeholder="请输入维修项目名称" class="form-control">
+                        <input type="text" name="maintainName" define="MaintainFixMap.maintainName" placeholder="请输入维修项目名称" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">预计维修时间：</label>
+                    <label class="col-sm-3 control-label">维修项目工时：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="fixHour" value="2012-05-15 21:05" id="editDateTimePicker" class="form-control">
+                        <input type="text" name="maintainHour" define="MaintainFixMap.maintainHour" placeholder="请输入维修项目工时" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">预计维修费用：</label>
+                    <label class="col-sm-3 control-label">维修项目基础费用：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="fixMoney" placeholder="请预估所需的维修费用" class="form-control"></input>
+                        <input type="text" name="maintainMoney" define="MaintainFixMap.maintainMoney" placeholder="请输入维修项目基础费用" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">项目描述：</label>
+                    <label class="col-sm-3 control-label">维修项目工时费：</label>
                     <div class="col-sm-7">
-                        <textarea type="text" placeholder="请输入该项目的相关描述" style="height: 100px;"
-                                  class="form-control"></textarea>
+                        <input type="text" name="maintainManHourFee" define="MaintainFixMap.maintainManHourFee" placeholder="请输入维修项目工时费" class="form-control">
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default"
-                            data-dismiss="modal">关闭
-                    </button>
-                    <button id="editButton" type="button" onclick="editSubmit()" class="btn btn-primary">保存
-                    </button>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">维修项目描述：</label>
+                    <div class="col-sm-7">
+                                <textarea type="textarea" class="form-control" placeholder="请输入维修项目描述" define="MaintainFixMap.maintainDes" name="maintainDes"
+                                          rows="3" maxlength="500"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">维修项目所属公司：</label>
+                    <div class="col-sm-7">
+                        <select id="editcompany" class="js-example-tags company" define="MaintainFixMap.companyId" name="companyId" style="width:100%">
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-8">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button id="editButton" type="button" onclick="editSubmit()" class="btn btn-sm btn-success">保存</button>
+                    </div>
                 </div>
             </form>
         </div><!-- /.modal-content -->
