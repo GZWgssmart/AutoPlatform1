@@ -7,5 +7,8 @@
     <result column="accId" property="accId" jdbcType="VARCHAR" />
     <result column="accCount" property="accCount" jdbcType="INTEGER" />
   </resultMap>
+  <select id="queryByRecord" resultMap="maintainFixAccMap">
+    select * from t_maintain_fix_acc where maintainId in (${fixId})
+  </select>
 
 </mapper>

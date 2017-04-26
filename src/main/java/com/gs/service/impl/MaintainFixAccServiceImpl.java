@@ -61,4 +61,8 @@ public class MaintainFixAccServiceImpl implements MaintainFixAccService {
 	public int countByBlurred(MaintainFixAcc maintainFixAcc) {
 		return 0;
 	}
+
+	public List<MaintainFixAcc> queryByRecord(String fixId) {
+		return maintainFixAccDAO.queryByRecord(fixId);
+	}
 }

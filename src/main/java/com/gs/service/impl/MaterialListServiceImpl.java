@@ -1,16 +1,14 @@
 package com.gs.service.impl;
 
-import com.gs.bean.Checkin;
 import com.gs.bean.MaterialList;
 import com.gs.bean.view.MaterialView;
+import com.gs.common.bean.Pager;
 import com.gs.dao.MaterialListDAO;
 import com.gs.service.MaterialListService;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
+
 import javax.annotation.Resource;
 import java.util.List;
-
-import com.gs.common.bean.Pager;
 /**
 *由CSWangBin技术支持
 *
@@ -82,5 +80,10 @@ public class MaterialListServiceImpl implements MaterialListService {
 	@Override
 	public int countRecordAccs(String recordId) {
 		return materialListDAO.countRecordAccs(recordId);
+	}
+
+	@Override
+	public void insertList(List<MaterialList> materialLists) {
+		materialListDAO.insertList(materialLists);
 	}
 }

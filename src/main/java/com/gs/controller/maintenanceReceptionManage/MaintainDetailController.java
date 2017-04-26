@@ -2,6 +2,7 @@ package com.gs.controller.maintenanceReceptionManage;
 
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.MaintainDetail;
+import com.gs.bean.MaintainFixAcc;
 import com.gs.bean.MaterialList;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -103,9 +105,17 @@ public class MaintainDetailController {
     @RequestMapping(value = "userConfirm/{recordId}/{ids}", method = RequestMethod.POST)
     public ControllerResult userConfirm(@PathVariable("recordId") String recordId,@PathVariable("ids") String ids) {
         logger.info("用户确认明细清单, 这时生成所有物料清单");
-        MaterialList materialList = new MaterialList();
-        materialList.setMaintainRecordId(recordId);
-       // materialListService.insert(materialList);
+        List<MaintainFixAcc> maintainFixAccs = maintainFixAccService.queryByRecord(ids);
+        System.out.print(maintainFixAccs);
+        List<MaterialList> materialLists = new ArrayList<MaterialList>();
+        for (MaintainFixAcc m : maintainFixAccs){
+            MaterialList materialList = new MaterialList();
+            materialList.setMaintainRecordId(recordId);
+            materialList.setAccId(m.getAccId());
+            materialList.setMaterialCount(m.getAccCount());
+            materialLists.add(materialList);
+        }
+        materialListService.insertList(materialLists);
         return ControllerResult.getSuccessResult("确定成功");
     }
 

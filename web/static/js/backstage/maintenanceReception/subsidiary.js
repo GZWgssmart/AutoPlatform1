@@ -50,11 +50,13 @@ function showAddDetail(){
             type:"warning"}) // 提示类型
     }
 }
+var recordId = "";
 
 // 显示所有明细
 function showDetail(){
     var row =  $('#table').bootstrapTable('getSelections');
     if(row.length >0) {
+        recordId = row[0].recordId;
         $("#detailWindow").modal('show');
         initDetailTable('detailTable', '/maintainDetail/queryByDetailPager/'+row[0].recordId+'');
     }else{
@@ -94,32 +96,54 @@ function closeWindow(){
 }
 
 function showUserDetail(){
-    swal(
-        {title:"",
-            text:"确定确认维修保养明细吗",
-            type:"warning",
-            showCancelButton:true,
-            confirmButtonColor:"#DD6B55",
-            confirmButtonText:"我确定",
-            cancelButtonText:"再考虑一下",
-            closeOnConfirm:false,
-            closeOnCancel:false
-        },function(isConfirm){
-            if(isConfirm){
-                userConfirm();// 点击确定确认
-            }else{
-                swal({title:"",
-                    text:"已取消",
-                    confirmButtonText:"确认",
-                    type:"error"})
-            }
-        })
+    tableData = $("#detailTable").bootstrapTable('getData');//获取表格的所有内容行
+    if(tableData.length > 0){
+        swal(
+            {title:"",
+                text:"确定确认维修保养明细吗",
+                type:"warning",
+                showCancelButton:true,
+                confirmButtonColor:"#DD6B55",
+                confirmButtonText:"我确定",
+                cancelButtonText:"再考虑一下",
+                closeOnConfirm:false,
+                closeOnCancel:false
+            },function(isConfirm){
+                if(isConfirm){
+                    userConfirm();// 点击确定确认
+                }else{
+                    swal({title:"",
+                        text:"已取消",
+                        confirmButtonText:"确认",
+                        type:"error"})
+                }
+            })
+    }else{
+        swal({
+            title:"",
+            text: "请先生存维修保养明细", // 主要文本
+            confirmButtonColor: "#DD6B55", // 提示按钮的颜色
+            confirmButtonText:"确定", // 提示按钮上的文本
+            type:"warning"}) // 提示类型
+        }
 }
+
 
 // 点击确定确认
 function userConfirm(){
     tableData = $("#detailTable").bootstrapTable('getData');//获取表格的所有内容行
-    $.post("/maintainDetail/userConfirm",function (data) {
+    var ids = "";// 设置一个字符串
+        $.each(tableData, function(index, value, item) {
+            alert(tableData.length)
+            if(ids == ""){// 假如这个字符串刚开始设置,
+                alert(tableData[index].maintainItemId)
+                ids = "'"+tableData[index].maintainItemId+"'";// 则直接赋上0索引上的id属性
+            }else {
+                alert(tableData[index].maintainItemId)
+                ids += ",'" + tableData[index].maintainItemId+"'"// 否则就加上逗号把rows里所有的id都赋给ids
+            }
+        });
+    $.post("/maintainDetail/userConfirm/"+recordId+"/"+ids,function (data) {
         if (data.result == "success") {
             swal({
                 title: "",

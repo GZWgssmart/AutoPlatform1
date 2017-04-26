@@ -43,4 +43,14 @@ public class MaintainFixAcc {
     public void setAccCount(Integer accCount) {
         this.accCount = accCount;
     }
+
+    @Override
+    public String toString() {
+        return "MaintainFixAcc{" +
+                "mainAccId='" + mainAccId + '\'' +
+                ", maintainId='" + maintainId + '\'' +
+                ", accId='" + accId + '\'' +
+                ", accCount=" + accCount +
+                '}';
+    }
 }
