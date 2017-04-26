@@ -173,7 +173,7 @@
                 <div class="form-group">
                     <div class="col-sm-offset-8">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button class="btn btn-sm btn-success" onclick="addSubmit();" type="button">保 存</button>
+                        <button class="btn btn-sm btn-success" id="addButton" onclick="addSubmit();" type="button">保 存</button>
                     </div>
                 </div>
             </form>
@@ -189,18 +189,18 @@
                 <div class="modal-header" style="overflow:auto;">
                     <h4>修改电话预约信息</h4>
                 </div>
-                <input type="hidden" define="appointment.userId" name="userId" class="form-control"/>
-                <input type="hidden" define="appointment.appointmentId" name="appointmentId" class="form-control"/>
+                <input type="hidden" define="appointment.userId" name="userId" />
+                <input type="hidden" define="appointment.appointmentId" name="appointmentId"/>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">车主姓名：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="userName" placeholder="车主姓名" define="appointment.userName" class="form-control"/>
+                        <input type="text"  id="editUserName" name="userName" placeholder="车主姓名" define="appointment.userName" class="form-control"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">车主电话：</label>
                     <div class="col-sm-7">
-                        <input type="number" name="userPhone" placeholder="车主电话" define="appointment.userPhone" class="form-control" style="width:100%"/>
+                        <input type="number" id="editUserPhone" name="userPhone" placeholder="车主电话" define="appointment.userPhone" class="form-control" style="width:100%"/>
                     </div>
                 </div>
 
@@ -235,13 +235,13 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">车牌号码：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="carPlate" placeholder="车牌号码" define="appointment.carPlate" class="form-control"/>
+                        <input type="text" id="editPlateId" name="carPlate" placeholder="车牌号码" define="appointment.carPlate" class="form-control"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">到店时间：</label>
                     <div class="col-sm-7">     <!-- 当设置不可编辑后, 会修改颜色, 在min.css里搜索.form-control{background-color:#eee;opacity:1} -->
-                        <input id="editDatetimepicker" placeholder="请选择到店时间" readonly="true" type="text" name="arriveTime"
+                        <input id="editArriveTime" placeholder="请选择到店时间" readonly="true" type="text" name="arriveTime" define="appointment.arriveTime"
                                class="form-control datetimepicker"/>
                     </div>
                 </div>
@@ -254,12 +254,11 @@
                         </select>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default"
-                            data-dismiss="modal">关闭
-                    </button>
-                    <button id="editButton" type="button" onclick="editSubmit()" class="btn btn-success">保存
-                    </button>
+                <div class="form-group">
+                    <div class="col-sm-offset-8">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button class="btn btn-sm btn-success" onclick="editSubmit();" type="button">保 存</button>
+                    </div>
                 </div>
             </form>
         </div><!-- /.modal-content -->

@@ -77,11 +77,11 @@
 
   <insert id="update" parameterType="Appointment">
     <![CDATA[
-        UPDATE auto_platform.t_appointment SET userId = #{userId}, userName = #{userName}, userPhone = #{userPhone},
+        UPDATE auto_platform.t_appointment SET userName = #{userName}, userPhone = #{userPhone},
         brandId = #{brandId}, colorId = #{colorId}, modelId = #{modelId}, plateId = #{plateId}, carPlate = #{carPlate},
-        arriveTime = #{arriveTime}, maintainOrFix = #{maintainOrFix}, appCreatedTime = #{appCreatedTime},
-         companyId = #{companyId}, appoitmentStatus = #{appoitmentStatus}
-         WHERE userId = #{userId}
+        arriveTime = #{arriveTime}, maintainOrFix = #{maintainOrFix},
+         companyId = #{companyId}
+         WHERE appointmentId = #{appointmentId}
     ]]>
   </insert>
   
