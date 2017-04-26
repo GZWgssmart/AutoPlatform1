@@ -117,8 +117,11 @@
 
     <select id="queryByPagerDisable" resultMap="AccessoriesBuyMap" parameterType="com.gs.common.bean.Pager">
         <![CDATA[
-       SELECT *FROM auto_platform.t_accessories_buy WHERE accBuyStatus='N'
-    ]]>
+       SELECT abu.*,cp.companyId,cp.companyName,ac.accId,ac.accName FROM auto_platform.t_accessories_buy abu
+       LEFT JOIN auto_platform.t_company cp on cp.companyId=abu.companyId
+       LEFT JOIN auto_platform.t_accessories ac on ac.accId=abu.accId
+       WHERE accBuyStatus='N'
+       ]]>
         limit #{beginIndex}, #{pageSize}
     </select>
 
@@ -126,6 +129,48 @@
         <![CDATA[
       select count(accBuyId) from auto_platform.t_accessories_buy ck where ck.accBuyStatus = 'N'
     ]]>
+    </select>
+
+    <!-- 分页模糊查询 -->
+    <select id="blurredQuery" resultMap="AccessoriesBuyMap" >
+        <![CDATA[
+           select abu.*,cp.companyId,cp.companyName,ac.accId,ac.accName from auto_platform.t_accessories_buy abu
+           LEFT JOIN auto_platform.t_company cp on abu.companyId=cp.companyId
+           LEFT JOIN auto_platform.t_accessories ac on abu.accId=ac.accId
+           where 1=1 AND
+        ]]>
+        <if test="accBuy.companyId != '' and accBuy.companyId != null">
+            cp.companyName like '%${accBuy.companyId}%'
+        </if>
+        <if test="accBuy.companyId != '' and accBuy.companyId != null and
+            accBuy.accId != '' and accBuy.accId != null">
+            OR
+        </if>
+        <if test="accBuy.accId!='' and accBuy.accId!= null">
+            ac.accName LIKE '%${accBuy.accId}%'
+        </if>
+        ORDER by abu.accBuyCreatedTime DESC
+        limit #{pager.beginIndex}, #{pager.pageSize}
+    </select>
+
+    <!-- 分页模糊查询个数 -->
+    <select id="countByBlurred" resultType="int" >
+        <![CDATA[
+           select count(accBuyId) from auto_platform.t_accessories_buy abu
+           LEFT JOIN auto_platform.t_company cp on abu.companyId=cp.companyId
+           LEFT JOIN auto_platform.t_accessories ac on abu.accId=ac.accId
+           where 1=1 AND
+        ]]>
+        <if test="accBuy.companyId != '' and accBuy.companyId != null">
+            cp.companyName like '%${accBuy.companyId}%'
+        </if>
+        <if test="accBuy.companyId != '' and accBuy.companyId != null and
+            accBuy.accId != '' and accBuy.accId != null">
+            OR
+        </if>
+        <if test="accBuy.accId!='' and accBuy.accId!= null">
+            ac.accName LIKE '%${accBuy.accId}%'
+        </if>
     </select>
 
 </mapper>

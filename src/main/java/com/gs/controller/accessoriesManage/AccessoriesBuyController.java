@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -172,6 +173,34 @@ public class AccessoriesBuyController {
             }
         } else {
             return ControllerResult.getFailResult("操作失败");
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "blurredQuery", method = RequestMethod.GET)
+    public Pager4EasyUI<AccessoriesBuy> blurredQuery(HttpServletRequest request, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
+        logger.info("配件采购记录模糊查询");
+        String text = request.getParameter("text");
+        String value = request.getParameter("value");
+        if (text != null && !text.equals("") && value != null && !value.equals("")) {
+            Pager pager = new Pager();
+            pager.setPageNo(Integer.parseInt(pageNumber));
+            pager.setPageSize(Integer.parseInt(pageSize));
+            List<AccessoriesBuy> accessoriesBuys = null;
+            AccessoriesBuy accessoriesBuy = new AccessoriesBuy();
+            if (text.equals("汽车公司/配件")) {
+                accessoriesBuy.setCompanyId(value);
+                accessoriesBuy.setAccId(value);
+            } else if (text.equals("汽车公司")) {
+                accessoriesBuy.setCompanyId(value);
+            } else if (text.equals("配件")) {
+                accessoriesBuy.setAccId(value);
+            }
+            accessoriesBuys = accessoriesBuyService.blurredQuery(pager, accessoriesBuy);
+            pager.setTotalRecords(accessoriesBuyService.countByBlurred(accessoriesBuy));
+            return new Pager4EasyUI<AccessoriesBuy>(pager.getTotalRecords(), accessoriesBuys);
+        } else {
+            return null;
         }
     }
 

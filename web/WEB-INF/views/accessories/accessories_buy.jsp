@@ -57,17 +57,14 @@
             </button>
             <div class="input-group" style="width:350px;float:left;padding:0;margin:0 0 0 -1px;">
                 <div class="input-group-btn">
-                    <button type="button" id="ulButton" class="btn btn-default" style="border-radius:0px;" data-toggle="dropdown">公司名称/配件数量/配件编号/配件单价<span class="caret"></span></button>
+                    <button type="button" id="ulButton" class="btn btn-default" style="border-radius:0px;" data-toggle="dropdown">汽车公司/配件<span class="caret"></span></button>
                     <ul class="dropdown-menu pull-right">
-                        <li><a onclick="onclikLi(this)">公司名称/配件数量/配件编号/配件单价</a></li>
+                        <li><a onclick="onclikLi(this)">汽车公司/配件</a></li>
                         <li class="divider"></li>
-                        <li><a onclick="onclikLi(this)">公司名称</a></li>
+                        <li><a onclick="onclikLi(this)">汽车公司</a></li>
                         <li class="divider"></li>
-                        <li><a onclick="onclikLi(this)">配件数量</a></li>
+                        <li><a onclick="onclikLi(this)">配件</a></li>
                         <li class="divider"></li>
-                        <li><a onclick="onclikLi(this)">配件编号</a></li>
-                        <li class="divider"></li>
-                        <li><a onclick="onclikLi(this)">配件单价</a></li>
                     </ul>
                 </div><!-- /btn-group -->
                 <input id="ulInput" class="form-control" onkeypress="if(event.keyCode==13) {blurredQuery();}">
