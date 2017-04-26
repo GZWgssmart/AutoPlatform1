@@ -178,44 +178,6 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<!-- 删除弹窗 -->
-<div class="modal fade" id="del" aria-hidden="true">
-    <div class="modal-dialog" style="overflow:hidden;">
-        <form action="/table/edit" method="post">
-            <div class="modal-content">
-                <input type="hidden" id="delNoticeId"/>
-                <div class="modal-footer" style="text-align: center;">
-                    <h2>确认删除吗?</h2>
-                    <button type="button" class="btn btn-default"
-                            data-dismiss="modal">关闭
-                    </button>
-                    <button type="sumbit" class="btn btn-primary" onclick="del()">
-                        确认
-                    </button>
-                </div>
-            </div><!-- /.modal-content -->
-        </form>
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
-<!-- 提示弹窗 -->
-<div class="modal fade" id="tanchuang" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                提示
-            </div>
-            <div class="modal-body">
-                请先选择某一行
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default"
-                        data-dismiss="modal">关闭
-                </button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
 <script src="/static/js/jquery.min.js"></script>
 <script src="/static/js/bootstrap.min.js"></script>
 <script src="/static/js/bootstrap-table/bootstrap-table.js"></script>

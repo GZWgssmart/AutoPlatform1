@@ -77,22 +77,6 @@ function showAdd() {
     validator('addForm'); // 初始化验证
 }
 
-function formatRepo(repo) {
-    return repo.text
-}
-function formatRepoSelection(repo) {
-    return repo.text
-}
-
-function showDel() {
-    var row = $('table').bootstrapTable('getSelections');
-    if (row.length > 0) {
-        $("#del").modal('show');
-    } else {
-        $("#tanchuang").modal('show');
-    }
-}
-
 function checkAdd() {
     var id = $('#addId').val();
     var name = $('#addName').val();
