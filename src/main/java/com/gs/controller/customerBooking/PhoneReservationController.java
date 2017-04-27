@@ -2,10 +2,12 @@ package com.gs.controller.customerBooking;
 
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.Appointment;
+import com.gs.bean.MaintainRecord;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
 import com.gs.service.AppointmentService;
+import com.gs.service.MaintainRecordService;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -95,43 +97,27 @@ public class PhoneReservationController {
         return ControllerResult.getSuccessResult("修改成功");
     }
 
+    /**
+     * 对状态的激活和启用，只使用一个方法进行切换。
+     */
     @ResponseBody
-    @RequestMapping(value = "inactive",method = RequestMethod.POST)
-    public ControllerResult inactive(String id) {
-        logger.info("禁用");
-        if(id !=null) {
-            appointmentService.inactive(id);
-            return ControllerResult.getSuccessResult("禁用成功");
-        }else{
-            return ControllerResult.getFailResult("禁用失败");
+    @RequestMapping(value = "statusOperate", method = RequestMethod.POST)
+    public ControllerResult inactive(String appointmentId, String appoitmentStatus) {
+        if (appointmentId != null && !appointmentId.equals("") && appoitmentStatus != null && !appoitmentStatus.equals("")) {
+            if (appoitmentStatus.equals("N")) {
+                appointmentService.active(appointmentId);
+                logger.info("激活成功");
+                return ControllerResult.getSuccessResult("激活成功");
+            } else {
+                appointmentService.inactive(appointmentId);
+                logger.info("禁用成功");
+                return ControllerResult.getSuccessResult("禁用成功");
+            }
+        } else {
+            return ControllerResult.getFailResult("操作失败");
         }
     }
 
-    @ResponseBody
-    @RequestMapping(value="blurredQuery", method = RequestMethod.GET)
-    public Pager4EasyUI<Appointment> blurredQuery(HttpServletRequest request, @Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
-        logger.info("登记记录模糊查询");
-        String column = request.getParameter("column");
-        String value = request.getParameter("value");
-        if(column != null && value != null) {
-            Pager pager = new Pager();
-            pager.setPageNo(Integer.valueOf(pageNumber));
-            pager.setPageSize(Integer.valueOf(pageSize));
-            pager.setTotalRecords(appointmentService.countByBlurred());
-            List<Appointment> appointments;
-            if(column.equals("all")){
-                String column1 = "userName";
-                String column2 = "companyId";
-                String column3 = "plateId";
-                appointments = appointmentService.blurredQuery(pager, column, value);
-            }else{
-                appointments = appointmentService.blurredQuery(pager, column, value);
-            }
-            return new Pager4EasyUI<Appointment>(pager.getTotalPages(), appointments);
-        }else{
-            return null;
-        }
-    }
 
     /**
      * 时间格式化

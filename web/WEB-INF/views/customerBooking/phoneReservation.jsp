@@ -66,10 +66,10 @@
             </thead>
         </table>
         <div id="toolbar" class="btn-group">
-            <button id="btn_available" type="button" class="btn btn-default" onclick="showAvailable();">
+            <button id="btn_available" type="button" class="btn btn-default" onclick="showAvailable()">
                 <span class="glyphicon glyphicon-search" aria-hidden="true"></span>可用登记记录
             </button>
-            <button id="btn_disable" type="button" class="btn btn-default" onclick="showDisable();">
+            <button id="btn_disable" type="button" class="btn btn-default" onclick="showDisable()">
                 <span class="glyphicon glyphicon-search" aria-hidden="true"></span>禁用登记记录
             </button>
             <button id="btn_add" type="button" class="btn btn-default" onclick="showAdd();">
@@ -106,6 +106,16 @@
             <form role="form" class="form-horizontal" id="addForm" method="post">
                 <div class="modal-header" style="overflow:auto;">
                     <h4>添加预约信息</h4>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">是否为本店用户：</label>
+                    <div class="col-sm-7">
+                        <select class="js-example-tags form-control" id="app"
+                                onchange="checkAppointment(this)">
+                            <option value="N">否</option>
+                            <option value="Y">是</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">车主姓名：</label>
@@ -264,7 +274,72 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+<div id="appWindow" class="modal fade" aria-hidden="true" style="overflow-y:scroll" data-backdrop="static" keyboard:false>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12 b-r">
+                        <h3 class="m-t-none m-b">选择预约记录</h3>
+                        <table class="table table-hover" id="appTable">
+                            <thead>
+                            <tr>
+                                <th data-checkbox="true"></th>
+                                <th data-field="userName">
+                                    车主姓名
+                                </th>
+                                <th data-field="userPhone">
+                                    车主电话
+                                </th>
+                                <th data-field="brand.brandName">
+                                    汽车品牌
+                                </th>
+                                <th data-field="color.colorName">
+                                    汽车颜色
+                                </th>
+                                <th data-field="model.modelName">
+                                    汽车车型
+                                </th>
+                                <th data-field="plate.plateName">
+                                    汽车车牌
+                                </th>
+                                <th data-field="carPlate">
+                                    车牌号码
+                                </th>
+                                <th data-field="arriveTime" data-formatter="formatterDate">
+                                    预计到店时间
+                                </th>
+                                <th data-field="maintainOrFix">
+                                    维修&nbsp;|&nbsp;保养
+                                </th>
+                                <th data-field="appCreatedTime" data-formatter="formatterDate">
+                                    预约创建时间
+                                </th>
+                                <th data-field="company.companyName">
+                                    汽修公司
+                                </th>
+                                <th data-field="appoitmentStatus" data-formatter="status">
+                                    预约状态
+                                </th>
+                            </thead>
+                            <tbody>
+                            </tbody>
 
+                        </table>
+                        <div style="height: 100px;"></div>
+                        <div class="modal-footer" style="overflow:hidden;">
+                            <button type="button" class="btn btn-default" onclick="closeAppWin()">关闭
+                            </button>
+                            <input type="button" class="btn btn-primary" onclick="checkApp()" value="确定">
+                            </input>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <script src="/static/js/jquery.min.js"></script>
 <script src="/static/js/bootstrap.min.js"></script>
 <script src="/static/js/bootstrap-table/bootstrap-table.js"></script>

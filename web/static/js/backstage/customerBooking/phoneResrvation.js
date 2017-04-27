@@ -7,6 +7,15 @@ $(function () {
     initSelect2("carModel", "请选择车型", "/carModel/queryAllCarModel");
     initSelect2("carPlate", "请选择车牌", "/carPlate/queryAllCarPlate");
 });
+
+function showAvailable() {
+    initTable('table', '/appointment/queryByPager'); // 初始化表格
+}
+
+function showDisable() {
+    initTable('table', '/appointment/queryByPagerDisable'); // 初始化表格
+}
+
 // 这个方法别看
 $("#addCarBrand").change(function(){
     var div = $("#addModelDiv");
@@ -37,60 +46,55 @@ function showStatusFormatter(value) {
 // 激活或禁用
 function statusFormatter(value, row, index) {
     if(value == 'Y') {
-        return "&nbsp;&nbsp;<a href='javascript:;' onclick='inactive(\""+row.userName+ "\")'>禁用</a>";
+        return "&nbsp;&nbsp;<button type='button' class='btn btn-danger' onclick='inactive(\""+row.appointmentId+"\")'>禁用</a>";
     } else {
-        return "&nbsp;&nbsp;<a href='javascript:;' onclick='active(\""+row.userName+ "\")'>激活</a>";
+        return "&nbsp;&nbsp;<button type='button' class='btn btn-success' onclick='active(\""+ row.appointmentId+ "\")'" +
+            "" +
+            "" +
+            ">激活</a>";
     }
-
 }
 
-// 禁用
-function inactive(id) {
-    $.post("/appointment/inactive?id="+id,
-        function(data){
-            if(data.result == 'success'){
-                $('#table').bootstrapTable("refresh");
-                swal({
-                    title:"",
-                    text: data.message,
-                    confirmButtonText:"确定", // 提示按钮上的文本
-                    type:"success"})// 提示窗口, 修改成功
-            }else{
-                swal({title:"",
-                    text:"禁用失败",
-                    confirmButtonText:"确认",
-                    type:"error"})
-            }
-        },"json");
-}
-// 激活
-function active(id) {
-    $.post("/appointment/active?id="+id,
-        function(data){
-            if(data.result == 'success'){
-                $('#table').bootstrapTable("refresh");
-                swal({
-                    title:"",
-                    text: data.message,
-                    confirmButtonText:"确定", // 提示按钮上的文本
-                    type:"success"})// 提示窗口, 修改成功
-            }else{
-                swal({title:"",
-                    text:"激活失败",
-                    confirmButtonText:"确认",
-                    type:"error"})
-            }
-        },"json");
+//禁用状态
+function inactive(appointmentId) {
+    $.post(contentPath + "/appointment/statusOperate?appointmentId=" + appointmentId + "&" + "appoitmentStatus=" + "Y", function (data) {
+        if (data.result == "success") {
+            $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
+        }
+    })
 }
 
-// 查看全部可用
-function showAvailable(){
-    initTable('table', '/appointment/queryByPager');
+//激活状态
+function active(appointmentId) {
+    $.post(contentPath + "/appointment/statusOperate?appointmentId=" + appointmentId + "&" + "appoitmentStatus=" + 'N', function (data) {
+        if (data.result == "success") {
+            $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
+        }
+    })
 }
-// 查看全部禁用
-function showDisable(){
-    initTable('table', '/appointment/queryByPagerDisable');
+/** 判断是否选中 */
+function checkAppointment(combox) {
+    var val = combox.value;
+    if (val == "Y") {
+        //调用函数，初始化表格
+        initTableNotTollbar("appTable", "/appointment/queryByPager");
+        //当点击查询按钮的时候执行
+        $("#search").bind("click", initTable);
+        $("#addWindow").modal('hide');
+        $("#appWindow").modal('show');
+    } else {
+        $("#appWindow").modal('hide');
+        $("#addWindow").modal('show');
+        $("input[type=reset]").trigger("click");
+    }
 }
+// 关闭预约
+function closeAppWin() {
+    $("#appWindow").modal('hide');
+    $("#addWindow").modal('show')
+    $("#app").val("N");
+}
+
 // 选择预约记录
 function checkApp() {
     var row = $("#appTable").bootstrapTable('getSelections');
@@ -109,7 +113,7 @@ function checkApp() {
         $('#addCarBrand').html('<option value="' + appointment.brand.brandId + '">' + appointment.brand.brandName + '</option>').trigger("change");
         $('#addCarColor').html('<option value="' + appointment.color.colorId + '">' + appointment.color.colorName + '</option>').trigger("change");
         $('#addCarModel').html('<option value="' + appointment.model.modelId + '">' + appointment.model.modelName + '</option>').trigger("change");
-        $('#addCarPlate').html('<option value="' + appointment.plate.plateId + '">' + appointment.plate.plateName + '</option>').trigger("change");
+        $('#addCarPlate').html('<option value="' + appointment.plate.carPlate + '">' + appointment.plate.plateName + '</option>').trigger("change");
         $("#addMaintainOrFix").val(appointment.maintainOrFix);
         $("#addWindow").modal('show');
     }
@@ -311,14 +315,14 @@ function formSubmit(url, formId, winId){
                     $("input[type=reset]").trigger("click"); // 移除表单中填的值
                     $('#addForm').data('bootstrapValidator').resetForm(true); // 移除所有验证样式
                     $("#addButton").removeAttr("disabled"); // 移除不可点击
-                    $("#" + formId).data('bootstrapValidator').destroy(); // 销毁此form表单
-                    $('#' + formId).data('bootstrapValidator', null);// 此form表单设置为空
                     // 设置select2的值为空
                     $("#addCarBrand").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
                     $("#addCarModel").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
                     $("#addCarColor").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
                     $("#addCarPlate").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
                 }
+                $("#" + formId).data('bootstrapValidator').destroy(); // 销毁此form表单
+                $('#' + formId).data('bootstrapValidator', null);// 此form表单设置为空
             } else if (data.result == "fail") {
                 swal({title:"",
                     text:"添加失败",

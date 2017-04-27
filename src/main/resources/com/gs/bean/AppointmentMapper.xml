@@ -84,5 +84,41 @@
          WHERE appointmentId = #{appointmentId}
     ]]>
   </insert>
-  
+
+  <select id="queryByPagerDisable" resultMap="appointmentMap" parameterType="com.gs.common.bean.Pager">
+    <![CDATA[
+       select am.*, cc.colorId, cc.colorName, cp.plateId, cp.plateName,
+        cm.modelId, cm.modelName, company.companyId,
+        company.companyName, cb.brandId, cb.brandName from t_appointment am
+       LEFT JOIN t_car_color cc on am.colorId =cc.colorId
+       LEFT JOIN t_car_model cm on am.modelId = cm.modelId
+       LEFT JOIN t_car_plate cp on am.plateId = cp.plateId
+       LEFT JOIN t_company company on am.companyId = company.companyId
+       LEFT JOIN t_car_brand cb on am.brandId = cb.brandId
+       where am.appoitmentStatus = 'N' order by am.appCreatedTime Desc
+    ]]>
+    limit #{beginIndex}, #{pageSize}
+  </select>
+  <!-- 分页查询禁用个数 -->
+  <select id="countByDisable" resultType="int" >
+    <![CDATA[
+      select count(appointmentId) from t_appointment am where am.appoitmentStatus = 'N'
+    ]]>
+  </select>
+
+  <!--冻结数据-->
+  <update id="inactive" parameterType="Appointment">
+    <![CDATA[
+         update auto_platform.t_appointment set appoitmentStatus = 'N' where appointmentId = #{appointmentId}
+        ]]>
+  </update>
+
+  <!--激活数据-->
+  <update id="active" parameterType="Appointment">
+    <![CDATA[
+        update auto_platform.t_appointment set appoitmentStatus = 'Y' where appointmentId = #{appointmentId}
+        ]]>
+  </update>
+
+
 </mapper>

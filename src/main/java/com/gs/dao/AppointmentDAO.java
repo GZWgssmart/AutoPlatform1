@@ -1,7 +1,9 @@
 package com.gs.dao;
 
 import com.gs.bean.Appointment;
+import com.gs.bean.Checkin;
 import com.gs.common.bean.Pager;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -17,11 +19,12 @@ import java.util.List;
 public interface AppointmentDAO extends BaseDAO<String, Appointment>{
 
     /**
-     * 分页查询被禁用的记录
+     * 模糊查询
      */
-    public List<Appointment> queryByPagerDisable(Pager pager);
+    public List<Appointment> blurredQuery(@Param("pager")Pager pager, @Param("appointment")Appointment appointment);
+
     /**
-     * 分页查询被禁用的记录
+     * 模糊查询的记录数
      */
-    public int countByDisable();
+    public int countByBlurred(@Param("appointment")Appointment appointment);
 }
