@@ -39,10 +39,32 @@
      ]]>
   </update>
 
-  <delete id="deleteById" parameterType="string">
+  <!-- 分页查询禁用 -->
+  <select id="queryByPagerDisable" resultMap="carbrandMap" parameterType="com.gs.common.bean.Pager">
     <![CDATA[
-     delete from t_car_brand where brandId = #{brandId}
-     ]]>
-  </delete>
+       select * from t_car_brand cb where cb.brandStatus = 'N'
+    ]]>
+    limit #{beginIndex}, #{pageSize}
+  </select>
+  <!-- 分页查询禁用个数 -->
+  <select id="countByDisable" resultType="int" >
+    <![CDATA[
+      select count(brandId) from t_car_brand cb where cb.brandStatus = 'N'
+    ]]>
+  </select>
+
+  <!--冻结数据-->
+  <update id="inactive" keyProperty="brandId" parameterType="carbrand">
+    <![CDATA[
+         update t_car_brand set brandStatus = 'N' where brandId = #{brandId}
+        ]]>
+  </update>
+
+  <!--激活数据-->
+  <update id="active" keyProperty="brandId" parameterType="carbrand">
+    <![CDATA[
+        update t_car_brand set brandStatus = 'Y' where brandId = #{brandId}
+        ]]>
+  </update>
 
 </mapper>
