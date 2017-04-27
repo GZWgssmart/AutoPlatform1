@@ -37,8 +37,7 @@
                 <th data-field="accSaleDiscount">配件销售折扣</th>
                 <th data-field="accSaleMoney">配件销售最终价</th>
                 <th data-field="accSaleCreatedTime" data-formatter="formatterDateTime">销售记录创建时间</th>
-                <th data-field="accSaleStatus" data-formatter="formatterStatus">销售记录状态</th>
-                <th data-formatter="openStatusFormatter">操作</th>
+                <th data-field="accSaleStatus" data-formatter="statusFormatter">销售记录状态</th>
             </tr>
             </thead>
         </table>

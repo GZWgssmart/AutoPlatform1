@@ -37,8 +37,7 @@
                 <th data-field="accBuyMoney">购买最终价</th>
                 <th data-field="accBuyTime" data-formatter="formatterDate">购买时间</th>
                 <th data-field="accBuyCreatedTime" data-formatter="formatterDateTime">购买记录创建时间</th>
-                <th data-field="accBuyStatus" data-formatter="formatterStatus">购买记录状态</th>
-                <th data-formatter="openStatusFormatter">操作</th>
+                <th data-field="accBuyStatus" data-formatter="statusFormatter">购买记录状态</th>
             </tr>
             </thead>
         </table>

@@ -65,33 +65,14 @@ function formatterStatus(value) {
     }
 }
 
-function openStatusFormatter(index, row) {
-    /*处理数据*/
-    if (row.accStatus == 'Y') {
-        return "&nbsp;&nbsp;<a href='javascript:;' onclick='inactive(\"" + row.accId + "\")'>禁用</a>";
+// 激活或禁用
+function statusFormatter(value, row, index) {
+    if(value == 'Y') {
+        return "&nbsp;&nbsp;<button type='button' class='btn btn-danger' onclick='inactive(\""+'/accInv/statusOperate?accId='+row.accId+'&accStatus=Y'+"\")'>禁用</a>";
     } else {
-        return "&nbsp;&nbsp;<a href='javascript:;' onclick='active(\"" + row.accId + "\")'>激活</a>";
+        return "&nbsp;&nbsp;<button type='button' class='btn btn-success' onclick='active(\""+'/checkin/statusOperate?accId='+ row.accId+'&accStatus=N'+ "\")'>激活</a>";
     }
 }
-
-//禁用状态
-function inactive(accId) {
-    $.post(contentPath + "/accInv/statusOperate?accId=" + accId + "&" + "accStatus=" + "Y", function (data) {
-        if (data.result == "success") {
-            $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
-        }
-    })
-}
-
-//激活状态
-function active(accId) {
-    $.post(contentPath + "/accInv/statusOperate?accId=" + accId + "&" + "accStatus=" + 'N', function (data) {
-        if (data.result == "success") {
-            $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
-        }
-    })
-}
-
 
 //格式化带时分秒的时间值。
 function formatterDateTime(value) {

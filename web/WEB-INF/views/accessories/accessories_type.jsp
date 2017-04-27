@@ -32,8 +32,7 @@
                 <th data-field="company.companyName">所属公司</th>
                 <th data-field="accTypeName">配件分类名称</th>
                 <th data-field="accTypeDes">配件分类描述</th>
-                <th data-field="accTypeStatus" data-formatter="formatterStatus">配件分类状态</th>
-                <th data-formatter="openStatusFormatter">操作</th>
+                <th data-field="accTypeStatus" data-formatter="statusFormatter">配件分类状态</th>
             </tr>
             </thead>
         </table>
