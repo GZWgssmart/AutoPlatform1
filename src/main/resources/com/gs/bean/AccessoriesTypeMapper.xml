@@ -19,7 +19,7 @@
     -->
     <select id="queryAll" resultMap="AccessoriesTypeMap">
       <![CDATA[
-        SELECT *FROM auto_platform.t_accessories_type
+        SELECT *FROM auto_platform.t_accessories_type WHERE accTypeStatus='Y'
         ]]>
     </select>
 
