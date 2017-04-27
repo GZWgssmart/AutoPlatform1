@@ -4,7 +4,6 @@ import com.gs.bean.Salary;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
-import com.gs.common.util.ViewExcel;
 import com.gs.service.SalaryService;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
@@ -92,14 +91,6 @@ public class SalaryController{
     }
 
 
-    @RequestMapping(value ="/export",method=RequestMethod.GET)
-    public ModelAndView export(ModelMap model, HttpServletRequest request){
-        List<Salary> list = salaryService.queryAll();
-        ViewExcel viewExcel = new ViewExcel();
-        //将查询出的list集合存入ModelMap 对象中，此时的key就是ViewExcel类中Map所对应的key
-        model.put("list", list);
-        return new ModelAndView(viewExcel, model);
-    }
 
 
 }
