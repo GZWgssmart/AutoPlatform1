@@ -41,7 +41,7 @@
 -->
   <select id="queryAll" resultMap="AccessoriesMap">
     <![CDATA[
-            select * from auto_platform.t_accessories
+            select * from auto_platform.t_accessories WHERE accStatus='Y'
         ]]>
   </select>
 
