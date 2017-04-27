@@ -100,4 +100,20 @@ public class IncomingOutgoing {
     public void setInOutStatus(String inOutStatus) {
         this.inOutStatus = inOutStatus;
     }
+
+    @Override
+    public String toString() {
+        return "IncomingOutgoing{" +
+                "inOutId='" + inOutId + '\'' +
+                ", inTypeId='" + inTypeId + '\'' +
+                ", outTypeId='" + outTypeId + '\'' +
+                ", inOutMoney=" + inOutMoney +
+                ", inOutCreatedUser='" + inOutCreatedUser + '\'' +
+                ", inOutCreatedTime=" + inOutCreatedTime +
+                ", inOutStatus='" + inOutStatus + '\'' +
+                ", outgoingType=" + outgoingType +
+                ", incomingType=" + incomingType +
+                ", user=" + user +
+                '}';
+    }
 }

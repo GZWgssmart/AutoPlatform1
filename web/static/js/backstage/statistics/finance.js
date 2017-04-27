@@ -1,4 +1,4 @@
-
+var echart = echarts.init(document.getElementById("echart"));
 
 /**
  * 初始化表格
@@ -106,7 +106,7 @@ function setDaterangeReturnFun(elid,daterangeReturnFun){
             fromLabel: '从',
             toLabel: '到',
             weekLabel: 'W',
-            customRangeLabel: 'Custom Range',
+            customRangeLabel: '自定义',
             daysOfWeek:["日","一","二","三","四","五","六"],
             monthNames: ["一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月"],
         },
@@ -117,6 +117,7 @@ function setDaterangeReturnFun(elid,daterangeReturnFun){
             '最近一月': [moment().subtract(29, 'days'), moment()],
             '本季度': [moment().quarter(1), moment().quarter(1)],
             '本月': [moment().startOf('month'), moment().endOf('month')],
+            '自定义':[]
         },
         showCustomRangeLabel: false,
         alwaysShowCalendars: false
@@ -129,7 +130,19 @@ function setDaterangeReturnFun(elid,daterangeReturnFun){
             tempdatetext = label + "(" + start.format('YYYY-MM-DD') + " ~ " +end.format('YYYY-MM-DD') + ")";
         $(elid+">span").text(tempdatetext);
 
+
         daterangeReturnFun(start, end, label);
+
+        $.ajax({
+            type:"GET",
+            async : false,  //同步请求
+            url : "/ioReport/queryByTime",
+            data : {"start":start.format('YYYY-MM-DD'), "end":end.format('YYYY-MM-DD')},
+            timeout:1000
+
+        })
+        alert("/ioReport/queryByTime?start="+start.format('YYYY-MM-DD')+"&end="+start.format('YYYY-MM-DD'))
+        setNewEchartData("/ioReport/queryByTime?start="+start.format('YYYY-MM-DD')+"&end="+end.format('YYYY-MM-DD'),echart);
     });
 }
 
@@ -146,7 +159,7 @@ function setTableData(table, data){
 
 $(function(){
 
-    var echart = echarts.init(document.getElementById("echart"));
+
     var echartOption = {
         legend: {
             data:['收入','支出','盈利']
@@ -157,6 +170,7 @@ $(function(){
         },
         yAxis: {
             name: '金额',
+            type: "value",
             axisLine: {
                 show: false
             },
@@ -217,7 +231,7 @@ $(function(){
     initData($("#reportrange>span"));
     setDaterangeReturnFun("#reportrange",daterangeReturnFun);
 
-    setNewEchartData(echart);
+    setNewEchartData("/ioReport/queryByTime", echart);
     pageChangeEchartsResize(echart);
 })
 
@@ -233,9 +247,13 @@ function daterangeReturnFun(start, end, label){
     //更新表格           setTableData
 }
 
-function setNewEchartData(echart){
-    $.get("/incomingOutgoing/queryByPager",function(data){
-        var data= arrayObjs2arrayAttr(data,"price");
+function setNewEchartData(url,echart){
+    alert(url)
+    $.get(url,function(data){
+        console.log(data)
+        var dataa= arrayObjs2arrayAttr(data,"inOutMoney");
+       var dataStr =  tempInts2Strs(dataa);
+       console.log(dataStr);
         var newEchartOption = {
             xAxis: {
                 data: (function(){
@@ -250,15 +268,26 @@ function setNewEchartData(echart){
                 })()
             },
             series: [{
-                data: data.slice(0,7),
+
+                data: dataStr.slice(0,7),
             },{
-                data: data.slice(0,7),
+
+                data: dataStr.slice(0,7),
             },{
-                data: data.slice(0,7),
+
+                data: dataStr.slice(0,7),
             }]
         }
         echart.setOption(newEchartOption);
     })
+}
+
+function tempInts2Strs(ints){
+    var strs = [];
+   for (var i = 0; i <= ints.length; i++ ){
+       strs.push(ints[i]+"");
+    }
+    return strs;
 }
 
 function setTopData(top, data){

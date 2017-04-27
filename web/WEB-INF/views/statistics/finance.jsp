@@ -66,9 +66,6 @@
                             <th data-field="inOutCreatedTime" data-formatter="formatterDate">
                                 创建时间
                             </th>
-                            <th data-field="inOutStatus" data-formatter="statusFormatter">
-                                记录状态
-                            </th>
                         </tr>
                         </thead>
                     </table>

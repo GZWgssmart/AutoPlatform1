@@ -42,6 +42,28 @@
     limit #{beginIndex}, #{pageSize}
   </select>
 
+  <select id="queryByDate" resultMap="incomingOutgoingMap">
+    <![CDATA[
+      select io.*,i.inTypeId as inType_id, i.inTypeName,o.outTypeId as outType_id,o.outTypeName,u.userId ,u.userName from t_incoming_outgoing io
+				LEFT JOIN t_incoming_type i on io.inTypeId = i.inTypeId
+				LEFT JOIN t_outgoing_type o on io.outTypeId = o.outTypeId
+				LEFT JOIN  t_user u on io.inOutCreatedUser = u.userId
+				where  io.inOutStatus = 'Y'  and io.inOutCreatedTime between #{start} and  #{end}
+				order by io.inOutCreatedTime Desc
+    ]]>
+  </select>
+
+  <select id="queryAll" resultMap="incomingOutgoingMap">
+    <![CDATA[
+      select io.*,i.inTypeId as inType_id, i.inTypeName,o.outTypeId as outType_id,o.outTypeName,u.userId ,u.userName from t_incoming_outgoing io
+				LEFT JOIN t_incoming_type i on io.inTypeId = i.inTypeId
+				LEFT JOIN t_outgoing_type o on io.outTypeId = o.outTypeId
+				LEFT JOIN  t_user u on io.inOutCreatedUser = u.userId
+				where  io.inOutStatus = 'Y'
+				order by io.inOutCreatedTime Desc
+    ]]>
+  </select>
+
   <select id="countByDisable" resultType="int" >
     <![CDATA[
         select count(*) from t_incoming_outgoing i where i.inOutStatus = 'N'

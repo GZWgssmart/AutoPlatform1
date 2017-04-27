@@ -3,6 +3,7 @@ package com.gs.service;
 import com.gs.bean.Checkin;
 import com.gs.bean.IncomingOutgoing;
 import com.gs.common.bean.Pager;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -23,6 +24,11 @@ public interface IncomingOutgoingService extends BaseService<String, IncomingOut
      * 分页查询被禁用的记录
      */
     public int countByDisable();
+
+    /**
+     * 根据时间段去查找
+     */
+    public List<IncomingOutgoing> queryByDate(String start,  String end);
 
 
 }

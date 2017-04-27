@@ -32,10 +32,10 @@ public class IncomingOutgoingServiceImpl implements IncomingOutgoingService {
 	public int batchUpdate(List<IncomingOutgoing> list) { return incomingOutgoingDAO.batchUpdate(list); }
 	public List<IncomingOutgoing> queryAll() { return incomingOutgoingDAO.queryAll(); }
 
-	@Override
 	public List<IncomingOutgoing> queryAll(String status) {
 		return incomingOutgoingDAO.queryAll();
 	}
+
 
 	public List<IncomingOutgoing> queryByStatus(String status) { return incomingOutgoingDAO.queryAll(status); }
 	public IncomingOutgoing query(IncomingOutgoing incomingOutgoing) { return incomingOutgoingDAO.query(incomingOutgoing); }
@@ -45,14 +45,17 @@ public class IncomingOutgoingServiceImpl implements IncomingOutgoingService {
 	public int inactive(String id) { return incomingOutgoingDAO.inactive(id); }
 	public int active(String id) { return incomingOutgoingDAO.active(id); }
 
-	@Override
+
 	public List<IncomingOutgoing> queryByPagerDisable(Pager pager) {
 		return incomingOutgoingDAO.queryByPagerDisable(pager);
 	}
 
-	@Override
 	public int countByDisable() {
 		return incomingOutgoingDAO.countByDisable();
+	}
+
+	public List<IncomingOutgoing> queryByDate(String start, String end) {
+		return incomingOutgoingDAO.queryByDate(start, end);
 	}
 
 	public List<IncomingOutgoing> blurredQuery(Pager pager, IncomingOutgoing incomingOutgoing) {
