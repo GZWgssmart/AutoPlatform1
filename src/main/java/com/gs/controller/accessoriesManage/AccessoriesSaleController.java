@@ -82,7 +82,6 @@ public class AccessoriesSaleController {
         pager.setTotalRecords(accessoriesSaleService.count());
         logger.info("分页查询配件销售信息成功");
         List<AccessoriesSale> accessoriesSales = accessoriesSaleService.queryByPager(pager);
-        System.out.println(accessoriesSales.toString());
         return new Pager4EasyUI<AccessoriesSale>(pager.getTotalRecords(), accessoriesSales);
     }
 
