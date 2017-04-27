@@ -74,7 +74,7 @@
             INSERT INTO auto_platform.t_accessories
             (accId,accName, accCommodityCode, accDes, accPrice,accSalePrice,accTotal,accIdle, accUsedTime,accBuyedTime,supplyId,accCreatedTime,accTypeId,companyId,accStatus)
             VALUES
-            (uuid(),#{accName},#{accCommodityCode},#{accDes},#{accPrice},#{accSalePrice},#{accTotal},#{accIdle},CURRENT_TIMESTAMP ,CURRENT_TIMESTAMP ,#{supplyId},CURRENT_TIMESTAMP,#{accTypeId},#{companyId},'Y')
+            (uuid(),#{accName},#{accCommodityCode},#{accDes},abs(#{accPrice}),abs(#{accSalePrice}),abs(#{accTotal}),abs(#{accIdle}),CURRENT_TIMESTAMP ,CURRENT_TIMESTAMP ,#{supplyId},CURRENT_TIMESTAMP,#{accTypeId},#{companyId},'Y')
         ]]>
   </insert>
 
@@ -84,8 +84,8 @@
   <update id="update" keyProperty="id" parameterType="java.util.Map">
     UPDATE auto_platform.t_accessories
     SET accName=#{accName}, accCommodityCode=#{accCommodityCode},
-    accDes=#{accDes},accPrice=#{accPrice},
-    accSalePrice=#{accSalePrice},accTotal=#{accTotal},accIdle=#{accIdle},accUsedTime=CURRENT_TIMESTAMP,accBuyedTime=CURRENT_TIMESTAMP,supplyId=#{supplyId},accTypeId=#{accTypeId},companyId=#{companyId}
+    accDes=#{accDes},accPrice=abs(#{accPrice}),
+    accSalePrice=abs(#{accSalePrice}),accTotal=abs(#{accTotal}),accIdle=abs(#{accIdle}),accUsedTime=CURRENT_TIMESTAMP,accBuyedTime=CURRENT_TIMESTAMP,supplyId=#{supplyId},accTypeId=#{accTypeId},companyId=#{companyId}
     WHERE accId=#{accId}
   </update>
 
