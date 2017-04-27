@@ -82,39 +82,11 @@ function searchRapidStatus() {
 function openStatusFormatter(value, row) {
     /*处理数据*/
     if (value == 'Y') {
-        return "&nbsp;&nbsp;<button type='button' class='btn btn-danger' onclick='inactive(\""+ row.inOutId + "\")'>禁用</a>";
+        return "&nbsp;&nbsp;<button type='button' class='btn btn-danger' onclick='active(\""+'/incomingOutgoing/statusOperate?id='+row.inOutId+'&status=Y'+"\")'>禁用</a>";
     } else {
-        return "&nbsp;&nbsp;<button type='button' class='btn btn-danger' onclick='active(\""+ row.inOutId + "\")'>激活</a>";
+        return "&nbsp;&nbsp;<button type='button' class='btn btn-danger' onclick='inactive(\""+'/incomingOutgoing/statusOperate?id='+row.inOutId+'&status=N'+"\")'>激活</a>";
     }
 
-}
-
-
-/**
- * 禁用收支记录状态
- * @param id
- */
-function inactive(id) {
-    $.post("/incomingOutgoing/inactive?id=" + id,
-        function (data) {
-            if (data.result == "success") {
-                $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
-            }
-        })
-}
-
-
-/**
- * 启用收支记录状态
- * @param id
- */
-function active(id) {
-    $.post("/incomingOutgoing/active?id=" + id,
-        function (data) {
-            if (data.result == "success") {
-                $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
-            }
-        })
 }
 
 
@@ -406,14 +378,14 @@ function validator(formId) {
             validating: 'glyphicon glyphicon-refresh'
         },
         fields: {
-            inTypeId: {
+            inTypeName: {
                 validators: {
                     notEmpty: {
                         message: '请选择收支类型',
                     },
                 }
             },
-            outTypeId: {
+            outTypeName: {
                 validators: {
                     notEmpty: {
                         message: '请选择收支类型',
@@ -429,7 +401,7 @@ function validator(formId) {
                 }
             },
 
-            inOutCreatedUser: {
+            inOutCreatedUserName: {
                 message: '请选择创建人',
                 validators: {
                     notEmpty: {

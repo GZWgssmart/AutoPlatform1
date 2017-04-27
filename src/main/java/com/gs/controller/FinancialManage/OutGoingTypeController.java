@@ -62,19 +62,21 @@ public class OutGoingTypeController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "inactive",method = RequestMethod.POST)
-    public ControllerResult inactive(String id) {
-        logger.info("禁用");
-        outgoingTypeService.inactive(id);
-        return ControllerResult.getSuccessResult("禁用成功");
-    }
-
-    @ResponseBody
-    @RequestMapping(value = "active",method = RequestMethod.POST)
-    public ControllerResult active(String id) {
-        logger.info("激活");
-        outgoingTypeService.active(id);
-        return ControllerResult.getSuccessResult("激活成功");
+    @RequestMapping(value = "statusOperate", method = RequestMethod.POST)
+    public ControllerResult inactive(String id, String status) {
+        if (id != null && !id.equals("") && status != null && !status.equals("")) {
+            if (status.equals("N")) {
+                outgoingTypeService.active(id);
+                logger.info("激活成功");
+                return ControllerResult.getSuccessResult("激活成功");
+            } else {
+                outgoingTypeService.inactive(id);
+                logger.info("禁用成功");
+                return ControllerResult.getSuccessResult("禁用成功");
+            }
+        } else {
+            return ControllerResult.getFailResult("操作失败");
+        }
     }
 
     @ResponseBody
