@@ -117,18 +117,25 @@ function setDaterangeReturnFun(elid,daterangeReturnFun){
             '最近一月': [moment().subtract(29, 'days'), moment()],
             '本季度': [moment().quarter(1), moment().quarter(1)],
             '本月': [moment().startOf('month'), moment().endOf('month')],
-            '自定义':[]
+            '自定义':"aa"
         },
         showCustomRangeLabel: false,
         alwaysShowCalendars: false
     },function(start, end, label) {
-
+        console.log(label + "label")
         var tempdatetext = ''
-        if(label === '今日' || label === '明日')
-            tempdatetext = label + " " + start.format('YYYY-MM-DD');
-        else
-            tempdatetext = label + "(" + start.format('YYYY-MM-DD') + " ~ " +end.format('YYYY-MM-DD') + ")";
-        $(elid+">span").text(tempdatetext);
+        if (!label) {
+            console.log("isNo")
+            tempdatetext = "自定义" + "(" + start.format('YYYY-MM-DD') + " ~ " + end.format('YYYY-MM-DD') + ")";
+        }else {
+            if(label === '今日' || label === '明日' || label === '自定义') {
+                tempdatetext = label + " " + start.format('YYYY-MM-DD');
+            }else {
+                tempdatetext = label + "(" + start.format('YYYY-MM-DD') + " ~ " + end.format('YYYY-MM-DD') + ")";
+            }
+        }
+
+        $(elid + ">span").text(tempdatetext);
 
 
         daterangeReturnFun(start, end, label);
@@ -141,8 +148,8 @@ function setDaterangeReturnFun(elid,daterangeReturnFun){
             timeout:1000
 
         })
-        alert("/ioReport/queryByTime?start="+start.format('YYYY-MM-DD')+"&end="+start.format('YYYY-MM-DD'))
-        setNewEchartData("/ioReport/queryByTime?start="+start.format('YYYY-MM-DD')+"&end="+end.format('YYYY-MM-DD'),echart);
+        console.log(typeof  start['_d'])
+        setNewEchartData("/ioReport/queryByTime?start="+start.format('YYYY-MM-DD')+"&end="+end.format('YYYY-MM-DD'), echart, start['_d'], end['_d']);
     });
 }
 
@@ -158,8 +165,6 @@ function setTableData(table, data){
 
 
 $(function(){
-
-
     var echartOption = {
         legend: {
             data:['收入','支出','盈利']
@@ -230,8 +235,7 @@ $(function(){
 
     initData($("#reportrange>span"));
     setDaterangeReturnFun("#reportrange",daterangeReturnFun);
-
-    setNewEchartData("/ioReport/queryByTime", echart);
+    setNewEchartData("/ioReport/queryByTime?start="+"2017-04-20"+"&end="+"2017-04-30",echart);
     pageChangeEchartsResize(echart);
 })
 
@@ -247,28 +251,63 @@ function daterangeReturnFun(start, end, label){
     //更新表格           setTableData
 }
 
-function setNewEchartData(url,echart){
-    alert(url)
+//格式化不带时分秒的时间值。
+function formatterDate(value) {
+    if (value == undefined || value == null || value == '') {
+        return "";
+    } else {
+        var date = new Date(value);
+        var year = date.getFullYear().toString();
+        var month = (date.getMonth() + 1);
+        var day = date.getDate().toString();
+        if (month < 10) {
+            month = "0" + month;
+        }
+        if (day < 10) {
+            day = "0" + day;
+        }
+        return year + "-" + month + "-" + day + ""
+    }
+}
+
+function addDate(date,days){
+    var d=new Date(date);
+    d.setDate(d.getDate()+days);
+    var month=d.getMonth()+1;
+    var day = d.getDate();
+    if(month<10){
+        month = "0"+month;
+    }
+    if(day<10){
+        day = "0"+day;
+    }
+    var val = d.getFullYear()+""+month+""+day;
+    return val;
+}
+
+function setNewEchartData(url,echart, start, end){
+    console.log(formatterDate(start) + formatterDate(end) + "aaaaaa")
+
+    var a = formatterDate(end);
+    console.log(a)
     $.get(url,function(data){
-        console.log(data)
         var dataa= arrayObjs2arrayAttr(data,"inOutMoney");
        var dataStr =  tempInts2Strs(dataa);
-       console.log(dataStr);
         var newEchartOption = {
             xAxis: {
                 data: (function(){
                     var dates = [];
                     var date = new Date();
-                    for(var i =0;i<7;i++) {
+                    for(var i =0;i<30;i++) {
                         var datestr = [date.getFullYear(), date.getMonth(), date.getDate()].join("-");
                         dates.push(datestr);
                         date = addOneDay(date);
                     }
+                    console.log(dates)
                     return dates;
                 })()
             },
             series: [{
-
                 data: dataStr.slice(0,7),
             },{
 

@@ -30,9 +30,6 @@ public class IncomingOutgoingReport  {
     @ResponseBody
     @RequestMapping(value = "queryByTime", method = RequestMethod.GET)
     public List<IncomingOutgoing> queyrByTime(String start, String end) {
-        System.out.printf("开始时间" + start + "结束时间" + end);
-
-
         List<IncomingOutgoing> incomingOutgoings = incomingOutgoingService.queryByDate(start, end);
         return incomingOutgoings;
     }
