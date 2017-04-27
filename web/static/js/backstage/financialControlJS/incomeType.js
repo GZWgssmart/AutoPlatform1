@@ -33,39 +33,13 @@ function statusFormatter(index, row) {
 function openStatusFormatter(index, row) {
     /*处理数据*/
     if(row.inTypeStatus == 'Y') {
-        return "&nbsp;&nbsp;<button type='button' class='btn btn-danger' onclick='inactive(\""+row.inTypeId+ "\")'>禁用</a>";
+        return "&nbsp;&nbsp;<button type='button' class='btn btn-danger' onclick='active(\""+'/incomingType/statusOperate?id='+row.inTypeId+'&status=Y'+"\")'>禁用</a>";
     } else {
-        return "&nbsp;&nbsp;<button type='button' class='btn btn-danger' onclick='active(\""+row.inTypeId+ "\")'>激活</a>";
+        return "&nbsp;&nbsp;<button type='button' class='btn btn-danger' onclick='active(\""+'/incomingType/statusOperate?id='+row.inTypeId+'&status=N'+"\")'>激活</a>";
     }
 
 }
 
-
-/**
- * 禁用操作方法
- * @param id
- */
-function inactive(id) {
-    $.post( "/incomingType/inactive?id="+id,
-        function (data) {
-            if (data.result == "success") {
-                $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
-            }
-        })
-}
-
-/**
- * 激活操作方法
- * @param id
- */
-function active(id) {
-    $.post( "/incomingType/active?id="+id,
-        function (data) {
-            if (data.result == "success") {
-                $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
-            }
-        })
-}
 
 /**
  * 查询禁用支出类型

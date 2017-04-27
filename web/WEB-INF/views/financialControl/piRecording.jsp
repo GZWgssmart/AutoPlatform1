@@ -82,7 +82,7 @@
                         <label class="col-sm-3 control-label">支出类型：</label>
                         <div class="col-sm-7">
                             <input type="hidden"  id="outTypeId" readonly="true" name="outTypeId">
-                            <input type="text" onclick="openCheckOutType();" readonly="true" id="outTypeName" name="outTypeId" placeholder="请点击选择支出类型" class="form-control">
+                            <input type="text" onclick="openCheckOutType();" readonly="true" id="outTypeName" name="outTypeName" placeholder="请点击选择支出类型" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
@@ -95,7 +95,7 @@
                         <label class="col-sm-3 control-label">创建人：</label>
                         <div class="col-sm-7">
                             <input type="hidden" id="userId" readonly="true" name="inOutCreatedUser">
-                            <input onclick="checkAppointment();" type="text" readonly="true" name="inOutCreatedUser" id="userName"  placeholder="请输入支出记录创建人" class="form-control">
+                            <input onclick="checkAppointment();" type="text" readonly="true" name="inOutCreatedUserName" id="userName"  placeholder="请输入支出记录创建人" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
@@ -277,7 +277,7 @@
                         <label class="col-sm-3 control-label">收入类型：</label>
                         <div class="col-sm-7">
                             <input type="hidden"  id="inTypeId" readonly="true" name="inTypeId">
-                            <input type="text" onclick="inOpenCheckInType();" readonly="true" id="inTypeName" name="inTypeId" placeholder="请点击选择收入类型" class="form-control">
+                            <input type="text" onclick="inOpenCheckInType();" readonly="true" id="inTypeName" name="inTypeName" placeholder="请点击选择收入类型" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
@@ -290,7 +290,7 @@
                         <label class="col-sm-3 control-label">创建人：</label>
                         <div class="col-sm-7">
                             <input type="hidden" id="inUserId" readonly="true" name="inOutCreatedUser">
-                            <input onclick="inCheckAppointment();" type="text" readonly="true" name="inOutCreatedUser" id="inUserName"  placeholder="请输入收入记录创建人" class="form-control">
+                            <input onclick="inCheckAppointment();" type="text" readonly="true" name="inOutCreatedUserName" id="inUserName"  placeholder="请输入收入记录创建人" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">

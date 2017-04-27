@@ -51,39 +51,11 @@ function statusFormatter(value) {
 function openStatusFormatter(value, row) {
     /*处理数据*/
     if (value == 'Y') {
-        return "&nbsp;&nbsp;<button type='button' class='btn btn-danger' onclick='inactive(\""+ row.chargeBillId + "\")'>禁用</a>"
+        return "&nbsp;&nbsp;<button type='button' class='btn btn-danger' onclick='active(\""+'/chargeBill/statusOperate?id='+row.chargeBillId+'&status=Y'+"\")'>禁用</a>";
     } else {
-        return "&nbsp;&nbsp;<button type='button' class='btn btn-danger' onclick='inactive(\""+ row.chargeBillId  + "\")'>激活</a>"
+        return "&nbsp;&nbsp;<button type='button' class='btn btn-danger' onclick='inactive(\""+'/chargeBill/statusOperate?id='+row.chargeBillId+'&status=N'+"\")'>激活</a>";
     }
 
-}
-
-
-/**
- * 禁用支出类型
- * @param id
- */
-function inactive(id) {
-    $.post("/chargeBill/inactive?id=" + id,
-        function (data) {
-            if (data.result == "success") {
-                $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
-            }
-        })
-}
-
-
-/**
- * 激活支出类型
- * @param id
- */
-function active(id) {
-    $.post("/chargeBill/active?id=" + id,
-        function (data) {
-            if (data.result == "success") {
-                $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
-            }
-        })
 }
 
 /**
