@@ -50,10 +50,34 @@
       ]]>
   </update>
 
-  <delete id="deleteById" parameterType="string">
-      <![CDATA[
-            delete from t_car_model where modelId = #{modelId}
-       ]]>
-  </delete>
+
+    <!-- 分页查询禁用 -->
+    <select id="queryByPagerDisable" resultMap="carmodelMap" parameterType="com.gs.common.bean.Pager">
+        <![CDATA[
+       select cm.*, cb.brandId,cb.brandName from t_car_model cm left join t_car_brand cb on cm.brandId = cb.brandId where cm.modelStaus = 'N'
+    ]]>
+        limit #{beginIndex}, #{pageSize}
+    </select>
+    <!-- 分页查询禁用个数 -->
+    <select id="countByDisable" resultType="int" >
+        <![CDATA[
+      select count(modelId) from t_car_model cm where cm.modelStaus = 'N'
+    ]]>
+    </select>
+
+
+    <!--冻结数据-->
+    <update id="inactive" keyProperty="modelId" parameterType="carmodel">
+        <![CDATA[
+         update t_car_model set modelStaus = 'N' where modelId = #{modelId}
+        ]]>
+    </update>
+
+    <!--激活数据-->
+    <update id="active" keyProperty="modelId" parameterType="carmodel">
+        <![CDATA[
+        update t_car_model set modelStaus = 'Y' where modelId = #{modelId}
+        ]]>
+    </update>
 
 </mapper>

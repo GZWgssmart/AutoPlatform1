@@ -96,4 +96,41 @@ public class CarModelController {
             return ControllerResult.getFailResult("修改失败，请输入必要的信息");
         }
     }
+
+    /**
+     * 查询所有被禁用的汽车品牌
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value="queryByPagerDisable", method = RequestMethod.GET)
+    public Pager4EasyUI<CarModel> queryByPagerDisable(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
+        logger.info("分页查询所有被禁用的车型");
+        Pager pager = new Pager();
+        pager.setPageNo(Integer.valueOf(pageNumber));
+        pager.setPageSize(Integer.valueOf(pageSize));
+        pager.setTotalRecords(carModelService.countByDisable());
+        List<CarModel> carModels = carModelService.queryByPagerDisable(pager);
+        return new Pager4EasyUI<CarModel>(pager.getTotalRecords(), carModels);
+    }
+
+    /**
+     * 对状态的激活和启用，只使用一个方法进行切换。
+     */
+    @ResponseBody
+    @RequestMapping(value = "statusOperate", method = RequestMethod.POST)
+    public ControllerResult inactive(String id, String status) {
+        if (id != null && !id.equals("") && status != null && !status.equals("")) {
+            if (status.equals("N")) {
+                carModelService.active(id);
+                logger.info("激活成功");
+                return ControllerResult.getSuccessResult("激活成功");
+            } else {
+                carModelService.inactive(id);
+                logger.info("禁用成功");
+                return ControllerResult.getSuccessResult("禁用成功");
+            }
+        } else {
+            return ControllerResult.getFailResult("操作失败");
+        }
+    }
 }

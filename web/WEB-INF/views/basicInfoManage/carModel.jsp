@@ -34,13 +34,19 @@
                     <th data-field="carBrand.brandName">
                         品牌名称
                     </th>
-                    <th data-field="modelStaus">
+                    <th data-field="modelStaus" data-formatter="statusFormatter">
                         车型状态
                     </th>
                 </tr>
             </thead>
         </table>
         <div id="toolbar" class="btn-group">
+            <button id="btn_available" type="button" class="btn btn-default" onclick="showAvailable();">
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>可用登记记录
+            </button>
+            <button id="btn_disable" type="button" class="btn btn-default" onclick="showDisable();">
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>禁用登记记录
+            </button>
             <button id="btn_add" type="button" class="btn btn-default" onclick="showAdd();">
                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
             </button>
