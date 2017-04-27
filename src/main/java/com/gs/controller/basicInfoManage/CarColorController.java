@@ -84,4 +84,41 @@ public class CarColorController {
             return ControllerResult.getFailResult("修改失败，请输入必要的信息");
         }
     }
+
+    /**
+     * 查询所有被禁用的汽车颜色
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value="queryByPagerDisable", method = RequestMethod.GET)
+    public Pager4EasyUI<CarColor> queryByPagerDisable(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
+        logger.info("分页查询所有被禁用汽车颜色");
+        Pager pager = new Pager();
+        pager.setPageNo(Integer.valueOf(pageNumber));
+        pager.setPageSize(Integer.valueOf(pageSize));
+        pager.setTotalRecords(carColorService.countByDisable());
+        List<CarColor> carColors = carColorService.queryByPagerDisable(pager);
+        return new Pager4EasyUI<CarColor>(pager.getTotalRecords(), carColors);
+    }
+
+    /**
+     * 对状态的激活和启用，只使用一个方法进行切换。
+     */
+    @ResponseBody
+    @RequestMapping(value = "statusOperate", method = RequestMethod.POST)
+    public ControllerResult inactive(String id, String status) {
+        if (id != null && !id.equals("") && status != null && !status.equals("")) {
+            if (status.equals("N")) {
+                carColorService.active(id);
+                logger.info("激活成功");
+                return ControllerResult.getSuccessResult("激活成功");
+            } else {
+                carColorService.inactive(id);
+                logger.info("禁用成功");
+                return ControllerResult.getSuccessResult("禁用成功");
+            }
+        } else {
+            return ControllerResult.getFailResult("操作失败");
+        }
+    }
 }

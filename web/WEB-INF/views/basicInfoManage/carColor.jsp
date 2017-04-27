@@ -30,11 +30,17 @@
                     <th data-field="colorRgb">颜色的RBG值</th>
                     <th data-field="colorHex">颜色的16进制值</th>
                     <th data-field="colorDes">颜色描述</th>
-                    <th data-field="colorStatus">颜色状态</th>
+                    <th data-field="colorStatus" data-formatter="statusFormatter">颜色状态</th>
                 </tr>
             </thead>
         </table>
         <div id="toolbar" class="btn-group">
+            <button id="btn_available" type="button" class="btn btn-default" onclick="showAvailable();">
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>可用登记记录
+            </button>
+            <button id="btn_disable" type="button" class="btn btn-default" onclick="showDisable();">
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>禁用登记记录
+            </button>
             <button id="btn_add" type="button" class="btn btn-default" onclick="showAdd();">
                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
             </button>
