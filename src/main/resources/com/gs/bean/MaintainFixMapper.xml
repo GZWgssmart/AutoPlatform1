@@ -17,28 +17,31 @@
     </association>
   </resultMap>
 
+  <!--查询所有维修保养项目-->
   <select id="queryAll" resultMap="MaintainFixMap">
     <![CDATA[
             select * from auto_platform.t_maintain_fix
         ]]>
   </select>
 
+  <!--分页查询所有维修保养项目-->
   <select id="queryByPagerAll" resultType="list" resultMap="MaintainFixMap" parameterType="com.gs.common.bean.Pager">
      <![CDATA[
           select * from auto_platform.t_maintain_fix limit #{beginIndex}, #{pageSize}
     ]]>
   </select>
 
+  <!--分页查询维修项目-->
   <select id="queryByPager" resultType="list" resultMap="MaintainFixMap" parameterType="com.gs.common.bean.Pager">
     <![CDATA[
-			select mf.*, c.companyName from t_maintain_fix  mf, t_company  c where mf.companyId = c.companyId and mf.maintainOrFix = '维修' limit #{beginIndex}, #{pageSize}
+			select mf.*, c.companyName from t_maintain_fix  mf, t_company  c where mf.companyId = c.companyId and mf.maintainOrFix = '维修' and mf.maintainStatus = 'Y' limit #{beginIndex}, #{pageSize}
 		]]>
   </select>
 
-
+  <!--分页查询保养项目-->
   <select id="queryByPagerMaintain" resultType="list" resultMap="MaintainFixMap" parameterType="com.gs.common.bean.Pager">
     <![CDATA[
-            select mf.*, c.companyName from t_maintain_fix  mf, t_company  c where mf.companyId = c.companyId and mf.maintainOrFix = '保养' limit #{beginIndex}, #{pageSize}
+            select mf.*, c.companyName from t_maintain_fix  mf, t_company  c where mf.companyId = c.companyId and mf.maintainOrFix = '保养' and mf.maintainStatus = 'Y' limit #{beginIndex}, #{pageSize}
     ]]>
   </select>
 
@@ -48,49 +51,59 @@
 		]]>
   </select>
 
-
+  <!--添加维修保养项目-->
   <insert id="insert"  parameterType="MaintainFix">
     <![CDATA[
 			insert into t_maintain_fix (maintainId,maintainName,maintainHour,maintainMoney,maintainManHourFee,maintainOrFix,maintainDes,maintainStatus,companyId) values (UUID(),#{maintainName},#{maintainHour},#{maintainMoney},#{maintainManHourFee},#{maintainOrFix},#{maintainDes},'Y',#{companyId})
 		]]>
   </insert>
-
+  <!--修改维修保养项目-->
   <update id="update" parameterType="MaintainFix">
     <![CDATA[
 			update t_maintain_fix set maintainName = #{maintainName} , maintainHour = #{maintainHour} , maintainMoney = #{maintainMoney} , maintainManHourFee = #{maintainManHourFee} , maintainDes = #{maintainDes} , companyId = #{companyId} , maintainStatus = 'Y' where maintainId = #{maintainId}
 		]]>
   </update>
 
-  <update id="inactive" keyProperty="id" parameterType="string">
-    <![CDATA[
-        update auto_platform.t_maintain_fix set maintainStatus = 'N' where maintainId = #{maintainId}
-        ]]>
-  </update>
 
-  <update id="active" keyProperty="id" parameterType="string">
-    <![CDATA[
-        update auto_platform.t_maintain_fix set maintainStatus = 'Y' where maintainId = #{maintainId}
-        ]]>
-  </update>
-
-  <select id="queryAllStatus" parameterType="string" resultMap="MaintainFixMap">
-    <![CDATA[
-        select * from auto_platform.t_maintain_fix WHERE maintainStatus=#{maintainStatus};
-        ]]>
-  </select>
-
+  <!-- 分页保养查询禁用 -->
   <select id="queryByPagerDisable" resultMap="MaintainFixMap" parameterType="com.gs.common.bean.Pager">
     <![CDATA[
-       SELECT *FROM auto_platform.t_maintain_fix WHERE maintainStatus='N'
+    select mf.*, c.companyId,c.companyName from t_maintain_fix mf left join t_company c on mf.companyId = c.companyId where mf.maintainStatus = 'N' and mf.maintainOrFix = '保养'
     ]]>
     limit #{beginIndex}, #{pageSize}
   </select>
-
+  <!-- 分页查询禁用个数 -->
   <select id="countByDisable" resultType="int" >
     <![CDATA[
-      select count(maintainId) from auto_platform.t_maintain_fix ck where ck.maintainStatus = 'N'
+      select count(maintainId) from t_maintain_fix mf where mf.maintainStatus = 'N'
+    ]]>
+  </select>
+  <!-- 分页维修查询禁用 -->
+  <select id="queryByPagerDisableService" resultMap="MaintainFixMap" parameterType="com.gs.common.bean.Pager">
+    <![CDATA[
+    select mf.*, c.companyId,c.companyName from t_maintain_fix mf left join t_company c on mf.companyId = c.companyId where mf.maintainStatus = 'N' and mf.maintainOrFix = '维修'
+    ]]>
+    limit #{beginIndex}, #{pageSize}
+  </select>
+  <!-- 分页查询禁用个数 -->
+  <select id="countByDisableService" resultType="int" >
+    <![CDATA[
+      select count(maintainId) from t_maintain_fix mf where mf.maintainStatus = 'N'
     ]]>
   </select>
 
+  <!--冻结数据-->
+  <update id="inactive" keyProperty="maintainId" parameterType="MaintainFix">
+    <![CDATA[
+         update t_maintain_fix set maintainStatus = 'N' where maintainId = #{maintainId}
+        ]]>
+  </update>
+
+  <!--激活数据-->
+  <update id="active" keyProperty="maintainId" parameterType="MaintainFix">
+    <![CDATA[
+        update t_maintain_fix set maintainStatus = 'Y' where maintainId = #{maintainId}
+        ]]>
+  </update>
 
 </mapper>

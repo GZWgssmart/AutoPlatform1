@@ -36,10 +36,10 @@
         </table>
         <div id="toolbar" class="btn-group">
             <button id="btn_available" type="button" class="btn btn-default" onclick="showAvailable();">
-                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>可用登记记录
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>可用汽车颜色记录
             </button>
             <button id="btn_disable" type="button" class="btn btn-default" onclick="showDisable();">
-                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>禁用登记记录
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>禁用汽车颜色记录
             </button>
             <button id="btn_add" type="button" class="btn btn-default" onclick="showAdd();">
                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增

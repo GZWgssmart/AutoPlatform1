@@ -23,6 +23,16 @@ public class MaintainFixServiceImpl implements MaintainFixService {
 		return maintainFixDAO.queryByPagerAll(pager);
 	}
 
+	@Override
+	public List<MaintainFix> queryByPagerDisableService(Pager pager) {
+		return maintainFixDAO.queryByPagerDisableService(pager);
+	}
+
+	@Override
+	public int countByDisableService() {
+		return maintainFixDAO.countByDisableService();
+	}
+
 	@Resource
 	private MaintainFixDAO maintainFixDAO;
 

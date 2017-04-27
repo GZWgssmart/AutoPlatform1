@@ -38,17 +38,16 @@
                 <th data-field="maintainManHourFee">保养项目工时费</th>
                 <th data-field="maintainDes">保养项目描述</th>
                 <th data-field="company.companyName">保养项目所属公司</th>
-                <th data-field="maintainStatus" data-formatter="formatterStatus">保养项目状态</th>
-                <th data-formatter="openStatusFormatter">操作</th>
+                <th data-field="maintainStatus" data-formatter="statusFormatter">保养项目状态</th>
             </tr>
             </thead>
         </table>
         <div id="toolbar" class="btn-group">
             <button id="btn_available" type="button" class="btn btn-default" onclick="showAvailable();">
-                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>可用维修保养记录
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>可用保养记录
             </button>
             <button id="btn_disable" type="button" class="btn btn-default" onclick="showDisable();">
-                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>禁用维修保养记录
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>禁用保养记录
             </button>
             <button id="btn_add" type="button" class="btn btn-default" onclick="showAdd();">
                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增

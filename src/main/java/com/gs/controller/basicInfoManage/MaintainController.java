@@ -68,7 +68,9 @@ public class MaintainController {
         return new Pager4EasyUI<MaintainFix>(pager.getTotalRecords(), maintainFixes);
     }
 
-
+    /**
+     * 分页查询所有维修保养项目信息
+     */
     @ResponseBody
     @RequestMapping(value = "queryByPagerAll",method = RequestMethod.GET)
     public Pager4EasyUI queryByPagerAll(@Param("pageNumber") String pageNumber,@Param("pageSize") String pageSize) {
@@ -125,7 +127,6 @@ public class MaintainController {
         }
     }
 
-
     /**
      * 修改保养项目信息
      *
@@ -143,14 +144,21 @@ public class MaintainController {
         }
     }
 
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        dateFormat.setLenient(false);
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
+    }
+
     /**
-     * 查询所有被禁用的保养项目信息
+     * 分页查询所有被禁用的保养项目
      * @return
      */
     @ResponseBody
     @RequestMapping(value="queryByPagerDisable", method = RequestMethod.GET)
     public Pager4EasyUI<MaintainFix> queryByPagerDisable(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
-        logger.info("分页查询所有被禁用保养项目信息");
+        logger.info("分页查询所有被禁用的保养项目");
         Pager pager = new Pager();
         pager.setPageNo(Integer.valueOf(pageNumber));
         pager.setPageSize(Integer.valueOf(pageSize));
@@ -160,33 +168,40 @@ public class MaintainController {
     }
 
     /**
+     * 分页查询所有被禁用的维修项目
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value="queryByPagerDisableService", method = RequestMethod.GET)
+    public Pager4EasyUI<MaintainFix> queryByPagerDisableService(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
+        logger.info("分页查询所有被禁用的维修项目");
+        Pager pager = new Pager();
+        pager.setPageNo(Integer.valueOf(pageNumber));
+        pager.setPageSize(Integer.valueOf(pageSize));
+        pager.setTotalRecords(maintainFixService.countByDisableService());
+        List<MaintainFix> maintainFixes = maintainFixService.queryByPagerDisableService(pager);
+        return new Pager4EasyUI<MaintainFix>(pager.getTotalRecords(), maintainFixes);
+    }
+
+    /**
      * 对状态的激活和启用，只使用一个方法进行切换。
      */
     @ResponseBody
     @RequestMapping(value = "statusOperate", method = RequestMethod.POST)
-    public ControllerResult inactive(String maintainId, String maintainStatus) {
-        System.out.println("前台传过来来的值为"+maintainId+",状态为"+maintainStatus);
-        if (maintainId != null && !maintainId.equals("") && maintainStatus != null && !maintainStatus.equals("")) {
-            if (maintainStatus.equals("N")) {
-                maintainFixService.active(maintainId);
+    public ControllerResult inactive(String id, String status) {
+        if (id != null && !id.equals("") && status != null && !status.equals("")) {
+            if (status.equals("N")) {
+                maintainFixService.active(id);
                 logger.info("激活成功");
                 return ControllerResult.getSuccessResult("激活成功");
             } else {
-                maintainFixService.inactive(maintainId);
+                maintainFixService.inactive(id);
                 logger.info("禁用成功");
                 return ControllerResult.getSuccessResult("禁用成功");
             }
         } else {
             return ControllerResult.getFailResult("操作失败");
         }
-    }
-
-
-    @InitBinder
-    public void initBinder(WebDataBinder binder) {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        dateFormat.setLenient(false);
-        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
     }
 
 }

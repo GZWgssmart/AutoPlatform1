@@ -31,11 +31,17 @@
                 <th data-field="maintainManHourFee">维修项目工时费</th>
                 <th data-field="maintainDes">维修项目描述</th>
                 <th data-field="company.companyName">维修项目所属公司</th>
-                <th data-field="maintainStatus">维修项目状态</th>
+                <th data-field="maintainStatus" data-formatter="statusFormatter">维修项目状态</th>
             </tr>
             </thead>
         </table>
         <div id="toolbar" class="btn-group">
+            <button id="btn_available" type="button" class="btn btn-default" onclick="showAvailable();">
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>可用维修记录
+            </button>
+            <button id="btn_disable" type="button" class="btn btn-default" onclick="showDisable();">
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>禁用维修记录
+            </button>
             <button id="btn_add" type="button" class="btn btn-default" onclick="showAdd();">
                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
             </button>

@@ -30,4 +30,8 @@ public interface MaintainFixDAO extends BaseDAO<String, MaintainFix>{
 
     public List<MaintainFix> queryByPagerAll(Pager pager);
 
+    public List<MaintainFix> queryByPagerDisableService(Pager pager);
+
+    public int countByDisableService();
+
 }
