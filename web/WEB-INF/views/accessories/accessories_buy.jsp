@@ -91,7 +91,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">配件编号：</label>
+                    <label class="col-sm-3 control-label">配件：</label>
                     <div class="col-sm-7">
                         <select id="addAccInv" class="js-example-tags accInv" name="accId" style="width:100%">
                         </select>
@@ -106,31 +106,31 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">购买数量：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="accBuyCount" placeholder="请输入购买数量" class="form-control">
+                        <input type="number" name="accBuyCount" placeholder="请输入购买数量" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">购买单价：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="accBuyPrice" placeholder="请输入购买单价" class="form-control">
+                        <input type="number" name="accBuyPrice" placeholder="请输入购买单价" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">购买总价：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="accBuyTotal" placeholder="请输入购买总价" class="form-control">
+                        <input type="number" name="accBuyTotal" placeholder="请输入购买总价" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">购买折扣：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="accBuyDiscount" placeholder="请输入购买折扣" class="form-control">
+                        <input type="number" name="accBuyDiscount" placeholder="请输入购买折扣" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">购买最终价：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="accBuyMoney" placeholder="请输入购买最终价" class="form-control">
+                        <input type="number" name="accBuyMoney" placeholder="请输入购买最终价" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
@@ -161,7 +161,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">配件编号：</label>
+                    <label class="col-sm-3 control-label">配件：</label>
                     <div class="col-sm-7">
                         <select id="editAccInv" class="js-example-tags accInv" define="AccessoriesBuy.accId" name="accId" style="width:100%">
                         </select>
@@ -176,31 +176,31 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">购买数量：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="accBuyCount" define="AccessoriesBuy.accBuyCount" placeholder="请输入购买数量" class="form-control">
+                        <input type="number" name="accBuyCount" define="AccessoriesBuy.accBuyCount" placeholder="请输入购买数量" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">购买单价：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="accBuyPrice" define="AccessoriesBuy.accBuyPrice" placeholder="请输入购买单价" class="form-control">
+                        <input type="number" name="accBuyPrice" define="AccessoriesBuy.accBuyPrice" placeholder="请输入购买单价" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">购买总价：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="accBuyTotal" define="AccessoriesBuy.accBuyTotal" placeholder="请输入购买总价" class="form-control">
+                        <input type="number" name="accBuyTotal" define="AccessoriesBuy.accBuyTotal" placeholder="请输入购买总价" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">购买折扣：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="accBuyDiscount" define="AccessoriesBuy.accBuyDiscount" placeholder="请输入购买折扣" class="form-control">
+                        <input type="number" name="accBuyDiscount" define="AccessoriesBuy.accBuyDiscount" placeholder="请输入购买折扣" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">购买最终价：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="accBuyMoney" define="AccessoriesBuy.accBuyMoney" placeholder="请输入购买最终价" class="form-control">
+                        <input type="number" name="accBuyMoney" define="AccessoriesBuy.accBuyMoney" placeholder="请输入购买最终价" class="form-control">
                     </div>
                 </div>
 

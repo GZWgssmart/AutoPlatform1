@@ -63,7 +63,7 @@
             INSERT INTO auto_platform.t_accessories_buy
             (accBuyId,accId, accBuyCount, accBuyPrice, accBuyTotal,accBuyDiscount, accBuyMoney, accBuyTime, accBuyCreatedTime,companyId, accBuyStatus)
             VALUES
-            (uuid(),#{accId},#{accBuyCount},#{accBuyPrice},#{accBuyTotal},#{accBuyDiscount},#{accBuyMoney},#{accBuyTime},CURRENT_TIMESTAMP ,#{companyId},'Y')
+            (uuid(),#{accId},abs(#{accBuyCount}),abs(#{accBuyPrice}),abs(#{accBuyTotal}),abs(#{accBuyDiscount}),abs(#{accBuyMoney}),#{accBuyTime},CURRENT_TIMESTAMP ,#{companyId},'Y')
         ]]>
     </insert>
 
@@ -73,9 +73,9 @@
     <update id="update" keyProperty="id" parameterType="java.util.Map">
         <![CDATA[
         UPDATE auto_platform.t_accessories_buy
-        SET accBuyCount=#{accBuyCount}, accBuyPrice=#{accBuyPrice},
-        accBuyTotal=#{accBuyTotal},accBuyDiscount=#{accBuyDiscount},
-        accBuyMoney=#{accBuyMoney},accBuyTime=#{accBuyTime},
+        SET accBuyCount=abs(#{accBuyCount}), accBuyPrice=abs(#{accBuyPrice}),
+        accBuyTotal=abs(#{accBuyTotal}),accBuyDiscount=abs(#{accBuyDiscount}),
+        accBuyMoney=abs(#{accBuyMoney}),accBuyTime=#{accBuyTime},
         companyId=#{companyId},accId=#{accId}
         WHERE accBuyId=#{accBuyId}
         ]]>
