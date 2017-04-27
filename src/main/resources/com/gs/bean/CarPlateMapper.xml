@@ -39,10 +39,32 @@
           ]]>
       </update>
 
-      <delete id="deleteById" parameterType="string">
-          <![CDATA[
-        delete from t_car_plate where plateId = #{plateId}
-         ]]>
-      </delete>
+    <!-- 分页查询禁用 -->
+    <select id="queryByPagerDisable" resultMap="plateMap" parameterType="com.gs.common.bean.Pager">
+        <![CDATA[
+       select * from t_car_plate cp where cp.plateStatus = 'N'
+    ]]>
+        limit #{beginIndex}, #{pageSize}
+    </select>
+    <!-- 分页查询禁用个数 -->
+    <select id="countByDisable" resultType="int" >
+        <![CDATA[
+      select count(plateId) from t_car_plate cp where cp.plateStatus = 'N'
+    ]]>
+    </select>
+
+    <!--冻结数据-->
+    <update id="inactive" keyProperty="plateId" parameterType="carplate">
+        <![CDATA[
+         update t_car_plate set plateStatus = 'N' where plateId = #{plateId}
+        ]]>
+    </update>
+
+    <!--激活数据-->
+    <update id="active" keyProperty="plateId" parameterType="carplate">
+        <![CDATA[
+        update t_car_plate set plateStatus = 'Y' where plateId = #{plateId}
+        ]]>
+    </update>
 
 </mapper>
