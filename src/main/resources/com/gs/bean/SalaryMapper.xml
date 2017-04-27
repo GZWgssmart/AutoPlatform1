@@ -41,7 +41,7 @@
 
   <select id="queryAll" resultType="list" resultMap="salaryMap">
     <![CDATA[
-        select *  from t_salary;
+        select s.*, u.userId as user_id, u.userName from t_salary s, t_user u where 1 =1 and u.userId = s.userId
     ]]>
   </select>
 

@@ -375,7 +375,7 @@
                 </button>
                 <a href="login.html" class="roll-nav roll-right J_tabExit"><i class="fa fa fa-sign-out"></i> 退出</a>
             </div>
-            <div class="row J_mainContent" id="content-main" style="height:100%;">
+            <div class="row J_mainContent" id="content-main" style="height:84%;">
                 <iframe id="j_iframe" class="J_iframe" name="iframe0" width="100%" height="100%" src="/backstage/home" frameborder="0" data-id="/backstage/home" seamless></iframe>
             </div>
         </div>

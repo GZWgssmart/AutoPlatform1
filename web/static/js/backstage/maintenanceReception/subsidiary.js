@@ -2,7 +2,6 @@ $(function () {
     initTable('table', '/maintainRecord/queryByPager'); // 初始化表格
     initSelect2("maintainItem", "请选择维修保养项目", "/maintain/queryAllItem"); // 初始化select2, 第一个参数是class的名字, 第二个参数是select2的提示语, 第三个参数是select2的查询url
 });
-
 // 查看全部可用
 function showAvailable(){
     initTable('table', '/maintainRecord/queryByPager');
@@ -22,12 +21,47 @@ function showStatusFormatter(value) {
     }
 }
 
+// 折扣
+function formatterDiscount(value) {
+    if(value >= 1) {
+        return "无折扣";
+    } else {
+        var str = value.toString();;
+        var str1 = str.split('.')[1];
+        str1 += "折";
+        return str1;
+    }
+}
+
+// 折扣后价钱
+function formatterDiscountMoney(value, row, index){
+    var disCount = row.maintainDiscount;
+    return value * disCount;
+}
+
+
 // 激活或禁用
 function statusFormatter(value, row, index) {
     if(value == 'Y') {
         return "&nbsp;&nbsp;<button type='button' class='btn btn-danger' onclick='inactive(\""+'/maintainRecord/statusOperate?id='+row.maintainRecordId+'&status=Y'+"\")'>禁用</a>";
     } else {
         return "&nbsp;&nbsp;<button type='button' class='btn btn-success' onclick='active(\""+'/maintainRecord/statusOperate?id='+ row.maintainRecordId+'&status=N'+ "\")'>激活</a>";
+    }
+}
+
+function showAddItem(windowId){
+    $("#"+ windowId).modal('hide');
+    initTableNotTollbar('itemTable', '/maintainRecord/queryByPagerDisable');
+    $("#itemWindow").modal('show');
+    $("#closeButton").addClass(windowId);
+}
+
+function closeItemWindow(){
+    $("#itemWindow").modal('hide');
+    if($("#closeButton").hasClass('addWindow')){
+        $("#addForm").modal('show');
+    }else{
+        $("#editForm").modal('show');
     }
 }
 
@@ -50,6 +84,58 @@ function showAddDetail(){
             type:"warning"}) // 提示类型
     }
 }
+
+function showPrintDetail(){
+    $("#detailWindow").modal('hide');
+    $('#printWindow').show();
+    $('.modal-backdrop').show();
+    var row =  $('#table').bootstrapTable('getSelections'); // 选中的维修保养记录
+    var detailData = $("#detailTable").bootstrapTable('getData');//获取所有明细
+    var div1 = $("#printDiv1"); // 获取div
+    var div2 = $("#printDiv2"); // 获取div
+    var table = $("#printTable");//获取一个table标签,此标签没子元素
+    div1.html("");
+    div2.html("");
+    table.html(""); // 把div内部的内容设置为空字符串
+    var money = 0;
+    var disCountMoney = 0;
+    table.append("<tr><th style='text-align: center' colspan='5'>维修保养记录明细清单</th></tr><tr><span class='fontStyle'><th style='text-align: center'>项目名称</th><th style='text-align: center'>项目折扣</th><th style='text-align: center'>原价</th><th style='text-align: center'>折扣后</th><th style='text-align: center'>创建时间</th></span></tr>");
+    $.each(detailData, function(index, value, item) {
+        money = parseFloat(money + detailData[index].maintainFix.maintainMoney); //总计
+        disCountMoney= parseFloat(disCountMoney + formatterDiscountMoney(detailData[index].maintainFix.maintainMoney, detailData[index]));// 折扣后
+        table.append("<tr><td style='text-align: center'><span class='fontStyle'>"+ detailData[index].maintainFix.maintainName +"</span></td>" +
+            "<td style='text-align: center'><span class='fontStyle'>"+ formatterDiscount(detailData[index].maintainDiscount) +"</span></td>" +
+            "<td style='text-align: center'><span class='fontStyle'>"+ detailData[index].maintainFix.maintainMoney +"</span></td>" +
+            "<td style='text-align: center'><span class='fontStyle'>"+ formatterDiscountMoney(detailData[index].maintainFix.maintainMoney, detailData[index]) +"</span></td>"+
+            "<td style='text-align: center'><span class='fontStyle'>"+ formatterDate(detailData[index].mdcreatedTime) +"</span></td><tr>");
+    });
+    div1.append("<span class='fontStyle'><strong>汽车公司: "+ row[0].checkin.company.companyName +"</strong></span><br/>" +
+        "<span class='fontStyle'>公司联系方式:"+ row[0].checkin.company.companyTel +"</span><br/>" +
+        "<span class='fontStyle'>公司地址:"+ row[0].checkin.company.companyAddress +"</span><br/>");
+    div2.append("<span class='fontStyle'><strong>车主名称:"+ row[0].checkin.userName +"</strong></span><br/>" +
+        "<span class='fontStyle'>车主联系方式:"+ row[0].checkin.userPhone +"</span><br/>" +
+        "<span class='fontStyle'>汽车品牌:"+ row[0].checkin.brand.brandName +"</span><br/>" +
+        "<span class='fontStyle'>汽车车型:"+ row[0].checkin.model.modelName +"</span><br/>" +
+        "<span class='fontStyle'>总计: "+ parseFloat(money).toFixed(1) +"元</span><br/>" +
+        "<span class='fontStyle' style='color:red'><strong>折扣后: "+ parseFloat(disCountMoney).toFixed(1) +"元</strong></strong></span><br/>" +
+        "<span class='fontStyle'>明细日期:"+ formatterDate(new Date()) +"</span><br/>")
+    $("#printWindow").modal('show');
+}
+
+function showPrint(){
+    var newstr = document.all.item('divData').innerHTML;// 拿打印div所有元素
+    var oldstr = document.body.innerHTML;// 原先页面所有元素
+    document.body.innerHTML = newstr; // 根据打印div绘制一个网页
+    window.print(); // 打印
+    document.body.innerHTML = oldstr; // 重新把网页变回原先页面
+    return false;
+}
+
+function closePrint(){
+    $('#printWindow').hide();
+    $('.modal-backdrop').hide();
+}
+
 var recordId = "";
 
 // 显示所有明细

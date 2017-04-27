@@ -9,8 +9,12 @@
     <result column="mdcreatedTime" property="mdcreatedTime" jdbcType="TIMESTAMP" />
 
     <association property="maintainFix" javaType="com.gs.bean.MaintainFix">
-      <id property="maintainId" column="maintainId"/>
-      <id property="maintainName" column="maintainName"/>
+      <id column="maintainId" property="maintainId"/>
+      <result column="maintainName" property="maintainName"/>
+      <result column="maintainHour" property="maintainHour" jdbcType="DOUBLE"/>
+      <result column="maintainMoney" property="maintainMoney" jdbcType="DOUBLE"/>
+      <result column="maintainOrFix" property="maintainOrFix"/>
+      <result column="maintainDes" property="maintainDes"/>
     </association>
   </resultMap>
 
@@ -31,7 +35,8 @@
 
   <select id="queryByDetailByPager" resultMap="maintainDetailMap">
     <![CDATA[
-       select md.*, mf.maintainId, mf.maintainName from t_maintain_detail md
+       select md.*, mf.maintainId, mf.maintainName, mf.maintainHour,
+        mf.maintainMoney, mf.maintainOrFix, mf.maintainDes from t_maintain_detail md
        LEFT JOIN t_maintain_fix mf on md.maintainItemId = mf.maintainId
        where md.maintainRecordId = #{maintainRecordId}
        order by md.mdCreatedTime Desc

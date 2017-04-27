@@ -40,8 +40,8 @@
             <button id="btn_edit" type="button" class="btn btn-default" onclick="showEdit();">
                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
             </button>
-            <button type="button" class="btn btn-default"onclick="exportFile();">
-                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>导出
+            <button type="button" class="btn btn-default">
+                <a href="/salary/exportExcel">导出数据</a>
             </button>
         </div>
     </div>

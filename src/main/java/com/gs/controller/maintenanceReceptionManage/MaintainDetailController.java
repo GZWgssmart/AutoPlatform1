@@ -81,7 +81,7 @@ public class MaintainDetailController {
      */
     @ResponseBody
     @RequestMapping(value = "add", method = RequestMethod.POST)
-    public ControllerResult addCheckin(MaintainDetail maintainDetail) {
+    public ControllerResult add(MaintainDetail maintainDetail) {
         logger.info("添加维修保养明细");
         maintainDetailService.insert(maintainDetail);
         return ControllerResult.getSuccessResult("添加成功");
@@ -92,7 +92,7 @@ public class MaintainDetailController {
      */
     @ResponseBody
     @RequestMapping(value = "edit", method = RequestMethod.POST)
-    public ControllerResult editCheckin(MaintainDetail maintainDetail) {
+    public ControllerResult edit(MaintainDetail maintainDetail) {
         logger.info("修改维修保养明细");
         maintainDetailService.update(maintainDetail);
         return ControllerResult.getSuccessResult("修改成功");
@@ -117,6 +117,17 @@ public class MaintainDetailController {
         }
         materialListService.insertList(materialLists);
         return ControllerResult.getSuccessResult("确定成功");
+    }
+
+    /**
+     * 打印维修保养明细
+     */
+    @ResponseBody
+    @RequestMapping(value = "print", method = RequestMethod.POST)
+    public ControllerResult print(MaintainDetail maintainDetail) {
+        logger.info("添加维修保养明细");
+        maintainDetailService.insert(maintainDetail);
+        return ControllerResult.getSuccessResult("添加成功");
     }
 
     /**

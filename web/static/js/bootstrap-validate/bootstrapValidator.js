@@ -2277,7 +2277,7 @@
 }(window.jQuery));
 ;(function($) {
     $.fn.bootstrapValidator.i18n.date = $.extend($.fn.bootstrapValidator.i18n.date || {}, {
-        'default': 'Please enter a valid date'
+        'default': '请输入有效的日期'
     });
 
     $.fn.bootstrapValidator.validators.date = {
@@ -2395,7 +2395,7 @@
 }(window.jQuery));
 ;(function($) {
     $.fn.bootstrapValidator.i18n.different = $.extend($.fn.bootstrapValidator.i18n.different || {}, {
-        'default': 'Please enter a different value'
+        'default': '请输入不同的值'
     });
 
     $.fn.bootstrapValidator.validators.different = {
@@ -2436,7 +2436,7 @@
 }(window.jQuery));
 ;(function($) {
     $.fn.bootstrapValidator.i18n.digits = $.extend($.fn.bootstrapValidator.i18n.digits || {}, {
-        'default': 'Please enter only digits'
+        'default': '请只输入数字'
     });
 
     $.fn.bootstrapValidator.validators.digits = {
@@ -2460,7 +2460,7 @@
 }(window.jQuery));
 ;(function($) {
     $.fn.bootstrapValidator.i18n.ean = $.extend($.fn.bootstrapValidator.i18n.ean || {}, {
-        'default': 'Please enter a valid EAN number'
+        'default': '请输入一个有效的 EAN 号码'
     });
 
     $.fn.bootstrapValidator.validators.ean = {
@@ -2500,7 +2500,7 @@
 }(window.jQuery));
 ;(function($) {
     $.fn.bootstrapValidator.i18n.emailAddress = $.extend($.fn.bootstrapValidator.i18n.emailAddress || {}, {
-        'default': 'Please enter a valid email address'
+        'default': '请输入有效的电子邮件地址'
     });
 
     $.fn.bootstrapValidator.validators.emailAddress = {
@@ -2531,7 +2531,7 @@
 }(window.jQuery));
 ;(function($) {
     $.fn.bootstrapValidator.i18n.file = $.extend($.fn.bootstrapValidator.i18n.file || {}, {
-        'default': 'Please choose a valid file'
+        'default': '请选择有效文件'
     });
 
     $.fn.bootstrapValidator.validators.file = {
@@ -2600,8 +2600,8 @@
 }(window.jQuery));
 ;(function($) {
     $.fn.bootstrapValidator.i18n.greaterThan = $.extend($.fn.bootstrapValidator.i18n.greaterThan || {}, {
-        'default': 'Please enter a value greater than or equal to %s',
-        notInclusive: 'Please enter a value greater than %s'
+        'default': '请输入大于或等于 %s 的值',
+        notInclusive: '请输入大于 %s 的值'
     });
 
     $.fn.bootstrapValidator.validators.greaterThan = {
@@ -2661,7 +2661,7 @@
 }(window.jQuery));
 ;(function($) {
     $.fn.bootstrapValidator.i18n.grid = $.extend($.fn.bootstrapValidator.i18n.grid || {}, {
-        'default': 'Please enter a valid GRId number'
+        'default': '请输入有效的网格编号'
     });
 
     $.fn.bootstrapValidator.validators.grid = {
@@ -2698,7 +2698,7 @@
 }(window.jQuery));
 ;(function($) {
     $.fn.bootstrapValidator.i18n.hex = $.extend($.fn.bootstrapValidator.i18n.hex || {}, {
-        'default': 'Please enter a valid hexadecimal number'
+        'default': '请输入有效的十六进制数'
     });
 
     $.fn.bootstrapValidator.validators.hex = {
@@ -2723,7 +2723,7 @@
 }(window.jQuery));
 ;(function($) {
     $.fn.bootstrapValidator.i18n.hexColor = $.extend($.fn.bootstrapValidator.i18n.hexColor || {}, {
-        'default': 'Please enter a valid hex color'
+        'default': '请输入有效的十六进制颜色'
     });
 
     $.fn.bootstrapValidator.validators.hexColor = {
@@ -2751,9 +2751,9 @@
 }(window.jQuery));
 ;(function($) {
     $.fn.bootstrapValidator.i18n.iban = $.extend($.fn.bootstrapValidator.i18n.iban || {}, {
-        'default': 'Please enter a valid IBAN number',
-        countryNotSupported: 'The country code %s is not supported',
-        country: 'Please enter a valid IBAN number in %s',
+        'default': '请输入一个有效的码',
+        countryNotSupported: '国家代码 %s 不支持',
+        country: '请输入一个有效的IBAN号码 %s',
         countries: {
             AD: 'Andorra',
             AE: 'United Arab Emirates',
@@ -2997,9 +2997,9 @@
 }(window.jQuery));
 ;(function($) {
     $.fn.bootstrapValidator.i18n.id = $.extend($.fn.bootstrapValidator.i18n.id || {}, {
-        'default': 'Please enter a valid identification number',
-        countryNotSupported: 'The country code %s is not supported',
-        country: 'Please enter a valid %s identification number',
+        'default': '请输入有效的标识号',
+        countryNotSupported: '国家代码%s 不支持',
+        country: '请输入有效 %s 识别号码',
         countries: {
             BA: 'Bosnia and Herzegovina',
             BG: 'Bulgarian',
@@ -3812,7 +3812,7 @@
 }(window.jQuery));
 ;(function($) {
     $.fn.bootstrapValidator.i18n.identical = $.extend($.fn.bootstrapValidator.i18n.identical || {}, {
-        'default': 'Please enter the same value'
+        'default': '请输入相同的值'
     });
 
     $.fn.bootstrapValidator.validators.identical = {
@@ -3852,7 +3852,7 @@
 }(window.jQuery));
 ;(function($) {
     $.fn.bootstrapValidator.i18n.imei = $.extend($.fn.bootstrapValidator.i18n.imei || {}, {
-        'default': 'Please enter a valid IMEI number'
+        'default': '请输入一个有效的IMEI号码'
     });
 
     $.fn.bootstrapValidator.validators.imei = {
@@ -3896,7 +3896,7 @@
 }(window.jQuery));
 ;(function($) {
     $.fn.bootstrapValidator.i18n.imo = $.extend($.fn.bootstrapValidator.i18n.imo || {}, {
-        'default': 'Please enter a valid IMO number'
+        'default': '请输入有效的IMO编号'
     });
 
     $.fn.bootstrapValidator.validators.imo = {
@@ -3941,7 +3941,7 @@
 }(window.jQuery));
 ;(function($) {
     $.fn.bootstrapValidator.i18n.integer = $.extend($.fn.bootstrapValidator.i18n.integer || {}, {
-        'default': 'Please enter a valid number'
+        'default': '请输入有效数字'
     });
 
     $.fn.bootstrapValidator.validators.integer = {
@@ -3969,9 +3969,9 @@
 }(window.jQuery));
 ;(function($) {
     $.fn.bootstrapValidator.i18n.ip = $.extend($.fn.bootstrapValidator.i18n.ip || {}, {
-        'default': 'Please enter a valid IP address',
-        ipv4: 'Please enter a valid IPv4 address',
-        ipv6: 'Please enter a valid IPv6 address'
+        'default': '请输入有效的IP地址',
+        ipv4: '请输入有效的 IPv4 地址',
+        ipv6: '请输入有效的 IPv6 地址'
     });
 
     $.fn.bootstrapValidator.validators.ip = {
@@ -4031,7 +4031,7 @@
     };
 }(window.jQuery));;(function($) {
     $.fn.bootstrapValidator.i18n.isbn = $.extend($.fn.bootstrapValidator.i18n.isbn || {}, {
-        'default': 'Please enter a valid ISBN number'
+        'default': '请输入一个有效的ISBN号'
     });
 
     $.fn.bootstrapValidator.validators.isbn = {
@@ -4117,7 +4117,7 @@
 }(window.jQuery));
 ;(function($) {
     $.fn.bootstrapValidator.i18n.isin = $.extend($.fn.bootstrapValidator.i18n.isin || {}, {
-        'default': 'Please enter a valid ISIN number'
+        'default': '请输入有效的号码'
     });
 
     $.fn.bootstrapValidator.validators.isin = {
@@ -4176,7 +4176,7 @@
 }(window.jQuery));
 ;(function($) {
     $.fn.bootstrapValidator.i18n.ismn = $.extend($.fn.bootstrapValidator.i18n.ismn || {}, {
-        'default': 'Please enter a valid ISMN number'
+        'default': '请输入一个有效的 ISMN 号'
     });
 
     $.fn.bootstrapValidator.validators.ismn = {
@@ -4235,7 +4235,7 @@
 }(window.jQuery));
 ;(function($) {
     $.fn.bootstrapValidator.i18n.issn = $.extend($.fn.bootstrapValidator.i18n.issn || {}, {
-        'default': 'Please enter a valid ISSN number'
+        'default': '请输入一个有效的ISSN号'
     });
 
     $.fn.bootstrapValidator.validators.issn = {
@@ -4281,8 +4281,8 @@
 }(window.jQuery));
 ;(function($) {
     $.fn.bootstrapValidator.i18n.lessThan = $.extend($.fn.bootstrapValidator.i18n.lessThan || {}, {
-        'default': 'Please enter a value less than or equal to %s',
-        notInclusive: 'Please enter a value less than %s'
+        'default': '请输入小于或等于 %s 的值',
+        notInclusive: '请输入小于 %s 的值'
     });
 
     $.fn.bootstrapValidator.validators.lessThan = {
@@ -4342,7 +4342,7 @@
 }(window.jQuery));
 ;(function($) {
     $.fn.bootstrapValidator.i18n.mac = $.extend($.fn.bootstrapValidator.i18n.mac || {}, {
-        'default': 'Please enter a valid MAC address'
+        'default': '请输入有效的MAC地址'
     });
 
     $.fn.bootstrapValidator.validators.mac = {
@@ -4367,7 +4367,7 @@
 }(window.jQuery));
 ;(function($) {
     $.fn.bootstrapValidator.i18n.meid = $.extend($.fn.bootstrapValidator.i18n.meid || {}, {
-        'default': 'Please enter a valid MEID number'
+        'default': '请输入一个有效的MEID号码'
     });
 
     $.fn.bootstrapValidator.validators.meid = {
@@ -4450,7 +4450,7 @@
 }(window.jQuery));
 ;(function($) {
     $.fn.bootstrapValidator.i18n.notEmpty = $.extend($.fn.bootstrapValidator.i18n.notEmpty || {}, {
-        'default': 'Please enter a value'
+        'default': '请输入值'
     });
 
     $.fn.bootstrapValidator.validators.notEmpty = {
@@ -4482,7 +4482,7 @@
 }(window.jQuery));
 ;(function($) {
     $.fn.bootstrapValidator.i18n.numeric = $.extend($.fn.bootstrapValidator.i18n.numeric || {}, {
-        'default': 'Please enter a valid float number'
+        'default': '请输入有效的浮点数'
     });
 
     $.fn.bootstrapValidator.validators.numeric = {
@@ -4521,9 +4521,9 @@
 }(window.jQuery));
 ;(function($) {
     $.fn.bootstrapValidator.i18n.phone = $.extend($.fn.bootstrapValidator.i18n.phone || {}, {
-        'default': 'Please enter a valid phone number',
-        countryNotSupported: 'The country code %s is not supported',
-        country: 'Please enter a valid phone number in %s',
+        'default': '请输入有效的电话号码',
+        countryNotSupported: '国家代码 %s 不支持',
+        country: '请输入一个有效的电话号码 %s',
         countries: {
             ES: 'Spain',
             FR: 'France',
@@ -4618,7 +4618,7 @@
 }(window.jQuery));
 ;(function($) {
     $.fn.bootstrapValidator.i18n.regexp = $.extend($.fn.bootstrapValidator.i18n.regexp || {}, {
-        'default': 'Please enter a value matching the pattern'
+        'default': '请输入与模式匹配的值'
     });
 
     $.fn.bootstrapValidator.validators.regexp = {
@@ -4660,7 +4660,7 @@
 }(window.jQuery));
 ;(function($) {
     $.fn.bootstrapValidator.i18n.remote = $.extend($.fn.bootstrapValidator.i18n.remote || {}, {
-        'default': 'Please enter a valid value'
+        'default': '请输入有效值'
     });
 
     $.fn.bootstrapValidator.validators.remote = {
@@ -4730,7 +4730,7 @@
 }(window.jQuery));
 ;(function($) {
     $.fn.bootstrapValidator.i18n.rtn = $.extend($.fn.bootstrapValidator.i18n.rtn || {}, {
-        'default': 'Please enter a valid RTN number'
+        'default': '请输入有效的 RTN 值'
     });
 
     $.fn.bootstrapValidator.validators.rtn = {
@@ -4768,7 +4768,7 @@
 }(window.jQuery));
 ;(function($) {
     $.fn.bootstrapValidator.i18n.sedol = $.extend($.fn.bootstrapValidator.i18n.sedol || {}, {
-        'default': 'Please enter a valid SEDOL number'
+        'default': '请输入有效的 SEDOL 值'
     });
 
     $.fn.bootstrapValidator.validators.sedol = {
@@ -4808,7 +4808,7 @@
 }(window.jQuery));
 ;(function($) {
     $.fn.bootstrapValidator.i18n.siren = $.extend($.fn.bootstrapValidator.i18n.siren || {}, {
-        'default': 'Please enter a valid SIREN number'
+        'default': '请输入有效的 SIREN 值'
     });
 
 	$.fn.bootstrapValidator.validators.siren = {
@@ -4836,7 +4836,7 @@
 }(window.jQuery));
 ;(function($) {
     $.fn.bootstrapValidator.i18n.siret = $.extend($.fn.bootstrapValidator.i18n.siret || {}, {
-        'default': 'Please enter a valid SIRET number'
+        'default': '请输入有效的 SIRET 值'
     });
 
 	$.fn.bootstrapValidator.validators.siret = {
@@ -4874,7 +4874,7 @@
 }(window.jQuery));
 ;(function($) {
     $.fn.bootstrapValidator.i18n.step = $.extend($.fn.bootstrapValidator.i18n.step || {}, {
-        'default': 'Please enter a valid step of %s'
+        'default': '请输入一个有效步骤 %s'
     });
 
     $.fn.bootstrapValidator.validators.step = {
@@ -4938,8 +4938,8 @@
 }(window.jQuery));
 ;(function($) {
     $.fn.bootstrapValidator.i18n.stringCase = $.extend($.fn.bootstrapValidator.i18n.stringCase || {}, {
-        'default': 'Please enter only lowercase characters',
-        upper: 'Please enter only uppercase characters'
+        'default': '请只输入小写字符',
+        upper: '请只输入大写字符'
     });
 
     $.fn.bootstrapValidator.validators.stringCase = {
@@ -4974,10 +4974,10 @@
 }(window.jQuery));
 ;(function($) {
     $.fn.bootstrapValidator.i18n.stringLength = $.extend($.fn.bootstrapValidator.i18n.stringLength || {}, {
-        'default': 'Please enter a value with valid length',
-        less: 'Please enter less than %s characters',
-        more: 'Please enter more than %s characters',
-        between: 'Please enter value between %s and %s characters long'
+        'default': '请输入有效长度的值',
+        less: '请输入小于 %s 字符',
+        more: '请输入大于 %s 字符',
+        between: '请输入在 %s 到 %s 之间的值'
     });
 
     $.fn.bootstrapValidator.validators.stringLength = {
@@ -5055,7 +5055,7 @@
 }(window.jQuery));
 ;(function($) {
     $.fn.bootstrapValidator.i18n.uri = $.extend($.fn.bootstrapValidator.i18n.uri || {}, {
-        'default': 'Please enter a valid URI'
+        'default': '请输入有效的URI'
     });
 
     $.fn.bootstrapValidator.validators.uri = {
@@ -5159,8 +5159,8 @@
 }(window.jQuery));
 ;(function($) {
     $.fn.bootstrapValidator.i18n.uuid = $.extend($.fn.bootstrapValidator.i18n.uuid || {}, {
-        'default': 'Please enter a valid UUID number',
-        version: 'Please enter a valid UUID version %s number'
+        'default': '请输入一个有效的UUID号',
+        version: '请输入一个有效的 UUID %s 值'
     });
 
     $.fn.bootstrapValidator.validators.uuid = {
