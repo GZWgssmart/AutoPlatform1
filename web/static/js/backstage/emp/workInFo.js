@@ -1,3 +1,5 @@
+var contentPath = ''
+
 /**
  *初始化表格
  * @type {string}
@@ -5,81 +7,71 @@
 $(function () {
     initTable("table","/Order/queryByPager");
 
+
     initSelect2("record","请选择保养记录","/maintainRecord/queryByPager");
     initSelect2("user","请选择用户","/userBasicManage/queryAll");
+
 });
 
-//选择维修保养记录弹窗
+
+
+//add选择维修保养记录弹窗
 function openRecord(){
-    initTableNotTollbar("recordTable","maintainRecord/queryByPager")
+    initTableNotTollbar("recordTable","/maintainRecord/queryByPager")
     $("#addWindow").modal('hide');
     $("#recordWindow").modal('show');
 }
-//选择维修保养记录窗关闭
+//add选择维修保养记录窗关闭
 function closeRecord(){
     $("#recordWindow").modal('hide');
     $("#addWindow").modal('show');
 }
-//选择用户弹窗
+//add选择用户弹窗
 function openUser(){
-    initTableNotTollbar("userTable","userBasicManage/queryByPager");
+    initTableNotTollbar("userTable","/userBasicManage/queryByPager");
     $("#addWindow").modal('hide');
     $("#userWindow").modal('show');
 }
-//关闭用户弹窗
+//add关闭用户弹窗
 function closeUser(){
     $("#userWindow").modal('hide');
     $("#addWindow").modal('show');
 }
 
-//选择记录
-// function workApp(){
-//     var row =$("#appTable").bootstapTable('getSelections');
-//     if(row.length !=1){
-//         swal({
-//             title:"",
-//             text:"只能选择一条数据"
-//             confirmButtonText:"确认",
-//             type:"error";
-//         })
-//     }else{
-//         $("appWindow").modal('hide');
-//         var appointment = row[0];
-//         $("#addRecordId").html('<option value="' + appointment.record.checkinId + '">' + appointment.record.recordId + '</option>').trigger("change");
-//         $("#addUserId").html('<option value="' + appointment.user.userId + '">' + appointment.user.userName + '</option>').trigger("change");
-//         $("#addworkAssignTime").val(appointment.workAssignTime);
-//         $("#addworkCreateTime").val(appointment.workCreatedTime);
-//     }
-// }
-//
-// function showEdit(){
-//     var row =$("#table").bootstapTable('getSelections');
-//     if(row.length >0){
-//         $("edit").modal('show');//显示窗口
-//         var appointment = row[0];
-//         $("#addRecordId").html('<option value="' + appointment.record.checkinId + '">' + appointment.record.recordId + '</option>').trigger("change");
-//         $("#addUserId").html('<option value="' + appointment.user.userId + '">' + appointment.user.userName + '</option>').trigger("change");
-//         $("#addworkAssignTime").val(appointment.workAssignTime);
-//         $("#addworkCreateTime").val(appointment.workCreatedTime);
-//
-//     }else{
-//         swal({
-//             title:"",
-//             text:"请选择你要修改的工单记录" //主要文本
-//             confirmButtonColor:"#DD6B55"    //提示按钮的颜色
-//             confirmButtonText:"确认", //提示按钮上的文本
-//             type:"warning";   //提示类型
-//     })
-//     }
-// }
+//edit选择维修保养记录弹窗
+function openEditRecord(){
+    initTableNotTollbar("editRecordTable","/maintainRecord/queryByPager");
+    $("#editWindow").modal('hide');
+    $("#editRecordWindow").modal('show');
+}
+
+
+//edit选择维修保养记录窗关闭
+function closeEditRecord() {
+    $("#editRecordWindow").modal('hide');
+    $("#editWindow").modal('show');
+
+}
+/*edit选择用户弹窗*/
+function openEditUser(){
+    initTableNotTollbar("editUserTable","/userBasicManage/queryByPager");
+    $("#editWindow").modal('hide');
+    $("#editUserWindow").modal('show');
+}
+/*edit用户弹窗关闭*/
+function closeEditUser(){
+    $("#editUserWindow").modal('hide');
+    $("#editWindow").modal('show');
+}
 
 //添加
 function showAdd(){
-    //initDateTimePicker('addForm', 'workAssignTime'); // 初始化时间框, 第一参数是form表单id, 第二参数是input的name
+    initDateTimePicker('addForm', 'workAssignTime'); // 初始化时间框, 第一参数是form表单id, 第二参数是input的name
     $("#addWindow").modal('show');
     $("#addButton").removeAttr("disabled");
     validator('addForm'); // 初始化验证
 }
+
 /*表格验证*/
 function validator(formId) {
     $('#' + formId).bootstrapValidator({
@@ -158,15 +150,12 @@ function editSubmit(){
         $("#editButton").removeAttr("disabled");
     }
 }
-
-/*function showEdit(){
+//修改
+function showEdit(){
     var row =  $('table').bootstrapTable('getSelections');
     if(row.length >0) {
-//                $('#editId').val(row[0].id);
-//                $('#editName').val(row[0].name);
-//                $('#editPrice').val(row[0].price);
         $("#editWindow").modal('show'); // 显示弹窗
-        $("editButton").removeAttr("disabled");
+        $("#editButton").removeAttr("disabled");
         var workInfo = row[0];
         //$("#editForm").fill(ceshi);
     }else{
@@ -175,108 +164,11 @@ function editSubmit(){
             text:"请先选择一行数据",
             type:"warning"})// 提示窗口, 修改成功
     }
-}*/
-
-function formatRepo(repo){return repo.text}
-function formatRepoSelection(repo){return repo.text}
-
-
-/*function getIdSelections() {
-    return $.map($table.bootstrapTable('getSelections'), function (row) {
-        return row.id
-    });
-}
-$remove.click(function () {
-    var ids = getIdSelections();
-    $table.bootstrapTable('remove', {
-        field: 'id',
-        values: ids
-    });
-    $remove.prop('disabled', true);
-})*/;
-
-function showDel(){
-    var row =  $('table').bootstrapTable('getSelections');
-    if(row.length >0) {
-        $("#del").modal('show');
-        $('#table').bootstrapTable("delete");//重新加载网格数据
-        swal({
-            title:"",
-            text:"删除成功",
-            confirmButtonText:"确认",
-            type:"success"
-        })
-    }else{
-        swal({
-            title:"",
-            text:"删除失败",
-            confirmButtonText:"确认",
-            type:"fail"
-        })
-    }
-
-    // $.post(contentPath + "/Order/edit",
-    //     $("#del").serialize(),
-    //     function (data) {
-    //         if (data.result == "success") {
-    //             $("#edit").modal('hide'); // 关闭指定的窗口
-    //             $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
-    //             swal({
-    //                 title:"",
-    //                 text: data.message,
-    //                 type:"success"})// 提示窗口, 修改成功
-    //         } else if (data.result == "fail") {
-    //             //$.messager.alert("提示", data.result.message, "info");
-    //         }
-    //     }, "json"
-    // );
-}
-
-/*function checkAdd(){
-    var id = $('#addId').val();
-    var name = $('#addName').val();
-    var price = $('#addPrice').val();
-    var reslist=$("#addSelect").select2("data"); //获取多选的值
-    //alert(reslist.length)
-    if(id != "" && name != "" && price != ""){
-        return true;
-    }else{
-        var error = document.getElementById("addError");
-        error.innerHTML = "请输入正确的数据";
-        return false;
-    }
 }
 
 
-function checkEdit() {
-    $.post("/table/edit",
-        $("#editForm").serialize(),
-        function (data) {
-            if (data.result == "success") {
-                $("#edit").modal('hide'); // 关闭指定的窗口
-                $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
-                swal({
-                    title:"",
-                    text: data.message,
-                    type:"success"})// 提示窗口, 修改成功
-            } else if (data.result == "fail") {
-                //$.messager.alert("提示", data.result.message, "info");
-            }
-        }, "json"
-    );
-}*/
-
-
-
-// 获取当前时间
-function getDate(id){
-    $('#'+id).val((new Date()).toLocaleDateString() + " " + (new Date()).toLocaleTimeString());
-}
-
-/**
- * 时间格式化，传递进来的时间
- */
-function formatterDate(value) {
+//格式化带时分秒的时间值。
+function formatterDateTime(value) {
     if (value == undefined || value == null || value == '') {
         return "";
     }
@@ -307,72 +199,23 @@ function formatterDate(value) {
     }
 }
 
-$('#addworkAssignTime').datetimepicker({
-    minView: "month", //选择日期后，不会再跳转去选择时分秒
-    language: 'zh-CN',
-    format: 'yyyy-mm-dd',
-    todayBtn: 1,
-    autoclose: 1,
-});
-
-$('#addworkCreateTime').datetimepicker({
-    minView: "month", //选择日期后，不会再跳转去选择时分秒
-    language: 'zh-CN',
-    format: 'yyyy-mm-dd',
-    todayBtn: 1,
-    autoclose: 1,
-});
-
-$('#editworkAssignTime').datetimepicker({
-    minView: "month", //选择日期后，不会再跳转去选择时分秒
-    language: 'zh-CN',
-    format: 'yyyy-mm-dd',
-    todayBtn: 1,
-    autoclose: 1,
-});
-
-$('#editworkCreateTime').datetimepicker({
-    minView: "month", //选择日期后，不会再跳转去选择时分秒
-    language: 'zh-CN',
-    format: 'yyyy-mm-dd',
-    todayBtn: 1,
-    autoclose: 1,
-});
-//工单的状态
-function formatterStatus(index,row){
-    if(row.workStatus == 'Y'){
-        return "已完成"
-    }else{
-        return "未完成"
-    }
-}
-
-//工单未完成状态
-function inactive(workId) {
-    $.post(contentPath + "/Order/statusWork?workId=" + workId,
-        function (data) {
-            if(data.result == "success"){
-                $('#table').bootstrapTable("refresh");//重新加载数据网格的数据
-            }
-        } )
-}
-function active(workId) {
-    $.post(contentPath + "/Order/statusWork?workId=" + workId + "&" + "workStatus=" + "N",
-        function (data) {
-            if(data.result == "success"){
-                $('#table').bootstrapTable("refresh");//重新加载数据网格的数据
-            }
-
-        } )
-}
-function openStatusFormatter(index, row) {
-    /*处理数据*/
-    if (row.workStatus == 'Y') {
-        return "&nbsp;&nbsp;<a href='javascript:;' onclick='inactive(\"" + row.workId + "\")'>禁用</a>";
+// 激活或禁用
+function statusFormatter(value, row, index) {
+    if(value == 'Y') {
+        return "&nbsp;&nbsp;<button type='button' class='btn btn-danger' onclick='inactive(\""+'/Order/statusOperate?id='+row.workId+'&status=Y'+"\")'>禁用</a>";
     } else {
-        return "&nbsp;&nbsp;<a href='javascript:;' onclick='active(\"" + row.workId + "\")'>激活</a>";
+        return "&nbsp;&nbsp;<button type='button' class='btn btn-success' onclick='active(\""+'/Order/statusOperate?id='+ row.workId+'&status=N'+ "\")'>激活</a>";
     }
+}
 
+
+// 查看全部已完成
+function showComplete() {
+    initTable('table', '/Order/queryByPager');
+}
+// 查看全部未完成
+function showDisable() {
+    initTable('table', '/Order/queryByPagerDisable');
 }
 
 

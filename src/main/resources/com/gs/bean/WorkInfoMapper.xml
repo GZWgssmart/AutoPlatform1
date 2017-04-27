@@ -22,17 +22,38 @@
 
     <select id="count" resultType="int">
         <![CDATA[
-          SELECT  count(workId) FROM t_work_info w WHERE w.workStatus='N'
+          SELECT count(workId) FROM t_work_info w WHERE w.workStatus='Y'
         ]]>
     </select>
-    <!--分页查询全部-->
+
+    <select id="countByDisable" resultType="int" >
+        <![CDATA[
+        SELECT count(workId) FROM t_work_info w WHERE w.workStatus='N'
+    ]]>
+    </select>
+
+    <!--分页所有未完成查询全部-->
     <select id="queryByPager" resultMap="BaseResultMap" parameterType="com.gs.common.bean.Pager">
         <![CDATA[
             select w.*,tmR.recordId,tmR.checkinId,u.userId,
             u.userNickName FROM t_work_info w
             Left JOIN t_maintain_Record tmR on w.recordId = tmR.recordId
-            Left JOIN t_user u on w.userId = u.userId where w.workStatus = 'N'
-            ORDER BY w.workCreatedTime DESC
+            Left JOIN t_user u on w.userId = u.userId
+            where w.workStatus = 'Y' order by w.workCreatedTime Desc
+        ]]>
+        limit #{beginIndex}, #{pageSize}
+    </select>
+
+
+
+    <!--分页所有已完成查询全部-->
+    <select id="queryByPagerDisable" resultMap="BaseResultMap" parameterType="com.gs.common.bean.Pager">
+        <![CDATA[
+            select w.*,tmR.recordId,tmR.checkinId,u.userId,
+            u.userNickName FROM t_work_info w
+            Left JOIN t_maintain_Record tmR on w.recordId = tmR.recordId
+            Left JOIN t_user u on w.userId = u.userId
+            where w.workStatus = 'N' order by w.workCreatedTime Desc
         ]]>
         limit #{beginIndex}, #{pageSize}
     </select>
@@ -44,12 +65,12 @@
   </select>
 
     <!--添加数据-->
-  <insert id="insert" parameterType="com.gs.bean.WorkInfo">
+  <insert id="insert" keyProperty="id" parameterType="com.gs.bean.WorkInfo">
       <![CDATA[
           INSERT INTO t_work_info
           (workId,recordId, userId, workAssignTime, workCreatedTime,workStatus)
           VALUES
-          (uuid(),#{recordId},#{userId},#{workAssignTime},#{workCreatedTime},'N')
+          (uuid(),#{recordId},#{userId},#{workAssignTime},CURRENT_TIMESTAMP,'Y')
       ]]>
   </insert>
 
@@ -59,23 +80,24 @@
     </delete>-->
 
     <!--更新数据-->
-    <update id="update" keyProperty="workId" parameterType="com.gs.bean.WorkInfo">
+    <update id="update" keyProperty="id" parameterType="com.gs.bean.WorkInfo">
         <![CDATA[
-          UPDATE t_work_info SET recordId=#{recordId}, userId=#{userId}, workAssignTime=#{workAssignTime}, workCreatedTime=#{workCreatedTime} WHERE workId=#{workId}
+          UPDATE t_work_info SET recordId=#{recordId}, userId=#{userId}, workAssignTime=#{workAssignTime} WHERE workId=#{workId}
         ]]>
     </update>
 
     <!--未完成工单-->
-    <update id="inactive" keyProperty="workId" parameterType="string">
+    <update id="inactive" keyProperty="id" parameterType="string">
         <![CDATA[
           UPDATE t_work_info set workStatus='N' WHERE workId = #{workId}
            ]]>
     </update>
 
-    <!--以完成工单-->
-    <update id="active" keyProperty="workId" parameterType="string">
+    <!--已完成工单-->
+    <update id="active" keyProperty="id" parameterType="string">
       <![CDATA[
         UPDATE t_work_info set workStatus='Y' WHERE workId = #{workId}
          ]]>
     </update>
+
 </mapper>

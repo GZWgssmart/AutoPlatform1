@@ -62,8 +62,26 @@ public class OrderManageController {
         pager.setPageNo(Integer.valueOf(pageNumber));
         pager.setPageSize(Integer.valueOf(pageSize));
         pager.setTotalRecords(workInfoService.count());
-        List<WorkInfo> workInfosList = workInfoService.queryByPager(pager);
-        return new Pager4EasyUI<WorkInfo>(pager.getTotalRecords(), workInfosList);
+        List<WorkInfo> worksList = workInfoService.queryByPager(pager);
+        return new Pager4EasyUI<WorkInfo>(pager.getTotalRecords(), worksList);
+    }
+
+
+    /**
+     * 查询所有未完成工单
+     *
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value="queryByPagerDisable", method = RequestMethod.GET)
+    public Pager4EasyUI<WorkInfo> queryByPagerDisable(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
+        logger.info("分页查询所有被禁用登记记录");
+        Pager pager = new Pager();
+        pager.setPageNo(Integer.valueOf(pageNumber));
+        pager.setPageSize(Integer.valueOf(pageSize));
+        pager.setTotalRecords(workInfoService.countByDisable());
+        List<WorkInfo> worklLis = workInfoService.queryByPagerDisable(pager);
+        return new Pager4EasyUI<WorkInfo>(pager.getTotalRecords(), worklLis);
     }
 
     /**
@@ -76,7 +94,7 @@ public class OrderManageController {
     public ControllerResult addWork(WorkInfo workInfo) {
         logger.info("添加订单");
         workInfo.setUserId(UUIDUtil.uuid());
-        workInfo.setWorkStatus("N");
+        workInfo.setWorkStatus("Y");
         workInfoService.insert(workInfo);
         return ControllerResult.getSuccessResult("添加成功");
     }
@@ -95,31 +113,23 @@ public class OrderManageController {
     }
 
 
-   /* @ResponseBody
-    @RequestMapping(value = "deleteById", method = RequestMethod.GET)
-    public ControllerResult deleteWork(String id) {
-        logger.info("删除");
-        workInfoService.deleteById(id);
-        return ControllerResult.getSuccessResult("删除成功");
-    }*/
-
     /**
      * 对状态的激活和启用，只使用一个方法进行切换。
      */
     @ResponseBody
-    @RequestMapping(value = "statusWork",method = RequestMethod.GET)
-    public ControllerResult inactive(String workId,String workStatus){
-        if(workId!=null&&!workId.equals("")&&workStatus!=null&&!workStatus.equals("")){
-            if (workStatus.equals("N")){
-                workInfoService.active(workId);
+    @RequestMapping(value = "statusOperate",method = RequestMethod.POST)
+    public ControllerResult inactive(String id,String status){
+        if (id != null && !id.equals("") && status != null && !status.equals("")) {
+            if (status.equals("N")) {
+                workInfoService.active(id);
                 logger.info("激活成功");
                 return ControllerResult.getSuccessResult("激活成功");
-            }else{
-                workInfoService.inactive(workId);
+            } else {
+                workInfoService.inactive(id);
                 logger.info("禁用成功");
                 return ControllerResult.getSuccessResult("禁用成功");
             }
-        }else{
+        } else {
             return ControllerResult.getFailResult("操作失败");
         }
     }
