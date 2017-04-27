@@ -1,21 +1,57 @@
 <%--
   Created by IntelliJ IDEA.
   User: 不曾有黑夜
-  Date: 2017/4/20
-  Time: 20:11
+  Date: 2017/4/26
+  Time: 19:33
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <meta charset="utf-8">
-    <title>真正的主页</title>
+    <title>商家列表</title>
 </head>
 <link rel="stylesheet" href="/static/css/bootstrap.css">
 <link rel="stylesheet" href="/static/css/animate.css">
-<link rel="stylesheet" href="/static/css/FrontHome.css">
+<link rel="stylesheet" href="/static/css/TopBtm.css">
+<link rel="stylesheet" href="/static/css/paging.css">
+<style>
+    .content{
+        margin: 20px 90px;
+    }
+
+    /*搜索框和按钮*/
+    .input-text{
+        width: 350px;
+        height: 40px;
+        border: #01AAED 3px solid ;
+    }
+    .btn{
+        width: 150px;
+        height: 40px;
+        margin-left: -4px;
+        margin-top: -2px;
+        background:#01AAED;
+        color: white;
+        border-radius: 0px;
+        font-size: 18px;
+    }
+    .btn:hover span{
+        color:white;
+    }
+    /*排序*/
+    .sorting {
+        float: right;
+        font-size: 18px;
+        margin-right: 38px;
+    }
+    .sorting li {
+        list-style-type: none;
+
+    }
+
+</style>
 <body>
-    <div class="main" name="top">
+    <div class="main">
         <div class="nav nav-first">
             <div class="nav-left">
                 <ul class="nav-left-ul">
@@ -31,197 +67,49 @@
         </div>
         <div class="nav nav-two" id="navbar-two">
             <ul class="nav-two-ul">
-                <a href="home"><li class="actives">首页</li></a>
-                <a href="factorypage"><li>找商家</li></a>
+                <a href="home"><li>首页</li></a>
+                <a href="factorypage"><li class="actives">找商家</li></a>
                 <a href="javaScript:;"><li>首页</li></a>
                 <a href="javaScript:;"><li>首页</li></a>
                 <a href="javaScript:;"><li>首页</li></a>
                 <a href="javaScript:;"><li>首页</li></a>
             </ul>
         </div>
-        <%--轮播图--%>
-        <div class="car-carousel">
-            <div class="carousel">
-                <div class="car-choose">
-                    <div id="myCarousel" class="carousel slide" data-ride="carousel">
-                        <!-- 轮播（Carousel）指标 -->
-                        <ol class="carousel-indicators">
-                            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-                            <li data-target="#myCarousel" data-slide-to="1"></li>
-                            <li data-target="#myCarousel" data-slide-to="2"></li>
-                        </ol>
-                        <!-- 轮播项目-->
-                        <div class="carousel-inner">
-                            <div class="item active">
-                                <img src="/static/img/Frontpage/banner1.png">
-                                <%--<div class="carousel-caption">标题 1</div>--%>
-                            </div>
-                            <div class="item ">
-                                <img src="/static/img/Frontpage/582.jpg"/>
-                            </div>
-                            <div class="item">
-                                <img src="/static/img/Frontpage/lunbo3.jpg"/>
-                            </div>
-                        </div>
-                        <!-- 轮播（Carousel）导航 -->
-                        <button class="carousel-control left" href="#myCarousel" style="border: none;"
-                                data-slide="prev"><span class="glyphicon glyphicon-chevron-left" style="left:0;width:200px;height: 200px;"></span></button>
-                        <button class="carousel-control right" href="#myCarousel" style="border: none;"
-                                data-slide="next"><span class="glyphicon glyphicon-chevron-right" style="left:0;width:200px;height: 200px;"></span></button>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-        <%--主内容开始--%>
         <div class="content">
-            <%--保养项目开始--%>
-            <div class="product">
-                <%--保养项目头部--%>
-                <div class="preferences">
-                    <div class="pro-title">
-                        <i class="title-bg"></i>
-                        <h3>
-                            <a href="javaScript:;" style="text-decoration: none;">保养项目</a>
-                        </h3>
+            <div class="search-box">
+                <form method="get" name="search">
+                    <div class="form-search">
+                        <input type="text" class="input-text" placeholder="请输入车型、品牌或商家关键字"/>
+                        <button type="submit" class="btn">
+                            <span>
+                                搜索
+                            </span>
+                        </button>
                     </div>
-                    <div class="pro-content">
-                        <div class="index_baoyang_wrap">
-                            <div>
-                                <a class="index-green" href="javaScript:;">
-                                    <span class="baoy-title">小保养</span>
-                                    <i class="jiage">￥ <span class="price-span">158</span> 起</i>
-                                </a>
-                            </div>
-                            <div>
-                                <a class="index-red" href="javaScript:;">
-                                    <span class="baoy-title">大保养</span>
-                                    <i class="jiage">￥ <span class="price-span">346</span> 起</i>
-                                </a>
-                            </div>
-                            <div>
-                                <a class="index-blue" href="javaScript:;">
-                                    <span class="baoy-title">更换空调滤清器</span>
-                                    <i class="jiage">￥ <span class="price-span">580</span> 起</i>
-                                </a>
-                            </div>
-                            <div>
-                                <a class="index-pink" href="javaScript:;">
-                                    <span class="baoy-title">更换刹车片</span>
-                                    <i class="jiage">￥ <span class="price-span">98</span> 起</i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <%--全部保养项目模块--%>
-                <div class="index-main-wrap">
-                    <ul class="index-ul">
-                        <li class="one-li">
-                            <a href="javaScript:;">
-                                <span>更换轮胎</span>
-                            </a>
-                        </li>
-                        <li class="two-li">
-                            <a href="javaScript:;">
-                                <span>更换轮毂</span>
-                            </a>
-                        </li>
-                        <li class="three-li">
-                            <a href="javaScript:;">
-                                <span>更换刹车油</span>
-                            </a>
-                        </li>
-                        <li class="four-li">
-                            <a href="javaScript:;">
-                                <span>更换火花塞</span>
-                            </a>
-                        </li>
-                        <li class="five-li">
-                            <a href="javaScript:;">
-                                <span>更换电瓶</span>
-                            </a>
-                        </li>
-                        <li class="six-li">
-                            <a href="javaScript:;">
-                                <span>更换大灯/灯泡</span>
-                            </a>
-                        </li>
-                        <li class="seven-li">
-                            <a href="javaScript:;">
-                                <span>更换变速箱油</span>
-                            </a>
-                        </li>
-                        <li class="eight-li">
-                            <a href="javaScript:;">
-                                <span>更换空调制冷剂</span>
-                            </a>
-                        </li>
-                        <li class="nine-li">
-                            <a href="javaScript:;">
-                                <span>更换刹车盘</span>
-                            </a>
-                        </li>
-                        <li class="ten-li">
-                            <a href="javaScript:;">
-                                <span>更换防冻冷却液</span>
-                            </a>
-                        </li>
-                        <li class="eleven-li">
-                            <a href="javaScript:;">
-                                <span>进排气系统养护</span>
-                            </a>
-                        </li>
-                        <li class="twelve-li">
-                            <a href="javaScript:;">
-                                <span>更换助力转向油</span>
-                            </a>
-                        </li>
-                        <li class="thirteen-li">
-                            <a href="javaScript:;">
-                                <span>更换正时皮带</span>
-                            </a>
-                        </li>
-                        <li class="fourteen-li">
-                            <a href="javaScript:;">
-                                <span>更换外部皮带</span>
-                            </a>
-                        </li>
-                        <li class="fifteen-li">
-                            <a href="javaScript:;">
-                                <span>更换减震器</span>
-                            </a>
-                        </li>
-                        <li class="sixteen-li">
-                            <a href="javaScript:;">
-                                <span>燃油系统养护</span>
-                            </a>
-                        </li>
-                        <li class="seventeen-li">
-                            <a href="javaScript:;">
-                                <span>发动机内部养护</span>
-                            </a>
-                        </li>
-                        <li class="eighteen-li">
-                            <a href="javaScript:;">
-                                <span>空调系统养护</span>
-                            </a>
-                        </li>
-                        <div class="clearfix"></div>
-                    </ul>
-                </div>
+                </form>
             </div>
-            <%--入驻商家--%>
+            <%--商家列表--%>
             <div class="showfactory">
                 <div class="hot-factory">
                     <div class="title">
                         <span class="hot-icon"></span>
-                        <h3><a href="factorypage" style="text-decoration: none;">热门商家</a></h3>
+                        <h3><a href="factorypage" style="text-decoration: none;">商家大全</a></h3>
+                        <div class="sorting">
+                            <a id="opens" data-toggle="dropdown" href="javaScript:;" style="text-decoration: none;">按评分排序 <span class="glyphicon glyphicon-chevron-down"></span></a>
+                            <ul class="dropdown-menu" aria-labelledby="opens">
+                                <li>
+                                    <a href="javaScript:;">从高到低</a>
+                                </li>
+                                <li>
+                                    <a href="javaScript:;">从低到高</a>
+                                </li>
+                            </ul>
+                        </div>
                         <div class="clearfix"></div>
                     </div>
                     <div class="factory">
                         <div class="f-img">
-                            <a href="factorypage">
+                            <a href="javaScript:;">
                                 <img src="/static/img/Frontpage/slider.png"/>
                             </a>
                         </div>
@@ -261,7 +149,7 @@
                     </div>
                     <div class="factory">
                         <div class="f-img">
-                            <a href="factorypage">
+                            <a href="javaScript:;">
                                 <img src="/static/img/Frontpage/slider.png"/>
                             </a>
                         </div>
@@ -301,7 +189,127 @@
                     </div>
                     <div class="factory">
                         <div class="f-img">
-                            <a href="factorypage">
+                            <a href="javaScript:;">
+                                <img src="/static/img/Frontpage/slider.png"/>
+                            </a>
+                        </div>
+                        <div class="f-des">
+                            <div class="company-name">
+                                <span class="cns">
+                                    <a class="cns-a" href="javaScript:;" title="公司名称公司名称公司名称公司sssss公司名称公司名称公司名称公司sssss">
+                                        <i class="glyphicon glyphicon-bookmark"></i> . 公司名称公司名称公司名称公司sssss公司名称公司名称公司名称公司sssss
+                                    </a>
+                                    <div style="float: right;margin-right: 15px">
+                                        <img src="/static/img/Frontpage/xun-lv.png"/>
+                                        <img src="/static/img/Frontpage/xun-lv.png"/>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </span>
+                            </div>
+                            <div class="company-des">
+                                <span class="com-des" title="公司描述公司描述公司描述公司描述公司描述公司描述公司描述公司描述">
+                                    <i class="glyphicon glyphicon-edit"></i> 公司描述公司描述公司描述公司描述公司描述公司描述公司描述公司描述
+                                </span>
+                            </div>
+                            <div class="company-address">
+                                <span class="com-address" title="赣州市章贡区沙石镇">
+                                    <i class="glyphicon glyphicon-map-marker"></i> 赣州市章贡区沙石镇
+                                </span>
+                            </div>
+                            <div class="com-icon">
+                                <div class="icon-t">
+                                    <i class="ms glyphicon glyphicon-thumbs-up" title="五星好评"></i>
+                                    <i class="hp glyphicon glyphicon-hourglass" title="闪电发货"></i>
+                                    <span class="tuij" title="五星店铺">
+                                        <i class="glyphicon glyphicon-star" style="width: 14px;height: 16px;"></i> 推荐
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="factory">
+                        <div class="f-img">
+                            <a href="javaScript:;">
+                                <img src="/static/img/Frontpage/slider.png"/>
+                            </a>
+                        </div>
+                        <div class="f-des">
+                            <div class="company-name">
+                                <span class="cns">
+                                    <a class="cns-a" href="javaScript:;" title="公司名称公司名称公司名称公司sssss公司名称公司名称公司名称公司sssss">
+                                        <i class="glyphicon glyphicon-bookmark"></i> 公司名称公司名称公司名称公司sssss公司名称公司名称公司名称公司sssss
+                                    </a>
+                                    <div style="float: right;margin-right: 15px">
+                                        <img src="/static/img/Frontpage/xun-lv.png"/>
+                                        <img src="/static/img/Frontpage/xun-lv.png"/>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </span>
+                            </div>
+                            <div class="company-des">
+                                <span class="com-des" title="公司描述公司描述公司描述公司描述公司描述公司描述公司描述公司描述">
+                                    <i class="glyphicon glyphicon-edit"></i> 公司描述公司描述公司描述公司描述公司描述公司描述公司描述公司描述
+                                </span>
+                            </div>
+                            <div class="company-address">
+                                <span class="com-address" title="赣州市章贡区沙石镇">
+                                    <i class="glyphicon glyphicon-map-marker"></i> 赣州市章贡区沙石镇
+                                </span>
+                            </div>
+                            <div class="com-icon">
+                                <div class="icon-t">
+                                    <i class="ms glyphicon glyphicon-thumbs-up" title="五星好评"></i>
+                                    <i class="hp glyphicon glyphicon-hourglass" title="闪电发货"></i>
+                                    <span class="tuij" title="五星店铺">
+                                        <i class="glyphicon glyphicon-star" style="width: 14px;height: 16px;"></i> 推荐
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="factory">
+                        <div class="f-img">
+                            <a href="javaScript:;">
+                                <img src="/static/img/Frontpage/slider.png"/>
+                            </a>
+                        </div>
+                        <div class="f-des">
+                            <div class="company-name">
+                                <span class="cns">
+                                    <a class="cns-a" href="javaScript:;" title="公司名称公司名称公司名称公司sssss公司名称公司名称公司名称公司sssss">
+                                        <i class="glyphicon glyphicon-bookmark"></i> 公司名称公司名称公司名称公司sssss公司名称公司名称公司名称公司sssss
+                                    </a>
+                                    <div style="float: right;margin-right: 15px">
+                                        <img src="/static/img/Frontpage/xun-lv.png"/>
+                                        <img src="/static/img/Frontpage/xun-lv.png"/>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </span>
+                            </div>
+                            <div class="company-des">
+                                <span class="com-des" title="公司描述公司描述公司描述公司描述公司描述公司描述公司描述公司描述">
+                                    <i class="glyphicon glyphicon-edit"></i> 公司描述公司描述公司描述公司描述公司描述公司描述公司描述公司描述
+                                </span>
+                            </div>
+                            <div class="company-address">
+                                <span class="com-address" title="赣州市章贡区沙石镇">
+                                    <i class="glyphicon glyphicon-map-marker"></i> 赣州市章贡区沙石镇
+                                </span>
+                            </div>
+                            <div class="com-icon">
+                                <div class="icon-t">
+                                    <i class="ms glyphicon glyphicon-thumbs-up" title="五星好评"></i>
+                                    <i class="hp glyphicon glyphicon-hourglass" title="闪电发货"></i>
+                                    <span class="tuij" title="五星店铺">
+                                        <i class="glyphicon glyphicon-star" style="width: 14px;height: 16px;"></i> 推荐
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="factory">
+                        <div class="f-img">
+                            <a href="javaScript:;">
                                 <img src="/static/img/Frontpage/slider.png"/>
                             </a>
                         </div>
@@ -341,51 +349,30 @@
                     </div>
                 </div>
             </div>
-            <%--最近成交--%>
-            <div class="content-first">
-                <div class="recent-title">
-                    <i class="title-bg"></i>
-                    <h3><a href="javaScript:;" style="text-decoration: none;">最近预约保养</a></h3>
-                </div>
-                <div class="con">
-                    <div class="acc-head">
-                        <ul>
-                            <li>
-                                <span style="width:20%;margin-left:15px;">保养项目</span>
-                                <span style="width:33%;">车型</span>
-                                <span style="width: 20%;">费用</span>
-                                <span style="width: 16%;">保养时间</span>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="acc-content">
-                        <ul style="margin: 0;padding: 0;">
-                            <li>
-                                <span style="width:20%;margin-left:19px;padding-right: 15px;">前档玻璃外压条</span>
-                                <span style="width:33%;padding-right: 15px;">丰田 Alphard(进口) 3.5 手自一体 豪华版 2011款</span>
-                                <span style="width: 20%;">579.00</span>
-                                <span style="width: 16%;">2017-04-24</span>
-                            </li>
-                            <li>
-                                <span style="width:20%;margin-left:19px;padding-right: 15px;">前档玻璃外压条</span>
-                                <span style="width:33%;padding-right: 15px;">丰田 Alphard(进口) 3.5 手自一体 豪华版 2011款</span>
-                                <span style="width: 20%;">579.00</span>
-                                <span style="width: 16%;">2017-04-24</span>
-                            </li>
-                            <li>
-                                <span style="width:20%;margin-left:19px;padding-right: 15px;">前档玻璃外压条</span>
-                                <span style="width:33%;padding-right: 15px;">坎坎坷坷扩扩所所所安慰道丰田 Alphard(进口) 3.5 手自一体 豪华版 2011款</span>
-                                <span style="width: 20%;">579.00</span>
-                                <span style="width: 16%;">2017-04-24</span>
-                            </li>
-                            <li>
-                                <span style="width:20%;margin-left:19px;padding-right: 15px;">前档玻璃外压条</span>
-                                <span style="width:33%;padding-right: 15px;">丰田 Alphard(进口) 3.5 手自一体 豪华版 2011款</span>
-                                <span style="width: 20%;">579.00</span>
-                                <span style="width: 16%;">2017-04-24</span>
-                            </li>
-                        </ul>
-                    </div>
+            <%--分页--%>
+            <div class="container large">
+                <div class="pagination">
+                    <ul class="paging-ul">
+                        <li class="paging-li"><a href="#"></a></li>
+                        <li class="active paging-li"><a href="#"></a></li>
+                        <li class="paging-li"><a href="#"></a></li>
+                        <li class="paging-li"><a href="#"></a></li>
+                        <li class="paging-li"><a href="#"></a></li>
+                        <li class="paging-li"><a href="#"></a></li>
+                        <li class="paging-li"><a href="#"></a></li>
+                        <li class="paging-li"><a href="#"></a></li>
+                        <li class="paging-li"><a href="#"></a></li>
+                        <li class="paging-li"><a href="#"></a></li>
+                        <li class="paging-li"><a href="#"></a></li>
+                        <li class="paging-li"><a href="#"></a></li>
+                        <li class="paging-li"><a href="#"></a></li>
+                        <li class="paging-li"><a href="#"></a></li>
+                        <li class="paging-li"><a href="#"></a></li>
+                        <li class="paging-li"><a href="#"></a></li>
+                        <li class="paging-li"><a href="#"></a></li>
+                        <li class="paging-li"><a href="#"></a></li>
+                        <li class="paging-li"><a href="#"></a></li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -489,65 +476,9 @@
         </div>
         <a href="#top" class="go-top" id="backtop" style="display:none;"></a>
     </div>
-
-
-
+</body>
 <script src="/static/js/jquery.min.js"></script>
 <script src="/static/js/bootstrap.min.js"></script>
 <script src="/static/js/jquery.cxselect.min.js"></script>
-<script>
-
-    $(document).ready(function(){
-        $(".nav-two-ul a li").each(function(){
-            $this = $(this);
-            if($this[0].href==String(window.location)){
-                $this.addClass("actives");
-            }
-        });
-
-        $(function () {
-            var navbar = $("#navbar-two");
-            $(window).scroll(function () {
-                if($(window).scrollTop() > 21){
-                    if(navbar.css("position") !="fixed"){
-                        navbar.css({ 'position': 'fixed',top:0,width:1349,zIndex:9999})
-                    };
-                }else if(navbar.css("position") != "static"){
-                    navbar.css("position","static");
-                }
-            }) ;
-        });
-
-        $(function(){
-            var backtop = document.getElementById("backtop");
-            $(window).scroll(function () {
-                if($(window).scrollTop() >= 500){
-                    backtop.style.display = "block";
-                }else if($(window).scrollTop() <500){
-                    backtop.style.display = "none";
-                }
-            });
-        });
-        $(function(){
-            $('a[href*=#],area[href*=#]').click(function() {
-                if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
-                    var $target = $(this.hash);
-                    $target = $target.length && $target || $('[name=' + this.hash.slice(1) + ']');
-                    if ($target.length) {
-                        var targetOffset = $target.offset().top;
-                        $('html,body').animate({
-                                    scrollTop: targetOffset
-                                },
-                                1000);
-                        return false;
-                    }
-                }
-            });
-        });
-    });
-</script>
-
-
-</body>
+<script src="/static/js/general.js"></script>
 </html>
-

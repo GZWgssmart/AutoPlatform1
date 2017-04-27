@@ -110,7 +110,7 @@
                 </div>
             </div>
             <div class="button-box">
-                <a href="carchoose" class="btn zoomIn wow animated" data-wow-delay="0.5s" style="width: 200px;">立即进入</a>
+                <a href="home" class="btn zoomIn wow animated" data-wow-delay="0.5s" style="width: 200px;">立即进入</a>
             </div>
         </div>
         <%--主内容二--%>
@@ -273,43 +273,17 @@
 <script src="/static/js/jquery.min.js"></script>
 <script src="/static/js/bootstrap.min.js"></script>
 <script src="/static/js/wow.js"></script>
+<script src="/static/js/general.js"></script>
 <script>
     if (!(/msie [5|6|7|8|9]/i.test(navigator.userAgent))){
         new WOW().init();
     };
-    $(function(){
-        var backtop = document.getElementById("backtop");
-        $(window).scroll(function () {
-            if($(window).scrollTop() >= 500){
-                backtop.style.display = "block";
-            }else if($(window).scrollTop() <500){
-                backtop.style.display = "none";
-            }
-        });
-    });
     $(function () {
         var imgs = document.getElementById("rt");
         if(window.screen.width <= 456){
             imgs.style.display = "none";
         }
     })
-
-    $(function(){
-        $('a[href*=#],area[href*=#]').click(function() {
-            if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
-                var $target = $(this.hash);
-                $target = $target.length && $target || $('[name=' + this.hash.slice(1) + ']');
-                if ($target.length) {
-                    var targetOffset = $target.offset().top;
-                    $('html,body').animate({
-                                scrollTop: targetOffset
-                            },
-                            1000);
-                    return false;
-                }
-            }
-        });
-    });
 </script>
 </body>
 </html>

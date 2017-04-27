@@ -20,10 +20,13 @@ public class FrontpageController {
 
         return "Frontpage/PlatformIntro";
     }
-
-    @RequestMapping(value = "carchoose",method = RequestMethod.GET)
-    public String CarChoose(){
+    @RequestMapping(value ="home",method = RequestMethod.GET)
+    public String Home(){
         return "Frontpage/Frontindex";
     }
 
+    @RequestMapping(value ="factorypage",method = RequestMethod.GET)
+    public String Homes(){
+        return "Frontpage/Factorypage";
+    }
 }
