@@ -14,6 +14,7 @@ import org.activiti.engine.impl.Page;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import sun.plugin.util.UIUtil;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -51,9 +53,15 @@ public class UserBasicManageController {
      */
     @ResponseBody
     @RequestMapping(value = "addUser", method = RequestMethod.POST)
-    public ControllerResult addUser(User user) {
+    public ControllerResult addUser(HttpServletRequest request, User user) {
         logger.info("添加人员");
         user.setUserId(UUIDUtil.uuid());
+        String province = request.getParameter("province");
+        String city = request.getParameter("city");
+        String area = request.getParameter("area");
+        System.out.println("-------------------------==============" + province + "-" + city + "-" + area);
+        user.setUserAddress(province + "-" + city + "-" + area);
+
         UserRole userRole = new UserRole();
         userRole.setUserId(user.getUserId());
         userRole.setRoleId(user.getRoleId());
@@ -67,8 +75,10 @@ public class UserBasicManageController {
      */
     @ResponseBody
     @RequestMapping(value = "updateUser", method =RequestMethod.POST)
-    public ControllerResult updateUser(User user) {
+    public ControllerResult updateUser(HttpServletRequest request, User user) {
         UserRole userRole = new UserRole();
+//        userRole.setUserRoleId();
+        userRole.setUserId(user.getUserId());
         userRole.setRoleId(user.getRoleId());
 
         userService.update(user);
