@@ -54,6 +54,22 @@ public class CompanyController {
         return comboxs;
     }
 
+    /**
+     * 查询所有被禁用的登记记录
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value="queryByPagerDisable", method = RequestMethod.GET)
+    public Pager4EasyUI<Company> queryByPagerDisable(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
+        logger.info("分页查询所有被禁用公司信息");
+        Pager pager = new Pager();
+        pager.setPageNo(Integer.valueOf(pageNumber));
+        pager.setPageSize(Integer.valueOf(pageSize));
+        pager.setTotalRecords(companyService.countByDisable());
+        List<Company> companys = companyService.queryByPagerDisable(pager);
+        return new Pager4EasyUI<Company>(pager.getTotalRecords(), companys);
+    }
+
     @ResponseBody
     @RequestMapping(value="queryByPagerCompany", method = RequestMethod.GET)
     public Pager4EasyUI<Company> queryAll(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
@@ -87,6 +103,24 @@ public class CompanyController {
             return ControllerResult.getSuccessResult("修改成功");
         }else {
             return ControllerResult.getFailResult("修改失败，请输入必要的信息");
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "statusOperate", method = RequestMethod.POST)
+    public ControllerResult inactive(String id, String status) {
+        if (id != null && !id.equals("") && status != null && !status.equals("")) {
+            if (status.equals("N")) {
+                companyService.active(id);
+                logger.info("激活成功");
+                return ControllerResult.getSuccessResult("激活成功");
+            } else {
+                companyService.inactive(id);
+                logger.info("禁用成功");
+                return ControllerResult.getSuccessResult("禁用成功");
+            }
+        } else {
+            return ControllerResult.getFailResult("操作失败");
         }
     }
 

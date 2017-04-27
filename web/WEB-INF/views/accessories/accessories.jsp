@@ -42,8 +42,7 @@
                 <th data-field="accUsedTime" data-formatter="formatterDateTime">最近一次领料时间</th>
                 <th data-field="accBuyedTime" data-formatter="formatterDateTime">最近一次购买时间</th>
                 <th data-field="accCreatedTime" data-formatter="formatterDateTime">配件创建时间</th>
-                <th data-field="accStatus" data-formatter="formatterStatus">配件状态</th>
-                <th data-formatter="openStatusFormatter">操作</th>
+                <th data-field="accStatus" data-formatter="statusFormatter">配件状态</th>
             </tr>
             </thead>
         </table>

@@ -37,8 +37,7 @@
                 <th data-field="accSaleDiscount">配件销售折扣</th>
                 <th data-field="accSaleMoney">配件销售最终价</th>
                 <th data-field="accSaleCreatedTime" data-formatter="formatterDateTime">销售记录创建时间</th>
-                <th data-field="accSaleStatus" data-formatter="formatterStatus">销售记录状态</th>
-                <th data-formatter="openStatusFormatter">操作</th>
+                <th data-field="accSaleStatus" data-formatter="statusFormatter">销售记录状态</th>
             </tr>
             </thead>
         </table>
@@ -108,31 +107,31 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">配件销售数量：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="accSaleCount" placeholder="请输入配件销售数量" class="form-control">
+                        <input type="number" name="accSaleCount" placeholder="请输入配件销售数量" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">配件销售单价：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="accSalePrice" placeholder="请输入配件销售单价" class="form-control">
+                        <input type="number" name="accSalePrice" placeholder="请输入配件销售单价" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">配件销售总价：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="accSaleTotal" placeholder="请输入配件销售总价" class="form-control">
+                        <input type="number" name="accSaleTotal" placeholder="请输入配件销售总价" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">配件销售折扣：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="accSaleDiscount" placeholder="请输入配件销售折扣" class="form-control">
+                        <input type="number" name="accSaleDiscount" placeholder="请输入配件销售折扣" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">配件销售最终价：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="accSaleMoney" placeholder="请输入配件销售最终价" class="form-control">
+                        <input type="number" name="accSaleMoney" placeholder="请输入配件销售最终价" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
@@ -180,35 +179,35 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">配件销售数量：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="accSaleCount" define="AccessoriesSale.accSaleCount"
+                        <input type="number" name="accSaleCount" define="AccessoriesSale.accSaleCount"
                                placeholder="请输入配件销售数量" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">配件销售单价：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="accSalePrice" define="AccessoriesSale.accSalePrice"
+                        <input type="number" name="accSalePrice" define="AccessoriesSale.accSalePrice"
                                placeholder="请输入配件销售单价" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">配件销售总价：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="accSaleTotal" define="AccessoriesSale.accSaleTotal"
+                        <input type="number" name="accSaleTotal" define="AccessoriesSale.accSaleTotal"
                                placeholder="请输入配件销售总价" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">配件销售折扣：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="accSaleDiscount" define="AccessoriesSale.accSaleDiscount"
+                        <input type="number" name="accSaleDiscount" define="AccessoriesSale.accSaleDiscount"
                                placeholder="请输入配件销售折扣" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">配件销售最终价：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="accSaleMoney" define="AccessoriesSale.accSaleMoney"
+                        <input type="number" name="accSaleMoney" define="AccessoriesSale.accSaleMoney"
                                placeholder="请输入配件销售最终价" class="form-control">
                     </div>
                 </div>

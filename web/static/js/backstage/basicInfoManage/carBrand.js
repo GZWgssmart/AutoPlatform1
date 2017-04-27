@@ -114,3 +114,21 @@ function formSubmit(url, formId, winId){
             }
         }, "json");
 }
+
+// 激活或禁用
+function statusFormatter(value, row, index) {
+    if(value == 'Y') {
+        return "&nbsp;&nbsp;<button type='button' class='btn btn-danger' onclick='inactive(\""+'/carBrand/statusOperate?id='+row.brandId+'&status=Y'+"\")'>禁用</a>";
+    } else {
+        return "&nbsp;&nbsp;<button type='button' class='btn btn-success' onclick='active(\""+'/carBrand/statusOperate?id='+ row.brandId+'&status=N'+ "\")'>激活</a>";
+    }
+}
+
+// 查看全部可用
+function showAvailable(){
+    initTable('table', '/carBrand/queryByPagerCarBrand');
+}
+// 查看全部禁用
+function showDisable(){
+    initTable('table', '/carBrand/queryByPagerDisable');
+}

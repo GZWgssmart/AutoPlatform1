@@ -27,12 +27,15 @@ function editSubmit() {
 function showEdit(){
     initDatePicker('editForm', 'userBirthday'); // 初始化时间框, 第一参数是form表单id, 第二参数是input的name
     var row =  $('table').bootstrapTable('getSelections');
+    console.log(row);
     if(row.length >0) {
-        console.log(row)
         $("#editWindow").modal('show'); // 显示弹窗
         $("#editButton").removeAttr("disabled");
         var emp = row[0];
         $('#editUserRole').html('<option value="' + emp.role.roleId + '">' + emp.role.roleName + '</option>').trigger("change");
+        $('#editUserCompany').html('<option value="' + emp.company.companyId + '">' + emp.company.companyName + '</option>').trigger("change");
+        $('#editDatetimepicker').val(formatterDate(emp.userBirthday));
+       console.log(emp)
         $("#editForm").fill(emp);
         validator('editForm');
     }else{
@@ -42,6 +45,25 @@ function showEdit(){
             confirmButtonColor: "#DD6B55", // 提示按钮的颜色
             confirmButtonText:"确定", // 提示按钮上的文本
             type:"warning"}) // 提示类型
+    }
+}
+
+//格式化不带时分秒的时间值。
+function formatterDate(value) {
+    if (value == undefined || value == null || value == '') {
+        return "";
+    } else {
+        var date = new Date(value);
+        var year = date.getFullYear().toString();
+        var month = (date.getMonth() + 1);
+        var day = date.getDate().toString();
+        if (month < 10) {
+            month = "0" + month;
+        }
+        if (day < 10) {
+            day = "0" + day;
+        }
+        return year + "-" + month + "-" + day
     }
 }
 

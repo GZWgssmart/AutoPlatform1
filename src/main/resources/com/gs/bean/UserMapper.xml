@@ -54,9 +54,8 @@
        update t_user u set u.userName = #{userName}, u.userEmail = #{userEmail},
             u.userPhone = #{userPhone}, u.userIdentity = #{userIdentity},
            u.userPwd = #{userPwd}, u.userGender = #{userGender}, u.companyId=#{companyId},
-           u.userBirthDay = #{userBirthday}, u.userAddress = #{userAddress},
-           u.userDes = #{userDes}, u.userSalary = #{userSalary}, u.userStatus = #{userStatus}
-         where u.userId = #{userId};
+           u.userBirthDay = #{userBirthday}, u.userDes = #{userDes}, u.userSalary = #{userSalary}
+        where u.userId = #{userId};
      ]]>
   </update>
 

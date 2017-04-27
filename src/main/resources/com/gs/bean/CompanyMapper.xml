@@ -48,4 +48,33 @@
 			update t_company set companyName = #{companyName},companyAddress = #{companyAddress},companyTel = #{companyTel},companyPricipal = #{companyPricipal},companyWebsite = #{companyWebsite},companyOpendate = #{companyOpendate},companySize = #{companySize},companyLongitude = #{companyLongitude},companyLatitude = #{companyLatitude},companyDes = #{companyDes}where companyId = #{companyId}
      ]]>
   </update>
+
+  <!-- 分页查询禁用 -->
+  <select id="queryByPagerDisable" resultMap="companyMap" parameterType="com.gs.common.bean.Pager">
+    <![CDATA[
+       select * from t_company tc  where tc.companyStatus = 'N'
+    ]]>
+    limit #{beginIndex}, #{pageSize}
+  </select>
+  <!-- 分页查询禁用个数 -->
+  <select id="countByDisable" resultType="int" >
+    <![CDATA[
+      select count(companyId) from t_company c where c.companyStatus = 'N'
+    ]]>
+  </select>
+
+
+  <!--冻结数据-->
+  <update id="inactive" keyProperty="companyId" parameterType="company">
+    <![CDATA[
+         update t_company set companyStatus = 'N' where companyId = #{companyId}
+        ]]>
+  </update>
+
+  <!--激活数据-->
+  <update id="active" keyProperty="companyId" parameterType="company">
+    <![CDATA[
+        update t_company set companyStatus = 'Y' where companyId = #{companyId}
+        ]]>
+  </update>
 </mapper>

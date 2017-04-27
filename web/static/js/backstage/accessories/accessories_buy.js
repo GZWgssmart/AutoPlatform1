@@ -70,24 +70,23 @@ function openStatusFormatter(index, row) {
     }
 }
 
-//禁用状态
-function inactive(accBuyId) {
-    $.post(contentPath + "/accBuy/statusOperate?accBuyId=" + accBuyId + "&" + "accBuyStatus=" + "Y", function (data) {
-        if (data.result == "success") {
-            $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
-        }
-    })
+//格式化页面上的配件分类状态
+function formatterStatus(value) {
+    if (value == "Y") {
+        return "可用";
+    } else {
+        return "不可用";
+    }
 }
 
-//激活状态
-function active(accBuyId) {
-    $.post(contentPath + "/accBuy/statusOperate?accBuyId=" + accBuyId + "&" + "accBuyStatus=" + 'N', function (data) {
-        if (data.result == "success") {
-            $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
-        }
-    })
+// 激活或禁用
+function statusFormatter(value, row, index) {
+    if(value == 'Y') {
+        return "&nbsp;&nbsp;<button type='button' class='btn btn-danger' onclick='inactive(\""+'/accBuy/statusOperate?accBuyId='+row.accBuyId+'&accBuyStatus=Y'+"\")'>禁用</a>";
+    } else {
+        return "&nbsp;&nbsp;<button type='button' class='btn btn-success' onclick='active(\""+'/accBuy/statusOperate?accBuyId='+ row.accBuyId+'&accBuyStatus=N'+ "\")'>激活</a>";
+    }
 }
-
 
 //格式化带时分秒的时间值。
 function formatterDateTime(value) {
@@ -118,16 +117,6 @@ function formatterDateTime(value) {
             seconds = "0" + seconds;
         }
         return year + "-" + month + "-" + day + " " + hour + ":" + minutes + ":" + seconds;
-    }
-}
-
-
-//格式化页面上的配件分类状态
-function formatterStatus(value) {
-    if (value == "Y") {
-        return "可用";
-    } else {
-        return "不可用";
     }
 }
 

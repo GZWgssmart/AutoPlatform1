@@ -61,7 +61,7 @@
             INSERT INTO auto_platform.t_accessories_sale
             (accSaleId,accId, companyId, accSaledTime, accSaleCount,accSalePrice,accSaleTotal,accSaleDiscount, accSaleMoney,accSaleCreatedTime,accSaleStatus)
             VALUES
-            (uuid(),#{accId},#{companyId},#{accSaledTime},#{accSaleCount},#{accSalePrice},#{accSaleTotal},#{accSaleDiscount},#{accSaleMoney} ,CURRENT_TIMESTAMP ,'Y')
+            (uuid(),#{accId},#{companyId},#{accSaledTime},abs(#{accSaleCount}),abs(#{accSalePrice}),abs(#{accSaleTotal}),abs(#{accSaleDiscount}),abs(#{accSaleMoney}) ,CURRENT_TIMESTAMP ,'Y')
         ]]>
   </insert>
 
@@ -71,9 +71,9 @@
   <update id="update" keyProperty="id" parameterType="java.util.Map">
     UPDATE auto_platform.t_accessories_sale
     SET companyId=#{companyId},accId=#{accId}, accSaledTime=#{accSaledTime},
-    accSaleCount=#{accSaleCount},accSalePrice=#{accSalePrice},
-    accSaleTotal=#{accSaleTotal},accSaleDiscount=#{accSaleDiscount},
-    accSaleMoney=#{accSaleMoney} WHERE accSaleId=#{accSaleId}
+    accSaleCount=abs(#{accSaleCount}),accSalePrice=abs(#{accSalePrice}),
+    accSaleTotal=abs(#{accSaleTotal}),accSaleDiscount=abs(#{accSaleDiscount}),
+    accSaleMoney=abs(#{accSaleMoney}) WHERE accSaleId=#{accSaleId}
   </update>
 
   <!--

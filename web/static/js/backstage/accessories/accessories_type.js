@@ -66,31 +66,13 @@ function formatterStatus(value) {
     }
 }
 
-function openStatusFormatter(index, row) {
-    /*处理数据*/
-    if (row.accTypeStatus == 'Y') {
-        return "&nbsp;&nbsp;<a href='javascript:;' onclick='inactive(\"" + row.accTypeId + "\")'>禁用</a>";
+// 激活或禁用
+function statusFormatter(value, row, index) {
+    if(value == 'Y') {
+        return "&nbsp;&nbsp;<button type='button' class='btn btn-danger' onclick='inactive(\""+'/accType/statusOperate?accTypeId='+row.accTypeId+'&accTypeStatus=Y'+"\")'>禁用</a>";
     } else {
-        return "&nbsp;&nbsp;<a href='javascript:;' onclick='active(\"" + row.accTypeId + "\")'>激活</a>";
+        return "&nbsp;&nbsp;<button type='button' class='btn btn-success' onclick='active(\""+'/accType/statusOperate?accTypeId='+ row.accTypeId+'&accTypeStatus=N'+ "\")'>激活</a>";
     }
-}
-
-//禁用状态
-function inactive(accTypeId) {
-    $.post(contentPath + "/accType/statusOperate?accTypeId=" + accTypeId + "&" + "accTypeStatus=" + "Y", function (data) {
-        if (data.result == "success") {
-            $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
-        }
-    })
-}
-
-//激活状态
-function active(accTypeId) {
-    $.post(contentPath + "/accType/statusOperate?accTypeId=" + accTypeId + "&" + "accTypeStatus=" + 'N', function (data) {
-        if (data.result == "success") {
-            $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
-        }
-    })
 }
 
 //显示删除
