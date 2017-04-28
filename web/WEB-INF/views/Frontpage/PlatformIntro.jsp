@@ -13,94 +13,15 @@
 <link rel="stylesheet" href="/static/css/bootstrap.css">
 <link rel="stylesheet" href="/static/css/animate.css">
 <link rel="stylesheet" href="/static/css/Frontpage.css">
-<style>
-    #main{
-        width: 100%;
-    }
-    #first, #two, #three, #four{
-        width: 100%;
-        height: 650px;
-    }
-    .content-left{
-        height: 95%;
-    }
-    .first-left-bg img{
-        height: 90%;
-    }
-    .container{
-        padding-top: 100px;
-        height: 95%;
-    }
-    .des-txt{
-        font-size:16px;
-        padding-left: 21px;
-    }
-    .btn{
-        margin: 15px 10px;
-        width: 269px;
-        height:54px;
-        font-size: 20px;
-    }
-    .eweim{
-        background: url(/static/img/Frontpage/2wei.jpg) no-repeat;
-        float: right;
-        margin: 10px 15px;
-        width: 135px;
-        height: 135px;
-    }
-    #thirdBar{
-        background: url(/static/img/Frontpage/sg-bg2.jpg)50% -600px;
-        height: 600px;
-    }
-    #fourthBar{
-        background: url(/static/img/Frontpage/sg-bg3.jpg)50% -600px;
-        height: 600px;
-    }
-    #fifthBar{
-        background: url(/static/img/Frontpage/sg-bg.jpg)50% -600px;
-        height:600px;
-    }
-    #sixthBar{
-        background: url(/static/img/Frontpage/sg-bg4.jpg)50% -600px;
-        height: 600px;
-    }
-    .eweima img{
-        height: 90px;
-        width: 90px;
-    }
-    .nav-two{
-        position: fixed;
-        z-index:999;
-        width: 100%;
-        margin-top: -50px;
-        min-width:1350px;
-        height:auto;
-        border:solid #d4d4d4 0.5px;
-        background-color: white;
-        box-shadow: 5px 0px 3px grey;
-    }
-    .nav-ul li{
-        float: left;
-        list-style-type: none;
-        margin:0px 0px;
-        padding:10px 35px;
-        text-align: center;
-        font-size: 23px;
-    }
-    .nav-ul{
-        margin-bottom:0px;
-    }
-    .container-nav{
-        margin-left: 20%;
-    }
-    #computer{
-        background:url(/static/img/Frontpage/computer.png)0 10px no-repeat;
-    }
-    .nav-two .container-nav .nav-ul a{
-        color: grey;
-    }
-</style>
+<link rel="stylesheet" href="/static/css/platform.css">
 <body name="top">
+    <%--
+
+
+        下载页面
+
+
+    --%>
     <div id="main">
         <%--导航栏--%>
         <nav class="nav navbar-default navbar-fixed-top" role="navigation"  style="background-color:	#F5F5F5  ;">
@@ -314,36 +235,12 @@
 <script src="/static/js/bootstrap.min.js"></script>
 <script src="/static/js/wow.js"></script>
 <script src="/static/js/init.js"></script>
+<script src="/static/js/general.js"></script>
 <script>
     if (!(/msie [5|6|7|8|9]/i.test(navigator.userAgent))){
         new WOW().init();
     };
-    $(function(){
-        var backtop = document.getElementById("backtop");
-        $(window).scroll(function () {
-            if($(window).scrollTop() >= 500){
-                backtop.style.display = "block";
-            }else if($(window).scrollTop() <500){
-                backtop.style.display = "none";
-            }
-        });
-    });
-    $(function(){
-        $('a[href*=#],area[href*=#]').click(function() {
-            if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
-                var $target = $(this.hash);
-                $target = $target.length && $target || $('[name=' + this.hash.slice(1) + ']');
-                if ($target.length) {
-                    var targetOffset = $target.offset().top;
-                    $('html,body').animate({
-                                scrollTop: targetOffset
-                            },
-                            1000);
-                    return false;
-                }
-            }
-        });
-    })
+
 </script>
 </body>
 

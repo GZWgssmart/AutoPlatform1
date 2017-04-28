@@ -10,9 +10,80 @@
 <head>
     <title>厂商详情</title>
 </head>
+<link rel="stylesheet" href="/static/css/bootstrap.css">
+<link rel="stylesheet" href="/static/css/animate.css">
 <link rel="stylesheet" href="/static/css/TopBtm.css">
+<style>
+    .content{
+        background: url(/static/img/Frontpage/xc-bg.jpg)30% 0;
+        height:650px;
+        width: 100%;
+    }
+    .content-main{
+        width: 100%;
+        padding: 20px 250px;
+    }
+    .showdata{
+        padding: 15px 40px;
+        background: rgba(0,0,0,0.2);
+        border-radius: 5px;
+    }
+    .content-main label,h2{
+        color: white;
+    }
+    .show-left label{
+        font-size: 21px;
+    }
+    .show-left span{
+        color: #e8e8e8;
+        width: 250px;
+        font-size: 20px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .show-left{
+        width: 50%;
+        float: left;
+    }
+    .show-left div{
+        margin-top: 10px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .show-right{
+        margin: 15px 50px;
+        float: left;
+    }
+    .company-logo img{
+        width: 95%;
+        height: 95%;
+    }
+    .company-logo{
+        margin-left:10px;
+        width: 230px;
+        height: 200px;
+    }
+    .btn{
+        width: 219px;
+        height: 38px;
+        background: #ff6600;
+        font-size: 18px;
+        color: white;
+    }
+    .btn:hover{
+        background: #FF9900;
+        color: #EEEEEE;
+    }
+    .rese-btn{
+        margin: 20px 10px;
+    }
+</style>
 <body>
+    <%--厂家详情页面--%>
     <div class="main">
+        <%--导航栏--%>
         <div class="nav nav-first">
             <div class="nav-left">
                 <ul class="nav-left-ul">
@@ -36,10 +107,56 @@
                 <a href="javaScript:;"><li>首页</li></a>
             </ul>
         </div>
-
+        <%--主内容区开始--%>
+        <div class="content">
+            <div class="content-main">
+                <h2>赣州市天道有限公司</h2>
+                <div class="showdata">
+                    <div class="show-left">
+                        <div>
+                            <label>公司地址：</label>
+                            <span>天知道在哪天知道在哪天知道在哪天知道在哪</span>
+                        </div>
+                        <div>
+                            <label>联系电话：</label>
+                            <span>15779094094</span>
+                        </div>
+                        <div>
+                            <label>负责人：</label>
+                            <span>天知道在哪wwwwwwwwwwwwwwwwwww</span>
+                        </div>
+                        <div>
+                            <label>网站地址：</label>
+                            <span>天知道在哪</span>
+                        </div>
+                        <div>
+                            <label>公司成立时间：</label>
+                            <span>公元397年</span>
+                        </div>
+                        <div>
+                            <label>公司规模：</label>
+                            <span>200</span>
+                        </div>
+                        <div>
+                            <label>公司描述：</label>
+                            <span>这。。。。</span>
+                        </div>
+                    </div>
+                    <div class="show-right">
+                        <div class="company-logo">
+                            <img src="/static/img/Frontpage/u29.png"/>
+                        </div>
+                        <div class="rese-btn">
+                            <a href="javaScript:;" class="btn">我要预约</a>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
         <%--底部模块--%>
         <div class="index-bottom">
-            <div class="bottom-main">
+            <div class="bottom-main" style="margin-top: 0">
                 <div class="bottom-bs">
                     <div class="bg"></div>
                     <a href="javaScript:;" style="text-decoration: none;">
@@ -138,4 +255,8 @@
         <a href="#top" class="go-top" id="backtop" style="display:none;"></a>
     </div>
 </body>
+<script src="/static/js/jquery.min.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+<script src="/static/js/jquery.cxselect.min.js"></script>
+<script src="/static/js/general.js"></script>
 </html>

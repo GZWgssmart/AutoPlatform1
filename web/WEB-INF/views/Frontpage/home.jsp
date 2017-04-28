@@ -8,7 +8,11 @@
 <link rel="stylesheet" href="/static/css/animate.css">
 <link rel="stylesheet" href="/static/css/Frontpage.css">
 <body>
+    <%--
 
+    欢迎页面
+
+    --%>
     <div class="content" name="top">
         <%--导航栏--%>
         <nav class="nav navbar-default navbar-fixed-top" role="navigation">

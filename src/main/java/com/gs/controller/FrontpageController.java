@@ -17,7 +17,6 @@ public class FrontpageController {
 
     @RequestMapping(value ="platformIntro",method = RequestMethod.GET)
     public String Goplatform(){
-
         return "Frontpage/PlatformIntro";
     }
     @RequestMapping(value ="home",method = RequestMethod.GET)
@@ -28,5 +27,10 @@ public class FrontpageController {
     @RequestMapping(value ="factorypage",method = RequestMethod.GET)
     public String Homes(){
         return "Frontpage/Factorypage";
+    }
+
+    @RequestMapping(value = "factorydeta",method = RequestMethod.GET)
+    public String deta(){
+        return "Frontpage/Factorydeta";
     }
 }

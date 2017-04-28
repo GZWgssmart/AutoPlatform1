@@ -9,12 +9,17 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>真正的主页</title>
+    <title>主页</title>
 </head>
 <link rel="stylesheet" href="/static/css/bootstrap.css">
 <link rel="stylesheet" href="/static/css/animate.css">
 <link rel="stylesheet" href="/static/css/FrontHome.css">
 <body>
+    <%--
+
+    主页面
+
+    --%>
     <div class="main" name="top">
         <div class="nav nav-first">
             <div class="nav-left">
@@ -355,6 +360,50 @@
                                 <span style="width:33%;">车型</span>
                                 <span style="width: 20%;">费用</span>
                                 <span style="width: 16%;">保养时间</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="acc-content">
+                        <ul style="margin: 0;padding: 0;">
+                            <li>
+                                <span style="width:20%;margin-left:19px;padding-right: 15px;">前档玻璃外压条</span>
+                                <span style="width:33%;padding-right: 15px;">丰田 Alphard(进口) 3.5 手自一体 豪华版 2011款</span>
+                                <span style="width: 20%;">579.00</span>
+                                <span style="width: 16%;">2017-04-24</span>
+                            </li>
+                            <li>
+                                <span style="width:20%;margin-left:19px;padding-right: 15px;">前档玻璃外压条</span>
+                                <span style="width:33%;padding-right: 15px;">丰田 Alphard(进口) 3.5 手自一体 豪华版 2011款</span>
+                                <span style="width: 20%;">579.00</span>
+                                <span style="width: 16%;">2017-04-24</span>
+                            </li>
+                            <li>
+                                <span style="width:20%;margin-left:19px;padding-right: 15px;">前档玻璃外压条</span>
+                                <span style="width:33%;padding-right: 15px;">坎坎坷坷扩扩所所所安慰道丰田 Alphard(进口) 3.5 手自一体 豪华版 2011款</span>
+                                <span style="width: 20%;">579.00</span>
+                                <span style="width: 16%;">2017-04-24</span>
+                            </li>
+                            <li>
+                                <span style="width:20%;margin-left:19px;padding-right: 15px;">前档玻璃外压条</span>
+                                <span style="width:33%;padding-right: 15px;">丰田 Alphard(进口) 3.5 手自一体 豪华版 2011款</span>
+                                <span style="width: 20%;">579.00</span>
+                                <span style="width: 16%;">2017-04-24</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="recent-title">
+                    <i class="title-bg"></i>
+                    <h3><a href="javaScript:;" style="text-decoration: none;">最近预约维修</a></h3>
+                </div>
+                <div class="con">
+                    <div class="acc-head">
+                        <ul>
+                            <li>
+                                <span style="width:20%;margin-left:15px;">维修项目</span>
+                                <span style="width:33%;">车型</span>
+                                <span style="width: 20%;">维修费用</span>
+                                <span style="width: 16%;">维修时间</span>
                             </li>
                         </ul>
                     </div>

@@ -51,6 +51,11 @@
 
 </style>
 <body>
+    <%--
+
+        厂家列表页面
+
+    --%>
     <div class="main">
         <div class="nav nav-first">
             <div class="nav-left">
@@ -109,7 +114,7 @@
                     </div>
                     <div class="factory">
                         <div class="f-img">
-                            <a href="javaScript:;">
+                            <a href="factorydeta">
                                 <img src="/static/img/Frontpage/slider.png"/>
                             </a>
                         </div>
