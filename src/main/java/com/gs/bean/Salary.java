@@ -93,4 +93,19 @@ public class Salary {
     public void setSalaryCreatedTime(Date salaryCreatedTime) {
         this.salaryCreatedTime = salaryCreatedTime;
     }
+
+    @Override
+    public String toString() {
+        return "Salary{" +
+                "salaryId='" + salaryId + '\'' +
+                ", userId='" + userId + '\'' +
+                ", prizeSalary=" + prizeSalary +
+                ", minusSalay=" + minusSalay +
+                ", totalSalary=" + totalSalary +
+                ", salaryDes='" + salaryDes + '\'' +
+                ", salaryTime=" + salaryTime +
+                ", salaryCreatedTime=" + salaryCreatedTime +
+                ", user=" + user +
+                '}';
+    }
 }

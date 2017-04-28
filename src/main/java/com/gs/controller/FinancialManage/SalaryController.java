@@ -1,26 +1,30 @@
 package com.gs.controller.FinancialManage;
 
 import com.gs.bean.Salary;
+import com.gs.common.Methods;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
+import com.gs.common.util.ExcelExport;
 import com.gs.common.util.ExcelReader;
+import com.gs.common.util.ExcelReaderUtil;
 import com.gs.service.SalaryService;
+import org.apache.commons.io.FileUtils;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -32,7 +36,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/salary")
-public class SalaryController{
+public class SalaryController {
 
     private Logger logger = (Logger) LoggerFactory.getLogger(SalaryController.class);
 
@@ -43,11 +47,9 @@ public class SalaryController{
     public SalaryService salaryService;
 
 
-
-
     @ResponseBody
-    @RequestMapping(value = "queryByPager",method = RequestMethod.GET)
-    public Pager4EasyUI<Salary> queryByPager(@Param("pageNumber") String pageNumber, @Param("pageSize")String pageSize) {
+    @RequestMapping(value = "queryByPager", method = RequestMethod.GET)
+    public Pager4EasyUI<Salary> queryByPager(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
         logger.info("工资信息分页查询");
         Pager pager = new Pager();
         pager.setPageNo(Integer.valueOf(pageNumber));
@@ -64,8 +66,9 @@ public class SalaryController{
         dateFormat.setLenient(false);
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
     }
+
     @ResponseBody
-    @RequestMapping(value = "add",method = RequestMethod.POST)
+    @RequestMapping(value = "add", method = RequestMethod.POST)
     public ControllerResult add(Salary salary) {
         logger.info("添加工资信息");
         salaryService.insert(salary);
@@ -76,7 +79,7 @@ public class SalaryController{
     @RequestMapping(value = "checkUserId", method = RequestMethod.GET)
     public boolean checkUserId(String userId) {
         Salary salary1 = salaryService.queryById(userId);
-        if(salary1 != null){
+        if (salary1 != null) {
             return true;
         }
         return false;
@@ -87,35 +90,36 @@ public class SalaryController{
     @RequestMapping(value = "update", method = RequestMethod.POST)
     public ControllerResult update(Salary salary) {
         logger.info("修改工资信息");
-        System.out.printf(salary.getUserId()+ "ddddddd" +  salary.getSalaryId() + "ccc" + salary.getPrizeSalary());
+        System.out.printf(salary.getUserId() + "ddddddd" + salary.getSalaryId() + "ccc" + salary.getPrizeSalary());
         salaryService.update(salary);
         return ControllerResult.getSuccessResult("修改成功");
     }
 
-    @RequestMapping(value ="exportExcel")
-    public ModelAndView exportExcel(HttpServletRequest request, HttpServletResponse response){
+    @RequestMapping(value = "exportExcel")
+    public ModelAndView exportExcel(HttpServletRequest request, HttpServletResponse response) {
         try {
-            Salary salary =new Salary();
+            Salary salary = new Salary();
             // 查询工资信息
             List<Salary> userlist = salaryService.queryAll();
-            String title ="用户信息表";
-            String[] rowsName=new String[]{"工资发放编号","用户编号","奖金","罚款","总工资","工资发放描述", "工资发放时间", "工资发放创建时间"};
-            List<Object[]>  dataList = new ArrayList<Object[]>();
+            String title = "员工工资信息";
+            String[] rowsName = new String[]{"工资发放编号", "用户编号", "用户名称", "奖金", "罚款", "总工资", "工资发放描述", "工资发放时间", "工资发放创建时间"};
+            List<Object[]> dataList = new ArrayList<Object[]>();
             Object[] objs = null;
             for (int i = 0; i < userlist.size(); i++) {
-                Salary salary1 =userlist.get(i);
+                Salary salary1 = userlist.get(i);
                 objs = new Object[rowsName.length];
                 objs[0] = salary1.getSalaryId();
-                objs[1] = salary1.getUser().getUserName();
-                objs[2] = salary1.getPrizeSalary();
-                objs[3] =  salary1.getMinusSalay();
-                objs[4] = salary1.getTotalSalary();
-                objs[5] = salary1.getSalaryDes();
-                objs[6] = salary1.getSalaryTime();
-                objs[7] = salary1.getSalaryCreatedTime();
+                objs[1] = salary1.getUserId();
+                objs[2] = salary1.getUser().getUserName();
+                objs[3] = salary1.getPrizeSalary();
+                objs[4] = salary1.getMinusSalay();
+                objs[5] = salary1.getTotalSalary();
+                objs[6] = salary1.getSalaryDes();
+                objs[7] = salary1.getSalaryTime();
+                objs[8] = salary1.getSalaryCreatedTime();
                 dataList.add(objs);
             }
-            ExcelReader ex =new ExcelReader(title, rowsName, dataList,response);
+            ExcelExport ex = new ExcelExport(title, rowsName, dataList, response);
             ex.exportData();
         } catch (Exception e) {
             e.printStackTrace();
@@ -124,6 +128,27 @@ public class SalaryController{
     }
 
 
+
+
+    @ResponseBody
+    @RequestMapping(value = "addFile", method = RequestMethod.POST)
+    public ControllerResult addFile(@RequestParam("txt_file") MultipartFile file, HttpServletRequest request) {
+        try {
+            String fileName = file.getOriginalFilename();
+            String prefix = fileName.substring(fileName.lastIndexOf(".") + 1);
+            String newFileName = System.currentTimeMillis() + "." + prefix;
+            String filePath = Methods.getRootPath(request) + Methods.createNewFolder() + "\\" + newFileName;
+            InputStream in = file.getInputStream(); // 获取文件输入流
+            if (fileName != null && !fileName.equals("")) {
+                FileUtils.copyInputStreamToFile(in, new File(filePath));
+            }
+            ExcelReader.readExcelFile(filePath);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ControllerResult.getFailResult("上传失败");
+        }
+        return ControllerResult.getSuccessResult("上传成功");
+    }
 
 
 

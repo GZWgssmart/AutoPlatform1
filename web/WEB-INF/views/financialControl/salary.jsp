@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="/static/css/select2.min.css">
     <link rel="stylesheet" href="/static/css/sweetalert.css">
     <link rel="stylesheet" href="/static/css/table/table.css">
+    <link rel="stylesheet" href="/static/css/fileinput.css">
 
     <title>支出管理</title>
 </head>
@@ -43,9 +44,28 @@
             <button type="button" class="btn btn-default">
                 <a href="/salary/exportExcel">导出数据</a>
             </button>
+            <button type="button" class="btn btn-default">
+                <a href="javascript:void(0)" onclick="importData();">导入数据</a>
+            </button>
         </div>
     </div>
 </div>
+
+
+<!-- 添加弹窗 -->
+<div class="modal fade" id="import" aria-hidden="true" style="overflow:auto;">
+    <div class="container kv-main">
+        <div class="ibox-title">
+            <div class="input-group">
+                <div class="input-group-btn">
+                </div>
+                <input id="txt_file" name="txt_file" type="file" class="form-control" multiple class="file-loading"
+                       placeholder="请选择或输入一个你想上传的相册类型,默认当天日期为类型!"/>
+            </div>
+        </div>
+
+    </div>
+</div><!-- /.modal -->
 
 <!-- 添加弹窗 -->
 <div class="modal fade" id="add" aria-hidden="true" style="overflow:auto;">
@@ -243,5 +263,7 @@
 <script src="/static/js/bootstrap-select/bootstrap-select.js"></script>
 <script src="/static/js/backstage/main.js"></script>
 <script src="/static/js/bootstrap-validate/bootstrapValidator.js"></script>
+<script src="/static/js/fileInput/fileinput.js"></script>
+<script src="/static/js/fileInput/zh.js"></script>
 </body>
 </html>

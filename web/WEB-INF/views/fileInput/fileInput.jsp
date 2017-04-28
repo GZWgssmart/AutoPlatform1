@@ -24,43 +24,12 @@
         <div class="input-group">
             <div class="input-group-btn">
             </div>
-            <input id="txt_file" name="txt_file" type="file" class="form-control" multiple class="file-loading"
+            <input id="txt_file" name="file" type="file" class="form-control" multiple class="file-loading"
                    placeholder="请选择或输入一个你想上传的相册类型,默认当天日期为类型!"/>
         </div>
     </div>
 
 </div>
-
-<%--<div class="container kv-main">--%>
-
-    <%--<div class="ibox-title">--%>
-        <%--<h4 style="color: #00a2d4">上传回忆</h4>--%>
-
-        <%--<div class="input-group">--%>
-            <%--<div class="input-group-btn">--%>
-                <%--<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">--%>
-                    <%--相册类型--%>
-                    <%--<span class="caret"></span>--%>
-                <%--</button>--%>
-                <%--<ul id="photoTypeList" class="dropdown-menu">--%>
-                    <%--<c:forEach items="${photoTypes}" var="pt">--%>
-                        <%--<li class="divider"></li>--%>
-                        <%--<a href="#">--%>
-                            <%--<li onclick="clickType(this);">${pt.title}</li>--%>
-                        <%--</a>--%>
-                    <%--</c:forEach>--%>
-                <%--</ul>--%>
-            <%--</div>--%>
-            <%--<input id="photoType" name="photoType" type="text" class="form-control"--%>
-                   <%--placeholder="请选择或输入一个你想上传的相册类型,默认当天日期为类型!"/>--%>
-        <%--</div>--%>
-
-        <%--<div class="form-group">--%>
-            <%--<input id="file-1" name="file" type="file" class="file" multiple data-overwrite-initial="true"/>--%>
-        <%--</div>--%>
-    <%--</div>--%>
-
-<%--</div>--%>
 
 <script src="/static/js/jquery.min.js"></script>
 <script src="/static/js/bootstrap.min.js"></script>
@@ -71,7 +40,7 @@
     $(function () {
         //0.初始化fileinput
         var oFileInput = new FileInput();
-        oFileInput.Init("txt_file", "/file/addFile");
+        oFileInput.Init("file", "/file/addFile");
     });
 
     //初始化fileinput
