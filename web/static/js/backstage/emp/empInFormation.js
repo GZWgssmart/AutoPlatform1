@@ -4,6 +4,7 @@ $(function () {
     // 初始化select2, 第一个参数是class的名字, 第二个参数是select2的提示语, 第三个参数是select2的查询url
     initSelect2("userRole", "请选择角色", "/role/role2CheckBox");
     initSelect2("userCompany", "请选择所属公司", "/company/queryAllCompany");
+
 });
 
 function addSubmit() {
@@ -27,7 +28,8 @@ function editSubmit() {
 function showEdit(){
     initDatePicker('editForm', 'userBirthday'); // 初始化时间框, 第一参数是form表单id, 第二参数是input的name
     var row =  $('table').bootstrapTable('getSelections');
-    console.log(row);
+    var editAddress = row.userAddress;
+    console.log(editAddress);
     if(row.length >0) {
         $("#editWindow").modal('show'); // 显示弹窗
         $("#editButton").removeAttr("disabled");
@@ -35,7 +37,6 @@ function showEdit(){
         $('#editUserRole').html('<option value="' + emp.role.roleId + '">' + emp.role.roleName + '</option>').trigger("change");
         $('#editUserCompany').html('<option value="' + emp.company.companyId + '">' + emp.company.companyName + '</option>').trigger("change");
         $('#editDatetimepicker').val(formatterDate(emp.userBirthday));
-       console.log(emp)
         $("#editForm").fill(emp);
         validator('editForm');
     }else{
@@ -103,14 +104,6 @@ function validator(formId) {
                     }
                 }
             },
-            userAddress: {
-                message: '地址验证失败',
-                validators: {
-                    notEmpty: {
-                        message: '地址不能为空'
-                    }
-                }
-            },
             userIdentity: {
                 message: '身份证验证失败',
                 validators: {
@@ -120,7 +113,7 @@ function validator(formId) {
                     stringLength: {
                         min:18,
                         max: 18,
-                        message: '身份证长度必须在18位之间'
+                        message: '身份证长度为18位'
                     }
                 }
             },

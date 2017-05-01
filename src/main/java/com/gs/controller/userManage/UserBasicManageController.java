@@ -7,6 +7,7 @@ import com.gs.common.bean.ComboBox4EasyUI;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
+import com.gs.common.util.FileUtil;
 import com.gs.common.util.UUIDUtil;
 import com.gs.service.UserRoleService;
 import com.gs.service.UserService;
@@ -25,6 +26,7 @@ import sun.plugin.util.UIUtil;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -61,6 +63,11 @@ public class UserBasicManageController {
         String area = request.getParameter("area");
         System.out.println("-------------------------==============" + province + "-" + city + "-" + area);
         user.setUserAddress(province + "-" + city + "-" + area);
+
+        HttpSession session = request.getSession();
+        String filePath = FileUtil.uploadPath(session, "userIcon");
+        user.setUserIcon(filePath);
+        System.out.println("文件路径: -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=" + filePath);
 
         UserRole userRole = new UserRole();
         userRole.setUserId(user.getUserId());

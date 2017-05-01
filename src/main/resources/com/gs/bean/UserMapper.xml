@@ -41,10 +41,11 @@
     <![CDATA[
         insert into t_user(userId, userEmail, userPhone, userPwd, userIdentity, userName,
               userGender,userBirthday, userAddress, qqOpenId, weChatOpenId, weiboOpenId,
-              userDes, companyId, userSalary, userCreatedTime, userStatus)
+              userIcon, userDes, companyId, userSalary, userCreatedTime, userStatus)
             values(#{userId}, #{userEmail}, #{userPhone}, #{userPwd}, #{userIdentity},
               #{userName}, #{userGender},#{userBirthday}, #{userAddress}, #{qqOpenId},
-              #{weChatOpenId}, #{weiboOpenId}, #{userDes}, #{companyId}, #{userSalary}, now(),'Y');
+              #{weChatOpenId}, #{weiboOpenId}, #{userIcon}, #{userDes}, #{companyId},
+              #{userSalary}, now(), 'Y');
       ]]>
   </insert>
 
