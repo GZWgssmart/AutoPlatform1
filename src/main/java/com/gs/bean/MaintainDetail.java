@@ -18,6 +18,17 @@ public class MaintainDetail {
 
     private MaintainFix maintainFix;
 
+    // 打印需要字段
+    private String disCount; // 折扣
+
+    public String getDisCount() {
+        return disCount;
+    }
+
+    public void setDisCount(String disCount) {
+        this.disCount = disCount;
+    }
+
     public MaintainFix getMaintainFix() {
         return maintainFix;
     }

@@ -70,4 +70,9 @@ public class MaintainDetailServiceImpl implements MaintainDetailService {
 	public int countByDetail(String maintainRecordId) {
 		return maintainDetailDAO.countByDetail(maintainRecordId);
 	}
+
+	@Override
+	public List<MaintainDetail> queryByRecordId(String maintainRecordId) {
+		return maintainDetailDAO.queryByRecordId(maintainRecordId);
+	}
 }

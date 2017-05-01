@@ -1,6 +1,5 @@
 $(function () {
     initTable('table', '/maintainRecord/queryByPager'); // 初始化表格
-    initSelect2("maintainItem", "请选择维修保养项目", "/maintain/queryAllItem"); // 初始化select2, 第一个参数是class的名字, 第二个参数是select2的提示语, 第三个参数是select2的查询url
 });
 // 查看全部可用
 function showAvailable(){
@@ -49,19 +48,49 @@ function statusFormatter(value, row, index) {
     }
 }
 
-function showAddItem(windowId){
+// 显示所有项目window
+function showItem(windowId){
     $("#"+ windowId).modal('hide');
-    initTableNotTollbar('itemTable', '/maintainRecord/queryByPagerDisable');
+    initTableNotTollbar('itemTable', '/maintain/queryByPagerAll');
     $("#itemWindow").modal('show');
     $("#closeButton").addClass(windowId);
 }
 
+// 在所有项目中点击确定
+function itemSubmit(){
+    var row =  $('#itemTable').bootstrapTable('getSelections');
+    if(row.length >0) {
+        $("#itemWindow").modal('hide');
+        if($("#closeButton").hasClass('addWindow')){
+            $("#addItemId").val(row[0].maintainId);
+            $("#addItem").val(row[0].maintainName);
+            $("#addWindow").modal('show');
+            $("#closeButton").removeClass('addWindow');
+        }else if($("#closeButton").hasClass('editWindow')){
+            $("#editItemId").val(row[0].maintainId);
+            $("#editItem").val(row[0].maintainName);
+            $("#editWindow").modal('show');
+            $("#closeButton").removeClass('editWindow');
+        }
+    }else{
+            swal({
+                title:"",
+                text: "请先选择维修保养项目", // 主要文本
+                confirmButtonColor: "#DD6B55", // 提示按钮的颜色
+                confirmButtonText:"确定", // 提示按钮上的文本
+                type:"warning"}) // 提示类型
+    }
+}
+
+// 关闭所有项目window
 function closeItemWindow(){
     $("#itemWindow").modal('hide');
     if($("#closeButton").hasClass('addWindow')){
         $("#addForm").modal('show');
-    }else{
+        $("#closeButton").removeClass('addWindow');
+    }else if($("#closeButton").hasClass('editWindow')){
         $("#editForm").modal('show');
+        $("#closeButton").removeClass('editWindow');
     }
 }
 
@@ -71,7 +100,6 @@ function showAddDetail(){
     if(row.length >0) {
         $("#addButton").removeAttr("disabled");
         var maintainDetail = row[0];
-        alert(maintainDetail.recordId)
         $("#addForm").fill(maintainDetail);
         $("#addWindow").modal('show');
         validator('addForm'); // 初始化验证
@@ -85,56 +113,12 @@ function showAddDetail(){
     }
 }
 
-function showPrintDetail(){
-    $("#detailWindow").modal('hide');
-    $('#printWindow').show();
-    $('.modal-backdrop').show();
-    var row =  $('#table').bootstrapTable('getSelections'); // 选中的维修保养记录
-    var detailData = $("#detailTable").bootstrapTable('getData');//获取所有明细
-    var div1 = $("#printDiv1"); // 获取div
-    var div2 = $("#printDiv2"); // 获取div
-    var table = $("#printTable");//获取一个table标签,此标签没子元素
-    div1.html("");
-    div2.html("");
-    table.html(""); // 把div内部的内容设置为空字符串
-    var money = 0;
-    var disCountMoney = 0;
-    table.append("<tr><th style='text-align: center' colspan='5'>维修保养记录明细清单</th></tr><tr><span class='fontStyle'><th style='text-align: center'>项目名称</th><th style='text-align: center'>项目折扣</th><th style='text-align: center'>原价</th><th style='text-align: center'>折扣后</th><th style='text-align: center'>创建时间</th></span></tr>");
-    $.each(detailData, function(index, value, item) {
-        money = parseFloat(money + detailData[index].maintainFix.maintainMoney); //总计
-        disCountMoney= parseFloat(disCountMoney + formatterDiscountMoney(detailData[index].maintainFix.maintainMoney, detailData[index]));// 折扣后
-        table.append("<tr><td style='text-align: center'><span class='fontStyle'>"+ detailData[index].maintainFix.maintainName +"</span></td>" +
-            "<td style='text-align: center'><span class='fontStyle'>"+ formatterDiscount(detailData[index].maintainDiscount) +"</span></td>" +
-            "<td style='text-align: center'><span class='fontStyle'>"+ detailData[index].maintainFix.maintainMoney +"</span></td>" +
-            "<td style='text-align: center'><span class='fontStyle'>"+ formatterDiscountMoney(detailData[index].maintainFix.maintainMoney, detailData[index]) +"</span></td>"+
-            "<td style='text-align: center'><span class='fontStyle'>"+ formatterDate(detailData[index].mdcreatedTime) +"</span></td><tr>");
-    });
-    div1.append("<span class='fontStyle'><strong>汽车公司: "+ row[0].checkin.company.companyName +"</strong></span><br/>" +
-        "<span class='fontStyle'>公司联系方式:"+ row[0].checkin.company.companyTel +"</span><br/>" +
-        "<span class='fontStyle'>公司地址:"+ row[0].checkin.company.companyAddress +"</span><br/>");
-    div2.append("<span class='fontStyle'><strong>车主名称:"+ row[0].checkin.userName +"</strong></span><br/>" +
-        "<span class='fontStyle'>车主联系方式:"+ row[0].checkin.userPhone +"</span><br/>" +
-        "<span class='fontStyle'>汽车品牌:"+ row[0].checkin.brand.brandName +"</span><br/>" +
-        "<span class='fontStyle'>汽车车型:"+ row[0].checkin.model.modelName +"</span><br/>" +
-        "<span class='fontStyle'>总计: "+ parseFloat(money).toFixed(1) +"元</span><br/>" +
-        "<span class='fontStyle' style='color:red'><strong>折扣后: "+ parseFloat(disCountMoney).toFixed(1) +"元</strong></strong></span><br/>" +
-        "<span class='fontStyle'>明细日期:"+ formatterDate(new Date()) +"</span><br/>")
-    $("#printWindow").modal('show');
-}
-
+// 所有明细window中的打印按钮
 function showPrint(){
-    var newstr = document.all.item('divData').innerHTML;// 拿打印div所有元素
-    var oldstr = document.body.innerHTML;// 原先页面所有元素
-    document.body.innerHTML = newstr; // 根据打印div绘制一个网页
-    window.print(); // 打印
-    document.body.innerHTML = oldstr; // 重新把网页变回原先页面
-    return false;
+    var row =  $('#table').bootstrapTable('getSelections'); // 选中的维修保养记录
+    window.parent.addPrint(row[0].recordId);
 }
 
-function closePrint(){
-    $('#printWindow').hide();
-    $('.modal-backdrop').hide();
-}
 
 var recordId = "";
 
@@ -164,6 +148,7 @@ function showEditDetail(){
         var maintainDetail = row[0];
         $("#editForm").fill(maintainDetail);
         $('#editItem').html('<option value="' + maintainDetail.maintainFix.maintainId + '">' + maintainDetail.maintainFix.maintainName + '</option>').trigger("change");
+        $("#editItemId").val(maintainDetail.maintainFix.maintainId);
         $("#editWindow").modal('show');
         validator('editForm'); // 初始化验证
     }else{
@@ -176,17 +161,19 @@ function showEditDetail(){
     }
 }
 
+// 项目window关闭按钮
 function closeWindow(){
-    $("#editWindow").modal('hide');
-    $("#detailWindow").modal('show');
+    $("#itemWindow").modal('hide');
+    $("#addWindow").modal('show');
 }
 
+// 所有明细window的用户确认按钮
 function showUserDetail(){
     tableData = $("#detailTable").bootstrapTable('getData');//获取表格的所有内容行
     if(tableData.length > 0){
         swal(
             {title:"",
-                text:"确定确认维修保养明细吗",
+                text:"确定用户已经在维修保养明细清单上签字了吗",
                 type:"warning",
                 showCancelButton:true,
                 confirmButtonColor:"#DD6B55",
@@ -207,7 +194,7 @@ function showUserDetail(){
     }else{
         swal({
             title:"",
-            text: "请先生存维修保养明细", // 主要文本
+            text: "请先生成维修保养明细", // 主要文本
             confirmButtonColor: "#DD6B55", // 提示按钮的颜色
             confirmButtonText:"确定", // 提示按钮上的文本
             type:"warning"}) // 提示类型
@@ -215,14 +202,12 @@ function showUserDetail(){
 }
 
 
-// 点击确定确认
+// 点击确定确定用户已签字
 function userConfirm(){
     tableData = $("#detailTable").bootstrapTable('getData');//获取表格的所有内容行
     var ids = "";// 设置一个字符串
         $.each(tableData, function(index, value, item) {
-            alert(tableData.length)
             if(ids == ""){// 假如这个字符串刚开始设置,
-                alert(tableData[index].maintainItemId)
                 ids = "'"+tableData[index].maintainItemId+"'";// 则直接赋上0索引上的id属性
             }else {
                 alert(tableData[index].maintainItemId)
@@ -254,7 +239,7 @@ function validator(formId) {
             validating: 'glyphicon glyphicon-refresh'
         },
         fields: {
-            maintainItemId: {
+            maintainItemName: {
                 message: '维修保养项目验证失败',
                 validators: {
                     notEmpty: {
@@ -318,17 +303,13 @@ function formSubmit(url, formId, winId){
                     $("input[type=reset]").trigger("click"); // 移除表单中填的值
                     $('#addForm').data('bootstrapValidator').resetForm(true); // 移除所有验证样式
                     $("#addButton").removeAttr("disabled"); // 移除不可点击
-                    $("#" + formId).data('bootstrapValidator').destroy(); // 销毁此form表单
-                    $('#' + formId).data('bootstrapValidator', null);// 此form表单设置为空
-                    // 设置select2的值为空
-                    $("#addItem").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
                 }if(formId == 'editForm'){
                     $('#detailTable').bootstrapTable('refresh');
                     $("#detailWindow").modal('show');
                     $("#editButton").removeAttr("disabled"); // 移除不可点击
-                    $("#" + formId).data('bootstrapValidator').destroy(); // 销毁此form表单
-                    $('#' + formId).data('bootstrapValidator', null);// 此form表单设置为空
                 }
+                $("#" + formId).data('bootstrapValidator').destroy(); // 销毁此form表单
+                $('#' + formId).data('bootstrapValidator', null);// 此form表单设置为空
             } else if (data.result == "fail") {
                 swal({title:"",
                     text:"添加失败",

@@ -4,12 +4,14 @@ import ch.qos.logback.classic.Logger;
 import com.gs.bean.MaintainDetail;
 import com.gs.bean.MaintainFixAcc;
 import com.gs.bean.MaterialList;
+import com.gs.bean.WorkInfo;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
 import com.gs.service.MaintainDetailService;
 import com.gs.service.MaintainFixAccService;
 import com.gs.service.MaterialListService;
+import com.gs.service.WorkInfoService;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -42,6 +44,9 @@ public class MaintainDetailController {
     // 项目配件service
     @Resource
     private MaintainFixAccService maintainFixAccService;
+    // 工单service
+    @Resource
+    private WorkInfoService workInfoService;
 
     /**
      * 查询所有明细
@@ -99,12 +104,12 @@ public class MaintainDetailController {
     }
 
     /**
-     * 用户确认, 此时生成所有物料清单
+     * 用户确认, 此时生成所有物料清单, 两个参数一个为维修保养记录id, 一个为所有项目ids
      */
     @ResponseBody
     @RequestMapping(value = "userConfirm/{recordId}/{ids}", method = RequestMethod.POST)
     public ControllerResult userConfirm(@PathVariable("recordId") String recordId,@PathVariable("ids") String ids) {
-        logger.info("用户确认明细清单, 这时生成所有物料清单");
+        logger.info("用户确认明细清单, 这时生成所有物料清单和工单");
         List<MaintainFixAcc> maintainFixAccs = maintainFixAccService.queryByRecord(ids);
         System.out.print(maintainFixAccs);
         List<MaterialList> materialLists = new ArrayList<MaterialList>();
@@ -115,7 +120,11 @@ public class MaintainDetailController {
             materialList.setMaterialCount(m.getAccCount());
             materialLists.add(materialList);
         }
-        materialListService.insertList(materialLists);
+        materialListService.insertList(materialLists); // 生成物料清单
+        // 用户确认之后, 生成工单, 指派员工进行施工
+        WorkInfo w = new WorkInfo();
+        w.setRecordId(recordId);
+        workInfoService.insert(w);
         return ControllerResult.getSuccessResult("确定成功");
     }
 

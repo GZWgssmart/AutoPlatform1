@@ -15,4 +15,5 @@ import java.util.List;
 public interface MaintainDetailService extends BaseService<String, MaintainDetail>{
     public List<MaintainDetail> queryByDetailByPager(Pager pager, String maintainRecordId);
     public int countByDetail(String maintainRecordId);
+    public List<MaintainDetail> queryByRecordId(String maintainRecordId);
 }

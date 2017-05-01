@@ -18,4 +18,5 @@ import java.util.List;
 public interface MaintainDetailDAO extends BaseDAO<String, MaintainDetail>{
     public List<MaintainDetail> queryByDetailByPager(@Param("pager")Pager pager, @Param("maintainRecordId") String maintainRecordId);
     public int countByDetail(@Param("maintainRecordId") String maintainRecordId);
+    public List<MaintainDetail> queryByRecordId(@Param("maintainRecordId") String maintainRecordId);
 }

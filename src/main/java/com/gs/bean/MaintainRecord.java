@@ -26,6 +26,35 @@ public class MaintainRecord {
 
     private Checkin checkin; // 登记记录
 
+    // 打印需要字段
+    private Double total; // 总计价钱
+    private Date todayTime; // 日期
+    private Double discountMoney; // 总共折扣后价钱
+
+    public Double getTotal() {
+        return total;
+    }
+
+    public void setTotal(Double total) {
+        this.total = total;
+    }
+
+    public Double getDiscountMoney() {
+        return discountMoney;
+    }
+
+    public void setDiscountMoney(Double discountMoney) {
+        this.discountMoney = discountMoney;
+    }
+
+    public Date getTodayTime() {
+        return todayTime;
+    }
+
+    public void setTodayTime(Date todayTime) {
+        this.todayTime = todayTime;
+    }
+
     public Checkin getCheckin() {
         return checkin;
     }
@@ -104,5 +133,21 @@ public class MaintainRecord {
 
     public void setRecordStatus(String recordStatus) {
         this.recordStatus = recordStatus;
+    }
+
+    @Override
+    public String toString() {
+        return "MaintainRecord{" +
+                "recordId='" + recordId + '\'' +
+                ", checkinId='" + checkinId + '\'' +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
+                ", actualEndTime=" + actualEndTime +
+                ", recordCreatedTime=" + recordCreatedTime +
+                ", pickupTime=" + pickupTime +
+                ", recordDes='" + recordDes + '\'' +
+                ", recordStatus='" + recordStatus + '\'' +
+                ", checkin=" + checkin +
+                '}';
     }
 }

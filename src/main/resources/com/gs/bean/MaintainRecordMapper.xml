@@ -77,6 +77,20 @@
           limit #{beginIndex}, #{pageSize}
   </select>
 
+  <select id="queryById" resultMap="BaseResultMap" >
+    select m.*, ck.*, cc.colorId, cc.colorName, cp.plateId, cp.plateName,
+    cm.modelId, cm.modelName, company.companyId,
+    company.companyName,company.companyAddress,
+    company.companyAddress, company.companyTel,
+    company.companyLogo, cb.brandId, cb.brandName
+    from t_maintain_record m, t_checkin ck, t_car_brand cb,
+    t_car_color cc, t_car_model cm, t_car_plate cp, t_company company
+    where m.checkinId = ck.checkinId and ck.brandId = cb.brandId and
+    ck.colorId = cc.colorId and ck.modelId = cm.modelId
+    and ck.plateId = cp.plateId and ck.companyId = company.companyId
+    and m.recordStatus = 'Y' and m.recordId = #{id}
+  </select>
+
   <select id="queryByPagerDisable" resultMap="BaseResultMap" parameterType="com.gs.common.bean.Pager">
     select m.*,c.checkinId as checkin_id,c.userName as user_name from t_maintain_record m, t_checkin c where m.checkinId = c.checkinId and m.recordStatus = 'N' limit #{beginIndex}, #{pageSize}
   </select>

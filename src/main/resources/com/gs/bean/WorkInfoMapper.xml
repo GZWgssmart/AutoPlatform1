@@ -70,7 +70,7 @@
           INSERT INTO t_work_info
           (workId,recordId, userId, workAssignTime, workCreatedTime,workStatus)
           VALUES
-          (uuid(),#{recordId},#{userId},#{workAssignTime},CURRENT_TIMESTAMP,'Y')
+          (uuid(),#{recordId},#{userId},#{workAssignTime},now(),'Y')
       ]]>
   </insert>
 

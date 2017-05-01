@@ -92,15 +92,16 @@
         <div class="modal-content">
             <form role="form" class="form-horizontal" id="addForm">
                 <input type="hidden" define="maintainDetail.recordId" name="maintainRecordId"/>
+                <input type="hidden" id="addItemId" name="maintainItemId">
                 <div class="modal-header" style="overflow:auto;">
                     <h4>生成维修保养记录明细</h4>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">维修保养项目：</label>
                     <div class="col-sm-9">
-                        <input id="addItem" class="form-control" placeholder="请选择维修保养项目" readonly="true" name="maintainItemId" style="width:52%;">
+                        <input id="addItem" class="form-control" placeholder="请选择维修保养项目" readonly="true" style="width:52%;">
                         </input>
-                        <button type="button" class="btn btn-default" onclick="showAddItem('addWindow');">
+                        <button type="button" class="btn btn-default" onclick="showItem('addWindow');">
                             <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查看项目
                         </button>
                     </div>
@@ -132,14 +133,18 @@
             <form role="form" class="form-horizontal" id="editForm">
                 <input type="hidden" define="maintainDetail.maintainDetailId" name="maintainDetailId"/>
                 <input type="hidden" define="maintainDetail.maintainRecordId" name="maintainRecordId"/>
+                <input type="hidden" id="editItemId" name="maintainItemId">
                 <div class="modal-header" style="overflow:auto;">
                     <h4>修改维修保养明细</h4>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">维修保养项目：</label>
-                    <div class="col-sm-7">
-                        <select id="editItem" class="js-example-tags maintainItem" name="maintainItemId" style="width:100%">
-                        </select>
+                    <div class="col-sm-9">
+                        <input id="editItem" type="text" define="maintainDetail.maintainFix.maintainName" class="form-control" placeholder="请选择维修保养项目" readonly="true" style="width:52%;">
+                        </input>
+                        <button type="button" class="btn btn-default" onclick="showItem('editWindow');">
+                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查看项目
+                        </button>
                     </div>
                 </div>
                 <div class="form-group">
@@ -150,7 +155,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default"
-                            onclick="closeWindow()">关闭
+                            data-dismiss="modal">关闭
                     </button>
                     <button id="editButton" type="button" onclick="editSubmit()" class="btn btn-success">保存
                     </button>
@@ -162,7 +167,7 @@
 
 <!-- 维修保养项目表格 -->
 <div class="modal fade" id="itemWindow" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static">
-    <div class="modal-dialog">
+    <div class="modal-dialog" style="width:90%;">
         <div class="modal-content">
         <table id="itemTable" style="table-layout: fixed">
             <thead>
@@ -180,7 +185,7 @@
                 <button id="closeButton" type="button" class="btn btn-default"
                         onclick="closeWindow()">关闭
                 </button>
-                <button id="itemButton" type="button" onclick="editSubmit()" class="btn btn-success">保存
+                <button id="itemButton" type="button" onclick="itemSubmit()" class="btn btn-success">确定
                 </button>
             </div>
         </div><!-- /.modal-content -->
@@ -198,7 +203,7 @@
                         <table class="table table-hover" id="detailTable">
                             <thead>
                             <tr>
-                                <th data-checkbox="true"></th>
+                                <th data-rideo="true"></th>
                                 <th data-field="maintainFix.maintainName">
                                     项目名称
                                 </th>
@@ -227,50 +232,26 @@
                         </table>
                         <div id="detailToolbar" class="btn-group">
                             <button id="btn_userDetail" type="button" class="btn btn-default" onclick="showUserDetail();">
-                                <span class="glyphicon glyphicon-user" aria-hidden="true"></span>用户确认
+                                <span class="glyphicon glyphicon-user" aria-hidden="true"></span>用户已签字
                             </button>
                             <button id="btn_editDetail" type="button" class="btn btn-default" onclick="showEditDetail();">
                                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改明细
                             </button>
-                            <button id="btn_printDetail" type="button" class="btn btn-default" onclick="showPrintDetail();">
+                            <button id="btn_printDetail" type="button" class="btn btn-default" onclick="showPrint();">
                                 <span class="glyphicon glyphicon-print" aria-hidden="true"></span>打印明细
                             </button>
                         </div>
-                        <div style="height: 100px;"></div>
                         <div class="modal-footer" style="overflow:hidden;">
                             <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                             <input type="button" class="btn btn-primary" onclick="checkApp()" value="确定">
                             </input>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-<!-- 明细打印 -->
-<div class="modal fade" id="printWindow" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static" keyboard:false>
-    <div class="modal-dialog" style="width: 90%">
-        <div class="modal-content">
-            <div id="divData">
-                <div class="row" style="padding:30px 30px 0 30px">
-                    <div id="printDiv1" class="col-sm-6"></div>
-                    <div id="printDiv2" class="col-sm-6 text-right"></div>
-                </div>
-                <table id="printTable" border="1px" bordercolor="#676a6c" cellspacing="0px" style="border-collapse:collapse;width:94%;margin-top:3%;margin-left:3%;"></table>
-            </div>
-            <div class="modal-footer" style="margin-top:10px;">
-                <button type="button" class="btn btn-default"
-                        onclick="closePrint()">关闭
-                </button>
-                <button type="button" onclick="showPrint()" class="btn btn-success">打印
-                </button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
 <script src="/static/js/jquery.min.js"></script>
 <script src="/static/js/bootstrap.min.js"></script>
 <script src="/static/js/bootstrap-table/bootstrap-table.js"></script>

@@ -44,6 +44,16 @@
     limit #{pager.beginIndex}, #{pager.pageSize}
   </select>
 
+  <select id="queryByRecordId" resultMap="maintainDetailMap">
+    <![CDATA[
+       select md.*, mf.maintainId, mf.maintainName, mf.maintainHour,
+        mf.maintainMoney, mf.maintainOrFix, mf.maintainDes from t_maintain_detail md
+       LEFT JOIN t_maintain_fix mf on md.maintainItemId = mf.maintainId
+       where md.maintainRecordId = #{maintainRecordId}
+       order by md.mdCreatedTime Desc
+    ]]>
+  </select>
+
   <select id="countByDetail" resultType="int" >
     <![CDATA[
       select count(maintainDetailId) from t_maintain_detail where maintainRecordId = #{maintainRecordId}
