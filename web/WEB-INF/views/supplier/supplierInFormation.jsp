@@ -200,7 +200,8 @@
                          <span id="addError"></span>
                          <button type="button" class="btn btn-default" data-dismiss="modal">关闭 </button>
                          <button id="addButton" type="button" onclick="addSubmit()" class="btn btn-primary">保存</button>
-                     </div>
+                         <input type="reset" name="reset" style="display: none;"/>
+                    </div>
                 </div>
             </form>
         </div><!-- /.modal-content -->
