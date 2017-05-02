@@ -1,68 +1,68 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.gs.dao.MaintainRecordDAO" >
-  <resultMap id="BaseResultMap" type="MaintainRecord" >
-    <id column="recordId" property="recordId" />
-    <result column="checkinId" property="checkinId" />
-    <result column="startTime" property="startTime" />
-    <result column="endTime" property="endTime" />
-    <result column="actualEndTime" property="actualEndTime" />
-    <result column="recordCreatedTime" property="recordCreatedTime" />
-    <result column="pickupTime" property="pickupTime" />
-    <result column="recordDes" property="recordDes" />
-    <result column="recordStatus" property="recordStatus" />
+<mapper namespace="com.gs.dao.MaintainRecordDAO">
+    <resultMap id="MaintainRecordMap" type="MaintainRecord">
+        <id column="recordId" property="recordId"/>
+        <result column="checkinId" property="checkinId"/>
+        <result column="startTime" property="startTime"/>
+        <result column="endTime" property="endTime"/>
+        <result column="actualEndTime" property="actualEndTime"/>
+        <result column="recordCreatedTime" property="recordCreatedTime"/>
+        <result column="pickupTime" property="pickupTime"/>
+        <result column="recordDes" property="recordDes"/>
+        <result column="recordStatus" property="recordStatus"/>
 
-    <association property="checkin" javaType="com.gs.bean.Checkin">
-      <id column="checkin_id" property="checkinId"></id>
-      <result column="user_name" property="userName"></result>
-      <result column="userName" property="userName" jdbcType="VARCHAR" />
-      <result column="userPhone" property="userPhone" jdbcType="VARCHAR" />
-      <result column="brandId" property="brandId" jdbcType="VARCHAR" />
-      <result column="colorId" property="colorId" jdbcType="VARCHAR" />
-      <result column="modelId" property="modelId" jdbcType="VARCHAR" />
-      <result column="plateId" property="plateId" jdbcType="VARCHAR" />
-      <result column="carPlate" property="carPlate" jdbcType="VARCHAR" />
-      <result column="arriveTime" property="arriveTime" jdbcType="TIMESTAMP" />
-      <result column="carMileage" property="carMileage" jdbcType="DOUBLE" />
-      <result column="carThings" property="carThings" jdbcType="VARCHAR" />
-      <result column="intactDegrees" property="intactDegrees" jdbcType="VARCHAR" />
-      <result column="userRequests" property="userRequests" jdbcType="VARCHAR" />
-      <result column="maintainOrFix" property="maintainOrFix" jdbcType="VARCHAR" />
-      <result column="companyId" property="companyId" jdbcType="VARCHAR" />
-      <result column="nowOil" property="nowOil" jdbcType="DOUBLE" />
-      <result column="ifClearCar" property="ifClearCar" jdbcType="VARCHAR" />
+        <association property="checkin" javaType="com.gs.bean.Checkin">
+            <id column="checkin_id" property="checkinId"></id>
+            <result column="user_name" property="userName"></result>
+            <result column="userName" property="userName" jdbcType="VARCHAR"/>
+            <result column="userPhone" property="userPhone" jdbcType="VARCHAR"/>
+            <result column="brandId" property="brandId" jdbcType="VARCHAR"/>
+            <result column="colorId" property="colorId" jdbcType="VARCHAR"/>
+            <result column="modelId" property="modelId" jdbcType="VARCHAR"/>
+            <result column="plateId" property="plateId" jdbcType="VARCHAR"/>
+            <result column="carPlate" property="carPlate" jdbcType="VARCHAR"/>
+            <result column="arriveTime" property="arriveTime" jdbcType="TIMESTAMP"/>
+            <result column="carMileage" property="carMileage" jdbcType="DOUBLE"/>
+            <result column="carThings" property="carThings" jdbcType="VARCHAR"/>
+            <result column="intactDegrees" property="intactDegrees" jdbcType="VARCHAR"/>
+            <result column="userRequests" property="userRequests" jdbcType="VARCHAR"/>
+            <result column="maintainOrFix" property="maintainOrFix" jdbcType="VARCHAR"/>
+            <result column="companyId" property="companyId" jdbcType="VARCHAR"/>
+            <result column="nowOil" property="nowOil" jdbcType="DOUBLE"/>
+            <result column="ifClearCar" property="ifClearCar" jdbcType="VARCHAR"/>
 
-      <association property="brand" javaType="com.gs.bean.CarBrand">
-        <id property="brandId" column="brandId"/>
-        <result property="brandName" column="brandName"/>
-      </association>
+            <association property="brand" javaType="com.gs.bean.CarBrand">
+                <id property="brandId" column="brandId"/>
+                <result property="brandName" column="brandName"/>
+            </association>
 
-      <association property="color" javaType="com.gs.bean.CarColor">
-        <id property="colorId" column="colorId"/>
-        <result property="colorName" column="colorName"/>
-      </association>
+            <association property="color" javaType="com.gs.bean.CarColor">
+                <id property="colorId" column="colorId"/>
+                <result property="colorName" column="colorName"/>
+            </association>
 
-      <association property="plate" javaType="com.gs.bean.CarPlate">
-        <id property="plateId" column="plateId"/>
-        <result property="plateName" column="plateName"/>
-      </association>
+            <association property="plate" javaType="com.gs.bean.CarPlate">
+                <id property="plateId" column="plateId"/>
+                <result property="plateName" column="plateName"/>
+            </association>
 
-      <association property="model" javaType="com.gs.bean.CarModel">
-        <id property="modelId" column="modelId"/>
-        <result property="modelName" column="modelName"/>
-      </association>
+            <association property="model" javaType="com.gs.bean.CarModel">
+                <id property="modelId" column="modelId"/>
+                <result property="modelName" column="modelName"/>
+            </association>
 
-      <association property="company" javaType="com.gs.bean.Company">
-        <id property="companyId" column="companyId"/>
-        <result property="companyName" column="companyName"/>
-        <result property="companyAddress" column="companyAddress"/>
-        <result property="companyTel" column="companyTel"/>
-        <result property="companyLogo" column="companyLogo"/>
-      </association>
-    </association>
-  </resultMap>
+            <association property="company" javaType="com.gs.bean.Company">
+                <id property="companyId" column="companyId"/>
+                <result property="companyName" column="companyName"/>
+                <result property="companyAddress" column="companyAddress"/>
+                <result property="companyTel" column="companyTel"/>
+                <result property="companyLogo" column="companyLogo"/>
+            </association>
+        </association>
+    </resultMap>
 
-  <select id="queryByPager" resultMap="BaseResultMap" parameterType="com.gs.common.bean.Pager">
+    <select id="queryByPager" resultMap="MaintainRecordMap" parameterType="com.gs.common.bean.Pager">
     select m.*, ck.*, cc.colorId, cc.colorName, cp.plateId, cp.plateName,
         cm.modelId, cm.modelName, company.companyId,
         company.companyName,company.companyAddress,
@@ -70,14 +70,14 @@
         company.companyLogo, cb.brandId, cb.brandName
         from t_maintain_record m, t_checkin ck, t_car_brand cb,
          t_car_color cc, t_car_model cm, t_car_plate cp, t_company company
-          where m.checkinId = ck.checkinId and ck.brandId = cb.brandId and
-         ck.colorId = cc.colorId and ck.modelId = cm.modelId
+          where m.checkinId = ck.checkinId and ck.brandId = cb.brandId
+          and ck.colorId = cc.colorId and ck.modelId = cm.modelId
          and ck.plateId = cp.plateId and ck.companyId = company.companyId
          and m.recordStatus = 'Y'
           limit #{beginIndex}, #{pageSize}
   </select>
 
-  <select id="queryById" resultMap="BaseResultMap" >
+    <select id="queryById" resultMap="MaintainRecordMap">
     select m.*, ck.*, cc.colorId, cc.colorName, cp.plateId, cp.plateName,
     cm.modelId, cm.modelName, company.companyId,
     company.companyName,company.companyAddress,
@@ -85,43 +85,122 @@
     company.companyLogo, cb.brandId, cb.brandName
     from t_maintain_record m, t_checkin ck, t_car_brand cb,
     t_car_color cc, t_car_model cm, t_car_plate cp, t_company company
-    where m.checkinId = ck.checkinId and ck.brandId = cb.brandId and
-    ck.colorId = cc.colorId and ck.modelId = cm.modelId
+    where m.checkinId = ck.checkinId and ck.brandId = cb.brandId
+    and ck.colorId = cc.colorId and ck.modelId = cm.modelId
     and ck.plateId = cp.plateId and ck.companyId = company.companyId
     and m.recordStatus = 'Y' and m.recordId = #{id}
   </select>
 
-  <select id="queryByPagerDisable" resultMap="BaseResultMap" parameterType="com.gs.common.bean.Pager">
+    <select id="queryByPagerDisable" resultMap="MaintainRecordMap" parameterType="com.gs.common.bean.Pager">
     select m.*,c.checkinId as checkin_id,c.userName as user_name from t_maintain_record m, t_checkin c where m.checkinId = c.checkinId and m.recordStatus = 'N' limit #{beginIndex}, #{pageSize}
   </select>
 
-  <select id="count" resultType="int" >
+    <select id="count" resultType="int">
     select count(recordId) from t_maintain_record where recordStatus = 'Y'
   </select>
 
-  <select id="countDisable" resultType="int" >
+    <select id="countByDisable" resultType="int">
     select count(recordId) from t_maintain_record where recordStatus = 'N'
   </select>
 
-  <select id="queryAll" resultMap="BaseResultMap">
+    <select id="queryAll" resultMap="MaintainRecordMap">
     select m.*,c.checkinId as checkin_id,c.userName as user_name from t_maintain_record m, t_checkin c where m.checkinId = c.checkinId
   </select>
 
-  <update id="inactive" parameterType="string">
+    <update id="inactive" parameterType="string">
     update t_maintain_record set recordStatus = 'N' where recordId = #{recordId}
   </update>
 
-  <update id="active" parameterType="string">
+    <update id="active" parameterType="string">
     update t_maintain_record set recordStatus = 'Y' where recordId = #{recordId}
   </update>
 
-  <insert id="insert" parameterType="MaintainRecord">
+    <insert id="insert" parameterType="MaintainRecord">
     insert into t_maintain_record(recordId,checkinId,startTime,endTime,actualEndTime,recordCreatedTime,pickupTime,recordDes,recordStatus)
     values(uuid(),#{checkinId},#{startTime},#{endTime},#{actualEndTime},now(),#{pickupTime},#{recordDes},'Y');
   </insert>
 
-  <update id="update" parameterType="MaintainRecord">
+    <update id="update" parameterType="MaintainRecord">
     update t_maintain_record set startTime=#{startTime},endTime=#{endTime},actualEndTime=#{actualEndTime},recordCreatedTime=#{recordCreatedTime},pickupTime=#{pickupTime},recordDes=#{recordDes} where recordId = #{recordId}
   </update>
 
+    <!-- 分页模糊查询 -->
+    <select id="blurredQuery" resultMap="MaintainRecordMap">
+        <![CDATA[
+            select  m.*, ck.*, cc.colorId, cc.colorName, cp.plateId, cp.plateName,
+            cm.modelId, cm.modelName, company.companyId,
+            company.companyName,company.companyAddress,
+            company.companyAddress, company.companyTel,
+            company.companyLogo, cb.brandId, cb.brandName
+            from t_maintain_record m, t_checkin ck, t_car_brand cb,
+            t_car_color cc, t_car_model cm, t_car_plate cp, t_company company
+            where m.checkinId = ck.checkinId and ck.brandId = cb.brandId
+            and ck.colorId = cc.colorId and ck.modelId = cm.modelId
+            and ck.plateId = cp.plateId and ck.companyId = company.companyId
+            and m.recordStatus = 'Y' where 1=1 and
+      ]]>
+        <if test="maintainRecord.checkin.userName != '' and maintainRecord.checkin.userName != null">
+            ck.userName like '%${maintainRecord.checkin.userName}%'
+        </if>
+        <if test="maintainRecord.checkin.userName != '' and maintainRecord.checkin.userName != null and
+            maintainRecord.checkin.companyId != '' and maintainRecord.checkin.companyId != null">
+            or
+        </if>
+        <if test="maintainRecord.checkin.companyId != '' and maintainRecord.checkin.companyId != null">
+            company.companyName like '%${maintainRecord.checkin.companyId}%'
+        </if>
+        <if test="maintainRecord.checkin.companyId != '' and maintainRecord.checkin.companyId != null and
+            maintainRecord.checkin.carPlate != '' and maintainRecord.checkin.carPlate != null">
+            or
+        </if>
+        <if test="maintainRecord.checkin.carPlate != '' and maintainRecord.checkin.carPlate != null">
+            ck.carPlate like '%${maintainRecord.checkin.carPlate}%'
+        </if>
+        <if test="maintainRecord.checkin.carPlate != '' and maintainRecord.checkin.carPlate != null and
+            maintainRecord.checkin.userPhone != '' and maintainRecord.checkin.userPhone != null">
+            or
+        </if>
+        <if test="maintainRecord.checkin.userPhone != '' and maintainRecord.checkin.userPhone != null">
+            ck.userPhone like '%${maintainRecord.checkin.userPhone}%'
+        </if>
+        order by m.recordCreatedTime Desc
+        limit #{pager.beginIndex}, #{pager.pageSize}
+    </select>
+
+    <!-- 分页模糊查询个数 -->
+    <select id="countByBlurred" resultType="int">
+        <![CDATA[
+            select count(m.recordId)
+            from t_maintain_record m, t_checkin ck, t_car_brand cb,
+            t_car_color cc, t_car_model cm, t_car_plate cp, t_company company
+            where m.checkinId = ck.checkinId and ck.brandId = cb.brandId
+            and ck.colorId = cc.colorId and ck.modelId = cm.modelId
+            and ck.plateId = cp.plateId and ck.companyId = company.companyId
+            and m.recordStatus = 'Y' where 1=1 and
+      ]]>
+        <if test="maintainRecord.checkin.userName != '' and maintainRecord.checkin.userName != null">
+            ck.userName like '%${maintainRecord.checkin.userName}%'
+        </if>
+        <if test="maintainRecord.checkin.userName != '' and maintainRecord.checkin.userName != null and
+            maintainRecord.checkin.companyId != '' and maintainRecord.checkin.companyId != null">
+            or
+        </if>
+        <if test="maintainRecord.checkin.companyId != '' and maintainRecord.checkin.companyId != null">
+            company.companyName like '%${maintainRecord.checkin.companyId}%'
+        </if>
+        <if test="maintainRecord.checkin.companyId != '' and maintainRecord.checkin.companyId != null and
+            maintainRecord.checkin.carPlate != '' and maintainRecord.checkin.carPlate != null">
+            or
+        </if>
+        <if test="maintainRecord.checkin.carPlate != '' and maintainRecord.checkin.carPlate != null">
+            ck.carPlate like '%${maintainRecord.checkin.carPlate}%'
+        </if>
+        <if test="maintainRecord.checkin.carPlate != '' and maintainRecord.checkin.carPlate != null and
+            maintainRecord.checkin.userPhone != '' and maintainRecord.checkin.userPhone != null">
+            or
+        </if>
+        <if test="maintainRecord.checkin.userPhone != '' and maintainRecord.checkin.userPhone != null">
+            ck.userPhone like '%${maintainRecord.checkin.userPhone}%'
+        </if>
+    </select>
 </mapper>

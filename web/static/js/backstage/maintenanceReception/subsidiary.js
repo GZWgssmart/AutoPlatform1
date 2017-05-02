@@ -161,6 +161,11 @@ function showEditDetail(){
     }
 }
 
+function closeEditForm(){
+    $("#editWindow").modal('hide');
+    $("#detailWindow").modal('show');
+}
+
 // 项目window关闭按钮
 function closeWindow(){
     $("#itemWindow").modal('hide');
@@ -285,6 +290,14 @@ function editSubmit(){
     } else {
         $("#editButton").removeAttr("disabled");
     }
+}
+
+// 模糊查询
+function blurredQuery(){
+    var button = $("#ulButton");// 获取模糊查询按钮
+    var text = button.text();// 获取模糊查询按钮文本
+    var vaule = $("#ulInput").val();// 获取模糊查询输入框文本
+    initTable('table', '/maintainDetail/blurredQuery?text='+text+'&value='+vaule);
 }
 
 function formSubmit(url, formId, winId){

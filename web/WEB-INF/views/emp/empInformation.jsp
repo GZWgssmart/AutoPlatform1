@@ -71,159 +71,128 @@
 
 <!-- 添加弹窗 aria-hidden="true" 默认隐藏 data-backdrop="static" 点击模态窗底层不会关闭模态窗 -->
 <div class="modal fade" id="addWindow" aria-hidden="true" data-backdrop="static">
-    <div class="modal-dialog">
-        <div class="modal-content" style="width:900px; margin-left:-200px;">
-            <form class="form-horizontal" role="form" id="addForm" method="post" enctype="multipart/form-data">
+    <div class="modal-dialog" style="width:900px;">
+        <div class="modal-content">
+            <div class="modal-body">
                 <div class="modal-header" style="overflow:auto;">
                     <h3>添加人员信息</h3>
                 </div>
-                <div style="width:90%;margin-left:auto;margin-right:auto">
-                    <div class="wrapper wrapper-content">
-                            <div class="col-sm-6">
-                                        <input id="file" name="file" type="file" class="form-control" multiple
-                                               class="file-loading"/>
-                            <div>
-                                <div class="form-group col-md-6 pull-left">
-                                    <label class="col-md-4 control-label">姓&nbsp;&nbsp;名：</label>
-                                    <div class="col-md-8">
-                                        <input type="text" id="addUsername" name="userName" placeholder="请输入姓名"
-                                               class="form-control userName">
-                                    </div>
-                                </div>
-                                <div class="form-group col-md-6 pull-left">
-                                    <label class="col-md-4 control-label">Email：</label>
-                                    <div class="col-md-8">
-                                        <input type="email" name="userEmail" placeholder="请输入邮箱"
-                                               class="form-control userEmail">
-                                    </div>
-                                </div>
-                                <p class="clearfix"></p>
-                            </div>
-                            <div>
-                                <div class="form-group col-md-6 pull-left">
-                                    <label class="col-md-4 control-label">手机号码：</label>
-                                    <div class="col-md-8">
-                                        <input type="number" id="addUserPhone" placeholder="手机号码为11位"
-                                               class="form-control userPhone"
-                                               aria-describedby="sizing-addon2" name="userPhone"/>
-                                    </div>
-                                </div>
-                                <div class="form-group col-md-6 pull-left">
-                                    <label class="col-md-4 control-label">角&nbsp;&nbsp;色：</label>
-                                    <div class="col-md-8">
-                                        <select id="addUserRole" name="roleId" class="js-example-tags userRole"
-                                                style="width: 100%;"></select>
-                                    </div>
-                                </div>
-                                <p class="clearfix"></p>
-                            </div>
-                            <div>
-                                <div class="form-group col-md-6 pull-left">
-                                    <label class="col-md-4 control-label">身份证：</label>
-                                    <div class="col-md-8">
-                                        <input type="number" id="addUserIdentity" name="userIdentity"
-                                               placeholder="请输入身份证号" class="form-control userIdentity">
-                                    </div>
-                                </div>
-                                <div class="form-group col-md-6 pull-left">
-                                    <label class="col-md-4 control-label">性&nbsp;&nbsp;别：</label>
-                                    <div class="col-md-8">
-                                        <select id="addUserGender" name="userGender"
-                                                class="js-example-tags form-control userGender" style="width: 50%;">
-                                            <option value="N">选择性别</option>
-                                            <option value="M">男</option>
-                                            <option VALUE="F">女</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <p class="clearfix"></p>
-                            </div>
-                            <div>
-                                <div class="form-group col-md-6 pull-left">
-                                    <label class="col-md-4 control-label">所属公司：</label>
-                                    <div class="col-md-8">
-                                        <select id="addUserCompany" name="companyId" class="js-example-tags userCompany"
-                                                style="width: 100%;"></select>
-                                    </div>
-                                </div>
-                                <div class="form-group col-md-6 pull-left">
-                                    <label class="col-md-4 control-label">用户描述：</label>
-                                    <div class="col-md-8">
-                                        <input id="addUserDes" type="text" name="userDes" placeholder="请输入用户描述"
-                                               class="form-control">
-                                    </div>
-                                </div>
-                                <p class="clearfix"></p>
-                            </div>
-                            <div>
-                                <div class="form-group col-md-12 pull-right">
-                                    <label class="col-md-2 control-label"
-                                           style="top: 9px;right:5px">地&nbsp;&nbsp;址：</label>
-                                    <div class="col-md-9">
-                                        <fieldset id="city_china">
-                                            <div class="pull-left">省份：<select class="province" disabled="disabled"
-                                                                              name="province"
-                                                                              style="width:75px;"></select></div>
-                                            <div class="pull-left">&nbsp;&nbsp;&nbsp;城市：<select class="city"
-                                                                                                disabled="disabled"
-                                                                                                name="city"></select>
+                <form class="form-horizontal" role="form" id="addForm" method="post" enctype="multipart/form-data">
+                    <div class="col-md-7">
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">用户头像：</label>
+                            <div class="col-md-9">
+                                <div class="container kv-main">
+                                    <div class="ibox-title">
+                                        <div class="input-group">
+                                            <div class="input-group-btn">
                                             </div>
-                                            <div class="pull-left">&nbsp;&nbsp;&nbsp;地区：<select class="area"
-                                                                                                disabled="disabled"
-                                                                                                name="area"></select>
-                                            </div>
-                                        </fieldset>
-                                    </div>
-                                </div>
-                                <p class="clearfix"></p>
-                            </div>
-                            <div>
-                                <div class="form-group col-md-6 pull-left">
-                                    <label class="col-md-4 control-label">生&nbsp;&nbsp;日：</label>
-                                    <div class="col-md-8">
-                                        <input id="addDatetimepicker" placeholder="请选择生日" readonly="true" type="text"
-                                               name="userBirthday"
-                                               class="form-control datetimepicker"/>
-                                    </div>
-                                </div>
-                                <div class="form-group col-md-6 pull-left">
-                                    <label class="col-md-4 control-label">底&nbsp;&nbsp;薪：</label>
-                                    <div class="col-md-8">
-                                        <input id="addUserSalary" type="number" min="0" name="userSalary"
-                                               placeholder="请输入底薪" class="form-control">
-                                    </div>
-                                </div>
-                                <p class="clearfix"></p>
-                            </div>
-                            <div>
-                                <div>
-                                    <div class="form-group col-md-6 pull-left">
-                                        <label class="col-md-4 control-label">密&nbsp;&nbsp;码：</label>
-                                        <div class="col-md-8">
-                                            <input type="password" id="addPassword" name="userPwd" placeholder="请输入密码"
-                                                   class="form-control">
+                                            <input id="file" name="file" type="file" class="form-control" multiple
+                                                   class="file-loading"/>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group col-md-6 pull-left">
-                                    <label class="col-md-4 control-label">确定密码：</label>
-                                    <div class="col-md-8">
-                                        <input type="password" id="addConfirm_password" name="confirm_password"
-                                               placeholder="请确定密码" class="form-control">
-                                    </div>
-                                </div>
-                                <p class="clearfix"></p>
                             </div>
                         </div>
                     </div>
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">姓名：</label>
+                            <div class="col-md-9">
+                                <input type="text" id="addUsername" name="userName" placeholder="请输入姓名"
+                                       class="form-control userName">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">角色：</label>
+                            <div class="col-md-9">
+                                <select id="addUserRole" name="roleId" class="js-example-tags userRole"
+                                        style="width: 100%;"></select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">性别：</label>
+                            <div class="col-md-9">
+                                <select id="addUserGender" name="userGender"
+                                        class="js-example-tags form-control userGender">
+                                    <option value="N">请选择性别</option>
+                                    <option value="M">男</option>
+                                    <option VALUE="F">女</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Email：</label>
+                            <div class="col-md-9">
+                                <input type="email" name="userEmail" placeholder="请输入邮箱"
+                                       class="form-control userEmail">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">电话：</label>
+                            <div class="col-md-9">
+                                <input type="number" id="addUserPhone" placeholder="手机号码为11位"
+                                       class="form-control userPhone"
+                                       aria-describedby="sizing-addon2" name="userPhone"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">生日：</label>
+                            <div class="col-md-9">
+                                <input id="addDatetimepicker" placeholder="请选择生日" readonly="true" type="text"
+                                       name="userBirthday"
+                                       class="form-control datetimepicker"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">底薪：</label>
+                            <div class="col-md-9">
+                                <input id="addUserSalary" type="number" min="0" name="userSalary"
+                                       placeholder="请输入底薪" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="form-group col-md-6">
+                            <label class="col-md-4 control-label">身份证：</label>
+                            <div class="col-md-8">
+                                <input type="number" id="addUserIdentity" name="userIdentity"
+                                       placeholder="请输入身份证号" class="form-control userIdentity">
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="col-md-4 control-label">用户描述：</label>
+                            <div class="col-md-8">
+                                <textarea id="addUserDes" class="form-control" name="userDes" placeholder="请输入用户描述"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label class="col-md-2 control-label"
+                               style="top: 9px;right:5px">家庭住址：</label>
+                        <div class="col-md-10">
+                            <fieldset id="city_china">
+                                <div class="form-group col-md-4">
+                                    <select class="province js-example-tags form-control" disabled="disabled" name="province"></select>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <select class="city js-example-tags form-control" disabled="disabled" name="city"></select>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <select class="area js-example-tags form-control" disabled="disabled" name="area"></select>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+                    <p class="clearfix"></p>
                     <div class="modal-footer">
                         <span id="addError"></span>
                         <button type="button" class="btn btn-default" data-dismiss="modal"> 关闭</button>
                         <button id="addButton" onClick="addSubmit();" type="button" class="btn btn-sm btn-success">保存
                         </button>
                     </div>
-                </div>
-            </form>
+                </form>
+            </div><!-- /.modal-body -->
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
@@ -416,10 +385,10 @@
                 showCaption: false,//是否显示标题
                 browseClass: "btn btn-primary", //按钮样式
                 dropZoneEnabled: true,//是否显示拖拽区域
-                //minImageWidth: 50, //图片的最小宽度
-                //minImageHeight: 50,//图片的最小高度
-                //maxImageWidth: 1000,//图片的最大宽度
-                //maxImageHeight: 1000,//图片的最大高度
+                minImageWidth: 50, //图片的最小宽度
+                minImageHeight: 50,//图片的最小高度
+                maxImageWidth: 350,//图片的最大宽度
+                maxImageHeight: 350,//图片的最大高度
                 maxFileSize: 0,//单位为kb，如果为0表示不限制文件大小
                 maxFileCount: 1, //表示允许同时上传的最大文件个数
                 enctype: 'multipart/form-data',

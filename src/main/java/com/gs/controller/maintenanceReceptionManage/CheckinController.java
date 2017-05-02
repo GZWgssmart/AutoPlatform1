@@ -128,7 +128,6 @@ public class CheckinController {
         logger.info("登记记录模糊查询");
         String text = request.getParameter("text");
         String value = request.getParameter("value");
-        System.out.print(text+value+"-------------------");
         if(text != null && text!="") {
             Pager pager = new Pager();
             pager.setPageNo(Integer.valueOf(pageNumber));

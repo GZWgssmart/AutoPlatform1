@@ -18,34 +18,32 @@
 
 <div class="container">
     <div class="panel-body" style="padding-bottom:0px;">
-        <!--show-refresh, show-toggle的样式可以在bootstrap-table.js的948行修改-->
-        <!-- table里的所有属性在bootstrap-table.js的240行-->
-        <table id="table">
+        <table id="table" style="table-layout: fixed">
             <thead>
             <tr>
-                <th data-radio="true" data-field="status" ></th>
-                <th data-width="100" data-field="checkin.userName">
+                <th data-radio="true" data-field="status"></th>
+                <th data-width="90" data-field="checkin.userName">
                     车主姓名
                 </th>
-                <th data-width="110" data-field="checkin.userPhone">
+                <th data-width="120" data-field="checkin.userPhone">
                     车主电话
                 </th>
-                <th data-width="100" data-field="checkin.brand.brandName">
+                <th data-width="90" data-field="checkin.brand.brandName">
                     汽车品牌
                 </th>
-                <th data-width="100" data-field="checkin.color.colorName">
+                <th data-width="90" data-field="checkin.color.colorName">
                     汽车颜色
                 </th>
-                <th data-width="100" data-field="checkin.model.modelName">
+                <th data-width="90" data-field="checkin.model.modelName">
                     汽车车型
                 </th>
-                <th data-width="100" data-field="checkin.plate.plateName">
+                <th data-width="90" data-field="checkin.plate.plateName">
                     汽车车牌
                 </th>
-                <th data-width="100" data-field="checkin.carPlate">
+                <th data-width="90" data-field="checkin.carPlate">
                     车牌号码
                 </th>
-                <th data-width="100" data-field="checkin.ifClearCar" data-formatter="showStatusFormatter">
+                <th data-width="90" data-field="checkin.ifClearCar" data-formatter="showStatusFormatter">
                     是否洗车
                 </th>
                 <th data-width="150" data-field="checkin.carThings">
@@ -60,13 +58,13 @@
                 <th data-width="100" data-field="checkin.maintainOrFix">
                     保养&nbsp;|&nbsp;维修
                 </th>
-                <th data-field="startTime" data-formatter="formatterDate">维修保养开始时间</th>
-                <th data-field="endTime" data-formatter="formatterDate">维修保养预估结束时间</th>
-                <th data-field="actualEndTime" data-formatter="formatterDate">维修保养实际结束时间</th>
-                <th data-field="recordCreatedTime" data-formatter="formatterDate">维修保养记录创建时间</th>
-                <th data-field="pickupTime" data-formatter="formatterDate">维修保养车主提车时间</th>
-                <th data-field="recordDes">维修保养记录描述</th>
-                <th data-field="recordStatus" data-formatter="statusFormatter">记录状态</th>
+                <th data-width="160" data-field="startTime" data-formatter="formatterDate">维修保养开始时间</th>
+                <th data-width="190" data-field="endTime" data-formatter="formatterDate">维修保养预估结束时间</th>
+                <th data-width="190" data-field="actualEndTime" data-formatter="formatterDate">维修保养实际结束时间</th>
+                <th data-width="190" data-field="recordCreatedTime" data-formatter="formatterDate">维修保养记录创建时间</th>
+                <th data-width="190" data-field="pickupTime" data-formatter="formatterDate">维修保养车主提车时间</th>
+                <th data-width="160" data-field="recordDes">维修保养记录描述</th>
+                <th data-width="100" data-field="recordStatus" data-formatter="statusFormatter">记录状态</th>
             </tr>
             </thead>
         </table>
@@ -83,44 +81,70 @@
             <button id="btn_add" type="button" class="btn btn-default" onclick="showAddDetail();">
                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>生成明细
             </button>
+            <div class="input-group" style="width:350px;float:left;padding:0;margin:0 0 0 -1px;">
+                <div class="input-group-btn">
+                    <button type="button" id="ulButton" class="btn btn-default" style="border-radius:0px;"
+                            data-toggle="dropdown">车主/电话/汽车公司/车牌号<span class="caret"></span></button>
+                    <ul class="dropdown-menu pull-right">
+                        <li><a onclick="onclikLi(this)">车主/电话/汽车公司/车牌号</a></li>
+                        <li class="divider"></li>
+                        <li><a onclick="onclikLi(this)">车主</a></li>
+                        <li class="divider"></li>
+                        <li><a onclick="onclikLi(this)">电话</a></li>
+                        <li class="divider"></li>
+                        <li><a onclick="onclikLi(this)">汽车公司</a></li>
+                        <li class="divider"></li>
+                        <li><a onclick="onclikLi(this)">车牌号</a></li>
+                    </ul>
+                </div><!-- /btn-group -->
+                <input id="ulInput" class="form-control" onkeypress="if(event.keyCode==13) {blurredQuery();}">
+                <a href="javaScript:;" onclick="blurredQuery()"><span
+                        class="glyphicon glyphicon-search search-style"></span></a>
+                </input>
+            </div><!-- /input-group -->
         </div>
     </div>
 </div>
 
-<div id="addWindow" class="modal fade" style="overflow-y:scroll" data-backdrop="static" >
+<div id="addWindow" class="modal fade" style="overflow-y:scroll" data-backdrop="static">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form role="form" class="form-horizontal" id="addForm">
-                <input type="hidden" define="maintainDetail.recordId" name="maintainRecordId"/>
-                <input type="hidden" id="addItemId" name="maintainItemId">
-                <div class="modal-header" style="overflow:auto;">
-                    <h4>生成维修保养记录明细</h4>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">维修保养项目：</label>
-                    <div class="col-sm-9">
-                        <input id="addItem" class="form-control" placeholder="请选择维修保养项目" readonly="true" style="width:52%;">
-                        </input>
-                        <button type="button" class="btn btn-default" onclick="showItem('addWindow');">
-                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查看项目
+            <div class="modal-body">
+                <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
+                <form role="form" class="form-horizontal" id="addForm">
+                    <input type="hidden" define="maintainDetail.recordId" name="maintainRecordId"/>
+                    <input type="hidden" id="addItemId" name="maintainItemId">
+                    <div class="modal-header" style="overflow:auto;">
+                        <h3>生成维修保养记录明细</h3>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">维修保养项目：</label>
+                        <div class="col-sm-9">
+                            <input id="addItem" class="form-control" placeholder="请选择维修保养项目" readonly="true"
+                                   style="width:52%;">
+                            </input>
+                            <button type="button" class="btn btn-default" onclick="showItem('addWindow');">
+                                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查看项目
+                            </button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">项目折扣：</label>
+                        <div class="col-sm-7">
+                            <input type="number" name="maintainDiscount" step="0.1" min="0.1" max="1"
+                                   placeholder="请输入项目折扣, 0.1代表1折" class="form-control" style="width:100%"/>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default"
+                                data-dismiss="modal">关闭
                         </button>
+                        <button id="addButton" type="button" onclick="addSubmit()" class="btn btn-success">生成
+                        </button>
+                        <input type="reset" name="reset" style="display: none;"/>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">项目折扣：</label>
-                    <div class="col-sm-7">
-                        <input type="number" name="maintainDiscount" step="0.1" min="0.1" max="1" placeholder="请输入项目折扣, 0.1代表1折" class="form-control" style="width:100%"/>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default"
-                            data-dismiss="modal">关闭
-                    </button>
-                    <button id="addButton" type="button" onclick="addSubmit()" class="btn btn-success">生成
-                    </button>
-                    <input type="reset" name="reset" style="display: none;"/>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
 </div>
@@ -130,37 +154,43 @@
 <div class="modal fade" id="editWindow" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form role="form" class="form-horizontal" id="editForm">
-                <input type="hidden" define="maintainDetail.maintainDetailId" name="maintainDetailId"/>
-                <input type="hidden" define="maintainDetail.maintainRecordId" name="maintainRecordId"/>
-                <input type="hidden" id="editItemId" name="maintainItemId">
-                <div class="modal-header" style="overflow:auto;">
-                    <h4>修改维修保养明细</h4>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">维修保养项目：</label>
-                    <div class="col-sm-9">
-                        <input id="editItem" type="text" define="maintainDetail.maintainFix.maintainName" class="form-control" placeholder="请选择维修保养项目" readonly="true" style="width:52%;">
-                        </input>
-                        <button type="button" class="btn btn-default" onclick="showItem('editWindow');">
-                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查看项目
+            <div class="modal-body">
+                <span class="glyphicon glyphicon-remove closeModal" onclick="closeEditForm()"></span>
+                <form role="form" class="form-horizontal" id="editForm">
+                    <input type="hidden" define="maintainDetail.maintainDetailId" name="maintainDetailId"/>
+                    <input type="hidden" define="maintainDetail.maintainRecordId" name="maintainRecordId"/>
+                    <input type="hidden" id="editItemId" name="maintainItemId">
+                    <div class="modal-header" style="overflow:auto;">
+                        <h3>修改维修保养明细</h3>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">维修保养项目：</label>
+                        <div class="col-sm-9">
+                            <input id="editItem" type="text" define="maintainDetail.maintainFix.maintainName"
+                                   class="form-control" placeholder="请选择维修保养项目" readonly="true" style="width:52%;">
+                            </input>
+                            <button type="button" class="btn btn-default" onclick="showItem('editWindow');">
+                                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查看项目
+                            </button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">项目折扣：</label>
+                        <div class="col-sm-7">
+                            <input type="number" name="maintainDiscount" placeholder="请输入项目折扣, 0.1代表1折" step="0.1"
+                                   min="0.1" max="1" define="maintainDetail.maintainDiscount" class="form-control"
+                                   style="width:100%"/>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default"
+                                onclick="closeEditForm()">关闭
+                        </button>
+                        <button id="editButton" type="button" onclick="editSubmit()" class="btn btn-success">保存
                         </button>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">项目折扣：</label>
-                    <div class="col-sm-7">
-                        <input type="number" name="maintainDiscount" placeholder="请输入项目折扣, 0.1代表1折" step="0.1" min="0.1" max="1" define="maintainDetail.maintainDiscount" class="form-control" style="width:100%"/>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default"
-                            data-dismiss="modal">关闭
-                    </button>
-                    <button id="editButton" type="button" onclick="editSubmit()" class="btn btn-success">保存
-                    </button>
-                </div>
-            </form>
+                </form>
+            </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
@@ -169,88 +199,93 @@
 <div class="modal fade" id="itemWindow" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog" style="width:90%;">
         <div class="modal-content">
-        <table id="itemTable" style="table-layout: fixed">
-            <thead>
-            <tr>
-                <th data-radio="true" data-field="status"></th>
-                <th data-field="maintainName">维修项目名称</th>
-                <th data-field="maintainHour">维修项目工时</th>
-                <th data-field="maintainMoney">维修项目基础费用</th>
-                <th data-field="maintainManHourFee">维修项目工时费</th>
-                <th data-field="maintainDes">维修项目描述</th>
-            </tr>
-            </thead>
-        </table>
-            <div class="modal-footer">
-                <button id="closeButton" type="button" class="btn btn-default"
-                        onclick="closeWindow()">关闭
-                </button>
-                <button id="itemButton" type="button" onclick="itemSubmit()" class="btn btn-success">确定
-                </button>
+            <div class="modal-body">
+                <span class="glyphicon glyphicon-remove closeModal" onclick="closeWindow()"></span>
+                <div class="modal-header" style="overflow:auto;">
+                    <h3>所有维修保养项目</h3>
+                </div>
+                <table id="itemTable" style="table-layout: fixed">
+                    <thead>
+                    <tr>
+                        <th data-radio="true" data-field="status"></th>
+                        <th data-width="110" data-field="maintainName">维修项目名称</th>
+                        <th data-width="110" data-field="maintainHour">维修项目工时</th>
+                        <th data-width="130" data-field="maintainMoney">维修项目基础费用</th>
+                        <th data-width="130" data-field="maintainManHourFee">维修项目工时费</th>
+                        <th data-width="150" data-field="maintainDes">维修项目描述</th>
+                    </tr>
+                    </thead>
+                </table>
+                <div class="modal-footer">
+                    <button id="closeButton" type="button" class="btn btn-default"
+                            onclick="closeWindow()">关闭
+                    </button>
+                    <button id="itemButton" type="button" onclick="itemSubmit()" class="btn btn-success">确定
+                    </button>
+                </div>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
 <!-- 明细表格 -->
-<div id="detailWindow" class="modal fade" aria-hidden="true" style="overflow-y:scroll" data-backdrop="static" keyboard:false>
+<div id="detailWindow" class="modal fade" aria-hidden="true" style="overflow-y:scroll" data-backdrop="static"
+     keyboard:false>
     <div class="modal-dialog" style="width: 90%">
         <div class="modal-content">
             <div class="modal-body">
-                <div class="row">
-                    <div class="col-sm-12 b-r">
-                        <h3 class="m-t-none m-b">此维修保养记录下的所有明细</h3>
-                        <table class="table table-hover" id="detailTable">
-                            <thead>
-                            <tr>
-                                <th data-rideo="true"></th>
-                                <th data-field="maintainFix.maintainName">
-                                    项目名称
-                                </th>
-                                <th data-field="maintainFix.maintainHour">
-                                    项目公时
-                                </th>
-                                <th data-field="maintainFix.maintainOrFix">
-                                    维修|保养
-                                </th>
-                                <th data-field="maintainFix.maintainDes">
-                                    项目描述
-                                </th>
-                                <th data-field="maintainDiscount" data-formatter="formatterDiscount">
-                                    项目折扣
-                                </th>
-                                <th data-field="maintainFix.maintainMoney">
-                                    原价
-                                </th>
-                                <th data-field="maintainFix.maintainMoney" data-formatter="formatterDiscountMoney">
-                                    折扣后
-                                </th>
-                                <th data-field="mdcreatedTime" data-formatter="formatterDate">
-                                    创建时间
-                                </th>
-                            </thead>
-                        </table>
-                        <div id="detailToolbar" class="btn-group">
-                            <button id="btn_userDetail" type="button" class="btn btn-default" onclick="showUserDetail();">
-                                <span class="glyphicon glyphicon-user" aria-hidden="true"></span>用户已签字
-                            </button>
-                            <button id="btn_editDetail" type="button" class="btn btn-default" onclick="showEditDetail();">
-                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改明细
-                            </button>
-                            <button id="btn_printDetail" type="button" class="btn btn-default" onclick="showPrint();">
-                                <span class="glyphicon glyphicon-print" aria-hidden="true"></span>打印明细
-                            </button>
-                        </div>
-                        <div class="modal-footer" style="overflow:hidden;">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                            <input type="button" class="btn btn-primary" onclick="checkApp()" value="确定">
-                            </input>
-                        </div>
-                    </div>
+                <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
+                <h3 class="m-t-none m-b">此维修保养记录下的所有明细</h3>
+                <table class="table table-hover" id="detailTable">
+                    <thead>
+                    <tr>
+                        <th data-radio="true" data-field="status"></th>
+                        <th data-width="100" data-field="maintainFix.maintainName">
+                            项目名称
+                        </th>
+                        <th data-width="100" data-field="maintainFix.maintainHour">
+                            项目公时
+                        </th>
+                        <th data-width="100" data-field="maintainFix.maintainOrFix">
+                            维修|保养
+                        </th>
+                        <th data-width="100" data-field="maintainFix.maintainDes">
+                            项目描述
+                        </th>
+                        <th data-width="100" data-field="maintainDiscount" data-formatter="formatterDiscount">
+                            项目折扣
+                        </th>
+                        <th data-width="100" data-field="maintainFix.maintainMoney">
+                            原价
+                        </th>
+                        <th data-width="110" data-field="maintainFix.maintainMoney"
+                            data-formatter="formatterDiscountMoney">
+                            折扣后价钱
+                        </th>
+                        <th data-width="100" data-field="mdcreatedTime" data-formatter="formatterDate">
+                            明细创建时间
+                        </th>
+                    </thead>
+                </table>
+                <div id="detailToolbar" class="btn-group">
+                    <button id="btn_userDetail" type="button" class="btn btn-default" onclick="showUserDetail();">
+                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>用户已签字
+                    </button>
+                    <button id="btn_editDetail" type="button" class="btn btn-default" onclick="showEditDetail();">
+                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改明细
+                    </button>
+                    <button id="btn_printDetail" type="button" class="btn btn-default" onclick="showPrint();">
+                        <span class="glyphicon glyphicon-print" aria-hidden="true"></span>打印明细
+                    </button>
+                </div>
+                <div class="modal-footer" style="overflow:hidden;">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                 </div>
             </div>
         </div>
     </div>
+</div>
+</div>
 </div>
 <script src="/static/js/jquery.min.js"></script>
 <script src="/static/js/bootstrap.min.js"></script>

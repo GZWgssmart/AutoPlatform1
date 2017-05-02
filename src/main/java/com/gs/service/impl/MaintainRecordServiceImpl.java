@@ -1,6 +1,5 @@
 package com.gs.service.impl;
 
-import com.gs.bean.Checkin;
 import com.gs.bean.MaintainRecord;
 import com.gs.common.bean.Pager;
 import com.gs.dao.MaintainRecordDAO;
@@ -49,19 +48,15 @@ public class MaintainRecordServiceImpl implements MaintainRecordService {
 		return maintainRecordDAO.queryByPagerDisable(pager);
 	}
 
-	public int countDisable() {
-		return maintainRecordDAO.countDisable();
-	}
-
 	public int countByDisable() {
 		return maintainRecordDAO.countByDisable();
 	}
 
 	public List<MaintainRecord> blurredQuery(Pager pager, MaintainRecord maintainRecord) {
-		return null;
+		return maintainRecordDAO.blurredQuery(pager, maintainRecord);
 	}
 
 	public int countByBlurred(MaintainRecord maintainRecord) {
-		return 0;
+		return maintainRecordDAO.countByBlurred(maintainRecord);
 	}
 }

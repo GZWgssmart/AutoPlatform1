@@ -2,6 +2,7 @@ package com.gs.dao;
 
 import com.gs.bean.MaintainRecord;
 import com.gs.common.bean.Pager;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -15,17 +16,13 @@ import java.util.List;
 */
 @Repository
 public interface MaintainRecordDAO extends BaseDAO<String, MaintainRecord>{
+    /**
+     * 模糊查询
+     */
+    public List<MaintainRecord> blurredQuery(@Param("pager")Pager pager, @Param("maintainRecord")MaintainRecord maintainRecord);
 
     /**
-     * 分页查看禁用
-     * @param pager
-     * @return
+     * 模糊查询的记录数
      */
-    public List<MaintainRecord> queryByPagerDisable(Pager pager);
-
-    /**
-     * 分页查看禁用计数
-     * @return
-     */
-    public int countDisable();
+    public int countByBlurred(@Param("maintainRecord")MaintainRecord maintainRecord);
 }

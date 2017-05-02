@@ -4,7 +4,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>维修保养明细打印</title>
     <link rel="stylesheet" href="/static/css/bootstrap.min.css">
 </head>
 <body>
@@ -19,7 +19,7 @@
         <span class="fontStyle">汽车品牌:${maintainRecord.checkin.brand.brandName}</span><br>
         <span class="fontStyle">汽车车型:${maintainRecord.checkin.model.modelName}</span><br>
         <span class="fontStyle">总计: ${maintainRecord.total}</span><br>
-        <span class="fontStyle" style="color:red"><strong>折扣后: ${maintainRecord.discountMoney}</strong></span>
+        <span class="fontStyle" style="color:red"><strong>折扣后总计: ${maintainRecord.discountMoney}</strong></span>
         <br><span class="fontStyle">明细日期:<fmt:formatDate value="${maintainRecord.todayTime}" pattern="yyyy/MM/dd  HH:mm:ss"></fmt:formatDate></span><br></div>
 </div>
 <table id="printTable" border="1px" bordercolor="#676a6c" cellspacing="0px" style="border-collapse:collapse;width:94%;margin-top:3%;margin-left:3%;">
@@ -27,7 +27,7 @@
     <tr><th style="text-align: center">项目名称</th>
         <th style="text-align: center">项目折扣</th>
         <th style="text-align: center">原价</th>
-        <th style="text-align: center">折扣后</th>
+        <th style="text-align: center">折扣后价钱</th>
         <th style="text-align: center">创建时间</th>
     </tr>
     <c:forEach items="${maintainDetails}" var="m">
@@ -47,7 +47,6 @@
 <script>
     $(function () {
         window.print();
-        return false;
     });
 </script>
 </body>

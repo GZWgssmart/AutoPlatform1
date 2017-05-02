@@ -1,17 +1,11 @@
 package com.gs.controller.maintenanceReceptionManage;
 
 import ch.qos.logback.classic.Logger;
-import com.gs.bean.MaintainDetail;
-import com.gs.bean.MaintainFixAcc;
-import com.gs.bean.MaterialList;
-import com.gs.bean.WorkInfo;
+import com.gs.bean.*;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
-import com.gs.service.MaintainDetailService;
-import com.gs.service.MaintainFixAccService;
-import com.gs.service.MaterialListService;
-import com.gs.service.WorkInfoService;
+import com.gs.service.*;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -20,6 +14,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -47,6 +42,9 @@ public class MaintainDetailController {
     // 工单service
     @Resource
     private WorkInfoService workInfoService;
+    // 维修保养记录service
+    @Resource
+    private MaintainRecordService maintainRecordService;
 
     /**
      * 查询所有明细
@@ -129,14 +127,51 @@ public class MaintainDetailController {
     }
 
     /**
-     * 打印维修保养明细
+     * 维修保养记录模糊查询
+     * @return
      */
     @ResponseBody
-    @RequestMapping(value = "print", method = RequestMethod.POST)
-    public ControllerResult print(MaintainDetail maintainDetail) {
-        logger.info("添加维修保养明细");
-        maintainDetailService.insert(maintainDetail);
-        return ControllerResult.getSuccessResult("添加成功");
+    @RequestMapping(value="blurredQuery", method = RequestMethod.GET)
+    public Pager4EasyUI<MaintainRecord> blurredQuery(HttpServletRequest request, @Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
+        logger.info("维修保养记录模糊查询");
+        String text = request.getParameter("text");
+        String value = request.getParameter("value");
+        System.out.print(text+value+"-------------------");
+        if(text != null && text!="") {
+            Pager pager = new Pager();
+            pager.setPageNo(Integer.valueOf(pageNumber));
+            pager.setPageSize(Integer.valueOf(pageSize));
+            List<MaintainRecord> maintainRecords = null;
+            MaintainRecord maintainRecord = new MaintainRecord();
+            Checkin checkin = new Checkin();
+            Company company = new Company();
+            if(text.equals("车主/电话/汽车公司/车牌号")){ // 当多种模糊搜索条件时
+                checkin.setUserPhone(value);
+                checkin.setCarPlate(value);
+                checkin.setUserName(value);
+                company.setCompanyName(value);
+                maintainRecord.setCheckin(checkin);
+                maintainRecord.getCheckin().setCompany(company);
+            }else if(text.equals("车主")){
+                checkin.setUserName(value);
+                maintainRecord.setCheckin(checkin);
+            }else if(text.equals("汽车公司")){
+                company.setCompanyName(value);
+                maintainRecord.setCheckin(checkin);
+                maintainRecord.getCheckin().setCompany(company);
+            }else if(text.equals("车牌号")){
+                checkin.setCarPlate(value);
+                maintainRecord.setCheckin(checkin);
+            }else if(text.equals("电话")){
+                checkin.setUserPhone(value);
+                maintainRecord.setCheckin(checkin);
+            }
+            maintainRecords = maintainRecordService.blurredQuery(pager, maintainRecord);
+            pager.setTotalRecords(maintainRecordService.countByBlurred(maintainRecord));
+            return new Pager4EasyUI<MaintainRecord>(pager.getTotalRecords(), maintainRecords);
+        }else{
+            return null;
+        }
     }
 
     /**
