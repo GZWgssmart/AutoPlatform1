@@ -57,8 +57,8 @@ public class AccessoriesBuyController {
      * 查询全部的配件信息
      */
     @ResponseBody
-    @RequestMapping(value = "queryAllAccType",method = RequestMethod.GET)
-    public List<ComboBox4EasyUI> queryAllAccType(){
+    @RequestMapping(value = "queryAllAccBuy",method = RequestMethod.GET)
+    public List<ComboBox4EasyUI> queryAllAccBuy(){
         logger.info("查询所有配件分类信息");
         List<AccessoriesBuy> accessoriesBuys = accessoriesBuyService.queryAll();
         List<ComboBox4EasyUI> comboxs = new ArrayList<ComboBox4EasyUI>();

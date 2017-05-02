@@ -57,7 +57,7 @@ public class AccessoriesInventoryController {
      */
     @ResponseBody
     @RequestMapping(value = "queryAllAccInv",method = RequestMethod.GET)
-    public List<ComboBox4EasyUI> queryAllAccType(){
+    public List<ComboBox4EasyUI> queryAllAccInv(){
         logger.info("查询所有配件信息");
         List<Accessories> accessories = accessoriesService.queryAll();
         List<ComboBox4EasyUI> comboxs = new ArrayList<ComboBox4EasyUI>();
