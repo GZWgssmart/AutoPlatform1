@@ -20,4 +20,12 @@ public class Constants {
 
     public static final String DEFAULT_ENCODING = "UTF-8";
 
+
+    public static final String UPLOAD_IMAGES = "uploads/images/";
+
+    public static final String UPLOAD_VIDEO = "uploadsideo/";
+
+    public static final String UPLOAD_LOGO = "uploads/logo/";
+
+    public static final String UPLOAD_HEAD = "uploads/head/";
 }

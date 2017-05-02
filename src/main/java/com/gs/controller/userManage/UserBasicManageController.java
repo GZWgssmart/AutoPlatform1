@@ -3,6 +3,8 @@ package com.gs.controller.userManage;
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.User;
 import com.gs.bean.UserRole;
+import com.gs.common.Constants;
+import com.gs.common.Methods;
 import com.gs.common.bean.ComboBox4EasyUI;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
@@ -18,15 +20,16 @@ import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import sun.plugin.util.UIUtil;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -55,20 +58,24 @@ public class UserBasicManageController {
      */
     @ResponseBody
     @RequestMapping(value = "addUser", method = RequestMethod.POST)
-    public ControllerResult addUser(HttpServletRequest request, User user) {
+    public ControllerResult addUser(MultipartFile file, HttpServletRequest request, User user) {
         logger.info("添加人员");
-        user.setUserId(UUIDUtil.uuid());
         String province = request.getParameter("province");
         String city = request.getParameter("city");
         String area = request.getParameter("area");
-        System.out.println("-------------------------==============" + province + "-" + city + "-" + area);
         user.setUserAddress(province + "-" + city + "-" + area);
-
-        HttpSession session = request.getSession();
-        String filePath = FileUtil.uploadPath(session, "userIcon");
-        user.setUserIcon(filePath);
-        System.out.println("文件路径: -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=" + filePath);
-
+        try {
+            String fileName = Methods.createName(file.getOriginalFilename());
+            String path = Methods.uploadPath("head") + fileName;
+            if(!file.isEmpty()){
+                file.transferTo(new File(path));
+                user.setUserIcon(Constants.UPLOAD_HEAD + Methods.createNewFolder() + "/" + fileName);
+            }else{
+                user.setUserIcon("img/default.jpg");
+            }
+        }catch (IOException e){
+        }
+        System.out.println("头像路径: -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=" + user.getUserIcon());
         UserRole userRole = new UserRole();
         userRole.setUserId(user.getUserId());
         userRole.setRoleId(user.getRoleId());
@@ -94,23 +101,19 @@ public class UserBasicManageController {
         return ControllerResult.getSuccessResult("修改成功");
     }
 
-    /**
-     * setDisabled  禁用
-     */
     @ResponseBody
-    @RequestMapping(value = "setDisabled", method = RequestMethod.POST)
-    public ControllerResult setDisabled(String id) {
-        userService.inactive(id);
-        logger.info("修改状态成功，已禁用");
-        return ControllerResult.getSuccessResult("修改状态成功，已禁用");
-    }
-
-    /**
-     * setActivate 激活
-     */
-    public ControllerResult setActivate(String id) {
-        logger.info("修改状态成功，已激活");
-        return ControllerResult.getSuccessResult("修改状态成功，已激活");
+    @RequestMapping(value = "updateStatus", method = RequestMethod.POST)
+    public ControllerResult updateStatus(String id, String status) {
+        if(status.equals("Y")) {
+            userService.inactive(id);
+            logger.info("修改状态成功，已禁用");
+            return ControllerResult.getSuccessResult("修改状态成功，已禁用");
+        } else if(status.equals("N")) {
+            userService.active(id);
+            logger.info("修改状态成功，已激活");
+            return ControllerResult.getSuccessResult("修改状态成功，已激活");
+        }
+        return ControllerResult.getFailResult("修改状态成功，已激活");
     }
 
     /**
@@ -151,5 +154,19 @@ public class UserBasicManageController {
         dateFormat.setLenient(false);
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
     }
+
+//    @ResponseBody
+//    @RequestMapping(value = "queryAll", method = RequestMethod.GET)
+//    public List<ComboBox4EasyUI> queryAll() {
+//        List<User> users = userService.queryAll();
+//        List<ComboBox4EasyUI> combo = new ArrayList<ComboBox4EasyUI>();
+//        for(User u: users) {
+//            ComboBox4EasyUI c = new ComboBox4EasyUI();
+//            c.setId(u.getUserId());
+//            c.setText(u.getUserName());
+//            combo.add(c);
+//        }
+//        return combo;
+//    }
 
 }
