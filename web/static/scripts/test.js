@@ -91,7 +91,7 @@ swfobject.addDomLoadEvent(function () {
     };
     var swf1 = new fullAvatarEditor('swf1', 335, {
         id: 'swf1',
-        upload_url: 'static/jsp/upload.jsp',
+        upload_url: '/static/jsp/upload.jsp',
         src_url: sourcePic1Url,			//默认加载的原图片的url
         tab_visible: false,				//不显示选项卡，外部自定义
         button_visible: false,				//不显示按钮，外部自定义
