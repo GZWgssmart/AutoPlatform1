@@ -42,11 +42,11 @@
             </thead>
         </table>
         <div id="toolbar" class="btn-group">
-            <button id="btn_available" type="button" class="btn btn-default" onclick="showAvailable();">
-                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>可用登记记录
+            <button id="btn_available" type="button" class="btn btn-success" onclick="showAvailable();">
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询激活类型
             </button>
-            <button id="btn_disable" type="button" class="btn btn-default" onclick="showDisable();">
-                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>禁用登记记录
+            <button id="btn_disable" type="button" class="btn btn-danger" onclick="showDisable();">
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询禁用类型
             </button>
             <button id="btn_add" type="button" class="btn btn-default" onclick="showAdd();">
                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
@@ -105,31 +105,31 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">购买数量：</label>
                     <div class="col-sm-7">
-                        <input type="number" name="accBuyCount" placeholder="请输入购买数量" class="form-control">
+                        <input type="number" name="accBuyCount" onchange="Addcalculate();" id="addCountNum" placeholder="请输入购买数量" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">购买单价：</label>
                     <div class="col-sm-7">
-                        <input type="number" name="accBuyPrice" placeholder="请输入购买单价" class="form-control">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">购买总价：</label>
-                    <div class="col-sm-7">
-                        <input type="number" name="accBuyTotal" placeholder="请输入购买总价" class="form-control">
+                        <input type="number" name="accBuyPrice" onchange="Addcalculate();" id="addBuyPrice" placeholder="请输入购买单价" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">购买折扣：</label>
                     <div class="col-sm-7">
-                        <input type="number" name="accBuyDiscount" placeholder="请输入购买折扣" class="form-control">
+                        <input type="number" min="0.0" step="0.1" onchange="Addcalculate();" max="1" name="accBuyDiscount" id="addBuyDiscount" placeholder="请输入购买折扣，0.1代表1折" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">购买总价：</label>
+                    <div class="col-sm-7">
+                        <input type="number" readonly="true" min="0.0" step="0.1" name="accBuyTotal" id="addBuyTotal" placeholder="请输入购买总价" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">购买最终价：</label>
                     <div class="col-sm-7">
-                        <input type="number" name="accBuyMoney" placeholder="请输入购买最终价" class="form-control">
+                        <input type="number" readonly="true" min="0.0" step="0.1" name="accBuyMoney" id="addBuyMoney" placeholder="请输入购买最终价" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
@@ -175,31 +175,31 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">购买数量：</label>
                     <div class="col-sm-7">
-                        <input type="number" name="accBuyCount" define="AccessoriesBuy.accBuyCount" placeholder="请输入购买数量" class="form-control">
+                        <input type="number" name="accBuyCount" onchange="Editcalculate();" id="editBuyNum" define="AccessoriesBuy.accBuyCount" placeholder="请输入购买数量" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">购买单价：</label>
                     <div class="col-sm-7">
-                        <input type="number" name="accBuyPrice" define="AccessoriesBuy.accBuyPrice" placeholder="请输入购买单价" class="form-control">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">购买总价：</label>
-                    <div class="col-sm-7">
-                        <input type="number" name="accBuyTotal" define="AccessoriesBuy.accBuyTotal" placeholder="请输入购买总价" class="form-control">
+                        <input type="number" name="accBuyPrice" onchange="Editcalculate();" id="editBuyPrice" define="AccessoriesBuy.accBuyPrice" placeholder="请输入购买单价" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">购买折扣：</label>
                     <div class="col-sm-7">
-                        <input type="number" name="accBuyDiscount" define="AccessoriesBuy.accBuyDiscount" placeholder="请输入购买折扣" class="form-control">
+                        <input type="number" min="0.0" step="0.1" max="1" onchange="Editcalculate();" name="accBuyDiscount" id="editBuyDiscount" define="AccessoriesBuy.accBuyDiscount" placeholder="请输入折扣，0.1代表1折" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">购买总价：</label>
+                    <div class="col-sm-7">
+                        <input type="number" min="0.0" step="0.1" readonly="true" name="accBuyTotal" id="editBuyTotal" define="AccessoriesBuy.accBuyTotal" placeholder="请输入购买总价" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">购买最终价：</label>
                     <div class="col-sm-7">
-                        <input type="number" name="accBuyMoney" define="AccessoriesBuy.accBuyMoney" placeholder="请输入购买最终价" class="form-control">
+                        <input type="number" readonly="true" min="0.0" step="0.1" name="accBuyMoney" id="editBuyMoney" define="AccessoriesBuy.accBuyMoney" placeholder="请输入购买最终价" class="form-control">
                     </div>
                 </div>
 

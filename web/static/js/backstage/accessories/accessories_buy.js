@@ -17,11 +17,11 @@ function showDisable() {
 }
 
 // 模糊查询
-function blurredQuery(){
+function blurredQuery() {
     var button = $("#ulButton");// 获取模糊查询按钮
     var text = button.text();// 获取模糊查询按钮文本
     var vaule = $("#ulInput").val();// 获取模糊查询输入框文本
-    initTable('table', '/accBuy/blurredQuery?text='+text+'&value='+vaule);
+    initTable('table', '/accBuy/blurredQuery?text=' + text + '&value=' + vaule);
 }
 
 //显示弹窗
@@ -81,10 +81,10 @@ function formatterStatus(value) {
 
 // 激活或禁用
 function statusFormatter(value, row, index) {
-    if(value == 'Y') {
-        return "&nbsp;&nbsp;<button type='button' class='btn btn-danger' onclick='inactive(\""+'/accBuy/statusOperate?accBuyId='+row.accBuyId+'&accBuyStatus=Y'+"\")'>禁用</a>";
+    if (value == 'Y') {
+        return "&nbsp;&nbsp;<button type='button' class='btn btn-danger' onclick='inactive(\"" + '/accBuy/statusOperate?accBuyId=' + row.accBuyId + '&accBuyStatus=Y' + "\")'>禁用</a>";
     } else {
-        return "&nbsp;&nbsp;<button type='button' class='btn btn-success' onclick='active(\""+'/accBuy/statusOperate?accBuyId='+ row.accBuyId+'&accBuyStatus=N'+ "\")'>激活</a>";
+        return "&nbsp;&nbsp;<button type='button' class='btn btn-success' onclick='active(\"" + '/accBuy/statusOperate?accBuyId=' + row.accBuyId + '&accBuyStatus=N' + "\")'>激活</a>";
     }
 }
 
@@ -240,14 +240,6 @@ function validator(formId) {
                     }
                 }
             },
-            accBuyDiscount: {
-                message: '购买折扣不能为空',
-                validators: {
-                    notEmpty: {
-                        message: '购买折扣不能为空'
-                    }
-                }
-            },
             accBuyMoney: {
                 message: '购买最终价不能为空',
                 validators: {
@@ -302,6 +294,10 @@ function formSubmit(url, formId, winId) {
                     $("input[type=reset]").trigger("click"); // 移除表单中填的值
                     $('#addForm').data('bootstrapValidator').resetForm(true); // 移除所有验证样式
                     $("#addButton").removeAttr("disabled"); // 移除不可点击
+                    $("#" + formId).data('bootstrapValidator').destroy(); // 销毁此form表单
+                    $('#' + formId).data('bootstrapValidator', null);// 此form表单设置为空
+                    $("#addCompany").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
+                    $("#addAccType").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
                 }
             } else if (data.result == "fail") {
                 swal({
@@ -313,4 +309,71 @@ function formSubmit(url, formId, winId) {
                 $("#" + formId).removeAttr("disabled");
             }
         }, "json");
+}
+
+//获取hex颜色值后转换成rgb颜色值后自动添加到rgb颜色框中
+function showAddHex() {
+    var a = document.getElementById("addColor").value;
+    if (a.substr(0, 1) == "#") a = a.substring(1);
+    if (a.length != 6)return alert("请输入正确的十六进制颜色码！")
+    a = a.toLowerCase()
+    b = new Array();
+    for (x = 0; x < 3; x++) {
+        b[0] = a.substr(x * 2, 2)
+        b[3] = "0123456789abcdef";
+        b[1] = b[0].substr(0, 1)
+        b[2] = b[0].substr(1, 1)
+        b[20 + x] = b[3].indexOf(b[1]) * 16 + b[3].indexOf(b[2])
+    }
+    var rbgNumber = b[20] + "," + b[21] + "," + b[22];
+    var rgbColor = document.getElementById("addrgbColor");
+    rgbColor.value = rbgNumber;
+}
+
+function Addcalculate() {
+    //购买数量
+    var countNum = document.getElementById("addCountNum").value;
+    //购买单价
+    var buyPrice = document.getElementById("addBuyPrice").value;
+    //购买折扣
+    var buyDiscount = document.getElementById("addBuyDiscount").value;
+    //购买总价
+    var addBuyTotal = document.getElementById("addBuyTotal");
+    //如果有折扣，则加入折扣进行计算，如果没有最终价格为购买总价。
+    var addBuyMoney = document.getElementById("addBuyMoney");
+    if (countNum != null && buyPrice != null && countNum != "" && buyPrice != "") {
+        //计算出的总价需要进行四舍五入计算。
+        var totalPrice = Math.floor(parseFloat(buyPrice * 100 * countNum)) / 100;
+        //把计算后的值，填入购买总价中。
+        addBuyTotal.value = totalPrice;
+        if (buyDiscount != null && buyDiscount != "") {
+            addBuyMoney.value = totalPrice * buyDiscount;
+        } else {
+            addBuyMoney.value = totalPrice;
+        }
+    }
+}
+
+function Editcalculate() {
+    //购买数量
+    var countNum = document.getElementById("editBuyNum").value;
+    //购买单价
+    var buyPrice = document.getElementById("editBuyPrice").value;
+    //购买折扣
+    var buyDiscount = document.getElementById("editBuyDiscount").value;
+    //购买总价
+    var addBuyTotal = document.getElementById("editBuyTotal");
+    //如果有折扣，则加入折扣进行计算，如果没有最终价格为购买总价。
+    var addBuyMoney = document.getElementById("editBuyMoney");
+    if (countNum != null && buyPrice != null && countNum != "" && buyPrice != "") {
+        //计算出的总价需要进行四舍五入计算。
+        var totalPrice = Math.floor(parseFloat(buyPrice * 100 * countNum)) / 100;
+        //把计算后的值，填入购买总价中。
+        addBuyTotal.value = totalPrice;
+        if (buyDiscount != null && buyDiscount != "") {
+            addBuyMoney.value = totalPrice * buyDiscount;
+        } else {
+            addBuyMoney.value = totalPrice;
+        }
+    }
 }
