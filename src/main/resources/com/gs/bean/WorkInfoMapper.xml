@@ -82,7 +82,7 @@
     <!--更新数据-->
     <update id="update" keyProperty="workId" parameterType="com.gs.bean.WorkInfo">
         <![CDATA[
-          UPDATE t_work_info SET recordId=#{recordId},userId=#{userId},workAssignTime=#{workAssignTime} WHERE workId=#{workId}
+          UPDATE t_work_info SET workId=#{workId},userId=#{userId},workAssignTime=#{workAssignTime} WHERE workId=#{workId}
         ]]>
     </update>
 
