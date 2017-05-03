@@ -47,21 +47,24 @@ public class WorkInfoServiceImpl implements WorkInfoService {
 
 	@Override
 	public List<WorkInfo> queryByPagerDisable(Pager pager) {
-		return null;
+		return workInfoDAO.queryByPagerDisable(pager);
 	}
 
 	@Override
 	public int countByDisable() {
-		return 0;
+		return workInfoDAO.countByDisable();
 	}
 
 	@Override
 	public List<WorkInfo> blurredQuery(Pager pager, WorkInfo workInfo) {
+//		return workInfoDAO.blurredQuery(pager,workInfo);
 		return null;
 	}
 
 	@Override
-	public int countByBlurred(WorkInfo workInfo) {
+	public int countByBlurred(WorkInfo workInfo)
+	{
+//		return workInfoDAO.countByBlurred(workInfo);
 		return 0;
 	}
 

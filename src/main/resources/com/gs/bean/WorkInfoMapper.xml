@@ -22,13 +22,13 @@
 
     <select id="count" resultType="int">
         <![CDATA[
-          SELECT count(workId) FROM t_work_info w WHERE w.workStatus='Y'
+          SELECT count(workId) FROM t_work_info w where 1 =1 and w.workStatus='Y'
         ]]>
     </select>
 
     <select id="countByDisable" resultType="int" >
         <![CDATA[
-        SELECT count(workId) FROM t_work_info w WHERE w.workStatus='N'
+        SELECT count(*) FROM t_work_info w WHERE w.workStatus='N'
     ]]>
     </select>
 
@@ -39,7 +39,7 @@
             u.userNickName FROM t_work_info w
             Left JOIN t_maintain_Record tmR on w.recordId = tmR.recordId
             Left JOIN t_user u on w.userId = u.userId
-            where w.workStatus = 'Y' order by w.workCreatedTime Desc
+            where w.workStatus = 'N' order by w.workCreatedTime Desc
         ]]>
         limit #{beginIndex}, #{pageSize}
     </select>
@@ -53,7 +53,7 @@
             u.userNickName FROM t_work_info w
             Left JOIN t_maintain_Record tmR on w.recordId = tmR.recordId
             Left JOIN t_user u on w.userId = u.userId
-            where w.workStatus = 'N' order by w.workCreatedTime Desc
+            where w.workStatus = 'Y' order by w.workCreatedTime Desc
         ]]>
         limit #{beginIndex}, #{pageSize}
     </select>
@@ -64,7 +64,7 @@
          ]]>
   </select>
 
-    <!--添加数据-->
+   <!-- &lt;!&ndash;添加数据&ndash;&gt;
   <insert id="insert" keyProperty="id" parameterType="com.gs.bean.WorkInfo">
       <![CDATA[
           INSERT INTO t_work_info
@@ -72,7 +72,7 @@
           VALUES
           (uuid(),#{recordId},#{userId},#{workAssignTime},now(),'Y')
       ]]>
-  </insert>
+  </insert>-->
 
     <!--删除数据-->
    <!-- <delete id="deleteById">
@@ -80,21 +80,21 @@
     </delete>-->
 
     <!--更新数据-->
-    <update id="update" keyProperty="id" parameterType="com.gs.bean.WorkInfo">
+    <update id="update" keyProperty="workId" parameterType="com.gs.bean.WorkInfo">
         <![CDATA[
-          UPDATE t_work_info SET recordId=#{recordId}, userId=#{userId}, workAssignTime=#{workAssignTime} WHERE workId=#{workId}
+          UPDATE t_work_info SET recordId=#{recordId},userId=#{userId},workAssignTime=#{workAssignTime} WHERE workId=#{workId}
         ]]>
     </update>
 
     <!--未完成工单-->
-    <update id="inactive" keyProperty="id" parameterType="string">
+    <update id="inactive" keyProperty="workId" parameterType="string">
         <![CDATA[
-          UPDATE t_work_info set workStatus='N' WHERE workId = #{workId}
+            UPDATE t_work_info set workStatus='N' WHERE workId = #{workId}
            ]]>
     </update>
 
     <!--已完成工单-->
-    <update id="active" keyProperty="id" parameterType="string">
+    <update id="active" keyProperty="workId" parameterType="string">
       <![CDATA[
         UPDATE t_work_info set workStatus='Y' WHERE workId = #{workId}
          ]]>

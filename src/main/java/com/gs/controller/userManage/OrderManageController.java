@@ -3,6 +3,7 @@ package com.gs.controller.userManage;
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.WorkInfo;
 import com.gs.common.bean.ControllerResult;
+import com.gs.common.bean.ComboBox4EasyUI;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
 import com.gs.common.util.UUIDUtil;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -35,25 +37,31 @@ public class OrderManageController {
     @Resource
     private WorkInfoService workInfoService;
 
-  /* *
-     * 查询所有工单
-     * @return
-     */
     @ResponseBody
     @RequestMapping(value = "queryAll",method = RequestMethod.GET)
-    public List<WorkInfo> queryAllWork(){
+    public List<ComboBox4EasyUI> queryAllWork(){
         logger.info("查询所有订单");
         List<WorkInfo> workInfosList = workInfoService.queryAll();
-        return workInfosList;
+        List<ComboBox4EasyUI> comboxs = new ArrayList<ComboBox4EasyUI>();
+        for(WorkInfo work : workInfosList){
+            ComboBox4EasyUI comboBox4EasyUI = new ComboBox4EasyUI();
+            comboBox4EasyUI.setId(work.getWorkId());
+            comboBox4EasyUI.setText(work.getRecordId());
+            comboxs.add(comboBox4EasyUI);
+        }
+        return comboxs;
     }
 
 
-    /**
+
+
+    /*
      * 分页查询
      * @param pageNumber
      * @param pageSize
      * @return
-     */
+*/
+
     @ResponseBody
     @RequestMapping(value = "queryByPager",method = RequestMethod.GET)
     public Pager4EasyUI<WorkInfo> queryByPager(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
@@ -67,6 +75,18 @@ public class OrderManageController {
     }
 
 
+/*    @ResponseBody
+    @RequestMapping(value="queryByUserId/{id}",method="RequestMethod.GET")
+    public List<ComboBox4EasyUI> queryUserId(@PathVariable ("id") String id){
+        List<WorkInfo> workinfos = workInfoService.queryByUserId(id);
+        List<ComboBox4EasyUI> comboxs = new ArrayList<ComboBox4EasyUI>();
+        for(WorkInfo w : workinfos){
+            ComboBox4EasyUI comboBox4EasyUI = new ComboBox4EasyUI();
+            comboBox4EasyUI.setId(work.getUserId());
+            comboBox4EasyUI.setText(work.getUserNickname());
+            comboxs.add(comboBox4EasyUI);
+        }
+    }*/
     /**
      * 查询所有未完成工单
      *
@@ -84,11 +104,11 @@ public class OrderManageController {
         return new Pager4EasyUI<WorkInfo>(pager.getTotalRecords(), worklLis);
     }
 
-    /**
+/*    *//**
      *添加订单
      * @param workInfo
      * @return
-     */
+     *//*
     @ResponseBody
     @RequestMapping(value = "add",method = RequestMethod.GET)
     public ControllerResult addWork(WorkInfo workInfo) {
@@ -97,7 +117,7 @@ public class OrderManageController {
         workInfo.setWorkStatus("Y");
         workInfoService.insert(workInfo);
         return ControllerResult.getSuccessResult("添加成功");
-    }
+    }*/
 
     /**
      * 修改订单
@@ -105,11 +125,17 @@ public class OrderManageController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "edit", method = RequestMethod.GET)
+    @RequestMapping(value = "update", method = RequestMethod.POST)
     public ControllerResult updateWork(WorkInfo workInfo) {
-        logger.info("修改订单");
-        workInfoService.update(workInfo);
-        return ControllerResult.getSuccessResult("修改成功");
+        if(workInfo!=null && !workInfo.equals("")){
+            logger.info("修改订单");
+            System.out.println("fdjsldkfls");
+            workInfoService.update(workInfo);
+            return ControllerResult.getSuccessResult("修改成功");
+        }else{
+            return ControllerResult.getFailResult("修改失败，请输入正确的信息");
+        }
+
     }
 
 
