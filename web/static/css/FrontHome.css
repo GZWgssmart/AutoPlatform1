@@ -305,14 +305,14 @@ li{
 .one-li:hover,.two-li:hover,.three-li:hover,.four-li:hover,.five-li:hover,.six-li:hover
 ,.seven-li:hover,.eight-li:hover,.nine-li:hover{
     transform: translate(0px,-15px);
-    border:solid 2px #01AAED;
+    border:solid 3px #01AAED;
 }
 .ten-li:hover,.eleven-li:hover,.twelve-li:hover,.thirteen-li:hover,
 .fourteen-li:hover,.fifteen-li:hover,.sixteen-li:hover
 ,.seventeen-li:hover,.eighteen-li:hover{
     transform:translate(0px,-15px);
     background: white;
-    border:solid 2px #01AAED;
+    border:solid 3px #01AAED;
 }
 .index-ul .one-li a{
     background: url(/static/img/Frontpage/indexghicon1.png)no-repeat center -175px;

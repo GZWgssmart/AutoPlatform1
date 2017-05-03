@@ -74,12 +74,13 @@
             <ul class="nav-two-ul">
                 <a href="home"><li>首页</li></a>
                 <a href="factorypage"><li class="actives">找商家</li></a>
-                <a href="javaScript:;"><li>首页</li></a>
+                <a href="resepage"><li>我要预约</li></a>
                 <a href="javaScript:;"><li>首页</li></a>
                 <a href="javaScript:;"><li>首页</li></a>
                 <a href="javaScript:;"><li>首页</li></a>
             </ul>
         </div>
+        <%--主内容区--%>
         <div class="content">
             <div class="search-box">
                 <form method="get" name="search">

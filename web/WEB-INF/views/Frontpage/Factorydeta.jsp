@@ -101,7 +101,7 @@
             <ul class="nav-two-ul">
                 <a href="home"><li>首页</li></a>
                 <a href="factorypage"><li class="actives">找商家</li></a>
-                <a href="javaScript:;"><li>首页</li></a>
+                <a href="resepage"><li>我要预约</li></a>
                 <a href="javaScript:;"><li>首页</li></a>
                 <a href="javaScript:;"><li>首页</li></a>
                 <a href="javaScript:;"><li>首页</li></a>
@@ -147,7 +147,7 @@
                             <img src="/static/img/Frontpage/u29.png"/>
                         </div>
                         <div class="rese-btn">
-                            <a href="javaScript:;" class="btn">我要预约</a>
+                            <a href="resepage" class="btn">我要预约</a>
                         </div>
                     </div>
                     <div class="clearfix"></div>

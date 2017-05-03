@@ -19,6 +19,7 @@ public class FrontpageController {
     public String Goplatform(){
         return "Frontpage/PlatformIntro";
     }
+
     @RequestMapping(value ="home",method = RequestMethod.GET)
     public String Home(){
         return "Frontpage/Frontindex";
@@ -33,4 +34,10 @@ public class FrontpageController {
     public String deta(){
         return "Frontpage/Factorydeta";
     }
+
+    @RequestMapping(value ="resepage",method=RequestMethod.GET)
+    public String resepage(){
+        return "Frontpage/resepage";
+    }
+
 }

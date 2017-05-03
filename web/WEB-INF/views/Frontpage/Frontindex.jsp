@@ -22,23 +22,23 @@
     --%>
     <div class="main" name="top">
         <div class="nav nav-first">
-            <div class="nav-left">
-                <ul class="nav-left-ul">
-                    <li>欢迎您，请登录</li>
-                    <a href=""><li>登录</li></a>
-                    <a href=""><li>绑定手机号</li></a>
-                    <a href="" class="right-ul"><li>我的中心</li></a>
-                    <a href="" class="right-ul"><li>消息通知</li></a>
-                    <div class="clearfix"></div>
-                </ul>
-            </div>
-            <div class="clearfix"></div>
+        <div class="nav-left">
+            <ul class="nav-left-ul">
+                <li>欢迎您，请登录</li>
+                <a href=""><li>登录</li></a>
+                <a href=""><li>绑定手机号</li></a>
+                <a href="" class="right-ul"><li>我的中心</li></a>
+                <a href="" class="right-ul"><li>消息通知</li></a>
+                <div class="clearfix"></div>
+            </ul>
         </div>
+        <div class="clearfix"></div>
+    </div>
         <div class="nav nav-two" id="navbar-two">
             <ul class="nav-two-ul">
                 <a href="home"><li class="actives">首页</li></a>
                 <a href="factorypage"><li>找商家</li></a>
-                <a href="javaScript:;"><li>首页</li></a>
+                <a href="resepage"><li>我要预约</li></a>
                 <a href="javaScript:;"><li>首页</li></a>
                 <a href="javaScript:;"><li>首页</li></a>
                 <a href="javaScript:;"><li>首页</li></a>

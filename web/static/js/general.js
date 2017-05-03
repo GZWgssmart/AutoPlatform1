@@ -15,12 +15,13 @@ $(function () {
         }
     }) ;
 });
-$(".nav-two-ul a li").each(function(){
+
+/*$(".nav-two-ul a li").each(function(){
     $this = $(this);
     if($this[0].href==String(window.location)){
         $this.addClass("actives");
     }
-});
+});*/
 $(".paging-ul .paging-li ").each(function () {
     $(this).click(function () {
         $(".paging-ul .paging-li ").removeClass("active");
