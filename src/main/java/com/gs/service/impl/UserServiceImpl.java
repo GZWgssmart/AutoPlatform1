@@ -8,6 +8,7 @@ import com.gs.service.UserService;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Set;
 
 import com.gs.common.bean.Pager;
 /**
@@ -51,6 +52,16 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public Pager4EasyUI queryByPagerAll(Pager pager) {
 		return userDAO.queryByPagerAll(pager);
+	}
+
+	@Override
+	public Set<String> queryPermissions(String email) {
+		return userDAO.queryPermissions(email);
+	}
+
+	@Override
+	public Set<String> queryRoles(String email) {
+		return userDAO.queryRoles(email);
 	}
 
 	public List<User> queryByPagerDisable(Pager pager) {

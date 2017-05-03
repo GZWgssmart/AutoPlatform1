@@ -107,6 +107,21 @@
     ]]>
   </select>
 
+
+  <select id="queryRoles" parameterType="String" resultType="String">
+    SELECT roleName FROM auto_platform.t_role WHERE roleId
+    IN (select t_user_role.roleId from auto_platform.t_user_role
+    WHERE user_id = (select t_user.userId from auto_platform.t_user where email = #{email}))
+  </select>
+
+  <select id="queryPermissions" parameterType="String" resultType="String">
+    SELECT permissionName FROM auto_platform.t_permission
+    WHERE id IN (SELECT t_role_permission.permissionId FROM auto_platform.t_role_permission
+    WHERE role_id IN (SELECT t_user_role.roleId FROM auto_platform.t_user_role
+    WHERE user_id = (SELECT t_user.userId FROM auto_platform.t_user
+    WHERE email = #{email})))
+  </select>
+
   <!-- 根据维修保养记录查询到用户的email发送邮件提醒车主进行提车 -->
   <select id="queryEmail" resultMap="userBasicManageMap">
     <![CDATA[
