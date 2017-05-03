@@ -31,4 +31,11 @@ public interface UserDAO extends BaseDAO<String, User>{
      * 根据维修保养记录查询到用户的email发送邮件提醒车主进行提车
      */
     public List<User> queryEmail(String ids);
-}}
+
+    /**
+     *根据邮箱查询用户对应的id
+     * @param email
+     * @return
+     */
+    public User queryByEmail(String email);
+}
