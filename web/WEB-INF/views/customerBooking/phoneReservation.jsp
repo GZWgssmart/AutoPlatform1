@@ -62,6 +62,11 @@
                 <th data-width="100" data-hide="all" data-field="appoitmentStatus" data-formatter="statusFormatter">
                     记录状态
                 </th>
+                <th data-width="100" data-hide="" >
+                    是否已预约
+                </th>
+
+
             </tr>
             </thead>
         </table>
@@ -161,7 +166,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">车牌号码：</label>
                     <div class="col-sm-7">
-                        <input type="text" id="addPlateId" name="carPlate" placeholder="请输入车牌号码" class="form-control"/>
+                        <input id="addPlate" name="carPlate" placeholder="请输入车牌号码" class="form-control"/>
                     </div>
                 </div>
                 <div class="form-group">
@@ -303,7 +308,7 @@
                                 <th data-field="plate.plateName">
                                     汽车车牌
                                 </th>
-                                <th data-field="carPlate">
+                                <th data-field="plateId">
                                     车牌号码
                                 </th>
                                 <th data-field="arriveTime" data-formatter="formatterDate">
