@@ -4,6 +4,8 @@ import com.gs.bean.User;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
 
+import java.util.List;
+
 /**
 *由CSWangBin技术支持
 *
@@ -14,6 +16,6 @@ import com.gs.common.bean.Pager4EasyUI;
 public interface UserService extends BaseService<String, User>{
 
     //  分页查询全部，不分状态
-    public Pager4EasyUI queryByPagerAll(Pager pager);
-
+    public Pager4EasyUI queryByPagerAll(Pager pr);
+    public List<User> queryEmail(String ids);
 }

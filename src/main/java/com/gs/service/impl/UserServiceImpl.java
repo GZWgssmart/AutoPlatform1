@@ -68,4 +68,8 @@ public class UserServiceImpl implements UserService {
 	public int countByBlurred(User user) {
 		return 0;
 	}
+
+	public List<User> queryEmail(String ids) {
+		return userDAO.queryEmail(ids);
+	}
 }

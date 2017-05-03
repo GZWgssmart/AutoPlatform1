@@ -321,6 +321,7 @@ CREATE TABLE `t_appointment` (
   `appCreatedTime` datetime NOT NULL COMMENT '预约记录创建时间，not null',
   `companyId` varchar(36) DEFAULT NULL COMMENT '汽修公司编号，来源于t_company表',
   `appoitmentStatus` varchar(2) DEFAULT NULL COMMENT '预约状态，Y表示可用，N表示不可用',
+  `currentStatus` varchar(100) DEFAULT NULL COMMENT '标明此预约记录当前状态是什么',
   PRIMARY KEY (`appointmentId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -344,6 +345,8 @@ CREATE TABLE `t_checkin` (
   `carThings` varchar(500) DEFAULT NULL COMMENT '车上物品描述',
   `intactDegrees` varchar(500) DEFAULT NULL COMMENT '汽车完好度描述',
   `userRequests` varchar(500) DEFAULT NULL COMMENT '用户要求描述',
+  `ifClearCar` varchar(2) DEFAULT NULL COMMENT '是否洗车, Y或N',
+  `nowOil` double DEFAULT NULL COMMENT '当前油量',
   `maintainOrFix` varchar(20) DEFAULT NULL COMMENT '标识是保养还是维修',
   `checkinCreatedTime` datetime DEFAULT NULL COMMENT '登记记录创建的时间',
   `companyId` varchar(36) DEFAULT NULL COMMENT '汽修公司编号，来源于t_company表',
@@ -365,6 +368,7 @@ CREATE TABLE `t_maintain_record` (
   `pickupTime` datetime DEFAULT NULL COMMENT '维修保养结束车主提车时间',
   `recordDes` varchar(500) DEFAULT NULL COMMENT '维修保养记录描述',
   `recordStatus` varchar(2) DEFAULT NULL COMMENT '维修保养记录状态，Y表示可用，N表示不可用',
+  `currentStatus` varchar(100) DEFAULT NULL COMMENT '标明此维修保养记录当前状态是什么',
   PRIMARY KEY (`recordId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
