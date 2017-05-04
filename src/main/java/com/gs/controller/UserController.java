@@ -2,13 +2,13 @@ package com.gs.controller;
 
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.User;
-import com.gs.common.Constants;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.util.EncryptUtil;
 import com.gs.service.UserService;
 import org.apache.ibatis.annotations.Param;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
+import org.apache.shiro.subject.Subject;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,13 +27,13 @@ public class UserController {
     private UserService userService;
 
 
-    private org.apache.shiro.subject.Subject subject;
+    private Subject subject;
 
     @RequestMapping(value = "loginPage",method = RequestMethod.GET)
-    public String loginPage(){
+    public String loginPage() {
         return "user/login";
     }
-
+    
 
     /**
      * 登陆方法。
