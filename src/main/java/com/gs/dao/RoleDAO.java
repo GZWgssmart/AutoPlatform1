@@ -2,6 +2,7 @@ package com.gs.dao;
 
 import com.gs.bean.Permission;
 import com.gs.bean.Role;
+import com.gs.common.bean.Pager;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -17,4 +18,11 @@ import java.util.List;
 @Repository
 public interface RoleDAO extends BaseDAO<String, Role>{
     public List<Role> queryAll(@Param("roleStatus") String roleStatus);
+
+    public List<Role> queryByPager(@Param("roleStatus")String roleStatus, @Param("pager")Pager pager);
+
+    public int count(@Param("roleStatus") String roleStatus);
+
+    public int updateStatus (Role role);
+
 }

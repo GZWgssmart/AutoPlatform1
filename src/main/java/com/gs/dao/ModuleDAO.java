@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 /**
 *由CSWangBin技术支持
@@ -16,4 +17,8 @@ import java.util.List;
 @Repository
 public interface ModuleDAO extends BaseDAO<String, Module>{
     public List<Module> queryAll(@Param("moduleStatus")String moduleStatus);
+
+    public int updPermissions(@Param("oldModuleId")String oldModuleId, @Param("newModuleId")String newModuleId);
+
+    public int updPermission(@Param("permissionId")String permissionId, @Param("moduleId")String moduleId);
 }

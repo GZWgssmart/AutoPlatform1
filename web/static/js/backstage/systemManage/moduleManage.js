@@ -1,253 +1,452 @@
-$(function () {
+var initObj = {};
+$(function() {
+    initModules();
+    init();
+    validator('addForm');
+    windowScrollListener();
 });
 
-$("#editForm").submit(function(){
-    $(":submit",this).attr("disabled","disabled");
-});
-
-$("#addForm").submit(function(){
-    $(":submit",this).attr("disabled","disabled");
-});
-
-function showAvailable(){
-    alert("可用");
-}
-
-function showDisable(){
-    alert("禁用");
-}
-
-function showCollapse(id){
-    var coll = "collapse"+id; // 获取到被打开的collapse Id;
-    $("#"+coll).on('hide.bs.collapse', function () { // 当一个折叠窗被折叠时, 清空其所内所有事件
-        var collapseDiv = $("#collapse"+id);
-        collapseDiv.html("");
-    })
-    $.post("/role/permission/"+id,
-        function (data) {
-            var div = $("#collapse"+id);
-            div.html("");
-            var psYes = "<div id='yesPermission" + id + "' class='panel-body'><h4>已有权限</h4>";
-            var psNo = "<div id='notPermission" + id + "' class='panel-body'><h4>未有权限</h4>";
-            $.each(data, function (index, item) {
-                if(data[index].status == 'true') {
-                    psYes += "<div id='permission_"+ data[index].permissionId +"' class='biaoqian'>"+data[index].permissionDes+"<a href='javascript:;' onclick='remove("+id+", "+data[index].permissionId+",\""+data[index].permissionDes + "\")';>&nbsp;✖</a></div>";
-                }else{
-                    psNo += "<div id='permission_"+ data[index].permissionId +"' class='biaoqian'>"+ data[index].permissionDes+"<a href='javascript:;' onclick='add("+id+", "+data[index].permissionId+", \""+data[index].permissionDes + "\")';>&nbsp;➕</a></div>";
-                }
-            });
-            psYes += "</div>";
-            psNo += "</div>";
-            var permission = psYes + psNo;
-            div.html(permission);
-        }, "json"
-    );
-}
-
-function remove(roleId, permissionId, permissionDes){
-    $.get("/role/removePermission/"+roleId+"/"+permissionId,
-        function (data) {
-            if(data.result == 'success'){
-                document.getElementById("permission_"+ permissionId).remove();
-                var notPermission = document.getElementById("notPermission"+roleId);
-                var div2 = document.createElement("newDiv"+permissionId);
-                div2.innerHTML="<div id='permission_"+ permissionId +"' class='biaoqian'>"+ permissionDes+ "<a href='javascript:;' onclick='add("+roleId+", "+permissionId+", \""+permissionDes + "\")';>&nbsp;➕</a></div>";
-                notPermission.appendChild(div2);
+function init(){
+    var moduleData = initObj.modules.responseJSON;
+    $.get("/permission/noStatusQueryAll",function(permissionData){
+        var mlen = moduleData.length;
+        var tempModule = [];
+        for(var m = 0; m<mlen; m++) {
+            var mdl = moduleData[m];
+            if(mdl.moduleStatus == 'Y') {
+                tempModule.push(mdl);
+                mdl.permissions = setPermissions(permissionData, mdl.moduleId); // 模块与权限匹配到了
             }
-        }, "json");
+        }
+        var notInModulePers =  getNotInModulePers(permissionData, "moduleId");  // 得到没有分配到模块的权限
+
+        initLeftNav(moduleData);
+        setPageModulePanel(moduleData);
+        setNoInModulePanelModulePanel(notInModulePers);
+        canDragSetting();
+    });
 }
-
-function add(roleId, permissionId, permissionDes){
-    $.get("/role/addPermission/"+roleId+"/"+permissionId,
-        function (data) {
-            if(data.result == 'success') {
-                document.getElementById("permission_" + permissionId).remove();
-                var yesPermission = document.getElementById("yesPermission" + roleId);
-                var div2 = document.createElement("newDiv" + roleId + permissionId);
-                div2.innerHTML = "<div id='permission_" + permissionId + "' class='biaoqian'>" + permissionDes + "<a href='javascript:;' onclick='remove(" + roleId + ", " + permissionId + ", \" " + permissionDes + "\")';>&nbsp;✖</a></div>";
-                yesPermission.appendChild(div2);
-            }
-        }, "json"
-    );
-}
-
-function showEdit(){
-    var row =  $('table').bootstrapTable('getSelections');
-    if(row.length >0) {
-//                $('#editId').val(row[0].id);
-//                $('#editName').val(row[0].name);
-//                $('#editPrice').val(row[0].price);
-        $("#editButton").removeAttr("disabled");
-        $("#edit").modal('show'); // 显示弹窗
-        var ceshi = row[0];
-        $("#editForm").fill(ceshi);
-
-    }else{
-        swal({
-            title:"",
-            text: "请先选择要修改的单据", // 主要文本
-            confirmButtonColor: "#DD6B55", // 提示按钮的颜色
-            confirmButtonText:"确定", // 提示按钮上的文本
-            type:"warning"}) // 提示类型
+function setPageModulePanel(modules){
+    var len = modules.length;
+    var modulePanels = $("#modulePanels");
+    for(var i = 0; i<len; i++) {
+        modulePanels.append(getModulePanel(modules[i]));
     }
+}
+function setNoInModulePanelModulePanel(permissions) {
+    var ul = $("#otherModule").children("ul")[0]
+    $(ul).append(getNoModulePermissionsHtmlTest(permissions));
+}
+function initLeftNav(modules) {
+    var ulEl = $($("#navbar").children("ul"));
+    var lisHtmlTest = [];
+    for(var i = 0,len = modules.length; i<len; i++ ){
+        lisHtmlTest.push(getLeftNaveOneHtml(modules[i]));
+    }
+    ulEl.append(lisHtmlTest.join(""));
+    navLiLietener();
 }
 
 function showAdd(){
+    $("#addForm").data('bootstrapValidator').resetForm(true);
     $("input[type=reset]").trigger("click");
     $("#addButton").removeAttr("disabled");
-    $("#add").modal('show');
+    $("#addModal .modal-header> input").val("addForm");
+    $("#addModal").modal('show');
+}
+function delModule(el) {
+    swal(
+        {title:"",
+            text:"您确定要删除此模块吗",
+            type:"warning",
+            showCancelButton:true,
+            confirmButtonColor:"#DD6B55",
+            confirmButtonText:"我确定",
+            cancelButtonText:"再考虑一下",
+            closeOnConfirm:false,
+            closeOnCancel:false
+        },function(isConfirm){
+            if(isConfirm)
+            {
+                delSubmit("/module/delete", el);
+            } else {
+                swal({title:"",
+                    text:"已取消",
+                    confirmButtonText:"确认",
+                    type:"success"})
+            }
+        })
+}
+function showEdit(moduleId) {
+    $("#addForm").data('bootstrapValidator').resetForm(true);
+    $("#addButton").removeAttr("disabled");
+    $("#addModal .modal-header> input").val("editForm");
+    var module = getModule(moduleId);
+    $("#addForm").fill(module);
+    $("#addModal").modal('show');
+}
+function closeModal(){
+    $("#addModal").modal("hide");
+    $("#addForm").data('bootstrapValidator').resetForm(true);
 }
 
-function showDel(){
-    var row =  $('table').bootstrapTable('getSelections');
-    if(row.length >0) {
-        swal(
-            {title:"",
-                text:"您确定要禁用此模块吗",
-                type:"warning",
-                showCancelButton:true,
-                confirmButtonColor:"#DD6B55",
-                confirmButtonText:"我确定",
-                cancelButtonText:"再考虑一下",
-                closeOnConfirm:false,
-                closeOnCancel:false
-            },function(isConfirm){
-                if(isConfirm)
-                {
-                    swal({title:"",
-                        text:"禁用成功",
-                        type:"success",
-                        confirmButtonText:"确认",
-                    },function(){
-                    })
+
+function getModulePanel(module){
+    var outtest = [];
+    outtest.push('<div class="panel modulePanel" ></div>');
+    var headingtest = [];
+    headingtest.push('<div class="panel-heading" data-id="'+ module.moduleId+ '" >');
+    headingtest.push('<div><span>'+ module.moduleName + '</span></div>');
+    headingtest.push('<div style="float:right">');
+    headingtest.push('<span  class="glyphicon glyphicon-edit" onclick="showEdit(\''+ module.moduleId +'\')"></span>');
+    headingtest.push('<span  class="glyphicon glyphicon-remove" onclick="delModule(this)"></span>');
+    headingtest.push('</div>');
+    headingtest.push('<p class="clearfix"></p>');
+    headingtest.push('</div>');
+    var bodytest = [];
+    bodytest.push('<div class="panel-body" style="padding-top:0">');
+    bodytest.push('<ul class="connectedSortable">');
+    bodytest.push(getHasModulePermissionsHtmlTest(module.permissions).join(""));
+    bodytest.push('</ul>');
+    var outEl = $(outtest.join(""));
+    var headingEl = $(headingtest.join(""));
+    var bodyEl = $(bodytest.join(""));
+    outEl.append(headingEl);
+    outEl.append(bodyEl);
+    return outEl;
+}
+function getPermissionsHtmlTest(permissions, clazz, style){
+    var permissionsHtmlTest = [];
+    if(permissions!=undefined && permissions!=null && permissions!="") {
+        var len = permissions.length;
+        for(var i =0;i<len; i++ ) {
+            var permission = permissions[i];
+            permissionsHtmlTest .push('<li class="'+ clazz +'" style="'+style+'"   data-id = "'+permission.permissionId+'">'+ permission.permissionName +'</li>');
+        }
+    }
+    return permissionsHtmlTest;
+}
+function getLeftNaveOneHtml(module) {
+    var liHtmlTest = [];
+    liHtmlTest.push('<li hrett="'+ module.moduleId +'">')
+    liHtmlTest.push(module.moduleName);
+    liHtmlTest.push("</li>");
+    return liHtmlTest.join("");
+}
+
+function getHasModulePermissionsHtmlTest(permissions){
+    return getPermissionsHtmlTest(permissions, "col-md-12","");
+}
+function getNoModulePermissionsHtmlTest(permissions){
+    return getPermissionsHtmlTest(permissions,"col-md-12","" );
+}
+
+function validator(formId) {
+    $('#' + formId).bootstrapValidator({
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            moduleDes: {
+                message: '角色简介验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '角色简介不能为空'
+                    },
+                    stringLength: {
+                        min: 1,
+                        max: 100,
+                        message: "角色简介长度必须在1至100个字符之间"
+                    }
                 }
-                else{
-                    swal({title:"",
-                        text:"已取消",
-                        confirmButtonText:"确认",
-                        type:"error"})
+            },
+            moduleName: {
+                message: '角色名称验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '角色名称不能为空'
+                    },
+                    stringLength: {
+                        min: 3,
+                        max: 8,
+                        message: '角色名称必须在3至8个字符之间'
+                    },
+                    regexp: {
+                        regexp: /^[^$&,""''\s]+$/,
+                        message: '名称不允许存在符号'
+                    }
                 }
+            }
+        }
+    }) .on('success.form.bv', function (e) {
+        var title =$("#addModal .modal-header> input").val();
+        if(title === "addForm") {
+            formSubmit("/module/insert", "addModal",formId, title);
+        }else if (title === "editForm"){
+            formSubmit("/module/edit", "addModal",formId, title);
+        }
+    })
+}
+function formSubmit(url, modalId ,formId, flag) {
+    $.post(url,
+        $("#" + formId).serialize(),
+        function(data) {
+            var title = "修改";
+            if(flag === "addForm") {
+                title = "添加";
+            }
+            if (data.controllResult.result == "success") {
+                closeModal();
+                swal({
+                    title:"",
+                    text:data.controllResult.message,
+                    confirmButtonText:"确定", // 提示按钮上的文本
+                    type:"success"},function (){
+                    if(flag === "addForm") {
+                        appendLeftNav(data.module);
+                        addModule(data.module);
+                        appendModulePanel(data.module);
+                    } else {
+                        var inputs = $("#" + formId).find("input");
+                        var module = {}
+                        for(var i = 0,len = inputs.length; i<len; i++) {
+                            var input = inputs[i];
+                            if( $(input).attr("name")==="moduleId") {
+                                module.moduleId =  $(input).val();
+                            }
+                            if($(input).attr("name") === "moduleName") {
+                                module.moduleName = $(input).val();
+                            }
+                        }
+                        updBodyModulePanel(module);
+                        updateLeftNavTitle(module);
+                    }
+
+                });// 提示窗口, 修改成功
+            } else if (data.controllResult.result == "fail") {
+                swal({title:"",
+                    text:data.controllResult.message,
+                    confirmButtonText:"确认",
+                    type:"error"});
+                $("#"+formId).removeAttr("disabled");
+            }
+        }, "json"
+    )
+}
+function addSubmit(){
+    $("#addForm").data('bootstrapValidator').validate();
+    if($("#addForm").data('bootstrapValidator').isValid()) {
+        $("#addButton").attr("disabled","disabled");
+    } else {
+        $("#addButton").removeAttr("disabled");
+    }
+}
+function delSubmit(url, el) {
+    var modulePanel = $(el).parents(".panel").first();
+    var moduleTitle =modulePanel.find(".panel-heading")[0];
+    var lis =modulePanel.find("li");
+    var otherModule = $("#otherModule");
+    var otherul = otherModule.children("ul")[0];
+    $(otherul).append(lis);
+    var moduleId = $(moduleTitle).attr("data-id");
+    var perIds = getlis2PermissionIds(lis);
+    $.get(url + "?moduleId="+ moduleId,function (data) {
+        if(data.result === "success") {
+            swal({title:"",
+                text:data.message,
+                type:"success",
+                confirmButtonText:"确认",
+            },function(){
+                modulePanel.remove();
+                deleteLeftNav(moduleId);
             })
-    }else{
-        swal({
-            title:"",
-            text: "请先选择要禁用的模块", // 主要文本
-            confirmButtonColor: "#DD6B55", // 提示按钮的颜色
-            confirmButtonText:"确定", // 提示按钮上的文本
-            type:"warning"}) // 提示类型
+        } else {
+            swal({title:"",
+                text:data.message,
+                type:"error",
+                confirmButtonText:"确认",
+            });
+        }
+
+    })
+}
+function updModulePer(moduleId, permissionId){
+    if(!moduleId) {moduleId = "";}
+    $.post("/module/updPer",
+        "moduleId="+moduleId+"&permissionId="+permissionId,
+        function (data) {
+            if(data.result=== "fail") {
+                swal({title:"",
+                    text:data.message+",请刷新页面重试",
+                    type:"error",
+                    confirmButtonText:"点击刷新",
+                },function(isConfirm){
+                    if(isConfirm)
+                    {
+                        itemOnclik1();
+                    }
+                });
+            }
+        }
+    )
+}
+
+function appendModulePanel(module) {
+    var modulePanels = $("#modulePanels");
+    var panel = getModulePanel(module);
+    modulePanels.append(panel);
+    canDragSetting();
+}
+function updateModuelPanelTitle(modulePanel, newTitle) {
+    var heading = $(modulePanel).children(".panel-heading")
+    var titleDiv = $(heading[0]).children("div")
+    var span = $(titleDiv[0]).children("span")
+    $(span).text(newTitle);
+}
+function deleteLeftNav(moduleId) {
+    var ulEl = $($("#navbar").children("ul"));
+    var lis = ulEl.find("li");
+    $.each(lis,function (index, el) {
+        if($(el).attr("hrett") == moduleId) {
+            el.remove();
+            return ;
+        }
+    })
+}
+function appendLeftNav(module) {
+    var ulEl = $($("#navbar").children("ul"));
+    ulEl.append(getLeftNaveOneHtml(module));
+    navLiLietener();
+}
+function updateLeftNavTitle(module) {
+    var ulEl = $($("#navbar").children("ul"));
+    var lis = ulEl.find("li");
+    $.each(lis,function (index, el) {
+        if($(el).attr("hrett") == module.moduleId) {
+            $(el).text(module.moduleName);
+            return ;
+        }
+    })
+}
+
+function updateModule(moduleId, moduleName) {
+    var oldModule = getModule(moduleId);
+    oldModule.moduleName = moduleName;
+}
+function getModulePanelByModuleId(moduelId) {
+    var modulePanels = $("#modulePanels").children(".modulePanel");
+
+    for(var i =0, len = modulePanels.length; i<len; i++ ){
+        var modulePanel = modulePanels[i];
+        var panelHeading = $(modulePanel).children(".panel-heading");
+        if($(panelHeading).attr("data-id")==moduelId) {
+            return modulePanel;
+        }
+    }
+    return null;
+}
+function updBodyModulePanel(module) {
+    var modulePanel = getModulePanelByModuleId(module.moduleId);
+    updateModuelPanelTitle(modulePanel,module.moduleName);
+    updateModule(module.moduleId, module.moduleName);
+}
+
+function canDragSetting() {
+    $( ".connectedSortable" ).sortable({
+        connectWith: ".connectedSortable",
+        stop:stopFun
+    }).disableSelection();
+}
+function navLiLietener() {
+    var lis = $("#navbar").find("li");
+    lis.on("click",function (e) {
+        var moduleId = $(this).attr("hrett");
+        var modulePanel = getModulePanelByModuleId(moduleId);
+        window.scrollTo(0,$(modulePanel)[0].offsetTop+108);
+    })
+}
+function windowScrollListener() {
+    var $windowtemp = $(window)
+    $windowtemp.on("scroll",function (){
+
+        scrollNavListener($windowtemp);
+    })
+}
+function scrollNavListener($window) {
+    var nav = $("#navbar");
+    if($window[0].scrollY >= 108) {
+        nav.css("top","10px");
+    } else {
+        var souHeight = 108;
+        var height = souHeight- $window[0].scrollY+8;
+        nav.css("top",height+ "px");
     }
 }
 
-$(document).ready(function() {
-    $("#addForm").validate({
-        errorElement : 'span',
-        errorClass : 'help-block',
-        rules : {
-            moduleName : {
-                required : true,
-            },
-            moduleDes : {
-                required : true,
-            }
-        },
-        messages : {
-            moduleName : "请输入模块名称",
-            moduleDes : "请输入模块描述"
-        },
-        errorPlacement : function(error, element) {
-            $("#addButton").removeAttr("disabled");
-            element.next().remove();
-            element.after('<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>');
-            element.closest('.form-group').append(error);
-        },
-        highlight : function(element) {
-            $("#addButton").removeAttr("disabled");
-            $(element).closest('.form-group').addClass('has-error has-feedback');
-        },
-        success : function(label) {
-            $("#addButton").removeAttr("disabled");
-            var el=label.closest('.form-group').find("input");
-            el.next().remove();
-            el.after('<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>');
-            label.closest('.form-group').removeClass('has-error').addClass("has-feedback has-success");
-            label.remove();
-        },
-        submitHandler: function(form) {
-            $.post("/table/add",
-                $("#addForm").serialize(),
-                function (data) {
-                    if (data.result == "success") {
-                        $("#add").modal('hide'); // 关闭指定的窗口
-                        $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
-                        swal({
-                            title:"",
-                            text: data.message,
-                            confirmButtonText:"确定", // 提示按钮上的文本
-                            type:"success"})// 提示窗口, 修改成功
-                    } else if (data.result == "fail") {
-                        swal({title:"",
-                            text:"添加失败",
-                            confirmButtonText:"确认",
-                            type:"error"})
-                    }
-                }, "json"
-            );
-        }
-    })
+function stopFun( event, ui ) {
+    var dragEl = ui.item[0];
+    var moduleEl = $(dragEl).parents()[2];
+    var moduleTitle = $(moduleEl).children(".panel-heading")[0];
+    var moduleId = $(moduleTitle).attr("data-Id");
+    var permissionId = $(dragEl).attr("data-Id");
+    updModulePer(moduleId, permissionId);
+}
 
-    $("#editForm").validate({
-        errorElement : 'span',
-        errorClass : 'help-block',
-        rules : {
-            moduleName : {
-                required : true,
-            },
-            moduleDes : {
-                required : true,
-            }
-        },
-        messages : {
-            moduleName : "请输入模块名称",
-            moduleDes : "请输入模块描述"
-        },
-        errorPlacement : function(error, element) {
-            $("#editButton").removeAttr("disabled");
-            element.next().remove();
-            element.after('<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>');
-            element.closest('.form-group').append(error);
-        },
-        highlight : function(element) {
-            $("#editButton").removeAttr("disabled");
-            $(element).closest('.form-group').addClass('has-error has-feedback');
-        },
-        success : function(label) {
-            $("#editButton").removeAttr("disabled");
-            var el=label.closest('.form-group').find("input");
-            el.next().remove();
-            el.after('<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>');
-            label.closest('.form-group').removeClass('has-error').addClass("has-feedback has-success");
-            label.remove();
-        },
-        submitHandler: function(form) {
-            $.post("/table/edit",
-                $("#editForm").serialize(),
-                function (data) {
-                    if (data.result == "success") {
-                        $("#edit").modal('hide'); // 关闭指定的窗口
-                        $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
-                        swal({
-                            title:"",
-                            text: data.message,
-                            confirmButtonText:"确定", // 提示按钮上的文本
-                            type:"success"})// 提示窗口, 修改成功
-                    } else if (data.result == "fail") {
-                        swal({title:"",
-                            text:"修改失败",
-                            confirmButtonText:"确认",
-                            type:"error"})
-                    }
-                }, "json"
-            );
+function initModules() {
+    initObj.modules =  $.ajax({url:"/module/queryAll",async:false});
+}
+function getModules() {
+    return initObj.modules.responseJSON;
+}
+function addModule(module){
+    initObj.modules.responseJSON.push(module);
+}
+function getModule(moduleId) {
+    var modules = getModules();
+    var len = modules.length;
+    for(var i =0; i<len; i++) {
+        var module = modules[i];
+        if(module.moduleId == moduleId) {
+            return module;
         }
-    })
-});
+    }
+    return null;
+}
+function setPermissions(permissionData,checkId){
+    var permissions = [];
+    var plen = permissionData.length;
+    for(var p = 0; p<plen; p++){
+        var per = permissionData[p];
+        if(per!=null){
+            if(per.permissionStatus === 'Y'){
+                if(per.moduleId === checkId) {
+                    permissions.push(per);
+                    per = null;
+                }
+            }
+        }
+    }
+    return permissions;
+}
+function getNotInModulePers(pers, molCol){
+    var len = pers.length;
+    var notInpers = [];
+    for(var i = 0; i< len; i++) {
+        if(!pers[i][molCol]){
+            notInpers.push(pers[i]);
+        }
+    }
+    return notInpers;
+}
+function getlis2PermissionIds(lis) {
+    var len = lis.length;
+    var permissionIds = [];
+    for(var i=0; i<len ; i++ ) {
+        var li = lis[i];
+        permissionIds.push($(li).attr("data-id"))
+    }
+    return permissionIds.join(",");
+}
+

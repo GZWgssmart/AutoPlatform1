@@ -1,8 +1,12 @@
 package com.gs.controller;
 
 import com.gs.bean.MaterialList;
+import com.gs.bean.MaterialReturn;
+import com.gs.bean.MaterialUse;
+import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
+import com.gs.common.util.UUIDUtil;
 import com.gs.service.MaterialListService;
 import com.gs.service.MaterialReturnService;
 import com.gs.service.MaterialUseService;
@@ -13,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -82,5 +87,48 @@ public class MaterialsController {
         pager4EasyUI.setRows(list);
         return pager4EasyUI;
     }
+
+    @ResponseBody
+    @RequestMapping("insertUse")
+    public ControllerResult insertMaterialsUse(MaterialUse materialUse){
+        int accCount = materialUse.getAccCount();
+        int resultCount = 0;
+        materialUse.setMaterialUseId(UUIDUtil.uuid());
+        if(accCount>0) {
+            materialUse.setMuCreatedTime(new Date());
+            materialUse.setMuUseDate(new Date());
+            resultCount  = materialUseService.insert(materialUse);
+        }else {
+            materialUse.setAccCount(-accCount);
+            MaterialReturn materialReturn = new MaterialReturn();
+            materialReturn.setMaterialReturnId(materialUse.getMaterialUseId());
+            materialReturn.setAccCount(materialUse.getAccCount());
+            materialReturn.setAccId(materialUse.getAccId());
+            materialReturn.setMatainRecordId(materialUse.getMatainRecordId());
+            materialReturn.setMrCreatedDate(materialUse.getMuCreatedTime());
+            materialReturn.setMrReturnDate(materialUse.getMuUseDate());
+            resultCount  = materialReturnService.insert(materialReturn);
+        }
+        return isSuc(resultCount,"添加成功","添加失败");
+    }
+
+
+
+
+    @ResponseBody
+    @RequestMapping("insert")
+    public ControllerResult insertMaterials(MaterialList materialList){
+        int resultCount = materialListService.insert(materialList);
+        return isSuc(resultCount,"添加成功","添加失败");
+    }
+
+    private ControllerResult isSuc(int resultCount,String sucmsg,String ermsg) {
+        if(resultCount>0) {
+            return ControllerResult.getSuccessResult(sucmsg);
+        }
+        return ControllerResult.getFailResult(ermsg);
+    }
+
+
 
 }

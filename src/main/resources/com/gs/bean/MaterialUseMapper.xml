@@ -11,14 +11,21 @@
   </resultMap>
   
   <resultMap id="baseRecordView" type="com.gs.bean.view.RecordBaseView">
+    <id property="recordId" column="recordId"></id>
     <result column="needHours" property="hours"></result>
     <result column="carplate" property="carplate"></result>
     <result column="carmodel" property="carmodel"></result>
     <association resultMap="com.gs.dao.MaintainRecordDAO.BaseResultMap" property="record" />
+    <association javaType="workInfo" property="workInfo" >
+        <id column="workId" property="workId" jdbcType="VARCHAR" />
+        <association property="user" javaType="user">
+            <id column="userId" property="userId"></id>
+            <result column="userName" jdbcType="VARCHAR" property="userName" />
+        </association>
+    </association>
   </resultMap>
 
-
-    <resultMap id="userWorkView" type="com.gs.bean.view.WorkView">
+  <resultMap id="userWorkView" type="com.gs.bean.view.WorkView">
         <id column="workId" property="workId" jdbcType="VARCHAR" />
         <result column = "recordId" property="recordId" />
         <result column="colorRGB" property="colorRGB" />
@@ -30,7 +37,7 @@
         <result column="workAssignTime" property="workAssignTime" />
     </resultMap>
 
-    <resultMap id="materialTempView" type="com.gs.bean.view.MaterialURTemp">
+  <resultMap id="materialTempView" type="com.gs.bean.view.MaterialURTemp">
         <result column="materialUseId" property="materialUseId" jdbcType="VARCHAR" />
         <result column="matainRecordId" property="matainRecordId" jdbcType="VARCHAR" />
         <result column="accId" property="accId" jdbcType="VARCHAR" />
@@ -57,8 +64,22 @@
         </association>
     </resultMap>
 
+  <resultMap id="detailFixs" type="com.gs.bean.view.DetailTemp">
+      <id property="maintainDetailId" column="maintainDetailId"/>
+      <result property="maintainDiscount" column="maintainDiscount"></result>
+      <result property="mdcreatedTime" column="mdcreatedTime"></result>
+      <association property="maintainFix" resultMap="com.gs.dao.MaintainFixDAO.MaintainFixMap"/>
+      <association property="record" javaType="maintainRecord">
+          <id column="recordId" property="recordId"></id>
+      </association>
+  </resultMap>
 
-  
+
+    <insert id="insert" parameterType="materialUse">
+        insert into t_material_use
+        values( #{materialUseId}, #{matainRecordId}, #{accId}, #{accCount}, #{muCreatedTime}, #{muUseDate});
+    </insert>
+
     <select id="queryByPager">
         select mu.* ,acc.accName from t_material_use mu left join t_accessories acc on mu.accId = acc.accId
          left join t_company comp on acc.companyId = comp.companyId
@@ -107,7 +128,7 @@
     </select>
 
   <!-- 其它的 不与这个表相关的-->
-    <select id="queryNoUseRecord" resultMap="baseRecordView">
+    <select id="queryCurRecordsByPager" resultMap="baseRecordView">
   	select record.recordCreatedTime,
 				(select sum(fix.maintainHour) from t_maintain_detail detail
 					Left JOIN t_maintain_fix fix 	on detail.maintainItemId = fix.maintainId
@@ -115,13 +136,23 @@
       record.recordId,
       checkin.carPlate as 'carplate' ,
       model.modelName 'carmodel'
+      <if test="hasEmp!=''" >
+      , euser.userName
+      </if>
 	from t_checkin checkin
 	left JOIN t_maintain_record record on checkin.checkinId = record.checkinId
 	left JOIN t_company com on com.companyId = checkin.companyId
 	left join t_car_model model on checkin.modelId = model.modelId
-	where com.companyId = #{companyId} and  record.recordStatus='Y' and record.recordId not in(
-		select workinfo.recordId from t_work_info workinfo
-	) order by  record.recordCreatedTime desc
+        <if test="hasEmp!=''" >
+        left join t_work_info workinfo on workinfo.recordId = record.recordId
+        left join t_user euser on euser.userId = workinfo.userId
+        </if>
+	where com.companyId = #{companyId} and  record.recordStatus='Y' and record.recordId
+        <choose>
+            <when test="hasEmp!=''">in</when>
+            <otherwise>not in</otherwise>
+        </choose>
+         (select workinfo.recordId from t_work_info workinfo	) order by  record.recordCreatedTime desc
 	 limit #{pager.beginIndex}, #{pager.pageSize}
   </select>
 
@@ -199,6 +230,31 @@
             </if>
         </where>
     </select>
+
+    <select id = "queryWorkInfoByRecordId" resultMap="com.gs.dao.WorkInfoDAO.BaseResultMap">
+        select * from t_work_info workinfo left join t_maintain_record record on workinfo.recordId = record.recordId
+        where record.recordId = #{recordId}
+    </select>
+
+    <select id="queryDetailsByRecordId" resultMap = "detailFixs">
+        select record.recordId, detail.maintainDetailId,detail.maintainDiscount,fix.* from t_maintain_record record
+        left join t_maintain_detail detail on record.recordId = detail.maintainRecordId
+        left join t_maintain_fix fix on detail.maintainItemId = fix.maintainId
+        where record.recordId = #{recordId} and fix.companyId = #{companyId}
+        limit #{pager.beginIndex}, #{pager.pageSize}
+    </select>
+    <select id="countDetailsByRecordId" resultType="int">
+        select count(detail.maintainDetailId) from t_maintain_record record
+        left join t_maintain_detail detail on record.recordId = detail.maintainRecordId
+        left join t_maintain_fix fix on detail.maintainItemId = fix.maintainId
+        where record.recordId = #{recordId} and fix.companyId = #{companyId}
+    </select>
+
+    <update id = "updWorkInfoUser"  >
+        update t_work_info workinfo set userid= #{userId} where workinfo.recordId = #{recordId}
+    </update>
+
+
 
 
 </mapper>

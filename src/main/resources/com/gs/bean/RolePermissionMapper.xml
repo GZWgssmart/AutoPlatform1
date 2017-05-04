@@ -33,4 +33,11 @@
     </where>
   </select>
 
+  <insert id="insertList"  parameterType="java.util.List">
+    insert into t_role_permission(rpId, roleId,permissionId,rpCreatedTime) values
+    <foreach collection="permissions" item="permissionId" index="index" separator=",">
+      (uuid(),#{roleId}, #{permissionId}, now())
+    </foreach>
+  </insert>
+
 </mapper>

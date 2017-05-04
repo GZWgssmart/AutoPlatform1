@@ -24,12 +24,14 @@ public interface RolePermissionDAO extends BaseDAO<String, RolePermission>{
     public List<String> queryAllPermissionByRoleName(@Param("roleName")String roleName);
 
     public List<Permission> queryPermissionById(Integer id);
-    public void addPermission(@Param("roleId")int roleId, @Param("permissionId")int permissionId);
-    public void removePermission(@Param("roleId")int roleId, @Param("permissionId")int permissionId);
+    public int addPermission(@Param("roleId")String roleId, @Param("permissionId")String permissionId);
+    public int removePermission(@Param("roleId")String roleId, @Param("permissionId")String permissionId);
 
     /**
      *
-     * append
+     * 自己写的
      */
     public List<Permission> queryPermissions(@Param("roleId") String roleId, @Param("roleStatus") String roleStatus);
+
+    public int insertList(@Param("roleId")String roleId, @Param("permissions")List<String> permissionIds);
 }

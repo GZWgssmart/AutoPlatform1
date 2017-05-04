@@ -2,6 +2,8 @@ package com.gs.service;
 
 import com.gs.bean.Module;
 
+import java.util.List;
+
 /**
 *由CSWangBin技术支持
 *
@@ -10,4 +12,8 @@ import com.gs.bean.Module;
 *@des 模块Service
 */
 public interface ModuleService extends BaseService<String, Module>{
+
+    public int updPermissions(String oldModuleId, String newModuleId);
+
+    public int updPermission(String permissionId, String moduleId);
 }

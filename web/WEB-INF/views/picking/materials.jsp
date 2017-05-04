@@ -22,9 +22,12 @@
 
     <style>
         .materialsSuc{
-            background: url("/static/img/materialsFlag1.png") 105% -25px;
-            background-size: 22%;
+            background: url("/static/img/materialsFlag1.png") 105% -34px;
+            background-size: 100%;
             background-repeat: no-repeat;
+        }
+        #materialsForm input[disable] {
+            background: #fff;
         }
     </style>
 </head>
@@ -40,7 +43,7 @@
         <ul id="myTab" class="nav nav-tabs">
             <li class="pull-right" onclick="initHistory()">
                 <a href="#historyPanel" data-toggle="tab">
-                    <h4>历史记录</h4>
+                    <h4><span class="glyphicon glyphicon-time" ></span>&nbsp;历史记录</h4>
                 </a>
             </li>
             <li class="active pull-right">
@@ -55,7 +58,6 @@
             <table id="materialsTable" style="table-layout: fixed" data-search=true>
                 <thead>
                 <tr >
-                    <th data-radio="true"></th>
                     <th data-width="110" data-field="carplate">
                         车牌
                     </th>
@@ -68,7 +70,7 @@
                     <th data-width="110" data-field="colorName">
                         颜色
                     </th>
-                    <th data-field="workAssignTime" data-formatter=formatterDate>
+                    <th data-width="180"  data-field="workAssignTime" data-formatter=formatterDate >
                         工单指派时间
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -82,23 +84,7 @@
                 </tr>
                 </thead>
             </table>
-            <div id="toolbar" class="btn-group">
-                <button id="btn_add" type="button" class="btn btn-default" onclick="showAdd();">
-                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
-                </button>
-                <button id="btn_edit" type="button" class="btn btn-default" onclick="showEdit();">
-                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
-                </button>
-                <button id="btn_delete" type="button" class="btn btn-default" onclick="showDel();">
-                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
-                </button>
-                <button id="btn_appoint" type="button" class="btn btn-warning" onclick="showAppoint();">追加物料</button>
-                <button id="btn_confirm" type="button" class="btn btn-info" onclick="showConfirm();">领料确认</button>
-                <button id="btn_application" type="button" class="btn btn-success" onclick="showApplication();">退料申请</button>
-                <button id="btn_regress" type="button" class="btn btn-danger" onclick="showRegress();">确认退料</button>
-            </div>
         </div>
-
 
         <div id="historyPanel" class="tab-pane fade" data-toggle="tab">
             <table id="historyTable" style="table-layout: fixed" data-search=true>
@@ -119,59 +105,21 @@
 
 </div>
 
-
-<!-- 退料申请添加弹窗 -->
-<div class="modal fade" id="application" aria-hidden="true">
-    <div class="modal-dialog" style="overflow:hidden;">
-        <form action="/table/edit" method="post">
-            <div class="modal-content">
-                <input type="hidden" id="delNoticeId3"/>
-                <div class="modal-footer" style="text-align: center;">
-                    <h2>确认退料申请吗?</h2>
-                    <button type="button" class="btn btn-default"
-                            data-dismiss="modal">取消
-                    </button>
-                    <button type="sumbit" class="btn btn-primary" onclick="">
-                        确认
-                    </button>
-                </div>
-            </div><!-- /.modal-content -->
-        </form>
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
-<!-- 确认退料弹窗 -->
-<div class="modal fade" id="regress" aria-hidden="true">
-    <div class="modal-dialog" style="overflow:hidden;">
-        <form action="/table/edit" method="post">
-            <div class="modal-content">
-                <input type="hidden" id="delNoticeId1"/>
-                <div class="modal-footer" style="text-align: center;">
-                    <h2>确认退料吗?</h2>
-                    <button type="button" class="btn btn-default"
-                            data-dismiss="modal">取消
-                    </button>
-                    <button type="sumbit" class="btn btn-primary" onclick="">
-                        确认
-                    </button>
-                </div>
-            </div><!-- /.modal-content -->
-        </form>
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
 <!-- 零件明细弹窗 -->
 <div class="modal fade" id="accsInfo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header" style="margin-right:0;width:95%;">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel" onclick="testHH()">零件明细</h4>
+                <h4 class="modal-title" id="myModalLabel">零件明细
+                    <button type="button" class="btn btn-warning"  aria-hidden="true" onclick="showAppend()">追加物料</button>
+                </h4>
             </div>
             <div class="modal-body">
                 <input style="display: none;" id="seachRecordId" />
+
                 <table id="workInfoAccDetailTable" style="table-layout: fixed" data-single-select="true"
-                       data-show-header=false>
+                       data-show-header="false" >
                     <thead>
                         <tr >
                             <th data-width="50"  data-field="accessories.accName"></th>
@@ -187,6 +135,89 @@
     </div><!-- /.modal -->
 </div>
 
+
+<!-- 确认弹窗 -->
+<div class="modal fade" id="application" aria-hidden="true">
+    <div class="modal-dialog" style="overflow:hidden;">
+            <div class="modal-content">
+                <div class="modal-footer" style="text-align: center;">
+                    <div class="modal-header" style="overflow:auto;">
+                        <h2>领取/退回 物料</h2>
+                    </div>
+                    <hr>
+                    <form id="materialsForm" class="form-horizontal">
+                        <input type="text" name="matainRecordId" define="materials.recordId" style="display:none"/>
+                        <input type="text" name="accId" define="materials.accId" style="display:none"/>
+                        <input type="text" name="accCount" define="materials.accCount"  style="display: none" />
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">操作类型：</label>
+                            <div class="col-sm-7">
+                                <input type="text" define="materials.type" disabled class="form-control" style="background-color:#fff;border:none">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">物料名称：</label>
+                            <div class="col-sm-7">
+                                <input type="text" define="materials.accName" disabled class="form-control" style="background-color:#fff;border:none">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">物料数量：</label>
+                            <div class="col-sm-7">
+                                <input type="text"  define="materials.accCountView" disabled class="form-control" style="background-color:#fff;border:none">
+                            </div>
+                        </div>
+                    </form>
+                    <button type="button" class="btn btn-default"
+                            data-dismiss="modal">取消
+                    </button>
+                    <button  class="btn btn-primary" onclick="submitMaterials()">
+                        确认
+                    </button>
+                </div>
+            </div><!-- /.modal-content -->
+
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- 追加弹窗 -->
+<div class="modal fade" id="appendModal" aria-hidden="true">
+    <div class="modal-dialog" style="overflow:hidden;">
+        <div class="modal-content">
+            <div class="modal-footer" style="text-align: center;">
+                <div class="modal-header" style="overflow:auto;">
+                    <h2>确认操作吗?</h2>
+                </div>
+                <hr>
+                <form id="appendMaterialsForm" class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">请选择零件：</label>
+                        <div class="col-sm-7">
+                            <select class="js-example-tags materialsCombobox"  name="accId"  style="width:300px;"></select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" >请填写数量：</label>
+                        <div class="col-sm-7">
+                            <input type="number" name="materialCount" min = 1 define="emp.userIdentity" class="form-control">
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-default"
+                            data-dismiss="modal">取消
+                    </button>
+                    <button  class="btn btn-primary" onclick="appendMaterial()">
+                        确认
+                    </button>
+                </form>
+
+            </div>
+        </div><!-- /.modal-content -->
+
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
 <script src="/static/js/jquery.min.js"></script>
 <script src="/static/js/bootstrap.min.js"></script>
 <script src="/static/js/bootstrap-table/bootstrap-table.js"></script>
@@ -199,7 +230,7 @@
 <script src="/static/js/bootstrap-validate/bootstrapValidator.js"></script>
 <script src="/static/js/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.js"></script>
 <script src="/static/js/bootstrap-dateTimePicker/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
-<script src="/static/js/form/jquery.validate.js"></script>
+<script src="/static/js/bootstrap-validate/bootstrapValidator.js"></script>
 <%--<script src="/static/js/backstage/picking/jquery.spinner.js"></script>
 <script src="/static/js/backstage/picking/assignstaff.js"></script>--%>
 
@@ -208,25 +239,42 @@
     $(function(){
        // $("#materialsTable").bootstrapTable();
         initTable('materialsTable', '/dispatching/userWorksByPager'); // 初始化表格
+
+        initSelect2("materialsCombobox", "请选择零件", "/accInv/queryAllAccInv"); // 初始化select2, 第一个参数是class的名字, 第二个参数是select2的提示语, 第三个参数是select2的查询url
+
         //initTable('workInfoAccDetailTable',"/materials/queryUserMaterialsByPager?recordId=1"); // 初始化表格
     });
-    function testHH(){
-        var rows = $("#workInfoAccDetailTable").bootstrapTable('getSelections');
-        console.log(rows);
-    }
+
     function todoCell(ele, row, index) {
         return "<span onclick='showWorkInfoDetail(\"" + row.recordId +"\")'>查看清单</span>";
     }
 
+    function appendMaterial(){
+        validator("appendMaterialsForm");
+        var recordTest = "maintainRecordId="+$("#seachRecordId").val();
+        var formSeri = $("#appendMaterialsForm").serialize();
+        var newParams = formSeri+"&" + recordTest;
+        $.post("/materials/insert",newParams,function(data){
+            console.log(data);
+            if (data.result == "success") {
+                $("#appendModal").modal('hide'); // 关闭指定的窗口
+                swal({
+                    title:"",
+                    text: "操作成功",
+                    type:"success"})// 提示窗口, 修改成功
+            } else if (data.result == "fail") {
+                $.messager.alert("提示", "操作失败", "info");
+            }
+        })
+    }
     function showWorkInfoDetail(recordId){
         abcd('workInfoAccDetailTable',"/materials/recordAccsByPager?recordId="+recordId);
         $("#accsInfo").modal("show");
         $("#seachRecordId").val(recordId);
-
     }
 
 
-        function queryParams(params) {   //设置查询参数
+    function queryParams(params) {   //设置查询参数
             var param = {
                 pageNumber: params.pageNumber,
                 pageSize: params.pageSize,
@@ -236,12 +284,18 @@
         }
 
     function accInfoFormat(element, row, index){
-        console.log(row.materialReturn)
-        console.log(row.materialUse)
-        console.log(row.accessories)
-        var max = row.accessories.accTotal;
+
         var min ;
+        if(!isnull(row.materialUse)&&!isnull(row.materialReturn)){
+            min = row.materialUse.accCount- row.materialReturn.accCount;
+        } else if(!isnull(row.materialUse)){
+            min = row.materialUse.accCount;
+        } else {
+            min = 0;
+        }
+        var max = row.materialCount - min;
         var htmltest = [];
+        htmltest.push("<input style='display:none' value=" + row.accessories.accId+ " /> ");
         htmltest.push("<div style='display: inline-block;' class='col-md-7'>");
         htmltest.push("<span>库存: </span>");
         htmltest.push("<span>");
@@ -252,26 +306,54 @@
         htmltest.push("</span></br>");
         htmltest.push("<span '>已领取: </span>");
         htmltest.push("<span style='margin-right:10px;'>");
-        if(!isnull(row.materialUse)&&!isnull(row.materialReturn)){
-            min = row.materialUse.accCount- row.materialReturn.accCount;
-        } else if(!isnull(row.materialUse)){
-            min = row.materialUse.accCount;
-        } else {
-            min = 0;
-        }
-        htmltest.push(min+"个");
+        htmltest.push(min);
         htmltest.push("<input type='number'  max="+ max +" min="+-min+" class='form-control text-center'  value='0'  style='width:100px;margin-left:20px;display: inline-block; width:80px'>");
         htmltest.push("</span>");
         htmltest.push("</div>");
         htmltest.push("<div style='float:right;height:100%;text-align: center;' class='col-md-4'>");
-        htmltest.push("<button type='button' class='btn btn-success' onclick='showDel();' style='height:60px;top:10px;position:inherit; width:100%;'>领料</button>");
-        htmltest.push("</div>");
-        if(min === row.materialCount ){
+
+        if(min >= row.materialCount ){
             htmltest.push("<div style='position: relative;top:-10px;right:-10px;height:60px' class='materialsSuc' ></div>");
+        }else {
+            htmltest.push("<button type='button' class='btn btn-success' onclick='showDel(this);' style='height:60px;top:10px;position:inherit; width:100%;'>领料/退料</button>");
+        }
+        htmltest.push("</div>");
+        return htmltest.join("");
+    }
+    function showDel(t){
+        var $t = $(t)[0];
+        var td = $($t).parents()[1];
+        var td1 = $(td).prev();
+        var input = $(td).find("input")[1];
+        var $input = $(input);
+        var max = parseInt($input.attr("max"));
+        var min = parseInt($input.attr("min"));
+        var val = parseInt($input.val());
+        if( val > max){
+            $input.val(max);
+        } else if(val <min){
+            $input.val(min);
+        }
+        var materials = {};
+        var accName = td1.text();
+        var recordId = $("#seachRecordId").val();
+        var accIdel = $(td).find("input")[0];
+        var accCount =  $input.val();
+        materials.recordId = recordId;
+        materials.accId = $(accIdel).val();
+        materials.accName = accName;
+        materials.type = "领料";
+        materials.accCount = accCount;
+        materials.accCountView = accCount;
+        if(materials.accCount < 0 ) {
+            materials.type= "退料";
+            materials.accCountView = -parseInt(accCount);
         }
 
-        console.log(htmltest);
-        return htmltest.join("");
+
+
+        $("#materialsForm").fill(materials);
+        $("#application").modal("show");
     }
     function isnull(obj){
         if(obj===null) {
@@ -280,8 +362,6 @@
         return false;
     }
     function abcd(tableId, url) {
-        console.log(url);
-
         //先销毁表格
         $('#' + tableId).bootstrapTable('destroy');
         //初始化表格,动态从服务器加载数据
@@ -310,6 +390,26 @@
         });
     }
 
+    function submitMaterials() {
+        $.post("/materials/insertUse",
+                $("#materialsForm").serialize(),
+                function (data) {
+                    if (data.result == "success") {
+                        $("#application").modal('hide'); // 关闭指定的窗口
+                        $('#workInfoAccDetailTable').bootstrapTable("refresh");
+                        swal({
+                            title:"",
+                            text: "操作成功",
+                            type:"success"})// 提示窗口, 修改成功
+                    } else if (data.result == "fail") {
+                        $.messager.alert("提示", "操作失败", "info");
+                    }
+                });
+    }
+    function showAppend(){
+        $("#appendModal").modal("show")
+        $("#accsInfo").modal('hide'); // 关闭指定的窗口
+    }
     /**
      * 第二个Table
      */
@@ -323,6 +423,52 @@
     function initHistory(){
         abcd('historyTable', '/materials/history'); // 初始化表格
     }
+
+
+    function validator(formId) {
+        $('#' + formId).bootstrapValidator({
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                materialCount: {
+                    message: '用户名验证失败',
+                    validators: {
+                        notEmpty: {
+                            message: '数量不能为空'
+                        },
+                        numeric: {
+                            message: '数量至少为1'
+                        }
+                    }
+                },
+                accId: {
+                    message: '零件验证失败',
+                    validators: {
+                        notEmpty: {
+                            message: '请选择零件'
+                        }
+                    }
+                }
+
+            }
+        })
+
+                .on('success.form.bv', function (e) {
+                    if (formId == "addForm") {
+                        formSubmit("/checkin/add", formId, "addWindow");
+
+                    } else if (formId == "editForm") {
+                        formSubmit("/checkin/edit", formId, "editWindow");
+
+                    }
+                })
+
+    }
+
+
 
 </script>
 </html>

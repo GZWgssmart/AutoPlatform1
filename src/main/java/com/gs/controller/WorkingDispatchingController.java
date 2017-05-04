@@ -2,6 +2,7 @@ package com.gs.controller;
 
 import com.gs.bean.User;
 import com.gs.bean.WorkInfo;
+import com.gs.bean.view.DetailTemp;
 import com.gs.bean.view.RecordBaseView;
 import com.gs.common.bean.ComboBox4EasyUI;
 import com.gs.common.bean.ControllerResult;
@@ -44,7 +45,7 @@ public class WorkingDispatchingController {
     private WorkInfoService workInfoService;
 
     @ResponseBody
-    @RequestMapping("queryRecordByPager")
+    @RequestMapping("noDispRecordByPager")
     public Pager4EasyUI records(@RequestParam("pageNumber")String pageNo, @RequestParam("pageSize")String pageSize){
         final  String companyId = "11";
         Pager pager = new Pager();
@@ -53,7 +54,19 @@ public class WorkingDispatchingController {
         int total = materialUseService.countNoUseRecord(companyId);
         List<RecordBaseView> rbvs = materialUseService.queryNoUseRecord(companyId, pager);
         Pager4EasyUI pager4EasyUI = new Pager4EasyUI(total, rbvs);
-        System.out.println("进入了这个方法里");
+        return pager4EasyUI;
+    }
+
+    @ResponseBody
+    @RequestMapping("dispRecordByPager")
+    public Pager4EasyUI curRecords(@RequestParam("pageNumber")String pageNo, @RequestParam("pageSize")String pageSize){
+        final  String companyId = "11";
+        Pager pager = new Pager();
+        pager.setPageNo(str2int(pageNo));
+        pager.setPageSize(str2int(pageSize));
+        int total = materialUseService.countNoUseRecord(companyId);
+        List<RecordBaseView> rbvs = materialUseService.queryHasUseRecord(companyId, pager);
+        Pager4EasyUI pager4EasyUI = new Pager4EasyUI(total, rbvs);
         return pager4EasyUI;
     }
 
@@ -81,6 +94,22 @@ public class WorkingDispatchingController {
         return pager4EasyUI;
     }
 
+
+    @ResponseBody
+    @RequestMapping("recordDetails")
+    public Pager4EasyUI recordDetails(@RequestParam("pageNumber")int pageNo, @RequestParam("pageSize")int pageSize,@RequestParam("recordId")String recordId){
+        String companyId = "11";
+        Pager pager = new Pager();
+        pager.setPageNo(pageNo);
+        pager.setPageSize(pageSize);
+        List<DetailTemp> details = materialUseService.queryDetailsByRecordId(recordId, companyId, pager);
+        int total = materialUseService.countDetailsByRecordId(recordId, companyId);
+        Pager4EasyUI pager4EasyUI = new Pager4EasyUI();
+        pager4EasyUI.setTotal(total);
+        pager4EasyUI.setRows(details);
+        return  pager4EasyUI;
+    }
+
     @ResponseBody
     @RequestMapping("emps") // 可能不会使用到
     public List<ComboBox4EasyUI> emps() {
@@ -96,19 +125,29 @@ public class WorkingDispatchingController {
         return comboBoxs;
     }
 
+
+
     @ResponseBody
     @RequestMapping("insert")
     public ControllerResult insert(@RequestParam("recordId")String recordId, @RequestParam("userId")String userId) {
-        WorkInfo workInfo = new WorkInfo();
-        workInfo.setRecordId(recordId);
-        workInfo.setUserId(userId);
-        workInfo.setWorkCreatedTime(new Date());
-        workInfo.setWorkAssignTime(new Date());
-        int result = materialUseService.insertWorkInfo(workInfo);
-        if(result < 1) {
-            return ControllerResult.getFailResult("添加失败");
+        int result = 0;
+        String msg = "";
+        if(materialUseService.recordIsDisp(recordId)){
+            result = materialUseService.updWorkInfoUser(recordId, userId);
+            msg = "修改";
+        }else {
+            WorkInfo workInfo = new WorkInfo();
+            workInfo.setRecordId(recordId);
+            workInfo.setUserId(userId);
+            workInfo.setWorkCreatedTime(new Date());
+            workInfo.setWorkAssignTime(new Date());
+            result = materialUseService.insertWorkInfo(workInfo);
+            msg = "添加";
         }
-        return ControllerResult.getSuccessResult("添加成功");
+        if(result < 1) {
+            return ControllerResult.getFailResult(msg+"失败");
+        }
+        return ControllerResult.getSuccessResult(msg+"成功");
     }
 
 

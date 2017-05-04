@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.gs.dao.MaterialListDAO" >
-  <resultMap id="BaseResultMap" type="com.gs.bean.MaterialList" >
+  <resultMap id="BaseMaterialList" type="com.gs.bean.MaterialList" >
     <id column="materialId" property="materialId" jdbcType="VARCHAR" />
     <result column="maintainRecordId" property="maintainRecordId" jdbcType="VARCHAR" />
     <result column="accId" property="accId" jdbcType="VARCHAR" />
@@ -76,7 +76,7 @@
     where t_work_info.workStatus='Y' and  u.userId = #{userId};
   </select>
 
-  <select id="recordAccsByPager" resultMap="BaseResultMap">
+  <select id="recordAccsByPager" resultMap="BaseMaterialList">
       select
       list.maintainRecordId 'recordId',
       acc.accId,
@@ -109,7 +109,7 @@
 
     <insert id="insert"  parameterType="materialList">
         insert into t_material_list (materialId,maintainRecordId,accId,materialCount, materialCreatedTime,materialStatus)values
-            (uuid(),#{item.maintainRecordId},#{item.accId},#{item.materialCount}, now(), 'Y')
+            (uuid(),#{maintainRecordId},#{accId},#{materialCount}, now(), 'Y')
     </insert>
 
     <insert id="insertList"  parameterType="java.util.List">

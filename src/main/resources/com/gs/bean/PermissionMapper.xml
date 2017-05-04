@@ -12,28 +12,44 @@
   </resultMap>
   <select id="queryAll" resultType="permission">
     select * from t_permission
+  </select>
+
+  <select id="queryByPager" resultMap="permissionMap" parameterType="hashmap">
+    select * from t_permission p left join t_module m on p.moduleId = m.moduleId
     <where>
-      <if test="permissionStatus!=null" >
-        permissionStatus = #{permissionStatus}
+      <if test="status != null">
+        permissionStatus = #{status}
+      </if>
+    </where>
+      limit #{pager.beginIndex}, #{pager.pageSize}
+  </select>
+
+  <select id = "count" resultType="int" parameterType="hashmap">
+    select count(permissionId) from t_permission
+    <where>
+      <if test="status != null">
+        permissionStatus = #{status}
       </if>
     </where>
   </select>
 
-  <select id="queryByPager" resultType="permission">
-    select * from t_permission
-      limit #{beginIndex}, #{pageSize}
-  </select>
 
   <insert id="insert" parameterType="permission">
-    insert into t_permission values(#{permissionId}, #{permissionName},#{permissionZhname},#{permissionDes},#{module.moduleId}, 'Y')
+    insert into t_permission values(uuid(), #{permissionName},#{permissionZhname},#{permissionDes},#{module.moduleId}, 'Y')
   </insert>
 
   <update id="update" parameterType="permission">
-    update t_permission set permissionName= #{permissionName}, permissionZHName=#{permissionZHName}, permissionDes=#{permissionDes}
+    update t_permission set permissionName= #{permissionName}, permissionZHName=#{permissionZhname}, permissionDes=#{permissionDes}
+    where permissionId = #{permissionId}
   </update>
 
-  <update id="updStatus" >
-    update t_permission set permissionStatus = #{permissionStatus} where permissionId = #{permissionId};
+  <update id="updateStatus" >
+    update t_permission set permissionStatus = #{permissionStatus} where permissionId in
+    (
+     <foreach collection="permissionIds" item = "permissionId" index="index" separator=",">
+       #{permissionId}
+     </foreach>
+    )
   </update>
 
 </mapper>

@@ -39,6 +39,20 @@ public class RoleServiceImpl implements RoleService {
 		return roleDAO.queryAll(status);
 	}
 
+	@Override
+	public List<Role> queryByPager(String roleStatus, Pager pager) {
+		return roleDAO.queryByPager(roleStatus, pager);
+	}
+
+	@Override
+	public int count(String roleStatus) {
+		return roleDAO.count(roleStatus);
+	}
+
+	@Override
+	public int updateStatus(Role role) {
+		return roleDAO.updateStatus(role);
+	}
 
 
 	public List<Role> queryByStatus(String status) { return roleDAO.queryAll(status); }
@@ -46,6 +60,7 @@ public class RoleServiceImpl implements RoleService {
 	public Role queryById(String id) { return roleDAO.queryById(id); }
 	public List<Role> queryByPager(Pager pager) { return roleDAO.queryByPager(pager); }
 	public int count() { return roleDAO.count(); }
+
 	public int inactive(String id) { return roleDAO.inactive(id); }
 	public int active(String id) { return roleDAO.active(id); }
 

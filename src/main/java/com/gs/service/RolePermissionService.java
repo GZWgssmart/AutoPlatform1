@@ -1,6 +1,7 @@
 package com.gs.service;
 
 import com.gs.bean.Permission;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.Collection;
 import java.util.List;
@@ -16,8 +17,9 @@ public interface RolePermissionService{
     Collection<org.apache.shiro.authz.Permission> queryAllPermissionByRoleName(String roleName);
 
     public List<Permission> queryPermissionById(Integer id);
-    public void addPermission(int roleId, int permissionId);
-    public void removePermission(int roleId, int permissionId);
+    public int addPermission(String  roleId, String  permissionId);
+    public int removePermission(String roleId, String permissionId);
 
     public List<Permission> queryPermissions(String roleId, String roleStatus);
+    public int insertList(String roleId, List<String> permissionIds);
 }

@@ -16,15 +16,39 @@
     </where>
   </select>
 
+    <select id = "queryByPager" resultMap="roleMap">
+          select * from t_role r
+          <where>
+              <if test = "roleStatus != null">
+                  r.roleStatus = #{roleStatus}
+              </if>
+          </where>
+        limit #{pager.beginIndex}, #{pager.pageSize}
+    </select>
+
+    <select id = "count" resultType="int">
+      select count(r.roleId) from t_role r
+      <where>
+          <if test = "roleStatus!=null" >
+              r.roleStatus = #{roleStatus}
+          </if>
+      </where>
+    </select>
+
   <insert id="insert" parameterType="role">
     insert into t_role(roleId, roleName, roleDes, roleStatus)
-						values(#{roleId},#{roleName}, #{roleDes}, 'Y');
+						values(uuid(),#{roleName}, #{roleDes}, 'Y');
   </insert>
   
   <update id="update" parameterType="role">
     update t_role set roleName = #{roleName}, roleDes =#{roleDes}
      where roleId = #{roleId}
   </update>
+
+    <update id="updateStatus" parameterType="role">
+        update t_role set roleStatus = #{roleStatus}
+        where roleId = #{roleId}
+    </update>
 
 
 

@@ -23,15 +23,41 @@
     .sd{
         font-weight: bold;
     }
+    a {
+        color: #337ab7;
+    }
+    #accInfoTable tr {
+        font-family:"微软雅黑";
+        line-height:30px;
+    }
+
 </style>
 <body>
 <%@include file="../backstage/contextmenu.jsp"%>
 <div class="container">
+    <div class="nav">
+        <ul id="myTab" class="nav nav-tabs">
+            <li class="pull-right" onclick = "hasDispatcher()">
+                <a  data-toggle="tab" >
+                    <h4>进行中</h4>
+                </a>
+            </li>
+            <li class="active pull-right" onclick = "noDispatcher()">
+                <a  data-toggle="tab" >
+                    <h4>未指定</h4>
+                </a>
+            </li>
+        </ul>
+    </div>
+
     <div class="panel-body" style="padding-bottom:0px;"  >
         <table id="recordTable" style="table-layout: fixed" data-search=true>
             <thead>
             <tr >
                 <th data-radio="true"></th>
+                <th data-width="110" data-field="workInfo" data-formatter = "formatterUser">
+                    员工
+                </th>
                 <th data-width="110" data-field="carplate">
                     车牌
                 </th>
@@ -50,21 +76,6 @@
             </tr>
             </thead>
         </table>
-        <div id="toolbar" class="btn-group">
-            <button id="btn_add" type="button" class="btn btn-default" onclick="showAdd();">
-                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
-            </button>
-            <button id="btn_edit" type="button" class="btn btn-default" onclick="showEdit();">
-                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
-            </button>
-            <button id="btn_delete" type="button" class="btn btn-default" onclick="showDel();">
-                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
-            </button>
-            <button id="btn_appoint" type="button" class="btn btn-warning" onclick="showAppoint();">指派员工</button>
-            <button id="btn_confirm" type="button" class="btn btn-info" onclick="showConfirm();">领料确认</button>
-            <button id="btn_application" type="button" class="btn btn-success" onclick="showApplication();">退料申请</button>
-            <button id="btn_regress" type="button" class="btn btn-danger" onclick="showRegress();">确认退料</button>
-        </div>
     </div>
 </div>
 
@@ -97,230 +108,22 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<!-- 确认领料弹窗 -->
-<div class="modal fade" id="confirm" aria-hidden="true">
-    <div class="modal-dialog" style="overflow:hidden;">
-        <form action="/table/edit" method="post">
-            <div class="modal-content">
-                <input type="hidden" id="delNoticeId2"/>
-                <div class="modal-footer" style="text-align: center;">
-                    <h2>确认领料吗?</h2>
-                    <button type="button" class="btn btn-default"
-                            data-dismiss="modal">取消
-                    </button>
-                    <button type="sumbit" class="btn btn-primary" onclick="">
-                        确认
-                    </button>
-                </div>
-            </div><!-- /.modal-content -->
-        </form>
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
-<!-- 退料申请添加弹窗 -->
-<div class="modal fade" id="application" aria-hidden="true">
-    <div class="modal-dialog" style="overflow:hidden;">
-        <form action="/table/edit" method="post">
-            <div class="modal-content">
-                <input type="hidden" id="delNoticeId3"/>
-                <div class="modal-footer" style="text-align: center;">
-                    <h2>确认退料申请吗?</h2>
-                    <button type="button" class="btn btn-default"
-                            data-dismiss="modal">取消
-                    </button>
-                    <button type="sumbit" class="btn btn-primary" onclick="">
-                        确认
-                    </button>
-                </div>
-            </div><!-- /.modal-content -->
-        </form>
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
-<!-- 确认退料弹窗 -->
-<div class="modal fade" id="regress" aria-hidden="true">
-    <div class="modal-dialog" style="overflow:hidden;">
-        <form action="/table/edit" method="post">
-            <div class="modal-content">
-                <input type="hidden" id="delNoticeId1"/>
-                <div class="modal-footer" style="text-align: center;">
-                    <h2>确认退料吗?</h2>
-                    <button type="button" class="btn btn-default"
-                            data-dismiss="modal">取消
-                    </button>
-                    <button type="sumbit" class="btn btn-primary" onclick="">
-                        确认
-                    </button>
-                </div>
-            </div><!-- /.modal-content -->
-        </form>
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
-<!-- 添加弹窗 -->
-<div class="modal fade" id="addWindow" aria-hidden="true" style="overflow:auto; ">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <form class="form-horizontal" role="form" onsubmit="return checkAdd()" id="showAddFormWar" method="post">
-                <div class="modal-header" style="overflow:auto;">
-                    <h4 class="sd">添加物料清单</h4>
-                </div>
-                <hr>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">物料名称：</label>
-                    <div class="col-sm-7">
-                        <input type="text" name="materialName" placeholder="请输入物料名称" class="form-control">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">物料说明：</label>
-                    <div class="col-sm-7">
-                        <input type="text" name="materielState" placeholder="请输入物料说明" class="form-control">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">物料数量：</label>
-                    <div class="col-sm-7">
-                        <input type="text" name="materielCount" placeholder="请输入物料数量" class="form-control">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">维修保养记录：</label>
-                    <div class="col-sm-7">
-                        <input type="text" name="maintain" placeholder="请输入维修保养记录" class="form-control">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">领料时间：</label>
-                    <div class="col-sm-7">
-                        <input type="text" name="materiel_Receive_Time" value="2012-05-15 21:05" id="materiel_Receive_Time" class="form-control">
-                    </div>
-                </div>
-                <div class="modal-footer" style="border: none;">
-                    <span id="addError"></span>
-                    <button type="button" class="btn btn-default"
-                            data-dismiss="modal">关闭
-                    </button>
-                    <button type="submit" class="btn btn-primary btn-sm">保存</button>
-                </div>
-            </form>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
-<!-- 修改弹窗 -->
-<div class="modal fade" id="editWindow" aria-hidden="true" style="overflow:auto; ">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <form class="form-horizontal" role="form" onsubmit="return checkAdd()" id="showEditFormWar" method="post">
-                <div class="modal-header" style="overflow:auto;">
-                    <h4 class="sd">请修改你的物料清单</h4>
-                </div>
-                <hr>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">物料名称：</label>
-                    <div class="col-sm-7">
-                        <input type="text" name="materialName" placeholder="请输入物料名称" class="form-control">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">物料说明：</label>
-                    <div class="col-sm-7">
-                        <input type="text" name="materielState" placeholder="请输入物料说明" class="form-control">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">物料数量：</label>
-                    <div class="col-sm-7">
-                        <input type="text" name="materielCount" placeholder="请输入物料数量" class="form-control">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">维修保养记录：</label>
-                    <div class="col-sm-7">
-                        <input type="text" name="maintain" placeholder="请输入维修保养记录" class="form-control">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">领料时间：</label>
-                    <div class="col-sm-7">
-                        <input type="text" name="materiel_Receive_Time" define="materiel_Receive_Time" value="2012-05-15 21:05"
-                               id="editDateTimePicker" class="form-control">
-                    </div>
-                </div>
-                <div class="modal-footer" style="border: none;">
-                    <span id="editError1" style="color: red;"></span>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button class="btn btn-sm btn-success" type="submit">保 存</button>
-                </div>
-            </form>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
-<!-- 删除弹窗 -->
-<div class="modal fade" id="del" aria-hidden="true">
-    <div class="modal-dialog" style="overflow:hidden;">
-        <form action="/table/edit" method="post">
-            <div class="modal-content">
-                <input type="hidden" id="delNoticeId"/>
-                <div class="modal-footer" style="text-align: center;">
-                    <h2>确认删除吗?</h2>
-                    <button type="button" class="btn btn-default"
-                            data-dismiss="modal">关闭
-                    </button>
-                    <button type="sumbit" class="btn btn-primary" onclick="del()">
-                        确认
-                    </button>
-                </div>
-            </div><!-- /.modal-content -->
-        </form>
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
-<!-- 提示弹窗 -->
-<div class="modal fade" id="tanchuang" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                提示
-            </div>
-            <div class="modal-body">
-                请先选择某一行
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default"
-                        data-dismiss="modal">关闭
-                </button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
-
-<!-- 零件明细弹窗 -->
+<!-- 维修保养明细弹窗 -->
 <div class="modal fade" id="accsInfo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header" style="margin-right:0;width:95%;">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel">零件明细</h4>
+                <h3 class="modal-title" id="myModalLabel">维修保养明细</h3>
             </div>
             <div class="modal-body">
-                <input style="display: none;" id="seachRecordId" />
                 <table id="accInfoTable" style="table-layout: fixed">
                     <thead>
                     <tr >
-                        <th data-radio="true"></th>
-                        <th data-width="110" data-field="carplate">
-                           零件名称
-                        </th>
-                        <th data-width="110" data-field="carmodel">
-                            零件数量
-                        </th>
+                        <th data-width="110" data-field="carmodel" data-formatter="infoFormatter"></th>
                     </tr>
                     </thead>
+
                 </table>
             </div>
             <div class="modal-footer">
@@ -353,33 +156,29 @@
 </body>
 <script>
     $(function() {
-        initTable('recordTable', '/dispatching/queryRecordByPager'); // 初始化表格
+        initTable('recordTable', '/dispatching/noDispRecordByPager'); // 初始化表格
+        $("#recordTable").bootstrapTable("hideColumn","workInfo")
         initSelect2("addemp", "请选择员工", "/dispatching/emps"); // 初始化select2, 第一个参数是class的名字, 第二个参数是select2的提示语, 第三个参数是select2的查询url
-        //initTable('accInfoTable', '/dispatching/accInfo'); // 初始化表格
-//        $("#accInfoTable").bootstrapTable({
-//            queryParams:  function queryParams(params) {   //设置查询参数
-//                console.log(params);
-//                var param = {
-//                    pageNumber: params.pageNumber,
-//                    pageSize: params.pageSize,
-//                    recordId: $("#seachRecordId").val(),
-//                    orderNum : $("#orderNum").val()
-//                };
-//                return param;
-//            }
-//        });
     });
 
     function todoCell(element, row, index){
-        var accInfo = '<span onclick = "showInfo(\''+ row.record.recordId +'\')"><a style="float:left">查看零件明细</a></span>'
-        var dispatcher = '<span onclick = "showAppoint(\''+ row.record.recordId +'\')"><a style="float:left">指派员工</a></span>'
+        var accInfo = '<a style="margin-right:30px;float:left;margin-bottom: 8px;"><span onclick = "showInfo(\''+ row.record.recordId +'\')" class="glyphicon glyphicon-list-alt"><span style="position: inherit;bottom: 2px;margin-left:5px;">查看明细</span></span></a>'
+        var dispatcher = "";
+        if(row.workInfo){
+            dispatcher = '<a style="float:left"><span onclick = "showAppoint(\''+ row.record.recordId +'\')" class="glyphicon glyphicon-user"><span style="position: inherit;bottom: 2px;margin-left:5px;">重新指定</span></span></a>'
+        } else {
+            dispatcher = '<a style="float:left"><span onclick = "showAppoint(\''+ row.record.recordId +'\')" class="glyphicon glyphicon-user"><span style="position: inherit;bottom: 2px;margin-left:5px;">指定员工</span></span></a>'
+        }
         return accInfo + dispatcher;
     }
 
     function showInfo(recordId){
+        infoTableSet('accInfoTable', '/dispatching/recordDetails?recordId='+ recordId); // 初始化表格
+        $("#accInfoTable").bootstrapTable({
+
+        })
         $("#accsInfo").modal("show");
-        $("#seachRecordId").val(recordId);
-        console.log("recordId: " + recordId);
+
 
     }
 
@@ -390,6 +189,77 @@
             $("#appointForm").fill(record);
     }
 
+    function formatterUser(ele, row, index) {
+       return ele.user.userName;
+    }
+    //面板
+    function hasDispatcher(){
+        initTable('recordTable', '/dispatching/dispRecordByPager'); // 初始化表格
+        $("#recordTable").bootstrapTable("showColumn","workInfo")
+
+    }
+    function noDispatcher(){
+        initTable('recordTable', '/dispatching/noDispRecordByPager'); // 初始化表格
+
+        $("#recordTable").bootstrapTable("hideColumn","workInfo")
+    }
+
+    function infoFormatter(ele, row, index){
+        var htmlTest = [];
+        /*类型  名称 数量 预计天数*/
+        var maintainFix = row.maintainFix;
+        if(maintainFix){
+            htmlTest.push("<div ><span class='col-md-4'>类型:</span>")
+            htmlTest.push("<span class='col-md-6'>"+ maintainFix.maintainOrFix +"</span></div>")
+
+            htmlTest.push("<div><span class='col-md-4'>名称:</span>")
+            htmlTest.push("<span class='col-md-6'>"+ maintainFix.maintainName +"</span></div>")
+
+            htmlTest.push("<div><span class='col-md-4'>工时费:</span>")
+            htmlTest.push("<span class='col-md-6'>"+ maintainFix.maintainManHourFee +"</span></div>")
+
+            htmlTest.push("<div><span class='col-md-4'>预计完成工时:</span>")
+            htmlTest.push("<span class='col-md-6'>"+maintainFix.maintainHour +"</span></div>")
+
+        }
+
+        return htmlTest.join("");
+    }
+
+
+    function infoTableSet(tableId, url) {
+
+        //先销毁表格
+        $('#' + tableId).bootstrapTable('destroy');
+        //初始化表格,动态从服务器加载数据
+        $("#" + tableId).bootstrapTable({
+            method: "get",  //使用get请求到服务器获取数据
+            url: url, //获取数据的Servlet地址
+            striped: false,  //表格显示条纹
+            pagination: true, //启动分页
+            pageSize: 10,  //每页显示的记录数
+            pageNumber:1, //当前第几页
+            pageList: [10, 15, 20, 25, 30],  //记录数可选列表
+            strictSearch: true,
+            clickToSelect: true,  //是否启用点击选中行
+            uniqueId: "maintainDetailId",                     //每一行的唯一标识，一般为主键列
+            sortable: true,                     //是否启用排序
+            sortOrder: "asc",                   //排序方式
+            sidePagination: "server", //表示服务端请求
+            showHeader: false,
+            //设置为undefined可以获取pageNumber，pageSize，searchText，sortName，sortOrder
+            //设置为limit可以获取limit, offset, search, sort, order
+            queryParamsType : "undefined",
+            queryParams: function queryParams(params) {   //设置查询参数
+                var param = {
+                    pageNumber: params.pageNumber,
+                    pageSize: params.pageSize,
+                    orderNum : $("#orderNum").val()
+                };
+                return param;
+            },
+        });
+    }
 
 </script>
 </html>

@@ -1,8 +1,11 @@
 package com.gs.service;
 
 import com.gs.bean.Permission;
+import com.gs.common.bean.Pager;
+import com.gs.common.bean.Pager4EasyUI;
 
 import java.util.List;
+import java.util.Map;
 
 /**
 *由CSWangBin技术支持
@@ -14,4 +17,9 @@ import java.util.List;
 public interface PermissionService extends BaseService<String, Permission>{
 
     public List<Permission> queryAll();
+    public List<Permission> queryByPager(String status, Pager pager) ;
+    public int count(String status);
+
+    public int updateStatus(List permissionIds,String status );
+
 }

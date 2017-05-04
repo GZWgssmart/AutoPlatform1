@@ -1,6 +1,7 @@
 package com.gs.bean.view;
 
 import com.gs.bean.MaintainRecord;
+import com.gs.bean.WorkInfo;
 
 /**
  * Temp
@@ -9,10 +10,22 @@ import com.gs.bean.MaintainRecord;
  * @create 2017-04-23 18:23
  */
 public class RecordBaseView {
-    private MaintainRecord record;
+    private String recordId;
     private int hours;
     private String carplate;
     private String carmodel;
+    private MaintainRecord record;
+    private WorkInfo workInfo;
+
+
+
+    public String getRecordId() {
+        return recordId;
+    }
+
+    public void setRecordId(String recordId) {
+        this.recordId = recordId;
+    }
 
     public MaintainRecord getRecord() {
         return record;
@@ -44,6 +57,14 @@ public class RecordBaseView {
 
     public void setCarmodel(String carmodel) {
         this.carmodel = carmodel;
+    }
+
+    public WorkInfo getWorkInfo() {
+        return workInfo;
+    }
+
+    public void setWorkInfo(WorkInfo workInfo) {
+        this.workInfo = workInfo;
     }
 
     @Override

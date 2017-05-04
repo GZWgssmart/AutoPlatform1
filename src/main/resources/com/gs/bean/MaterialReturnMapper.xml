@@ -9,5 +9,10 @@
     <result column="mrCreatedDate" property="mrCreatedDate" jdbcType="TIMESTAMP" />
     <result column="mrReturnDate" property="mrReturnDate" jdbcType="TIMESTAMP" />
   </resultMap>
+  
+  <insert id="insert" parameterType="materialReturn">
+    insert into t_material_return
+      values( #{materialReturnId}, #{matainRecordId}, #{accId}, #{accCount}, #{mrCreatedDate}, #{mrReturnDate});
+  </insert>
 
 </mapper>

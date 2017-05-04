@@ -8,7 +8,10 @@ import com.gs.service.PermissionService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 /**
 *由CSWangBin技术支持
 *
@@ -32,6 +35,29 @@ public class PermissionServiceImpl implements PermissionService {
 	public int update(Permission permission) { return permissionDAO.update(permission); }
 	public int batchUpdate(List<Permission> list) { return permissionDAO.batchUpdate(list); }
 	public List<Permission> queryAll() { return permissionDAO.queryAll(); }
+
+	@Override
+	public List<Permission> queryByPager(String status, Pager pager) {
+		Map map = new HashMap();
+		map.put("status", status);
+		map.put("pager", pager);
+		return permissionDAO.queryByPager(map);
+	}
+
+	@Override
+	public int count(String status) {
+		Map map = new HashMap();
+		map.put("status", status);
+		return permissionDAO.count(map);
+	}
+
+	@Override
+	public int updateStatus(List permissionIds, String status) {
+		Map map = new HashMap();
+		map.put("permissionIds", permissionIds);
+		map.put("permissionStatus", status);
+		return permissionDAO.updateStatus(map);
+	}
 
 	@Override
 	public List<Permission> queryAll(String status) {

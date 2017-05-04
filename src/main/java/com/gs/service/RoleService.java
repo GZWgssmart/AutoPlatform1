@@ -2,6 +2,7 @@ package com.gs.service;
 
 import com.gs.bean.Permission;
 import com.gs.bean.Role;
+import com.gs.common.bean.Pager;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -15,6 +16,10 @@ import java.util.List;
 */
 public interface RoleService extends BaseService<String, Role>{
     public List<Role> queryAll(String rolestatus);
+    public List<Role> queryByPager(String roleStatus, Pager pager);
 
+    public int count(String roleStatus);
+
+    public int updateStatus (Role role);
 
 }

@@ -61,4 +61,14 @@ public class ModuleServiceImpl implements ModuleService {
 	public int countByBlurred(Module module) {
 		return 0;
 	}
+
+	@Override
+	public int updPermissions(String oldModuleId, String newModuleId){
+		return moduleDAO.updPermissions(oldModuleId, newModuleId);
+	}
+
+	@Override
+	public int updPermission(String permissionId, String moduleId) {
+		return moduleDAO.updPermission(permissionId, moduleId);
+	}
 }
