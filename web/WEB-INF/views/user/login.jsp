@@ -6,6 +6,9 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    String path=request.getContextPath();
+%>
 <html>
 <head>
     <title>用户登陆</title>
@@ -56,6 +59,17 @@
                         <div class="col-sm-8">
                             <input type="password" name="userPwd" placeholder="密码" class="form-control">
                         </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">验证码：</label>
+
+                        <div class="col-sm-8">
+                            <input type="text" name="checkCode" placeholder="验证码" class="form-control">
+                            <a href="javascript:;"><img style=" margin:10px 0 0 0; vertical-align:middle; height:35px;"
+                                                        src="<%=path %>/captcha"
+                                                        onclick="this.src='<%=path %>/captcha?time=Math.random();'"></a>
+                        </div>
+
                     </div>
                     <div class="form-group">
                         <div class="col-sm-offset-3 col-sm-8">
