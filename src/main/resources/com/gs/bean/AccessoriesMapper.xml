@@ -92,7 +92,7 @@
   <select id="queryByIdPager" resultType="list" resultMap="AccessoriesMap"
           parameterType="com.gs.common.bean.Pager">
     <![CDATA[
-			select * from t_accessories where accTypeId = #{id} limit #{beginIndex}, #{pageSize}
+			select * from t_accessories where accTypeId = #{id} limit #{pager.beginIndex}, #{pager.pageSize}
         ]]>
   </select>
 

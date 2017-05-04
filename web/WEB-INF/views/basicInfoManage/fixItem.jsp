@@ -69,6 +69,7 @@
                     <div class="modal-header" style="overflow:auto;">
                         <h3>请输入配件</h3>
                     </div>
+                    <hr>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">配件名称：</label>
                         <div class="col-sm-9">
@@ -87,7 +88,7 @@
                         </div>
                     </div>
 
-                    <div class="modal-footer">
+                    <div class="modal-footer" style="border: none">
                         <button type="button" class="btn btn-default"
                                 data-dismiss="modal">关闭
                         </button>
@@ -110,6 +111,7 @@
                 <div class="modal-header" style="overflow:auto;">
                     <h3>请选择配件</h3>
                 </div>
+                    <hr>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">配件类型：</label>
                     <div class="col-sm-7">
@@ -117,14 +119,10 @@
                         </select>
                     </div>
                 </div>
-                <table class="table table-hover" id="table1"
-                       data-pagination="true"
-                       data-show-refresh="true"
-                       data-show-toggle="true"
-                       data-showColumns="true">
+                <table class="table table-hover" id="table1">
                     <thead>
                     <tr>
-                        <th data-field="state" data-checkbox="true"></th>
+                        <th data-field="state" data-radio="true"></th>
                         <th data-field="accName" >
                             配件名称
                         </th>
@@ -137,7 +135,7 @@
                     </tr>
                     </thead>
                 </table>
-                <div class="modal-footer">
+                <div class="modal-footer" style="border: none">
                     <button id="AccessoriesButton" type="button" class="btn btn-default"
                             onclick="AccessoriescloseWindow()">关闭
                     </button>
@@ -158,7 +156,7 @@
                 <div class="modal-header" style="overflow:auto;">
                     <h4>请填写该维修项目的相关信息</h4>
                 </div>
-                <br/>
+                <hr>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">维修项目名称：</label>
                     <div class="col-sm-7">
@@ -197,7 +195,7 @@
                         </select>
                     </div>
                 </div>
-                <div class="modal-footer">
+                <div class="modal-footer" style="border: none">
                     <button type="button" class="btn btn-default"
                             data-dismiss="modal">关闭
                     </button>

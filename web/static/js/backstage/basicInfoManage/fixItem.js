@@ -189,8 +189,9 @@ function showAddacc(){
             type:"warning"}) // 提示类型
     }
 }
+
 function queryByTypeId(obj){
-    initTable('table1', '/maintain/queryByPagerDisableService?id'+obj.value());
+    initTableNotTollbar("table1", "/accInv/queryByIdAcc?id=" + obj.value);
 }
 // 显示所有项目window
 function showAccessories(windowId){
