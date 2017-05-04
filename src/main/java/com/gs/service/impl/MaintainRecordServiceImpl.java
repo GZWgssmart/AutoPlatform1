@@ -59,4 +59,12 @@ public class MaintainRecordServiceImpl implements MaintainRecordService {
 	public int countByBlurred(MaintainRecord maintainRecord) {
 		return maintainRecordDAO.countByBlurred(maintainRecord);
 	}
+
+	public List<MaintainRecord> blurredQueryByRemind(Pager pager, MaintainRecord maintainRecord) {
+		return maintainRecordDAO.blurredQueryByRemind(pager, maintainRecord);
+	}
+
+	public int countByBlurredByRemind(MaintainRecord maintainRecord) {
+		return maintainRecordDAO.countByBlurredByRemind(maintainRecord);
+	}
 }

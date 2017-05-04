@@ -3,6 +3,7 @@ package com.gs.dao;
 import com.gs.bean.User;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.Set;
@@ -30,7 +31,7 @@ public interface UserDAO extends BaseDAO<String, User>{
     /**
      * 根据维修保养记录查询到用户的email发送邮件提醒车主进行提车
      */
-    public List<User> queryEmail(String ids);
+    public List<User> queryEmail(@Param("ids")String ids);
 
     /**
      *根据邮箱查询用户对应的id

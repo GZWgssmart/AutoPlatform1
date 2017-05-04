@@ -108,22 +108,30 @@ public class MaintainDetailController {
     @RequestMapping(value = "userConfirm/{recordId}/{ids}", method = RequestMethod.POST)
     public ControllerResult userConfirm(@PathVariable("recordId") String recordId,@PathVariable("ids") String ids) {
         logger.info("用户确认明细清单, 这时生成所有物料清单和工单");
-        List<MaintainFixAcc> maintainFixAccs = maintainFixAccService.queryByRecord(ids);
-        System.out.print(maintainFixAccs);
-        List<MaterialList> materialLists = new ArrayList<MaterialList>();
-        for (MaintainFixAcc m : maintainFixAccs){
-            MaterialList materialList = new MaterialList();
-            materialList.setMaintainRecordId(recordId);
-            materialList.setAccId(m.getAccId());
-            materialList.setMaterialCount(m.getAccCount());
-            materialLists.add(materialList);
+        if(recordId != null && recordId != "" && ids!= null && ids != "") {
+            List<MaintainFixAcc> maintainFixAccs = maintainFixAccService.queryByRecord(ids);
+            System.out.print(maintainFixAccs);
+            List<MaterialList> materialLists = new ArrayList<MaterialList>();
+            for (MaintainFixAcc m : maintainFixAccs) {
+                MaterialList materialList = new MaterialList();
+                materialList.setMaintainRecordId(recordId);
+                materialList.setAccId(m.getAccId());
+                materialList.setMaterialCount(m.getAccCount());
+                materialLists.add(materialList);
+            }
+            materialListService.insertList(materialLists); // 生成物料清单
+            // 用户确认之后, 生成工单, 指派员工进行施工
+            WorkInfo w = new WorkInfo();
+            w.setRecordId(recordId);
+            workInfoService.insert(w);
+            // 修改维修保养记录中的开始时间
+            MaintainRecord maintainRecord = maintainRecordService.queryById(recordId);
+            maintainRecord.setStartTime(new Date());
+            maintainRecordService.update(maintainRecord);
+            return ControllerResult.getSuccessResult("确定成功");
+        }else{
+            return ControllerResult.getFailResult("确定失败");
         }
-        materialListService.insertList(materialLists); // 生成物料清单
-        // 用户确认之后, 生成工单, 指派员工进行施工
-        WorkInfo w = new WorkInfo();
-        w.setRecordId(recordId);
-        workInfoService.insert(w);
-        return ControllerResult.getSuccessResult("确定成功");
     }
 
     /**
@@ -136,7 +144,6 @@ public class MaintainDetailController {
         logger.info("维修保养记录模糊查询");
         String text = request.getParameter("text");
         String value = request.getParameter("value");
-        System.out.print(text+value+"-------------------");
         if(text != null && text!="") {
             Pager pager = new Pager();
             pager.setPageNo(Integer.valueOf(pageNumber));
@@ -144,21 +151,18 @@ public class MaintainDetailController {
             List<MaintainRecord> maintainRecords = null;
             MaintainRecord maintainRecord = new MaintainRecord();
             Checkin checkin = new Checkin();
-            Company company = new Company();
             if(text.equals("车主/电话/汽车公司/车牌号")){ // 当多种模糊搜索条件时
                 checkin.setUserPhone(value);
                 checkin.setCarPlate(value);
                 checkin.setUserName(value);
-                company.setCompanyName(value);
+                checkin.setCompanyId(value);
                 maintainRecord.setCheckin(checkin);
-                maintainRecord.getCheckin().setCompany(company);
             }else if(text.equals("车主")){
                 checkin.setUserName(value);
                 maintainRecord.setCheckin(checkin);
             }else if(text.equals("汽车公司")){
-                company.setCompanyName(value);
+                checkin.setCompanyId(value);
                 maintainRecord.setCheckin(checkin);
-                maintainRecord.getCheckin().setCompany(company);
             }else if(text.equals("车牌号")){
                 checkin.setCarPlate(value);
                 maintainRecord.setCheckin(checkin);

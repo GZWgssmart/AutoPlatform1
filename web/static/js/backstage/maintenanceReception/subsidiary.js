@@ -215,7 +215,6 @@ function userConfirm(){
             if(ids == ""){// 假如这个字符串刚开始设置,
                 ids = "'"+tableData[index].maintainItemId+"'";// 则直接赋上0索引上的id属性
             }else {
-                alert(tableData[index].maintainItemId)
                 ids += ",'" + tableData[index].maintainItemId+"'"// 否则就加上逗号把rows里所有的id都赋给ids
             }
         });
