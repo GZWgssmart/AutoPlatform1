@@ -64,6 +64,11 @@ public class UserServiceImpl implements UserService {
 		return userDAO.queryRoles(email);
 	}
 
+	@Override
+	public User queryByEmail(String email) {
+		return userDAO.queryByEmail(email);
+	}
+
 	public List<User> queryByPagerDisable(Pager pager) {
 		return userDAO.queryByPagerDisable(pager);
 	}

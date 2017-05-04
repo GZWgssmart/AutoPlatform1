@@ -111,15 +111,15 @@
   <select id="queryRoles" parameterType="String" resultType="String">
     SELECT roleName FROM auto_platform.t_role WHERE roleId
     IN (select t_user_role.roleId from auto_platform.t_user_role
-    WHERE user_id = (select t_user.userId from auto_platform.t_user where email = #{email}))
+    WHERE userId = (select t_user.userId from auto_platform.t_user where userEmail = #{email}))
   </select>
 
   <select id="queryPermissions" parameterType="String" resultType="String">
     SELECT permissionName FROM auto_platform.t_permission
-    WHERE id IN (SELECT t_role_permission.permissionId FROM auto_platform.t_role_permission
-    WHERE role_id IN (SELECT t_user_role.roleId FROM auto_platform.t_user_role
-    WHERE user_id = (SELECT t_user.userId FROM auto_platform.t_user
-    WHERE email = #{email})))
+    WHERE permissionId IN (SELECT t_role_permission.permissionId FROM auto_platform.t_role_permission
+    WHERE roleId IN (SELECT t_user_role.roleId FROM auto_platform.t_user_role
+    WHERE userId = (SELECT t_user.userId FROM auto_platform.t_user
+    WHERE userEmail = #{email})))
   </select>
 
   <!-- 根据维修保养记录查询到用户的email发送邮件提醒车主进行提车 -->
@@ -130,5 +130,11 @@
       select ck.checkinId from t_maintain_record m, t_checkin ck
       where m.checkinId = ck.checkinId and m.recordId in (#{ids})));
     ]]>
+  </select>
+
+  <select id="queryByEmail" resultMap="userBasicManageMap">
+    <![CDATA[
+          SELECT *FROM auto_platform.t_user WHERE userEmail=#{email}
+        ]]>
   </select>
 </mapper>

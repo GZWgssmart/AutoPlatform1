@@ -6,42 +6,57 @@
        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
+    <!--内存限制缓存管理器-->
 	<bean id="cacheManager" class="org.apache.shiro.cache.MemoryConstrainedCacheManager" />   
-	
+
+    <!--通配符解析器-->
 	<bean id="permissionResolver" class="org.apache.shiro.authz.permission.WildcardPermissionResolver"/>
 
-	<bean id="rolePermissionRelover" class="com.gs.shiro.MyRolePermissionResolver" autowire="byType"></bean>
-
-	<bean id="authorizer" class="org.apache.shiro.authz.ModularRealmAuthorizer">
-		<property name="permissionResolver" ref="permissionResolver" />
-		<property name="rolePermissionResolver" ref="rolePermissionRelover" />
-	</bean>
-
-
-    <!-- 配置权限管理器 -->  
-    <bean id="jdbcRealm" class="org.apache.shiro.realm.jdbc.JdbcRealm">
-    	<property name="dataSource" ref="dataSource"></property>
-    	<!-- 根据用户邮箱查找用户密码 -->
-    	<property name="authenticationQuery" value="SELECT userPwd FROM t_user WHERE userEmail = ?"></property>
-    	<!-- 根据用户的邮箱查找用户的角色名称 -->
-    	<property name="userRolesQuery" value="SELECT roleName FROM t_role WHERE roleId in (select roleId from t_user_role where userId = (select userId from t_user where userEmail = ?))" />
-    	<!-- 根据用户的邮箱查找用户的权限 -->
-    	<property name="permissionsQuery" value="select permissionName from t_permission where permissionId in (select permissionId from t_role_permission where roleId in (select roleId from t_user_role where userId = (select userId from t_user where userEmail = ?)))" />
+    <!--模块化授权管理器-->
+    <bean id="authorizer" class="org.apache.shiro.authz.ModularRealmAuthorizer">
+        <property name="permissionResolver" ref="permissionResolver" />
     </bean>
-    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">  
-   		<property name="authorizer" ref="authorizer" />  
-        <!-- 我们自定义的realm -->  
-        <property name="realm" ref="jdbcRealm"/>    
-        <!-- 缓存管理器 -->  
-        <property name="cacheManager" ref="cacheManager"/>    
-        
-    </bean>  
-      
+
+    <!--配置模块化身份验证-->
+    <bean id="authenticator" class="com.gs.authenticator.MyModularRealmAuthenticator">
+        <property name="authenticationStrategy">
+            <bean class="org.apache.shiro.authc.pam.FirstSuccessfulStrategy" />
+        </property>
+    </bean>
+
+    <!-- 配置user角色自定义域 -->
+    <bean id="userRealm" class="com.gs.realm.UserRealm"/>
+
+    <!--配置默认的Web安全管理器-->
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <!--模块化权限授权器-->
+        <property name="authorizer" ref="authorizer"/>
+        <property name="authenticator" ref="authenticator" />
+        <!--配置多个域-->
+        <property name="realms">
+            <list>
+                <ref bean="userRealm" />
+            </list>
+        </property>
+    </bean>
+
+    <!--&lt;!&ndash; 配置权限管理器 &ndash;&gt;  -->
+    <!--<bean id="jdbcRealm" class="org.apache.shiro.realm.jdbc.JdbcRealm">-->
+    	<!--<property name="dataSource" ref="dataSource"></property>-->
+    	<!--&lt;!&ndash; 根据用户邮箱查找用户密码 &ndash;&gt;-->
+    	<!--<property name="authenticationQuery" value="SELECT userPwd FROM t_user WHERE userEmail = ?"></property>-->
+    	<!--&lt;!&ndash; 根据用户的邮箱查找用户的角色名称 &ndash;&gt;-->
+    	<!--<property name="userRolesQuery" value="SELECT roleName FROM t_role WHERE roleId in (select roleId from t_user_role where userId = (select userId from t_user where userEmail = ?))" />-->
+    	<!--&lt;!&ndash; 根据用户的邮箱查找用户的权限 &ndash;&gt;-->
+    	<!--<property name="permissionsQuery" value="select permissionName from t_permission where permissionId in (select permissionId from t_role_permission where roleId in (select roleId from t_user_role where userId = (select userId from t_user where userEmail = ?)))" />-->
+    <!--</bean>-->
+
+    <!--shiro核心过滤器-->
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">   
         <!-- 权限管理器 -->   
         <property name="securityManager" ref="securityManager"/>   
         <!-- 登录地址 -->   
-        <property name="loginUrl" value="/login.jsp"/>      
+        <property name="loginUrl" value="/loginPage"/>
         <!-- 错误页面 -->  
         <property name="unauthorizedUrl" value="/error/serverError"/>
         <!-- 权限配置 -->  
@@ -56,6 +71,7 @@
             </value>    
         </property>    
     </bean>  
-      
+
+    <!--bean最后生命周期结束后的处理程序-->
     <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />
 </beans>  
