@@ -134,7 +134,7 @@
 
   <select id="queryByEmail" resultMap="userBasicManageMap">
     <![CDATA[
-          SELECT *FROM auto_platform.t_user WHERE userEmail=#{email}
+          SELECT *FROM auto_platform.t_user WHERE userEmail=#{email} OR userPhone=#{email} OR userName=#{email}
         ]]>
   </select>
 </mapper>

@@ -32,10 +32,10 @@ function validator(formId) {
         },
         fields: {
             userEmail: {
-                message: '请输入您注册时所填的E-mail',
+                message: '邮箱/手机号/用户名不能为空',
                 validators: {
                     notEmpty: {
-                        message: '请输入您注册时所填的E-mail'
+                        message: '邮箱/手机号/用户名不能为空'
                     }
                 }
             },

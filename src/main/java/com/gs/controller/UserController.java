@@ -26,7 +26,6 @@ public class UserController {
     @Resource
     private UserService userService;
 
-
     private Subject subject;
 
     @RequestMapping(value = "loginPage",method = RequestMethod.GET)

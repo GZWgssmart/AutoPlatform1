@@ -48,10 +48,10 @@
                 <form class="form-horizontal" id="loginForm">
                     <p>欢迎登录本站(⊙o⊙)</p>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">用户名：</label>
+                        <label class="col-sm-3 control-label">帐号：</label>
 
                         <div class="col-sm-8">
-                            <input type="email" name="userEmail" placeholder="用户名" class="form-control">
+                            <input type="text" name="userEmail" placeholder="邮箱/手机号/用户名" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
