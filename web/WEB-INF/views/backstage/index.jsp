@@ -183,9 +183,9 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="#"><i class="fa fa-calculator"></i> <span class="nav-label">结算出厂</span><span class="fa arrow"></span></a>
+                        <a href="#"><i class="fa fa-calculator"></i> <span class="nav-label">结算提车</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
-                            <li><a class="J_menuItem" href="/clearingOut/carRemindIndex">提醒提车管理</a>
+                            <li><a class="J_menuItem" href="/clearingOut/carRemindIndex">提车提醒</a>
                             </li>
                             <li><a class="J_menuItem" href="/clearingOut/chargeDocumentsIndex">收费单据管理</a>
                             </li>

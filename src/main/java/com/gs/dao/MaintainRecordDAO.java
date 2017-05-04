@@ -25,4 +25,14 @@ public interface MaintainRecordDAO extends BaseDAO<String, MaintainRecord>{
      * 模糊查询的记录数
      */
     public int countByBlurred(@Param("maintainRecord")MaintainRecord maintainRecord);
+    /**
+     * 模糊查询
+     */
+    public List<MaintainRecord> blurredQueryByRemind(@Param("pager")Pager pager, @Param("maintainRecord")MaintainRecord maintainRecord);
+
+    /**
+     * 模糊查询的记录数
+     */
+    public int countByBlurredByRemind(@Param("maintainRecord")MaintainRecord maintainRecord);
+
 }

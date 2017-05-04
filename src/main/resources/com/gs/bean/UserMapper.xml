@@ -128,7 +128,7 @@
       select u.* from t_user u where userId in (
       select userId from t_checkin where checkinId in (
       select ck.checkinId from t_maintain_record m, t_checkin ck
-      where m.checkinId = ck.checkinId and m.recordId in (#{ids})));
+      where m.checkinId = ck.checkinId and m.recordId in (${ids})));
     ]]>
   </select>
 

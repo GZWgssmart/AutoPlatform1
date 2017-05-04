@@ -31,6 +31,8 @@
                 <th data-field="maintainManHourFee">维修项目工时费</th>
                 <th data-field="maintainDes">维修项目描述</th>
                 <th data-field="company.companyName">维修项目所属公司</th>
+                <%--<th data-field="accessoriesType.accTypeName">添加的配件</th>--%>
+                <%--<th data-field="maintainFixAcc.accCount">配件数量</th>--%>
                 <th data-field="maintainStatus" data-formatter="statusFormatter">维修项目状态</th>
             </tr>
             </thead>
@@ -48,9 +50,105 @@
             <button id="btn_edit" type="button" class="btn btn-default" onclick="showEdit();">
                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
             </button>
+            <button id="btn_addAcc" type="button" class="btn btn-default" onclick="showAddacc();">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>添加配件
+            </button>
+            <button id="btn_editAcc" type="button" class="btn btn-default" onclick="showDetail();">
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查看明细
+            </button>
         </div>
     </div>
 </div>
+
+<div id="accWindow" class="modal fade" style="overflow-y:scroll" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
+                <form role="form" class="form-horizontal" id="accForm">
+                    <div class="modal-header" style="overflow:auto;">
+                        <h3>请输入配件</h3>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">配件名称：</label>
+                        <div class="col-sm-9">
+                            <input id="addItem" class="form-control" placeholder="请选择配件" readonly="true"
+                                   style="width:52%;">
+                            </input>
+                            <button type="button" class="btn btn-default" onclick="showAccessories('accWindow');">
+                                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查看配件
+                            </button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">配件数量：</label>
+                        <div class="col-sm-7">
+                            <input type="text" name="accCount" placeholder="请输入配件数量" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default"
+                                data-dismiss="modal">关闭
+                        </button>
+                        <button id="accButton" type="button" onclick="addSubmit()" class="btn btn-success">添加
+                        </button>
+                        <input type="reset" name="reset" style="display: none;"/>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<%--所有配件--%>
+<div class="modal fade" id="AccessoriesWindow" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog" style="width:90%;">
+        <div class="modal-content">
+            <div class="modal-body">
+                <span class="glyphicon glyphicon-remove closeModal" onclick="closeWindow()"></span>
+                <form role="form" class="form-horizontal" id="AccessoriesForm">
+                <div class="modal-header" style="overflow:auto;">
+                    <h3>请选择配件</h3>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">配件类型：</label>
+                    <div class="col-sm-7">
+                        <select id="addAccessories" class="js-example-tags AccessoriesType" onchange="queryByTypeId(this)" name="accId" style="width:100%" >
+                        </select>
+                    </div>
+                </div>
+                <table class="table table-hover" id="table1"
+                       data-pagination="true"
+                       data-show-refresh="true"
+                       data-show-toggle="true"
+                       data-showColumns="true">
+                    <thead>
+                    <tr>
+                        <th data-field="state" data-checkbox="true"></th>
+                        <th data-field="accName" >
+                            配件名称
+                        </th>
+                        <th data-field="accIdle" >
+                            配件库可用数
+                        </th>
+                        <th data-field="accSalePrice" >
+                            配件单价
+                        </th>
+                    </tr>
+                    </thead>
+                </table>
+                <div class="modal-footer">
+                    <button id="AccessoriesButton" type="button" class="btn btn-default"
+                            onclick="AccessoriescloseWindow()">关闭
+                    </button>
+                    <button id="itemButton" type="button" onclick="itemSubmit()" class="btn btn-success">确定
+                    </button>
+                </div>
+                </form>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 <!-- 添加弹窗 -->
 <div id="addWindow" class="modal fade" style="overflow-y:scroll" data-backdrop="static">
@@ -95,7 +193,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">维修项目所属公司：</label>
                     <div class="col-sm-7">
-                        <select id="addCompany" class="js-example-tags Company" name="companyId" style="width:100%">
+                        <select id="addCompany" class="js-example-tags company" name="companyId" style="width:100%">
                         </select>
                     </div>
                 </div>

@@ -134,10 +134,10 @@
             company.companyLogo, cb.brandId, cb.brandName
             from t_maintain_record m, t_checkin ck, t_car_brand cb,
             t_car_color cc, t_car_model cm, t_car_plate cp, t_company company
-            where m.checkinId = ck.checkinId and ck.brandId = cb.brandId
+            where 1=1 and m.checkinId = ck.checkinId and ck.brandId = cb.brandId
             and ck.colorId = cc.colorId and ck.modelId = cm.modelId
             and ck.plateId = cp.plateId and ck.companyId = company.companyId
-            and m.recordStatus = 'Y' where 1=1 and
+            and m.recordStatus = 'Y' and
       ]]>
         <if test="maintainRecord.checkin.userName != '' and maintainRecord.checkin.userName != null">
             ck.userName like '%${maintainRecord.checkin.userName}%'
@@ -170,13 +170,91 @@
     <!-- 分页模糊查询个数 -->
     <select id="countByBlurred" resultType="int">
         <![CDATA[
-            select count(m.recordId)
-            from t_maintain_record m, t_checkin ck, t_car_brand cb,
+             select  count(m.recordId) from t_maintain_record m, t_checkin ck, t_car_brand cb,
             t_car_color cc, t_car_model cm, t_car_plate cp, t_company company
-            where m.checkinId = ck.checkinId and ck.brandId = cb.brandId
+            where 1=1 and m.checkinId = ck.checkinId and ck.brandId = cb.brandId
             and ck.colorId = cc.colorId and ck.modelId = cm.modelId
             and ck.plateId = cp.plateId and ck.companyId = company.companyId
-            and m.recordStatus = 'Y' where 1=1 and
+            and m.recordStatus = 'Y' and
+      ]]>
+        <if test="maintainRecord.checkin.userName != '' and maintainRecord.checkin.userName != null">
+            ck.userName like '%${maintainRecord.checkin.userName}%'
+        </if>
+        <if test="maintainRecord.checkin.userName != '' and maintainRecord.checkin.userName != null and
+            maintainRecord.checkin.companyId != '' and maintainRecord.checkin.companyId != null">
+            or
+        </if>
+        <if test="maintainRecord.checkin.companyId != '' and maintainRecord.checkin.companyId != null">
+            company.companyName like '%${maintainRecord.checkin.companyId}%'
+        </if>
+        <if test="maintainRecord.checkin.companyId != '' and maintainRecord.checkin.companyId != null and
+            maintainRecord.checkin.carPlate != '' and maintainRecord.checkin.carPlate != null">
+            or
+        </if>
+        <if test="maintainRecord.checkin.carPlate != '' and maintainRecord.checkin.carPlate != null">
+            ck.carPlate like '%${maintainRecord.checkin.carPlate}%'
+        </if>
+        <if test="maintainRecord.checkin.carPlate != '' and maintainRecord.checkin.carPlate != null and
+            maintainRecord.checkin.userPhone != '' and maintainRecord.checkin.userPhone != null">
+            or
+        </if>
+        <if test="maintainRecord.checkin.userPhone != '' and maintainRecord.checkin.userPhone != null">
+            ck.userPhone like '%${maintainRecord.checkin.userPhone}%'
+        </if>
+    </select>
+
+    <!-- 分页模糊查询, 此模糊查询为提车提醒的-->
+    <select id="blurredQueryByRemind" resultMap="MaintainRecordMap">
+        <![CDATA[
+            select  m.*, ck.*, cc.colorId, cc.colorName, cp.plateId, cp.plateName,
+            cm.modelId, cm.modelName, company.companyId,
+            company.companyName,company.companyAddress,
+            company.companyAddress, company.companyTel,
+            company.companyLogo, cb.brandId, cb.brandName
+            from t_maintain_record m, t_checkin ck, t_car_brand cb,
+            t_car_color cc, t_car_model cm, t_car_plate cp, t_company company
+            where 1=1 and m.checkinId = ck.checkinId and ck.brandId = cb.brandId
+            and ck.colorId = cc.colorId and ck.modelId = cm.modelId
+            and ck.plateId = cp.plateId and ck.companyId = company.companyId
+            and m.recordStatus = 'Y' and
+      ]]>
+        <if test="maintainRecord.checkin.userName != '' and maintainRecord.checkin.userName != null">
+            ck.userName like '%${maintainRecord.checkin.userName}%'
+        </if>
+        <if test="maintainRecord.checkin.userName != '' and maintainRecord.checkin.userName != null and
+            maintainRecord.checkin.companyId != '' and maintainRecord.checkin.companyId != null">
+            or
+        </if>
+        <if test="maintainRecord.checkin.companyId != '' and maintainRecord.checkin.companyId != null">
+            company.companyName like '%${maintainRecord.checkin.companyId}%'
+        </if>
+        <if test="maintainRecord.checkin.companyId != '' and maintainRecord.checkin.companyId != null and
+            maintainRecord.checkin.carPlate != '' and maintainRecord.checkin.carPlate != null">
+            or
+        </if>
+        <if test="maintainRecord.checkin.carPlate != '' and maintainRecord.checkin.carPlate != null">
+            ck.carPlate like '%${maintainRecord.checkin.carPlate}%'
+        </if>
+        <if test="maintainRecord.checkin.carPlate != '' and maintainRecord.checkin.carPlate != null and
+            maintainRecord.checkin.userPhone != '' and maintainRecord.checkin.userPhone != null">
+            or
+        </if>
+        <if test="maintainRecord.checkin.userPhone != '' and maintainRecord.checkin.userPhone != null">
+            ck.userPhone like '%${maintainRecord.checkin.userPhone}%'
+        </if>
+        order by m.recordCreatedTime Desc
+        limit #{pager.beginIndex}, #{pager.pageSize}
+    </select>
+
+    <!-- 分页模糊查询个数, 此模糊查询为提车提醒的 -->
+    <select id="countByBlurredByRemind" resultType="int">
+        <![CDATA[
+             select  count(m.recordId) from t_maintain_record m, t_checkin ck, t_car_brand cb,
+            t_car_color cc, t_car_model cm, t_car_plate cp, t_company company
+            where 1=1 and m.checkinId = ck.checkinId and ck.brandId = cb.brandId
+            and ck.colorId = cc.colorId and ck.modelId = cm.modelId
+            and ck.plateId = cp.plateId and ck.companyId = company.companyId
+            and m.recordStatus = 'Y' and
       ]]>
         <if test="maintainRecord.checkin.userName != '' and maintainRecord.checkin.userName != null">
             ck.userName like '%${maintainRecord.checkin.userName}%'

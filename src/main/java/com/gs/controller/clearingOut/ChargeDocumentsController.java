@@ -1,4 +1,4 @@
-package com.gs.controller.maintenanceReceptionManage;
+package com.gs.controller.clearingOut;
 
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.Checkin;
@@ -27,13 +27,13 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * 接待登记管理controller， 张文星
+ * 收费单据管理controller， 张文星
  */
 @Controller
-@RequestMapping("/checkin")
-public class CheckinController {
+@RequestMapping("/charge")
+public class ChargeDocumentsController {
 
-    private Logger logger = (Logger) LoggerFactory.getLogger(CheckinController.class);
+    private Logger logger = (Logger) LoggerFactory.getLogger(ChargeDocumentsController.class);
 
     // 登记service
     @Resource
@@ -43,7 +43,7 @@ public class CheckinController {
     private MaintainRecordService maintainRecordService;
 
     /**
-     * 查询所有登记记录
+     * 查询所有收费单据
      * @return
      */
     @ResponseBody
@@ -78,20 +78,14 @@ public class CheckinController {
     @RequestMapping(value = "add", method = RequestMethod.POST)
     public ControllerResult addCheckin(Checkin checkin) {
         logger.info("添加登记记录");
-        if(checkin != null) {
-            if(checkin.getAppointmentId()!= null && checkin.getAppointmentId() != ""){
-
-            }
-            checkin.setCheckinId(UUIDUtil.uuid());
-            checkin.setCompanyId("c515f5d623e011e7a97af832e40312b3");
-            checkinService.insert(checkin);
-            MaintainRecord maintainRecode = new MaintainRecord();
-            maintainRecode.setCheckinId(checkin.getCheckinId());
-            maintainRecordService.insert(maintainRecode);
-            return ControllerResult.getSuccessResult("添加成功");
-        }else{
-            return ControllerResult.getFailResult("添加失败");
-        }
+        System.out.print(UUIDUtil.uuid());
+        checkin.setCheckinId(UUIDUtil.uuid());
+        checkin.setCompanyId("c515f5d623e011e7a97af832e40312b3");
+        checkinService.insert(checkin);
+        MaintainRecord maintainRecode = new MaintainRecord();
+        maintainRecode.setCheckinId(checkin.getCheckinId());
+        maintainRecordService.insert(maintainRecode);
+        return ControllerResult.getSuccessResult("添加成功");
     }
 
     @ResponseBody

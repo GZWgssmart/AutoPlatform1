@@ -386,6 +386,18 @@ CREATE TABLE `t_maintain_detail` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /**
+维修保养进度表
+*/
+DROP TABLE IF EXISTS `t_maintain_schedule`;
+CREATE TABLE `t_maintain_schedule` (
+  `maintainScheduleId` varchar(36) DEFAULT NULL COMMENT '维修保养进度编号，UUID,主键',
+  `maintainRecordId` varchar(36) DEFAULT NULL COMMENT '维修保养记录编号，来源于t_maintain_record表',
+  `maintainScheduleDes` varchar(500) DEFAULT NULL COMMENT '维修保养进度描述',
+  `msCreatedTime` datetime DEFAULT NULL COMMENT '维修保养进度创建时间',
+  `msStatus` varchar(2) DEFAULT NULL COMMENT '维修保养进度状态，Y表示可用，N表示不可用'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/**
 物料清单表
 */
 DROP TABLE IF EXISTS `t_material_list`;

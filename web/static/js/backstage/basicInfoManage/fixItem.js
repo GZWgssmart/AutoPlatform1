@@ -3,6 +3,7 @@ $(function () {
 
     // 初始化select2, 第一个参数是class的名字, 第二个参数是select2的提示语, 第三个参数是select2的查询url
     initSelect2("company", "请选择公司", "/company/queryAllCompany");
+    initSelect2("AccessoriesType", "请选择配件类型", "/accType/queryAllAccType");
 });
 
 function showEdit() {
@@ -167,4 +168,40 @@ function showAvailable(){
 // 查看全部禁用
 function showDisable(){
     initTable('table', '/maintain/queryByPagerDisableService');
+}
+
+
+// 添加配件窗口
+function showAddacc(){
+    var row =  $('#table').bootstrapTable('getSelections');
+    if(row.length >0) {
+        $("#accButton").removeAttr("disabled");
+        var maintainDetail = row[0];
+        $("#accForm").fill(maintainDetail);
+        $("#accWindow").modal('show');
+        validator('accForm'); // 初始化验证
+    }else{
+        swal({
+            title:"",
+            text: "请选择要添加配件项目", // 主要文本
+            confirmButtonColor: "#DD6B55", // 提示按钮的颜色
+            confirmButtonText:"确定", // 提示按钮上的文本
+            type:"warning"}) // 提示类型
+    }
+}
+function queryByTypeId(obj){
+    initTable('table1', '/maintain/queryByPagerDisableService?id'+obj.value());
+}
+// 显示所有项目window
+function showAccessories(windowId){
+    $("#"+ windowId).modal('hide');
+    // initTableNotTollbar('itemTable', '/maintain/queryByPagerAll');
+    $("#AccessoriesWindow").modal('show');
+    $("#AccessoriesButton").addClass(windowId);
+}
+
+// 项目window关闭按钮
+function AccessoriescloseWindow(){
+    $("#AccessoriesWindow").modal('hide');
+    $("#accWindow").modal('show');
 }

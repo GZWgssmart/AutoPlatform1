@@ -12,55 +12,96 @@
     <link rel="stylesheet" href="/static/css/select2.min.css">
     <link rel="stylesheet" href="/static/css/sweetalert.css">
     <link rel="stylesheet" href="/static/css/table/table.css">
+    <link rel="stylesheet" href="/static/css/bootstrap-validate/bootstrapValidator.min.css">
 </head>
 <body>
 <%@include file="../backstage/contextmenu.jsp"%>
 
 <div class="container">
     <div class="panel-body" style="padding-bottom:0px;"  >
-        <!--show-refresh, show-toggle的样式可以在bootstrap-table.js的948行修改-->
-        <!-- table里的所有属性在bootstrap-table.js的240行-->
-        <table id="table"
-               data-toggle="table"
-               data-toolbar="#toolbar"
-               data-url="/table/query"
-               data-method="post"
-               data-query-params="queryParams"
-               data-pagination="true"
-               data-search="true"
-               data-show-refresh="true"
-               data-show-toggle="true"
-               data-show-columns="true"
-               data-page-size="10"
-               data-height="550"
-               data-id-field="id"
-               data-page-list="[5, 10, 20]"
-               data-cach="false"
-               data-single-select="false"
-               data-click-to-select="true">
+        <table id="table" style="table-layout: fixed">
             <thead>
             <tr>
                 <th data-checkBox="true" data-field="status"></th>
-                <th  data-field="name">工单编号</th>
-                <th  data-field="name">工单创建时间</th>
-                <th data-field="price">工单指派时间</th>
-                <th data-field="price">维修保养记录编号</th>
-                <th data-field="price">维修保养记录开始时间</th>
-                <th data-field="price">维修保养记录预估时间</th>
-                <th data-field="price">维修保养记录描述</th>
-                <th data-field="price">车主手机</th>
-                <th data-field="price">车主姓名</th>
-                <th data-field="price">工单状态</th>
+                <th data-width="90" data-field="checkin.userName">
+                    车主姓名
+                </th>
+                <th data-width="120" data-field="checkin.userPhone">
+                    车主电话
+                </th>
+                <th data-width="90" data-field="checkin.brand.brandName">
+                    汽车品牌
+                </th>
+                <th data-width="90" data-field="checkin.color.colorName">
+                    汽车颜色
+                </th>
+                <th data-width="90" data-field="checkin.model.modelName">
+                    汽车车型
+                </th>
+                <th data-width="90" data-field="checkin.plate.plateName">
+                    汽车车牌
+                </th>
+                <th data-width="90" data-field="checkin.carPlate">
+                    车牌号码
+                </th>
+                <th data-width="90" data-field="checkin.ifClearCar" data-formatter="showStatusFormatter">
+                    是否洗车
+                </th>
+                <th data-width="150" data-field="checkin.carThings">
+                    车上物品描述
+                </th>
+                <th data-width="150" data-field="checkin.intactDegrees">
+                    汽车完好度描述
+                </th>
+                <th data-width="150" data-field="checkin.userRequests">
+                    用户要求描述
+                </th>
+                <th data-width="100" data-field="checkin.maintainOrFix">
+                    保养&nbsp;|&nbsp;维修
+                </th>
+                <th data-width="180" data-field="startTime" data-formatter="formatterDate">维修保养开始时间</th>
+                <th data-width="190" data-field="endTime" data-formatter="formatterDate">维修保养预估结束时间</th>
+                <th data-width="190" data-field="actualEndTime" data-formatter="formatterDate">维修保养实际结束时间</th>
+                <th data-width="190" data-field="recordCreatedTime" data-formatter="formatterDate">维修保养记录创建时间</th>
+                <th data-width="190" data-field="pickupTime" data-formatter="formatterDate">维修保养车主提车时间</th>
+                <th data-width="160" data-field="recordDes">维修保养记录描述</th>
             </tr>
             </thead>
         </table>
         <div id="toolbar" class="btn-group">
+            <button id="btn_available" type="button" class="btn btn-default" onclick="showNoRemind();">
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>未提醒维修保养记录
+            </button>
+            <button id="btn_disable" type="button" class="btn btn-default" onclick="showYesRemind();">
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>已提醒维修保养记录
+            </button>
             <button id="btn_bell" type="button" class="btn btn-default" onclick="showBell();">
                 <span class="glyphicon glyphicon-bell" aria-hidden="true"></span>提醒
             </button>
             <button id="btn_bellAll" type="button" class="btn btn-default" onclick="showBellAll();">
                 <span class="glyphicon glyphicon-bell" aria-hidden="true"></span>全部提醒
             </button>
+            <div class="input-group" style="width:350px;float:left;padding:0;margin:0 0 0 -1px;">
+                <div class="input-group-btn">
+                    <button type="button" id="ulButton" class="btn btn-default" style="border-radius:0px;"
+                            data-toggle="dropdown">车主/电话/汽车公司/车牌号<span class="caret"></span></button>
+                    <ul class="dropdown-menu pull-right">
+                        <li><a onclick="onclikLi(this)">车主/电话/汽车公司/车牌号</a></li>
+                        <li class="divider"></li>
+                        <li><a onclick="onclikLi(this)">车主</a></li>
+                        <li class="divider"></li>
+                        <li><a onclick="onclikLi(this)">电话</a></li>
+                        <li class="divider"></li>
+                        <li><a onclick="onclikLi(this)">汽车公司</a></li>
+                        <li class="divider"></li>
+                        <li><a onclick="onclikLi(this)">车牌号</a></li>
+                    </ul>
+                </div><!-- /btn-group -->
+                <input id="ulInput" class="form-control" onkeypress="if(event.keyCode==13) {blurredQuery();}">
+                <a href="javaScript:;" onclick="blurredQuery()"><span
+                        class="glyphicon glyphicon-search search-style"></span></a>
+                </input>
+            </div><!-- /input-group -->
         </div>
     </div>
 </div>
@@ -73,5 +114,7 @@
 <script src="/static/js/sweetalert/sweetalert.min.js"></script>
 <script src="/static/js/contextmenu.js"></script>
 <script src="/static/js/backstage/clearingOut/carRemind.js"></script>
+<script src="/static/js/backstage/main.js"></script>
+<script src="/static/js/bootstrap-validate/bootstrapValidator.js"></script>
 </body>
 </html>
