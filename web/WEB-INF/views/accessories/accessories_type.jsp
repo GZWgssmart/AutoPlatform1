@@ -71,7 +71,7 @@
 
 <!-- 增加弹窗 -->
 <div class="modal fade" id="addWindow" aria-hidden="true" style="overflow:auto; ">
-    <div class="modal-dialog" style="width: 700px;height: auto;">
+    <div class="modal-dialog">
         <div class="modal-content" style="overflow:hidden;">
             <form class="form-horizontal" id="addForm" method="post">
                 <div class="modal-header" style="overflow:auto;">
@@ -98,7 +98,7 @@
                                   class="form-control"></textarea>
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="modal-footer">
                     <div class="col-sm-offset-8">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                         <button id="addButton" type="button" onclick="addSubmit()" class="btn btn-success">保存</button>
@@ -138,7 +138,7 @@
                                   class="form-control"></textarea>
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="modal-footer">
                     <div class="col-sm-offset-8">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                         <button id="editButton" type="button" onclick="editSubmit()" class="btn btn-success">保存</button>
