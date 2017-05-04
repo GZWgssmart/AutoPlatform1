@@ -15,6 +15,13 @@
       <id property="companyId" column="companyId"/>
       <result property="companyName" column="companyName"/>
     </association>
+    <association property="maintainFixAcc" javaType="com.gs.bean.MaintainFixAcc">
+      <id property="maintainId" column="maintainId"/>
+    </association>
+    <association property="accessories" javaType="com.gs.bean.Accessories">
+      <id property="accId" column="accId"/>
+      <result property="accName" column="accName"/>
+    </association>
   </resultMap>
 
   <!--查询所有维修保养项目-->
@@ -34,8 +41,8 @@
   <!--分页查询维修项目-->
   <select id="queryByPager" resultType="list" resultMap="MaintainFixMap" parameterType="com.gs.common.bean.Pager">
     <![CDATA[
-			select mf.*, c.companyName from t_maintain_fix  mf, t_company  c where mf.companyId = c.companyId and mf.maintainOrFix = '维修' and mf.maintainStatus = 'Y' limit #{beginIndex}, #{pageSize}
-		]]>
+          select mf.*, c.companyName from t_maintain_fix  mf, t_company  c where mf.companyId = c.companyId and mf.maintainOrFix = '维修' and mf.maintainStatus = 'Y' limit #{beginIndex}, #{pageSize}
+]]>
   </select>
 
   <!--分页查询保养项目-->

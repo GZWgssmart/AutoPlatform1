@@ -24,6 +24,36 @@ public class MaintainFix {
 
     private Company company;//关联Company表
 
+    private MaintainFixAcc maintainFixAcc;//关联MaintainFixAcc表
+
+    private Accessories accessories;//关联Accessories
+
+    private AccessoriesType accessoriesType;//关联accessoriesType
+
+    public AccessoriesType getAccessoriesType() {
+        return accessoriesType;
+    }
+
+    public void setAccessoriesType(AccessoriesType accessoriesType) {
+        this.accessoriesType = accessoriesType;
+    }
+
+    public Accessories getAccessories() {
+        return accessories;
+    }
+
+    public void setAccessories(Accessories accessories) {
+        this.accessories = accessories;
+    }
+
+    public MaintainFixAcc getMaintainFixAcc() {
+        return maintainFixAcc;
+    }
+
+    public void setMaintainFixAcc(MaintainFixAcc maintainFixAcc) {
+        this.maintainFixAcc = maintainFixAcc;
+    }
+
     public Company getCompany() {
         return company;
     }
