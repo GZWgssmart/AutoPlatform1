@@ -123,8 +123,8 @@
         border: solid 26px transparent;
     }
     .wechat-right:before{
-        top:230px;
-        border: solid 42px transparent;
+        top:250px;
+        border: solid 70px transparent;
         border-right-color:rgba(0,0,0,0.5) ;
     }
 
@@ -159,8 +159,8 @@
         <%--主内容区--%>
         <div class="content">
             <div class="form-box">
-                <div class="form-box2">
-                    <div class="title-box">
+                <div class="form-box2 wow fadeInLeft animated">
+                    <div class="title-box" >
                         <ul class="title-ul" style="padding:0;">
                            <a href="javaScript:;"><li class="choose" id="baoy" onmouseenter="Conversion()">预约保养</li></a>
                            <a href="javaScript:;"><li id="weix" onmouseenter="Conversion()">预约维修</li></a>
@@ -194,16 +194,19 @@
                                     <label style="">选择车型：</label>
                                     <div class="clearfix"></div>
                                     <select class="select" style="margin-left: 0px;">
+                                        <option>--品牌--</option>
                                         <option value="奥迪">奥迪吗</option>
                                         <option>奔驰啊</option>
                                         <option>宝马</option>
                                     </select>
                                     <select class="select">
+                                        <option>--车系--</option>
                                         <option>奥迪吗</option>
                                         <option>奔驰啊</option>
                                         <option>宝马</option>
                                     </select>
                                     <select class="select">
+                                        <option>--车型--</option>
                                         <option>奥迪吗</option>
                                         <option>奔驰啊</option>
                                         <option>还是宝马</option>
@@ -220,7 +223,7 @@
 
                 <div class="form-wechat">
                     <div class="wechat-right">
-                        <div class="erm-img">
+                        <div class="erm-img  wow fadeInLeft animated">
                             <img src="/static/img/Frontpage/2wei.jpg"/>
                         </div>
                         <span style="font-size: 16px;padding-left:8px;float:left;color: white;">扫描二维码，微信预约，方便快捷</span>
@@ -241,8 +244,17 @@
 <script src="/static/js/jquery.min.js"></script>
 <script src="/static/js/bootstrap.min.js"></script>
 <script src="/static/js/jquery.cxselect.min.js"></script>
-<script src="/static/js/general.js"></script>
+<script src="/static/js/wow.js"></script>
 <script>
+    $(".paging-ul .paging-li ").each(function () {
+        $(this).click(function () {
+            $(".paging-ul .paging-li ").removeClass("active");
+            $(".paging-ul .paging-li ").removeClass("active-two");
+            $(this).addClass("active-two");
+            return false;
+        });
+    });
+
     function verification(){
         var nameValue = document.getElementById("name").value;
         var phoneValue = document.getElementById("phone").value;
@@ -270,6 +282,7 @@
             return false;
 
         }else if(/\w+/.test(nameValue)){
+            namepro.removeClass("show")
             name.style.borderColor = "red";
             namepro3.addClass("show");
             return false;
@@ -304,6 +317,7 @@
         datepro.removeClass("show")
         date.style.borderColor="#ccc";
         time.style.borderColor="#ccc";
+        alert("预约成功")
         return true;
     };
 

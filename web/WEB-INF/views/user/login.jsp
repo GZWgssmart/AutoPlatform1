@@ -20,7 +20,7 @@
 </head>
 <body class="gray-bg">
 <div class="row">
-    <div class="col-sm-5">
+    <div class="col-sm-5" style="margin: 50px 30%;">
         <div class="ibox float-e-margins">
             <div class="ibox-title">
                 <h5>请登陆</h5>
