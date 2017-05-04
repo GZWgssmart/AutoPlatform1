@@ -55,6 +55,11 @@ public class AccessoriesServiceImpl implements AccessoriesService {
 		return accessoriesDAO.countByDisable();
 	}
 
+	@Override
+	public List<Accessories> queryByIdPager(String id, Pager pager) {
+		return accessoriesDAO.queryByIdPager(id,pager);
+	}
+
 	public List<Accessories> blurredQuery(Pager pager, Accessories accessories) {
 		return accessoriesDAO.blurredQuery(pager, accessories);
 	}

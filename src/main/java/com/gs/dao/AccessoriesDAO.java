@@ -25,4 +25,6 @@ public interface AccessoriesDAO extends BaseDAO<String, Accessories>{
      * 模糊查询的记录数
      */
     public int countByBlurred(@Param("accInv")Accessories accessories);
+
+    public List<Accessories> queryByIdPager(@Param("id") String id, @Param("pager") Pager pager);
 }

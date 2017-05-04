@@ -89,6 +89,13 @@
     WHERE accId=#{accId}
   </update>
 
+  <select id="queryByIdPager" resultType="list" resultMap="AccessoriesMap"
+          parameterType="com.gs.common.bean.Pager">
+    <![CDATA[
+			select * from t_accessories where accTypeId = #{id} limit #{beginIndex}, #{pageSize}
+        ]]>
+  </select>
+
   <!--
       根据id删除对应的配件销售记录
   -->

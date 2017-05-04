@@ -70,6 +70,18 @@ public class AccessoriesInventoryController {
         return comboxs;
     }
 
+    @ResponseBody
+    @RequestMapping(value = "queryByIdAcc", method = RequestMethod.GET)
+    public Pager4EasyUI<Accessories> queryByIdAccPager(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize,@Param("id")String id) {
+        Pager pager = new Pager();
+        logger.info("分页查询所有配件");
+        pager.setPageNo(Integer.valueOf(pageNumber));
+        pager.setPageSize(Integer.valueOf(pageSize));
+        pager.setTotalRecords(accessoriesService.count());
+        List<Accessories> accessoriesList = accessoriesService.queryByIdPager(id,pager);
+        return new Pager4EasyUI<Accessories>(pager.getTotalRecords(), accessoriesList);
+    }
+
 
     /**
      * 分页查询配件库存信息
