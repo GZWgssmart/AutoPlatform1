@@ -7,7 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    String path=request.getContextPath();
+    String path = request.getContextPath();
 %>
 <html>
 <head>
@@ -17,6 +17,8 @@
     <link href="/static/css/font-awesome.min.css?v=4.4.0" rel="stylesheet">
     <link href="/static/css/animate.min.css" rel="stylesheet">
     <link href="/static/css/style.min.css?v=4.1.0" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/sweetalert.css">
+    <link rel="stylesheet" href="/static/css/bootstrap-validate/bootstrapValidator.min.css">
 </head>
 <body class="gray-bg">
 <div class="row">
@@ -49,8 +51,7 @@
                         <label class="col-sm-3 control-label">用户名：</label>
 
                         <div class="col-sm-8">
-                            <input type="email" name="userEmail" placeholder="用户名" class="form-control"> <span
-                                class="help-block m-b-none">请输入您注册时所填的E-mail</span>
+                            <input type="email" name="userEmail" placeholder="用户名" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
@@ -73,7 +74,9 @@
                     </div>
                     <div class="form-group">
                         <div class="col-sm-offset-3 col-sm-8">
-                            <button class="btn btn-sm btn-white" type="button" onclick="userLogin();">登 录</button>
+                            <button class="btn btn-sm btn-white" type="button" id="loginButton" onclick="loginSubmit()">
+                                登 录
+                            </button>
                         </div>
                     </div>
                 </form>
@@ -86,10 +89,12 @@
 <script src="/static/js/plugins/metisMenu/jquery.metisMenu.js"></script>
 <script src="/static/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
 <script src="/static/js/plugins/layer/layer.min.js"></script>
+<script src="/static/js/sweetalert/sweetalert.min.js"></script>
 <script src="/static/js/hplus.min.js?v=4.1.0"></script>
 <script src="/static/js/contabs.min.js"></script>
 <script src="/static/js/plugins/pace/pace.min.js"></script>
 <script src="/static/js/backstage/user/user.js"></script>
+<script src="/static/js/bootstrap-validate/bootstrapValidator.js"></script>
 <script>
     $(function () {
         function bodyScroll(event) {

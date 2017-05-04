@@ -33,7 +33,6 @@ public class UserController {
     public String loginPage() {
         return "user/login";
     }
-    
 
     /**
      * 登陆方法。
@@ -45,7 +44,6 @@ public class UserController {
     @ResponseBody
     @RequestMapping(value = "login",method = RequestMethod.POST)
     public ControllerResult userLogin(User user, HttpSession session, @Param("checkCode")String checkCode){
-        System.out.println("前台传来过的数据为"+user+"，前台传过来的验证码为："+checkCode);
         String codeSession = (String) session.getAttribute("checkCode");
         if (checkCode != null && checkCode.equals(codeSession)) {
             subject = SecurityUtils.getSubject();
@@ -54,6 +52,7 @@ public class UserController {
                 if (subject.hasRole("user")) {
                     logger.info("验证是否为user");
                     session.setAttribute("user", userService.queryByEmail(subject.getPrincipal().toString()));
+                    logger.info("登陆成功");
                     return ControllerResult.getSuccessResult("登陆成功");
                 } else {
                     logger.info("抱歉，你的账号并未正式激活。请联系管理员激活账号！");
