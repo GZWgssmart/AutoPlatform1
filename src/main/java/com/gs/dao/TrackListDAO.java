@@ -1,7 +1,12 @@
 package com.gs.dao;
 
 import com.gs.bean.TrackList;
+import com.gs.common.bean.Pager;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
 /**
 *由CSWangBin技术支持
 *
@@ -12,4 +17,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TrackListDAO extends BaseDAO<String, TrackList>{
 
+    public List<TrackList> queryByPagerName(@Param("pager") Pager pager, @Param("trackList") TrackList trackList);
+
+    public int countName(@Param("trackList") TrackList trackList);
 }

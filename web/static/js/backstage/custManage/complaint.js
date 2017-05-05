@@ -1,18 +1,61 @@
 $(function () {
     initTable('table', '/complaint/queryByPager'); // 初始化表格
+
+    initSelect2("user", "请选择用户", "/complaint/queryCombox");
+    initSelect2("admin", "请选择回复人", "/complaint/queryCombox");
 });
+
+// 模糊查询
+function blurredQuery(){
+    var button = $("#ulButton");// 获取模糊查询按钮
+    var text = button.text();// 获取模糊查询按钮文本
+    var vaule = $("#ulInput").val();// 获取模糊查询输入框文本
+    initTable('table', '/complaint/queryName?text='+text+'&value='+vaule);
+}
+
+function formatterUserName(value, row, index) {
+    if(row.admin != null) {
+        return row.admin.userName;
+    }
+}
 
 //显示弹窗
 function showEdit() {
     var row = $('table').bootstrapTable('getSelections');
     if (row.length > 0) {
-        $("#editWindow").modal('show'); // 显示弹窗
-        var complaint = row[0];
-        $("#editForm").fill(complaint);
-        $('#editAdminName').html('<option value="' + complaint.admin.userId + '">' + complaint.admin.userName + '</option>').trigger("change");
-        $("#start_edit").val(formatterDate(complaint.complaintCreatedTime));
-        $("#end_edit").val(formatterDate(complaint.complaintReplyTime));
-        validator('editForm');
+        if(row[0].complaintReplyTime != null || row[0].complaintReply != null) {
+            $("#editWindow").modal('show'); // 显示弹窗
+            $("#editButton").removeAttr("disabled"); // 移除不可点击
+            var Complaint = row[0];
+            $("#editForm").fill(Complaint);
+            $('#editAdminName').html('<option value="' + Complaint.admin.userId + '">' + Complaint.admin.userName + '</option>').trigger("change");
+            $("#end_edit").val(formatterDate(Complaint.complaintReplyTime));
+            validator('editForm');
+        } else {
+            // swal({
+            //     "title": "",
+            //     "text": "该记录没有回复，您可以进行回复",
+            //     "type": "warning"
+            // })
+            swal({
+                    title: "该记录没有回复哦！",
+                    text: "您可以点击确认进行回复",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#0ec4f2",
+                    confirmButtonText: "确定",
+                    cancelButtonText: "取消",
+                    closeOnConfirm: true
+                },
+                function(){
+                    $("#addReplyWindow").modal('show'); // 显示弹窗
+                    $("#replyButton").removeAttr("disabled"); // 移除不可点击
+                    var Complaint = row[0];
+                    $("#addReplyForm").fill(Complaint);
+                    $("#end").val(formatterDate(Complaint.complaintReplyTime));
+                    validator('addReplyForm');
+                });
+        }
     } else {
         swal({
             "title": "",
@@ -25,11 +68,11 @@ function showEdit() {
 function showReply() {
     var row = $('table').bootstrapTable('getSelections');
     if (row.length > 0) {
-        if(row[0].complaintReplyTime == "" && row[0].complaintReply == "") {
+        if(row[0].complaintReplyTime == null || row[0].complaintReply == null) {
             $("#addReplyWindow").modal('show'); // 显示弹窗
-            var complaint = row[0];
-            $("#addReplyForm").fill(complaint);
-            $("#start").val(formatterDate(Complaint.complaintCreatedTime));
+            $("#replyButton").removeAttr("disabled"); // 移除不可点击
+            var Complaint = row[0];
+            $("#addReplyForm").fill(Complaint);
             $("#end").val(formatterDate(Complaint.complaintReplyTime));
             validator('addReplyForm');
         } else {
@@ -71,46 +114,46 @@ function validator(formId) {
                     }
                 }
             },
-            // complaintCreatedTime: {
-            //     message: '投诉时间验证失败',
-            //     validators: {
-            //         notEmpty: {
-            //             message: '投诉时间不能为空'
-            //         }
-            //     }
-            // },
-            // complaintContent: {
-            //     message: '投诉内容验证失败',
-            //     validators: {
-            //         notEmpty: {
-            //             message: '投诉内容不能为空'
-            //         }
-            //     }
-            // },
-            // complaintReplyUser: {
-            //     message: '投诉回复人验证失败',
-            //     validators: {
-            //         notEmpty: {
-            //             message: '投诉回复人不能为空'
-            //         }
-            //     }
-            // },
-            // complaintReplyTime: {
-            //     message: '投诉回复时间验证失败',
-            //     validators: {
-            //         notEmpty: {
-            //             message: '投诉回复时间不能为空'
-            //         }
-            //     }
-            // },
-            // complaintReply: {
-            //     message: '投诉回复内容验证失败',
-            //     validators: {
-            //         notEmpty: {
-            //             message: '投诉回复内容不能为空'
-            //         }
-            //     }
-            // }
+            complaintCreatedTime: {
+                message: '投诉时间验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '投诉时间不能为空'
+                    }
+                }
+            },
+            complaintContent: {
+                message: '投诉内容验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '投诉内容不能为空'
+                    }
+                }
+            },
+            complaintReplyUser: {
+                message: '投诉回复人验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '投诉回复人不能为空'
+                    }
+                }
+            },
+            complaintReplyTime: {
+                message: '投诉回复时间验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '投诉回复时间不能为空'
+                    }
+                }
+            },
+            complaintReply: {
+                message: '投诉回复内容验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '投诉回复内容不能为空'
+                    }
+                }
+            }
         }
     })
 
@@ -173,6 +216,16 @@ function formSubmit(url, formId, winId){
                     $("#addButton").removeAttr("disabled"); // 移除不可点击
                     $("#" + formId).data('bootstrapValidator').destroy(); // 销毁此form表单
                     $('#' + formId).data('bootstrapValidator', null);// 此form表单设置为空
+                    $("#start").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
+                    $("#addUserName").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
+                } else if(formId == 'addReplyForm'){
+                    $("input[type=reset]").trigger("click"); // 移除表单中填的值
+                    $('#addReplyForm').data('bootstrapValidator').resetForm(true); // 移除所有验证样式
+                    $("#replyButton").removeAttr("disabled"); // 移除不可点击
+                    $("#" + formId).data('bootstrapValidator').destroy(); // 销毁此form表单
+                    $('#' + formId).data('bootstrapValidator', null);// 此form表单设置为空
+                    // $("#start").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
+                    $("#addAdminName").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
                 }
             } else if (data.result == "fail") {
                 swal({title:"",

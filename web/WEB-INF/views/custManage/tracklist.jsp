@@ -19,8 +19,7 @@
     <link rel="stylesheet" href="/static/css/select2.min.css">
     <link rel="stylesheet" href="/static/css/sweetalert.css">
     <link rel="stylesheet" href="/static/css/table/table.css">
-    <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.css">
-    <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/datetimepicker.less">
+    <link rel="stylesheet" href="/static/js/plugins/layui/css/layui.css" media="all">
 </head>
 <body>
 <%@include file="../backstage/contextmenu.jsp" %>
@@ -29,32 +28,15 @@
     <div class="panel-body" style="padding-bottom:0px;">
         <!--show-refresh, show-toggle的样式可以在bootstrap-table.js的948行修改-->
         <!-- table里的所有属性在bootstrap-table.js的240行-->
-        <table id="table"
-               data-toggle="table"
-               data-toolbar="#toolbar"
-               data-url="/table/query"
-               data-method="post"
-               data-query-params="queryParams"
-               data-pagination="true"
-               data-search="true"
-               data-show-refresh="true"
-               data-show-toggle="true"
-               data-show-columns="true"
-               data-page-size="10"
-               data-height="543"
-               data-id-field="id"
-               data-page-list="[5, 10, 20]"
-               data-cach="false"
-               data-click-to-select="true"
-               data-single-select="true">
+        <table id="table">
             <thead>
             <tr>
-                <th data-radio="true" data-field="status"></th>
-                <th data-field="userId">回访人</th>
+                <th data-checkbox="true"></th>
+                <th data-field="admin.userName">回访人</th>
                 <th data-field="trackContent">回访问题</th>
                 <th data-field="serviceEvaluate">本次服务评价</th>
-                <th data-field="trackUser">跟踪回访用户</th>
-                <th data-field="trackCreateTime">跟踪回访创建时间</th>
+                <th data-field="user.userName">跟踪回访用户</th>
+                <th data-field="trackCreatedTime" data-formatter="formatterDate">跟踪回访创建时间</th>
             </tr>
             </thead>
         </table>
@@ -65,9 +47,25 @@
             <button id="btn_edit" type="button" class="btn btn-default" onclick="showEdit();">
                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
             </button>
-            <button id="btn_delete" type="button" class="btn btn-default" onclick="showDel();">
-                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
-            </button>
+            <div class="input-group" style="width:350px;float:left;padding:0;margin:0 0 0 -1px;">
+                <div class="input-group-btn">
+                    <button type="button" id="ulButton" class="btn btn-default" style="border-radius:0px;"
+                            data-toggle="dropdown">回访人<span class="caret"></span></button>
+                    <ul class="dropdown-menu pull-right">
+                        <li><a onclick="onclikLi(this)">回访人</a></li>
+                        <li class="divider"></li>
+                        <li><a onclick="onclikLi(this)">回访问题</a></li>
+                        <li class="divider"></li>
+                        <li><a onclick="onclikLi(this)">本次服务评价</a></li>
+                        <li class="divider"></li>
+                        <li><a onclick="onclikLi(this)">跟踪回访用户</a></li>
+                    </ul>
+                </div><!-- /btn-group -->
+                <input id="ulInput" class="form-control" onkeypress="if(event.keyCode==13) {blurredQuery();}">
+                <a href="javascript:;" onclick="blurredQuery()"><span
+                        class="glyphicon glyphicon-search search-style"></span></a>
+                </input>
+            </div><!-- /input-group -->
         </div>
     </div>
 </div>
@@ -76,7 +74,7 @@
 <div class="modal fade" id="addWindow" aria-hidden="true" style="overflow:auto; ">
     <div class="modal-dialog" style="width: 750px;height: auto;">
         <div class="modal-content" style="overflow:hidden;">
-            <form class="form-horizontal" onsubmit="return checkAdd()" id="addForm" method="post">
+            <form class="form-horizontal" id="addForm" method="post">
                 <div class="modal-header" style="overflow:auto;">
                     <h4>请填写跟踪回访管理信息</h4>
                 </div>
@@ -84,7 +82,9 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">回访人：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="userId" placeholder="请选择回访人" class="form-control">
+                        <select id="addAdminName" name="userId" class="form-control js-data-example-ajax admin"
+                                style="width:100%">
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">
@@ -95,28 +95,30 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <label class="col-sm-3 control-label">跟踪回访创建时间：</label>
+                    <div class="col-sm-7">
+                        <input id="start" name="trackCreatedTime" readonly class="layui-input" />
+                        <%--onclick="layui.laydate({elem: this, min: laydate.now(), format: 'yyyy-MM-dd hh:mm:ss', max: '2099-06-16 23:59:59'})"--%>
+                    </div>
+                </div>
+                <div class="form-group">
                     <label class="col-sm-3 control-label">本次服务评价：</label>
                     <div class="col-sm-7">
-                        <textarea type="text" name="serviceEvaluate" placeholder="请输入本次服务评价（1-10分）" style="height: 100px;"
-                                  class="form-control"></textarea>
+                        <input type="text" name="serviceEvaluate" placeholder="请输入本次服务评价（1-10分）" class="form-control"></input>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">跟踪回访用户：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="trackUser" placeholder="请选择跟踪回访用户" class="form-control">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">跟踪回访创建时间：</label>
-                    <div class="col-sm-7">
-                        <input type="text"  name="trackCreateTime" value="2012-05-15 21:05" id="addDateTimePicker" class="form-control">
+                        <select id="addUserName" name="trackUser" class="form-control js-data-example-ajax user"
+                                style="width:100%">
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-8">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button class="btn btn-sm btn-success" type="submit">保 存</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关 闭</button>
+                        <button id="addButton" class="btn btn-sm btn-success" type="button" onclick="addSubmit()">保 存</button>
                     </div>
                 </div>
             </form>
@@ -129,7 +131,8 @@
 <div class="modal fade" id="editWindow" aria-hidden="true">
     <div class="modal-dialog" style="width: 750px;height: auto;">
         <div class="modal-content">
-            <form class="form-horizontal" onsubmit="return checkAdd()" id="editForm" method="post">
+            <form class="form-horizontal" id="editForm" method="post">
+                <input type="hidden" name="trackId" define="TrackList.trackId" />
                 <div class="modal-header" style="overflow:auto;">
                     <h4>请修改跟踪回访管理信息</h4>
                 </div>
@@ -137,40 +140,43 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">回访人：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="userId" define="TrackList.userId" placeholder="请选择回访人" class="form-control">
+                        <select id="editAdminName" name="userId" class="form-control js-data-example-ajax admin"
+                                style="width:100%">
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">回访问题：</label>
                     <div class="col-sm-7">
-                        <textarea type="text" name="trackContent" define="TrackList.trackContent" placeholder="请输入回访问题内容" style="height: 100px;"
+                        <textarea type="text" name="trackContent" define="TrackList.trackContent"
+                                  placeholder="请输入回访问题内容" style="height: 100px;"
                                   class="form-control"></textarea>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">本次服务评价：</label>
-                    <div class="col-sm-7">
-                        <textarea type="text"  name="serviceEvaluate" define="TrackList.serviceEvaluate" placeholder="请输入本次服务评价（1-10分）" style="height: 100px;"
-                                  class="form-control"></textarea>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">跟踪回访用户：</label>
-                    <div class="col-sm-7">
-                        <input type="text" name="trackUser" define="TrackList.trackUser" placeholder="请选择跟踪回访用户" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">跟踪回访创建时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="trackCreateTime" define="TrackList.trackCreateTime" value="2012-05-15 21:05"
-                               id="editDateTimePicker" class="form-control">
+                        <input id="editStart" name="trackCreatedTime" readonly define="TrackList.trackCreatedTime" class="layui-input">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">本次服务评价：</label>
+                    <div class="col-sm-7">
+                        <input type="text" name="serviceEvaluate" define="TrackList.serviceEvaluate" placeholder="请输入本次服务评价（1-10分）" class="form-control"></input>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">跟踪回访用户：</label>
+                    <div class="col-sm-7">
+                        <select id="editUserName" name="trackUser" class="form-control js-data-example-ajax user"
+                                style="width:100%">
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-8">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button class="btn btn-sm btn-success" type="submit">保 存</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关 闭</button>
+                        <button id="editButton" class="btn btn-sm btn-success" type="button" onclick="editSubmit()">保 存</button>
                     </div>
                 </div>
             </form>
@@ -178,44 +184,6 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<!-- 删除弹窗 -->
-<div class="modal fade" id="del" aria-hidden="true">
-    <div class="modal-dialog" style="overflow:hidden;">
-        <form action="/table/edit" method="post">
-            <div class="modal-content">
-                <input type="hidden" id="delNoticeId"/>
-                <div class="modal-footer" style="text-align: center;">
-                    <h2>确认删除吗?</h2>
-                    <button type="button" class="btn btn-default"
-                            data-dismiss="modal">关闭
-                    </button>
-                    <button type="sumbit" class="btn btn-primary" onclick="del()">
-                        确认
-                    </button>
-                </div>
-            </div><!-- /.modal-content -->
-        </form>
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
-<!-- 提示弹窗 -->
-<div class="modal fade" id="tanchuang" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                提示
-            </div>
-            <div class="modal-body">
-                请先选择某一行
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default"
-                        data-dismiss="modal">关闭
-                </button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
 <script src="/static/js/jquery.min.js"></script>
 <script src="/static/js/bootstrap.min.js"></script>
 <script src="/static/js/bootstrap-table/bootstrap-table.js"></script>
@@ -224,9 +192,41 @@
 <script src="/static/js/select2/select2.js"></script>
 <script src="/static/js/sweetalert/sweetalert.min.js"></script>
 <script src="/static/js/contextmenu.js"></script>
-<script src="/static/js/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.js"></script>
-<script src="/static/js/bootstrap-dateTimePicker/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
 <script src="/static/js/backstage/custManage/tracklist.js"></script>
-<script src="/static/js/form/jquery.validate.js"></script>
+<script src="/static/js/bootstrap-validate/bootstrapValidator.js"></script>
+<script src="/static/js/plugins/layui/layui.js" charset="utf-8"></script>
+<script src="/static/js/backstage/main.js"></script>
+<script>
+    layui.use('laydate', function(){
+//        var laydate = layui.laydate;
+
+        var start = {
+            format: 'yyyy-MM-dd hh:mm:ss',
+            min: laydate.now(), //设定最小日期为当前日期
+            max: '2099-12-30 23:59:59', //最大日期
+            istime: true,
+            istoday: false,
+            festival: true
+        };
+
+        document.getElementById('start').onclick = function () {
+            start.elem = this;
+            laydate(start);
+        }
+
+        var editStart = {
+            format: 'yyyy-MM-dd hh:mm:ss',
+            max: '2099-12-30 23:59:59', //最大日期
+            istime: true,
+            istoday: false,
+            festival: true
+        };
+
+        document.getElementById('editStart').onclick = function () {
+            editStart.elem = this;
+            laydate(editStart);
+        }
+    });
+</script>
 </body>
 </html>

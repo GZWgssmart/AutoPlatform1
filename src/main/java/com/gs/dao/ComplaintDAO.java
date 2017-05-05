@@ -1,7 +1,12 @@
 package com.gs.dao;
 
 import com.gs.bean.Complaint;
+import com.gs.common.bean.Pager;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
 /**
 *由CSWangBin技术支持
 *
@@ -12,4 +17,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ComplaintDAO extends BaseDAO<String, Complaint>{
 
+    public List<Complaint> queryByPagerName(@Param("pager") Pager pager, @Param("complaint") Complaint complaint);
+
+    public int countName(@Param("complaint") Complaint complaint);
 }

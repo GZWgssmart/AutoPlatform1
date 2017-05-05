@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="/static/css/select2.min.css">
     <link rel="stylesheet" href="/static/css/sweetalert.css">
     <link rel="stylesheet" href="/static/css/table/table.css">
-    <link rel="stylesheet" href="/static/js/plugins/layui/css/layui.css">
+    <link rel="stylesheet" href="/static/js/plugins/layui/css/layui.css" media="all">
 </head>
 <body>
 <%@include file="../backstage/contextmenu.jsp" %>
@@ -35,7 +35,7 @@
                 <th data-field="user.userName">投诉人</th>
                 <th data-field="complaintCreatedTime" data-formatter="formatterDate">投诉时间</th>
                 <th data-field="complaintContent">投诉内容</th>
-                <th data-field="admin.userName">投诉回复人</th>
+                <th data-formatter="formatterUserName">投诉回复人</th>
                 <th data-field="complaintReplyTime" data-formatter="formatterDate">投诉回复时间</th>
                 <th data-field="complaintReply">投诉回复内容</th>
             </tr>
@@ -49,6 +49,25 @@
             <button id="btn_edit" type="button" class="btn btn-default" onclick="showEdit();">
                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
             </button>
+            <div class="input-group" style="width:350px;float:left;padding:0;margin:0 0 0 -1px;">
+                <div class="input-group-btn">
+                    <button type="button" id="ulButton" class="btn btn-default" style="border-radius:0px;"
+                            data-toggle="dropdown">投诉人<span class="caret"></span></button>
+                    <ul class="dropdown-menu pull-right">
+                        <li><a onclick="onclikLi(this)">投诉人</a></li>
+                        <li class="divider"></li>
+                        <li><a onclick="onclikLi(this)">投诉内容</a></li>
+                        <li class="divider"></li>
+                        <li><a onclick="onclikLi(this)">投诉回复人</a></li>
+                        <li class="divider"></li>
+                        <li><a onclick="onclikLi(this)">投诉回复内容</a></li>
+                    </ul>
+                </div><!-- /btn-group -->
+                <input id="ulInput" class="form-control" onkeypress="if(event.keyCode==13) {blurredQuery();}">
+                <a href="javascript:;" onclick="blurredQuery()"><span
+                        class="glyphicon glyphicon-search search-style"></span></a>
+                </input>
+            </div><!-- /input-group -->
         </div>
     </div>
 </div>
@@ -65,7 +84,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">投诉人：</label>
                     <div class="col-sm-7">
-                        <select id="addUserName" name="userId" class="js-example-tags user" style="width:100%">
+                        <select id="addUserName" name="userId" class="form-control js-data-example-ajax user" style="width:100%">
                         </select>
                     </div>
                 </div>
@@ -100,9 +119,9 @@
         <div class="modal-content" style="overflow:hidden;">
             <form class="form-horizontal" role="form" id="addReplyForm" method="post">
                 <input type="hidden" name="complaintId" define="Complaint.complaintId" />
-                <input type="hidden" name="userId" define="Complaint.userId" />
-                <input type="hidden" name="complaintCreatedTime" define="Complaint.complaintCreatedTime" />
-                <input type="hidden" name="complaintContent" define="Complaint.complaintContent" />
+                <%--<input type="hidden" name="userId" define="Complaint.user.userId" />--%>
+                <%--<input id="start2" type="text" name="complaintCreatedTime" define="Complaint.complaintCreatedTime" />--%>
+                <%--<input type="hidden" name="complaintContent" define="Complaint.complaintContent" />--%>
                 <div class="modal-header" style="overflow:auto;">
                     <h4>请填写回复信息</h4>
                 </div>
@@ -110,20 +129,20 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">投诉回复人：</label>
                     <div class="col-sm-7">
-                        <select id="addAdminName" name="complaintReplyUser" class="js-example-tags admin" style="width:100%">
+                        <select id="addAdminName" name="complaintReplyUser" class="form-control js-data-example-ajax admin" style="width:100%">
                         </select>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">投诉回复时间：</label>
                     <div class="col-sm-7">
-                        <input id="end" name="complaintReplyTime" readonly class="layui-input">
+                        <input id="end" name="complaintReplyTime" readonly define="Complaint.complaintReplyTime" class="layui-input">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">投诉回复内容：</label>
                     <div class="col-sm-7">
-                        <textarea type="text"  name="complaintReply" placeholder="请输入投诉回复内容" style="height: 100px;"
+                        <textarea type="text"  name="complaintReply" define="Complaint.complaintReply" placeholder="请输入投诉回复内容" style="height: 100px;"
                                   class="form-control"></textarea>
                     </div>
                 </div>
@@ -146,9 +165,9 @@
         <div class="modal-content">
             <form class="form-horizontal" id="editForm" method="post">
                 <input type="text" name="complaintId" define="Complaint.complaintId" />
-                <input type="text" name="userId" define="Complaint.userId" />
-                <input id="start_edit" type="text" name="complaintCreatedTime" define="Complaint.complaintCreatedTime" />
-                <input type="text" name="complaintContent" define="Complaint.complaintContent" />
+                <%--<input type="text" name="userId" define="Complaint.user.userId" />--%>
+                <%--<input id="start3" type="text" name="complaintCreatedTime" define="Complaint.complaintCreatedTime" />--%>
+                <%--<input type="text" name="complaintContent" define="Complaint.complaintContent" />--%>
                 <div class="modal-header" style="overflow:auto;">
                     <h4>请修改投诉管理信息</h4>
                 </div>
@@ -156,7 +175,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">投诉回复人：</label>
                     <div class="col-sm-7">
-                        <select id="editAdminName" name="complaintReplyUser" class="js-example-tags admin">
+                        <select id="editAdminName" name="complaintReplyUser" class="form-control js-data-example-ajax admin" style="width:100%">
                         </select>
                     </div>
                 </div>
@@ -197,81 +216,50 @@
 <script src="/static/js/plugins/layui/layui.js" charset="utf-8"></script>
 <script src="/static/js/backstage/main.js"></script>
 <script>
-    layui.use('laydate', function () {
-        //日期范围限制
-        var start = {
-            elem: '#start',
-            format: 'yyyy-MM-dd hh:mm:ss',
-            min: laydate.now(), //设定最小日期为当前日期
-            max: '2099-12-30 23:59:59', //最大日期
-            istime: true,
-            istoday: false,
-            festival: true,
-            choose: function (datas) {
-                end.min = datas; //开始日选好后，重置结束日的最小日期
-                end.start = datas //将结束日的初始值设定为开始日
+    $(function() {
+        layui.use('laydate', function () {
+            //日期范围限制
+            var start = {
+                format: 'yyyy-MM-dd hh:mm:ss',
+                min: laydate.now(), //设定最小日期为当前日期
+                max: '2099-12-30 23:59:59', //最大日期
+                istime: true,
+                istoday: false,
+                festival: true
+            };
+
+            var end = {
+                format: 'yyyy-MM-dd hh:mm:ss',
+                min: laydate.now(),
+                max: '2099-12-30 23:59:59',
+                istime: true,
+                istoday: false,
+                festival: true
+            };
+
+            document.getElementById('start').onclick = function () {
+                start.elem = this;
+                laydate(start);
             }
-        };
-        var end = {
-            elem: '#end',
-            format: 'yyyy-MM-dd hh:mm:ss',
-            min: laydate.now(),
-            max: '2099-12-30 23:59:59',
-            istime: true,
-            istoday: false,
-            festival: true,
-            choose: function (datas) {
-                start.max = datas; //结束日选好后，重置开始日的最大日期
+
+            document.getElementById('end').onclick = function () {
+                end.elem = this;
+                laydate(end);
             }
-        };
-
-        document.getElementById('start').onclick = function(){
-            start.elem = this;
-            laydate(start);
-        }
-
-        document.getElementById('end').onclick = function(){
-            end.elem = this;
-            laydate(end);
-        }
 
 
-        //日期范围限制
-        var start_edit = {
-            elem: '#start_edit',
-            format: 'yyyy-MM-dd hh:mm:ss',
-            min: laydate.now(), //设定最小日期为当前日期
-            max: '2099-12-30 23:59:59', //最大日期
-            istime: true,
-            istoday: false,
-            festival: true,
-            choose: function (datas) {
-                end_edit.min = datas; //开始日选好后，重置结束日的最小日期
-                end_edit.start = datas //将结束日的初始值设定为开始日
+            var end_edit = {
+                format: 'yyyy-MM-dd hh:mm:ss',
+                max: '2099-12-30 23:59:59',
+                istime: true,
+                istoday: false,
+            };
+
+            document.getElementById('end_edit').onclick = function () {
+                end_edit.elem = this;
+                laydate(end_edit);
             }
-        };
-        var end_edit = {
-            elem: '#end_edit',
-            format: 'yyyy-MM-dd hh:mm:ss',
-            min: laydate.now(),
-            max: '2099-12-30 23:59:59',
-            istime: true,
-            istoday: false,
-            festival: true,
-            choose: function (datas) {
-                start_edit.max = datas; //结束日选好后，重置开始日的最大日期
-            }
-        };
-
-        document.getElementById('start_edit').onclick = function(){
-            start_edit.elem = this;
-            laydate(start_edit);
-        }
-
-        document.getElementById('end_edit').onclick = function(){
-            end_edit.elem = this;
-            laydate(end_edit);
-        }
+        });
     });
 </script>
 </body>

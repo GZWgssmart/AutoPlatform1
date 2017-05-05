@@ -60,4 +60,14 @@ public class ComplaintServiceImpl implements ComplaintService {
 	public int countByBlurred(Complaint complaint) {
 		return 0;
 	}
+
+	@Override
+	public List<Complaint> queryByPagerName(Pager pager, Complaint complaint) {
+		return complaintDAO.queryByPagerName(pager,complaint);
+	}
+
+	@Override
+	public int countName(Complaint complaint) {
+		return complaintDAO.countName(complaint);
+	}
 }

@@ -1,14 +1,13 @@
 package com.gs.controller.custManage;
 
 import ch.qos.logback.classic.Logger;
-import com.gs.bean.Complaint;
-import com.gs.bean.MaintainRecord;
+import com.gs.bean.TrackList;
 import com.gs.bean.User;
 import com.gs.common.bean.ComboBox4EasyUI;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
-import com.gs.service.ComplaintService;
+import com.gs.service.TrackListService;
 import com.gs.service.UserService;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
@@ -30,63 +29,60 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by XiaoQiao on 2017/4/25.
+ * Created by XiaoQiao on 2017/4/27.
  */
 
-/**
- * 投诉管理
- */
 @Controller
-@RequestMapping("/complaint")
-public class ComplaintController {
+@RequestMapping("/tracklist")
+public class TracklistController {
 
-    private Logger logger = (Logger) LoggerFactory.getLogger(ComplaintController.class);
+    private Logger logger = (Logger) LoggerFactory.getLogger(TracklistController.class);
 
     @Autowired
     private HttpServletRequest req;
 
     @Resource
-    private ComplaintService complaintService;
+    private TrackListService trackListService;
 
     @Resource
     private UserService userService;
 
     @ResponseBody
     @RequestMapping("queryByPager")
-    public Pager4EasyUI<Complaint> queryByPager(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
-        logger.info("分页查看投诉记录");
+    public Pager4EasyUI<TrackList> queryByPager(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
+        logger.info("分页查看跟踪回访记录");
         Pager pager = new Pager();
         pager.setPageNo(Integer.valueOf(pageNumber));
         pager.setPageSize(Integer.valueOf(pageSize));
-        int count = complaintService.count();
+        int count = trackListService.count();
         pager.setTotalRecords(count);
-        List<Complaint> queryList = complaintService.queryByPager(pager);
-        return new Pager4EasyUI<Complaint>(pager.getTotalRecords(), queryList);
+        List<TrackList> queryList = trackListService.queryByPager(pager);
+        return new Pager4EasyUI<TrackList>(pager.getTotalRecords(), queryList);
     }
 
     @ResponseBody
     @RequestMapping("queryName")
-    public Pager4EasyUI<Complaint> queryName(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize, Complaint complaint) {
-        logger.info("模糊查询投诉记录");
+    public Pager4EasyUI<TrackList> queryName(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize, TrackList trackList) {
+        logger.info("模糊查询跟踪回访记录");
         String text = req.getParameter("text");
         String value = req.getParameter("value");
         if(text != null && text != "") {
             Pager pager = new Pager();
             pager.setPageNo(Integer.valueOf(pageNumber));
             pager.setPageSize(Integer.valueOf(pageSize));
-            if(text.equals("投诉人")) {
-                complaint.setUserId(value);
-            } else if (text.equals("投诉内容")) {
-                complaint.setComplaintContent(value);
-            } else if (text.equals("投诉回复人")) {
-                complaint.setComplaintReplyUser(value);
-            } else if (text.equals("投诉回复内容")) {
-                complaint.setComplaintReply(value);
+            if(text.equals("回访人")) {
+                trackList.setUserId(value);
+            } else if (text.equals("本次服务评价")) {
+                trackList.setServiceEvaluate(Integer.valueOf(value));
+            } else if (text.equals("跟踪回访用户")) {
+                trackList.setTrackUser(value);
+            } else if (text.equals("回访问题")) {
+                trackList.setTrackContent(value);
             }
-            int count = complaintService.countName(complaint);
+            int count = trackListService.countName(trackList);
             pager.setTotalRecords(count);
-            List<Complaint> queryList = complaintService.queryByPagerName(pager,complaint);
-            return new Pager4EasyUI<Complaint>(pager.getTotalRecords(), queryList);
+            List<TrackList> queryList = trackListService.queryByPagerName(pager,trackList);
+            return new Pager4EasyUI<TrackList>(pager.getTotalRecords(), queryList);
         }
         return null;
     }
@@ -112,25 +108,17 @@ public class ComplaintController {
 
     @ResponseBody
     @RequestMapping(value = "insert", method = RequestMethod.POST)
-    public ControllerResult insert(Complaint complaint) {
-        logger.info("投诉记录添加操作");
-        complaintService.insert(complaint);
+    public ControllerResult insert(TrackList trackList) {
+        logger.info("跟踪回访记录添加操作");
+        trackListService.insert(trackList);
         return ControllerResult.getSuccessResult("添加成功");
     }
 
     @ResponseBody
-    @RequestMapping(value = "updateReply", method = RequestMethod.POST)
-    public ControllerResult updateReply(Complaint complaint) {
-        logger.info("投诉记录回复操作");
-        complaintService.update(complaint);
-        return ControllerResult.getSuccessResult("回复成功");
-    }
-
-    @ResponseBody
     @RequestMapping(value = "update", method = RequestMethod.POST)
-    public ControllerResult update(Complaint complaint) {
-        logger.info("投诉记录修改操作");
-        complaintService.update(complaint);
+    public ControllerResult update(TrackList trackList) {
+        logger.info("跟踪回访记录修改操作");
+        trackListService.update(trackList);
         return ControllerResult.getSuccessResult("修改成功");
     }
 

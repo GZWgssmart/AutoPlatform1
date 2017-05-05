@@ -9,6 +9,7 @@
     <result column="complaintReply" property="complaintReply" jdbcType="VARCHAR" />
     <result column="complaintReplyTime" property="complaintReplyTime" jdbcType="TIMESTAMP" />
     <result column="complaintReplyUser" property="complaintReplyUser" jdbcType="VARCHAR" />
+
     <association property="user" javaType="com.gs.bean.User">
       <id column="user_id" property="userId"></id>
       <result column="user_name" property="userName"></result>
@@ -21,7 +22,51 @@
   </resultMap>
 
   <select id="queryByPager" resultMap="BaseResultMap" parameterType="com.gs.common.bean.Pager">
-    SELECT c.*,u.userId AS user_id,u.userName AS user_name,u2.userId AS admin_id,u2.userName AS admin_name FROM t_complaint c LEFT JOIN t_user u ON c.userId = u.userId LEFT  JOIN t_user u2 ON c.complaintReplyUser = u2.userId limit #{beginIndex}, #{pageSize}
+    SELECT c.*,u.userId AS user_id,u.userName AS user_name,
+    u2.userId AS admin_id,u2.userName AS admin_name FROM t_complaint c
+    LEFT JOIN t_user u ON c.userId = u.userId
+    LEFT  JOIN t_user u2 ON c.complaintReplyUser = u2.userId
+    limit #{beginIndex}, #{pageSize}
+  </select>
+
+  <select id="queryByPagerName" resultMap="BaseResultMap" parameterType="com.gs.common.bean.Pager">
+    SELECT c.*,u.userId AS user_id,u.userName AS user_name,
+    u2.userId AS admin_id,u2.userName AS admin_name FROM t_complaint c
+    LEFT JOIN t_user u ON c.userId = u.userId
+    LEFT  JOIN t_user u2 ON c.complaintReplyUser = u2.userId
+    where 1=1
+    <if test="complaint.userId != null and complaint.userId != ''">
+      and u.userName like concat('%',#{complaint.userId},'%')
+    </if>
+    <if test="complaint.complaintReplyUser != null and complaint.complaintReplyUser != ''">
+      and u2.userName like concat('%',#{complaint.complaintReplyUser},'%')
+    </if>
+    <if test="complaint.complaintContent != null and complaint.complaintContent != ''">
+      and c.complaintContent like concat('%',#{complaint.complaintContent},'%')
+    </if>
+    <if test="complaint.complaintReply != null and complaint.complaintReply != ''">
+      and c.complaintReply like concat('%',#{complaint.complaintReply},'%')
+    </if>
+    limit #{pager.beginIndex}, #{pager.pageSize}
+  </select>
+
+  <select id="countName"  resultType="int">
+    SELECT count(complaintId) FROM t_complaint c
+    LEFT JOIN t_user u ON c.userId = u.userId
+    LEFT  JOIN t_user u2 ON c.complaintReplyUser = u2.userId
+    where 1=1
+    <if test="complaint.userId != null and complaint.userId != ''">
+      and u.userName like concat('%',#{complaint.userId},'%')
+    </if>
+    <if test="complaint.complaintReplyUser != null and complaint.complaintReplyUser != ''">
+      and u2.userName like concat('%',#{complaint.complaintReplyUser},'%')
+    </if>
+    <if test="complaint.complaintContent != null and complaint.complaintContent != ''">
+      and c.complaintContent like concat('%',#{complaint.complaintContent},'%')
+    </if>
+    <if test="complaint.complaintReply != null and complaint.complaintReply != ''">
+      and c.complaintReply like concat('%',#{complaint.complaintReply},'%')
+    </if>
   </select>
 
   <select id="count" resultType="int" >
@@ -29,7 +74,11 @@
   </select>
 
   <update id="update" parameterType="complaint">
-    update t_complaint set complaintContent=#{complaintContent},complaintCreatedTime=#{complaintCreatedTime},complaintReply=#{complaintReply},complaintReplyTime=#{complaintReplyTime},complaintReplyUser=#{complaintReplyUser} where complaintId = #{complaintId}
+    update t_complaint set complaintReply=#{complaintReply},complaintReplyTime=#{complaintReplyTime},complaintReplyUser=#{complaintReplyUser} where complaintId = #{complaintId}
   </update>
+
+  <insert id="insert" parameterType="complaint">
+    insert into t_complaint(complaintId,userId,complaintContent,complaintCreatedTime) values(uuid(),#{userId},#{complaintContent},#{complaintCreatedTime})
+  </insert>
 
 </mapper>

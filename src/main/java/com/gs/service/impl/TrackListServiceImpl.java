@@ -1,9 +1,9 @@
 package com.gs.service.impl;
 
-import com.gs.bean.Checkin;
 import com.gs.bean.TrackList;
 import com.gs.dao.TrackListDAO;
 import com.gs.service.TrackListService;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.List;
@@ -60,5 +60,15 @@ public class TrackListServiceImpl implements TrackListService {
 
 	public int countByBlurred(TrackList trackList) {
 		return 0;
+	}
+
+	@Override
+	public List<TrackList> queryByPagerName(@Param("pager") Pager pager, @Param("trackList") TrackList trackList) {
+		return trackListDAO.queryByPagerName(pager,trackList);
+	}
+
+	@Override
+	public int countName(@Param("trackList") TrackList trackList) {
+		return trackListDAO.countName(trackList);
 	}
 }

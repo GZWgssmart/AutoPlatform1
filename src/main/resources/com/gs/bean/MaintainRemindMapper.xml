@@ -1,15 +1,30 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.gs.dao.MaintainRemindDAO" >
-  <resultMap id="BaseResultMap" type="com.gs.bean.MaintainRemind" >
+  <resultMap id="BaseResultMap" type="maintainremind" >
     <id column="remindId" property="remindId" jdbcType="VARCHAR" />
     <result column="userId" property="userId" jdbcType="VARCHAR" />
     <result column="lastMaintainTime" property="lastMaintainTime" jdbcType="TIMESTAMP" />
-    <result column="v" property="lastMaintainMileage" jdbcType="DOUBLE" />
+    <result column="lastMaintainMileage" property="lastMaintainMileage" jdbcType="DOUBLE" />
     <result column="remindMsg" property="remindMsg" jdbcType="VARCHAR" />
     <result column="remindTime" property="remindTime" jdbcType="TIMESTAMP" />
     <result column="remindType" property="remindType" jdbcType="VARCHAR" />
     <result column="remindCreatedTime" property="remindCreatedTime" jdbcType="TIMESTAMP" />
+
+    <association property="user" javaType="com.gs.bean.User">
+      <id column="user_id" property="userId"></id>
+      <result column="user_name" property="userName"></result>
+    </association>
+
   </resultMap>
+
+  <select id="queryByPager" resultMap="BaseResultMap" parameterType="com.gs.common.bean.Pager">
+    select mr.*,u.userId as user_id,u.userName as user_name from t_maintain_remind mr,t_user u where mr.userId = u.userId
+  </select>
+
+  <select id="count" resultType="int">
+    select count(remindId) from t_maintain_remind
+  </select>
+
 
 </mapper>

@@ -1,6 +1,10 @@
 package com.gs.service;
 
 import com.gs.bean.TrackList;
+import com.gs.common.bean.Pager;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
 *由CSWangBin技术支持
@@ -11,4 +15,7 @@ import com.gs.bean.TrackList;
 */
 public interface TrackListService extends BaseService<String, TrackList>{
 
+    public List<TrackList> queryByPagerName(@Param("pager") Pager pager, @Param("trackList") TrackList trackList);
+
+    public int countName(@Param("trackList") TrackList trackList);
 }

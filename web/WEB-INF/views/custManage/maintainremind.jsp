@@ -11,7 +11,7 @@
 %>
 <html>
 <head>
-    <title>维修维修保养提醒 </title>
+    <title>维修保养提醒</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/css/bootstrap.min.css">
@@ -19,8 +19,7 @@
     <link rel="stylesheet" href="/static/css/select2.min.css">
     <link rel="stylesheet" href="/static/css/sweetalert.css">
     <link rel="stylesheet" href="/static/css/table/table.css">
-    <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.css">
-    <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/datetimepicker.less">
+    <link rel="stylesheet" href="/static/js/plugins/layui/css/layui.css" media="all">
 </head>
 <body>
 <%@include file="../backstage/contextmenu.jsp" %>
@@ -29,34 +28,17 @@
     <div class="panel-body" style="padding-bottom:0px;">
         <!--show-refresh, show-toggle的样式可以在bootstrap-table.js的948行修改-->
         <!-- table里的所有属性在bootstrap-table.js的240行-->
-        <table id="table"
-               data-toggle="table"
-               data-toolbar="#toolbar"
-               data-url="/table/query"
-               data-method="post"
-               data-query-params="queryParams"
-               data-pagination="true"
-               data-search="true"
-               data-show-refresh="true"
-               data-show-toggle="true"
-               data-show-columns="true"
-               data-page-size="10"
-               data-height="543"
-               data-id-field="id"
-               data-page-list="[5, 10, 20]"
-               data-cach="false"
-               data-click-to-select="true"
-               data-single-select="true">
+        <table id="table">
             <thead>
             <tr>
-                <th data-radio="true" data-field="status"></th>
-                <th data-field="userId">用户名</th>
-                <th data-field="lastMaintainTime">上次维修保养时间</th>
+                <th data-checkbox="true"></th>
+                <th data-field="user.userName">用户名</th>
+                <th data-field="lastMaintainTime" data-formatter="formatterDate">上次维修保养时间</th>
                 <th data-field="lastMaintainMileage">上次汽车行驶里程</th>
                 <th data-field="remindMsg">维修保养提醒消息</th>
-                <th data-field="remindTime">维修保养提醒时间</th>
+                <th data-field="remindTime" data-formatter="formatterDate">维修保养提醒时间</th>
                 <th data-field="remindType">维修保养提醒方式</th>
-                <th data-field="remindCreatedTime">提醒记录创建时间</th>
+                <th data-field="remindCreatedTime" data-formatter="formatterDate">提醒记录创建时间</th>
             </tr>
             </thead>
         </table>
@@ -67,9 +49,6 @@
             <button id="btn_edit" type="button" class="btn btn-default" onclick="showEdit();">
                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
             </button>
-            <button id="btn_delete" type="button" class="btn btn-default" onclick="showDel();">
-                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
-            </button>
         </div>
     </div>
 </div>
@@ -78,7 +57,7 @@
 <div class="modal fade" id="addWindow" aria-hidden="true" style="overflow:auto; ">
     <div class="modal-dialog" style="width: 790px;height: auto;">
         <div class="modal-content" style="overflow:hidden;">
-            <form class="form-horizontal" role="form" onsubmit="return checkAdd()" id="addForm" method="post">
+            <form class="form-horizontal" id="addForm" method="post">
                 <div class="modal-header" style="overflow:auto;">
                     <h4>请填写维修维修保养提醒信息</h4>
                 </div>
@@ -86,7 +65,9 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">用户名：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="userId" placeholder="请选择用户" class="form-control">
+                        <select id="addUserName" name="userId" class="form-control js-data-example-ajax user"
+                                style="width:100%">
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">
@@ -129,7 +110,7 @@
                 <div class="form-group">
                     <div class="col-sm-offset-8">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button class="btn btn-sm btn-success" type="submit">保 存</button>
+                        <button id="addButton" class="btn btn-sm btn-success" type="button" onclick="addSubmit()">保 存</button>
                     </div>
                 </div>
             </form>
@@ -142,7 +123,8 @@
 <div class="modal fade" id="editWindow" aria-hidden="true">
     <div class="modal-dialog" style="width: 790px;height: auto;">
         <div class="modal-content">
-            <form class="form-horizontal" onsubmit="return checkAdd()" id="editForm" method="post">
+            <form class="form-horizontal" id="editForm" method="post">
+                <input type="hidden" name="remindId" define="MaintainRemind.remindId">
                 <div class="modal-header" style="overflow:auto;">
                     <h4>请修改维修维修保养提醒信息</h4>
                 </div>
@@ -150,14 +132,15 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">用户名称：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="userId" define="MaintainRemind.userId" placeholder="请输入用户名称" class="form-control">
+                        <select id="editUserName" name="userId" class="form-control js-data-example-ajax user"
+                                style="width:100%">
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">上次维修保养时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="lastMaintainTime" define="MaintainRemind.lastMaintainTime" value="2012-05-15 21:05"
-                               id="editDateTimePicker" class="form-control">
+                        <input type="text" name="lastMaintainTime" define="MaintainRemind.lastMaintainTime" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
@@ -176,8 +159,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">维修保养提醒时间：</label>
                     <div class="col-sm-7">
-                        <input type="text"  name="remindTime" define="MaintainRemind.remindTime" value="2012-05-15 21:05"
-                               id="editDateTimePicker1" class="form-control">
+                        <input type="text"  name="remindTime" define="MaintainRemind.remindTime" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
@@ -196,7 +178,7 @@
                 <div class="form-group">
                     <div class="col-sm-offset-8">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button class="btn btn-sm btn-success" type="submit">保 存</button>
+                        <button id="editButton" class="btn btn-sm btn-success" type="button" onclick="editSubmit">保 存</button>
                     </div>
                 </div>
             </form>
@@ -204,44 +186,6 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<!-- 删除弹窗 -->
-<div class="modal fade" id="del" aria-hidden="true">
-    <div class="modal-dialog" style="overflow:hidden;">
-        <form action="/table/edit" method="post">
-            <div class="modal-content">
-                <input type="hidden" id="delNoticeId"/>
-                <div class="modal-footer" style="text-align: center;">
-                    <h2>确认删除吗?</h2>
-                    <button type="button" class="btn btn-default"
-                            data-dismiss="modal">关闭
-                    </button>
-                    <button type="sumbit" class="btn btn-primary" onclick="del()">
-                        确认
-                    </button>
-                </div>
-            </div><!-- /.modal-content -->
-        </form>
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
-<!-- 提示弹窗 -->
-<div class="modal fade" id="tanchuang" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                提示
-            </div>
-            <div class="modal-body">
-                请先选择某一行
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default"
-                        data-dismiss="modal">关闭
-                </button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
 <script src="/static/js/jquery.min.js"></script>
 <script src="/static/js/bootstrap.min.js"></script>
 <script src="/static/js/bootstrap-table/bootstrap-table.js"></script>
@@ -250,9 +194,9 @@
 <script src="/static/js/select2/select2.js"></script>
 <script src="/static/js/sweetalert/sweetalert.min.js"></script>
 <script src="/static/js/contextmenu.js"></script>
-<script src="/static/js/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.js"></script>
-<script src="/static/js/bootstrap-dateTimePicker/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
 <script src="/static/js/backstage/custManage/maintainremind.js"></script>
-<script src="/static/js/form/jquery.validate.js"></script>
+<script src="/static/js/bootstrap-validate/bootstrapValidator.js"></script>
+<script src="/static/js/plugins/layui/layui.js" charset="utf-8"></script>
+<script src="/static/js/backstage/main.js"></script>
 </body>
 </html>
