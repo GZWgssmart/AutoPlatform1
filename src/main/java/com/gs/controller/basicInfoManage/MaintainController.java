@@ -2,10 +2,12 @@ package com.gs.controller.basicInfoManage;
 
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.MaintainFix;
+import com.gs.bean.MaintainFixAcc;
 import com.gs.common.bean.ComboBox4EasyUI;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
+import com.gs.service.MaintainFixAccService;
 import com.gs.service.MaintainFixService;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
@@ -37,6 +39,9 @@ public class MaintainController {
 
     @Resource
     private MaintainFixService maintainFixService;
+
+    @Resource
+    private MaintainFixAccService maintainFixAccService;
 
     /**
      * 分页查询维修项目信息
@@ -111,6 +116,18 @@ public class MaintainController {
             return ControllerResult.getSuccessResult("添加维修项目成功");
         }else {
             return ControllerResult.getFailResult("添加失败，请输入必要的信息");
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "accadd",method =  RequestMethod.POST)
+    public ControllerResult accadd(MaintainFixAcc maintainFixAcc){
+        if(maintainFixAcc != null && !maintainFixAcc.equals("")){
+            logger.info("添加配件成功");
+            maintainFixAccService.insert(maintainFixAcc);
+            return ControllerResult.getSuccessResult("添加配件成功");
+        }else {
+            return ControllerResult.getFailResult("添加配件失败，请输入必要的信息");
         }
     }
 

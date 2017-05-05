@@ -31,8 +31,6 @@
                 <th data-field="maintainManHourFee">维修项目工时费</th>
                 <th data-field="maintainDes">维修项目描述</th>
                 <th data-field="company.companyName">维修项目所属公司</th>
-                <%--<th data-field="accessoriesType.accTypeName">添加的配件</th>--%>
-                <%--<th data-field="maintainFixAcc.accCount">配件数量</th>--%>
                 <th data-field="maintainStatus" data-formatter="statusFormatter">维修项目状态</th>
             </tr>
             </thead>
@@ -66,17 +64,19 @@
             <div class="modal-body">
                 <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
                 <form role="form" class="form-horizontal" id="accForm">
+                    <input type="hidden" name="maintainId" define="MaintainFixMap.maintainId">
+                    <input type="hidden" id="addaccId" name="accId">
                     <div class="modal-header" style="overflow:auto;">
-                        <h3>请输入配件</h3>
+                        <h3>请选择配件</h3>
                     </div>
                     <hr>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">配件名称：</label>
                         <div class="col-sm-9">
-                            <input id="addItem" class="form-control" placeholder="请选择配件" readonly="true"
+                            <input id="addacc" class="form-control" placeholder="请选择配件" readonly="true"
                                    style="width:52%;">
                             </input>
-                            <button type="button" class="btn btn-default" onclick="showAccessories('accWindow');">
+                            <button type="button" class="btn btn-default" onclick="showAcc('accWindow');">
                                 <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查看配件
                             </button>
                         </div>
@@ -92,7 +92,7 @@
                         <button type="button" class="btn btn-default"
                                 data-dismiss="modal">关闭
                         </button>
-                        <button id="accButton" type="button" onclick="addSubmit()" class="btn btn-success">添加
+                        <button id="accButton" type="button" onclick="accaddSubmit()" class="btn btn-success">添加
                         </button>
                         <input type="reset" name="reset" style="display: none;"/>
                     </div>
@@ -102,12 +102,11 @@
     </div>
 </div>
 <%--所有配件--%>
-<div class="modal fade" id="AccessoriesWindow" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static">
+<div class="modal fade" id="accAllWindow" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog" style="width:90%;">
         <div class="modal-content">
             <div class="modal-body">
                 <span class="glyphicon glyphicon-remove closeModal" onclick="closeWindow()"></span>
-                <form role="form" class="form-horizontal" id="AccessoriesForm">
                 <div class="modal-header" style="overflow:auto;">
                     <h3>请选择配件</h3>
                 </div>
@@ -136,13 +135,12 @@
                     </thead>
                 </table>
                 <div class="modal-footer" style="border: none">
-                    <button id="AccessoriesButton" type="button" class="btn btn-default"
-                            onclick="AccessoriescloseWindow()">关闭
+                    <button id="closeButton" type="button" class="btn btn-default"
+                            onclick="accAllcloseWindow()">关闭
                     </button>
                     <button id="itemButton" type="button" onclick="itemSubmit()" class="btn btn-success">确定
                     </button>
                 </div>
-                </form>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->

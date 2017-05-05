@@ -11,4 +11,10 @@
     select * from t_maintain_fix_acc where maintainId in (${fixId})
   </select>
 
+
+  <insert id="insert" parameterType="MaintainFixAcc">
+    <![CDATA[
+            insert into t_maintain_fix_acc (mainAccId, maintainId, accId, accCount) VALUES (uuid(),#{maintainId},#{accId},#{accCount})
+		]]>
+  </insert>
 </mapper>
