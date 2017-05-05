@@ -1,5 +1,5 @@
 $(function () {
-    initTable('table', '/userBasicManage/queryByPager'); // 初始化表格
+    initTable('table', '/userBasicManage/queryByPagerAll'); // 初始化表格
 
     // 初始化select2, 第一个参数是class的名字, 第二个参数是select2的提示语, 第三个参数是select2的查询url
     initSelect2("userRole", "请选择角色", "/role/role2CheckBox");
@@ -191,26 +191,48 @@ function validator(formId) {
 
 function formSubmit(url, formId, winId) {
     $.post(url,
-        $("#" + formId).serialize(),
+        $("#"+formId).serialize(),
         function (data) {
-            if (data.result == "success") {
-                $('#' + winId).modal('hide');
-                swal({
-                    title:"",
-                    text: data.message,
-                    confirmButtonText:"确定", // 提示按钮上的文本
-                    type:"success"
-                })// 提示窗口, 修改成功
-                $('#table').bootstrapTable('refresh');
-                if(formId == 'addForm'){
-                    $("input[type=reset]").trigger("click"); // 移除表单中填的值
-                    $('#addForm').data('bootstrapValidator').resetForm(true); // 移除所有验证样式
-                    $("#addButton").removeAttr("disabled"); // 移除不可点击
-                    $("#" + formId).data('bootstrapValidator').destroy(); // 销毁此form表单
-                    $('#' + formId).data('bootstrapValidator', null);// 此form表单设置为空
-                    // 设置select2的值为空
-                    $("#addUserRole").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
-                    $("#addUserCompany").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
+            if (data.controllerResult.result == "success") {
+                var user = data.user;
+                var fileData  = document.getElementById("file").files[0];
+                var formData = new  FormData();
+                formData.append("userIcon", fileData);
+                formData.append("userId", user.userId);
+                var data = $.ajax({
+                    url: "/userBasicManage/afterUpdIcon",
+                    type: "POST",
+                    data: formData,
+                    processData: false,
+                    contentType: false
+                })
+                var resp= data.responseJSON;
+                var controllerResult= resp.controllerResult;
+                if (controllerResult.result == "success") {
+                    $('#' + winId).modal('hide');
+                    swal({
+                        title:"",
+                        text: data.message,
+                        confirmButtonText:"确定", // 提示按钮上的文本
+                        type:"success"
+                    })// 提示窗口, 修改成功
+                    $('#table').bootstrapTable('refresh');
+                    if(formId == 'addForm'){
+                        $("input[type=reset]").trigger("click"); // 移除表单中填的值
+                        $('#addForm').data('bootstrapValidator').resetForm(true); // 移除所有验证样式
+                        $("#addButton").removeAttr("disabled"); // 移除不可点击
+                        $("#" + formId).data('bootstrapValidator').destroy(); // 销毁此form表单
+                        $('#' + formId).data('bootstrapValidator', null);// 此form表单设置为空
+                        // 设置select2的值为空
+                        $("#addUserRole").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
+                        $("#addUserCompany").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
+                    }
+                } else if (controllerResult.result == "fail") {
+                    swal({title:"",
+                        text:"添加失败",
+                        confirmButtonText:"确认",
+                        type:"error"})
+                    $("#"+formId).removeAttr("disabled");
                 }
             } else if (data.result == "fail") {
                 swal({title:"",
@@ -222,7 +244,6 @@ function formSubmit(url, formId, winId) {
         }, "json"
     );
 }
-
 
 function showReturn(){
     var row =  $('table').bootstrapTable('getSelections');

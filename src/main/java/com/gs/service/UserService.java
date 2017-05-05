@@ -18,7 +18,10 @@ import java.util.List;
 public interface UserService extends BaseService<String, User> {
 
     //  分页查询全部，不分状态
-    public Pager4EasyUI queryByPagerAll(Pager pr);
+    public List<User> queryByPagerAll(Pager pr);
+
+    //  分页查询被禁用的记录
+    public List<User> queryByPagerDisable(Pager pager);
 
     public List<User> queryEmail(String ids);
 
@@ -35,5 +38,10 @@ public interface UserService extends BaseService<String, User> {
      * @return
      */
     public User queryByEmail(String email);
+
+
+    public User queryByPhone(String userPhone);
+
+    public int updIcon(String userId,String userIcon);
 
 }

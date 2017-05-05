@@ -50,7 +50,7 @@ public class UserServiceImpl implements UserService {
 
 	//  分页查询全部，不分状态
 	@Override
-	public Pager4EasyUI queryByPagerAll(Pager pager) {
+	public List<User> queryByPagerAll(Pager pager) {
 		return userDAO.queryByPagerAll(pager);
 	}
 
@@ -88,4 +88,16 @@ public class UserServiceImpl implements UserService {
 	public List<User> queryEmail(String ids) {
 		return userDAO.queryEmail(ids);
 	}
+
+
+	@Override
+	public User queryByPhone(String userPhone) {
+		return userDAO.queryByPhone(userPhone);
+	}
+
+	@Override
+	public int updIcon(String userId, String userIcon) {
+		return userDAO.updIcon(userId,userIcon);
+	}
+
 }

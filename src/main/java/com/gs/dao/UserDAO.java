@@ -20,7 +20,10 @@ import java.util.List;
 public interface UserDAO extends BaseDAO<String, User>{
 
 //  分页查询全部，不分状态
-    public Pager4EasyUI queryByPagerAll(Pager pager);
+    public List<User> queryByPagerAll(Pager pager);
+
+    //  分页查询被禁用的记录
+    public List<User> queryByPagerDisable(Pager pager);
 
     //根据用户的email查询用户所拥有的权限。
     public Set<String> queryPermissions(String email);
@@ -39,4 +42,10 @@ public interface UserDAO extends BaseDAO<String, User>{
      * @return
      */
     public User queryByEmail(String email);
+
+
+    public User queryByPhone(String userPhone);
+
+    public int updIcon(@Param("userId")String userId,@Param("userIcon")String userIcon);
+
 }

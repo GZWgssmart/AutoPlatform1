@@ -27,15 +27,10 @@ import sun.plugin.util.UIUtil;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Created by 小蜜蜂 on 2017-04-19.
@@ -52,6 +47,27 @@ public class UserBasicManageController {
 
     @Resource
     protected UserRoleService userRoleService;
+
+    /**
+     *
+     * 在提交表单后，续图片提交，这里接收用户ID
+     */
+    @ResponseBody
+    @RequestMapping(value = "afterUpdIcon", method = RequestMethod.POST)
+    public Map afterSubForm(@RequestParam("userIcon") MultipartFile file, @RequestParam("userId") String userId, HttpServletRequest request){
+        String fileName = file.getOriginalFilename();
+        String savePath = "E://" + userId + ".jpg";
+        Map map= new HashMap();
+        System.out.print(fileName);
+        if(fileSave(file, savePath)) {
+            userService.updIcon(userId,savePath);   // 设置头像
+            map.put("controllerResult", ControllerResult.getSuccessResult("提交成功"));
+            map.put("imgPath", savePath);
+        } else {
+            map.put("controllerResult", ControllerResult.getFailResult("提交失败"));
+        }
+        return map;
+    }
 
     /**
      * 添加人员基本信息 返回json
@@ -84,6 +100,41 @@ public class UserBasicManageController {
         return ControllerResult.getSuccessResult("添加成功");
     }
 
+    @ResponseBody
+    @RequestMapping(value = "addFile", method = RequestMethod.POST)
+    public Map addFile(@RequestParam("userIconTemp") MultipartFile file, HttpServletRequest request){
+        String fileName = file.getOriginalFilename();
+        String savePath = "E://abc.jpg";
+        Map map= new HashMap();
+        System.out.print(fileName);
+        if(fileSave(file, savePath)) {
+            map.put("controllerResult", ControllerResult.getSuccessResult("上传成功"));
+            map.put("imgPath", savePath);
+        } else {
+            map.put("controllerResult", ControllerResult.getFailResult("上传失败"));
+        }
+        return map;
+    }
+
+    private boolean fileSave(MultipartFile sourceFile, String savePath) {
+        byte[] temp = new byte[1024];
+        int len = -1;
+        try {
+            File saveFile = new File(savePath);
+            InputStream fis = sourceFile.getInputStream();
+            OutputStream fos = new FileOutputStream(saveFile);
+            while((len = fis.read(temp)) != -1) {
+                fos.write(temp, 0 ,len);
+            }
+            fis.close();
+            fos.flush();
+            fos.close();
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+
     /**
      * 修改人员基本信息
      */
@@ -113,11 +164,26 @@ public class UserBasicManageController {
             logger.info("修改状态成功，已激活");
             return ControllerResult.getSuccessResult("修改状态成功，已激活");
         }
-        return ControllerResult.getFailResult("修改状态成功，已激活");
+        return ControllerResult.getFailResult("修改状态失败");
     }
 
     /**
-     * 分页查询人员基本信息
+     * 分页查询人员基本信息,不分状态
+     */
+    @ResponseBody
+    @RequestMapping(value="queryByPagerAll", method = RequestMethod.GET)
+    public Pager4EasyUI queryByPagerAll(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
+        Pager pager = new Pager();
+        pager.setPageNo(Integer.valueOf(pageNumber));
+        pager.setPageSize(Integer.valueOf(pageSize));
+        pager.setTotalRecords(userService.count());
+        logger.info("分页查询人员基本信息成功");
+        List<User> users = userService.queryByPagerAll(pager);
+        return new Pager4EasyUI<User>(pager.getTotalRecords(), users);
+    }
+
+    /**
+     * 分页查询状态为可用的记录
      */
     @ResponseBody
     @RequestMapping(value="queryByPager", method = RequestMethod.GET)
@@ -126,8 +192,23 @@ public class UserBasicManageController {
         pager.setPageNo(Integer.valueOf(pageNumber));
         pager.setPageSize(Integer.valueOf(pageSize));
         pager.setTotalRecords(userService.count());
-        logger.info("分页查询人员基本信息成功");
+        logger.info("分页查询分页查询状态为可用的人员基本信息成功");
         List<User> users = userService.queryByPager(pager);
+        return new Pager4EasyUI<User>(pager.getTotalRecords(), users);
+    }
+
+    /**
+     * 分页查询状态为不可用的记录
+     */
+    @ResponseBody
+    @RequestMapping(value="queryByPagerDisable", method = RequestMethod.GET)
+    public Pager4EasyUI queryByPagerDisable(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
+        Pager pager = new Pager();
+        pager.setPageNo(Integer.valueOf(pageNumber));
+        pager.setPageSize(Integer.valueOf(pageSize));
+        pager.setTotalRecords(userService.count());
+        logger.info("分页查询分页查询状态为不可用的人员基本信息成功");
+        List<User> users = userService.queryByPagerDisable(pager);
         return new Pager4EasyUI<User>(pager.getTotalRecords(), users);
     }
 
@@ -154,19 +235,5 @@ public class UserBasicManageController {
         dateFormat.setLenient(false);
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
     }
-
-//    @ResponseBody
-//    @RequestMapping(value = "queryAll", method = RequestMethod.GET)
-//    public List<ComboBox4EasyUI> queryAll() {
-//        List<User> users = userService.queryAll();
-//        List<ComboBox4EasyUI> combo = new ArrayList<ComboBox4EasyUI>();
-//        for(User u: users) {
-//            ComboBox4EasyUI c = new ComboBox4EasyUI();
-//            c.setId(u.getUserId());
-//            c.setText(u.getUserName());
-//            combo.add(c);
-//        }
-//        return combo;
-//    }
 
 }

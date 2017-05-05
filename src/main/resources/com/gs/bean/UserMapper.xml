@@ -77,21 +77,36 @@
   <!-- 分页查询全部 -->
   <select id="queryByPagerAll" resultMap="userBasicManageMap" parameterType="com.gs.common.bean.Pager">
     <![CDATA[
-      select u.*, r.roleName, c.companyId, c.companyName from t_user u, t_user_role ur, t_role r,
-            t_company c where ur.userId = u.userId and r.roleId = ur.roleId
-            and u.companyId = c.companyId
+      select u.*, r.roleName, c.companyId, c.companyName from t_user u
+        left join t_user_role ur on u.userId = ur.userId
+        left join t_role r on r.roleId = ur.roleId
+        left join t_company c on u.companyId = c.companyId
     ]]>
      limit #{beginIndex}, #{pageSize};
   </select>
 
-  <!-- 分页查询状态为可用的员工及角色名称 -->
+  <!-- 分页查询状态为可用的记录 -->
   <select id="queryByPager" resultMap="userBasicManageMap" parameterType="com.gs.common.bean.Pager">
     <![CDATA[
-      select u.*, r.roleName, c.companyId, c.companyName from t_user u, t_user_role ur, t_role r, t_company c
-        where u.userStatus = 'Y' and ur.userId = u.userId
-          and r.roleId = ur.roleId and u.companyId = c.companyId
+      select u.*, r.roleId, r.roleName, c.companyId, c.companyName from t_user u
+        left join t_user_role ur on u.userId = ur.userId
+        left join t_role r on r.roleId = ur.roleId
+        left join t_company c on u.companyId = c.companyId
+        where u.userStatus = 'Y'
     ]]>
      limit #{beginIndex}, #{pageSize};
+  </select>
+
+  <!-- 分页查询状态为不可用的员工及角色名称 -->
+  <select id="queryByPagerDisable" resultMap="userBasicManageMap" parameterType="com.gs.common.bean.Pager">
+    <![CDATA[
+      select u.*, r.roleName, c.companyId, c.companyName from t_user u
+        left join t_user_role ur on u.userId = ur.userId
+        left join t_role r on r.roleId = ur.roleId
+        left join t_company c on u.companyId = c.companyId
+        where u.userStatus = 'N'
+    ]]>
+    limit #{beginIndex}, #{pageSize};
   </select>
 
   <select id="count" resultType="int" >
@@ -137,4 +152,19 @@
           SELECT *FROM auto_platform.t_user WHERE userEmail=#{email} OR userPhone=#{email} OR userName=#{email}
         ]]>
   </select>
+
+
+  <!-- 测试用，不要删  -->
+  <select id ="queryByPhone" resultMap="userBasicManageMap">
+    <![CDATA[
+      select * from t_user where userPhone= #{userPhone}
+    ]]>
+  </select>
+  <!-- 同上 -->
+  <update id="updIcon" >
+    <![CDATA[
+      update  t_user set userIcon=#{userIcon} where userId = #{userId}
+    ]]>
+  </update>
+
 </mapper>

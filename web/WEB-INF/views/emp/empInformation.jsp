@@ -1,5 +1,4 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<% String path = request.getContextPath(); %>
 <html>
 <head>
     <meta charset="utf-8">
@@ -64,6 +63,12 @@
             </button>
             <button id="btn_return" type="button" class="btn btn-default" onclick="showReturn();">
                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>辞退
+            </button>
+            <button id="searchDisable" type="button" class="btn btn-danger" onclick="searchDisableStatus();">
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询已禁用/辞退的记录
+            </button>
+            <button id="searchRapid" type="button" class="btn btn-success" onclick="searchRapidStatus();">
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询已激活的记录
             </button>
         </div>
     </div>
@@ -387,8 +392,8 @@
                 dropZoneEnabled: true,//是否显示拖拽区域
                 minImageWidth: 50, //图片的最小宽度
                 minImageHeight: 50,//图片的最小高度
-                maxImageWidth: 350,//图片的最大宽度
-                maxImageHeight: 350,//图片的最大高度
+//                maxImageWidth: 350,//图片的最大宽度
+//                maxImageHeight: 350,//图片的最大高度
                 maxFileSize: 0,//单位为kb，如果为0表示不限制文件大小
                 maxFileCount: 1, //表示允许同时上传的最大文件个数
                 enctype: 'multipart/form-data',
@@ -397,8 +402,12 @@
                 msgFilesTooMany: "选择上传的文件数量({n}) 超过允许的最大数值{m}！",
             }).on("fileuploaded", function (event, data) {
                 // data 为controller返回的json
-                if (data.response.result == 'success') {
+                var resp= data.response;
+                if (resp.controllerResult.result == 'success') {
+                    $("#file1").val(resp.imgPath)
                     alert('处理成功');
+                } else {
+                    alert("上传失败")
                 }
             });
         }
@@ -422,12 +431,28 @@
     // 激活或禁用
     function formatterStatus(value, row, index) {
         if (value == 'Y') {
+            if(row.role.roleName == '车主') {
+                return "&nbsp;&nbsp;<button type='button' class='btn btn-danger' " +
+                    "onclick='inactive(\"" + '/userBasicManage/updateStatus?id=' + row.userId + '&status=Y' + "\")'>禁用</button>";
+            }
             return "&nbsp;&nbsp;<button type='button' class='btn btn-danger' " +
-                "onclick='inactive(\"" + '/userBasicManage/updateStatus?id=' + row.userId + '&status=Y' + "\")'>禁用</button>";
+                "onclick='inactive(\"" + '/userBasicManage/updateStatus?id=' + row.userId + '&status=Y' + "\")'>辞退</button>";
         } else {
-            return "&nbsp;&nbsp;<button type='button' class='btn btn-success' " +
-                "onclick='active(\"" + '/userBasicManage/updateStatus?id=' + row.userId + '&status=N' + "\")'>激活</button>";
+            if(row.role.roleName == '车主') {
+                return "&nbsp;&nbsp;<button type='button' class='btn btn-success' " +
+                    "onclick='active(\"" + '/userBasicManage/updateStatus?id=' + row.userId + '&status=N' + "\")'>激活</button>";
+            }
         }
+    }
+
+//  查询不可用的
+    function searchDisableStatus() {
+        initTable('table', '/userBasicManage/queryByPagerDisable');
+    }
+
+//  查询可用的
+    function searchRapidStatus() {
+        initTable('table', '/userBasicManage/queryByPager');
     }
 
     $.cxSelect.defaults.url = '/static/js/cityData.json';
