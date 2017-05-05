@@ -1,37 +1,42 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.gs.dao.IncomingOutgoingDAO" >
-  <resultMap id="incomingOutgoingMap" type="com.gs.bean.IncomingOutgoing" >
-    <id column="inOutId" property="inOutId" jdbcType="VARCHAR" />
-    <result column="inOutMoney" property="inOutMoney" jdbcType="DOUBLE" />
-    <result column="inOutCreatedUser" property="inOutCreatedUser" jdbcType="VARCHAR" />
-    <result column="inOutCreatedTime" property="inOutCreatedTime" jdbcType="TIMESTAMP" />
-    <result column="inOutStatus" property="inOutStatus" jdbcType="VARCHAR" />
+<mapper namespace="com.gs.dao.IncomingOutgoingDAO">
+    <resultMap id="incomingOutgoingMap" type="com.gs.bean.IncomingOutgoing">
+        <id column="inOutId" property="inOutId" jdbcType="VARCHAR"/>
+        <result column="inTypeId" property="inTypeId" jdbcType="VARCHAR"/>
+        <result column="outTypeId" property="outTypeId" jdbcType="VARCHAR"/>
+        <result column="inOutMoney" property="inOutMoney" jdbcType="DOUBLE"/>
+        <result column="inOutCreatedUser" property="inOutCreatedUser" jdbcType="VARCHAR"/>
+        <result column="inOutCreatedTime" property="inOutCreatedTime" jdbcType="TIMESTAMP"/>
+        <result column="inOutStatus" property="inOutStatus" jdbcType="VARCHAR"/>
 
-    <association property="incomingType" javaType="com.gs.bean.IncomingType">
-      <id column="inType_id" property="inTypeId"/>
-      <result column="inTypeName" property="inTypeName"/>
-    </association>
+        <association property="incomingType" javaType="com.gs.bean.IncomingType">
+            <id column="inType_id" property="inTypeId"/>
+            <result column="inTypeName" property="inTypeName"/>
+        </association>
 
-    <association property="outgoingType" javaType="com.gs.bean.OutgoingType">
-      <id column="outType_id" property="outTypeId"/>
-      <result column="outTypeName" property="outTypeName"/>
-    </association>
+        <association property="outgoingType" javaType="com.gs.bean.OutgoingType">
+            <id column="outType_id" property="outTypeId"/>
+            <result column="outTypeName" property="outTypeName"/>
+        </association>
 
-    <association property="user" javaType="com.gs.bean.User">
-      <id column="userId" property="userId"/>
-      <result column="userName" property="userName"/>
-    </association>
-  </resultMap>
+        <association property="user" javaType="com.gs.bean.User">
+            <id column="userId" property="userId"/>
+            <result column="userName" property="userName"/>
+        </association>
+    </resultMap>
 
-  <select id="count" resultType="int" >
+    <select id="count" resultType="int">
     <![CDATA[
+
       select count(*) from t_incoming_outgoing i where i.inOutStatus = 'Y'
-    ]]>
+
+        ]]>
   </select>
 
-  <select id="queryByPager" resultMap="incomingOutgoingMap" parameterType="com.gs.common.bean.Pager">
-    <![CDATA[
+    <select id="queryByPager" resultMap="incomingOutgoingMap" parameterType="com.gs.common.bean.Pager">
+        <![CDATA[
+
       select io.*,i.inTypeId as inType_id, i.inTypeName,o.outTypeId as outType_id,o.outTypeName,u.userId ,u.userName from t_incoming_outgoing io
 				LEFT JOIN t_incoming_type i on io.inTypeId = i.inTypeId
 				LEFT JOIN t_outgoing_type o on io.outTypeId = o.outTypeId
@@ -42,36 +47,76 @@
     limit #{beginIndex}, #{pageSize}
   </select>
 
-  <select id="queryByDate" resultMap="incomingOutgoingMap">
+    <select id="queryByDate" resultMap="incomingOutgoingMap">
     <![CDATA[
+
       select io.*,i.inTypeId as inType_id, i.inTypeName,o.outTypeId as outType_id,o.outTypeName,u.userId ,u.userName from t_incoming_outgoing io
 				LEFT JOIN t_incoming_type i on io.inTypeId = i.inTypeId
 				LEFT JOIN t_outgoing_type o on io.outTypeId = o.outTypeId
 				LEFT JOIN  t_user u on io.inOutCreatedUser = u.userId
 				where  io.inOutStatus = 'Y'  and io.inOutCreatedTime between #{start} and  #{end}
-				order by io.inOutCreatedTime Desc
-    ]]>
+				order by io.inOutCreatedTime ASC
+
+        ]]>
   </select>
 
-  <select id="queryAll" resultMap="incomingOutgoingMap">
+    <select id="queryByYear" resultMap="incomingOutgoingMap">
     <![CDATA[
-      select io.*,i.inTypeId as inType_id, i.inTypeName,o.outTypeId as outType_id,o.outTypeName,u.userId ,u.userName from t_incoming_outgoing io
-				LEFT JOIN t_incoming_type i on io.inTypeId = i.inTypeId
-				LEFT JOIN t_outgoing_type o on io.outTypeId = o.outTypeId
-				LEFT JOIN  t_user u on io.inOutCreatedUser = u.userId
-				where  io.inOutStatus = 'Y'
-				order by io.inOutCreatedTime Desc
-    ]]>
+      select io.inTypeId, io.outTypeId, sum(io.inOutMoney) as inOutMoney,io.inOutCreatedTime from t_incoming_outgoing io
+      where  io.inOutStatus = 'Y' and io.inOutCreatedTime >=  #{start} and io.inOutCreatedTime <= #{end}
+      GROUP BY year(io.inOutCreatedTime) order by io.inOutCreatedTime ASC;
+        ]]>
   </select>
 
-  <select id="countByDisable" resultType="int" >
+    <select id="queryByMonth" resultMap="incomingOutgoingMap">
+        <![CDATA[
+
+        select inTypeId, outTypeId, sum(inOutMoney) as inOutMoney,inOutCreatedTime from t_incoming_outgoing
+    where  inOutStatus = 'Y' and  inOutCreatedTime >= #{start} and inOutCreatedTime <= #{end}
+    GROUP BY month(inOutCreatedTime) order by inOutCreatedTime ASC;
+      ]]>
+    </select>
+
+    <select id="queryByDay" resultMap="incomingOutgoingMap">
+        <![CDATA[
+
+            select inTypeId, outTypeId, sum(inOutMoney) as inOutMoney,inOutCreatedTime from t_incoming_outgoing
+            where inOutStatus = 'Y' and inOutCreatedTime >= #{start} and inOutCreatedTime <= #{end}
+            GROUP BY day(inOutCreatedTime) order by inOutCreatedTime ASC;
+        ]]>
+    </select>
+
+
+
+    <select id="queryByQuarter" resultMap="incomingOutgoingMap">
     <![CDATA[
+             select inTypeId, outTypeId, sum(inOutMoney) as inOutMoney,inOutCreatedTime from t_incoming_outgoing
+        where inOutStatus = 'Y' and inOutCreatedTime >= #{start} and inOutCreatedTime <= #{end}
+        GROUP BY quarter(inOutCreatedTime) order by inOutCreatedTime ASC;
+
+        ]]>
+  </select>
+
+    <select id="queryByWeek" resultMap="incomingOutgoingMap">
+        <![CDATA[
+       select inTypeId, outTypeId, sum(inOutMoney) as inOutMoney,inOutCreatedTime from t_incoming_outgoing
+	where inOutStatus = 'Y' and inOutCreatedTime >= #{start} and inOutCreatedTime <= #{end}
+	GROUP BY week(inOutCreatedTime) order by inOutCreatedTime ASC;
+
+        ]]>
+    </select>
+
+    <select id="countByDisable" resultType="int">
+    <![CDATA[
+
         select count(*) from t_incoming_outgoing i where i.inOutStatus = 'N'
-    ]]>
+
+        ]]>
   </select>
 
-  <select id="queryByPagerDisable" resultMap="incomingOutgoingMap" parameterType="com.gs.common.bean.Pager">
-    <![CDATA[
+    <select id="queryByPagerDisable" resultMap="incomingOutgoingMap" parameterType="com.gs.common.bean.Pager">
+        <![CDATA[
+
          select io.*,i.inTypeId as inType_id, i.inTypeName,o.outTypeId as outType_id,o.outTypeName,u.userId ,u.userName from t_incoming_outgoing io
 				LEFT JOIN t_incoming_type i on io.inTypeId = i.inTypeId
 				LEFT JOIN t_outgoing_type o on io.outTypeId = o.outTypeId
@@ -83,29 +128,37 @@
   </select>
 
 
-  <insert id="insert" useGeneratedKeys="true" keyProperty="inOutId" parameterType="incomingOutgoing">
+    <insert id="insert" useGeneratedKeys="true" keyProperty="inOutId" parameterType="incomingOutgoing">
     <![CDATA[
+
         insert into t_incoming_outgoing(inOutId, inTypeId, outTypeId,inOutMoney,inOutCreatedUser,inOutCreatedTime,inOutStatus) values(uuid(), #{inTypeId}, #{outTypeId}, #{inOutMoney}, #{inOutCreatedUser}, now(),'Y')
+
         ]]>
   </insert>
 
-  <update id="update" keyProperty="inOutId" parameterType="incomingOutgoing">
+    <update id="update" keyProperty="inOutId" parameterType="incomingOutgoing">
     <![CDATA[
+
         update t_incoming_outgoing set inTypeId = #{inTypeId}, outTypeId = #{outTypeId}, inOutMoney = #{inOutMoney}, inOutCreatedUser = #{inOutCreatedUser} where inOutId = #{inOutId}
+
         ]]>
   </update>
 
-  <!--冻结数据-->
-  <update id="inactive" keyProperty="inOutId" parameterType="incomingOutgoing">
+    <!--冻结数据-->
+    <update id="inactive" keyProperty="inOutId" parameterType="incomingOutgoing">
     <![CDATA[
+
         update t_incoming_outgoing set inOutStatus = 'N' where inOutId = #{outTypeId}
+
         ]]>
   </update>
 
-  <!--激活数据-->
-  <update id="active" keyProperty="inOutId" parameterType="incomingOutgoing">
+    <!--激活数据-->
+    <update id="active" keyProperty="inOutId" parameterType="incomingOutgoing">
     <![CDATA[
+
         update t_incoming_outgoing set inOutStatus = 'Y' where inOutId = #{outTypeId}
+
         ]]>
   </update>
 

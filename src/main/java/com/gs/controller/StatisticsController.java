@@ -64,4 +64,10 @@ public class StatisticsController {
         ModelAndView mav = new ModelAndView("statistics/purchase");
         return mav;
     }
+
+    @RequestMapping("test")
+    public ModelAndView test(){
+        ModelAndView mav = new ModelAndView("statistics/test");
+        return mav;
+    }
 }

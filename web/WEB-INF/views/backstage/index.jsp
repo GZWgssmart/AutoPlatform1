@@ -228,8 +228,11 @@
                     <li>
                         <a href="#"><i class="fa fa-bar-chart"></i> <span class="nav-label">报表统计</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
+                            <li><a class="J_menuItem" href="/statistics/test">测试报表</a>
+                            </li>
                             <li><a class="J_menuItem" href="/statistics/maintain">下单统计</a>
                             </li>
+
                             <li><a class="J_menuItem" href="/statistics/maintaintype">消费统计</a>
                             </li>
                             <li><a class="J_menuItem" href="/statistics/maintain">维修保养统计</a>

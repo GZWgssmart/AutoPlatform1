@@ -5,6 +5,8 @@ import com.gs.bean.IncomingOutgoing;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
+import com.gs.common.entity.EchartData;
+import com.gs.common.entity.Series;
 import com.gs.service.IncomingOutgoingService;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
@@ -14,13 +16,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
  * Created by GZWangBin on 2017/4/20.
  */
 @Controller
-@RequestMapping("incomingOutgoing")
+@RequestMapping("/incomingOutgoing")
 public class IncomingOutgoingController {
 
     private Logger logger = (Logger) LoggerFactory.getLogger(IncomingOutgoingController.class);
@@ -92,4 +96,59 @@ public class IncomingOutgoingController {
         incomingOutgoingService.update(incomingOutgoing);
         return ControllerResult.getSuccessResult("修改成功");
     }
+
+
+
+    @ResponseBody
+    @RequestMapping(value = "queryByYear")
+    public List<IncomingOutgoing> queryByYear(String start, String end){
+        logger.info("根据年份去查找图表");
+        System.out.println("开始时间" + start + "结束时间" + end);
+        List<IncomingOutgoing> list=incomingOutgoingService.queryByYear(start, end);
+        for (IncomingOutgoing incomingOutgoing : list) {
+            if (incomingOutgoing.getInTypeId() == null) {
+
+            }
+            System.out.println(incomingOutgoing + "list");
+        }
+        return list;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "queryByMonth")
+    public List<IncomingOutgoing> queryByMonth(String start, String end){
+        logger.info("根据月份去查找图表");
+        System.out.println("开始时间" + start + "结束时间" + end);
+        List<IncomingOutgoing> list=incomingOutgoingService.queryByMonth(start, end);
+        return list;
+    }
+
+
+    @ResponseBody
+    @RequestMapping(value = "queryByDay")
+    public List<IncomingOutgoing> queryByDay(String start, String end){
+        logger.info("根据日去查找图表");
+        System.out.println("开始时间" + start + "结束时间" + end);
+        List<IncomingOutgoing> list=incomingOutgoingService.queryByDay(start, end);
+        return list;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "queryByQuarter")
+    public List<IncomingOutgoing> queryByQuarter(String start, String end){
+        logger.info("根据季度查找图表");
+        System.out.println("开始时间" + start + "结束时间" + end);
+        List<IncomingOutgoing> list=incomingOutgoingService.queryByQuarter(start, end);
+        return list;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "queryByWeek")
+    public List<IncomingOutgoing> queryByWeek(String start, String end){
+        logger.info("根据周期查找图表");
+        System.out.println("开始时间" + start + "结束时间" + end);
+        List<IncomingOutgoing> list=incomingOutgoingService.queryByWeek(start, end);
+        return list;
+    }
+
 }

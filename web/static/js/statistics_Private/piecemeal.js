@@ -74,6 +74,7 @@ function setDaterangeReturnFun(elid,daterangeReturnFun){
             '最近一月': [moment().subtract(29, 'days'), moment()],
             '本季度': [moment().quarter(1), moment().quarter(1)],
             '本月': [moment().startOf('month'), moment().endOf('month')],
+            'Custom Range':[]
         },
         showCustomRangeLabel: false,
         alwaysShowCalendars: false

@@ -1,5 +1,7 @@
 package com.gs.controller.FinancialManage;
 
+import com.github.abel533.echarts.json.GsonUtil;
+import com.github.abel533.echarts.series.Series;
 import com.gs.bean.Salary;
 import com.gs.common.Methods;
 import com.gs.common.bean.ControllerResult;
@@ -28,6 +30,7 @@ import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
