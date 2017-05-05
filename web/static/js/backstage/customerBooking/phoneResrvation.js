@@ -89,7 +89,9 @@ function checkApp() {
         var appointment = row[0];
         $("#addUserName").val(appointment.userName);
         $("#addUserPhone").val(appointment.userPhone);
+        $("#addPlate").val(appointment.carPlate);
         $('#addArriveTime').val(formatterDate(appointment.arriveTime));
+        $("#addcurrentStatus").val(appointment.currentStatus);
         $('#addCarBrand').html('<option value="' + appointment.brand.brandId + '">' + appointment.brand.brandName + '</option>').trigger("change");
         $('#addCarColor').html('<option value="' + appointment.color.colorId + '">' + appointment.color.colorName + '</option>').trigger("change");
         $('#addCarModel').html('<option value="' + appointment.model.modelId + '">' + appointment.model.modelName + '</option>').trigger("change");
@@ -243,6 +245,14 @@ function validator(formId) {
                 validators: {
                     notEmpty: {
                         message: '预约记录时间不能为空'
+                    }
+                }
+            },
+            currentStatus:{
+                message: '预约验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '预约不能为空'
                     }
                 }
             },

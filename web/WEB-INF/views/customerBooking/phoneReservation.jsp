@@ -59,12 +59,13 @@
                 <th data-width="100" data-hide="all" data-field="company.companyName">
                     汽修公司
                 </th>
+                <th data-width="100" data-hide="all" data-field="currentStatus">
+                    已预约&nbsp;|&nbsp;未预约
+                </th>
                 <th data-width="100" data-hide="all" data-field="appoitmentStatus" data-formatter="statusFormatter">
                     记录状态
                 </th>
-                <th data-width="100" data-hide="" >
-                    是否已预约
-                </th>
+
 
 
             </tr>
@@ -174,6 +175,15 @@
                     <div class="col-sm-7">     <!-- 当设置不可编辑后, 会修改颜色, 在min.css里搜索.form-control{background-color:#eee;opacity:1} -->
                         <input id="addArriveTime" placeholder="请选择到店时间" onclick="getDate('addArriveTime')" readonly="true" type="text" name="arriveTime"
                                class="form-control datetimepicker"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">已预约&nbsp;|&nbsp;未预约：</label>
+                    <div class="col-sm-7">
+                        <select id="addcurrentStatus" class="js-example-tags form-control" name="currentStatus">
+                            <option value="已预约">已预约</option>
+                            <option value="未预约">未预约</option>
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">
@@ -308,7 +318,7 @@
                                 <th data-field="plate.plateName">
                                     汽车车牌
                                 </th>
-                                <th data-field="plateId">
+                                <th data-field="carPlate">
                                     车牌号码
                                 </th>
                                 <th data-field="arriveTime" data-formatter="formatterDate">
@@ -325,6 +335,9 @@
                                 </th>
                                 <th data-field="appoitmentStatus" data-formatter="status">
                                     预约状态
+                                </th>
+                                <th data-field="currentStatus">
+                                    已预约&nbsp;|&nbsp;未预约
                                 </th>
                             </thead>
                             <tbody>

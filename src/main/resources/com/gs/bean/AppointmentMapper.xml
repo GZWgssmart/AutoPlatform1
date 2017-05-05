@@ -16,7 +16,7 @@
     <result column="appCreatedTime" property="appCreatedTime" jdbcType="TIMESTAMP" />
     <result column="companyId" property="companyId" jdbcType="VARCHAR" />
     <result column="appoitmentStatus" property="appoitmentStatus" jdbcType="VARCHAR" />
-
+    <result column="currentStatus" property="currentStatus" jdbcType="VARCHAR" />
 
     <association property="brand" javaType="com.gs.bean.CarBrand">
       <id property="brandId" column="brandId"/>
@@ -47,9 +47,10 @@
 
   <select id="queryByPager" resultMap="appointmentMap">
     <![CDATA[
-       select am.*, cc.colorId, cc.colorName, cp.plateId, cp.plateName,
+       select am.*, userId cc.colorId, cc.colorName, cp.plateId, cp.plateName,
         cm.modelId, cm.modelName, company.companyId,
         company.companyName, cb.brandId, cb.brandName from t_appointment am
+       LEFT JOIN t_user
        LEFT JOIN t_car_color cc on am.colorId =cc.colorId
        LEFT JOIN t_car_model cm on am.modelId = cm.modelId
        LEFT JOIN t_car_plate cp on am.plateId = cp.plateId
@@ -69,9 +70,9 @@
   <insert id="insert" parameterType="Appointment">
     <![CDATA[
     insert into auto_platform.t_appointment(appointmentId,userId,userName,userPhone,brandId,colorId,modelId,
-    plateId,carPlate,arriveTime,maintainOrFix,appCreatedTime,companyId,appoitmentStatus)
+    plateId,carPlate,arriveTime,maintainOrFix,appCreatedTime,companyId,appoitmentStatus,currentStatus)
     values(uuid(),#{userId},#{userName},#{userPhone},#{brandId},#{colorId},#{modelId},#{plateId},#{carPlate},#{arriveTime},
-    #{maintainOrFix},now(),#{companyId},'Y');
+    #{maintainOrFix},now(),#{companyId},'Y',#{currentStatus});
     ]]>
   </insert>
 
@@ -85,25 +86,84 @@
     ]]>
   </insert>
 
-  <select id="queryByPagerDisable" resultMap="appointmentMap" parameterType="com.gs.common.bean.Pager">
+  <!-- 分页模糊查询 -->
+  <select id="blurredQuery" resultMap="appointmentMap" >
     <![CDATA[
-       select am.*, cc.colorId, cc.colorName, cp.plateId, cp.plateName,
-        cm.modelId, cm.modelName, company.companyId,
-        company.companyName, cb.brandId, cb.brandName from t_appointment am
-       LEFT JOIN t_car_color cc on am.colorId =cc.colorId
-       LEFT JOIN t_car_model cm on am.modelId = cm.modelId
-       LEFT JOIN t_car_plate cp on am.plateId = cp.plateId
-       LEFT JOIN t_company company on am.companyId = company.companyId
-       LEFT JOIN t_car_brand cb on am.brandId = cb.brandId
-       where am.appoitmentStatus = 'N' order by am.appCreatedTime Desc
-    ]]>
-    limit #{beginIndex}, #{pageSize}
+           select am.*, cc.colorId, cc.colorName, cp.plateId, cp.plateName,
+            cm.modelId, cm.modelName, company.companyId,
+            company.companyName, cb.brandId, cb.brandName from t_checkin am
+           LEFT JOIN t_user u on u.userId =am.userId
+           LEFT JOIN t_car_color cc on am.colorId =cc.colorId
+           LEFT JOIN t_car_model cm on am.modelId = cm.modelId
+           LEFT JOIN t_car_plate cp on am.plateId = cp.plateId
+           LEFT JOIN t_company company on am.companyId = company.companyId
+           LEFT JOIN t_car_brand cb on am.brandId = cb.brandId
+           where 1=1 and
+      ]]>
+    <if test="appointment.userName != '' and appointment.userName != null">
+      ck.userName like '%${appointment.userName}%'
+    </if>
+    <if test="appointment.userName != '' and appointment.userName != null and
+            appointment.companyId != '' and appointment.companyId != null">
+      or
+    </if>
+    <if test="appointment.companyId != '' and appointment.companyId != null">
+      company.companyName like '%${appointment.companyId}%'
+    </if>
+    <if test="appointment.companyId != '' and appointment.companyId != null and
+            appointment.carPlate != '' and appointment.carPlate != null">
+      or
+    </if>
+    <if test="appointment.carPlate != '' and appointment.carPlate != null">
+      ck.carPlate like '%${appointment.carPlate}%'
+    </if>
+    <if test="appointment.carPlate != '' and appointment.carPlate != null and
+            appointment.userPhone != '' and appointment.userPhone != null">
+      or
+    </if>
+    <if test="appointment.userPhone != '' and appointment.userPhone != null">
+      ck.userPhone like '%${appointment.userPhone}%'
+    </if>
+    order by ck.appCreatedTime Desc
+    limit #{pager.beginIndex}, #{pager.pageSize}
   </select>
-  <!-- 分页查询禁用个数 -->
-  <select id="countByDisable" resultType="int" >
+
+  <!-- 分页模糊查询个数 -->
+  <select id="countByBlurred" resultType="int" >
     <![CDATA[
-      select count(appointmentId) from t_appointment am where am.appoitmentStatus = 'N'
+      select count(appointmentId) from t_appointment am
+      LEFT JOIN t_user u on u.userId =am.userId
+      LEFT JOIN t_car_color cc on am.colorId =cc.colorId
+      LEFT JOIN t_car_model cm on am.modelId = cm.modelId
+      LEFT JOIN t_car_plate cp on am.plateId = cp.plateId
+      LEFT JOIN t_company company on ck.companyId = company.companyId
+      LEFT JOIN t_car_brand cb on am.brandId = cb.brandId
+      where 1=1 and
     ]]>
+    <if test="appointment.userName != '' and appointment.userName != null">
+      ck.userName like '%${appointment.userName}%'
+    </if>
+    <if test="appointment.userName != '' and appointment.userName != null and
+    appointment.companyId != '' and appointment.companyId != null">
+      or
+    </if>
+    <if test="appointment.companyId != '' and appointment.companyId != null">
+      company.companyName like '%${appointment.companyId}%'
+    </if>
+    <if test="appointment.companyId != '' and appointment.companyId != null and
+    appointment.carPlate != '' and appointment.carPlate != null">
+      or
+    </if>
+    <if test="appointment.carPlate != '' and appointment.carPlate != null">
+      ck.carPlate like '%${appointment.carPlate}%'
+    </if>
+    <if test="appointment.carPlate != '' and appointment.carPlate != null and
+    appointment.userPhone != '' and appointment.userPhone != null">
+      or
+    </if>
+    <if test="appointment.userPhone != '' and appointment.userPhone != null">
+      ck.userPhone like '%${appointment.userPhone}%'
+    </if>
   </select>
 
   <!--冻结数据-->

@@ -37,13 +37,13 @@ public class PhoneReservationController {
     private AppointmentService appointmentService;
 
     /**
-     * 查询所有登记记录
+     * 查询所有预约记录
      * @return
      */
     @ResponseBody
     @RequestMapping(value="queryByPager", method = RequestMethod.GET)
     public Pager4EasyUI<Appointment> queryByPager(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
-        logger.info("分页查询所有登记记录");
+        logger.info("分页查询所有预约记录");
         Pager pager = new Pager();
         pager.setPageNo(Integer.valueOf(pageNumber));
         pager.setPageSize(Integer.valueOf(pageSize));
@@ -59,7 +59,7 @@ public class PhoneReservationController {
     @ResponseBody
     @RequestMapping(value="queryByPagerDisable", method = RequestMethod.GET)
     public Pager4EasyUI<Appointment> queryByPagerDisable(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
-        logger.info("分页查询所有被禁用登记记录");
+        logger.info("分页查询所有被禁用预约记录");
         Pager pager = new Pager();
         pager.setPageNo(Integer.valueOf(pageNumber));
         pager.setPageSize(Integer.valueOf(pageSize));

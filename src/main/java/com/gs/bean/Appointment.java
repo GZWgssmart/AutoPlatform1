@@ -31,6 +31,8 @@ public class Appointment {
 
     private String appoitmentStatus;
 
+    private String currentStatus;
+
     private CarBrand brand; // 汽车品牌
     private CarColor color; // 汽车颜色
     private CarModel model; // 汽车车型
@@ -188,6 +190,13 @@ public class Appointment {
         this.company = company;
     }
 
+    public String getCurrentStatus() {
+        return currentStatus;
+    }
+
+    public void setCurrentStatus(String currentStatus) {
+        this.currentStatus = currentStatus;
+    }
     @Override
     public String toString() {
         return "Appointment{" +
@@ -205,6 +214,7 @@ public class Appointment {
                 ", appCreatedTime=" + appCreatedTime +
                 ", companyId='" + companyId + '\'' +
                 ", appoitmentStatus='" + appoitmentStatus + '\'' +
+                ", currentStatus='" + currentStatus + '\'' +
                 '}';
     }
 }
