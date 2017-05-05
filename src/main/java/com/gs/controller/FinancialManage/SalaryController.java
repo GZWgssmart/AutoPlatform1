@@ -1,7 +1,5 @@
 package com.gs.controller.FinancialManage;
 
-import com.github.abel533.echarts.json.GsonUtil;
-import com.github.abel533.echarts.series.Series;
 import com.gs.bean.Salary;
 import com.gs.common.Methods;
 import com.gs.common.bean.ControllerResult;
@@ -9,7 +7,6 @@ import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
 import com.gs.common.util.ExcelExport;
 import com.gs.common.util.ExcelReader;
-import com.gs.common.util.ExcelReaderUtil;
 import com.gs.service.SalaryService;
 import org.apache.commons.io.FileUtils;
 import org.apache.ibatis.annotations.Param;
@@ -30,7 +27,6 @@ import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
