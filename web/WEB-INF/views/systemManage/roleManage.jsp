@@ -26,6 +26,9 @@
         h3, h4{
             font-weight: bold;
         }
+        li[data-id|=module]>div[data-role="wrapper"]{
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -129,26 +132,6 @@
 </div><!-- /.modal -->
 
 
-<!-- 修改角色权限弹窗 -->
-<div class="modal fade" id="editPermission" aria-hidden="true" data-backdrop="static">
-    <div class="modal-dialog">
-        <div class="modal-content">
-           <div class="panel-heading">
-               <h4 style="display: inline-block">修改角色权限</h4>
-               <div style="float:right"><span data-dismiss="modal">关闭</span></div>
-           </div>
-            <div class="panel-body" style="width: 60%;margin-left: auto;margin-right: auto;">
-                <div class="col-md-12">
-                    <div id = "staTree" ></div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default"  data-dismiss="modal">取消</button>
-                <button  type="submit" class="btn btn-primary btn-sm" onclick="savePermission()">保存</button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
 
 <script src="/static/js/jquery.min.js"></script>
 <script src="/static/js/bootstrap.min.js"></script>
@@ -203,7 +186,7 @@ $(function(){
         setTimeout(function(){
             initObj.rolePermissions=  $.ajax({url:"/role/permissions/"+initObj.roles.responseJSON[0].roleId ,async:false});
             initObj.role = initObj.roles.responseJSON[0];
-            setPageTitle(initObj.role);
+            setPageTitle();
             var dnyTree = initDnyTree("#dnyTree",initObj.modules.responseJSON, initObj.rolePermissions.responseJSON);//初始了树
             trees.staTree = initStaticTree("#staTree", initObj.permissions.responseJSON,initObj.modules.responseJSON, initObj.rolePermissions.responseJSON)
         },500);
@@ -228,7 +211,7 @@ $(function(){
             } else {
                 oneBar.push("<li>");
             }
-            oneBar.push("<a href='"+panelId + "' data-toggle='tab' onclick='resetRoleId(\"" + role.roleId + "\")'>");
+            oneBar.push("<a href='"+panelId + "' data-toggle='tab' data-id =" +role.roleId +"  onclick='resetRoleId(this)'>");
             oneBar.push(role.roleName);
             oneBar.push("</a></li>");
             bar.append(oneBar.join(""));
@@ -237,23 +220,30 @@ $(function(){
         bar.append(recyclebin);
     }
 
- function setPageTitle(role){
-        var title = $("#home .title:eq(0)")
+ function setPageTitle(){
+     var role = initObj.role;
+     var title = $("#home .title:eq(0)")
      var roleNameNode = "<span>" + role.roleName + "</span>";
      var roleDesNode = "<small style='font-size:9px;color:#999; margin-left:10px;'>"+ role.roleDes +"</small>"
       title.find("h3").html(roleNameNode+ roleDesNode);
         title.find("input:eq(0)").val(role.roleId);
     }
+    function setNavName () {
+        var role = initObj.role;
+        var navul = $("#bar");
+        var navlia = navul.find("a[data-id=" + role.roleId + "]");
+        $(navlia).text(role.roleName);
+    }
 
-function resetRoleId(roleId){ // 用于点击更换右侧数值的
+function resetRoleId(thisEl){ // 用于点击更换右侧数值的
+    var roleId = $(thisEl).attr("data-id");
     setRolePermission(roleId);
     var curObj = initObj;
     var modules = curObj.modules.responseJSON;
     var rolePermissions = curObj.rolePermissions.responseJSON;
     var permissions = curObj.permissions.responseJSON;
-    // reloadStatic($("staTree").tree(),permissions, modules, rolePermissions);
     setRole(roleId);
-    setPageTitle(curObj.role);
+    setPageTitle();
     reloadDny(modules, rolePermissions);
     $("#roleId").val(roleId);
 }
@@ -429,7 +419,6 @@ function setRolePermission(roleId){
     /**
      *  添加 相关
      * */
-    // TODO 添加相关
     function showAdd(){
         $("input[type=reset]").trigger("click");
         $("#addButton").removeAttr("disabled");
@@ -510,17 +499,30 @@ function setRolePermission(roleId){
                 $("#" + formId).serialize(),
                 function(data) {
                     if (data.result == "success") {
-                        $("#"+modalId).modal('hide');
                         swal({
                             title:"",
                             text: data.message,
                             confirmButtonText:"确定", // 提示按钮上的文本
                             type:"success"});// 提示窗口, 修改成功
-                        $("#" + formId).data('bootstrapValidator').resetForm(true);
                         if(flag === "addForm") {
                             resetRole();
                             initRoleTabs();
+                        } else {
+                            // todo updateTitle();
+                            console.log("修改成功")
+                            var roleNameEl = $("#"+formId).find("input[name=roleName]")[0];
+                            var roleIdEl = $("#"+formId).find("input[name=roleId]")[0];
+                            var roleDesEl = $("#" + formId).find("textarea")[0];
+                            var role = {}
+                            role.roleId = $(roleIdEl).val();
+                            role.roleName = $(roleNameEl).val();
+                            role.roleDes = $(roleDesEl).val();
+                            console.log(role);
+                            updateRole(role);
+                            setPageTitle();
+                            setNavName();
                         }
+                        formModalclose(modalId,formId);
                     } else if (data.result == "fail") {
                         swal({title:"",
                             text:data.message,
@@ -533,7 +535,13 @@ function setRolePermission(roleId){
 
     }
 
+function formModalclose(modalId,formId ) {
 
+    $("#"+modalId).modal('hide');
+    $("#" + formId).data('bootstrapValidator').resetForm(true);
+    $("#" + formId).data('bootstrapValidator').destroy(); // 销毁此form表单
+    $('#' + formId).data('bootstrapValidator', null);// 此form表单设置为空
+}
     /**
      * 修改相关
      */
@@ -612,7 +620,16 @@ function rolePermissionsObj2permissionIds(permissions){
     }
     return permissionIds;
 }
-
+function updateRole(role){
+    var roles = initObj.roles.responseJSON
+    for(var i = 0, len = roles.length; i<len; i++) {
+        var roleTemp = roles[i];
+        if(roleTemp.roleId == role.roleId) {
+            initObj.role =  role;
+            return ;
+        }
+    }
+}
 function contrast(cur, sou){
     var added = [];
     var ilen = sou.length;
@@ -630,6 +647,7 @@ function contrast(cur, sou){
     }
     return added;
 }
+
 // 回收站
     function showDel(){ //删除角色
             swal(

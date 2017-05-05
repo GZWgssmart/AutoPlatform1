@@ -1,4 +1,4 @@
-package com.gs.controller;
+package com.gs.controller.systemManage;
 
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.Permission;

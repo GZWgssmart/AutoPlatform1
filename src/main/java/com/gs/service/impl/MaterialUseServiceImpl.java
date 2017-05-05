@@ -1,12 +1,7 @@
 package com.gs.service.impl;
 
-import com.gs.bean.MaterialUse;
-import com.gs.bean.User;
-import com.gs.bean.WorkInfo;
-import com.gs.bean.view.MaterialURTemp;
-import com.gs.bean.view.MaterialView;
-import com.gs.bean.view.RecordBaseView;
-import com.gs.bean.view.WorkView;
+import com.gs.bean.*;
+import com.gs.bean.view.*;
 import com.gs.common.bean.Pager;
 import com.gs.dao.MaterialUseDAO;
 import com.gs.service.MaterialUseService;
@@ -94,12 +89,17 @@ public class MaterialUseServiceImpl implements MaterialUseService {
 	 */
 	@Override
 	public List<RecordBaseView> queryNoUseRecord(String companyId, Pager pager) {
-		return materialUseDAO.queryNoUseRecord(companyId, pager);
+		return materialUseDAO.queryCurRecordsByPager(companyId,"", pager);
+	}
+	@Override
+	public List<RecordBaseView> queryHasUseRecord(String companyId, Pager pager) {
+		return materialUseDAO.queryCurRecordsByPager(companyId,"Y",pager);
 	}
 	@Override
 	public int countNoUseRecord(String companyId) {
 		return materialUseDAO.countNoUseRecord(companyId);
 	}
+	@Override
 	public List<User> companyEmps(String companyId){
 		return materialUseDAO.companyEmps(companyId);
 	}
@@ -128,6 +128,52 @@ public class MaterialUseServiceImpl implements MaterialUseService {
 	public int countUserWorksStatus(String userId, String status) {
 		return materialUseDAO.countUserWorks(userId,status);
 	}
+
+	@Override
+	public boolean recordIsDisp(String recordId) {
+		WorkInfo workInfo = materialUseDAO.queryWorkInfoByRecordId(recordId);
+		if(workInfo!=null)
+			return true;
+		return false;
+
+	}
+
+	@Override
+	public List<DetailTemp> queryDetailsByRecordId(String recordId, String companyId, Pager pager) {
+		return materialUseDAO.queryDetailsByRecordId(recordId,companyId, pager);
+	}
+
+	@Override
+	public int countDetailsByRecordId(String recordId, String companyId) {
+		return materialUseDAO.countDetailsByRecordId(recordId,companyId);
+	}
+
+	@Override
+	public int updWorkInfoUser(String recordId, String userId) {
+		return materialUseDAO.updWorkInfoUser(recordId, userId);
+	}
+
+
+	private class Flag{
+		private  String flag;
+		private String id;
+
+		public String getId() {
+			return id;
+		}
+
+		public void setId(String id) {
+			this.id = id;
+		}
+
+		public String getFlag() {
+			return flag;
+		}
+
+		public void setFlag(String flag) {
+			this.flag = flag;
+		}
+}
 
 
 }

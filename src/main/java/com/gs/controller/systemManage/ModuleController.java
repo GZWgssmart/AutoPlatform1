@@ -1,4 +1,4 @@
-package com.gs.controller;
+package com.gs.controller.systemManage;
 
 import com.gs.bean.Module;
 import com.gs.bean.Permission;

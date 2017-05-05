@@ -15,7 +15,7 @@
     <result column="needHours" property="hours"></result>
     <result column="carplate" property="carplate"></result>
     <result column="carmodel" property="carmodel"></result>
-    <association resultMap="com.gs.dao.MaintainRecordDAO.BaseResultMap" property="record" />
+    <association resultMap="com.gs.dao.MaintainRecordDAO.MaintainRecordMap" property="record" />
     <association javaType="workInfo" property="workInfo" >
         <id column="workId" property="workId" jdbcType="VARCHAR" />
         <association property="user" javaType="user">

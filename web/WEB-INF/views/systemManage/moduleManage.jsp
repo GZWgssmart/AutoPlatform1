@@ -130,6 +130,7 @@
            text-align: center;
            line-height: 30px;
            list-style-type: none;
+           cursor: hand;
        }
        #navbar li:after{
            content: "";

@@ -1,4 +1,4 @@
-package com.gs.controller;
+package com.gs.controller.pickingManage;
 
 import ch.qos.logback.classic.Logger;
 import org.slf4j.LoggerFactory;

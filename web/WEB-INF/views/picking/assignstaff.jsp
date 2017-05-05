@@ -190,7 +190,11 @@
     }
 
     function formatterUser(ele, row, index) {
-       return ele.user.userName;
+        console.log(ele.user);
+       if(ele.user!= null){
+            return ele.user.userName;
+        }
+        return "暂无指派";
     }
     //面板
     function hasDispatcher(){

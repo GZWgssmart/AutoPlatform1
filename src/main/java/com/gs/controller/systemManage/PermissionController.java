@@ -1,4 +1,4 @@
-package com.gs.controller;
+package com.gs.controller.systemManage;
 
 /**
  * @author Administrator
@@ -7,11 +7,9 @@ package com.gs.controller;
 
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.Permission;
-import com.gs.bean.Role;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
-import com.gs.controller.RoleController;
 import com.gs.service.PermissionService;
 import com.gs.service.RolePermissionService;
 import com.gs.service.RoleService;

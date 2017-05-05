@@ -1,4 +1,4 @@
-package com.gs.controller;
+package com.gs.controller.pickingManage;
 
 import com.gs.bean.MaterialList;
 import com.gs.bean.MaterialReturn;
