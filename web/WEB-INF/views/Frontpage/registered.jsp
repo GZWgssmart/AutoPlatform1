@@ -104,7 +104,6 @@
         display: none;
     }
     .caveat{
-        margin:10px 15px;
         font-size: 16px;
         color: red;
     }
@@ -169,22 +168,22 @@
                         <div class="form-content">
                             <form class="form" action="" method="post">
                                 <div class="form-group">
-                                    <input name="email" type="text" id="phone" class="form-control" placeholder="请输入您的手机号" required>
+                                    <input name="email" type="text" id="phone" class="form-control" onblur="checkphone()" placeholder="请输入您的手机号" required>
                                     <span class="caveat" id="phone-caveat">手机号错误</span>
                                 </div>
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-xs-7 col-md-8">
-                                            <input name="phonecode" type="text" id="phone-code" class="form-control" placeholder="请输入验证码" >
+                                            <input name="phonecode" type="text" id="phone-code" class="form-control" placeholder="请输入验证码" required>
                                         </div>
                                         <div class="col-xs-5 col-md-4">
-                                            <button class="btn btn-info" style="margin-bottom: 0;">发送验证码</button>
+                                            <a class="btn btn-info" style="margin-bottom: 0;">发送验证码</a>
                                         </div>
                                     </div>
                                     <span class="caveat" id="phonecode-caveat">验证码错误</span>
                                 </div>
                                 <div class="form-group">
-                                    <input name="password" type="password" id="password1" class="form-control" placeholder="请输入密码" required>
+                                    <input name="password" onblur="checkpwd()" type="password" id="password1" class="form-control" placeholder="请输入密码" required>
                                     <span class="caveat" id="pws1-caveat">密码至少六位数</span>
                                 </div>
                                 <div class="form-group">
@@ -214,9 +213,7 @@
 <script src="/static/js/jquery.cxselect.min.js"></script>
 <script src="/static/js/wow.js"></script>
 <script>
-
     function reg() {
-
         var login =$("#login");
         var reg = $("#reg");
         if(login.css("display") == "block"){
@@ -229,9 +226,40 @@
         }else if(reg.css("display") == "block"){
             reg.css("display","none");
             login.css("display","block");
-           $(".form-content form input").each(function () {
+            $(".form-content form input").each(function () {
                 $(this).val('');
             });
+        };
+    };
+
+
+
+
+    /*验证电话*/
+    function checkphone() {
+        var phoneTip = $("#phone-caveat");
+        var phoneInput = document.getElementById("phone");
+        var phoneValue = document.getElementById("phone").value;
+        if(!(/^[1][3|5|7|9|8]\d{9}$/.test(phoneValue)) && phoneValue != ""){
+            phoneTip.css("display","block");
+            phoneInput.style.borderColor = "red";
+        }else if(/^[1][3|5|7|9|8]\d{9}$/.test(phoneValue)){
+            phoneTip.css("display","none");
+            phoneInput.style.borderColor = "#ccc";
+        }
+    }
+
+    /*验证密码*/
+    function checkpwd(){
+        var pwdTip = $("#pws1-caveat");
+        var pwd1Input = document.getElementById("password1");
+        var pwd1Value = document.getElementById("password1").value;
+        if(pwd1Value.length < 2 || pwd1Value.length > 17){
+            pwdTip.css("display","block")
+            pwd1Input.style.borderColor = "red";
+        }else if(pwd1Value.length <= 17 && pwd1Value.length >= 2){
+            pwdTip.css("display","none")
+            pwd1Input.style.borderColor = "#ccc";
         }
     }
 </script>
