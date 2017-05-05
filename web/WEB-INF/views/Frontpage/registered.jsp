@@ -175,7 +175,7 @@
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-xs-7 col-md-8">
-                                            <input name="phonecode" type="text" id="phone-code" class="form-control" placeholder="请输入验证码" required>
+                                            <input name="phonecode" type="text" id="phone-code" class="form-control" placeholder="请输入验证码" >
                                         </div>
                                         <div class="col-xs-5 col-md-4">
                                             <button class="btn btn-info" style="margin-bottom: 0;">发送验证码</button>
