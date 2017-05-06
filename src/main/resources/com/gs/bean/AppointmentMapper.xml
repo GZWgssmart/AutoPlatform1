@@ -47,10 +47,9 @@
 
   <select id="queryByPager" resultMap="appointmentMap">
     <![CDATA[
-       select am.*, userId cc.colorId, cc.colorName, cp.plateId, cp.plateName,
+       select am.*, cc.colorId, cc.colorName, cp.plateId, cp.plateName,
         cm.modelId, cm.modelName, company.companyId,
         company.companyName, cb.brandId, cb.brandName from t_appointment am
-       LEFT JOIN t_user
        LEFT JOIN t_car_color cc on am.colorId =cc.colorId
        LEFT JOIN t_car_model cm on am.modelId = cm.modelId
        LEFT JOIN t_car_plate cp on am.plateId = cp.plateId
