@@ -2,18 +2,19 @@
     clear: both;
 }
 a:focus {
+    color:#333; text-decoration:none;
     outline: none;
 }
 a{
-    color:#676a6c; text-decoration:none;
+    color:#333; text-decoration:none;
 }
 
 a:hover{
-    color:#676a6c; text-decoration:none;
+    color:#333; text-decoration:none;
 }
 
 a:active{
-    color:black;
+    color:#333; text-decoration:none;
 }
 
 .container {

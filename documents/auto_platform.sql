@@ -58,6 +58,21 @@ CREATE TABLE `t_role` (
   `roleStatus` varchar(2) DEFAULT NULL COMMENT '角色状态，Y表示可用，N表示不可用',
   PRIMARY KEY (`roleId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+INSERT INTO `t_role` VALUES ('7ff4f1c5-3205-11e7-bc72-507b9d765567', 'systemSuperAdmin', '系统超级管理员', 'Y');
+INSERT INTO `t_role` VALUES ('80095901-3205-11e7-bc72-507b9d765567', 'systemOrdinaryAdmin', '系统普通管理员', 'Y');
+INSERT INTO `t_role` VALUES ('8010cecf-3205-11e7-bc72-507b9d765567', 'companySuperAdmin', '公司超级管理员', 'Y');
+INSERT INTO `t_role` VALUES ('80195a53-3205-11e7-bc72-507b9d765567', 'companyOrdinaryAdmin', '公司普通管理员', 'Y');
+INSERT INTO `t_role` VALUES ('8020abdc-3205-11e7-bc72-507b9d765567', 'companyReceptionist', '汽车公司接待员', 'Y');
+INSERT INTO `t_role` VALUES ('802895f4-3205-11e7-bc72-507b9d765567', 'companyTotalTC', '汽车公司总技师', 'Y');
+INSERT INTO `t_role` VALUES ('802fd749-3205-11e7-bc72-507b9d765567', 'companyTechnician', '汽车公司技师', 'Y');
+INSERT INTO `t_role` VALUES ('80360abc-3205-11e7-bc72-507b9d765567', 'companyApprentice', '汽车公司学徒', 'Y');
+INSERT INTO `t_role` VALUES ('803f0384-3205-11e7-bc72-507b9d765567', 'companySales', '汽车公司销售人员', 'Y');
+INSERT INTO `t_role` VALUES ('804532c4-3205-11e7-bc72-507b9d765567', 'companyFinancial', '汽车公司财务人员', 'Y');
+INSERT INTO `t_role` VALUES ('804cc69c-3205-11e7-bc72-507b9d765567', 'companyProcurement', '汽车公司采购人员', 'Y');
+INSERT INTO `t_role` VALUES ('8052af73-3205-11e7-bc72-507b9d765567', 'companyLibraryTube', '汽车公司库管人员', 'Y');
+INSERT INTO `t_role` VALUES ('805a2613-3205-11e7-bc72-507b9d765567', 'companyHR', '汽车公司人力资源管理部', 'Y');
+INSERT INTO `t_role` VALUES ('80602224-3205-11e7-bc72-507b9d765567', 'otherPersonnel', '其他人员', 'Y');
+INSERT INTO `t_role` VALUES ('8067fa42-3205-11e7-bc72-507b9d765567', 'owner', '车主', 'Y');
 
 /**
 模块表
@@ -482,6 +497,7 @@ CREATE TABLE `t_maintain_remind` (
   `remindMsg` varchar(500) DEFAULT NULL COMMENT '保养提醒消息',
   `remindTime` datetime DEFAULT NULL COMMENT '保养提醒时间',
   `remindType` varchar(20) DEFAULT NULL COMMENT '保养提醒方式，如邮箱，手机短信。默认使用手机短信方式发送提醒',
+  `companyId` varchar(36) DEFAULT NULL COMMENT '标识来源于哪家公司',
   `remindCreatedTime` datetime DEFAULT NULL COMMENT '保养提醒记录创建时间',
   PRIMARY KEY (`remindId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -495,6 +511,7 @@ CREATE TABLE `t_message_send` (
   `userId` varchar(36) DEFAULT NULL COMMENT '用户编号，来源于t_user表',
   `sendMsg` varchar(500) DEFAULT NULL COMMENT '短信发送内容',
   `sendTime` datetime DEFAULT NULL COMMENT '短信发送时间',
+  `companyId` varchar(36) DEFAULT NULL COMMENT '标识来源于哪家公司',
   `sendCreatedTime` datetime DEFAULT NULL COMMENT '短信发送记录创建时间',
   PRIMARY KEY (`messageId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -511,6 +528,7 @@ CREATE TABLE `t_complaint` (
   `complaintReply` varchar(500) DEFAULT NULL COMMENT '投诉回复内容',
   `complaintReplyTime` datetime DEFAULT NULL COMMENT '投诉回复时间',
   `complaintReplyUser` varchar(36) DEFAULT NULL COMMENT '投诉回复人，来源于t_user表',
+  `companyId` varchar(36) DEFAULT NULL COMMENT '标识来源于哪家公司',
   PRIMARY KEY (`complaintId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -524,6 +542,7 @@ CREATE TABLE `t_track_list` (
   `trackContent` varchar(500) DEFAULT NULL COMMENT '回访的问题',
   `serviceEvaluate` int(11) DEFAULT NULL COMMENT '本次服务评价,1-10分',
   `trackUser` varchar(36) DEFAULT NULL COMMENT '跟踪回访用户，来源于t_user表',
+  `companyId` varchar(36) DEFAULT NULL COMMENT '标识来源于哪家公司',
   `trackCreatedTime` datetime DEFAULT NULL COMMENT '跟踪回访创建时间',
   PRIMARY KEY (`trackId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -535,6 +554,7 @@ DROP TABLE IF EXISTS `t_outgoing_type`;
 CREATE TABLE `t_outgoing_type` (
   `outTypeId` varchar(36) NOT NULL COMMENT '支出类型编号，UUID,主键',
   `outTypeName` varchar(20) DEFAULT NULL COMMENT '支出类型名称',
+  `companyId` varchar(36) DEFAULT NULL COMMENT '标识来源于哪家公司',
   `outTypeStatus` varchar(2) DEFAULT NULL COMMENT '支出类型状态，Y表示可用，N表示不可用',
   PRIMARY KEY (`outTypeId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -546,6 +566,7 @@ DROP TABLE IF EXISTS `t_incoming_type`;
 CREATE TABLE `t_incoming_type` (
   `inTypeId` varchar(36) NOT NULL COMMENT '收入类型编号，UUID,主键',
   `inTypeName` varchar(20) DEFAULT NULL COMMENT '收入类型名称',
+  `companyId` varchar(36) DEFAULT NULL COMMENT '标识来源于哪家公司',
   `inTypeStatus` varchar(2) DEFAULT NULL COMMENT '收入类型状态，Y表示可用，N表示不可用',
   PRIMARY KEY (`inTypeId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -561,6 +582,7 @@ CREATE TABLE `t_incoming_outgoing` (
   `inOutMoney` double DEFAULT NULL COMMENT '收支金额',
   `inOutCreatedUser` varchar(36) DEFAULT NULL COMMENT '收支记录创建人，来源于t_user表',
   `inOutCreatedTime` datetime DEFAULT NULL COMMENT '收支记录创建时间',
+  `companyId` varchar(36) DEFAULT NULL COMMENT '标识来源于哪家公司',
   `inOutStatus` varchar(2) DEFAULT NULL COMMENT '收支记录状态，Y表示可用，N表示不可用',
   PRIMARY KEY (`inOutId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

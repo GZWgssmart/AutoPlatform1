@@ -4,16 +4,6 @@ $(function () {
     validator('loginForm');
 })
 
-function userLogin() {
-    $.post(contentPath+"/user/login",$("#loginForm").serialize(),function (data) {
-        if(data.result=="success"){
-            alert("登陆成功");
-        }else{
-            $("#errMsg").html(data.message);
-        }
-    })
-}
-
 function loginSubmit() {
     $("#loginForm").data('bootstrapValidator').validate();
     if ($("#loginForm").data('bootstrapValidator').isValid()) {
@@ -58,12 +48,12 @@ function validator(formId) {
         }
     }).on('success.form.bv', function (e) {
         if (formId == "loginForm") {
-            $.post(contentPath+"/user/login",$("#loginForm").serialize(),function (data) {
+            $.post("/user/login",$("#loginForm").serialize(),function (data) {
                 if(data.result=="success"){
-                    alert("登陆成功");
-                }else{
+                    window.location.href="/backstageIndex";
+                }else if(data.result=="fail"){
                     swal({
-                        title: "登陆错误",
+                        title: "",
                         text: data.message,
                         confirmButtonText: "确认",
                         type: "error"

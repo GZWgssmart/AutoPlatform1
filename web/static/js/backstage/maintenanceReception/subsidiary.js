@@ -11,15 +11,6 @@ function showDisable(){
     initTable('table', '/maintainRecord/queryByPagerDisable');
 }
 
-// 激活或禁用
-function showStatusFormatter(value) {
-    if(value == 'Y') {
-        return "是";
-    } else {
-        return "否";
-    }
-}
-
 // 折扣
 function formatterDiscount(value) {
     if(value >= 1) {
@@ -116,7 +107,7 @@ function showAddDetail(){
 // 所有明细window中的打印按钮
 function showPrint(){
     var row =  $('#table').bootstrapTable('getSelections'); // 选中的维修保养记录
-    window.parent.addPrint(row[0].recordId);
+    window.parent.addRecordPrint(row[0].recordId);
 }
 
 

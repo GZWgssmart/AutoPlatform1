@@ -13,7 +13,8 @@
     <link rel="stylesheet" href="/static/css/sweetalert.css">
     <link rel="stylesheet" href="/static/css/table/table.css">
     <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.css">
-    <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/datetimepicker.less">
+    <link rel="stylesheet/less" href="/static/css/bootstrap-dateTimePicker/datetimepicker.less">
+    <link rel="stylesheet" href="/static/css/bootstrap-validate/bootstrapValidator.min.css">
 </head>
 <body>
 <%@include file="../backstage/contextmenu.jsp"%>
@@ -22,48 +23,43 @@
     <div class="panel-body" style="padding-bottom:0px;"  >
         <!--show-refresh, show-toggle的样式可以在bootstrap-table.js的948行修改-->
         <!-- table里的所有属性在bootstrap-table.js的240行-->
-        <table id="table"
-               data-toggle="table"
-               data-toolbar="#toolbar"
-               data-url="/table/query"
-               data-method="post"
-               data-query-params="queryParams"
-               data-pagination="true"
-               data-search="true"
-               data-show-refresh="true"
-               data-show-toggle="true"
-               data-show-columns="true"
-               data-page-size="10"
-               data-height="543"
-               data-id-field="id"
-               data-page-list="[5, 10, 20]"
-               data-cach="false"
-               data-click-to-select="true">
+        <table id="table" style="table-layout: fixed">
             <thead>
             <tr>
-                <th data-checkBox="true" data-field="status"></th>
-                <th  data-field="name">收费单据编号</th>
-                <th data-field="price">车主手机</th>
-                <th data-field="price">车主姓名</th>
-                <th data-field="price">维修保养记录编号</th>
-                <th data-field="price">维修保养记录提车时间</th>
-                <th data-field="price">维修保养记录描述</th>
-                <th data-field="price">总金额</th>
-                <th data-field="price">付款方式</th>
-                <th data-field="price">实际付款</th>
-                <th data-field="price">收费时间</th>
-                <th data-field="price">收费单据创建时间</th>
-                <th data-field="price">收费单据描述</th>
-                <th data-field="price">收费单据状态</th>
+                <th data-radio="true" data-field="status"></th>
+                <th data-width="90" data-field="maintainRecord.checkin.userName">车主姓名</th>
+                <th data-width="130" data-field="maintainRecord.checkin.userPhone">车主手机</th>
+                <th data-width="90" data-field="maintainRecord.checkin.brand.brandName">汽车品牌</th>
+                <th data-width="90" data-field="maintainRecord.checkin.model.modelName">汽车车型</th>
+                <th data-width="90" data-field="maintainRecord.checkin.color.colorName">汽车颜色</th>
+                <th data-width="90" data-field="maintainRecord.checkin.plate.plateName">汽车车牌</th>
+                <th data-width="90" data-field="maintainRecord.checkin.carPlate">车牌号码</th>
+                <th data-width="180" data-field="maintainRecord.pickupTime" data-formatter="formatterDate">维修保养记录提车时间</th>
+                <th data-width="150" data-field="maintainRecord.recordDes">维修保养记录描述</th>
+                <th data-width="90" data-field="paymentMethod">付款方式</th>
+                <th data-width="90" data-field="chargeBillMoney">总金额</th>
+                <th data-width="90" data-field="actualPayment">实际付款</th>
+                <th data-width="180" data-field="chargeTime" data-formatter="formatterDate">收费时间</th>
+                <th data-width="180" data-field="chargeCreatedTime" data-formatter="formatterDate">收费单据创建时间</th>
+                <th data-width="130" data-field="chargeBillDes">收费单据描述</th>
+                <th data-width="130" data-field="chargeBillStatus" data-formatter="showStatusFormatter">收费单据状态</th>
+                <th data-width="90" data-field="chargeBillStatus" data-formatter="statusFormatter">操作</th>
             </tr>
             </thead>
         </table>
         <div id="toolbar" class="btn-group">
+            <button id="btn_available" type="button" class="btn btn-default" onclick="showAvailable();">
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>可用收费单据
+            </button>
+            <button id="btn_disable" type="button" class="btn btn-default" onclick="showDisable();">
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>禁用收费单据
+            </button>
             <button id="btn_edit" type="button" class="btn btn-default" onclick="showEdit();">
                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
             </button>
-            <button id="btn_Export" type="button" class="btn btn-default" onclick="showExport();">
-                <span class="glyphicon glyphicon-export" aria-hidden="true"></span>导出
+
+            <button id="btn_Export" type="button" class="btn btn-default"><a href="/charge/exportExcel">
+                <span class="glyphicon glyphicon-export" aria-hidden="true"></span>导出</a>
             </button>
             <button id="btn_print" type="button" class="btn btn-default" onclick="showPrint();">
                 <span class="glyphicon glyphicon-print" aria-hidden="true"></span>打印
@@ -71,6 +67,7 @@
         </div>
     </div>
 </div>
+
 <!-- 修改弹窗 -->
 <div class="modal fade" id="edit" aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog">
@@ -138,9 +135,10 @@
 <script src="/static/js/select2/select2.js"></script>
 <script src="/static/js/sweetalert/sweetalert.min.js"></script>
 <script src="/static/js/contextmenu.js"></script>
-<script src="/static/js/form/jquery.validate.js"></script>
 <script src="/static/js/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.js"></script>
 <script src="/static/js/bootstrap-dateTimePicker/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
 <script src="/static/js/backstage/clearingOut/chargeDocuments.js"></script>
+<script src="/static/js/backstage/main.js"></script>
+<script src="/static/js/bootstrap-validate/bootstrapValidator.js"></script>
 </body>
 </html>

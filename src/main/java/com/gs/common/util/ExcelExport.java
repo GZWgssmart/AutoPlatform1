@@ -66,10 +66,10 @@ public class ExcelExport {
 
             // 循环 将列名放进去
             for (int i = 0; i < columnNum; i++) {
-                HSSFCell  cellRowName = rowRowName.createCell((int)i);
+                HSSFCell cellRowName = rowRowName.createCell((int)i);
                 cellRowName.setCellType(HSSFCell.CELL_TYPE_STRING); // 单元格类型
-
                 HSSFRichTextString text = new HSSFRichTextString(rowName[i]);  // 得到列的值
+                sheet.setColumnWidth(i,text.length() * 1000);// 设置第二行的列宽
                 cellRowName.setCellValue(text); // 设置列的值
                 cellRowName.setCellStyle(columnTopStyle); // 样式
             }
@@ -95,16 +95,6 @@ public class ExcelExport {
                     cell.setCellStyle(style); // 样式
                 }
             }
-            //  让列宽随着导出的列长自动适应
-            sheet.autoSizeColumn((short)0); //调整第一列宽度
-            sheet.autoSizeColumn((short)1); //调整第二列宽度
-            sheet.autoSizeColumn((short)2); //调整第三列宽度
-            sheet.autoSizeColumn((short)3); //调整第四列宽度
-            sheet.autoSizeColumn((short)4); //调整第五列宽度
-            sheet.autoSizeColumn((short)5); //调整第六列宽度
-            sheet.autoSizeColumn((short)6); //调整第七列宽度
-            sheet.autoSizeColumn((short)7); //调整第八列宽度
-            sheet.autoSizeColumn((short)8); //调整第八列宽度
 
             if(workbook !=null){
                 try
@@ -134,7 +124,6 @@ public class ExcelExport {
     }
 
     public HSSFCellStyle getColumnTopStyle(HSSFWorkbook workbook) {
-
         // 设置字体
         HSSFFont font = workbook.createFont();
         //设置字体大小

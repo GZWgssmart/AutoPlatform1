@@ -124,17 +124,17 @@
 
 
   <select id="queryRoles" parameterType="String" resultType="String">
-    SELECT roleName FROM auto_platform.t_role WHERE roleId
+    SELECT roleName FROM auto_platform.t_role WHERE roleStatus = 'Y' and roleId
     IN (select t_user_role.roleId from auto_platform.t_user_role
-    WHERE userId = (select t_user.userId from auto_platform.t_user where userEmail = #{email}))
+    WHERE userId = (select t_user.userId from auto_platform.t_user where userEmail = #{email} OR userPhone=#{email}))
   </select>
 
   <select id="queryPermissions" parameterType="String" resultType="String">
     SELECT permissionName FROM auto_platform.t_permission
-    WHERE permissionId IN (SELECT t_role_permission.permissionId FROM auto_platform.t_role_permission
+    WHERE permissionStatus = 'Y' and permissionId IN (SELECT t_role_permission.permissionId FROM auto_platform.t_role_permission
     WHERE roleId IN (SELECT t_user_role.roleId FROM auto_platform.t_user_role
     WHERE userId = (SELECT t_user.userId FROM auto_platform.t_user
-    WHERE userEmail = #{email})))
+    WHERE userEmail = #{email} OR userPhone=#{email})))
   </select>
 
   <!-- 根据维修保养记录查询到用户的email发送邮件提醒车主进行提车 -->
@@ -149,10 +149,16 @@
 
   <select id="queryByEmail" resultMap="userBasicManageMap">
     <![CDATA[
-          SELECT *FROM auto_platform.t_user WHERE userEmail=#{email} OR userPhone=#{email} OR userName=#{email}
+          SELECT *FROM auto_platform.t_user WHERE userStatus = 'Y' and userEmail=#{email} OR userPhone=#{email}
         ]]>
   </select>
 
+  <!--根据用户输入的邮箱或者手机号判断成功时, 查询到此用户所有信息-->
+  <select id ="queryUser" resultType="user">
+    <![CDATA[
+      select * from t_user where userPhone= #{eamil} or userEmail = #{eamil}
+    ]]>
+  </select>
 
   <!-- 测试用，不要删  -->
   <select id ="queryByPhone" resultMap="userBasicManageMap">

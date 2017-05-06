@@ -1,16 +1,15 @@
 package com.gs.service.impl;
 
-import com.gs.bean.Checkin;
 import com.gs.bean.User;
-import com.gs.common.bean.Pager4EasyUI;
+import com.gs.common.bean.Pager;
 import com.gs.dao.UserDAO;
 import com.gs.service.UserService;
 import org.springframework.stereotype.Service;
+
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.Set;
 
-import com.gs.common.bean.Pager;
 /**
 *由CSWangBin技术支持
 *
@@ -55,16 +54,6 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public Set<String> queryPermissions(String email) {
-		return userDAO.queryPermissions(email);
-	}
-
-	@Override
-	public Set<String> queryRoles(String email) {
-		return userDAO.queryRoles(email);
-	}
-
-	@Override
 	public User queryByEmail(String email) {
 		return userDAO.queryByEmail(email);
 	}
@@ -100,4 +89,18 @@ public class UserServiceImpl implements UserService {
 		return userDAO.updIcon(userId,userIcon);
 	}
 
+	@Override
+	public User queryUser(String email) {
+		return userDAO.queryUser(email);
+	}
+
+	@Override
+	public Set<String> queryPermissions(String email) {
+		return userDAO.queryPermissions(email);
+	}
+
+	@Override
+	public Set<String> queryRoles(String email) {
+		return userDAO.queryRoles(email);
+	}
 }

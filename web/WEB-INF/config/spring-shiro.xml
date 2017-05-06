@@ -7,7 +7,7 @@
        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
     <!--内存限制缓存管理器-->
-	<bean id="cacheManager" class="org.apache.shiro.cache.MemoryConstrainedCacheManager" />   
+	<bean id="cacheManager" class="org.apache.shiro.cache.MemoryConstrainedCacheManager" />
 
     <!--通配符解析器-->
 	<bean id="permissionResolver" class="org.apache.shiro.authz.permission.WildcardPermissionResolver"/>

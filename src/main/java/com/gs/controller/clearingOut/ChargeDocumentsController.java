@@ -1,12 +1,13 @@
 package com.gs.controller.clearingOut;
 
 import ch.qos.logback.classic.Logger;
+import com.gs.bean.ChargeBill;
 import com.gs.bean.Checkin;
-import com.gs.bean.MaintainRecord;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
-import com.gs.common.util.UUIDUtil;
+import com.gs.common.util.ExcelExport;
+import com.gs.service.ChargeBillService;
 import com.gs.service.CheckinService;
 import com.gs.service.MaintainRecordService;
 import org.apache.ibatis.annotations.Param;
@@ -18,11 +19,14 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -41,21 +45,24 @@ public class ChargeDocumentsController {
     // 维修保养记录service
     @Resource
     private MaintainRecordService maintainRecordService;
+    // 收费单据service
+    @Resource
+    private ChargeBillService chargeBillService;
 
     /**
-     * 查询所有收费单据
+     * 分页查询所有收费单据
      * @return
      */
     @ResponseBody
     @RequestMapping(value="queryByPager", method = RequestMethod.GET)
-    public Pager4EasyUI<Checkin> queryByPager(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
-        logger.info("分页查询所有登记记录");
+    public Pager4EasyUI<ChargeBill> queryByPager(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
+        logger.info("分页查询所有收费单据");
         Pager pager = new Pager();
         pager.setPageNo(Integer.valueOf(pageNumber));
         pager.setPageSize(Integer.valueOf(pageSize));
-        pager.setTotalRecords(checkinService.count());
-        List<Checkin> checkins = checkinService.queryByPager(pager);
-        return new Pager4EasyUI<Checkin>(pager.getTotalRecords(), checkins);
+        pager.setTotalRecords(chargeBillService.count());
+        List<ChargeBill> chargeBills = chargeBillService.queryByPager(pager);
+        return new Pager4EasyUI<ChargeBill>(pager.getTotalRecords(), chargeBills);
     }
 
     /**
@@ -64,36 +71,29 @@ public class ChargeDocumentsController {
      */
     @ResponseBody
     @RequestMapping(value="queryByPagerDisable", method = RequestMethod.GET)
-    public Pager4EasyUI<Checkin> queryByPagerDisable(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
-        logger.info("分页查询所有被禁用登记记录");
+    public Pager4EasyUI<ChargeBill> queryByPagerDisable(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
+        logger.info("分页查询所有被禁用收费单据");
         Pager pager = new Pager();
         pager.setPageNo(Integer.valueOf(pageNumber));
         pager.setPageSize(Integer.valueOf(pageSize));
-        pager.setTotalRecords(checkinService.countByDisable());
-        List<Checkin> checkins = checkinService.queryByPagerDisable(pager);
-        return new Pager4EasyUI<Checkin>(pager.getTotalRecords(), checkins);
+        pager.setTotalRecords(chargeBillService.countByDisable());
+        List<ChargeBill> chargeBills = chargeBillService.queryByPagerDisable(pager);
+        return new Pager4EasyUI<ChargeBill>(pager.getTotalRecords(), chargeBills);
     }
 
     @ResponseBody
     @RequestMapping(value = "add", method = RequestMethod.POST)
-    public ControllerResult addCheckin(Checkin checkin) {
-        logger.info("添加登记记录");
-        System.out.print(UUIDUtil.uuid());
-        checkin.setCheckinId(UUIDUtil.uuid());
-        checkin.setCompanyId("c515f5d623e011e7a97af832e40312b3");
-        checkinService.insert(checkin);
-        MaintainRecord maintainRecode = new MaintainRecord();
-        maintainRecode.setCheckinId(checkin.getCheckinId());
-        maintainRecordService.insert(maintainRecode);
+    public ControllerResult addCheckin(ChargeBill chargeBill) {
+        logger.info("添加收费单据");
+        chargeBillService.insert(chargeBill);
         return ControllerResult.getSuccessResult("添加成功");
     }
 
     @ResponseBody
     @RequestMapping(value = "edit", method = RequestMethod.POST)
-    public ControllerResult editCheckin(Checkin checkin) {
-        logger.info("修改登记记录");
-        checkin.setCompanyId("c515f5d623e011e7a97af832e40312b3");
-        checkinService.update(checkin);
+    public ControllerResult editCheckin(ChargeBill chargeBill) {
+        logger.info("修改收费单据");
+        chargeBillService.update(chargeBill);
         return ControllerResult.getSuccessResult("修改成功");
     }
 
@@ -105,11 +105,11 @@ public class ChargeDocumentsController {
     public ControllerResult inactive(String id, String status) {
         if (id != null && !id.equals("") && status != null && !status.equals("")) {
             if (status.equals("N")) {
-                checkinService.active(id);
+                chargeBillService.active(id);
                 logger.info("激活成功");
                 return ControllerResult.getSuccessResult("激活成功");
             } else {
-                checkinService.inactive(id);
+                chargeBillService.inactive(id);
                 logger.info("禁用成功");
                 return ControllerResult.getSuccessResult("禁用成功");
             }
@@ -119,7 +119,7 @@ public class ChargeDocumentsController {
     }
 
     /**
-     * 登记记录模糊查询
+     * 收费单据模糊查询
      * @return
      */
     @ResponseBody
@@ -155,6 +155,49 @@ public class ChargeDocumentsController {
         }else{
             return null;
         }
+    }
+
+    @RequestMapping(value="exportExcel", method = RequestMethod.GET)
+    public ModelAndView exportExcel(HttpServletRequest request, HttpServletResponse response) {
+        logger.info("收费单据导出");
+        try {
+            ChargeBill chargeBill = new ChargeBill();
+            // 查询所有收费单据
+            List<ChargeBill> chargeBills = chargeBillService.queryAll();
+            String title = "收费单据";
+            String[] rowsName = new String[]{"收费单据编号", "车主姓名", "车主手机", "汽车品牌",
+                    "汽车车型", "汽车颜色", "汽车车牌", "车牌号码", "维修保养记录提车时间",
+                    "维修保养记录描述", "付款方式", "总金额", "实际付款", "收费时间", "收费单据创建时间",
+                    "收费单据描述", "收费单据状态"};
+            List<Object[]> dataList = new ArrayList<Object[]>();
+            Object[] objs = null;
+            for (ChargeBill c : chargeBills) {
+                objs = new Object[rowsName.length];
+                objs[0] = c.getChargeBillId();
+                objs[1] = c.getMaintainRecord().getCheckin().getUserName();
+                objs[2] = c.getMaintainRecord().getCheckin().getUserPhone();
+                objs[3] = c.getMaintainRecord().getCheckin().getBrand().getBrandName();
+                objs[4] = c.getMaintainRecord().getCheckin().getModel().getModelName();
+                objs[5] = c.getMaintainRecord().getCheckin().getColor().getColorName();
+                objs[6] = c.getMaintainRecord().getCheckin().getPlate().getPlateName();
+                objs[7] = c.getMaintainRecord().getCheckin().getCarPlate();
+                objs[8] = c.getMaintainRecord().getPickupTime();
+                objs[9] = c.getMaintainRecord().getRecordDes();
+                objs[10] = c.getPaymentMethod();
+                objs[11] = c.getChargeBillMoney();
+                objs[12] = c.getActualPayment();
+                objs[13] = c.getChargeTime();
+                objs[14] = java.sql.Timestamp.valueOf(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(c.getChargeCreatedTime()));
+                objs[15] = c.getChargeBillDes();
+                objs[16] = "可用";
+                dataList.add(objs);
+            }
+            ExcelExport ex = new ExcelExport(title, rowsName, dataList, response);
+            ex.exportData();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     /**

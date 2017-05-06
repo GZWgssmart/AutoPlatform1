@@ -1,16 +1,14 @@
 package com.gs.shiro;
 
-import java.util.Collection;
-
-import javax.annotation.Resource;
-
+import com.gs.service.RolePermissionService;
 import org.apache.shiro.authz.Permission;
 import org.apache.shiro.authz.permission.RolePermissionResolver;
 import org.springframework.stereotype.Component;
 
-import com.gs.service.RolePermissionService;
+import javax.annotation.Resource;
+import java.util.Collection;
 
-@Component(value = "rolePermissionRelover")
+@Component(value="rolePermissionResolver")
 public class MyRolePermissionResolver implements RolePermissionResolver{
 
 

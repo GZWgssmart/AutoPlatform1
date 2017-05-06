@@ -2,11 +2,9 @@ package com.gs.service;
 
 import com.gs.bean.User;
 import com.gs.common.bean.Pager;
-import com.gs.common.bean.Pager4EasyUI;
-
-import java.util.Set;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * 由CSWangBin技术支持
@@ -30,6 +28,11 @@ public interface UserService extends BaseService<String, User> {
 
     //根据用户email查询用户所拥有的角色
     public Set<String> queryRoles(String email);
+
+    /**
+     * 根据用户输入的邮箱或者手机号判断成功时, 查询到此用户所有信息
+     */
+    public User queryUser(String email);
 
     /**
      * 根据邮箱查询用户对应的id

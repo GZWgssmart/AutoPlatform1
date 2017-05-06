@@ -13,8 +13,7 @@
         <result column="recordStatus" property="recordStatus"/>
 
         <association property="checkin" javaType="com.gs.bean.Checkin">
-            <id column="checkin_id" property="checkinId"></id>
-            <result column="user_name" property="userName"></result>
+            <id column="checkinId" property="checkinId"></id>
             <result column="userName" property="userName" jdbcType="VARCHAR"/>
             <result column="userPhone" property="userPhone" jdbcType="VARCHAR"/>
             <result column="brandId" property="brandId" jdbcType="VARCHAR"/>

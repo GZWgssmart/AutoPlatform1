@@ -1,8 +1,10 @@
 package com.gs.controller;
 
 import ch.qos.logback.classic.Logger;
+import com.gs.bean.ChargeBill;
 import com.gs.bean.MaintainDetail;
 import com.gs.bean.MaintainRecord;
+import com.gs.service.ChargeBillService;
 import com.gs.service.CompanyService;
 import com.gs.service.MaintainDetailService;
 import com.gs.service.MaintainRecordService;
@@ -33,6 +35,8 @@ public class BackstageController {
     private MaintainDetailService maintainDetailService;
     @Resource
     private MaintainRecordService maintainRecordService;
+    @Resource
+    private ChargeBillService chargeBillService;
 
     /**
      * 后台主页
@@ -44,12 +48,12 @@ public class BackstageController {
     }
 
     /**
-     * 打印页面
+     * 维修保养记录打印页面
      */
-    @RequestMapping(value = "print/{maintainRecordId}", method = RequestMethod.GET)
-    public ModelAndView print(@PathVariable("maintainRecordId")String maintainRecordId) {
-        logger.info("跳转到打印页面");
-        ModelAndView mav = new ModelAndView("backstage/print");
+    @RequestMapping(value = "recordPrint/{maintainRecordId}", method = RequestMethod.GET)
+    public ModelAndView recordPrint(@PathVariable("maintainRecordId")String maintainRecordId) {
+        logger.info("跳转到维修保养明细打印页面");
+        ModelAndView mav = new ModelAndView("backstage/recordPrint");
         // 拿到选中的维修保养记录
         MaintainRecord maintainRecord = maintainRecordService.queryById(maintainRecordId);
         maintainRecord.setTodayTime(new Date());
@@ -72,6 +76,18 @@ public class BackstageController {
         maintainRecord.setTotal(money);
         mav.addObject("maintainRecord", maintainRecord);
         mav.addObject("maintainDetails", maintainDetails);
+        return mav;
+    }
+
+    /**
+     * 收费单据打印页面
+     */
+    @RequestMapping(value = "chargeBillprint/{chargeBillId}", method = RequestMethod.GET)
+    public ModelAndView chargeBillprint(@PathVariable("chargeBillId")String chargeBillId) {
+        logger.info("跳转到收费单据打印页面");
+        ChargeBill chargeBill = chargeBillService.queryById(chargeBillId);
+        ModelAndView mav = new ModelAndView("backstage/chargeBillPrint");
+        mav.addObject("chargeBill", chargeBill);
         return mav;
     }
 }

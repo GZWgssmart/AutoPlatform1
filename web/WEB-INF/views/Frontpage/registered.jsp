@@ -12,6 +12,8 @@
 </head>
 <link rel="stylesheet" href="/static/css/bootstrap.css">
 <link rel="stylesheet" href="/static/css/animate.css">
+<link rel="stylesheet" href="/static/css/sweetalert.css">
+<link rel="stylesheet" href="/static/css/bootstrap-validate/bootstrapValidator.min.css">
 <style>
     body,html{
         margin: 0;
@@ -141,18 +143,29 @@
                         <h2 style="color: white">登录</h2>
                     </div>
                     <div class="form-content">
-                        <form class="form" action="" method="post">
+                        <form class="form" id="loginForm">
                             <div class="form-group">
-                                <input name="email" type="text" id="email" class="form-control" placeholder="请输入邮箱" required>
+                                <input type="text" name="userEmail" id="email" class="form-control" placeholder="请输入邮箱/手机号/用户名">
                             </div>
                             <div class="form-group">
-                                <input name="password" type="password" id="password" class="form-control" placeholder="请输入密码"  required>
+                                <input type="password" name="userPwd" class="form-control" placeholder="请输入密码">
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-3 col-sm-3">
+                                    <a href="javascript:;"><img style="vertical-align:middle; height:35px;"
+                                                                src="/captcha"
+                                                                onclick="this.src='/captcha?time=Math.random();'"></a>
+                                    </div>
+                                    <div class="col-md-8 col-sm-8"><input type="text" name="checkCode" style="width:105%;" placeholder="验证码" class="form-control"></div>
+                                </div>
+
                             </div>
                             <div class="form-group">
                                 <label style="color: white;"><input type="checkbox"> 记住账号</label>
                             </div>
                             <div class="form-group">
-                                <button type="submit" class="btn btn-success btn-block" value="登录">登录</button>
+                                <button type="button" class="btn btn-success btn-block" value="登录" id="loginButton" onclick="loginSubmit()">登录</button>
                                 <button type="reset" class="btn btn-info btn-block" onclick="reg()" value="没有账号，立即注册">没有账号，立即注册</button>
                             </div>
                         </form>
@@ -211,7 +224,9 @@
 <script src="/static/js/jquery.min.js"></script>
 <script src="/static/js/bootstrap.min.js"></script>
 <script src="/static/js/jquery.cxselect.min.js"></script>
-<script src="/static/js/wow.js"></script>
+<script src="/static/js/wow.js"></script><script src="/static/js/sweetalert/sweetalert.min.js"></script>
+<script src="/static/js/backstage/user/user.js"></script>
+<script src="/static/js/bootstrap-validate/bootstrapValidator.js"></script>
 <script>
     function reg() {
         var login =$("#login");
@@ -232,35 +247,17 @@
         };
     };
 
-
-
-
-    /*验证电话*/
-    function checkphone() {
-        var phoneTip = $("#phone-caveat");
-        var phoneInput = document.getElementById("phone");
-        var phoneValue = document.getElementById("phone").value;
-        if(!(/^[1][3|5|7|9|8]\d{9}$/.test(phoneValue)) && phoneValue != ""){
-            phoneTip.css("display","block");
-            phoneInput.style.borderColor = "red";
-        }else if(/^[1][3|5|7|9|8]\d{9}$/.test(phoneValue)){
-            phoneTip.css("display","none");
-            phoneInput.style.borderColor = "#ccc";
+    $(function () {
+        function bodyScroll(event) {
+            event.preventDefault();
         }
-    }
 
-    /*验证密码*/
-    function checkpwd(){
-        var pwdTip = $("#pws1-caveat");
-        var pwd1Input = document.getElementById("password1");
-        var pwd1Value = document.getElementById("password1").value;
-        if(pwd1Value.length < 2 || pwd1Value.length > 17){
-            pwdTip.css("display","block")
-            pwd1Input.style.borderColor = "red";
-        }else if(pwd1Value.length <= 17 && pwd1Value.length >= 2){
-            pwdTip.css("display","none")
-            pwd1Input.style.borderColor = "#ccc";
-        }
+        document.body.addEventListener('touchmove', bodyScroll(event), false);
+        document.body.removeEventListener('touchmove', bodyScroll(event), false);
+    });
+    function doNothing() {
+        window.event.returnValue = false;
+        return false;
     }
 </script>
 </body>
