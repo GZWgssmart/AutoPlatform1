@@ -100,55 +100,25 @@ public class IncomingOutgoingController {
 
 
     @ResponseBody
-    @RequestMapping(value = "queryByYear")
-    public List<IncomingOutgoing> queryByYear(String start, String end){
-        logger.info("根据年份去查找图表");
-        System.out.println("开始时间" + start + "结束时间" + end);
-        List<IncomingOutgoing> list=incomingOutgoingService.queryByYear(start, end);
-        for (IncomingOutgoing incomingOutgoing : list) {
-            if (incomingOutgoing.getInTypeId() == null) {
+    @RequestMapping(value = "queryByCondition")
+    public List<IncomingOutgoing> queryByCondition(String start, String end, String type){
 
+        List<IncomingOutgoing> list = null;
+        if (type != null && !type.equals("")) {
+            if (type.equals("year")) {
+                list=incomingOutgoingService.queryByCondition(start, end, "1","year");
+            } else if (type.equals("quarter")) {
+                list=incomingOutgoingService.queryByCondition(start, end, "1","quarter");
+            } else if (type.equals("month")) {
+                list=incomingOutgoingService.queryByCondition(start, end, "1","month");
+            } else if (type.equals("week")) {
+                list=incomingOutgoingService.queryByCondition(start, end, "1","week");
+            } else if (type.equals("day")) {
+                list=incomingOutgoingService.queryByCondition(start, end, "1","day");
             }
-            System.out.println(incomingOutgoing + "list");
         }
         return list;
     }
 
-    @ResponseBody
-    @RequestMapping(value = "queryByMonth")
-    public List<IncomingOutgoing> queryByMonth(String start, String end){
-        logger.info("根据月份去查找图表");
-        System.out.println("开始时间" + start + "结束时间" + end);
-        List<IncomingOutgoing> list=incomingOutgoingService.queryByMonth(start, end);
-        return list;
-    }
-
-
-    @ResponseBody
-    @RequestMapping(value = "queryByDay")
-    public List<IncomingOutgoing> queryByDay(String start, String end){
-        logger.info("根据日去查找图表");
-        System.out.println("开始时间" + start + "结束时间" + end);
-        List<IncomingOutgoing> list=incomingOutgoingService.queryByDay(start, end);
-        return list;
-    }
-
-    @ResponseBody
-    @RequestMapping(value = "queryByQuarter")
-    public List<IncomingOutgoing> queryByQuarter(String start, String end){
-        logger.info("根据季度查找图表");
-        System.out.println("开始时间" + start + "结束时间" + end);
-        List<IncomingOutgoing> list=incomingOutgoingService.queryByQuarter(start, end);
-        return list;
-    }
-
-    @ResponseBody
-    @RequestMapping(value = "queryByWeek")
-    public List<IncomingOutgoing> queryByWeek(String start, String end){
-        logger.info("根据周期查找图表");
-        System.out.println("开始时间" + start + "结束时间" + end);
-        List<IncomingOutgoing> list=incomingOutgoingService.queryByWeek(start, end);
-        return list;
-    }
 
 }

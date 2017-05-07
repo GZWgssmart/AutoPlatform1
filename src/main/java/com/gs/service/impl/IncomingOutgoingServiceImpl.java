@@ -100,29 +100,10 @@ public class IncomingOutgoingServiceImpl implements IncomingOutgoingService {
         return incomingOutgoingDAO.queryByDate(start, end);
     }
 
-    @Override
-    public List<IncomingOutgoing> queryByYear(String start, String end) {
-        return incomingOutgoingDAO.queryByYear(start, end);
-    }
 
     @Override
-    public List<IncomingOutgoing> queryByMonth(String start, String end) {
-        return incomingOutgoingDAO.queryByMonth(start, end);
-    }
-
-    @Override
-    public List<IncomingOutgoing> queryByDay(String start, String end) {
-        return incomingOutgoingDAO.queryByDay(start, end);
-    }
-
-    @Override
-    public List<IncomingOutgoing> queryByQuarter(String start, String end) {
-        return incomingOutgoingDAO.queryByQuarter(start, end);
-    }
-
-    @Override
-    public List<IncomingOutgoing> queryByWeek(String start, String end) {
-        return incomingOutgoingDAO.queryByWeek(start, end);
+    public List<IncomingOutgoing> queryByCondition(String start, String end, String inOutType,String type) {
+        return incomingOutgoingDAO.queryByCondition(start, end,inOutType, type);
     }
 
     public List<IncomingOutgoing> blurredQuery(Pager pager, IncomingOutgoing incomingOutgoing) {

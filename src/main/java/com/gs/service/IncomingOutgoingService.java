@@ -30,30 +30,11 @@ public interface IncomingOutgoingService extends BaseService<String, IncomingOut
      */
     public List<IncomingOutgoing> queryByDate(String start,  String end);
 
-    /**
-     * 根据年去查找
-     */
-    public List<IncomingOutgoing> queryByYear(@Param("start") String start, @Param("end")String end);
 
-    /**
-     * 根据月去查找
-     */
-    public List<IncomingOutgoing> queryByMonth(@Param("start") String start, @Param("end")String end);
-
-    /**
-     * 根据日去查找
-     */
-    public List<IncomingOutgoing> queryByDay(@Param("start") String start, @Param("end")String end);
-
-    /**
-     * 根据季度查找
-     */
-    public List<IncomingOutgoing> queryByQuarter(@Param("start") String start, @Param("end")String end);
-
-    /**
-     * 根据周查找
-     */
-    public List<IncomingOutgoing> queryByWeek(@Param("start") String start, @Param("end")String end);
+    /*
+* 根据年，月，季度，周，日查询所有收支记录
+* */
+    public List<IncomingOutgoing> queryByCondition(String start,String end,String inOutType, String type);
 
 
 }
