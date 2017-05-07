@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: 不曾有黑夜
@@ -224,17 +225,19 @@
                         <h3><a href="factorypage" style="text-decoration: none;">热门商家</a></h3>
                         <div class="clearfix"></div>
                     </div>
+
+                    <c:forEach items="${requestScope.company}" var="c">
                     <div class="factory">
                         <div class="f-img">
                             <a href="factorypage">
-                                <img src="/static/img/Frontpage/slider.png"/>
+                                <img src=""/>
                             </a>
                         </div>
                         <div class="f-des">
                             <div class="company-name">
                                 <span class="cns">
-                                    <a class="cns-a" href="javaScript:;" title="公司名称公司名称公司名称公司sssss公司名称公司名称公司名称公司sssss">
-                                        <i class="glyphicon glyphicon-bookmark"></i> 公司名称公司名称公司名称公司sssss公司名称公司名称公司名称公司sssss
+                                    <a class="cns-a" href="javaScript:;" title="${c.companyName}">
+                                        <i class="glyphicon glyphicon-bookmark"></i> ${c.companyName}
                                     </a>
                                     <div style="float: right;margin-right: 15px">
                                         <img src="/static/img/Frontpage/xun-lv.png"/>
@@ -244,13 +247,13 @@
                                 </span>
                             </div>
                             <div class="company-des">
-                                <span class="com-des" title="公司描述公司描述公司描述公司描述公司描述公司描述公司描述公司描述">
-                                    <i class="glyphicon glyphicon-edit"></i> 公司描述公司描述公司描述公司描述公司描述公司描述公司描述公司描述
+                                <span class="com-des" title="${c.companyDes}">
+                                    <i class="glyphicon glyphicon-edit"></i>${c.companyDes}
                                 </span>
                             </div>
                             <div class="company-address">
-                                <span class="com-address" title="赣州市章贡区沙石镇">
-                                    <i class="glyphicon glyphicon-map-marker"></i> 赣州市章贡区沙石镇
+                                <span class="com-address" title="${c.companyAddress}">
+                                    <i class="glyphicon glyphicon-map-marker"></i> ${c.companyAddress}
                                 </span>
                             </div>
                             <div class="com-icon">
@@ -264,86 +267,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="factory">
-                        <div class="f-img">
-                            <a href="factorypage">
-                                <img src="/static/img/Frontpage/slider.png"/>
-                            </a>
-                        </div>
-                        <div class="f-des">
-                            <div class="company-name">
-                                <span class="cns">
-                                    <a class="cns-a" href="javaScript:;" title="公司名称公司名称公司名称公司sssss公司名称公司名称公司名称公司sssss">
-                                        <i class="glyphicon glyphicon-bookmark"></i> 公司名称公司名称公司名称公司sssss公司名称公司名称公司名称公司sssss
-                                    </a>
-                                    <div style="float: right;margin-right: 15px">
-                                        <img src="/static/img/Frontpage/xun-lv.png"/>
-                                        <img src="/static/img/Frontpage/xun-lv.png"/>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </span>
-                            </div>
-                            <div class="company-des">
-                                <span class="com-des" title="公司描述公司描述公司描述公司描述公司描述公司描述公司描述公司描述">
-                                    <i class="glyphicon glyphicon-edit"></i> 公司描述公司描述公司描述公司描述公司描述公司描述公司描述公司描述
-                                </span>
-                            </div>
-                            <div class="company-address">
-                                <span class="com-address" title="赣州市章贡区沙石镇">
-                                    <i class="glyphicon glyphicon-map-marker"></i> 赣州市章贡区沙石镇
-                                </span>
-                            </div>
-                            <div class="com-icon">
-                                <div class="icon-t">
-                                    <i class="ms glyphicon glyphicon-thumbs-up" title="五星好评"></i>
-                                    <i class="hp glyphicon glyphicon-hourglass" title="闪电发货"></i>
-                                    <span class="tuij" title="五星店铺">
-                                        <i class="glyphicon glyphicon-star" style="width: 14px;height: 16px;"></i> 推荐
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="factory">
-                        <div class="f-img">
-                            <a href="factorypage">
-                                <img src="/static/img/Frontpage/slider.png"/>
-                            </a>
-                        </div>
-                        <div class="f-des">
-                            <div class="company-name">
-                                <span class="cns">
-                                    <a class="cns-a" href="javaScript:;" title="公司名称公司名称公司名称公司sssss公司名称公司名称公司名称公司sssss">
-                                        <i class="glyphicon glyphicon-bookmark"></i> . 公司名称公司名称公司名称公司sssss公司名称公司名称公司名称公司sssss
-                                    </a>
-                                    <div style="float: right;margin-right: 15px">
-                                        <img src="/static/img/Frontpage/xun-lv.png"/>
-                                        <img src="/static/img/Frontpage/xun-lv.png"/>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </span>
-                            </div>
-                            <div class="company-des">
-                                <span class="com-des" title="公司描述公司描述公司描述公司描述公司描述公司描述公司描述公司描述">
-                                    <i class="glyphicon glyphicon-edit"></i> 公司描述公司描述公司描述公司描述公司描述公司描述公司描述公司描述
-                                </span>
-                            </div>
-                            <div class="company-address">
-                                <span class="com-address" title="赣州市章贡区沙石镇">
-                                    <i class="glyphicon glyphicon-map-marker"></i> 赣州市章贡区沙石镇
-                                </span>
-                            </div>
-                            <div class="com-icon">
-                                <div class="icon-t">
-                                    <i class="ms glyphicon glyphicon-thumbs-up" title="五星好评"></i>
-                                    <i class="hp glyphicon glyphicon-hourglass" title="闪电发货"></i>
-                                    <span class="tuij" title="五星店铺">
-                                        <i class="glyphicon glyphicon-star" style="width: 14px;height: 16px;"></i> 推荐
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    </c:forEach>
                 </div>
             </div>
             <%--最近成交--%>

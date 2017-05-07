@@ -145,24 +145,21 @@
                     <div class="form-content">
                         <form class="form" id="loginForm">
                             <div class="form-group">
-                                <input type="text" name="userEmail" id="email" class="form-control" placeholder="请输入邮箱/手机号/用户名">
+                                <input type="text" name="userEmail" id="email" class="form-control" placeholder="请输入邮箱/手机号">
                             </div>
                             <div class="form-group">
                                 <input type="password" name="userPwd" class="form-control" placeholder="请输入密码">
                             </div>
                             <div class="form-group">
                                 <div class="row">
-                                    <div class="col-md-3 col-sm-3">
+                                    <div class="col-md-3 col-sm-3" style="width: 29.6%">
                                     <a href="javascript:;"><img style="vertical-align:middle; height:35px;"
                                                                 src="/captcha"
                                                                 onclick="this.src='/captcha?time=Math.random();'"></a>
                                     </div>
-                                    <div class="col-md-8 col-sm-8"><input type="text" name="checkCode" style="width:105%;" placeholder="验证码" class="form-control"></div>
+                                    <div class="col-md-8 col-sm-8" style="padding-right: 0px;"><input type="text" name="checkCode"  placeholder="验证码" class="form-control"></div>
                                 </div>
 
-                            </div>
-                            <div class="form-group">
-                                <label style="color: white;"><input type="checkbox"> 记住账号</label>
                             </div>
                             <div class="form-group">
                                 <button type="button" class="btn btn-success btn-block" value="登录" id="loginButton" onclick="loginSubmit()">登录</button>

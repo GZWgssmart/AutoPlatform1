@@ -70,7 +70,7 @@ body {
   float: left;
 }
 .paging-li:first-child a:after {
-  content: "Previous";
+  content: "";
 }
 .paging-li:nth-child(2) {
   counter-reset: pagination;
@@ -79,7 +79,7 @@ body {
   float: right;
 }
 .paging-li:last-child a:after {
-  content: "Next";
+  content: "下一页";
 }
 .paging-li a {
   border: solid 1px #d6d6d6;
@@ -102,7 +102,7 @@ body {
   display: inline-block;
 }
 .large .paging-li:first-child a:after {
-  content: "Previous";
+  content: "";
 }
 .large .paging-li:nth-child(2) a {
   display: inline-block;
@@ -129,7 +129,7 @@ body {
   display: inline-block;
 }
 .large .paging-li:last-child a:after {
-  content: "Next";
+  content: "下一页";
 }
 .large .paging-li:nth-last-child(2) a {
   display: inline-block;
@@ -207,11 +207,11 @@ body {
   display: inline;
 }
 .xsmall .paging-li:first-child a:after {
-  content: "Prev";
+  content: "上一页";
 }
 .xsmall .paging-li:last-child {
   display: inline;
 }
 .xsmall .paging-li:last-child a:after {
-  content: "Next";
+  content: "下一页";
 }

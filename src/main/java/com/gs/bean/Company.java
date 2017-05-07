@@ -132,4 +132,23 @@ public class Company {
     public void setCompanyStatus(String companyStatus) {
         this.companyStatus = companyStatus;
     }
+
+    @Override
+    public String toString() {
+        return "Company{" +
+                "companyId='" + companyId + '\'' +
+                ", companyName='" + companyName + '\'' +
+                ", companyAddress='" + companyAddress + '\'' +
+                ", companyTel='" + companyTel + '\'' +
+                ", companyPricipal='" + companyPricipal + '\'' +
+                ", companyWebsite='" + companyWebsite + '\'' +
+                ", companyLogo='" + companyLogo + '\'' +
+                ", companyOpendate=" + companyOpendate +
+                ", companySize='" + companySize + '\'' +
+                ", companyLongitude=" + companyLongitude +
+                ", companyLatitude=" + companyLatitude +
+                ", companyDes='" + companyDes + '\'' +
+                ", companyStatus='" + companyStatus + '\'' +
+                '}';
+    }
 }

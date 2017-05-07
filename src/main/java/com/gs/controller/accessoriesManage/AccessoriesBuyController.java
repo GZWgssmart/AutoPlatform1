@@ -38,20 +38,20 @@ public class AccessoriesBuyController {
 
     private Logger logger = (Logger) LoggerFactory.getLogger(AccessoriesBuyController.class);
 
-//    /**
-//     * 查询所有的采购记录
-//     *
-//     * @return
-//     */
-//    @ResponseBody
-//    @RequestMapping(value = "queryAllAccBuy", method = RequestMethod.POST)
-//    public List<AccessoriesBuy> queryAllAccBuy() {
-//        List<AccessoriesBuy> accessoriesBuyList = accessoriesBuyService.queryAll();
-//        if (accessoriesBuyList != null && !accessoriesBuyList.equals("")) {
-//            return accessoriesBuyList;
-//        }
-//        return null;
-//    }
+    /**
+     * 查询所有的采购记录
+     *
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "queryAll", method = RequestMethod.POST)
+    public List<AccessoriesBuy> queryAll() {
+        List<AccessoriesBuy> accessoriesBuyList = accessoriesBuyService.queryAll();
+        if (accessoriesBuyList != null && !accessoriesBuyList.equals("")) {
+            return accessoriesBuyList;
+        }
+        return null;
+    }
 
     /**
      * 查询全部的配件信息
