@@ -55,12 +55,12 @@
         <span class="printStyle">日期: 2016/12月/1日</span>
     </div>
 
-    <div class="row" style="border:0.5px solid black;">
+    <div class="row" style="border:0.5px solid black; font-size: 20px;">
         <div class="col-sm-12" style="border:1px solid black;padding:10px 20px 10px 20px">
-            <div class="col-sm-1" style="width:130px;">汽车公司 : </div>
-            <div style="boder-boottom: 1px solid black">XXXX有限公司</div>
-            <div class="col-sm-1" style="width:130px;">公司联系方式 : </div>
-            <div style="boder-boottom: 1px solid black">15570102341</div>
+            <div class="col-sm-2" style="width:130px;">汽车公司 : </div>
+            <div class="col-sm-4" style="border-bottom: 1px solid black">XXXX有限公司</div>
+            <div class="col-sm-2" style="width:130px;">公司联系方式 : </div>
+            <div class="col-sm-4" style="border-bottom: 1px solid black">15570102341</div>
         </div>
         <div class="col-sm-12" style="border:0.5px solid black;">
             <span class="printStyle">公司地址:${chargeBill.maintainRecord.checkin.company.companyAddress}</span><br>

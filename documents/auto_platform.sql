@@ -136,7 +136,16 @@ CREATE TABLE `t_car_brand` (
   `brandStatus` varchar(2) DEFAULT NULL COMMENT '品牌状态，Y表示可用，N表示不可用',
   PRIMARY KEY (`brandId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
+INSERT INTO `t_car_brand` VALUES ('da0cae95-3317-11e7-b181-f832e40312b3', '奥迪', '全国限量版', 'Y');
+INSERT INTO `t_car_brand` VALUES ('dbfe486d-3317-11e7-b181-f832e40312b3', '克迪拉克', '全国限量版', 'Y');
+INSERT INTO `t_car_brand` VALUES ('dd92ce7a-3317-11e7-b181-f832e40312b3', '玛莎拉蒂', '全国限量版', 'Y');
+INSERT INTO `t_car_brand` VALUES ('df4451a2-3317-11e7-b181-f832e40312b3', '宝马', '全国限量版', 'Y');
+INSERT INTO `t_car_brand` VALUES ('e16dbcbb-3317-11e7-b181-f832e40312b3', '本田', '全国限量版', 'Y');
+INSERT INTO `t_car_brand` VALUES ('e4091843-3317-11e7-b181-f832e40312b3', '大众', '全国限量版', 'Y');
+INSERT INTO `t_car_brand` VALUES ('e5868988-3317-11e7-b181-f832e40312b3', '奔驰', '全国限量版', 'Y');
+INSERT INTO `t_car_brand` VALUES ('e742c5a4-3317-11e7-b181-f832e40312b3', '保时捷', '全国限量版', 'Y');
+INSERT INTO `t_car_brand` VALUES ('e8c1cdbc-3317-11e7-b181-f832e40312b3', '别克', '全国限量版', 'Y');
+INSERT INTO `t_car_brand` VALUES ('ea503e96-3317-11e7-b181-f832e40312b3', '哈弗', '全国限量版', 'Y');
 
 /***
 汽车颜色表
@@ -151,6 +160,12 @@ CREATE TABLE `t_car_color` (
   `colorStatus` varchar(2) DEFAULT NULL COMMENT '颜色状态，Y表示可用，N表示不可用',
   PRIMARY KEY (`colorId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+INSERT INTO `t_car_color` VALUES ('59022ceb-24dc-11e7-9b5f-507b9d765567', '紫色', '128,0,128', '#800080', '紫色', 'Y');
+INSERT INTO `t_car_color` VALUES ('5b97fbd0-24dc-11e7-9b5f-507b9d765567', '绿色', '0,128,0', '#008000', '纯绿', 'Y');
+INSERT INTO `t_car_color` VALUES ('5d5ba68a-24dc-11e7-9b5f-507b9d765567', '红色', '255,0,0', '＃FF0000', '纯红', 'Y');
+INSERT INTO `t_car_color` VALUES ('5ef60a0b-24dc-11e7-9b5f-507b9d765567', '黑色', '0,0,0', '#000000', '纯黑', 'Y');
+INSERT INTO `t_car_color` VALUES ('c318241d-3319-11e7-b181-f832e40312b3', '纯白', '255,255,255', '#ffffff', '白色', 'Y');
+INSERT INTO `t_car_color` VALUES ('de88f347-3319-11e7-b181-f832e40312b3', '黄色', '242,255,0', '#f2ff00', '黄色', 'Y');
 
 /**
 汽车车型表
@@ -164,6 +179,16 @@ CREATE TABLE `t_car_model` (
   `modelStaus` varchar(2) DEFAULT NULL COMMENT '车型状态，Y表示可用，N表示不可用',
   PRIMARY KEY (`modelId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+INSERT INTO `t_car_model` VALUES ('2c639452-3318-11e7-b181-f832e40312b3', '奥迪A3', '2017款 Sportback 35 TFSI 时尚型', 'da0cae95-3317-11e7-b181-f832e40312b3', 'Y');
+INSERT INTO `t_car_model` VALUES ('2e497723-3318-11e7-b181-f832e40312b3', '凯迪拉克ATS-L', '2017款 28T 豪华型', 'dbfe486d-3317-11e7-b181-f832e40312b3', 'Y');
+INSERT INTO `t_car_model` VALUES ('2fd54aba-3318-11e7-b181-f832e40312b3', '	2017款 3.0T S', '总裁', 'dd92ce7a-3317-11e7-b181-f832e40312b3', 'Y');
+INSERT INTO `t_car_model` VALUES ('31a30bbe-3318-11e7-b181-f832e40312b3', '宝马1系', '2017款 118i 时尚型', 'df4451a2-3317-11e7-b181-f832e40312b3', 'Y');
+INSERT INTO `t_car_model` VALUES ('3321f0d6-3318-11e7-b181-f832e40312b3', '本田XR-V', '2017款 1.5L LXi 手动经典版', 'e16dbcbb-3317-11e7-b181-f832e40312b3', 'Y');
+INSERT INTO `t_car_model` VALUES ('34d228eb-3318-11e7-b181-f832e40312b3', '大众-桑塔纳', '2017款 浩纳 1.4L 手动风尚版', 'e4091843-3317-11e7-b181-f832e40312b3', 'Y');
+INSERT INTO `t_car_model` VALUES ('3697ba01-3318-11e7-b181-f832e40312b3', '奔驰C级', '2017款 改款 C 200 运动版', 'e5868988-3317-11e7-b181-f832e40312b3', 'Y');
+INSERT INTO `t_car_model` VALUES ('38452e74-3318-11e7-b181-f832e40312b3', '保时捷911', '2017款 Carrera GTS 3.0T', 'e742c5a4-3317-11e7-b181-f832e40312b3', 'Y');
+INSERT INTO `t_car_model` VALUES ('3a2b60d8-3318-11e7-b181-f832e40312b3', '别克-VELITE 5', '2017款 都市增程型', 'e8c1cdbc-3317-11e7-b181-f832e40312b3', 'Y');
+INSERT INTO `t_car_model` VALUES ('3c8f048c-3318-11e7-b181-f832e40312b3', '哈弗H1', '2017款 红标 1.5L 手动标准型', 'ea503e96-3317-11e7-b181-f832e40312b3', 'Y');
 
 /**
 汽车车牌表
@@ -176,6 +201,12 @@ CREATE TABLE `t_car_plate` (
   `plateStatus` varchar(2) DEFAULT NULL COMMENT '车牌状态，Y表示可用，N表示不可用',
   PRIMARY KEY (`plateId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+INSERT INTO `t_car_plate` VALUES ('39b6f81e-2a77-11e7-a039-f832e40312b3', '赣B', '赣州市', 'Y');
+INSERT INTO `t_car_plate` VALUES ('6310142e-24ef-11e7-9b5f-507b9d765567', '赣A', '南昌市', 'Y');
+INSERT INTO `t_car_plate` VALUES ('663c23e5-24ef-11e7-9b5f-507b9d765567', '赣C', '宜春市', 'Y');
+INSERT INTO `t_car_plate` VALUES ('68612b83-24ef-11e7-9b5f-507b9d765567', '赣D', '吉安市', 'Y');
+INSERT INTO `t_car_plate` VALUES ('aa9ce266-2570-11e7-a97a-f832e40312b3', '赣E', '上饶市', 'Y');
+INSERT INTO `t_car_plate` VALUES ('c515f5d623e011e7a97af832e403acs3', '赣G', '九江市 ', 'Y');
 
 /**
 供应商分类表

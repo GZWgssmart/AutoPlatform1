@@ -53,8 +53,15 @@ public class UserController {
             subject = SecurityUtils.getSubject();
             try {
                 subject.login(new UsernamePasswordToken(user1.getUserEmail(), EncryptUtil.md5Encrypt(user1.getUserPwd())));
-                if (subject.hasRole("user") || subject.hasRole("admin")) {
-                    logger.info("用户登录成功");
+                if (subject.hasRole("systemSuperAdmin") || subject.hasRole("systemOrdinaryAdmin")
+                        || subject.hasRole("companySuperAdmin") || subject.hasRole("companyOrdinaryAdmin")
+                        || subject.hasRole("systemOrdinaryAdmin") || subject.hasRole("systemOrdinaryAdmin")
+                        || subject.hasRole("companyReceptionist") || subject.hasRole("companyTotalTC")
+                        || subject.hasRole("companyTechnician") || subject.hasRole("companyApprentice")
+                        || subject.hasRole("companySales") || subject.hasRole("companyFinancial")
+                        || subject.hasRole("companyProcurement") || subject.hasRole("companyLibraryTube")
+                        || subject.hasRole("companyHR") || subject.hasRole("otherPersonnel")) {
+                    logger.info("登录成功");
                     User user = userService.queryUser(user1.getUserEmail());
                     session.setAttribute("user", user);
                     return ControllerResult.getSuccessResult("登录成功");
