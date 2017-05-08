@@ -88,19 +88,5 @@ public class UserController {
         }
     }
 
-    /**
-     * 查询所有角色
-     * @return
-     */
-    @ResponseBody
-    @RequestMapping(value="queryByPager", method = RequestMethod.GET)
-    public Pager4EasyUI<User> queryByPager(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
-        logger.info("分页查询所有角色");
-        Pager pager = new Pager();
-        pager.setPageNo(Integer.valueOf(pageNumber));
-        pager.setPageSize(Integer.valueOf(pageSize));
-        pager.setTotalRecords(userService.count());
-        List<User> users = userService.queryByPager(pager);
-        return new Pager4EasyUI<User>(pager.getTotalRecords(), users);
-    }
+   
 }
