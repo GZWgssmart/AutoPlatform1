@@ -108,7 +108,7 @@ public class RoleController {
         for(Role role: roles) {
             ComboBox4EasyUI comboBox4EasyUI = new ComboBox4EasyUI();
             comboBox4EasyUI.setId(role.getRoleId());
-            comboBox4EasyUI.setText(role.getRoleName());
+            comboBox4EasyUI.setText(role.getRoleDes());
             comboBoxes.add(comboBox4EasyUI);
         }
         return comboBoxes;
@@ -125,8 +125,8 @@ public class RoleController {
     @RequestMapping(value = "/updatePermission" )
     public ControllerResult updatePermission(@RequestParam("roleId") String roleId, @RequestParam("added") String addedPerIdsStr, @RequestParam("removed")String removedPerIdsStr){
         logger.info("删除角色权限");
-        List<String> removedPerIds = Arrays.asList(perIdsStr2perIds(removedPerIdsStr,"-"));
-        List<String> addedPerIds = Arrays.asList(perIdsStr2perIds(addedPerIdsStr,"-"));
+        List<String> removedPerIds = Arrays.asList(perIdsStr2perIds(removedPerIdsStr,"\\|"));
+        List<String> addedPerIds = Arrays.asList(perIdsStr2perIds(addedPerIdsStr,"\\|"));
         removedPerIds = removeEmpStr(removedPerIds);
         addedPerIds = removeEmpStr(addedPerIds);
         int addedResultCount = 0;
