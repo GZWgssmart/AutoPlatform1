@@ -1,12 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.gs.dao.MaintainScheduleDAO" >
-    <resultMap id="BaseResultMap" type="com.gs.bean.MaintainSchedule" >
+    <resultMap id="MaintainScheduleMap" type="com.gs.bean.MaintainSchedule" >
         <id column="maintainScheduleId" property="maintainScheduleId" jdbcType="VARCHAR" />
         <result column="maintainRecordId" property="maintainRecordId" jdbcType="VARCHAR" />
         <result column="maintainScheduleDes" property="maintainScheduleDes" jdbcType="VARCHAR" />
         <result column="msCreatedTime" property="msCreatedTime" jdbcType="TIMESTAMP" />
         <result column="msStatus" property="msStatus" jdbcType="VARCHAR" />
 
+        <association property="maintainRecord" javaType="com.gs.bean.MaintainRecord">
+            <id column="recordId" property="recordId"></id>
+            <result column="checkinId" property="checkinId"></result>
+            <result column="startTime" property="startTime"/>
+            <result column="endTime" property="endTime"/>
+            <result column="actualEndTime" property="actualEndTime"/>
+            <result column="recordCreatedTime" property="recordCreatedTime"/>
+            <result column="pickupTime" property="pickupTime"/>
+        </association>
+
+        <!--<association property="checkin" javaType="com.gs.bean.Checkin">
+            <id column="checkinId" property="checkinId"></id>
+            <result column="userName" property="userName"></result>
+        </association>-->
     </resultMap>
+
+    <!--查询全部-->
+    <select id="queryAll" resultMap="MaintainScheduleMap">
+      <![CDATA[
+          select * from auto_platform.t_maintain_schedule
+        ]]>
+    </select>
+
+    <!--计数激活状态-->
+    <select id="count" resultType="int">
+        <![CDATA[
+          select count(maintainScheduleId) from t_maintain_schedule where msStatus='Y'
+        ]]>
+    </select>
+
+    <!--分页查询-->
+    <select id="queryByPager" resultMap="MaintainScheduleMap" parameterType="com.gs.common.bean.Pager">
+      <![CDATA[
+          select ms.*,c.recordId,c.checkinId
+          from auto_platform.t_maintain_schedule ms
+          LEFT JOIN t_maintain_record c on ms.maintainScheduleId=c.recordId
+          where ms.msStatus='Y' order by ms.msCreatedTime Desc
+        ]]>
+        limit #{beginIndex}, #{pageSize};
+    </select>
+
+    <!--添加维修保养进度-->
+    <select id="insert" parameterType="MaintainSchedule">
+        <![CDATA[
+          INSERT JOIN auto_platform.t_maintain_schedule
+          (maintainScheduleId, maintainRecordId, maintainScheduleDes, msCreatedTime,msStatus)
+          VALUES(uuid(),#{maintainRecordId},#{maintainScheduleDes},#{CURRENT_TIMESTAMP},'Y')
+        ]]>
+    </select>
+
+    <select id="update" parameterType="MaintainSchedule">
+        <![CDATA[
+          UPDATE auto_platform.t_maintain_schedule
+          SET maintainRecordId = #{maintainRecordId}, maintainScheduleDes = #{maintainScheduleDes} where maintainScheduleId=#{maintainScheduleId}
+        ]]>
+    </select>
 </mapper>

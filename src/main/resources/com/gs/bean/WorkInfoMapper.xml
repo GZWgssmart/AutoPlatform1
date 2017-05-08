@@ -32,28 +32,27 @@
     ]]>
     </select>
 
-    <!--分页所有未完成查询全部-->
+    <!--分页所有已完成查询全部-->
     <select id="queryByPager" resultMap="BaseResultMap" parameterType="com.gs.common.bean.Pager">
         <![CDATA[
             select w.*,tmR.recordId,tmR.checkinId,u.userId,
             u.userNickName FROM t_work_info w
             Left JOIN t_maintain_Record tmR on w.recordId = tmR.recordId
             Left JOIN t_user u on w.userId = u.userId
-            where w.workStatus = 'N' order by w.workCreatedTime Desc
+            where w.workStatus = 'Y' order by w.workCreatedTime Desc
         ]]>
         limit #{beginIndex}, #{pageSize}
     </select>
 
 
-
-    <!--分页所有已完成查询全部-->
+    <!--分页所有未完成查询全部-->
     <select id="queryByPagerDisable" resultMap="BaseResultMap" parameterType="com.gs.common.bean.Pager">
         <![CDATA[
             select w.*,tmR.recordId,tmR.checkinId,u.userId,
             u.userNickName FROM t_work_info w
             Left JOIN t_maintain_Record tmR on w.recordId = tmR.recordId
             Left JOIN t_user u on w.userId = u.userId
-            where w.workStatus = 'Y' order by w.workCreatedTime Desc
+            where w.workStatus = 'N' order by w.workCreatedTime Desc
         ]]>
         limit #{beginIndex}, #{pageSize}
     </select>

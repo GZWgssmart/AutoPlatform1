@@ -1,25 +1,20 @@
-$(function () {
-    $('#table').bootstrapTable('hideColumn', 'id');
-    $("#addSelect").select2({
-            language: 'zh-CN'
-        }
-    );
+var contentPath = ''
 
-    //绑定Ajax的内容
-    $.getJSON("/table/queryType", function (data) {
-        $("#addSelect").empty();//清空下拉框
-        $.each(data, function (i, item) {
-            $("#addSelect").append("<option value='" + data[i].id + "'>&nbsp;" + data[i].name + "</option>");
-        });
-    })
-//            $("#addSelect").on("select2:select",
-//                    function (e) {
-//                        alert(e)
-//                        alert("select2:select", e);
-//            });
-});
+/*初始化表格*/
+$(function(){
+    initTable('table','/Order/queryByPager');
+    initSelect2("maintainRecord","请选择保养记录编号","/maintainRecord/queryByPager");
+})
 
-//显示弹窗
+//显示添加
+function showAdd() {
+    $("#addWindow").modal('show');
+    $("#addButton").removeAttr("disabled");//按钮只能点击一次
+    validator('addForm');//初始化验证
+}
+
+
+//显示修改
 function showEdit() {
     var row = $('table').bootstrapTable('getSelections');
     if (row.length > 0) {
@@ -38,16 +33,33 @@ function showEdit() {
     }
 }
 
-//显示添加
-function showAdd() {
-    $("#addWindow").modal('show');
-}
+ function openAddSchedule(){
+     initTableNotTollbar("addScheudleTable","/maintainRecord/queryByPager");
+     // initTableNotTollbar("addScheudleTable","/maintainRecord/queryByPager");
+     // initTable("maintainRecord","请选择保养记录编号","/maintainRecord/queryByPager");
+     $("#addWindow").modal('hide');
+     $("#AddScheduleWindow").modal('show');
+ }
 
-function formatRepo(repo) {
-    return repo.text
-}
-function formatRepoSelection(repo) {
-    return repo.text
+ function closeAddSchedule(){
+     $("#AddScheduleWindow").modal('hide');
+     $("#addWindow").modal('show');
+ }
+
+/** add维修保养记录 */
+function checkPersonnel() {
+    var selectRow = $("#addScheudleTable").bootstrapTable('getSelections');
+    if (selectRow.length != 1) {
+        swal('选择失败', "只能选择一条数据", "error");
+        return false;
+    } else {
+        $("#AddScheduleWindow").modal('hide');
+        $("#add").modal('show');
+        var user = selectRow[0];
+        $("#checkin.userName").val(user.userName);
+        $("#userId").val(user.userId);
+        $("#addWindow").modal('show');
+    }
 }
 
 //显示删除
@@ -68,18 +80,65 @@ function showDel() {
 
 }
 
-//检查添加
-function checkAdd() {
-    var id = $('#addId').val();
-    var name = $('#addName').val();
-    var price = $('#addPrice').val();
-    var reslist = $("#addSelect").select2("data"); //获取多选的值
-    if (id != "" && name != "" && price != "") {
-        return true;
-    } else {
-        var error = document.getElementById("addError");
-        error.innerHTML = "请输入正确的数据";
-        return false;
+//验证数据格式
+function validator(formId) {
+    $('#' + formId).bootstrapValidator({
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            maintainRecordId: {
+                message: '维修记录编号不能为空',
+                validators: {
+                    notEmpty: {
+                        message: '维修记录编号不能为空'
+                    }
+                }
+            },
+            maintainScheduleDes: {
+                message: '进度不能为空',
+                validators: {
+                    notEmpty: {
+                        message: '进度不能为空'
+                    }
+                }
+            },
+            msCreatedTime: {
+                message: '维修创建时间不能为空',
+                validators: {
+                    notEmpty: {
+                        message: '维修创建时间不能为空'
+                    }
+                }
+            }
+        }
+    }).on('success.form.bv', function (e) {
+        if (formId == "addForm") {
+            formSubmit(contentPath + "/maintainSchedule/addSchedule", formId, "addWindow");
+        } else if (formId == "editForm") {
+            formSubmit(contentPath + "/maintainSchedule/updateSchedule", formId, "editWindow");
+
+        }
+    })
+}
+
+function addSubmit(){
+    $("#addForm").data('bootstrapValidator').validate();
+    if(("#addForm").data('bootstrapValidator').isValid()){
+        $("#addButton").attr("disabled","disabled");
+    }else{
+        $("#addButton").removeAttr("disabled");//按钮只能点击一次
+    }
+}
+
+function editSubmit(){
+    $("#editForm").data('bootstrapValidator').validate();
+    if(("#editForm").data('bootstrapValidator').isValid()){
+        $("#editButton").attr("disabled","disabled");
+    }else{
+        $("#editButton").removeAttr("disabled");//按钮只能点击一次
     }
 }
 
@@ -102,203 +161,4 @@ function checkEdit() {
         }, "json"
     );
 }
-//添加
-$('#addDateTimePicker').datetimepicker({
-    language: 'zh-CN',
-    format: 'yyyy-mm-dd hh:ii'
-});
-$('#addDateTimePicker2').datetimepicker({
-    language: 'zh-CN',
-    format: 'yyyy-mm-dd hh:ii'
-});
-$('#addDateTimePicker3').datetimepicker({
-    language: 'zh-CN',
-    format: 'yyyy-mm-dd hh:ii'
-});
-$('#addDateTimePicker4').datetimepicker({
-    language: 'zh-CN',
-    format: 'yyyy-mm-dd hh:ii'
-});
-$('#addDateTimePicker5').datetimepicker({
-    language: 'zh-CN',
-    format: 'yyyy-mm-dd hh:ii'
-});
 
-//修改
-$('#editDateTimePicker').datetimepicker({
-    language: 'zh-CN',
-    format: 'yyyy-mm-dd hh:ii'
-});
-$('#editDateTimePicker2').datetimepicker({
-    language: 'zh-CN',
-    format: 'yyyy-mm-dd hh:ii'
-});
-$('#editDateTimePicker3').datetimepicker({
-    language: 'zh-CN',
-    format: 'yyyy-mm-dd hh:ii'
-});
-$('#editDateTimePicker4').datetimepicker({
-    language: 'zh-CN',
-    format: 'yyyy-mm-dd hh:ii'
-});
-$('#editDateTimePicker5').datetimepicker({
-    language: 'zh-CN',
-    format: 'yyyy-mm-dd hh:ii'
-});
-
-
-
-
-// //日期时间控件初始化
-// $(document).ready(function () {
-//     // 带时间的控件
-//     // if ($(".iDate.full").length > 0) {
-//     //     $(".iDate.full").datetimepicker({
-//     //         locale: "zh-cn",
-//     //         format: "YYYY-MM-DD a hh:mm",
-//     //         dayViewHeaderFormat: "YYYY年 MMMM"
-//     //     });
-//     // }
-//
-//     //不带时间的控件
-//     if ($(".iDate.date").length > 0) {
-//         $(".iDate.date").datetimepicker({
-//             locale: "zh-cn",
-//             format: "YYYY-MM-DD",
-//             dayViewHeaderFormat: "YYYY年 MMMM"
-//         });
-//     }
-// })
-//前段验证
-$(document).ready(function () {
-    jQuery.validator.addMethod("isPhone", function (value, element) {
-        var length = value.length;
-        return this.optional(element) || (length == 11 && /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/.test(value));
-    }, "请正确填写进度编号");
-
-    $("#showAddFormWar").validate({
-        errorElement: 'span',
-        errorClass: 'help-block',
-
-        rules: {
-            checkinId: {
-                required: true,
-                minlength: 2
-            },
-            // startTime: {
-            //     required: true,
-            //     date: true
-            // },
-            // endTime: {
-            //     required: true,
-            //     date: true
-            // },
-            // actualEndTime: {
-            //     required: true,
-            //     date: true
-            // },
-            // recordCreatedTime: {
-            //     required: true,
-            //     date: true
-            // },
-            // pickupTime: {
-            //     required: true,
-            //     date: true
-            // },
-             recordDes: {
-                 required: true,
-                 minlength: 5
-             }
-        },
-        messages: {
-            checkinId: "请输入登记编号",
-            // startTime: "请选择时间",
-            // endTime: "请选择预估结束时间",
-            // actualEndTime: "请选择实际结束时间",
-            // recordCreatedTime: "创建时间",
-            // pickupTime: "请选择车主提车时间",
-            recordDes: "进度描述"
-        },
-        errorPlacement: function (error, element) {
-            element.next().remove();
-            element.after('<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>');
-            element.closest('.form-group').append(error);
-        },
-        highlight: function (element) {
-            $(element).closest('.form-group').addClass('has-error has-feedback');
-        },
-        success: function (label) {
-            var el = label.closest('.form-group').find("input");
-            el.next().remove();
-            el.after('<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>');
-            label.closest('.form-group').removeClass('has-error').addClass("has-feedback has-success");
-            label.remove();
-        },
-        submitHandler: function (form) {
-            alert("submitted!");
-        }
-    })
-    $("#showEditFormWar").validate({
-        errorElement: 'span',
-        errorClass: 'help-block',
-
-        rules: {
-            checkinId: {
-                required: true,
-                minlength: 2
-            },
-            // startTime: {
-            //     required: true,
-            //     date: true
-            // },
-            // endTime: {
-            //     required: true,
-            //     date: true
-            // },
-            // actualEndTime: {
-            //     required: true,
-            //     date: true
-            // },
-            // recordCreatedTime: {
-            //     required: true,
-            //     date: true,
-            // },
-            // pickupTime: {
-            //     required: true,
-            //     date: true,
-            // },
-            recordDes: {
-                required: true,
-                minlength: 5,
-            }
-
-        },
-        messages: {
-            checkinId: "请输入登记编号",
-            startTime: "请选择时间",
-            endTime: "请选择预估结束时间",
-            actualEndTime: "请选择实际结束时间",
-            recordCreatedTime: "创建时间",
-            pickupTime: "请选择车主提车时间",
-            recordDes: "进度描述"
-        },
-        errorPlacement: function (error, element) {
-            element.next().remove();
-            element.after('<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>');
-            element.closest('.form-group').append(error);
-        },
-        highlight: function (element) {
-            $(element).closest('.form-group').addClass('has-error has-feedback');
-        },
-        success: function (label) {
-            var el = label.closest('.form-group').find("input");
-            el.next().remove();
-            el.after('<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>');
-            label.closest('.form-group').removeClass('has-error').addClass("has-feedback has-success");
-            label.remove();
-        },
-        submitHandler: function (form) {
-            alert("submitted!");
-        }
-    })
-});
