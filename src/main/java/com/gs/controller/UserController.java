@@ -3,6 +3,8 @@ package com.gs.controller;
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.User;
 import com.gs.common.bean.ControllerResult;
+import com.gs.common.bean.Pager;
+import com.gs.common.bean.Pager4EasyUI;
 import com.gs.common.util.EncryptUtil;
 import com.gs.service.UserService;
 import org.apache.ibatis.annotations.Param;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 @RequestMapping("/user")
@@ -83,5 +86,21 @@ public class UserController {
             logger.info("验证码输入错误，请输入正确的验证码！");
             return ControllerResult.getFailResult("验证码输入错误，请输入正确的验证码！");
         }
+    }
+
+    /**
+     * 查询所有角色
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value="queryByPager", method = RequestMethod.GET)
+    public Pager4EasyUI<User> queryByPager(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
+        logger.info("分页查询所有角色");
+        Pager pager = new Pager();
+        pager.setPageNo(Integer.valueOf(pageNumber));
+        pager.setPageSize(Integer.valueOf(pageSize));
+        pager.setTotalRecords(userService.count());
+        List<User> users = userService.queryByPager(pager);
+        return new Pager4EasyUI<User>(pager.getTotalRecords(), users);
     }
 }

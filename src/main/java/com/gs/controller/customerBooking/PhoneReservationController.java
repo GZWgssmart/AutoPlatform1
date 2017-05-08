@@ -3,6 +3,7 @@ package com.gs.controller.customerBooking;
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.Appointment;
 import com.gs.bean.MaintainRecord;
+import com.gs.bean.User;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
@@ -30,6 +31,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/appointment")
+
 public class PhoneReservationController {
     private Logger logger = (Logger) LoggerFactory.getLogger(PhoneReservationController.class);
 
@@ -118,7 +120,44 @@ public class PhoneReservationController {
         }
     }
 
-
+    /**
+     * 登记记录模糊查询
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value="blurredQuery", method = RequestMethod.GET)
+    public Pager4EasyUI<Appointment> blurredQuery(HttpServletRequest request, @Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
+        logger.info("登记记录模糊查询");
+        String text = request.getParameter("text");
+        String value = request.getParameter("value");
+        if(text != null && text!="") {
+            Pager pager = new Pager();
+            pager.setPageNo(Integer.valueOf(pageNumber));
+            pager.setPageSize(Integer.valueOf(pageSize));
+            List<Appointment> appointments = null;
+            Appointment appointment = new Appointment();
+            if(text.equals("车主/电话/汽车公司/车牌号")){ // 当多种模糊搜索条件时
+                appointment.setUserName(value);
+                appointment.setCompanyId(value);
+                appointment.setCarPlate(value);
+                appointment.setUserPhone(value);
+            }else if(text.equals("车主")){
+                appointment.setUserName(value);
+            }else if(text.equals("汽车公司")){
+                appointment.setCompanyId(value);
+            }else if(text.equals("车牌号")){
+                appointment.setCarPlate(value);
+            }else if(text.equals("电话")){
+                appointment.setUserPhone(value);
+            }
+            appointments = appointmentService.blurredQuery(pager, appointment);
+            pager.setTotalRecords(appointmentService.countByBlurred(appointment));
+            System.out.print(appointments);
+            return new Pager4EasyUI<Appointment>(pager.getTotalRecords(), appointments);
+        }else{
+            return null;
+        }
+    }
     /**
      * 时间格式化
      */
