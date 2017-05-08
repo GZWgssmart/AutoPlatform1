@@ -28,7 +28,7 @@ $('.form_Year').datetimepicker({
 
 
 var count=[];		//湿度数组
-var accBuyCreatedTime=[];		//时间数组
+var workInfoDatas=[];		//时间数组
 
 
 
@@ -39,7 +39,7 @@ function selectYears() {
     $.ajax({	//使用JQuery内置的Ajax方法
         type: "post",		//post请求方式
         async: true,		//异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
-        url: "/accBuy/queryByCondition",	//请求发送到ShowInfoIndexServlet处
+        url: "/Order/queryByCondition",	//请求发送到ShowInfoIndexServlet处
         data: {"start": start, "end": end, "type":"year"},		//请求内包含一个key为name，value为A0001的参数；服务器接收到客户端请求时通过request.getParameter方法获取该参数值
         dataType: "json",		//返回数据形式为json
         success: function (result) {
@@ -47,19 +47,19 @@ function selectYears() {
             if (result !== null && result.length > 0) {
                 for (var i = 0; i < result.length; i++) {
                     count.push(result[i].count);
-                    accBuyCreatedTime.push(formatterYear(result[i].accBuyCreatedTime));
+                    workInfoDatas.push(formatterYear(result[i].workCreatedTime));
                 }
 
                 myChart.hideLoading();	//隐藏加载动画
 
                 myChart.setOption({		//载入数据
                     xAxis: {
-                        data: accBuyCreatedTime,	//填入X轴数据
+                        data: workInfoDatas,	//填入X轴数据
                     },
                     series: [	//填入系列（内容）数据
                         {
                             // 根据名字对应到相应的系列
-                            name: '下单记录总数',
+                            name: '工单记录总数',
                             data: count
                         }
 
@@ -93,7 +93,7 @@ function selectMonth() {
     $.ajax({	//使用JQuery内置的Ajax方法
         type: "post",		//post请求方式
         async: true,		//异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
-        url: "/accBuy/queryByCondition",	//请求发送到ShowInfoIndexServlet处
+        url: "/Order/queryByCondition",	//请求发送到ShowInfoIndexServlet处
         data: {"start": start, "end": end, "type":"month"},		//请求内包含一个key为name，value为A0001的参数；服务器接收到客户端请求时通过request.getParameter方法获取该参数值
         dataType: "json",		//返回数据形式为json
         success: function (result) {
@@ -102,20 +102,24 @@ function selectMonth() {
 
             if (result != null && result.length > 0) {
                 for (var i = 0; i < result.length; i++) {
+                    console.log(result[i].outTypeId + "aaaaa")
                     count.push(result[i].count);
-                    accBuyCreatedTime.push(formatterMonth(result[i].accBuyCreatedTime));
+                    workInfoDatas.push(formatterMonth(result[i].workCreatedTime));
+                    //挨个取出温度、湿度、压强等值并填入前面声明的温度、湿度、压强等数组
+                    console.log(result[i].inOutCreatedTime)
+
                 }
                 myChart.hideLoading();	//隐藏加载动画
 
 
                 myChart.setOption({		//载入数据
                     xAxis: {
-                        data: accBuyCreatedTime	//填入X轴数据
+                        data: workInfoDatas	//填入X轴数据
                     },
                     series: [	//填入系列（内容）数据
                         {
                             // 根据名字对应到相应的系列
-                            name: '下单记录总数',
+                            name: '工单记录总数',
                             data: count
                         }
                     ]
@@ -144,7 +148,7 @@ function selectDay() {
     $.ajax({	//使用JQuery内置的Ajax方法
         type: "post",		//post请求方式
         async: true,		//异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
-        url: "/accBuy/queryByCondition",	//请求发送到ShowInfoIndexServlet处
+        url: "/Order/queryByCondition",	//请求发送到ShowInfoIndexServlet处
         data: {"start": start, "end": end, "type":"day"},		//请求内包含一个key为name，value为A0001的参数；服务器接收到客户端请求时通过request.getParameter方法获取该参数值
         dataType: "json",		//返回数据形式为json
         success: function (result) {
@@ -156,7 +160,7 @@ function selectDay() {
                     console.log(result[i].outTypeId + "aaaaa")
 
                     count.push(result[i].count);
-                    accBuyCreatedTime.push(formatterDay(result[i].accBuyCreatedTime));
+                    workInfoDatas.push(formatterDay(result[i].workCreatedTime));
                     //挨个取出温度、湿度、压强等值并填入前面声明的温度、湿度、压强等数组
                     console.log(result[i].inOutCreatedTime)
 
@@ -166,12 +170,12 @@ function selectDay() {
 
                 myChart.setOption({		//载入数据
                     xAxis: {
-                        data: accBuyCreatedTime	//填入X轴数据
+                        data: workInfoDatas	//填入X轴数据
                     },
                     series: [	//填入系列（内容）数据
                         {
                             // 根据名字对应到相应的系列
-                            name: '下单记录总数',
+                            name: '工单记录总数',
                             data: count
                         }
                     ]
@@ -200,7 +204,7 @@ function selectQuarter() {
     $.ajax({	//使用JQuery内置的Ajax方法
         type: "post",		//post请求方式
         async: true,		//异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
-        url: "/accBuy/queryByCondition",	//请求发送到ShowInfoIndexServlet处
+        url: "/Order/queryByCondition",	//请求发送到ShowInfoIndexServlet处
         data: {"start": start, "end": end, "type":"quarter"},		//请求内包含一个key为name，value为A0001的参数；服务器接收到客户端请求时通过request.getParameter方法获取该参数值
         dataType: "json",		//返回数据形式为json
         success: function (result) {
@@ -212,7 +216,7 @@ function selectQuarter() {
 
                     count.push(result[i].count);
 
-                    accBuyCreatedTime.push(formatterQuarter(result[i].accBuyCreatedTime));
+                    workInfoDatas.push(formatterQuarter(result[i].workCreatedTime));
                     //挨个取出温度、湿度、压强等值并填入前面声明的温度、湿度、压强等数组
                     console.log(result[i].inOutCreatedTime)
 
@@ -222,12 +226,12 @@ function selectQuarter() {
 
                 myChart.setOption({		//载入数据
                     xAxis: {
-                        data: accBuyCreatedTime	//填入X轴数据
+                        data: workInfoDatas	//填入X轴数据
                     },
                     series: [	//填入系列（内容）数据
                         {
                             // 根据名字对应到相应的系列
-                            name: '下单记录总数',
+                            name: '工单记录总数',
                             data: count
                         }
                     ]
@@ -257,7 +261,7 @@ function selectWeek() {
     $.ajax({	//使用JQuery内置的Ajax方法
         type: "post",		//post请求方式
         async: true,		//异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
-        url: "/accBuy/queryByCondition",	//请求发送到ShowInfoIndexServlet处
+        url: "/Order/queryByCondition",	//请求发送到ShowInfoIndexServlet处
         data: {"start": start, "end": end, "type":"week"},		//请求内包含一个key为name，value为A0001的参数；服务器接收到客户端请求时通过request.getParameter方法获取该参数值
         dataType: "json",		//返回数据形式为json
         success: function (result) {
@@ -268,24 +272,23 @@ function selectWeek() {
                 for (var i = 0; i < result.length; i++) {
                     count.push(result[i].count);
 
-                    accBuyCreatedTime.push(formatterYear(result[i].accBuyCreatedTime) + "第" +  result[i].week + "周");
+                    workInfoDatas.push(formatterYear(result[i].workCreatedTime) + "第" +  result[i].week + "周");
                 }
                 myChart.hideLoading();	//隐藏加载动画
 
 
                 myChart.setOption({		//载入数据
                     xAxis: {
-                        data: accBuyCreatedTime	//填入X轴数据
+                        data: workInfoDatas	//填入X轴数据
                     },
                     series: [	//填入系列（内容）数据
                         {
                             // 根据名字对应到相应的系列
-                            name: '下单记录总数',
+                            name: '工单记录总数',
                             data: count
                         }
                     ]
                 });
-
 
             }
             else {
