@@ -13,6 +13,16 @@ public class MessageSend {
 
     private Date sendCreatedTime;
 
+    private User user;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public String getMessageId() {
         return messageId;
     }

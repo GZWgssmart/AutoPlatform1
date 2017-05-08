@@ -58,6 +58,9 @@
     <div class="modal-dialog" style="width: 790px;height: auto;">
         <div class="modal-content" style="overflow:hidden;">
             <form class="form-horizontal" id="addForm" method="post">
+                <input type="hidden" name="remindId" define="MaintainRemind.">
+                <input id="addLastMaintainTime" type="text" name="lastMaintainTime" define="MaintainRemind.lastMaintainTime">
+                <input id="addLastMaintainMileage" type="text" name="lastMaintainMileage" define="lastMaintainTime.lastMaintainMileage">
                 <div class="modal-header" style="overflow:auto;">
                     <h4>请填写维修维修保养提醒信息</h4>
                 </div>
@@ -65,21 +68,10 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">用户名：</label>
                     <div class="col-sm-7">
-                        <select id="addUserName" name="userId" class="form-control js-data-example-ajax user"
-                                style="width:100%">
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">上次维修保养时间：</label>
-                    <div class="col-sm-7">
-                        <input type="text" name="lastMaintainTime" value="2012-05-15 21:05" id="addDateTimePicker" class="form-control">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">上次汽车行驶里程：</label>
-                    <div class="col-sm-7">
-                        <input type="text" name="lastMaintainMileage" placeholder="请输入上次汽车行驶里程" class="form-control">
+                        <input id="addUserName" type="text" name="userId" readonly class="form-control">
+                        <button id="btn_available" type="button" class="btn btn-default" onclick="showCheckUser();">
+                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>请选择用户
+                        </button>
                     </div>
                 </div>
                 <div class="form-group">
@@ -92,19 +84,22 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">维修保养提醒时间：</label>
                     <div class="col-sm-7">
-                        <input type="text"  name="remindTime" value="2012-05-15 21:05" id="addDateTimePicker1" class="form-control">
+                        <input name="remindTime" readonly class="layui-input">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">维修保养提醒方式：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="remindType" placeholder="请选择维修保养提醒方式" class="form-control">
+                        <select name="remindType" class="form-control js-data-example-ajax">
+                            <option value="短信提醒">短信提醒</option>
+                            <option value="邮箱提醒">邮箱提醒</option>
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">维修保养记录创建时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="remindCreatedTime" value="2012-05-15 21:05" id="addDateTimePicker2" class="form-control">
+                        <input name="remindCreatedTime" readonly class="layui-input">
                     </div>
                 </div>
                 <div class="form-group">
@@ -140,7 +135,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">上次维修保养时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="lastMaintainTime" define="MaintainRemind.lastMaintainTime" class="form-control">
+                        <input id="editLastMaintainTime" name="lastMaintainTime" define="MaintainRemind.lastMaintainTime" readonly class="layui-input">
                     </div>
                 </div>
                 <div class="form-group">
@@ -159,20 +154,22 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">维修保养提醒时间：</label>
                     <div class="col-sm-7">
-                        <input type="text"  name="remindTime" define="MaintainRemind.remindTime" class="form-control">
+                        <input id="editRemindTime" name="remindTime" define="MaintainRemind.remindTime" readonly class="layui-input">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">维修保养提醒方式：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="remindType" define="MaintainRemind.remindType" placeholder="请选择维修保养提醒方式" class="form-control">
+                        <select id="editRemindType" name="remindType" define="MaintainRemind.remindType" class="form-control js-data-example-ajax">
+                            <option value="短信提醒">短信提醒</option>
+                            <option value="邮箱提醒">邮箱提醒</option>
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">提醒记录创建时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="remindCreatedTime" define="MaintainRemind.remindCreatedTime" value="2012-05-15 21:05"
-                               id="editDateTimePicker2" class="form-control">
+                        <input id="editRemindCreatedTime" name="remindCreatedTime" define="MaintainRemind.remindCreatedTime" readonly class="layui-input">
                     </div>
                 </div>
                 <div class="form-group">
@@ -185,6 +182,40 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+<div id="showUserWindow" class="modal fade" aria-hidden="true" style="overflow-y:scroll" data-backdrop="static"
+     keyboard:false>
+    <div class="modal-dialog" style="width: 90%">
+        <div class="modal-content">
+            <div class="modal-body">
+                <span class="glyphicon glyphicon-remove closeModal" onclick="closeUserWin()"></span>
+                <h3>选择用户</h3>
+                <table class="table table-hover" id="addUserTable" style="table-layout: fixed">
+                    <thead>
+                    <tr>
+                        <th data-checkbox="true"></th>
+                        <th data-field="user.userName">
+                            用户名称
+                        </th>
+                        <th data-field="lastMaintainTime" data-formatter="formatterDate">
+                            维修保养时间
+                        </th>
+                        <th data-field="lastMaintainMileage">
+                            汽车行驶里程
+                        </th>
+                    </tr>
+                    </thead>
+                </table>
+                <div class="modal-footer" style="overflow:hidden;">
+                    <button type="button" class="btn btn-default" onclick="closeUserWin()">关闭
+                    </button>
+                    <input type="button" class="btn btn-primary" onclick="checkUser()" value="确定">
+                    </input>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script src="/static/js/jquery.min.js"></script>
 <script src="/static/js/bootstrap.min.js"></script>

@@ -19,12 +19,29 @@
   </resultMap>
 
   <select id="queryByPager" resultMap="BaseResultMap" parameterType="com.gs.common.bean.Pager">
-    select mr.*,u.userId as user_id,u.userName as user_name from t_maintain_remind mr,t_user u where mr.userId = u.userId
+    select mr.*,u.userId as user_id,u.userName as user_name
+    from t_maintain_remind mr,t_user u where mr.userId = u.userId
+    and remindMsg is not null
+    limit #{beginIndex}, #{pageSize}
   </select>
 
   <select id="count" resultType="int">
-    select count(remindId) from t_maintain_remind
+    select count(mr.remindId) from t_maintain_remind mr,t_user u where mr.userId = u.userId and remindMsg is not null
   </select>
 
+  <update id="update" parameterType="maintainremind">
+    update t_maintain_remind set remindMsg=#{remindMsg},remindTime=#{remindTime},remindType=#{remindType},remindCreatedTime=#{remindCreatedTime} where remindId=#{remindId}
+  </update>
+
+  <select id="queryByPagerNull" resultMap="BaseResultMap" parameterType="com.gs.common.bean.Pager">
+    select mr.*,u.userId as user_id,u.userName as user_name
+    from t_maintain_remind mr,t_user u where mr.userId = u.userId
+    and remindMsg is null
+    limit #{pager.beginIndex}, #{pager.pageSize}
+  </select>
+
+  <select id="countNull" resultType="int">
+    select count(mr.remindId) from t_maintain_remind mr,t_user u where mr.userId = u.userId and remindMsg is null
+  </select>
 
 </mapper>

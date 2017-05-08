@@ -198,7 +198,7 @@
 <script src="/static/js/backstage/main.js"></script>
 <script>
     layui.use('laydate', function(){
-//        var laydate = layui.laydate;
+        var laydate = layui.laydate;
 
         var start = {
             format: 'yyyy-MM-dd hh:mm:ss',

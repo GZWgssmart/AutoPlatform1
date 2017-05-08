@@ -15,6 +15,7 @@ function blurredQuery(){
 
 //显示弹窗
 function showEdit() {
+    initDateTimePicker('editForm', 'arriveTime');
     var row = $('table').bootstrapTable('getSelections');
     if (row.length > 0) {
         $("#editWindow").modal('show'); // 显示弹窗
@@ -36,6 +37,7 @@ function showEdit() {
 
 //显示添加
 function showAdd() {
+    initDateTimePicker('addForm', 'arriveTime');
     $("#addWindow").modal('show');
     $("#addButton").removeAttr("disabled");
     validator('addForm'); // 初始化验证

@@ -60,4 +60,9 @@ public class MessageSendServiceImpl implements MessageSendService {
 	public int countByBlurred(MessageSend messageSend) {
 		return 0;
 	}
+
+	@Override
+	public int insertRemind(MessageSend messageSend) {
+		return messageSendDAO.insertRemind(messageSend);
+	}
 }

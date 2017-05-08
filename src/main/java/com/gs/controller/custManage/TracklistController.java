@@ -48,7 +48,7 @@ public class TracklistController {
     private UserService userService;
 
     @ResponseBody
-    @RequestMapping("queryByPager")
+    @RequestMapping(value = "queryByPager", method = RequestMethod.GET)
     public Pager4EasyUI<TrackList> queryByPager(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
         logger.info("分页查看跟踪回访记录");
         Pager pager = new Pager();
@@ -61,7 +61,7 @@ public class TracklistController {
     }
 
     @ResponseBody
-    @RequestMapping("queryName")
+    @RequestMapping(value = "queryName", method = RequestMethod.GET)
     public Pager4EasyUI<TrackList> queryName(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize, TrackList trackList) {
         logger.info("模糊查询跟踪回访记录");
         String text = req.getParameter("text");
@@ -88,7 +88,7 @@ public class TracklistController {
     }
 
     @ResponseBody
-    @RequestMapping("queryCombox")
+    @RequestMapping(value = "queryCombox", method = RequestMethod.GET)
     public List<ComboBox4EasyUI> queryCombox() {
         logger.info("查看用户");
         List<User> users = userService.queryAll();

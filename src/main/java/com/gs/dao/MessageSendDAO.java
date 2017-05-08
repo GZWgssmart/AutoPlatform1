@@ -12,4 +12,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface MessageSendDAO extends BaseDAO<String, MessageSend>{
 
+    public int insertRemind(MessageSend messageSend);
 }
