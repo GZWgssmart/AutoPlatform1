@@ -64,7 +64,7 @@
          ]]>
   </select>
 
-   <!-- &lt;!&ndash;添加数据&ndash;&gt;
+   <!-- 添加数据 -->
   <insert id="insert" keyProperty="id" parameterType="com.gs.bean.WorkInfo">
       <![CDATA[
           INSERT INTO t_work_info
@@ -72,12 +72,7 @@
           VALUES
           (uuid(),#{recordId},#{userId},#{workAssignTime},now(),'Y')
       ]]>
-  </insert>-->
-
-    <!--删除数据-->
-   <!-- <delete id="deleteById">
-        DELETE FROM activiti_proj.t_work_info WHERE workId=#{workId}
-    </delete>-->
+  </insert>
 
     <!--更新数据-->
     <update id="update" keyProperty="workId" parameterType="com.gs.bean.WorkInfo">

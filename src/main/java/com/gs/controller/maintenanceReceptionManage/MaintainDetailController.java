@@ -111,24 +111,28 @@ public class MaintainDetailController {
         if(recordId != null && recordId != "" && ids!= null && ids != "") {
             List<MaintainFixAcc> maintainFixAccs = maintainFixAccService.queryByRecord(ids);
             System.out.print(maintainFixAccs);
-            List<MaterialList> materialLists = new ArrayList<MaterialList>();
-            for (MaintainFixAcc m : maintainFixAccs) {
-                MaterialList materialList = new MaterialList();
-                materialList.setMaintainRecordId(recordId);
-                materialList.setAccId(m.getAccId());
-                materialList.setMaterialCount(m.getAccCount());
-                materialLists.add(materialList);
+            if(maintainFixAccs != null) {
+                    List<MaterialList> materialLists = new ArrayList<MaterialList>();
+                    for (MaintainFixAcc m : maintainFixAccs) {
+                        MaterialList materialList = new MaterialList();
+                        materialList.setMaintainRecordId(recordId);
+                        materialList.setAccId(m.getAccId());
+                        materialList.setMaterialCount(m.getAccCount());
+                        materialLists.add(materialList);
+                    }
+                    materialListService.insertList(materialLists); // 生成物料清单
+                    // 用户确认之后, 生成工单, 指派员工进行施工
+                    WorkInfo w = new WorkInfo();
+                    w.setRecordId(recordId);
+                    workInfoService.insert(w);
+                    // 修改维修保养记录中的开始时间
+                    MaintainRecord maintainRecord = maintainRecordService.queryById(recordId);
+                    maintainRecord.setStartTime(new Date());
+                    maintainRecordService.update(maintainRecord);
+                    return ControllerResult.getSuccessResult("确定成功");
+            }else{
+                return ControllerResult.getFailResult("确定失败, 此维修保养记录中的所有明细中的维修项目并没有配件");
             }
-            materialListService.insertList(materialLists); // 生成物料清单
-            // 用户确认之后, 生成工单, 指派员工进行施工
-            WorkInfo w = new WorkInfo();
-            w.setRecordId(recordId);
-            workInfoService.insert(w);
-            // 修改维修保养记录中的开始时间
-            MaintainRecord maintainRecord = maintainRecordService.queryById(recordId);
-            maintainRecord.setStartTime(new Date());
-            maintainRecordService.update(maintainRecord);
-            return ControllerResult.getSuccessResult("确定成功");
         }else{
             return ControllerResult.getFailResult("确定失败");
         }
