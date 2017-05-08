@@ -52,7 +52,7 @@
                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>添加配件
             </button>
             <button id="btn_editAcc" type="button" class="btn btn-default" onclick="showDetail();">
-                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查看明细
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查看配件
             </button>
         </div>
     </div>
@@ -145,6 +145,41 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+<div id="detailWindow" class="modal fade" aria-hidden="true" style="overflow-y:scroll" data-backdrop="static"
+     keyboard:false>
+    <div class="modal-dialog" style="width: 90%">
+        <div class="modal-content">
+            <div class="modal-body">
+                <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
+                <h3 class="m-t-none m-b">此维修保养记录下的所有明细</h3>
+                <hr>
+                <table class="table table-hover" id="detailTable">
+                    <thead>
+                    <tr>
+                        <th data-radio="true" data-field="status"></th>
+                        <th data-field="maintainName">维修项目名称</th>
+                        <th data-field="maintainHour">维修项目工时</th>
+                        <th data-field="maintainMoney">维修项目基础费用</th>
+                        <th data-field="maintainManHourFee">维修项目工时费</th>
+                        <th data-field="maintainDes">维修项目描述</th>
+                        <th data-field="company.companyName">维修项目所属公司</th>
+                        <th data-field="maintainFixAcc.accId" >配件名称</th>
+                        <th data-field="maintainFixAcc.accCount" >配件数量</th>
+                    </thead>
+                </table>
+                <div id="detailToolbar" class="btn-group">
+                    <button id="btn_editDetail" type="button" class="btn btn-default" onclick="showEditDetail();">
+                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改明细
+                    </button>
+                </div>
+                <div class="modal-footer" style="border: none">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- 添加弹窗 -->
 <div id="addWindow" class="modal fade" style="overflow-y:scroll" data-backdrop="static">

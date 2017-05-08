@@ -11,12 +11,13 @@
     <result column="maintainDes" property="maintainDes" jdbcType="VARCHAR" />
     <result column="companyId" property="companyId" jdbcType="VARCHAR" />
     <result column="maintainStatus" property="maintainStatus" jdbcType="VARCHAR" />
+
     <association property="company" javaType="com.gs.bean.Company">
       <id property="companyId" column="companyId"/>
       <result property="companyName" column="companyName"/>
     </association>
     <association property="maintainFixAcc" javaType="com.gs.bean.MaintainFixAcc">
-      <id property="maintainId" column="maintainId"/>
+      <id property="mainAccId" column="mainAccId"/>
     </association>
     <association property="accessories" javaType="com.gs.bean.Accessories">
       <id property="accId" column="accId"/>
@@ -71,6 +72,16 @@
 		]]>
   </update>
 
+    <select id="queryByDetailsByPager" resultMap="MaintainFixMap">
+      <![CDATA[
+     select fix.*,acc.* from t_maintain_fix fix,t_maintain_fix_acc acc where fix.maintainId = acc.maintainId and fix.maintainId = #{maintainId} limit #{pager.beginIndex}, #{pager.pageSize}
+    ]]>
+    </select>
+  <select id="countByDetails" resultType="int">
+    <![CDATA[
+      select count(maintainId) from t_maintain_fix where mainAccId = #{mainAccId}
+		]]>
+  </select>
 
   <!-- 分页保养查询禁用 -->
   <select id="queryByPagerDisable" resultMap="MaintainFixMap" parameterType="com.gs.common.bean.Pager">
