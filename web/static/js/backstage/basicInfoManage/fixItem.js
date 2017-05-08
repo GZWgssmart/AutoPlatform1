@@ -290,7 +290,6 @@ function showDetail(){
     var row =  $('#table').bootstrapTable('getSelections');
     if(row.length >0) {
         maintainId = row[0].maintainId;
-        alert(row[0].maintainId);
         $("#detailWindow").modal('show');
         initDetailTable('detailTable', '/maintain/queryByDetailsByPager?maintainId='+row[0].maintainId);
     }else{
