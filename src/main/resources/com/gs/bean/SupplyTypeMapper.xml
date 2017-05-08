@@ -29,9 +29,6 @@
 
   <select id="queryByPager" resultMap="supplyTypeMap" parameterType="com.gs.common.bean.Pager">
     <![CDATA[
-      /*  select st.*,co.companyId,co.companyName from t_supply_type st
-        LEFT JOIN t_company co on st.companyId = co.companyId
-        where st.supplyTypeStatus = "Y";*/
         select st.*,cp.companyId,cp.companyName
         from auto_platform.t_supply_type st
         LEFT JOIN auto_platform.t_company cp on st.companyId=cp.companyId

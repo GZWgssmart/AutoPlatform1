@@ -68,13 +68,13 @@
                         <input type="text" name="supplyTypeName" id="name" placeholder="请输入供应商类型" class="form-control">
                     </div>
                 </div>
-                <div class="form-group">
+               <%-- <div class="form-group">
                     <label class="col-sm-3 control-label">供应商类型所属公司：</label>
                     <div class="col-sm-7">
                         <select id="addCompanyName" class="js-example-tags company" name="companyId" style="width:100%">
                         </select>
                     </div>
-                </div>
+                </div>--%>
                  <div class="form-group">
                         <label class="col-sm-3 control-label">供应商类型描述：</label>
                         <div class="col-sm-7">
@@ -85,7 +85,7 @@
                 <div class="modal-footer" >
                     <span id="addError"></span>
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭 </button>
-                    <button id="addButton" type="button" onclick="addSubmit()" class="btn btn-primary">保存</button>
+                    <button id="addButton" type="button" onclick="addSubmit()" class="btn btn-success">添加</button>
                     <input type="reset" name="reset" style="display: none;"/>
                 </div>
             </form>
@@ -109,13 +109,13 @@
                         <input type="text" name="supplyTypeName" define="supplyType.supplyTypeName"  placeholder="请输入供应商类型" class="form-control">
                     </div>
                 </div>
-                <div class="form-group">
+               <%-- <div class="form-group">
                     <label class="col-sm-3 control-label">供应商类型所属公司：</label>
                     <div class="col-sm-7">
                         <select id="editCompanyName" class="js-example-tags company" define="supply.companyId" name="companyId" style="width:100%">
                         </select>
                     </div>
-                </div>
+                </div>--%>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">供应商类型描述：</label>
                     <div class="col-sm-7">
@@ -126,7 +126,7 @@
                 <div class="modal-footer" >
                     <span id="editError"></span>
                     <button type="button" class="btn btn-default"data-dismiss="modal">关闭</button>
-                    <button id="editButton" type="button" onclick="editSubmit()" class="btn btn-primary">保存</button>
+                    <button id="editButton" type="button" onclick="editSubmit()" class="btn btn-success">保存</button>
                 </div>
             </form>
         </div><!-- /.modal-content -->

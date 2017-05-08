@@ -89,6 +89,7 @@ public class SupplyTypeController {
     public ControllerResult addSupplyType(SupplyType supplyType) {
         if (supplyType != null && !supplyType.equals("")) {
             System.out.println(supplyType.toString());
+            supplyType.setCompanyId("a3fba179-3388-11e7-be46-1c3947c698fd");
             supplyTypeService.insert(supplyType);
             logger.info("添加成功");
             return ControllerResult.getSuccessResult("添加成功");
@@ -107,6 +108,7 @@ public class SupplyTypeController {
     @RequestMapping(value = "updateSupplyType", method = RequestMethod.POST)
     public ControllerResult updateSupplyType(SupplyType supplyType) {
         if (supplyType != null && !supplyType.equals("")) {
+            supplyType.setCompanyId("a3fba179-3388-11e7-be46-1c3947c698fd");
             supplyTypeService.update(supplyType);
             logger.info("修改成功");
             return ControllerResult.getSuccessResult("修改成功");
