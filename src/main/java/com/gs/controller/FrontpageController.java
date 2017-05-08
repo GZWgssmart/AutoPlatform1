@@ -53,6 +53,7 @@ public class FrontpageController {
     /*商家详情页面*/
     @RequestMapping(value = "factorydeta",method = RequestMethod.GET)
     public String deta(){
+
         return "Frontpage/Factorydeta";
     }
 
@@ -66,5 +67,11 @@ public class FrontpageController {
     @RequestMapping(value ="reg",method = RequestMethod.GET)
     public String reg(){
         return "Frontpage/registered";
+    }
+
+    /*用户中心页面*/
+    @RequestMapping(value ="userpage",method=RequestMethod.GET)
+    public String userpage(){
+        return "Frontpage/UserIndex";
     }
 }

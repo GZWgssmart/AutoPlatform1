@@ -22,10 +22,10 @@ function validator(formId) {
         },
         fields: {
             userEmail: {
-                message: '邮箱/手机号/用户名不能为空',
+                message: '邮箱/手机号',
                 validators: {
                     notEmpty: {
-                        message: '邮箱/手机号/用户名不能为空'
+                        message: '邮箱/手机号'
                     }
                 }
             },

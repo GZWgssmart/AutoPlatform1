@@ -15,42 +15,7 @@
 <link rel="stylesheet" href="/static/css/animate.css">
 <link rel="stylesheet" href="/static/css/TopBtm.css">
 <link rel="stylesheet" href="/static/css/paging.css">
-<style>
-    .content{
-        margin: 20px 90px;
-    }
-
-    /*搜索框和按钮*/
-    .input-text{
-        width: 350px;
-        height: 40px;
-        border: #01AAED 3px solid ;
-    }
-    .btn{
-        width: 150px;
-        height: 40px;
-        margin-left: -4px;
-        margin-top: -2px;
-        background:#01AAED;
-        color: white;
-        border-radius: 0px;
-        font-size: 18px;
-    }
-    .btn:hover span{
-        color:white;
-    }
-    /*排序*/
-    .sorting {
-        float: right;
-        font-size: 18px;
-        margin-right: 38px;
-    }
-    .sorting li {
-        list-style-type: none;
-
-    }
-
-</style>
+<link rel="stylesheet" href="/static/css/FactoryPageStyle.css">
 <body>
     <%--
 
@@ -63,9 +28,8 @@
                 <ul class="nav-left-ul">
                     <li>欢迎您，请登录</li>
                     <a href="reg"><li>登录</li></a>
-                    <a href=""><li>绑定手机号</li></a>
-                    <a href="" class="right-ul"><li>我的中心</li></a>
-                    <a href="" class="right-ul"><li>消息通知</li></a>
+                    <a href="reg"><li>绑定手机号</li></a>
+                    <a href="userpage" class="right-ul"><li>我的中心</li></a>
                     <div class="clearfix"></div>
                 </ul>
             </div>
@@ -114,7 +78,11 @@
                         </div>
                         <div class="clearfix"></div>
                     </div>
-
+                <c:choose>
+                    <c:when test="${requestScope.company} == null">
+                        <h1>暂无数据</h1>
+                    </c:when>
+                    <c:when test="${requestScope.company} != null">
                     <c:forEach items="${requestScope.company}" var="c">
                         <div class="factory">
                             <div class="f-img">
@@ -157,6 +125,8 @@
                             </div>
                         </div>
                     </c:forEach>
+                    </c:when>
+                </c:choose>
                 </div>
             </div>
             <%--分页--%>
@@ -275,16 +245,5 @@
 <script src="/static/js/bootstrap.min.js"></script>
 <script src="/static/js/jquery.cxselect.min.js"></script>
 <script src="/static/js/general.js"></script>
-<script>
-    /*var contentPath='';
-    $(function () {
-        $.post(contentPath+"/accBuy/queryAll",function (data) {
-            var html = "";
-            for(var i=0;i<data.length;i++){
-                var ls =data[i];
-            }
-            $("#ulul").html(html); //在html页面id=ulul的标签里显示html内容
-        })
-    })*/
-</script>
+
 </html>
