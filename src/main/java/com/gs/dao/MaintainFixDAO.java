@@ -35,7 +35,4 @@ public interface MaintainFixDAO extends BaseDAO<String, MaintainFix>{
 
     public int countByDisableService();
 
-    public List<MaintainFix> queryByDetailsByPager(@Param("pager") Pager pager, @Param("maintainId") String maintainId);
-    public int countByDetails(@Param("maintainId") String maintainId);
-
 }

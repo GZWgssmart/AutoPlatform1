@@ -1,6 +1,7 @@
 package com.gs.service.impl;
 
 import com.gs.bean.Checkin;
+import com.gs.bean.MaintainFix;
 import com.gs.bean.MaintainFixAcc;
 import com.gs.dao.MaintainFixAccDAO;
 import com.gs.service.MaintainFixAccService;
@@ -65,4 +66,15 @@ public class MaintainFixAccServiceImpl implements MaintainFixAccService {
 	public List<MaintainFixAcc> queryByRecord(String fixId) {
 		return maintainFixAccDAO.queryByRecord(fixId);
 	}
+
+	@Override
+	public List<MaintainFixAcc> queryByDetailsByPager(Pager pager, String maintainId) {
+		return maintainFixAccDAO.queryByDetailsByPager(pager, maintainId);
+	}
+
+	@Override
+	public int countByDetails(String maintainId) {
+		return maintainFixAccDAO.countByDetails(maintainId);
+	}
+
 }

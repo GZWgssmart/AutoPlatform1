@@ -6,6 +6,22 @@
     <result column="maintainId" property="maintainId" jdbcType="VARCHAR" />
     <result column="accId" property="accId" jdbcType="VARCHAR" />
     <result column="accCount" property="accCount" jdbcType="INTEGER" />
+    <association property="company" javaType="com.gs.bean.Company">
+      <id property="companyId" column="companyId"/>
+      <result property="companyName" column="companyName"/>
+    </association>
+    <association property="accessories" javaType="com.gs.bean.Accessories">
+      <id property="accId" column="accId"/>
+      <result property="accName" column="accName"/>
+    </association>
+    <association property="maintainFix" javaType="com.gs.bean.MaintainFix">
+      <id property="maintainId" column="maintainId"/>
+      <result property="maintainName" column="maintainName"/>
+      <result property="maintainHour" column="maintainHour"/>
+      <result property="maintainMoney" column="maintainMoney"/>
+      <result property="maintainManHourFee" column="maintainManHourFee"/>
+      <result property="maintainDes" column="maintainDes"/>
+    </association>
   </resultMap>
   <select id="queryByRecord" resultMap="maintainFixAccMap">
     select * from t_maintain_fix_acc where maintainId in (${fixId})
@@ -17,4 +33,15 @@
             insert into t_maintain_fix_acc (mainAccId, maintainId, accId, accCount) VALUES (uuid(),#{maintainId},#{accId},#{accCount})
 		]]>
   </insert>
+
+  <select id="queryByDetailsByPager" resultMap="maintainFixAccMap" parameterType="com.gs.common.bean.Pager">
+    <![CDATA[
+     select fix.*,acc.*,a.accName, c.companyId, c.companyName from t_maintain_fix fix,t_maintain_fix_acc acc,t_accessories a, t_company c where fix.maintainId = acc.maintainId and a.accId = acc.accId and c.companyId = fix.companyId and fix.maintainId = #{maintainId} limit #{pager.beginIndex}, #{pager.pageSize}
+    ]]>
+  </select>
+  <select id="countByDetails" resultType="int">
+    <![CDATA[
+      select count(maintainId) from t_maintain_fix where maintainId = #{maintainId}
+		]]>
+  </select>
 </mapper>

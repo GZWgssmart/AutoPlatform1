@@ -9,7 +9,6 @@
     <result column="maintainManHourFee" property="maintainManHourFee" jdbcType="DOUBLE" />
     <result column="maintainOrFix" property="maintainOrFix" jdbcType="VARCHAR" />
     <result column="maintainDes" property="maintainDes" jdbcType="VARCHAR" />
-    <result column="companyId" property="companyId" jdbcType="VARCHAR" />
     <result column="maintainStatus" property="maintainStatus" jdbcType="VARCHAR" />
 
     <association property="company" javaType="com.gs.bean.Company">
@@ -18,6 +17,8 @@
     </association>
     <association property="maintainFixAcc" javaType="com.gs.bean.MaintainFixAcc">
       <id property="mainAccId" column="mainAccId"/>
+      <result property="accCount" column="accCount"/>
+      <result property="maintainId" column="maintainId"/>
     </association>
     <association property="accessories" javaType="com.gs.bean.Accessories">
       <id property="accId" column="accId"/>
@@ -71,17 +72,6 @@
 			update t_maintain_fix set maintainName = #{maintainName} , maintainHour = #{maintainHour} , maintainMoney = #{maintainMoney} , maintainManHourFee = #{maintainManHourFee} , maintainDes = #{maintainDes} , companyId = #{companyId} , maintainStatus = 'Y' where maintainId = #{maintainId}
 		]]>
   </update>
-
-    <select id="queryByDetailsByPager" resultMap="MaintainFixMap">
-      <![CDATA[
-     select fix.*,acc.* from t_maintain_fix fix,t_maintain_fix_acc acc where fix.maintainId = acc.maintainId and fix.maintainId = #{maintainId} limit #{pager.beginIndex}, #{pager.pageSize}
-    ]]>
-    </select>
-  <select id="countByDetails" resultType="int">
-    <![CDATA[
-      select count(maintainId) from t_maintain_fix where mainAccId = #{mainAccId}
-		]]>
-  </select>
 
   <!-- 分页保养查询禁用 -->
   <select id="queryByPagerDisable" resultMap="MaintainFixMap" parameterType="com.gs.common.bean.Pager">
