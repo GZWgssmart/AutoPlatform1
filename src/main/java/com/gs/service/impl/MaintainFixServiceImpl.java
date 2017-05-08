@@ -33,6 +33,16 @@ public class MaintainFixServiceImpl implements MaintainFixService {
 		return maintainFixDAO.countByDisableService();
 	}
 
+	@Override
+	public List<MaintainFix> queryByDetailsByPager(Pager pager, String maintainId) {
+		return maintainFixDAO.queryByDetailsByPager(pager,maintainId);
+	}
+
+	@Override
+	public int countByDetails(String maintainId) {
+		return maintainFixDAO.countByDisable();
+	}
+
 	@Resource
 	private MaintainFixDAO maintainFixDAO;
 

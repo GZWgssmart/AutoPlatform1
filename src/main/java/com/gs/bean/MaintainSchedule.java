@@ -9,11 +9,23 @@ import java.util.Date;
  */
 public class MaintainSchedule {
 
-    private String maintainScheduleId;
-    private String maintainRecordId;
-    private String maintainScheduleDes;
-    private Date msCreatedTime;
-    private String msStatus;
+    private String maintainScheduleId;//维修保养进度id
+    private String maintainRecordId;//维修保养记录Id
+    private String maintainScheduleDes;//维修保养进度描述
+    private Date msCreatedTime;//维修保养创建时间
+    private String msStatus;//维修保养进度状态
+
+    private MaintainRecord maintainRecord;//维修保养记录表
+
+    public MaintainRecord getMaintainRecord() {
+        return maintainRecord;
+    }
+
+    public void setMaintainRecord(MaintainRecord maintainRecord) {
+        this.maintainRecord = maintainRecord;
+    }
+
+
 
     public String getMaintainScheduleId() {
         return maintainScheduleId;

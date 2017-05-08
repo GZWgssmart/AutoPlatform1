@@ -14,105 +14,7 @@
 <link rel="stylesheet" href="/static/css/animate.css">
 <link rel="stylesheet" href="/static/css/sweetalert.css">
 <link rel="stylesheet" href="/static/css/bootstrap-validate/bootstrapValidator.min.css">
-<style>
-    body,html{
-        margin: 0;
-        padding: 0;
-        min-width: 800px;
-        font-family:Microsoft YaHei,Arial,simsun, Helvetica, sans-serif;
-        overflow-x: hidden;
-    }
-    *{
-        margin:0;
-        padding: 0;
-    }
-    li{
-        list-style-type:none;
-    }
-    .main{
-        width:100%;
-        height: auto;
-    }
-
-    /*第一个导航栏模块*/
-    .nav-first{
-        width:100%;
-        height:auto;
-        background-color: #e6e6e6;
-    }
-    .nav-first ul{
-        margin: 5px 0 ;
-    }
-    .nav-first ul li {
-        float: left;
-        font-size:15px;
-        margin: 0 15px;
-        white-space:nowrap;
-        color:grey;
-    }
-    .nav-first ul a:hover li{
-        color: #0d8ddb;
-    }
-    .right-ul{
-        float: right;
-        margin-right: 10px;
-    }
-    /*底部模块*/
-    .t-bottom{
-        text-align: center;
-        width: 100%;
-        background-color: #0d8ddb;
-    }
-    .t-bottom span{
-        color: white;
-
-    }
-    /*表单部分*/
-    .login-content{
-        background: url(/static/img/Frontpage/sg-login.jpg)repeat;
-        width: 100%;
-        height: 660px;
-        overflow: hidden;
-    }
-    .content{
-        width: 400px;
-        height: auto;
-        margin: 45px auto;
-        padding:25px;
-        box-shadow: 4px 4px 3px #000;
-        background: rgba(0,0,0,0.2);
-        border-radius:5px;
-    }
-    .form-logo{
-        margin-bottom:20px;
-        text-align: center;
-    }
-    .form-group{
-        overflow: hidden;
-    }
-    .form-group .btn{
-        margin-bottom: 20px;
-        color: #000;
-    }
-    .form-group .btn:hover{
-        background: rgba(0,0,0,0.2);
-        border: solid white 1px;
-        color:#fff;
-    }
-    #login{
-        display: block;
-    }
-    #reg{
-        display: none;
-    }
-    .caveat{
-        font-size: 16px;
-        color: red;
-    }
-    .caveat{
-        display:none;
-    }
-</style>
+<link rel="stylesheet" href="/static/css/registeredStyle.css">
 <body>
     <div class="main">
         <%--顶部导航栏--%>
@@ -126,7 +28,7 @@
                         <a href="home"><li>返回首页</li></a>
                         </div>
                         <div class="col-xs-4 col-md-6">
-                            <a href="" class="right-ul"><li>我的中心</li></a>
+                            <a href="userpage" class="right-ul"><li>我的中心</li></a>
                             <div class="clearfix"></div>
                         </div>
                     </div>
@@ -170,7 +72,7 @@
                     </div>
                 </div>
             </div>
-                <div class="content wow fadeInRight animated" id="reg">
+                <div class="content wow fadeInRight animated" id="reg" name="regs">
                     <div class="form-box">
                         <div class="form-logo">
                             <h2 style="color: white">注册账号</h2>

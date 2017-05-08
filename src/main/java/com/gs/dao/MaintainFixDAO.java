@@ -3,6 +3,7 @@ package com.gs.dao;
 import com.gs.bean.MaintainFix;
 import com.gs.common.bean.Pager;
 import org.activiti.engine.impl.Page;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 import sun.applet.Main;
 
@@ -33,5 +34,8 @@ public interface MaintainFixDAO extends BaseDAO<String, MaintainFix>{
     public List<MaintainFix> queryByPagerDisableService(Pager pager);
 
     public int countByDisableService();
+
+    public List<MaintainFix> queryByDetailsByPager(@Param("pager") Pager pager, @Param("maintainId") String maintainId);
+    public int countByDetails(@Param("maintainId") String maintainId);
 
 }

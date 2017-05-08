@@ -2,6 +2,7 @@ package com.gs.service;
 
 import com.gs.bean.MaintainFix;
 import com.gs.common.bean.Pager;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -29,4 +30,7 @@ public interface MaintainFixService extends BaseService<String, MaintainFix>{
     public List<MaintainFix> queryByPagerDisableService(Pager pager);
 
     public int countByDisableService();
+
+    public List<MaintainFix> queryByDetailsByPager(Pager pager, String maintainId);
+    public int countByDetails(@Param("maintainId") String maintainId);
 }

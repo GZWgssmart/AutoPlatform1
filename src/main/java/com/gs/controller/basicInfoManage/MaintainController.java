@@ -14,10 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.text.DateFormat;
@@ -86,6 +83,19 @@ public class MaintainController {
         logger.info("分页查询所有维修保养项目信息");
         List<MaintainFix> maintainFixes = maintainFixService.queryByPagerAll(pager);
         return new Pager4EasyUI<MaintainFix>(pager.getTotalRecords(),maintainFixes);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "queryByDetailsByPager", method = RequestMethod.GET)
+    public Pager4EasyUI queryByDetailsByPager(@Param("maintainId") String maintainId, @Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize){
+        logger.info("分页查询此记录下所有明细");
+        Pager pager = new Pager();
+        pager.setPageNo(Integer.valueOf(pageNumber));
+        pager.setPageSize(Integer.valueOf(pageSize));
+        pager.setTotalRecords(maintainFixService.countByDetails(maintainId));
+        List<MaintainFix> maintainFixes = maintainFixService.queryByDetailsByPager(pager,maintainId);
+        System.out.print(maintainFixes);
+        return new Pager4EasyUI<MaintainFix>(pager.getTotalRecords(), maintainFixes);
     }
 
     /**

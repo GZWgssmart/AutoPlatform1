@@ -157,41 +157,38 @@
                         <p class="clearfix"></p>
                     </div>
                     <div>
-                        <div class="form-group col-md-6 pull-left">
+                        <%--<div class="form-group col-md-6 pull-left">
                             <label class="col-md-4 control-label">供应商所属公司：</label>
                             <div class="col-md-8">
                                 <select id="addCompany" class="js-example-tags company" name="companyId" style="width:100%">
                             </select>
                             </div>
-                        </div>
+                        </div>--%>
                         <div class="form-group col-md-6 pull-left">
                             <label class="col-md-4 control-label">支付宝账号：</label>
                             <div class="col-md-8">
                                 <input type="text"  name="supplyAlipay" placeholder="请输入支付宝账号" class="form-control">
                             </div>
                         </div>
-                        <p class="clearfix"></p>
-                    </div>
-                    <div>
                         <div class="form-group col-md-6 pull-left">
-                            <label class="col-md-4 control-label">开户银行全称：</label>
+                            <label class="col-md-4 control-label">银行卡全称：</label>
                             <div class="col-md-8">
-                                <input type="text" placeholder="请输入开户银行全称" name="supplyBank" class="form-control">
-                            </div>
-                        </div>
-                        <div class="form-group col-md-6 pull-left">
-                            <label class="col-md-4 control-label">开户人姓名：</label>
-                            <div class="col-md-8">
-                                <input type="text" placeholder="请输入开户人姓名"  name="supplyBankAccount"   class="form-control">
+                                <input type="text" placeholder="请输入银行卡全称" name="supplyBank" class="form-control">
                             </div>
                         </div>
                         <p class="clearfix"></p>
                     </div>
                     <div>
                         <div class="form-group col-md-6 pull-left">
-                            <label class="col-md-4 control-label">开户卡号：</label>
+                            <label class="col-md-4 control-label">持卡人姓名：</label>
                             <div class="col-md-8">
-                                <input type="text" placeholder="请输入开户卡号" name="supplyBankNo"  class="form-control">
+                                <input type="text" placeholder="请输入持卡人姓名"  name="supplyBankAccount"   class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6 pull-left">
+                            <label class="col-md-4 control-label">银行卡卡号：</label>
+                            <div class="col-md-8">
+                                <input type="text" placeholder="请输入银行卡卡号" name="supplyBankNo"  class="form-control">
                             </div>
                         </div>
                         <p class="clearfix"></p>
@@ -199,7 +196,7 @@
                     <div class="modal-footer" >
                          <span id="addError"></span>
                          <button type="button" class="btn btn-default" data-dismiss="modal">关闭 </button>
-                         <button id="addButton" type="button" onclick="addSubmit()" class="btn btn-primary">保存</button>
+                         <button id="addButton" type="button" onclick="addSubmit()" class="btn btn-success">添加</button>
                          <input type="reset" name="reset" style="display: none;"/>
                     </div>
                 </div>
@@ -266,39 +263,36 @@
                         <p class="clearfix"></p>
                     </div>
                     <div>
-                        <div class="form-group col-md-6 pull-left">
+                        <%--<div class="form-group col-md-6 pull-left">
                             <label class="col-md-4 control-label">供应商所属公司：</label>
                             <div class="col-md-8">
                                 <select id="editCompany" class="js-example-tags company" define="supply.companyId" name="companyId" style="width:100%">
                                 </select>
                             </div>
-                        </div>
+                        </div>--%>
                         <div class="form-group col-md-6 pull-left">
                             <label class="col-md-4 control-label">支付宝账号：</label>
                             <div class="col-md-8">
                                 <input type="text" define="supply.supplyAlipay"  name="supplyAlipay"  class="form-control">
                             </div>
                         </div>
-                        <p class="clearfix"></p>
-                    </div>
-                    <div>
                         <div class="form-group col-md-6 pull-left">
-                            <label class="col-md-4 control-label">开户银行全称：</label>
+                            <label class="col-md-4 control-label">银行卡全称：</label>
                             <div class="col-md-8">
                                 <input type="text" define="supply.supplyBank" name="supplyBank" class="form-control">
                             </div>
                         </div>
-                        <div class="form-group col-md-6 pull-left">
-                            <label class="col-md-4 control-label">开户人姓名：</label>
-                            <div class="col-md-8">
-                                <input type="text" define="supply.supplyBankAccount"  name="supplyBankAccount"   class="form-control">
-                            </div>
-                        </div>
                         <p class="clearfix"></p>
                     </div>
                     <div>
                         <div class="form-group col-md-6 pull-left">
-                            <label class="col-md-4 control-label">开户卡号：</label>
+                            <label class="col-md-4 control-label">持卡人姓名：</label>
+                            <div class="col-md-8">
+                                <input type="text" define="supply.supplyBankAccount"  name="supplyBankAccount"   class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6 pull-left">
+                            <label class="col-md-4 control-label">银行卡卡号：</label>
                             <div class="col-md-8">
                                 <input type="text" define="supply.supplyBankNo" name="supplyBankNo"  class="form-control">
                             </div>
@@ -308,7 +302,7 @@
                     <div class="modal-footer" >
                          <span id="editError"></span>
                          <button type="button" class="btn btn-default"data-dismiss="modal">关闭</button>
-                         <button id="editButton" type="button" onclick="editSubmit()" class="btn btn-primary">保存</button>
+                         <button id="editButton" type="button" onclick="editSubmit()" class="btn btn-success">保存</button>
                      </div>
                 </div>
             </form>

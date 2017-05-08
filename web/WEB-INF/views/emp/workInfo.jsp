@@ -51,10 +51,10 @@
             <button id="btn_edit" type="button" class="btn btn-default" onclick="showEdit();">
                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
             </button>
-            <button id="searchDisable" type="button" class="btn btn-danger" onclick="showComplete();">
+            <button id="searchDisable" type="button" class="btn btn-danger" onclick="showDisable();">
                 <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询未完成工单
             </button>
-            <button id="searchRapid" type="button" class="btn btn-success" onclick="showDisable();">
+            <button id="searchRapid" type="button" class="btn btn-success" onclick="showComplete();">
                 <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询已完成工单
             </button>
         </div>
