@@ -40,7 +40,7 @@
                 <th data-checkbox="true"></th>
                 <th data-field="userName">姓名</th>
                 <th data-field="userGender" data-formatter="formatterGender">性别</th>
-                <th data-field="role.roleDes" data-formatter="formatterRole">用户角色</th>
+                <th data-formatter="formatterRole">用户角色</th>
                 <th data-field="company" data-formatter="companyFormatter">所属公司</th>
                 <th data-field="userEmail">用户Email</th>
                 <th data-field="userAddress">地址</th>
@@ -111,8 +111,6 @@
                         <div class="form-group">
                             <label class="col-md-3 control-label">角色：</label>
                             <div class="col-md-9">
-                                <%--<select id="addUserRole" name="roleId" class="js-example-tags userRole"--%>
-                                        <%--style="width: 100%;"></select>--%>
                                 <select id="addUserRole" name="roleId" class="js-example-basic-multiple userRole"
                                     multiple="multiple" style="width: 100%;"></select>
                             </div>
@@ -274,7 +272,7 @@
                         <label class="col-md-4 control-label">生日：</label>
                         <div class="col-md-8">
                             <input id="editDatetimepicker" readonly="true" type="text" define="emp.userBirthday"
-                               name="userBirthdayTemp" class="form-control datetimepicker" data-formatter="formatterDate"/>
+                               name="userBirthdayTemp" class="form-control datetimepicker">
                         </div>
                     </div>
                     <p class="clearfix"></p>
@@ -284,6 +282,12 @@
                         <label class="col-md-4 control-label">底薪：</label>
                         <div class="col-md-8">
                             <input type="number" define="emp.userSalary" name="userSalary" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6 pull-left">
+                        <label class="col-md-4 control-label">昵称：</label>
+                        <div class="col-md-8">
+                            <input type="text" name="userNickName" define="emp.userNickName" class="form-control">
                         </div>
                     </div>
                     <%--<div class="form-group col-md-6 pull-left">
@@ -432,8 +436,21 @@
         }
     }
 
-    function formatterRole(val) {
-
+//    格式化角色
+    function formatterRole(value, row, index) {
+        if(row.role != null && row.role!=""){
+            var roles = null;
+            $.each(row.role, function(index, value, item) {
+                if(roles =="" ||roles == null){
+                    roles = row.role.roleDes;
+                }else{
+                    roles += "," + row.role.roleDes;
+                }
+            });
+            return roles;
+        }else{
+            return "-"
+        }
     }
 
     function formatterDateTime(ele, row, index) {
@@ -444,15 +461,18 @@
     function formatterStatus(value, row, index) {
         if (value == 'Y') {
             if(row.role.roleName == '车主') {
-                return "&nbsp;&nbsp;<button type='button' class='btn btn-danger' " +
-                    "onclick='inactive(\"" + '/userBasicManage/updateStatus?id=' + row.userId + '&status=Y' + "\")'>禁用</button>";
+                return "&nbsp;<button type='button' class='btn btn-danger' " +
+                    "onclick='inactive(\"" + '/userBasicManage/updateStatus?id=' + row.userId + '&status=Y' + "\")'>禁用</button>&nbsp;&nbsp;"
+                + "<a onclick='showDetail()' class='btn btn-info btn-sm'><span class='glyphicon glyphicon-fullscreen'></span>详细信息</a>";
             }
-            return "&nbsp;&nbsp;<button type='button' class='btn btn-danger' " +
-                "onclick='inactive(\"" + '/userBasicManage/updateStatus?id=' + row.userId + '&status=Y' + "\")'>辞退</button>";
+            return "&nbsp;<button type='button' class='btn btn-danger' " +
+                "onclick='inactive(\"" + '/userBasicManage/updateStatus?id=' + row.userId + '&status=Y' + "\")'>辞退</button>&nbsp;&nbsp;"
+            + "<a onclick='showDetail()' class='btn btn-info btn-sm'><span class='glyphicon glyphicon-fullscreen'></span>详细信息</a>";
         } else {
             if(row.role.roleName == '车主') {
-                return "&nbsp;&nbsp;<button type='button' class='btn btn-success' " +
-                    "onclick='active(\"" + '/userBasicManage/updateStatus?id=' + row.userId + '&status=N' + "\")'>激活</button>";
+                return "&nbsp;<button type='button' class='btn btn-success' " +
+                    "onclick='active(\"" + '/userBasicManage/updateStatus?id=' + row.userId + '&status=N' + "\")'>激活</button>&nbsp;&nbsp;"
+                + "<a onclick='showDetail()' class='btn btn-info btn-sm'><span class='glyphicon glyphicon-fullscreen'></span>详细信息</a>";
             }
         }
     }

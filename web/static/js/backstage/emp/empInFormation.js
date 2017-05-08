@@ -48,6 +48,14 @@ function showEdit(){
                     type:"warning"
                 }) // 提示类型
             }
+        } else {
+            $("#editWindow").modal('show'); // 显示弹窗
+            $("#editButton").removeAttr("disabled");
+            $('#editUserRole').html('<option value="' + emp.role.roleId + '">' + emp.role.roleName + '</option>').trigger("change");
+            $('#editDatetimepicker').val(formatterDate(emp.userBirthday));
+            $('#editCity_china').val(formatterAddress(emp.userAddress));
+            $("#editForm").fill(emp);
+            validator('editForm');
         }
     }
 }
@@ -202,16 +210,6 @@ function validator(formId) {
 function formSubmit(url, formId, winId) {
     var birthdayDate = new Date(parseInt($("#editDatetimepicker").val()));
     var userBirthday = formatterDate(birthdayDate);
-
-    var roles=[];
-    var obj = document.getElementById("addUserRole");
-    for(var i=0;i<obj.options.length;i++){
-        if(obj.options[i].selected){
-            roles.push(obj.options[i].value);// 收集选中项
-        }
-    }
-    alert(roles);
-
     $.post(url, $("#"+formId).serialize() + "&userBirthday="+userBirthday,
         function (data) {
             if (data.controllerResult.result == "success") {
@@ -261,8 +259,6 @@ function iconUpldSuc(data, winId, formId) {
         $("#addButton").removeAttr("disabled"); // 移除不可点击
         $("input[type=reset]").trigger("click"); // 移除表单中填的值
         $("#addUserRole").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
-        // $("#addUserCompany").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
-
     } else if (controllerResult.result == "fail") {
         swal({title:"",
             text:"添加失败",
@@ -311,4 +307,9 @@ function showReturn(){
             confirmButtonText:"确定", // 提示按钮上的文本
             type:"warning"}) // 提示类型
     }
+}
+
+// 点击显示详细信息 ---------------------- 未完成
+function showDetail() {
+
 }

@@ -32,6 +32,8 @@
     <association property="role" javaType="com.gs.bean.Role">
       <id property="roleId" column="roleId"></id>
       <result property="roleName" column="roleName"></result>
+      <result property="roleDes" column="roleDes"></result>
+      <result property="roleStatus" column="roleStatus"></result>
     </association>
 
   </resultMap>
@@ -52,11 +54,17 @@
   <!-- 修改员工的基本信息 -->
   <update id="update" parameterType="user">
      <![CDATA[
-       update t_user u set u.userName = #{userName}, u.userEmail = #{userEmail},
-            u.userPhone = #{userPhone}, u.userIdentity = #{userIdentity},
-           u.userPwd = #{userPwd}, u.userGender = #{userGender}, u.companyId=#{companyId},
+       update t_user u set u.userName = #{userName}, u.userEmail = #{userEmail}, u.userPhone = #{userPhone},
+            u.userIdentity = #{userIdentity}, u.userGender = #{userGender},u.userNickName=#{userNickName},
            u.userBirthDay = #{userBirthday}, u.userDes = #{userDes}, u.userSalary = #{userSalary}
         where u.userId = #{userId};
+     ]]>
+  </update>
+
+  <!-- 修改密码 -->
+  <update id="updatePwd" parameterType="user">
+    <![CDATA[
+       update t_user u set u.userPwd = #{userPwd} where u.userId = #{userId};
      ]]>
   </update>
 
@@ -77,7 +85,7 @@
   <!-- 分页查询全部 -->
   <select id="queryByPagerAll" resultMap="userBasicManageMap" parameterType="com.gs.common.bean.Pager">
     <![CDATA[
-      select u.*, r.roleName, c.companyId, c.companyName from t_user u
+      select u.*, r.*, c.companyId, c.companyName from t_user u
         left join t_user_role ur on u.userId = ur.userId
         left join t_role r on r.roleId = ur.roleId
         left join t_company c on u.companyId = c.companyId
@@ -88,7 +96,7 @@
   <!-- 分页查询状态为可用的记录 -->
   <select id="queryByPager" resultMap="userBasicManageMap" parameterType="com.gs.common.bean.Pager">
     <![CDATA[
-      select u.*, r.roleId, r.roleName, c.companyId, c.companyName from t_user u
+      select u.*, r.*, c.companyId, c.companyName from t_user u
         left join t_user_role ur on u.userId = ur.userId
         left join t_role r on r.roleId = ur.roleId
         left join t_company c on u.companyId = c.companyId
@@ -100,7 +108,7 @@
   <!-- 分页查询状态为不可用的员工及角色名称 -->
   <select id="queryByPagerDisable" resultMap="userBasicManageMap" parameterType="com.gs.common.bean.Pager">
     <![CDATA[
-      select u.*, r.roleName, c.companyId, c.companyName from t_user u
+      select u.*, r.*, r.roleDes, c.companyId, c.companyName from t_user u
         left join t_user_role ur on u.userId = ur.userId
         left join t_role r on r.roleId = ur.roleId
         left join t_company c on u.companyId = c.companyId
