@@ -31,6 +31,13 @@ public class StatisticsController {
         return mav;
     }
 
+    @RequestMapping("pay")
+    public ModelAndView payPage(){
+        ModelAndView mav = new ModelAndView("statistics/pay");
+        return mav;
+    }
+
+
     @RequestMapping("client")
     public ModelAndView clientPage(){
         ModelAndView mav = new ModelAndView("statistics/client");
@@ -48,11 +55,13 @@ public class StatisticsController {
         ModelAndView mav = new ModelAndView("statistics/usematerials");
         return mav;
     }
-    @RequestMapping("workorder")
+    @RequestMapping("workord")
     public ModelAndView workOrderPage(){
-        ModelAndView mav = new ModelAndView("statistics/workorder");
+        ModelAndView mav = new ModelAndView("statistics/workord");
         return mav;
     }
+
+
 
     @RequestMapping("paysup")
     public ModelAndView paySupPage(){

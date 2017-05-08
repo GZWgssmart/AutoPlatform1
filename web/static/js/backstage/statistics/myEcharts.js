@@ -136,7 +136,14 @@ $.ajax({	//使用JQuery内置的Ajax方法
     }
 })
 
+
 myChart.setOption(option, true);	//载入图表
+
+window.addEventListener('resize', function () {
+    myChart.resize();
+})
+
+
 
 //年的格式化
 function formatterYear(value) {

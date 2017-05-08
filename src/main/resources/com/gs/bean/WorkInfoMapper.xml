@@ -96,6 +96,7 @@
          ]]>
     </update>
 
+    <!--员工工单报表-->
     <select id="queryByCondition" resultMap="BaseResultMap">
         <![CDATA[
    select count(*) as count  ,week(wi.workCreatedTime) as week,wi.workCreatedTime from t_work_info wi, t_user u where wi.userId = u.userId and wi.userId = #{userId} and wi.workStatus = 'Y' and

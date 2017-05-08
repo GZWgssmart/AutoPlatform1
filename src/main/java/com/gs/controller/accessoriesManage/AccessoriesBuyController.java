@@ -2,6 +2,7 @@ package com.gs.controller.accessoriesManage;
 
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.AccessoriesBuy;
+import com.gs.bean.IncomingOutgoing;
 import com.gs.common.bean.ComboBox4EasyUI;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
@@ -207,5 +208,45 @@ public class AccessoriesBuyController {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         dateFormat.setLenient(false);
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "queryByCondition")
+    public List<AccessoriesBuy> queryByCondition(String start, String end, String type){
+        List<AccessoriesBuy> list = null;
+        if (type != null && !type.equals("")) {
+            if (type.equals("year")) {
+                list=accessoriesBuyService.queryByCondition(start, end, "810375d6-33a4-11e7-bbfe-b025aa1dfac1","year");
+            } else if (type.equals("quarter")) {
+                list=accessoriesBuyService.queryByCondition(start, end, "810375d6-33a4-11e7-bbfe-b025aa1dfac1","quarter");
+            } else if (type.equals("month")) {
+                list=accessoriesBuyService.queryByCondition(start, end, "810375d6-33a4-11e7-bbfe-b025aa1dfac1","month");
+            } else if (type.equals("week")) {
+                list=accessoriesBuyService.queryByCondition(start, end, "810375d6-33a4-11e7-bbfe-b025aa1dfac1","week");
+            } else if (type.equals("day")) {
+                list=accessoriesBuyService.queryByCondition(start, end, "810375d6-33a4-11e7-bbfe-b025aa1dfac1","day");
+            }
+        }
+        return list;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "queryByPayCondition")
+    public List<AccessoriesBuy> queryByPayCondition(String start, String end, String type){
+        List<AccessoriesBuy> list = null;
+        if (type != null && !type.equals("")) {
+            if (type.equals("year")) {
+                list=accessoriesBuyService.queryByPayCondition(start, end, "810375d6-33a4-11e7-bbfe-b025aa1dfac1","year");
+            } else if (type.equals("quarter")) {
+                list=accessoriesBuyService.queryByPayCondition(start, end, "810375d6-33a4-11e7-bbfe-b025aa1dfac1","quarter");
+            } else if (type.equals("month")) {
+                list=accessoriesBuyService.queryByPayCondition(start, end, "810375d6-33a4-11e7-bbfe-b025aa1dfac1","month");
+            } else if (type.equals("week")) {
+                list=accessoriesBuyService.queryByPayCondition(start, end, "810375d6-33a4-11e7-bbfe-b025aa1dfac1","week");
+            } else if (type.equals("day")) {
+                list=accessoriesBuyService.queryByPayCondition(start, end, "810375d6-33a4-11e7-bbfe-b025aa1dfac1","day");
+            }
+        }
+        return list;
     }
 }

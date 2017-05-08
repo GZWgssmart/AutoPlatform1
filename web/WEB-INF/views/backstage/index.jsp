@@ -238,7 +238,9 @@
                             </li>
                             <li><a class="J_menuItem" href="/statistics/maintain">维修保养统计</a>
                             </li>
-                            <li><a class="J_menuItem" href="/statistics/workorder">员工工单统计</a>
+                            <li><a class="J_menuItem" href="/statistics/workord">员工工单统计</a>
+                            </li>
+                            <li><a class="J_menuItem" href="/statistics/pay">支付统计</a>
                             </li>
                             <li><a class="J_menuItem" href="/statistics/usematerials">物料使用统计</a>
                             </li>

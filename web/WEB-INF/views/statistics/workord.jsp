@@ -20,7 +20,7 @@
 
 
 <div class='container-fluid'>
-    <h2 class='page-header'>下单统计</h2>
+    <h2 class='page-header'>工单统计</h2>
     <!--
         选项卡：通过BS的类来控制选项卡的样式
     -->
@@ -189,7 +189,7 @@
 </script>
 <!-- 显示Echarts图表 -->
 <script src="/static/js/backstage/statistics/myEcharts.js"></script>
-<script type="text/javascript" src="/static/js/backstage/statistics/maintain.js"></script>
+<script type="text/javascript" src="/static/js/backstage/statistics/workord.js"></script>
 
 <script src="/static/js/contextmenu.js"></script>
 
