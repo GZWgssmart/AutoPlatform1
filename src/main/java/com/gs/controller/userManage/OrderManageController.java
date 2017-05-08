@@ -1,6 +1,7 @@
 package com.gs.controller.userManage;
 
 import ch.qos.logback.classic.Logger;
+import com.gs.bean.IncomingOutgoing;
 import com.gs.bean.WorkInfo;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.ComboBox4EasyUI;
@@ -169,5 +170,31 @@ public class OrderManageController {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         dateFormat.setLenient(false);
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
+    }
+
+    /**
+     * 根据年月日周季去查询所有的工单
+     */
+    @ResponseBody
+    @RequestMapping(value = "queryByCondition")
+    public List<WorkInfo> queryByCondition(String start, String end, String type){
+        List<WorkInfo> list = null;
+        if (type != null && !type.equals("")) {
+            if (type.equals("year")) {
+                list=workInfoService.queryByCondition(start, end,"1","year");
+                for (WorkInfo workInfo : list) {
+                    System.out.println(workInfo);
+                }
+            } else if (type.equals("quarter")) {
+                list=workInfoService.queryByCondition(start, end,"1","quarter");
+            } else if (type.equals("month")) {
+                list=workInfoService.queryByCondition(start, end,"1","month");
+            } else if (type.equals("week")) {
+                list=workInfoService.queryByCondition(start, end,"1","week");
+            } else if (type.equals("day")) {
+                list=workInfoService.queryByCondition(start,end,"1","day");
+            }
+        }
+        return list;
     }
 }

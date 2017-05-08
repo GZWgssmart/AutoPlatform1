@@ -6,31 +6,35 @@
     <result column="inTypeName" property="inTypeName" jdbcType="VARCHAR" />
     <result column="inTypeStatus" property="inTypeStatus" jdbcType="VARCHAR" />
 
+    <association property="company" javaType="com.gs.bean.Company">
+      <id column="companyId" property="companyId"/>
+    </association>
+
 
   </resultMap>
 
   <select id="count" resultType="int" >
     <![CDATA[
-      select count(*) from t_incoming_type i where i.inTypeStatus = 'Y'
+      select count(*) from t_incoming_type i,t_company c where i.companyId = c.companyId  and c.companyId = #{companyId} and i.inTypeStatus = 'Y'
     ]]>
   </select>
 
   <select id="queryByPager" resultMap="incomingTypeMap" parameterType="com.gs.common.bean.Pager">
     <![CDATA[
-        select * from t_incoming_type i where 1 =1 and i.inTypeStatus = 'Y'
+        select i.*, c.companyId from t_incoming_type i,t_company c where i.companyId = c.companyId  and c.companyId = #{companyId} and i.inTypeStatus = 'Y'
     ]]>
     limit #{beginIndex}, #{pageSize}
   </select>
 
   <select id="countByDisable" resultType="int" >
     <![CDATA[
-       select count(*) from t_incoming_type i where i.inTypeStatus = 'N'
+ select count(*) from t_incoming_type i,t_company c where i.companyId = c.companyId  and c.companyId = #{companyId} and i.inTypeStatus = 'N'
     ]]>
   </select>
 
   <select id="queryByPagerDisable" resultMap="incomingTypeMap" parameterType="com.gs.common.bean.Pager">
     <![CDATA[
-         select * from t_incoming_type i where 1 =1 and i.inTypeStatus = 'N'
+      select i.*, c.companyId from t_incoming_type i,t_company c where i.companyId = c.companyId and c.companyId = #{companyId} and i.inTypeStatus = 'N'
     ]]>
     limit #{beginIndex}, #{pageSize}
   </select>
@@ -50,13 +54,13 @@
 
   <insert id="insert" useGeneratedKeys="true" keyProperty="inTypeId" parameterType="incomingType">
     <![CDATA[
-        insert into t_incoming_type(inTypeId, inTypeName, inTypeStatus) values(#{inTypeId}, #{inTypeName}, #{inTypeStatus})
+        insert into t_incoming_type(inTypeId, companyid inTypeName, inTypeStatus) values(#{inTypeId},#{companyId},#{inTypeName}, #{inTypeStatus})
         ]]>
   </insert>
 
   <update id="update" keyProperty="inTypeId" parameterType="incomingType">
     <![CDATA[
-        update t_incoming_type set inTypeName = #{inTypeName}, inTypeStatus = #{inTypeStatus} where inTypeId = #{inTypeId}
+        update t_incoming_type set inTypeName = #{inTypeName}, companyId = #{companyId},inTypeStatus = #{inTypeStatus} where inTypeId = #{inTypeId}
         ]]>
   </update>
 

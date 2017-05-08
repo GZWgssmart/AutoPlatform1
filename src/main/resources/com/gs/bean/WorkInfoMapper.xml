@@ -8,6 +8,8 @@
     <result column="workAssignTime" property="workAssignTime" jdbcType="TIMESTAMP" />
     <result column="workCreatedTime" property="workCreatedTime" jdbcType="TIMESTAMP" />
     <result column="workStatus" property="workStatus" jdbcType="VARCHAR" />
+      <result column="count" property="count" jdbcType="VARCHAR" />
+      <result column="week" property="week" jdbcType="VARCHAR" />
 
     <association property="maintainRecord" javaType="com.gs.bean.MaintainRecord">
         <id column="recordId" property="recordId"></id>
@@ -93,5 +95,29 @@
         UPDATE t_work_info set workStatus='Y' WHERE workId = #{workId}
          ]]>
     </update>
+
+    <select id="queryByCondition" resultMap="BaseResultMap">
+        <![CDATA[
+   select count(*) as count  ,week(wi.workCreatedTime) as week,wi.workCreatedTime from t_work_info wi, t_user u where wi.userId = u.userId and wi.userId = #{userId} and wi.workStatus = 'Y' and
+ wi.workCreatedTime >= #{start} and wi.workCreatedTime <= #{end}
+        ]]>
+        <if test="type =='year'">
+            group by date_format(wi.workCreatedTime, '%Y') ORDER BY wi.workCreatedTime ASC;
+        </if>
+        <if test="type =='quarter'">
+            group by concat(date_format(wi.workCreatedTime, '%Y'),FLOOR((date_format(wi.workCreatedTime, '%m')+2)/3)) ORDER BY wi.workCreatedTime ASC;
+        </if>
+        <if test="type =='month'">
+            group by date_format(wi.workCreatedTime, '%y-%m') ORDER BY wi.workCreatedTime ASC;
+        </if>
+        <if test="type =='week'">
+            group by date_format(wi.workCreatedTime, '%y-%m') ORDER BY wi.workCreatedTime ASC;
+        </if>
+        <if test="type =='day'">
+            group by date(workCreatedTime) ORDER BY wi.workCreatedTime ASC;
+        </if>
+    </select>
+
+
 
 </mapper>

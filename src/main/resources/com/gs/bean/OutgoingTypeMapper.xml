@@ -5,6 +5,10 @@
     <id column="outTypeId" property="outTypeId" jdbcType="VARCHAR" />
     <result column="outTypeName" property="outTypeName" jdbcType="VARCHAR" />
     <result column="outTypeStatus" property="outTypeStatus" jdbcType="VARCHAR" />
+
+    <association property="company" javaType="com.gs.bean.Company">
+      <id column="companyId" property="companyId"/>
+    </association>
   </resultMap>
 
 
@@ -43,13 +47,13 @@
 
   <insert id="insert" useGeneratedKeys="true" keyProperty="outTypeId" parameterType="outGoingType">
     <![CDATA[
-        insert into t_outgoing_type(outTypeId, outTypeName, outTypeStatus) values(#{outTypeId}, #{outTypeName}, #{outTypeStatus})
+        insert into t_outgoing_type(outTypeId,companyId outTypeName, outTypeStatus) values(#{outTypeId},#{companyId}, #{outTypeName}, #{outTypeStatus})
         ]]>
   </insert>
 
   <update id="update" keyProperty="outTypeId" parameterType="outGoingType">
     <![CDATA[
-        update t_outgoing_type set outTypeName = #{outTypeName}, outTypeStatus = #{outTypeStatus} where outTypeId = #{outTypeId}
+        update t_outgoing_type set outTypeName = #{outTypeName},companyId = #{companyId}, outTypeStatus = #{outTypeStatus} where outTypeId = #{outTypeId}
         ]]>
   </update>
 

@@ -15,6 +15,33 @@ public class WorkInfo {
 
     private String workStatus;
 
+    /**
+     * 统计工单记录
+     */
+    private int count;
+
+    /**
+     * 统计周期
+     * @return
+     */
+    private int week;
+
+    public int getWeek() {
+        return week;
+    }
+
+    public void setWeek(int week) {
+        this.week = week;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
     private MaintainRecord maintainRecord;//维修保养记录表
     private User user;
 
@@ -80,5 +107,20 @@ public class WorkInfo {
 
     public void setWorkStatus(String workStatus) {
         this.workStatus = workStatus;
+    }
+
+    @Override
+    public String toString() {
+        return "WorkInfo{" +
+                "workId='" + workId + '\'' +
+                ", recordId='" + recordId + '\'' +
+                ", userId='" + userId + '\'' +
+                ", workAssignTime=" + workAssignTime +
+                ", workCreatedTime=" + workCreatedTime +
+                ", workStatus='" + workStatus + '\'' +
+                ", count=" + count +
+                ", maintainRecord=" + maintainRecord +
+                ", user=" + user +
+                '}';
     }
 }

@@ -3,6 +3,7 @@
 <mapper namespace="com.gs.dao.IncomingOutgoingDAO">
     <resultMap id="incomingOutgoingMap" type="com.gs.bean.IncomingOutgoing">
         <id column="inOutId" property="inOutId" jdbcType="VARCHAR"/>
+        <result column="companyId" property="companyId" jdbcType="VARCHAR"/>
         <result column="inTypeId" property="inTypeId" jdbcType="VARCHAR"/>
         <result column="outTypeId" property="outTypeId" jdbcType="VARCHAR"/>
         <result column="inOutMoney" property="inOutMoney" jdbcType="DOUBLE"/>
@@ -23,6 +24,10 @@
         <association property="user" javaType="com.gs.bean.User">
             <id column="userId" property="userId"/>
             <result column="userName" property="userName"/>
+        </association>
+
+        <association property="company" javaType="com.gs.bean.Company">
+            <id column="companyId" property="companyId"/>
         </association>
     </resultMap>
 
@@ -90,10 +95,8 @@
 
     <select id="queryByMonth" resultMap="incomingOutgoingMap">
         <![CDATA[
-
-        select inTypeId, outTypeId, sum(inOutMoney) as inOutMoney,inOutCreatedTime from t_incoming_outgoing
-    where  inOutStatus = 'Y' and  inOutCreatedTime >= #{start} and inOutCreatedTime <= #{end}
-    GROUP BY month(inOutCreatedTime) order by inOutCreatedTime ASC;
+      select io.inTypeId,  io.outTypeId, sum(io.inOutMoney) as inOutMoney,io.inOutCreatedTime  from t_incoming_outgoing io, t_company c where c.companyId = io.companyId and io.companyId = "1"
+ and io.inOutStatus = 'Y' and  io.inOutCreatedTime >= '2009-01-01' and io.inOutCreatedTime <= '2019-12-31' and io.companyId =${companyId}
       ]]>
     </select>
 
@@ -105,7 +108,6 @@
             GROUP BY day(inOutCreatedTime) order by inOutCreatedTime ASC;
         ]]>
     </select>
-
 
 
     <select id="queryByQuarter" resultMap="incomingOutgoingMap">
@@ -151,7 +153,7 @@
     <insert id="insert" useGeneratedKeys="true" keyProperty="inOutId" parameterType="incomingOutgoing">
     <![CDATA[
 
-        insert into t_incoming_outgoing(inOutId, inTypeId, outTypeId,inOutMoney,inOutCreatedUser,inOutCreatedTime,inOutStatus) values(uuid(), #{inTypeId}, #{outTypeId}, #{inOutMoney}, #{inOutCreatedUser}, now(),'Y')
+        insert into t_incoming_outgoing(inOutId, companyId, inTypeId, outTypeId,inOutMoney,inOutCreatedUser,inOutCreatedTime,inOutStatus) values(uuid(),#{companyId}, #{inTypeId}, #{outTypeId}, #{inOutMoney}, #{inOutCreatedUser}, now(),'Y')
 
         ]]>
   </insert>
@@ -159,7 +161,7 @@
     <update id="update" keyProperty="inOutId" parameterType="incomingOutgoing">
     <![CDATA[
 
-        update t_incoming_outgoing set inTypeId = #{inTypeId}, outTypeId = #{outTypeId}, inOutMoney = #{inOutMoney}, inOutCreatedUser = #{inOutCreatedUser} where inOutId = #{inOutId}
+        update t_incoming_outgoing set inTypeId = #{inTypeId},companyId = #{companyId}, outTypeId = #{outTypeId}, inOutMoney = #{inOutMoney}, inOutCreatedUser = #{inOutCreatedUser} where inOutId = #{inOutId}
 
         ]]>
   </update>

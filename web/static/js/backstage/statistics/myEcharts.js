@@ -4,9 +4,6 @@ var myChart = echarts.init(document.getElementById('main'));
 
 // 指定图表的配置项和数据
 var option = {
-    title: {	//图表标题
-        text: '财务报表'
-    },
     tooltip: {
         trigger: 'axis', //坐标轴触发提示框，多用于柱状、折线图中
         /*
@@ -30,19 +27,24 @@ var option = {
             end: 100
         }
     ],
-    legend: {	//图表上方的类别显示
-        show:true,
-        data:['支出', '收入']
-    },
     color:[
         '#FF3333',	//温度曲线颜色
-        '#53FF53',	//湿度曲线颜色
     ],
     toolbox: {
+        //显示策略，可选为：true（显示） | false（隐藏），默认值为false
+        show: true,
+        //启用功能，目前支持feature，工具箱自定义功能回调处理
         feature: {
-            dataView: {show: true, readOnly: false},
+            //辅助线标志
+            mark: {show: true},
+            //dataZoom，框选区域缩放，自动与存在的dataZoom控件同步，分别是启用，缩放后退
+            //数据视图，打开数据视图，可设置更多属性,readOnly 默认数据视图为只读(即值为true)，可指定readOnly为false打开编辑功能
+            dataView: {show: true, readOnly: true},
+            //magicType，动态类型切换，支持直角系下的折线图、柱状图、堆积、平铺转换
             magicType: {show: true, type: ['line', 'bar']},
+            //restore，还原，复位原始图表
             restore: {show: true},
+            //saveAsImage，保存图片（IE8-不支持）,图片类型默认为'png'
             saveAsImage: {show: true}
         }
     },
@@ -54,7 +56,7 @@ var option = {
         {
             //第一个（左边）Y轴，yAxisIndex为0
             type : 'value',
-            name : '金额',
+            name : '数量',
             /* max: 120,
              min: -40, */
             axisLabel : {
@@ -66,17 +68,11 @@ var option = {
     ],
     series : [	//系列（内容）列表
         {
-            name:'支出',
+            name:'数量',
             type:'line',	//折线图表示（生成温度曲线）
             symbol:'emptycircle',	//设置折线图中表示每个坐标点的符号；emptycircle：空心圆；emptyrect：空心矩形；circle：实心圆；emptydiamond：菱形
             data:[]		//数据值通过Ajax动态获取
-        },
-        {
-            name:'收入',
-            type:'line',	//折线图表示（生成温度曲线）
-            symbol:'emptycircle',	//设置折线图中表示每个坐标点的符号；emptycircle：空心圆；emptyrect：空心矩形；circle：实心圆；emptydiamond：菱形
-            data:[]		//数据值通过Ajax动态获取
-        },
+        }
     ]
 };
 
@@ -140,7 +136,7 @@ $.ajax({	//使用JQuery内置的Ajax方法
     }
 })
 
-myChart.setOption(option);	//载入图表
+myChart.setOption(option, true);	//载入图表
 
 //年的格式化
 function formatterYear(value) {

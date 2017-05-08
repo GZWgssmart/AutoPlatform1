@@ -17,6 +17,8 @@ public class IncomingOutgoing {
 
     private String inOutStatus;
 
+    private String companyId;
+
     private OutgoingType outgoingType;
     private IncomingType incomingType;
     private User user;
@@ -99,6 +101,14 @@ public class IncomingOutgoing {
 
     public void setInOutStatus(String inOutStatus) {
         this.inOutStatus = inOutStatus;
+    }
+
+    public String getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(String companyId) {
+        this.companyId = companyId;
     }
 
     @Override

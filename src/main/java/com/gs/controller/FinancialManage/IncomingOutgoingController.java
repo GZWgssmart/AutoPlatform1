@@ -38,6 +38,7 @@ public class IncomingOutgoingController {
     @ResponseBody
     @RequestMapping(value = "queryByPager",method = RequestMethod.GET)
     public Pager4EasyUI<IncomingOutgoing> queryByPager(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
+
         logger.info("收支记录分页查询");
         Pager pager = new Pager();
         pager.setPageNo(Integer.valueOf(pageNumber));
@@ -45,6 +46,7 @@ public class IncomingOutgoingController {
         pager.setTotalRecords(incomingOutgoingService.count());
         List<IncomingOutgoing> incomingOutgoings = incomingOutgoingService.queryByPager(pager);
         return new Pager4EasyUI<IncomingOutgoing>(pager.getTotalRecords(), incomingOutgoings);
+
     }
 
     @ResponseBody
@@ -83,6 +85,7 @@ public class IncomingOutgoingController {
     @RequestMapping(value = "add",method = RequestMethod.POST)
     public ControllerResult add(IncomingOutgoing incomingOutgoing) {
         logger.info("添加收支记录");
+        incomingOutgoing.setCompanyId("1");
         incomingOutgoingService.insert(incomingOutgoing);
         return ControllerResult.getSuccessResult("添加成功");
     }
@@ -102,6 +105,8 @@ public class IncomingOutgoingController {
     @ResponseBody
     @RequestMapping(value = "queryByCondition")
     public List<IncomingOutgoing> queryByCondition(String start, String end, String type){
+
+
 
         List<IncomingOutgoing> list = null;
         if (type != null && !type.equals("")) {
