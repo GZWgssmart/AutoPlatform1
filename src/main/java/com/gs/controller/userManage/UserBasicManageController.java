@@ -9,6 +9,7 @@ import com.gs.common.bean.ComboBox4EasyUI;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
+import com.gs.common.util.EncryptUtil;
 import com.gs.common.util.FileUtil;
 import com.gs.common.util.UUIDUtil;
 import com.gs.service.UserRoleService;
@@ -25,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 import sun.plugin.util.UIUtil;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.*;
@@ -56,11 +58,13 @@ public class UserBasicManageController {
     @RequestMapping(value = "afterUpdIcon", method = RequestMethod.POST)
     public Map afterSubForm(@RequestParam("userIcon") MultipartFile file, @RequestParam("userId") String userId, HttpServletRequest request){
         String fileName = file.getOriginalFilename();
-        String savePath = "E://" + userId + ".jpg";
+        HttpSession session = request.getSession();
+
+        String savePath = Constants.UPLOAD_HEAD + Methods.createNewFolder() + "/";
         Map map= new HashMap();
-        System.out.print(fileName);
-        if(fileSave(file, savePath)) {
-            userService.updIcon(userId,savePath);   // 设置头像
+        System.out.println(fileName);
+        if(fileSave(file, savePath,userId,session)) {
+            userService.updIcon(userId,savePath+userId+".jpg");   // 设置头像
             map.put("controllerResult", ControllerResult.getSuccessResult("提交成功"));
             map.put("imgPath", savePath);
         } else {
@@ -74,30 +78,25 @@ public class UserBasicManageController {
      */
     @ResponseBody
     @RequestMapping(value = "addUser", method = RequestMethod.POST)
-    public ControllerResult addUser(MultipartFile file, HttpServletRequest request, User user) {
+    public Map addUser(User user, HttpServletRequest request ) {
         logger.info("添加人员");
+        Map map= new HashMap();
         String province = request.getParameter("province");
         String city = request.getParameter("city");
         String area = request.getParameter("area");
         user.setUserAddress(province + "-" + city + "-" + area);
-        try {
-            String fileName = Methods.createName(file.getOriginalFilename());
-            String path = Methods.uploadPath("head") + fileName;
-            if(!file.isEmpty()){
-                file.transferTo(new File(path));
-                user.setUserIcon(Constants.UPLOAD_HEAD + Methods.createNewFolder() + "/" + fileName);
-            }else{
-                user.setUserIcon("img/default.jpg");
-            }
-        }catch (IOException e){
-        }
-        System.out.println("头像路径: -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=" + user.getUserIcon());
-        UserRole userRole = new UserRole();
-        userRole.setUserId(user.getUserId());
-        userRole.setRoleId(user.getRoleId());
+        user.setUserPwd(EncryptUtil.md5Encrypt("123123"));
+
         userService.insert(user);
+        User userTemp= userService.queryByPhone(user.getUserPhone());
+        map.put("user",userTemp);
+
+        UserRole userRole = new UserRole();
+        userRole.setUserId(userTemp.getUserId());
+        userRole.setRoleId(user.getRoleId());
         userRoleService.insert(userRole);
-        return ControllerResult.getSuccessResult("添加成功");
+        map.put("controllerResult", ControllerResult.getSuccessResult("添加成功"));
+        return map;
     }
 
     @ResponseBody
@@ -106,8 +105,8 @@ public class UserBasicManageController {
         String fileName = file.getOriginalFilename();
         String savePath = "E://abc.jpg";
         Map map= new HashMap();
-        System.out.print(fileName);
-        if(fileSave(file, savePath)) {
+        System.out.println(fileName);
+        if(fileSave(file, savePath,"",null)) {
             map.put("controllerResult", ControllerResult.getSuccessResult("上传成功"));
             map.put("imgPath", savePath);
         } else {
@@ -116,20 +115,29 @@ public class UserBasicManageController {
         return map;
     }
 
-    private boolean fileSave(MultipartFile sourceFile, String savePath) {
+    private boolean fileSave(MultipartFile sourceFile, String savePath,String userId, HttpSession session) {
         byte[] temp = new byte[1024];
         int len = -1;
+        String rootPath = session.getServletContext().getRealPath("/");
+        savePath =rootPath + "/"+ savePath ;
         try {
-            File saveFile = new File(savePath);
+            File saveDir = new File(savePath);
+            if(!saveDir.isDirectory()) {
+                saveDir.mkdirs();
+            }
+
+            File saveFile = new File(savePath + userId + ".jpg");
             InputStream fis = sourceFile.getInputStream();
             OutputStream fos = new FileOutputStream(saveFile);
             while((len = fis.read(temp)) != -1) {
                 fos.write(temp, 0 ,len);
             }
+            System.out.println(saveFile.getAbsolutePath());
             fis.close();
             fos.flush();
             fos.close();
         } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
         return true;
@@ -140,16 +148,22 @@ public class UserBasicManageController {
      */
     @ResponseBody
     @RequestMapping(value = "updateUser", method =RequestMethod.POST)
-    public ControllerResult updateUser(HttpServletRequest request, User user) {
+    public Map updateUser(User user,HttpServletRequest request) {
+        Map map = new HashMap();
+
+        String province = request.getParameter("editProvince");
+        String city = request.getParameter("editCity");
+        String area = request.getParameter("editArea");
+        user.setUserAddress(province + "-" + city + "-" + area);
+        userService.update(user);
+
         UserRole userRole = new UserRole();
-//        userRole.setUserRoleId();
         userRole.setUserId(user.getUserId());
         userRole.setRoleId(user.getRoleId());
-
-        userService.update(user);
         userRoleService.update(userRole);
         logger.info("修改成功");
-        return ControllerResult.getSuccessResult("修改成功");
+        map.put("controllerResult", ControllerResult.getSuccessResult("修改成功"));
+        return map;
     }
 
     @ResponseBody
@@ -234,6 +248,13 @@ public class UserBasicManageController {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         dateFormat.setLenient(false);
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "queryById", method = RequestMethod.POST)
+    public User queryById(@Param("userId") String userId) {
+        logger.info("根据id查询该id的详细信息");
+        return userService.queryById(userId);
     }
 
 }

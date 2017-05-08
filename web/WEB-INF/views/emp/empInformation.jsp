@@ -40,10 +40,10 @@
                 <th data-checkbox="true"></th>
                 <th data-field="userName">姓名</th>
                 <th data-field="userGender" data-formatter="formatterGender">性别</th>
-                <th data-field="role.roleName">用户角色</th>
-                <th data-field="company.companyName">所属公司</th>
+                <th data-field="role.roleDes" data-formatter="formatterRole">用户角色</th>
+                <th data-field="company" data-formatter="companyFormatter">所属公司</th>
                 <th data-field="userEmail">用户Email</th>
-                <th data-field="userAddress" center>地址</th>
+                <th data-field="userAddress">地址</th>
                 <th data-field="userPhone">用户手机号</th>
                 <th data-field="userIdentity">身份证号</th>
                 <th data-field="userWeChat">微信</th>
@@ -86,13 +86,13 @@
                     <div class="col-md-7">
                         <div class="form-group">
                             <label class="col-md-3 control-label">用户头像：</label>
-                            <div class="col-md-9">
+                            <div class="col-md-10">
                                 <div class="container kv-main">
                                     <div class="ibox-title">
                                         <div class="input-group">
                                             <div class="input-group-btn">
                                             </div>
-                                            <input id="file" name="file" type="file" class="form-control" multiple
+                                            <input id="file" name="userIconTemp" type="file" class="form-control" multiple
                                                    class="file-loading"/>
                                         </div>
                                     </div>
@@ -111,8 +111,10 @@
                         <div class="form-group">
                             <label class="col-md-3 control-label">角色：</label>
                             <div class="col-md-9">
-                                <select id="addUserRole" name="roleId" class="js-example-tags userRole"
-                                        style="width: 100%;"></select>
+                                <%--<select id="addUserRole" name="roleId" class="js-example-tags userRole"--%>
+                                        <%--style="width: 100%;"></select>--%>
+                                <select id="addUserRole" name="roleId" class="js-example-basic-multiple userRole"
+                                    multiple="multiple" style="width: 100%;"></select>
                             </div>
                         </div>
                         <div class="form-group">
@@ -137,7 +139,7 @@
                             <label class="col-md-3 control-label">电话：</label>
                             <div class="col-md-9">
                                 <input type="number" id="addUserPhone" placeholder="手机号码为11位"
-                                       class="form-control userPhone"
+                                       class="form-control userPhone" maxlength="11"
                                        aria-describedby="sizing-addon2" name="userPhone"/>
                             </div>
                         </div>
@@ -161,7 +163,7 @@
                         <div class="form-group col-md-6">
                             <label class="col-md-4 control-label">身份证：</label>
                             <div class="col-md-8">
-                                <input type="number" id="addUserIdentity" name="userIdentity"
+                                <input type="number" id="addUserIdentity" name="userIdentity" maxlength="18"
                                        placeholder="请输入身份证号" class="form-control userIdentity">
                             </div>
                         </div>
@@ -272,8 +274,7 @@
                         <label class="col-md-4 control-label">生日：</label>
                         <div class="col-md-8">
                             <input id="editDatetimepicker" readonly="true" type="text" define="emp.userBirthday"
-                                   name="userBirthday"
-                                   class="form-control datetimepicker"/>
+                               name="userBirthdayTemp" class="form-control datetimepicker" data-formatter="formatterDate"/>
                         </div>
                     </div>
                     <p class="clearfix"></p>
@@ -285,30 +286,33 @@
                             <input type="number" define="emp.userSalary" name="userSalary" class="form-control">
                         </div>
                     </div>
-                    <div class="form-group col-md-6 pull-left">
+                    <%--<div class="form-group col-md-6 pull-left">
                         <label class="col-md-4 control-label">所属公司：</label>
                         <div class="col-md-8">
                             <select id="editUserCompany" name="companyId" define="emp.companyId"
                                     class="form-control userCompany" style="width: 100%;"></select>
                         </div>
-                    </div>
+                    </div>--%>
                     <p class="clearfix"></p>
                 </div>
                 <div>
                     <div class="form-group col-md-12 pull-right">
                         <label class="col-md-2 control-label" style="top: 9px;right:5px">地址：</label>
-                        <div class="col-md-9">
+                        <div class="col-md-9" id="address" style="margin-top: 10px;display: block;">
+                            <input type="text" define="emp.userAddress" class="form-control">
+                        </div>
+                        <div class="col-md-9" id="userAddress" style="display: none;">
                             <fieldset id="editCity_china">
                                 <div class="pull-left">
-                                    省份：<select class="province" disabled="disabled" name="editProvince"></select>
+                                    省份：<select class="province" disabled="disabled" id="editProvince" name="editProvince"></select>
                                 </div>
                                 <div class="pull-left">
                                     &nbsp;&nbsp;&nbsp;城市：<select class="city" disabled="disabled"
-                                                                 name="editCity"></select>
+                                        id="editCity" name="editCity"></select>
                                 </div>
                                 <div class="pull-left">
                                     &nbsp;&nbsp;&nbsp;地区：<select class="area" disabled="disabled"
-                                                                 name="editArea"></select>
+                                        id="editArea" name="editArea"></select>
                                 </div>
                             </fieldset>
                         </div>
@@ -317,7 +321,8 @@
                 <div class="modal-footer">
                     <span id="editError"></span>
                     <button type="button" class="btn btn-default" data-dismiss="modal"> 关闭</button>
-                    <button id="editButton" onclick="editSubmit();" type="submit" class="btn btn-primary btn-sm"> 保存
+                    <button id="editButton" onclick="editSubmit();" type="submit" class="btn btn-primary btn-sm">
+                        保存
                     </button>
                 </div>
             </form>
@@ -333,8 +338,8 @@
                 <input type="hidden" id="delNoticeId"/>
                 <div class="modal-footer" style="text-align: center;">
                     <h2>确认删除吗?</h2>
-                    <button type="button" class="btn btn-default"
-                            data-dismiss="modal">关闭
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        关闭
                     </button>
                     <button type="sumbit" class="btn btn-primary" onclick="del()">
                         确认
@@ -369,6 +374,9 @@
 
 </body>
 <script>
+
+    $(".js-example-basic-multiple").select2();
+
     $(function () {
         //0.初始化fileinput
         var oFileInput = new FileInput();
@@ -424,6 +432,10 @@
         }
     }
 
+    function formatterRole(val) {
+
+    }
+
     function formatterDateTime(ele, row, index) {
         return new Date(ele).toLocaleString();
     }
@@ -466,6 +478,20 @@
         selects: ['province', 'city', 'area'],
         nodata: 'none'
     });
+
+    function companyFormatter(el,row,index){
+        if(el!=null) {
+            return el.companyName;
+        }
+        return "汽修公司"
+    }
+
+//  修改时，点击地址的文本框后，文本框隐藏，地址下拉选择显示
+    var address = $("#address");
+    address.click(function () {
+        address.css('display', 'none');
+        $('#userAddress').css('display', 'block');
+    })
 
 </script>
 </html>

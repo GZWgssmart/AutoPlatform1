@@ -27,5 +27,5 @@ public class Constants {
 
     public static final String UPLOAD_LOGO = "uploads/logo/";
 
-    public static final String UPLOAD_HEAD = "uploads/head/";
+    public static final String UPLOAD_HEAD = "static/uploads/head/";    // 修改上传头像路径 xmf
 }

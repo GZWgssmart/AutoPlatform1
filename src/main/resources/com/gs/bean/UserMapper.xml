@@ -122,6 +122,12 @@
     ]]>
   </select>
 
+  <!-- 根据id查询所有员工的基本信息 -->
+  <select id="queryById" resultMap="userBasicManageMap" parameterType="String">
+    <![CDATA[
+      select * from t_user u where u.userId = #{userId};
+    ]]>
+  </select>
 
   <select id="queryRoles" parameterType="String" resultType="String">
     SELECT roleName FROM auto_platform.t_role WHERE roleStatus = 'Y' and roleId

@@ -171,8 +171,8 @@
                     <li>
                         <a href="#"><i class="fa fa-ambulance"></i> <span class="nav-label">派工领料管理</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
-                            <li><a class="J_menuItem" href="pickingControll/materialsIndex">物料清单</a>
-                            </li>
+                            <li><a class="J_menuItem" href="pickingControll/materialsIndex">物料清单</a></li>
+                            <li><a class="J_menuItem" href="pickingControll/assignstaffIndex">指派员工</a></li>
                         </ul>
                     </li>
                     <li>
