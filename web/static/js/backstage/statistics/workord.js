@@ -273,6 +273,7 @@ function selectWeek() {
                     count.push(result[i].count);
 
                     workInfoDatas.push(formatterYear(result[i].workCreatedTime) + "第" +  result[i].week + "周");
+
                 }
                 myChart.hideLoading();	//隐藏加载动画
 

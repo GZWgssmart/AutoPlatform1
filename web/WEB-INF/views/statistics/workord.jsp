@@ -20,7 +20,7 @@
 
 
 <div class='container-fluid'>
-    <h2 class='page-header'>工单统计</h2>
+    <h2 class='page-header'>支付统计</h2>
     <!--
         选项卡：通过BS的类来控制选项卡的样式
     -->
