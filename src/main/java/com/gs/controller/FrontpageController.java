@@ -1,10 +1,7 @@
 package com.gs.controller;
 
-import com.gs.bean.AccessoriesBuy;
 import com.gs.bean.Company;
-import com.gs.service.AccessoriesBuyService;
 import com.gs.service.CompanyService;
-import com.gs.service.SupplyService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
