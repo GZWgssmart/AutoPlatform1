@@ -58,21 +58,21 @@ CREATE TABLE `t_role` (
   `roleStatus` varchar(2) DEFAULT NULL COMMENT '角色状态，Y表示可用，N表示不可用',
   PRIMARY KEY (`roleId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-INSERT INTO `t_role` VALUES ('7ff4f1c5-3205-11e7-bc72-507b9d765567', 'systemSuperAdmin', '系统超级管理员', 'Y');
-INSERT INTO `t_role` VALUES ('80095901-3205-11e7-bc72-507b9d765567', 'systemOrdinaryAdmin', '系统普通管理员', 'Y');
-INSERT INTO `t_role` VALUES ('8010cecf-3205-11e7-bc72-507b9d765567', 'companySuperAdmin', '公司超级管理员', 'Y');
-INSERT INTO `t_role` VALUES ('80195a53-3205-11e7-bc72-507b9d765567', 'companyOrdinaryAdmin', '公司普通管理员', 'Y');
-INSERT INTO `t_role` VALUES ('8020abdc-3205-11e7-bc72-507b9d765567', 'companyReceptionist', '汽车公司接待员', 'Y');
-INSERT INTO `t_role` VALUES ('802895f4-3205-11e7-bc72-507b9d765567', 'companyTotalTC', '汽车公司总技师', 'Y');
-INSERT INTO `t_role` VALUES ('802fd749-3205-11e7-bc72-507b9d765567', 'companyTechnician', '汽车公司技师', 'Y');
-INSERT INTO `t_role` VALUES ('80360abc-3205-11e7-bc72-507b9d765567', 'companyApprentice', '汽车公司学徒', 'Y');
-INSERT INTO `t_role` VALUES ('803f0384-3205-11e7-bc72-507b9d765567', 'companySales', '汽车公司销售人员', 'Y');
-INSERT INTO `t_role` VALUES ('804532c4-3205-11e7-bc72-507b9d765567', 'companyFinancial', '汽车公司财务人员', 'Y');
-INSERT INTO `t_role` VALUES ('804cc69c-3205-11e7-bc72-507b9d765567', 'companyProcurement', '汽车公司采购人员', 'Y');
-INSERT INTO `t_role` VALUES ('8052af73-3205-11e7-bc72-507b9d765567', 'companyLibraryTube', '汽车公司库管人员', 'Y');
-INSERT INTO `t_role` VALUES ('805a2613-3205-11e7-bc72-507b9d765567', 'companyHR', '汽车公司人力资源管理部', 'Y');
-INSERT INTO `t_role` VALUES ('80602224-3205-11e7-bc72-507b9d765567', 'otherPersonnel', '其他人员', 'Y');
-INSERT INTO `t_role` VALUES ('8067fa42-3205-11e7-bc72-507b9d765567', 'owner', '车主', 'Y');
+INSERT INTO `t_role` VALUES ('7ff4f1c5-3205-11e7-bc72-507b9d765567', '系统超级管理员', '系统超级管理员', 'Y');
+INSERT INTO `t_role` VALUES ('80095901-3205-11e7-bc72-507b9d765567', '系统普通管理员', '系统普通管理员', 'Y');
+INSERT INTO `t_role` VALUES ('8010cecf-3205-11e7-bc72-507b9d765567', '公司超级管理员', '公司超级管理员', 'Y');
+INSERT INTO `t_role` VALUES ('80195a53-3205-11e7-bc72-507b9d765567', '公司普通管理员', '公司普通管理员', 'Y');
+INSERT INTO `t_role` VALUES ('8020abdc-3205-11e7-bc72-507b9d765567', '汽车公司接待员', '汽车公司接待员', 'Y');
+INSERT INTO `t_role` VALUES ('802895f4-3205-11e7-bc72-507b9d765567', '汽车公司总技师', '汽车公司总技师', 'Y');
+INSERT INTO `t_role` VALUES ('802fd749-3205-11e7-bc72-507b9d765567', '汽车公司技师', '汽车公司技师', 'Y');
+INSERT INTO `t_role` VALUES ('80360abc-3205-11e7-bc72-507b9d765567', '汽车公司学徒', '汽车公司学徒', 'Y');
+INSERT INTO `t_role` VALUES ('803f0384-3205-11e7-bc72-507b9d765567', '汽车公司销售人员', '汽车公司销售人员', 'Y');
+INSERT INTO `t_role` VALUES ('804532c4-3205-11e7-bc72-507b9d765567', '汽车公司财务人员', '汽车公司财务人员', 'Y');
+INSERT INTO `t_role` VALUES ('804cc69c-3205-11e7-bc72-507b9d765567', '汽车公司采购人员', '汽车公司采购人员', 'Y');
+INSERT INTO `t_role` VALUES ('8052af73-3205-11e7-bc72-507b9d765567', '汽车公司库管人员', '汽车公司库管人员', 'Y');
+INSERT INTO `t_role` VALUES ('805a2613-3205-11e7-bc72-507b9d765567', '汽车公司人力资源管理部', '汽车公司人力资源管理部', 'Y');
+INSERT INTO `t_role` VALUES ('80602224-3205-11e7-bc72-507b9d765567', '其他人员', '其他人员', 'Y');
+INSERT INTO `t_role` VALUES ('8067fa42-3205-11e7-bc72-507b9d765567', '车主', '车主', 'Y');
 
 /**
 模块表
@@ -405,7 +405,7 @@ CREATE TABLE `t_checkin` (
 */
 DROP TABLE IF EXISTS `t_maintain_record`;
 CREATE TABLE `t_maintain_record` (
-  `recordId` varchar(36) NOT NULL COMMENT '维修保养记录编号，UUID,主键',
+   `recordId` varchar(36) NOT NULL COMMENT '维修保养记录编号，UUID,主键',
   `checkinId` varchar(36) DEFAULT NULL COMMENT '维修保养登记编号，来源于t_checkin表',
   `startTime` datetime DEFAULT NULL COMMENT '维修保养开始时间',
   `endTime` datetime DEFAULT NULL COMMENT '维修保养预估结束时间',
@@ -415,6 +415,7 @@ CREATE TABLE `t_maintain_record` (
   `recordDes` varchar(500) DEFAULT NULL COMMENT '维修保养记录描述',
   `recordStatus` varchar(2) DEFAULT NULL COMMENT '维修保养记录状态，Y表示可用，N表示不可用',
   `currentStatus` varchar(100) DEFAULT NULL COMMENT '标明此维修保养记录当前状态是什么',
+  `ifConfirm` varchar(2) DEFAULT NULL COMMENT '是否用户签字, 进行维修保养',
   PRIMARY KEY (`recordId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -436,11 +437,13 @@ CREATE TABLE `t_maintain_detail` (
 */
 DROP TABLE IF EXISTS `t_maintain_schedule`;
 CREATE TABLE `t_maintain_schedule` (
-  `maintainScheduleId` varchar(36) DEFAULT NULL COMMENT '维修保养进度编号，UUID,主键',
+ 	`maintainScheduleId` varchar(36) DEFAULT NULL COMMENT '维修保养进度编号，UUID,主键',
   `maintainRecordId` varchar(36) DEFAULT NULL COMMENT '维修保养记录编号，来源于t_maintain_record表',
   `maintainScheduleDes` varchar(500) DEFAULT NULL COMMENT '维修保养进度描述',
   `msCreatedTime` datetime DEFAULT NULL COMMENT '维修保养进度创建时间',
-  `msStatus` varchar(2) DEFAULT NULL COMMENT '维修保养进度状态，Y表示可用，N表示不可用'
+  `msStatus` varchar(2) DEFAULT NULL COMMENT '维修保养进度状态，Y表示可用，N表示不可用',
+  `currentStatus` varchar(2) DEFAULT NULL COMMENT '标记此进度是否完成'
+  PRIMARY KEY (`maintainScheduleId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /**
