@@ -57,7 +57,7 @@
 			<dt><i class="Hui-iconfont">&#xe62c;</i> 账号管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
-					<li><a data-href="home" data-title="账号信息" href="javaScirpt:;">账号信息</a></li>
+					<li><a data-href="accountinfo" data-title="账号信息" href="javaScirpt:;">账号信息</a></li>
 					<li><a data-href="picture-list.html" data-title="修改密码" href="javascript:void(0)">修改密码</a></li>
 				</ul>
 		</dd>
@@ -74,17 +74,21 @@
 			<dt><i class="Hui-iconfont">&#xe637;</i> 维修保养<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
+					<li><a data-href="" data-title="维修保养记录" href="javascript:void(0)">维修保养记录</a></li>
+					<li><a data-href="product-brand.html" data-title="维修保养提醒" href="javascript:void(0)">维修保养提醒</a></li>
 					<li><a data-href="product-brand.html" data-title="查看维修保养进度" href="javascript:void(0)">查看维修保养进度</a></li>
-					<li><a data-href="product-list.html" data-title="支付记录" href="javascript:void(0)">支付记录</a></li>
+					<li><a data-href="product-list.html" data-title="维修保养明细" href="javascript:void(0)">维修保养明细</a></li>
+
 			</ul>
 		</dd>
 	</dl>
 		<dl id="menu-comments">
-			<dt><i class="Hui-iconfont">&#xe70c;</i> 结算提车<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+			<dt><i class="Hui-iconfont">&#xe70c;</i> 消费统计<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
-					<li><a data-href="http://h-ui.duoshuo.com/admin/" data-title="提车提醒" href="javascript:;">提车提醒</a></li>
+					<li><a data-href="product-list.html" data-title="消费记录" href="javascript:void(0)">消费记录</a></li>
 					<li><a data-href="feedback-list.html" data-title="收费单据" href="javascript:void(0)">收费单据</a></li>
+					<li><a data-href="product-list.html" data-title="我的评价" href="javascript:void(0)">我的评价</a></li>
 			</ul>
 		</dd>
 	</dl>

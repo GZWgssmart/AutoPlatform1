@@ -15,7 +15,7 @@
 <link rel="stylesheet" href="/static/css/sweetalert.css">
 <link rel="stylesheet" href="/static/css/bootstrap-validate/bootstrapValidator.min.css">
 <link rel="stylesheet" href="/static/css/registeredStyle.css">
-<body>
+<body onkeydown="keydown()">
     <div class="main">
         <%--顶部导航栏--%>
         <div class="nav nav-first">
@@ -145,7 +145,12 @@
             });
         };
     };
-
+    /*回车登录*/
+    function keydown(){
+        if(event.keyCode == 13){
+            document.getElementById("loginButton").click();
+        }
+    }
     $(function () {
         function bodyScroll(event) {
             event.preventDefault();
