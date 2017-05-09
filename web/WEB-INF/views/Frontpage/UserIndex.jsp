@@ -1,114 +1,182 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<!DOCTYPE html>
-<html lang="zh-cn">
+﻿<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!DOCTYPE HTML>
+<html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <meta name="renderer" content="webkit">
-    <title>个人中心</title>
-    <link rel="stylesheet" href="/static/css/pintuer.css">
-    <link rel="stylesheet" href="/static/css/bootstrap.css">
-    <link rel="stylesheet" href="/static/css/admin.css">
-    <script src="/static/js/jquery.min.js"></script>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<link rel="Bookmark" href="/favicon.ico" >
+<link rel="Shortcut Icon" href="/favicon.ico" />
+
+<link rel="stylesheet" type="text/css" href="/static/h-ui/css/H-ui.css" />
+<link rel="stylesheet" type="text/css" href="/static/h-ui/css/H-ui.admin.css" />
+<link rel="stylesheet" type="text/css" href="/static/h-ui/css/iconfont.css" />
+<link rel="stylesheet" type="text/css" href="/static/h-ui/css/skin.css" id="skin" />
+<link rel="stylesheet" type="text/css" href="/static/h-ui/css/style.css" />
+
+<title>H-ui.admin 3.0</title>
+<meta name="keywords" content="">
+<meta name="description" content="">
+	<style>
+	</style>
 </head>
-<style>
-    /*第一个导航栏模块*/
-    *{
-        margin: 0;
-        padding: 0;
-    }
-    .nav-first{
-        width:100%;
-        height:auto;
-        background-color: #e6e6e6;
-        overflow: hidden;
-    }
-    .nav-first ul{
-        margin: 5px 0;
-    }
-    .nav-first ul li {
-        float: left;
-        font-size:15px;
-        margin: 0 15px;
-        white-space:nowrap;
-        color:grey;
-    }
-    .nav-first ul a:hover li{
-        color: #0d8ddb;
-    }
-    .right-ul{
-        float: right;
-        margin-right: 10px;
-    }
-    .leftnav h2{
-        margin-top:0;
-        margin-bottom:0;
-    }
-</style>
-<body style="background-color:#f2f9fd;">
-<div class="nav-first">
-    <div class="nav-left">
-        <ul class="nav-left-ul">
-            <li>欢迎您，请登录</li>
-            <a href="reg"><li>登录</li></a>
-            <a href="home"><li>返回首页</li></a>
-            <a href="userpage" class="right-ul"><li>我的中心</li></a>
-            <div class="clearfix"></div>
-        </ul>
-    </div>
-    <div class="clearfix"></div>
+<body>
+<header class="navbar-wrapper">
+	<div class="navbar navbar-fixed-top">
+		<div class="container-fluid cl" style="background: #93a1a1;"> <h2 class="logo navbar-logo f-l mr-10 hidden-xs" style="padding: 0;">个人中心</h2>
+			<a aria-hidden="false" class="nav-toggle Hui-iconfont visible-xs" href="javascript:;">&#xe667;</a>
+			<nav class="nav navbar-nav">
+				<ul class="cl">
+					<li class=""><a href="home" class="dropDown_A"><i class="Hui-iconfont">&#xe6d4;</i> 返回首页</a>
+				</li>
+			</ul>
+		</nav>
+			<nav id="Hui-userbar" class="nav navbar-nav navbar-userbar hidden-xs">
+				<ul class="cl">
+					<li>用户名字</li>
+					<li class="dropDown dropDown_hover">
+						<a href="#" class="dropDown_A">admin <i class="Hui-iconfont">&#xe6d5;</i></a>
+						<ul class="dropDown-menu menu radius box-shadow">
+							<li><a href="#">切换账户</a></li>
+							<li><a href="#">退出</a></li>
+					</ul>
+				</li>
+					<li id="Hui-msg"> <a href="#" title="消息"><span class="badge badge-danger">1</span><i class="Hui-iconfont" style="font-size:18px">&#xe68a;</i></a> </li>
+
+			</ul>
+		</nav>
+	</div>
 </div>
-<div class="header bg-main">
-  <div class="logo margin-big-left fadein-top">
-    <h3><img src="images/y.jpg" class="radius-circle rotate-hover" height="50" />个人中心</h3>
-  </div>
+</header>
+
+<aside class="Hui-aside">
+	<div class="menu_dropdown bk_2">
+		<dl id="menu-article">
+			<dt><i class="Hui-iconfont">&#xe62c;</i> 账号管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+			<dd>
+				<ul>
+					<li><a data-href="home" data-title="账号信息" href="javaScirpt:;">账号信息</a></li>
+					<li><a data-href="picture-list.html" data-title="修改密码" href="javascript:void(0)">修改密码</a></li>
+				</ul>
+		</dd>
+	</dl>
+		<dl id="menu-picture">
+			<dt><i class="Hui-iconfont">&#xe6b4;</i> 我的预约<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+			<dd>
+				<ul>
+					<li><a data-href="picture-list.html" data-title="查看预约" href="javascript:void(0)">查看预约</a></li>
+			</ul>
+		</dd>
+	</dl>
+		<dl id="menu-product">
+			<dt><i class="Hui-iconfont">&#xe637;</i> 维修保养<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+			<dd>
+				<ul>
+					<li><a data-href="product-brand.html" data-title="查看维修保养进度" href="javascript:void(0)">查看维修保养进度</a></li>
+					<li><a data-href="product-list.html" data-title="支付记录" href="javascript:void(0)">支付记录</a></li>
+			</ul>
+		</dd>
+	</dl>
+		<dl id="menu-comments">
+			<dt><i class="Hui-iconfont">&#xe70c;</i> 结算提车<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+			<dd>
+				<ul>
+					<li><a data-href="http://h-ui.duoshuo.com/admin/" data-title="提车提醒" href="javascript:;">提车提醒</a></li>
+					<li><a data-href="feedback-list.html" data-title="收费单据" href="javascript:void(0)">收费单据</a></li>
+			</ul>
+		</dd>
+	</dl>
+
 </div>
-<div class="leftnav">
-  <div class="leftnav-title"><strong><span class="icon-list"></span>菜单列表</strong></div>
-  <h2><span class="icon-user"></span>账号设置</h2>
-  <ul style="display:block">
-    <li><a href="info.html" target="right">账号信息</a></li>
-    <li><a href="pass.html" target="right">修改密码</a></li>
-  </ul>
-  <h2><span class="icon-phone-square"></span>我的预约</h2>
-  <ul>
-    <li><a href="list.html" target="right">电话预约</a></li>
-    <li><a href="add.html" target="right">微信预约</a></li>
-    <li><a href="cate.html" target="right">网上预约</a></li>
-  </ul>
-    <h2><span class="icon-pencil-square-o"></span>维修保养</h2>
-    <ul>
-        <li><a href="list.html" target="right">查看维修保养进度</a></li>
-        <li><a href="list.html" target="right">支付记录</a></li>
-    </ul>
-    <h2><span class="icon-money"></span>结算提车</h2>
-    <ul>
-        <li><a href="list.html" target="right">提车提醒</a></li>
-        <li><a href="list.html" target="right">收费单据</a></li>
-    </ul>
+</aside>
+<div class="dislpayArrow hidden-xs"><a class="pngfix" href="javascript:void(0);" onClick="displaynavbar(this)"></a></div>
+<section class="Hui-article-box">
+	<div id="Hui-tabNav" class="Hui-tabNav hidden-xs">
+		<div class="Hui-tabNav-wp">
+			<ul id="min_title_list" class="acrossTab cl">
+				<li class="active">
+					<span title="我的桌面" data-href="welcome.html">我的桌面</span>
+					<em></em></li>
+		</ul>
+	</div>
 </div>
+	<div id="iframe_box" class="Hui-article">
+		<div class="show_iframe">
+			<div style="display:none" class="loading"></div>
+			<iframe scrolling="yes" frameborder="0" src="welcome.html"></iframe>
+	</div>
+</div>
+</section>
+
+<div class="contextMenu" id="Huiadminmenu">
+	<ul>
+		<li id="closethis">关闭当前 </li>
+		<li id="closeall">关闭全部 </li>
+</ul>
+</div>
+<!--_footer 作为公共模版分离出去-->
+<script type="text/javascript" src="/static/h-ui/js/jquery.min.js"></script>
+<script type="text/javascript" src="/static/h-ui/js/layer.js"></script>
+<script type="text/javascript" src="/static/h-ui/js/H-ui.min.js"></script>
+<script type="text/javascript" src="/static/h-ui/js/H-ui.admin.js"></script>
+<!--/_footer 作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="/static/h-ui/js/jquery.contextmenu.r2.js"></script>
 <script type="text/javascript">
 $(function(){
-  $(".leftnav h2").click(function(){
-	  $(this).next().slideToggle(200);	
-	  $(this).toggleClass("on"); 
-  })
-  $(".leftnav ul li a").click(function(){
-	    $("#a_leader_txt").text($(this).text());
-  		$(".leftnav ul li a").removeClass("on");
-		$(this).addClass("on");
-  })
+	
 });
-</script>
-<ul class="bread">
-  <li><a href="{:U('/home')}" target="right" class="icon-home"> 首页</a></li>
-  <li><a href="##" id="a_leader_txt">网站信息</a></li>
-</ul>
-<div class="admin">
-  <iframe scrolling="auto" rameborder="0" src="info.html" name="right" width="100%" height="100%"></iframe>
-</div>
-<div style="text-align:center;">
-</div>
+/*个人信息*/
+function myselfinfo(){
+	layer.open({
+		type: 1,
+		area: ['300px','200px'],
+		fix: false, //不固定
+		maxmin: true,
+		shade:0.4,
+		title: '查看信息',
+		content: '<div>管理员信息</div>'
+	});
+}
+
+/*资讯-添加*/
+function article_add(title,url){
+	var index = layer.open({
+		type: 2,
+		title: title,
+		content: url
+	});
+	layer.full(index);
+}
+/*图片-添加*/
+function picture_add(title,url){
+	var index = layer.open({
+		type: 2,
+		title: title,
+		content: url
+	});
+	layer.full(index);
+}
+/*产品-添加*/
+function product_add(title,url){
+	var index = layer.open({
+		type: 2,
+		title: title,
+		content: url
+	});
+	layer.full(index);
+}
+/*用户-添加*/
+function member_add(title,url,w,h){
+	layer_show(title,url,w,h);
+}
+
+
+</script> 
+
+
 </body>
 </html>

@@ -114,7 +114,7 @@
                 </div>
             </div>
             <div class="button-box">
-                <a href="home" class="btn zoomIn wow animated" data-wow-delay="0.5s" style="width: 200px;">立即进入</a>
+                <a href="home" class="btn zoomIn wow animated" data-wow-delay="0.3s" style="width: 200px;">立即进入</a>
             </div>
         </div>
         <%--主内容二--%>
