@@ -134,14 +134,14 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">汽车品牌：</label>
                             <div class="col-sm-7">
-                                <select id="addCarBrand" class="js-example-tags carBrand" name="brandId" style="width:100%">
+                                <select  id="addCarBrand" class="js-example-tags carBrand" name="brandId" style="width:100%">
                                 </select>
                             </div>
                         </div>
                         <div id="addModelDiv" style="display: none" class="form-group">
                             <label class="col-sm-3 control-label">汽车车型：</label>
                             <div class="col-sm-7">
-                                <select id="addCarModel" class="js-example-tags carModel" name="modelId" style="width:100%">
+                                <select   id="addCarModel"class="js-example-tags carModel" name="modelId" style="width:100%">
                                 </select>
                             </div>
                         </div>
@@ -155,27 +155,27 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">汽车颜色：</label>
                             <div class="col-sm-7">
-                                <select id="addCarColor" class="js-example-tags carColor" name="colorId" style="width:100%">
+                                <select  class="js-example-tags carColor" name="colorId" style="width:100%">
                                 </select>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">汽车车牌：</label>
                             <div class="col-sm-7">
-                                <select id="addCarPlate" class="js-example-tags carPlate" name="plateId" style="width:100%">
+                                <select  class="js-example-tags carPlate" name="plateId" style="width:100%">
                                 </select>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">车牌号码：</label>
                             <div class="col-sm-7">
-                                <input id="addPlate" name="carPlate" placeholder="请输入车牌号码" class="form-control"/>
+                                <input  name="carPlate" placeholder="请输入车牌号码" class="form-control"/>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">已预约&nbsp;|&nbsp;未预约：</label>
                             <div class="col-sm-7">
-                                <select id="addcurrentStatus" class="js-example-tags form-control" name="currentStatus">
+                                <select  class="js-example-tags form-control" name="currentStatus">
                                     <option value="已预约">已预约</option>
                                     <option value="未预约">未预约</option>
                                 </select>
@@ -184,7 +184,7 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">保养&nbsp;|&nbsp;维修：</label>
                             <div class="col-sm-7">
-                                <select id="addMaintainOrFix" class="js-example-tags form-control" name="maintainOrFix">
+                                <select  class="js-example-tags form-control" name="maintainOrFix">
                                     <option value="保养">保养</option>
                                     <option value="维修">维修</option>
                                 </select>
