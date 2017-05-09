@@ -14,12 +14,14 @@
 
     <association property="maintainRecord" javaType="com.gs.bean.MaintainRecord">
       <id column="recordId" property="recordId"/>
+      <result column="checkinId" property="checkinId"/>
       <result column="startTime" property="startTime"/>
       <result column="endTime" property="endTime"/>
       <result column="actualEndTime" property="actualEndTime"/>
       <result column="recordCreatedTime" property="recordCreatedTime"/>
       <result column="pickupTime" property="pickupTime"/>
       <result column="recordDes" property="recordDes"/>
+      <result column="recordStatus" property="recordStatus"/>
 
         <association property="checkin" javaType="com.gs.bean.Checkin">
           <id column="checkinId" property="checkinId"></id>
@@ -77,8 +79,7 @@
     <![CDATA[
         select c.*, ck.*, cc.colorId, cc.colorName, cp.plateId, cp.plateName,
         cm.modelId, cm.modelName, cb.brandId, cb.brandName, company.companyId, company.companyName,
-         m.recordId, m.startTime, m.endTime, m.actualEndTime, m.recordCreatedTime,
-         m.pickupTime, m.recordDes from t_checkin ck, t_car_brand cb,
+         m.* from t_checkin ck, t_car_brand cb,
         t_car_color cc, t_car_model cm, t_car_plate cp, t_company company,
         t_charge_bill c, t_maintain_record m
         where c.maintainRecordId = m.recordId and
@@ -106,8 +107,7 @@
     <![CDATA[
         select c.*, ck.*, cc.colorId, cc.colorName, cp.plateId, cp.plateName,
         cm.modelId, cm.modelName, cb.brandId, cb.brandName, company.companyId, company.companyName,
-         m.recordId, m.startTime, m.endTime, m.actualEndTime, m.recordCreatedTime,
-         m.pickupTime, m.recordDes from t_checkin ck, t_car_brand cb,
+         m.* from t_checkin ck, t_car_brand cb,
         t_car_color cc, t_car_model cm, t_car_plate cp, t_company company,
         t_charge_bill c, t_maintain_record m
         where c.maintainRecordId = m.recordId and
@@ -119,19 +119,19 @@
     limit #{beginIndex}, #{pageSize}
   </select>
 
-  <select id="queryById" resultType="chargeBill">
+  <select id="queryById" resultMap="chargeBillMap">
     <![CDATA[
         select c.*, ck.*, cc.colorId, cc.colorName, cp.plateId, cp.plateName,
         cm.modelId, cm.modelName, cb.brandId, cb.brandName, company.companyId, company.companyName,
         company.companyAddress, company.companyTel, company.companyLogo,
-         m.recordId, m.startTime, m.endTime, m.actualEndTime, m.recordCreatedTime,
-         m.pickupTime, m.recordDes from t_checkin ck, t_car_brand cb,
+         m.* from t_checkin ck, t_car_brand cb,
         t_car_color cc, t_car_model cm, t_car_plate cp, t_company company,
         t_charge_bill c, t_maintain_record m
         where c.maintainRecordId = m.recordId and
         m.checkinId = ck.checkinId and ck.brandId = cb.brandId
         and ck.colorId = cc.colorId and ck.modelId = cm.modelId
-        and ck.plateId = cp.plateId and ck.companyId = company.companyId and chargeBillId = #{id}
+        and ck.plateId = cp.plateId and ck.companyId = company.companyId
+        and c.chargeBillStatus = 'Y' and c.chargeBillId = #{id}
     ]]>
   </select>
 
