@@ -37,11 +37,12 @@ public class OrderManageController {
 
     @Resource
     private WorkInfoService workInfoService;
+    //private MaintainRecordService maintainRecordService
 
     @ResponseBody
     @RequestMapping(value = "queryAll",method = RequestMethod.GET)
     public List<ComboBox4EasyUI> queryAllWork(){
-        logger.info("查询所有订单");
+        logger.info("查询所有工单");
         List<WorkInfo> workInfosList = workInfoService.queryAll();
         List<ComboBox4EasyUI> comboxs = new ArrayList<ComboBox4EasyUI>();
         for(WorkInfo work : workInfosList){
@@ -53,9 +54,6 @@ public class OrderManageController {
         return comboxs;
     }
 
-
-
-
     /*
      * 分页查询
      * @param pageNumber
@@ -66,7 +64,7 @@ public class OrderManageController {
     @ResponseBody
     @RequestMapping(value = "queryByPager",method = RequestMethod.GET)
     public Pager4EasyUI<WorkInfo> queryByPager(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
-        logger.info("收入类型分页查询");
+        logger.info("工单分页查询");
         Pager pager = new Pager();
         pager.setPageNo(Integer.valueOf(pageNumber));
         pager.setPageSize(Integer.valueOf(pageSize));
@@ -75,6 +73,17 @@ public class OrderManageController {
         return new Pager4EasyUI<WorkInfo>(pager.getTotalRecords(), worksList);
     }
 
+    @ResponseBody
+    @RequestMapping(value = "queryBySche",method = RequestMethod.GET)
+    public Pager4EasyUI<WorkInfo> queryBySche(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
+        logger.info("维修保养记录分页查询");
+        Pager pager = new Pager();
+        pager.setPageNo(Integer.valueOf(pageNumber));
+        pager.setPageSize(Integer.valueOf(pageSize));
+        pager.setTotalRecords(workInfoService.count());
+        List<WorkInfo> worksList = workInfoService.queryByPagerschelude(pager);
+        return new Pager4EasyUI<WorkInfo>(pager.getTotalRecords(), worksList);
+    }
 
 /*    @ResponseBody
     @RequestMapping(value="queryByUserId/{id}",method="RequestMethod.GET")
@@ -129,7 +138,7 @@ public class OrderManageController {
     @RequestMapping(value = "update", method = RequestMethod.POST)
     public ControllerResult updateWork(WorkInfo workInfo) {
         if(workInfo!=null && !workInfo.equals("")){
-            logger.info("修改订单");
+            logger.info("修改工单");
             System.out.println("fdjsldkfls");
             workInfoService.update(workInfo);
             return ControllerResult.getSuccessResult("修改成功");

@@ -8,17 +8,76 @@
     <result column="workAssignTime" property="workAssignTime" jdbcType="TIMESTAMP" />
     <result column="workCreatedTime" property="workCreatedTime" jdbcType="TIMESTAMP" />
     <result column="workStatus" property="workStatus" jdbcType="VARCHAR" />
-      <result column="count" property="count" jdbcType="VARCHAR" />
-      <result column="week" property="week" jdbcType="VARCHAR" />
+    <result column="count" property="count" jdbcType="VARCHAR" />
+    <result column="week" property="week" jdbcType="VARCHAR" />
 
     <association property="maintainRecord" javaType="com.gs.bean.MaintainRecord">
-        <id column="recordId" property="recordId"></id>
         <id column="checkinId" property="checkinId"/>
+        <result column="startTime" property="startTime"/>
+        <result column="endTime" property="endTime"/>
+        <result column="actualEndTime" property="actualEndTime"/>
+        <result column="recordCreatedTime" property="recordCreatedTime"/>
+        <result column="pickupTime" property="pickupTime"/>
+        <result column="recordDes" property="recordDes"/>
+
+          <association property="checkin" javaType="com.gs.bean.Checkin">
+                <id column="checkinId" property="checkinId" jdbcType="VARCHAR" />
+                <result column="userId" property="userId" jdbcType="VARCHAR" />
+                <result column="appointmentId" property="appointmentId" jdbcType="VARCHAR" />
+                <result column="userName" property="userName" jdbcType="VARCHAR" />
+                <result column="userPhone" property="userPhone" jdbcType="VARCHAR" />
+                <result column="brandId" property="brandId" jdbcType="VARCHAR" />
+                <result column="colorId" property="colorId" jdbcType="VARCHAR" />
+                <result column="modelId" property="modelId" jdbcType="VARCHAR" />
+                <result column="plateId" property="plateId" jdbcType="VARCHAR" />
+                <result column="carPlate" property="carPlate" jdbcType="VARCHAR" />
+                <result column="arriveTime" property="arriveTime" jdbcType="TIMESTAMP" />
+                <result column="carMileage" property="carMileage" jdbcType="DOUBLE" />
+                <result column="carThings" property="carThings" jdbcType="VARCHAR" />
+                <result column="intactDegrees" property="intactDegrees" jdbcType="VARCHAR" />
+                <result column="userRequests" property="userRequests" jdbcType="VARCHAR" />
+                <result column="maintainOrFix" property="maintainOrFix" jdbcType="VARCHAR" />
+                <result column="checkinCreatedTime" property="checkinCreatedTime" jdbcType="TIMESTAMP" />
+                <result column="companyId" property="companyId" jdbcType="VARCHAR" />
+                <result column="checkinStatus" property="checkinStatus" jdbcType="VARCHAR" />
+                <result column="nowOil" property="nowOil" jdbcType="DOUBLE" />
+                <result column="ifClearCar" property="ifClearCar" jdbcType="VARCHAR" />
+
+                <association property="brand" javaType="com.gs.bean.CarBrand">
+                    <id property="brandId" column="brandId"/>
+                    <result property="brandName" column="brandName"/>
+                </association>
+
+                <association property="color" javaType="com.gs.bean.CarColor">
+                    <id property="colorId" column="colorId"/>
+                    <result property="colorName" column="colorName"/>
+                </association>
+
+                <association property="plate" javaType="com.gs.bean.CarPlate">
+                    <id property="plateId" column="plateId"/>
+                    <result property="plateName" column="plateName"/>
+                </association>
+
+                <association property="model" javaType="com.gs.bean.CarModel">
+                    <id property="modelId" column="modelId"/>
+                    <result property="modelName" column="modelName"/>
+                </association>
+
+                <association property="company" javaType="com.gs.bean.Company">
+                <id property="companyId" column="companyId"/>
+                <result property="companyName" column="companyName"/>
+            </association>
+          </association>
     </association>
 
     <association property="user" javaType="com.gs.bean.User">
         <id column="userId" property="userId"/>
-        <id column="userNickName" property="userNickName"/>
+        <result column="userNickName" property="userNickName"/>
+        <result column="userEmail" property="userEmail" />
+        <result column="userPhone" property="userPhone" />
+        <result column="userNickName" property="userNickName" />
+        <result column="userIdentity" property="userIdentity" />
+        <result column="userName" property="userName" />
     </association>
   </resultMap>
 
@@ -34,11 +93,11 @@
     ]]>
     </select>
 
-    <!--分页所有已完成查询全部-->
+    <!--分页所有完成查询全部-->
     <select id="queryByPager" resultMap="BaseResultMap" parameterType="com.gs.common.bean.Pager">
         <![CDATA[
             select w.*,tmR.recordId,tmR.checkinId,u.userId,
-            u.userNickName FROM t_work_info w
+            tmR.pickupTime,u.userNickName FROM t_work_info w
             Left JOIN t_maintain_Record tmR on w.recordId = tmR.recordId
             Left JOIN t_user u on w.userId = u.userId
             where w.workStatus = 'Y' order by w.workCreatedTime Desc
@@ -46,8 +105,29 @@
         limit #{beginIndex}, #{pageSize}
     </select>
 
+    <!--分页查询维修保养记录-->
+    <select id="queryByPagerschelude" resultMap="BaseResultMap" parameterType="com.gs.common.bean.Pager">
+        <![CDATA[
+          select wi.*, ck.*, cc.colorId, cc.colorName,
+			m.recordId,m.startTime,m.endTime,m.pickupTime,m.recordDes,actualEndTime,m.recordStatus,m.currentStatus,
+			cp.plateId, cp.plateName,
+            company.companyId,company.companyName,
+			cb.brandId, cb.brandName,
+			cc.colorId, cc.colorName,
+			cp.plateId,cp.plateName,
+			u.userId, u.userName, u.userPhone
+            from t_work_info wi, t_maintain_record m, t_checkin ck, t_company company, t_car_brand cb,
+            t_car_color cc, t_car_plate cp, t_user u
+            where wi.workId = m.recordId and wi.workId = ck.checkinId and ck.brandId = cb.brandId
+            and ck.colorId = cc.colorId and ck.plateId = cp.plateId
+            and ck.companyId = company.companyId and u.userId = wi.workId
+            and wi.workStatus = 'Y'
+        ]]>
+            limit #{beginIndex}, #{pageSize}
+    </select>
 
-    <!--分页所有未完成查询全部-->
+
+    <!--分页所有已完成查询全部-->
     <select id="queryByPagerDisable" resultMap="BaseResultMap" parameterType="com.gs.common.bean.Pager">
         <![CDATA[
             select w.*,tmR.recordId,tmR.checkinId,u.userId,
@@ -118,7 +198,5 @@
             group by date(workCreatedTime) ORDER BY wi.workCreatedTime ASC;
         </if>
     </select>
-
-
 
 </mapper>

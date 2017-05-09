@@ -2,8 +2,8 @@ var contentPath = ''
 
 /*初始化表格*/
 $(function(){
-    initTable('table','/Order/queryByPager');
-    initSelect2("maintainRecord","请选择保养记录编号","/maintainRecord/queryByPager");
+    initTable('table','/Order/queryBySche');
+    // initSelect2("maintainRecord","请选择保养记录编号","/maintainRecord/queryByPager");
 })
 
 //显示添加
@@ -162,3 +162,53 @@ function checkEdit() {
     );
 }
 
+//格式化不带时分秒的时间值。
+function formatterDate(value) {
+    if (value == undefined || value == null || value == '') {
+        return "";
+    } else {
+        var date = new Date(value);
+        var year = date.getFullYear().toString();
+        var month = (date.getMonth() + 1);
+        var day = date.getDate().toString();
+        if (month < 10) {
+            month = "0" + month;
+        }
+        if (day < 10) {
+            day = "0" + day;
+        }
+        return year + "-" + month + "-" + day
+    }
+}
+
+//格式化带时分秒的时间值。
+function formatterDateTime(value) {
+    if (value == undefined || value == null || value == '') {
+        return "";
+    }
+    else {
+        var date = new Date(value);
+        var year = date.getFullYear().toString();
+        var month = (date.getMonth() + 1);
+        var day = date.getDate().toString();
+        var hour = date.getHours().toString();
+        var minutes = date.getMinutes().toString();
+        var seconds = date.getSeconds().toString();
+        if (month < 10) {
+            month = "0" + month;
+        }
+        if (day < 10) {
+            day = "0" + day;
+        }
+        if (hour < 10) {
+            hour = "0" + hour;
+        }
+        if (minutes < 10) {
+            minutes = "0" + minutes;
+        }
+        if (seconds < 10) {
+            seconds = "0" + seconds;
+        }
+        return year + "-" + month + "-" + day + " " + hour + ":" + minutes + ":" + seconds;
+    }
+}

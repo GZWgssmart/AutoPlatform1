@@ -1,7 +1,7 @@
 package com.gs.service;
 
 import com.gs.bean.WorkInfo;
-import org.apache.ibatis.annotations.Param;
+import com.gs.common.bean.Pager;
 
 import java.util.List;
 
@@ -15,5 +15,7 @@ import java.util.List;
 public interface WorkInfoService extends BaseService<String, WorkInfo>{
 
     public List<WorkInfo> queryByCondition(String start, String end,String userId, String type);
+
+    public List<WorkInfo> queryByPagerschelude(Pager pager);
 
 }
