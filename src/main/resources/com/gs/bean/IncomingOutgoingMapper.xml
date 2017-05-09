@@ -67,9 +67,12 @@
 
     <select id="queryByCondition" resultMap="incomingOutgoingMap">
     <![CDATA[
-        select inTypeId, outTypeId, sum(inOutMoney) as inOutMoney,inOutCreatedTime from t_incoming_outgoing
+        select inTypeId, outTypeId,inOutMoney,inOutCreatedTime from t_incoming_outgoing
             where inOutStatus = 'Y' and  inOutCreatedTime >= #{start} and inOutCreatedTime <= #{end}
         ]]>
+        <if test="inOutType ==0">
+
+        </if>
         <if test="inOutType ==1">
             and outTypeId is not null
         </if>
@@ -77,19 +80,19 @@
             and inTypeId is not null
         </if>
         <if test="type =='year'">
-            GROUP BY year(inOutCreatedTime);
+            GROUP BY year(inOutCreatedTime)  ORDER BY inOutCreatedTime ASC;
         </if>
         <if test="type =='quarter'">
-            GROUP BY quarter(inOutCreatedTime);
+            group by concat(date_format(inOutCreatedTime, '%Y'),FLOOR((date_format(inOutCreatedTime, '%m')+2)/3)) ORDER BY inOutCreatedTime ASC;
         </if>
         <if test="type =='month'">
-            GROUP BY month(inOutCreatedTime);
+            GROUP BY month(inOutCreatedTime) ORDER BY inOutCreatedTime ASC;
         </if>
         <if test="type =='week'">
-            GROUP BY week(inOutCreatedTime);
+            GROUP BY week(inOutCreatedTime) ORDER BY inOutCreatedTime ASC;
         </if>
         <if test="type =='day'">
-            GROUP BY day(inOutCreatedTime);
+            GROUP BY day(inOutCreatedTime) ORDER BY inOutCreatedTime ASC;
         </if>
   </select>
 
