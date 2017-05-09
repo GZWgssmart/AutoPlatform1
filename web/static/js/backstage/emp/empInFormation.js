@@ -7,85 +7,6 @@ $(function () {
 
 });
 
-function addSubmit() {
-    $("#addForm").data('bootstrapValidator').validate();
-    if ($("#addForm").data('bootstrapValidator').isValid()) {
-        $("#addButton").attr("disabled","disabled");
-    } else {
-        $("#addButton").removeAttr("disabled");
-    }
-}
-
-function editSubmit() {
-    $("#editForm").data('bootstrapValidator').validate();
-    if ($("#editForm").data('bootstrapValidator').isValid()) {
-        $("#editButton").attr("disabled","disabled");
-    } else {
-        $("#editButton").removeAttr("disabled");
-    }
-}
-
-function showEdit(){
-    initDatePicker('editForm', 'userBirthday'); // 初始化时间框, 第一参数是form表单id, 第二参数是input的name
-    var row =  $('table').bootstrapTable('getSelections');
-    if(row.length >0) {
-        var emp = row[0];
-        if(emp.userStatus == 'N') {
-            if(emp.role.roleName == '车主') {
-                $("#editWindow").modal('show'); // 显示弹窗
-                $("#editButton").removeAttr("disabled");
-                $('#editUserRole').html('<option value="' + emp.role.roleId + '">' + emp.role.roleName + '</option>').trigger("change");
-                $('#editDatetimepicker').val(formatterDate(emp.userBirthday));
-                $('#editCity_china').val(formatterAddress(emp.userAddress));
-                $("#editForm").fill(emp);
-                validator('editForm');
-            } else {
-                swal({
-                    title:"警告",
-                    text: "此员工已被辞退，不能再对其进行操作", // 主要文本
-                    confirmButtonColor: "#DD6B55", // 提示按钮的颜色
-                    confirmButtonText:"确定", // 提示按钮上的文本
-                    type:"warning"
-                }) // 提示类型
-            }
-        } else {
-            $("#editWindow").modal('show'); // 显示弹窗
-            $("#editButton").removeAttr("disabled");
-            $('#editUserRole').html('<option value="' + emp.role.roleId + '">' + emp.role.roleName + '</option>').trigger("change");
-            $('#editDatetimepicker').val(formatterDate(emp.userBirthday));
-            $('#editCity_china').val(formatterAddress(emp.userAddress));
-            $("#editForm").fill(emp);
-            validator('editForm');
-        }
-    }
-}
-
-function formatterAddress(val) {
-    var address = val.split('-');
-    $("#editProvince").val(address[0]);
-    $("#editCity").val(address[1]);
-    $("#editArea").val(address[2]);
-}
-
-//格式化不带时分秒的时间值。
-function formatterDate(value) {
-    if (value == undefined || value == null || value == '') {
-        return "";
-    } else {
-        var date = new Date(value);
-        var year = date.getFullYear().toString();
-        var month = (date.getMonth() + 1);
-        var day = date.getDate().toString();
-        if (month < 10) {
-            month = "0" + month;
-        }
-        if (day < 10) {
-            day = "0" + day;
-        }
-        return year + "-" + month + "-" + day
-    }
-}
-
 function showAdd(){
     initDatePicker('addForm', 'userBirthday'); // 初始化时间框, 第一参数是form表单id, 第二参数是input的name
     $("#addWindow").modal('show');
@@ -268,6 +189,86 @@ function iconUpldSuc(data, winId, formId) {
     }
 }
 
+
+function addSubmit() {
+    $("#addForm").data('bootstrapValidator').validate();
+    if ($("#addForm").data('bootstrapValidator').isValid()) {
+        $("#addButton").attr("disabled","disabled");
+    } else {
+        $("#addButton").removeAttr("disabled");
+    }
+}
+
+function showEdit(){
+    initDatePicker('editForm', 'userBirthday'); // 初始化时间框, 第一参数是form表单id, 第二参数是input的name
+    var row =  $('table').bootstrapTable('getSelections');
+    if(row.length >0) {
+        var emp = row[0];
+        if(emp.userStatus == 'N') {
+            if(emp.role.roleName == '车主') {
+                $("#editWindow").modal('show'); // 显示弹窗
+                $("#editButton").removeAttr("disabled");
+                $('#editUserRole').html('<option value="' + emp.role.roleId + '">' + emp.role.roleName + '</option>').trigger("change");
+                $('#editDatetimepicker').val(formatterDate(emp.userBirthday));
+                $('#editCity_china').val(formatterAddress(emp.userAddress));
+                $("#editForm").fill(emp);
+                validator('editForm');
+            } else {
+                swal({
+                    title:"警告",
+                    text: "此员工已被辞退，不能再对其进行操作", // 主要文本
+                    confirmButtonColor: "#DD6B55", // 提示按钮的颜色
+                    confirmButtonText:"确定", // 提示按钮上的文本
+                    type:"warning"
+                }) // 提示类型
+            }
+        } else {
+            $("#editWindow").modal('show'); // 显示弹窗
+            $("#editButton").removeAttr("disabled");
+            $('#editUserRole').html('<option value="' + emp.role.roleId + '">' + emp.role.roleName + '</option>').trigger("change");
+            $('#editDatetimepicker').val(formatterDate(emp.userBirthday));
+            $('#editCity_china').val(formatterAddress(emp.userAddress));
+            $("#editForm").fill(emp);
+            validator('editForm');
+        }
+    }
+}
+
+function editSubmit() {
+    $("#editForm").data('bootstrapValidator').validate();
+    if ($("#editForm").data('bootstrapValidator').isValid()) {
+        $("#editButton").attr("disabled","disabled");
+    } else {
+        $("#editButton").removeAttr("disabled");
+    }
+}
+
+function formatterAddress(val) {
+    var address = val.split('-');
+    $("#editProvince").val(address[0]);
+    $("#editCity").val(address[1]);
+    $("#editArea").val(address[2]);
+}
+
+//格式化不带时分秒的时间值。
+function formatterDate(value) {
+    if (value == undefined || value == null || value == '') {
+        return "";
+    } else {
+        var date = new Date(value);
+        var year = date.getFullYear().toString();
+        var month = (date.getMonth() + 1);
+        var day = date.getDate().toString();
+        if (month < 10) {
+            month = "0" + month;
+        }
+        if (day < 10) {
+            day = "0" + day;
+        }
+        return year + "-" + month + "-" + day
+    }
+}
+
 function showReturn(){
     var row =  $('table').bootstrapTable('getSelections');
     if(row.length >0) {
@@ -309,7 +310,22 @@ function showReturn(){
     }
 }
 
-// 点击显示详细信息 ---------------------- 未完成
+// 点击显示详细信息
 function showDetail() {
+    var row =  $('table').bootstrapTable('getSelections');
+    if(row.length >0) {
+        var emp = row[0];
+        $("#detailWindow").modal('show');
+        var value = emp.userBirthday;
 
+        $('#detailBirthday').val(formatterDate(emp.userBirthday));
+        $("#detailForm").fill(emp);
+
+        // 将获取到的userIcon 的值 赋给img的src
+        alert(emp.userIcon);
+        $('#detailUserIcon').attr("src", "/" + emp.userIcon);
+
+        alert($('#detailUserIcon').val);
+        console.log(emp);
+    }
 }
