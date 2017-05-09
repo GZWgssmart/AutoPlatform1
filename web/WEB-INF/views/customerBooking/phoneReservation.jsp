@@ -71,10 +71,10 @@
         </table>
         <div id="toolbar" class="btn-group">
             <button id="btn_available" type="button" class="btn btn-default" onclick="showAvailable()">
-                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>可用登记记录
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>可用预约记录
             </button>
             <button id="btn_disable" type="button" class="btn btn-default" onclick="showDisable()">
-                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>禁用登记记录
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>禁用预约记录
             </button>
             <button id="btn_add" type="button" class="btn btn-default" onclick="showAdd();">
                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
@@ -143,6 +143,7 @@
                         </select>
                     </div>
                 </div>
+                <p class="clearfix"></p>
                 <div class="form-group col-md-6 pull-left">
                     <label class="col-md-4 control-label">汽车颜色：</label>
                     <div class="col-md-8">
@@ -157,14 +158,12 @@
                         </select>
                     </div>
                 </div>
-                <p class="clearfix"></p>
                 <div class="form-group col-md-6 pull-left">
                     <label class="col-md-4 control-label">车牌号码：</label>
                     <div class="col-md-8">
                         <input id="addPlate" name="carPlate" placeholder="请输入车牌号码" class="form-control"/>
                     </div>
                 </div>
-
                 <div class="form-group col-md-6 pull-left">
                     <label class="col-md-4 control-label">到店时间：</label>
                     <div class="col-md-8">     <!-- 当设置不可编辑后, 会修改颜色, 在min.css里搜索.form-control{background-color:#eee;opacity:1} -->
@@ -181,6 +180,7 @@
                         </select>
                     </div>
                 </div>
+                <p class="clearfix"></p>
                 <div class="form-group col-md-6 pull-left">
                     <label class="col-md-4 control-label">保养&nbsp;|&nbsp;维修：</label>
                     <div class="col-md-8">

@@ -1,9 +1,7 @@
 package com.gs.service;
 
 import com.gs.bean.Appointment;
-import com.gs.common.bean.Pager;
 
-import java.util.List;
 
 /**
  *由CSWangBin技术支持

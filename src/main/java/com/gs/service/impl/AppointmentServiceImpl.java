@@ -1,7 +1,6 @@
 package com.gs.service.impl;
 
 import com.gs.bean.Appointment;
-import com.gs.bean.Checkin;
 import com.gs.common.bean.Pager;
 import com.gs.dao.AppointmentDAO;
 import com.gs.service.AppointmentService;
@@ -53,19 +52,12 @@ public class AppointmentServiceImpl implements AppointmentService {
 		return appointmentDAO.countByDisable();
 	}
 
-	public List<Appointment> blurredQuery(Pager pager, String cloumn, String value) {
-		return null;
-	}
-
-	public int countByBlurred() {
-		return 0;
-	}
-
 	public List<Appointment> blurredQuery(Pager pager, Appointment appointment) {
-		return null;
+		return appointmentDAO.blurredQuery(pager, appointment);
 	}
 
 	public int countByBlurred(Appointment appointment) {
-		return 0;
+		return appointmentDAO.countByBlurred(appointment);
 	}
+
 }

@@ -1,4 +1,3 @@
-var contentPath='';
 $(function () {
     initTable('table', '/appointment/queryByPager'); // 初始化表格
 
@@ -16,7 +15,7 @@ $(function () {
         onSwitchChange:function(event,state){
             if(state==true){
                 app = true;
-                initTableNotTollbar("appTable", "/user/queryByPager");
+                initTableNotTollbar("appTable", "/userBasicManage/queryByPager");
                 $("#appWindow").modal('show');
             }else if(state==false){
                 app = false;
@@ -29,15 +28,6 @@ $(function () {
     });
 });
 
-function showAvailable() {
-    initTable('table', '/appointment/queryByPager'); // 初始化表格
-}
-
-function showDisable() {
-    initTable('table', '/appointment/queryByPagerDisable'); // 初始化表格
-}
-
-// 这个方法别看
 $("#addCarBrand").change(function(){
     var div = $("#addModelDiv");
     var select = $("#addCarBrand").select2("val");
@@ -45,7 +35,7 @@ $("#addCarBrand").change(function(){
     $('#addCarModel').html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
     initSelect2("carModel", "请选择车型", "/carModel/queryByBrandId/"+ select);
 });
-// 这个别看
+
 $("#editCarBrand").change(function(){
     var div = $("#editModelDiv");
     var select = $("#editCarBrand").select2("val");
@@ -62,6 +52,14 @@ function showStatusFormatter(value) {
         return "否";
     }
 
+}
+
+function showAvailable() {
+    initTable('table', '/appointment/queryByPager'); // 初始化表格
+}
+
+function showDisable() {
+    initTable('table', '/appointment/queryByPagerDisable'); // 初始化表格
 }
 
 // 激活或禁用
@@ -102,20 +100,19 @@ function blurredQuery(){
 function closeAppWin() {
     $("#appWindow").modal('hide');
     $("#addWindow").modal('show')
-    $("#app").val("N");
 }
 
-var appointment;
+var user;
 
 
 /** 监听switch的监听事件 */
 function appOnChange() {
     if ($('#app').bootstrapSwitch('state')) {
-        if (appointment != null && appointment != "" && appointment != undefined) {
-            setData(appointment);
+        if (user != null && user != "" && user != undefined) {
+            setData(user);
         }
     } else {
-        if (appointment != null && appointment != "" && appointment != undefined) {
+        if (user != null && user != "" && user != undefined) {
             clearAddForm();
         }
 
@@ -132,8 +129,8 @@ function checkApp() {
             type:"error"})
         return false;
     } else {
-        appointment = row[0];
-        setData(appointment);
+        user = row[0];
+        setData(user);
         $("#appWindow").on("hide.bs.modal", function () {
             $('#app').bootstrapSwitch('state', true);
         });

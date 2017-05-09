@@ -2,13 +2,10 @@ package com.gs.controller.customerBooking;
 
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.Appointment;
-import com.gs.bean.MaintainRecord;
-import com.gs.bean.User;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
 import com.gs.service.AppointmentService;
-import com.gs.service.MaintainRecordService;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -18,7 +15,6 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.text.DateFormat;
@@ -33,6 +29,7 @@ import java.util.List;
 @RequestMapping("/appointment")
 
 public class PhoneReservationController {
+
     private Logger logger = (Logger) LoggerFactory.getLogger(PhoneReservationController.class);
 
     @Resource
@@ -61,7 +58,7 @@ public class PhoneReservationController {
     @ResponseBody
     @RequestMapping(value="queryByPagerDisable", method = RequestMethod.GET)
     public Pager4EasyUI<Appointment> queryByPagerDisable(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
-        logger.info("分页查询所有被禁用预约记录");
+        logger.info("分页查询所有被禁用登记记录");
         Pager pager = new Pager();
         pager.setPageNo(Integer.valueOf(pageNumber));
         pager.setPageSize(Integer.valueOf(pageSize));
