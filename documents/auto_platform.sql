@@ -285,21 +285,23 @@ CREATE TABLE `t_accessories` (
 配件采购表
 */
 DROP TABLE IF EXISTS `t_accessories_buy`;
-CREATE TABLE `t_accessories_buy` (
-  `accBuyId` varchar(36) NOT NULL COMMENT '配件采购编号，UUID,主键',
-  `accId` varchar(36) DEFAULT NULL COMMENT '配件编号，来源于t_accessories表。配件的采购分为两种方式，一种是新增配件采购，一种是已有配件采购。如果是新增配件采购，则需要在t_accessories表中新增记录，并把上accId设置成t_accessories表中新增的记录的accId；如果是已有配件采购，则不需要在t_accessories表中新增记录，而是直接选择某个配件',
-  `accUnit` varchar(10) DEFAULT NULL COMMENT '配件计量单位',
-  `accBuyCount` int(11) NOT NULL COMMENT '配件购买数量，not null',
-  `accBuyPrice` double NOT NULL COMMENT '配件购买单价，not null',
-  `accBuyTotal` double NOT NULL COMMENT '配件购买总价，not null',
-  `accBuyDiscount` double NOT NULL COMMENT '配件购买折扣，not null, default 0。可选择折扣，也可选择减价',
-  `accBuyMoney` double NOT NULL COMMENT '配件购买最终价，not null',
-  `accBuyTime` datetime NOT NULL COMMENT '配件购买时间，not null',
-  `accBuyCreatedTime` datetime DEFAULT NULL COMMENT '配件购买记录创建时间',
-  `companyId` varchar(36) DEFAULT NULL COMMENT '配件购买记录所属公司，来源于t_company表',
-  `accBuyStatus` varchar(2) DEFAULT NULL COMMENT '配件购买记录状态，Y表示可用，N表示不可用',
-  PRIMARY KEY (`accBuyId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE t_accessories_buy
+(
+  accBuyId VARCHAR(36) PRIMARY KEY NOT NULL COMMENT '配件采购编号，UUID,主键',
+  accId VARCHAR(36) COMMENT '配件编号，来源于t_accessories表。配件的采购分为两种方式，一种是新增配件采购，一种是已有配件采购。如果是新增配件采购，则需要在t_accessories表中新增记录，并把上accId设置成t_accessories表中新增的记录的accId；如果是已有配件采购，则不需要在t_accessories表中新增记录，而是直接选择某个配件',
+  accUnit VARCHAR(10) COMMENT '配件计量单位',
+  accBuyCount INT(11) NOT NULL COMMENT '配件购买数量，not null',
+  accBuyPrice DOUBLE NOT NULL COMMENT '配件购买单价，not null',
+  accBuyTotal DOUBLE NOT NULL COMMENT '配件购买总价，not null',
+  accBuyDiscount DOUBLE NOT NULL COMMENT '配件购买折扣，not null, default 0。可选择折扣，也可选择减价',
+  accBuyMoney DOUBLE NOT NULL COMMENT '配件购买最终价，not null',
+  accBuyTime DATETIME NOT NULL COMMENT '配件购买时间，not null',
+  accBuyCreatedTime DATETIME COMMENT '配件购买记录创建时间',
+  companyId VARCHAR(36) COMMENT '配件购买记录所属公司，来源于t_company表',
+  accBuyStatus VARCHAR(2) COMMENT '配件购买记录状态，Y表示可用，N表示不可用',
+  accTypeId VARCHAR(36), 
+  supplyId VARCHAR(36)
+);
 
 /**
 配件销售表

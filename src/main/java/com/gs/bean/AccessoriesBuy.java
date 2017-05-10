@@ -1,7 +1,5 @@
 package com.gs.bean;
 
-import org.joda.time.DateTime;
-
 import java.util.Date;
 
 public class AccessoriesBuy {
@@ -36,6 +34,9 @@ public class AccessoriesBuy {
     private Company company;
 
     private Accessories accessories;
+
+    private Supply supply;
+    private AccessoriesType accessoriesType;
 
     private int count;
     private int week;
