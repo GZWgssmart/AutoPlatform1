@@ -97,17 +97,10 @@ function showEdit() {
 
 //显示添加
 function showAdd() {
+    initDatePicker('addForm', 'accBuyTime'); // 初始化时间框, 第一参数是form表单id, 第二参数是input的name
     $("#addWindow").modal('show');
     $("#addButton").removeAttr("disabled");
     validator('addForm'); // 初始化验证
-}
-
-
-function formatRepo(repo) {
-    return repo.text
-}
-function formatRepoSelection(repo) {
-    return repo.text
 }
 
 function openStatusFormatter(index, row) {
@@ -363,6 +356,7 @@ function formSubmit(url, formId, winId) {
                     $("#addButton").removeAttr("disabled"); // 移除不可点击
                     $("#addCompany").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
                     $("#addAccType").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
+                    $("#addSupply").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
                 }
                 $("#" + formId).data('bootstrapValidator').destroy(); // 销毁此form表单
                 $('#' + formId).data('bootstrapValidator', null);// 此form表单设置为空
@@ -376,25 +370,6 @@ function formSubmit(url, formId, winId) {
                 $("#" + formId).removeAttr("disabled");
             }
         }, "json");
-}
-
-//获取hex颜色值后转换成rgb颜色值后自动添加到rgb颜色框中
-function showAddHex() {
-    var a = document.getElementById("addColor").value;
-    if (a.substr(0, 1) == "#") a = a.substring(1);
-    if (a.length != 6)return alert("请输入正确的十六进制颜色码！")
-    a = a.toLowerCase()
-    b = new Array();
-    for (x = 0; x < 3; x++) {
-        b[0] = a.substr(x * 2, 2)
-        b[3] = "0123456789abcdef";
-        b[1] = b[0].substr(0, 1)
-        b[2] = b[0].substr(1, 1)
-        b[20 + x] = b[3].indexOf(b[1]) * 16 + b[3].indexOf(b[2])
-    }
-    var rbgNumber = b[20] + "," + b[21] + "," + b[22];
-    var rgbColor = document.getElementById("addrgbColor");
-    rgbColor.value = rbgNumber;
 }
 
 function Addcalculate() {
@@ -464,14 +439,11 @@ function setData(appointment) {
     $("#accInvId").val(appointment.accId);
     $("#accInvName").val(appointment.accName);
     $("#addDateTimePicker").val(formatterDate(appointment.accBuyedTime));
-    $("#addCountNum").val(appointment.accTotal);
     $("#addBuyPrice").val(appointment.accPrice);
     $("#addBuyTotal").val(appointment.accPrice);
     $('#addCompany').html('<option value="' + appointment.company.companyId + '">' + appointment.company.companyName + '</option>').trigger("change");
     $('#addSupply').html('<option value="' + appointment.supply.supplyId + '">' + appointment.supply.supplyName + '</option>').trigger("change");
     $('#addAccType').html('<option value="' + appointment.accessoriesType.accTypeId + '">' + appointment.accessoriesType.accTypeName + '</option>').trigger("change");
-
-
 }
 
 /** 清除添加的form表单信息 */

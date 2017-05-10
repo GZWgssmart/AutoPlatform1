@@ -52,9 +52,9 @@
             <button id="btn_disable" type="button" class="btn btn-danger" onclick="showDisable();">
                 <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询禁用类型
             </button>
-            <button id="btn_add" type="button" class="btn btn-default" onclick="showAdd();">
-                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
-            </button>
+            <%--<button id="btn_add" type="button" class="btn btn-default" onclick="showAdd();">--%>
+                <%--<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增--%>
+            <%--</button>--%>
             <button id="btn_edit" type="button" class="btn btn-default" onclick="showEdit();">
                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
             </button>

@@ -168,6 +168,7 @@
                     <div class="col-sm-offset-8">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                         <button id="addButton" type="button" onclick="addSubmit()" class="btn btn-success">保存</button>
+                        <input type="reset" name="reset" style="display: none;"/>
                     </div>
                 </div>
             </form>

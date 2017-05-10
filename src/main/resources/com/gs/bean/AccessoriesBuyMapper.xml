@@ -13,6 +13,8 @@
         <result column="accBuyTime" property="accBuyTime"/>
         <result column="accBuyCreatedTime" property="accBuyCreatedTime"/>
         <result column="companyId" property="companyId"/>
+        <result column="supplyId" property="supplyId"/>
+        <result column="accTypeId" property="accTypeId"/>
         <result column="accBuyStatus" property="accBuyStatus"/>
 
         <result column="count" property="count"/>
