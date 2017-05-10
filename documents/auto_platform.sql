@@ -18,6 +18,7 @@ CREATE TABLE `t_company` (
   `companyStatus` varchar(2) DEFAULT NULL COMMENT '公司状态，Y为可用，N为不可用',
   PRIMARY KEY (`companyId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+INSERT INTO `t_company` VALUES ('c515f5d623e011e7a97af832e40312b3', 'XX有限公司', '赣州', '400-120-111', null, null, null, null, null, null, null, null, 'Y');
 
 /**
 用户表
