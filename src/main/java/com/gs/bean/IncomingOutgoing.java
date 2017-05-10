@@ -1,5 +1,6 @@
 package com.gs.bean;
 
+import java.util.Arrays;
 import java.util.Date;
 
 public class IncomingOutgoing {
@@ -19,9 +20,39 @@ public class IncomingOutgoing {
 
     private String companyId;
 
+
+
+    private double outMoneys[];
+    private double inMoneys[];
     private OutgoingType outgoingType;
     private IncomingType incomingType;
     private User user;
+    private Company company;
+
+
+    public double[] getOutMoneys() {
+        return outMoneys;
+    }
+
+    public void setOutMoneys(double[] outMoneys) {
+        this.outMoneys = outMoneys;
+    }
+
+    public double[] getInMoneys() {
+        return inMoneys;
+    }
+
+    public void setInMoneys(double[] inMoneys) {
+        this.inMoneys = inMoneys;
+    }
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
+    }
 
     public OutgoingType getOutgoingType() {
         return outgoingType;
@@ -121,9 +152,13 @@ public class IncomingOutgoing {
                 ", inOutCreatedUser='" + inOutCreatedUser + '\'' +
                 ", inOutCreatedTime=" + inOutCreatedTime +
                 ", inOutStatus='" + inOutStatus + '\'' +
+                ", companyId='" + companyId + '\'' +
+                ", outMoneys=" + Arrays.toString(outMoneys) +
+                ", inMoneys=" + Arrays.toString(inMoneys) +
                 ", outgoingType=" + outgoingType +
                 ", incomingType=" + incomingType +
                 ", user=" + user +
+                ", company=" + company +
                 '}';
     }
 }

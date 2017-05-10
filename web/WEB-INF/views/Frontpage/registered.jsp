@@ -15,7 +15,7 @@
 <link rel="stylesheet" href="/static/css/sweetalert.css">
 <link rel="stylesheet" href="/static/css/bootstrap-validate/bootstrapValidator.min.css">
 <link rel="stylesheet" href="/static/css/registeredStyle.css">
-<body>
+<body onkeydown="keydown()">
     <div class="main">
         <%--顶部导航栏--%>
         <div class="nav nav-first">
@@ -62,6 +62,9 @@
                                     <div class="col-md-8 col-sm-8" style="padding-right: 0px;"><input type="text" name="checkCode"  placeholder="验证码" class="form-control"></div>
                                 </div>
 
+                            </div>
+                            <div class="form-group">
+                                <label style="overflow: hidden;"><input type="checkbox" value="记住账号" style="position: relative;top:3px;width: 16px;height: 16px;"> <span style="font-size: 16px;">记住账号</span></label>
                             </div>
                             <div class="form-group">
                                 <button type="button" class="btn btn-success btn-block" value="登录" id="loginButton" onclick="loginSubmit()">登录</button>
@@ -145,7 +148,12 @@
             });
         };
     };
-
+    /*回车登录*/
+    function keydown(){
+        if(event.keyCode == 13){
+            document.getElementById("loginButton").click();
+        }
+    }
     $(function () {
         function bodyScroll(event) {
             event.preventDefault();

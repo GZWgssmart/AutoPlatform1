@@ -1,13 +1,16 @@
 package com.gs.controller.accessoriesManage;
 
 import ch.qos.logback.classic.Logger;
+import com.gs.bean.Accessories;
 import com.gs.bean.AccessoriesBuy;
 import com.gs.bean.IncomingOutgoing;
 import com.gs.common.bean.ComboBox4EasyUI;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
+import com.gs.common.util.UUIDUtil;
 import com.gs.service.AccessoriesBuyService;
+import com.gs.service.AccessoriesService;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -25,6 +28,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * 王怡 配件采购
@@ -36,6 +40,9 @@ public class AccessoriesBuyController {
 
     @Resource
     private AccessoriesBuyService accessoriesBuyService;
+
+    @Resource
+    private AccessoriesService accessoriesService;
 
     private Logger logger = (Logger) LoggerFactory.getLogger(AccessoriesBuyController.class);
 
@@ -58,12 +65,12 @@ public class AccessoriesBuyController {
      * 查询全部的配件信息
      */
     @ResponseBody
-    @RequestMapping(value = "queryAllAccBuy",method = RequestMethod.GET)
-    public List<ComboBox4EasyUI> queryAllAccBuy(){
+    @RequestMapping(value = "queryAllAccBuy", method = RequestMethod.GET)
+    public List<ComboBox4EasyUI> queryAllAccBuy() {
         logger.info("查询所有配件分类信息");
         List<AccessoriesBuy> accessoriesBuys = accessoriesBuyService.queryAll();
         List<ComboBox4EasyUI> comboxs = new ArrayList<ComboBox4EasyUI>();
-        for(AccessoriesBuy c : accessoriesBuys){
+        for (AccessoriesBuy c : accessoriesBuys) {
             ComboBox4EasyUI comboBox4EasyUI = new ComboBox4EasyUI();
             comboBox4EasyUI.setId(c.getAccBuyId());
             comboBox4EasyUI.setText(c.getAccBuyId());
@@ -76,7 +83,7 @@ public class AccessoriesBuyController {
      * 分页查询配件采购信息
      */
     @ResponseBody
-    @RequestMapping(value="queryByPage", method = RequestMethod.GET)
+    @RequestMapping(value = "queryByPage", method = RequestMethod.GET)
     public Pager4EasyUI queryByPager(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
         Pager pager = new Pager();
         pager.setPageNo(Integer.valueOf(pageNumber));
@@ -87,21 +94,37 @@ public class AccessoriesBuyController {
         return new Pager4EasyUI<AccessoriesBuy>(pager.getTotalRecords(), accessoriesBuys);
     }
 
-    /**
-     * 添加采购记录
-     *
-     * @return
-     */
     @ResponseBody
     @RequestMapping(value = "addAccBuy", method = RequestMethod.POST)
-    public ControllerResult addAccBuy(AccessoriesBuy accessoriesBuy) {
+    public ControllerResult addAccBuy(AccessoriesBuy accessoriesBuy,@Param("accName")String accName) {
+        logger.info("前台传过来的数据为："+accessoriesBuy.toString());
         if (accessoriesBuy != null && !accessoriesBuy.equals("")) {
-            accessoriesBuyService.insert(accessoriesBuy);
-            logger.info("添加成功");
-            return ControllerResult.getSuccessResult("添加成功");
-        } else {
-            return ControllerResult.getFailResult("添加失败，请输入必要的信息");
+            if(accessoriesBuy.getAccId()!=null&&!accessoriesBuy.getAccId().equals("")){
+                accessoriesBuy.setAccBuyDiscount(1.0);
+                accessoriesBuyService.insert(accessoriesBuy);
+                accessoriesService.updateCount(accessoriesBuy.getAccBuyCount(),accessoriesBuy.getAccId());
+                return ControllerResult.getSuccessResult("更新数量成功");
+            }else{
+                Accessories acc=new Accessories();
+                String uuid=UUIDUtil.uuid();
+                acc.setAccId(uuid);
+                acc.setAccName(accName);
+                acc.setCompanyId(accessoriesBuy.getCompanyId());
+                acc.setAccTotal(accessoriesBuy.getAccBuyCount());
+                acc.setAccPrice(accessoriesBuy.getAccBuyPrice());
+                acc.setAccBuyedTime(accessoriesBuy.getAccBuyTime());
+                acc.setAccCommodityCode("");
+                acc.setAccSalePrice(accessoriesBuy.getAccBuyPrice());
+                acc.setAccIdle(accessoriesBuy.getAccBuyCount());
+                acc.setSupplyId(accessoriesBuy.getSupplyId());
+                acc.setAccTypeId(accessoriesBuy.getAccTypeId());
+                accessoriesService.insert(acc);
+                accessoriesBuy.setAccId(uuid);
+                accessoriesBuyService.insert(accessoriesBuy);
+                return ControllerResult.getSuccessResult("添加成功");
+            }
         }
+        return ControllerResult.getFailResult("添加失败，请输入必要的信息");
     }
 
     /**
@@ -140,11 +163,12 @@ public class AccessoriesBuyController {
 
     /**
      * 查询所有被禁用的登记记录
+     *
      * @return
      */
     @ResponseBody
-    @RequestMapping(value="queryByPagerDisable", method = RequestMethod.GET)
-    public Pager4EasyUI<AccessoriesBuy> queryByPagerDisable(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
+    @RequestMapping(value = "queryByPagerDisable", method = RequestMethod.GET)
+    public Pager4EasyUI<AccessoriesBuy> queryByPagerDisable(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
         logger.info("分页查询所有被禁用登记记录");
         Pager pager = new Pager();
         pager.setPageNo(Integer.valueOf(pageNumber));

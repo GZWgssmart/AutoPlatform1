@@ -144,6 +144,15 @@ function accaddSubmit(){
     }
 }
 
+function editSubmit(){
+    $("#editForm").data('bootstrapValidator').validate();
+    if ($("#editForm").data('bootstrapValidator').isValid()) {
+        $("#editButton").attr("disabled","disabled");
+    } else {
+        $("#editButton").removeAttr("disabled");
+    }
+}
+
 function formSubmit(url, formId, winId){
     $.post(url,
         $("#" + formId).serialize(),
@@ -231,25 +240,10 @@ function showAddacc(){
     }
 }
 
-function editSubmit(){
-    $("#editForm").data('bootstrapValidator').validate();
-    if ($("#editForm").data('bootstrapValidator').isValid()) {
-        $("#editButton").attr("disabled","disabled");
-    } else {
-        $("#editButton").removeAttr("disabled");
-    }
-}
-
-function showAcc(){
+function showAcc(windowId){
+    $("#"+ windowId).modal('hide');
     $("#accAllWindow").modal('show');
-    $("#accWindow").modal('hide');
-    $("#closeButton").addClass('accWindow');
-}
-
-function showDetail() {
-    $("#accAllWindow").modal('show');
-    $("#editDetailWindow").modal('hide');
-    $("#closeButton").addClass('editDetailWindow');
+    $("#closeButton").addClass(windowId);
 }
 
 //所有配件窗口关闭按钮
@@ -344,42 +338,4 @@ function initDetailTable(tableId, url) {
             return param;
         },
     });
-}
-
-
-// 修改配件
-function showEditDetail(){
-    var row =  $('#detailTable').bootstrapTable('getSelections');
-    if(row.length >0) {
-        $("#detailWindow").modal('hide');
-        $("#editDetailButton").removeAttr("disabled");
-        var maintainFixAcc = row[0];
-        $("#editDetailForm").fill(maintainFixAcc);
-        $('#editDetailacc').val(maintainFixAcc.accessories.accName);
-        $("#editItemId").val(maintainFixAcc.maintainId);
-        $("#editMaintainId").val(maintainFixAcc.maintainId);
-        $("#editDetailWindow").modal('show');
-        validator('editDetailForm'); // 初始化验证
-    }else{
-        swal({
-            title:"",
-            text: "请选择要修改的维修保养明细", // 主要文本
-            confirmButtonColor: "#DD6B55", // 提示按钮的颜色
-            confirmButtonText:"确定", // 提示按钮上的文本
-            type:"warning"}) // 提示类型
-    }
-}
-
-function closeEditForm(){
-    $("#editDetailWindow").modal('hide');
-    // $("#detailWindow").modal('show');
-}
-
-function editSubmit1(){
-    $("#editDetailForm").data('bootstrapValidator').validate();
-    if ($("#editDetailForm").data('bootstrapValidator').isValid()) {
-        $("#editDetailButton").attr("disabled","disabled");
-    } else {
-        $("#editDetailButton").removeAttr("disabled");
-    }
 }

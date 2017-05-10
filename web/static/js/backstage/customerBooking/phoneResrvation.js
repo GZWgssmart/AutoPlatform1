@@ -141,7 +141,6 @@ function checkApp() {
 function setData(user) {
     $("#addUserName").val(user.userName);
     $("#addUserPhone").val(user.userPhone);
-    validator('addForm'); // 初始化验证
    /**$("#addUserName").val(appointment.userName);
     $("#addUserPhone").val(appointment.userPhone);
     $("#addUserId").val(appointment.userId);
@@ -152,15 +151,6 @@ function setData(user) {
     $('#addCarModel').html('<option value="' + appointment.model.modelId + '">' + appointment.model.modelName + '</option>').trigger("change");
     $('#addCarPlate').html('<option value="' + appointment.plate.plateId + '">' + appointment.plate.plateName + '</option>').trigger("change");
     $("#addMaintainOrFix").val(appointment.maintainOrFix);**/
-}
-
-/** 清除添加的form表单信息 */
-function clearAddForm() {
-    $('#addCarBrand').html('').trigger("change");
-    $('#addCarColor').html('').trigger("change");
-    $('#addCarModel').html('').trigger("change");
-    $('#addCarPlate').html('').trigger("change");
-    $("input[type=reset]").trigger("click");
 }
 
 function showEdit(){
@@ -325,10 +315,10 @@ function validator(formId) {
 
         .on('success.form.bv', function (e) {
             if (formId == "addForm") {
-                formSubmit(contentPath+"/appointment/add", formId, "addWindow");
+                formSubmit("/appointment/add", formId, "addWindow");
 
             } else if (formId == "editForm") {
-                formSubmit(contentPath+"/appointment/update", formId, "editWindow");
+                formSubmit("/appointment/update", formId, "editWindow");
 
             }
         })

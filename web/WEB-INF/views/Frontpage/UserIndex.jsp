@@ -16,7 +16,7 @@
 <link rel="stylesheet" type="text/css" href="/static/h-ui/css/skin.css" id="skin" />
 <link rel="stylesheet" type="text/css" href="/static/h-ui/css/style.css" />
 
-<title>H-ui.admin 3.0</title>
+<title>个人中心</title>
 <meta name="keywords" content="">
 <meta name="description" content="">
 	<style>
@@ -29,7 +29,7 @@
 			<a aria-hidden="false" class="nav-toggle Hui-iconfont visible-xs" href="javascript:;">&#xe667;</a>
 			<nav class="nav navbar-nav">
 				<ul class="cl">
-					<li class=""><a href="home" class="dropDown_A"><i class="Hui-iconfont">&#xe6d4;</i> 返回首页</a>
+					<li class=""><a href="home" class="dropDown_A"><i class="Hui-iconfont">&#xe6d4;</i> 去首页</a>
 				</li>
 			</ul>
 		</nav>
@@ -57,8 +57,8 @@
 			<dt><i class="Hui-iconfont">&#xe62c;</i> 账号管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
-					<li><a data-href="home" data-title="账号信息" href="javaScirpt:;">账号信息</a></li>
-					<li><a data-href="picture-list.html" data-title="修改密码" href="javascript:void(0)">修改密码</a></li>
+					<li><a data-href="accountinfo" data-title="账号信息" href="javaScirpt:;">账号信息</a></li>
+					<li><a data-href="editpwd" data-title="修改密码" href="javaScirpt:;">修改密码</a></li>
 				</ul>
 		</dd>
 	</dl>
@@ -66,7 +66,7 @@
 			<dt><i class="Hui-iconfont">&#xe6b4;</i> 我的预约<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
-					<li><a data-href="picture-list.html" data-title="查看预约" href="javascript:void(0)">查看预约</a></li>
+					<li><a data-href="myrese" data-title="查看预约" href="javascript:void(0)">查看预约</a></li>
 			</ul>
 		</dd>
 	</dl>
@@ -74,17 +74,21 @@
 			<dt><i class="Hui-iconfont">&#xe637;</i> 维修保养<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
-					<li><a data-href="product-brand.html" data-title="查看维修保养进度" href="javascript:void(0)">查看维修保养进度</a></li>
-					<li><a data-href="product-list.html" data-title="支付记录" href="javascript:void(0)">支付记录</a></li>
+					<li><a data-href="userrese" data-title="维修保养记录" href="javascript:void(0)">维修保养记录</a></li>
+					<li><a data-href="prompt" data-title="维修保养提醒" href="javascript:void(0)">维修保养提醒</a></li>
+					<li><a data-href="schedule" data-title="查看维修保养进度" href="javascript:void(0)">查看维修保养进度</a></li>
+					<li><a data-href="details" data-title="维修保养明细" href="javascript:void(0)">维修保养明细</a></li>
+
 			</ul>
 		</dd>
 	</dl>
 		<dl id="menu-comments">
-			<dt><i class="Hui-iconfont">&#xe70c;</i> 结算提车<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+			<dt><i class="Hui-iconfont">&#xe70c;</i> 消费统计<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
-					<li><a data-href="http://h-ui.duoshuo.com/admin/" data-title="提车提醒" href="javascript:;">提车提醒</a></li>
-					<li><a data-href="feedback-list.html" data-title="收费单据" href="javascript:void(0)">收费单据</a></li>
+					<li><a data-href="conrecord" data-title="消费记录" href="javascript:void(0)">消费记录</a></li>
+					<li><a data-href="cdocument" data-title="收费单据" href="javascript:void(0)">收费单据</a></li>
+					<li><a data-href="mycomment" data-title="我的评价" href="javascript:void(0)">我的评价</a></li>
 			</ul>
 		</dd>
 	</dl>
@@ -97,7 +101,7 @@
 		<div class="Hui-tabNav-wp">
 			<ul id="min_title_list" class="acrossTab cl">
 				<li class="active">
-					<span title="我的桌面" data-href="welcome.html">我的桌面</span>
+					<span title="欢迎页面" data-href="welcome.html">欢迎页面</span>
 					<em></em></li>
 		</ul>
 	</div>

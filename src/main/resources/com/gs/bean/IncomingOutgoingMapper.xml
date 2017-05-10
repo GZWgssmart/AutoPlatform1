@@ -54,42 +54,50 @@
 
     <select id="queryByDate" resultMap="incomingOutgoingMap">
     <![CDATA[
-
-      select io.*,i.inTypeId as inType_id, i.inTypeName,o.outTypeId as outType_id,o.outTypeName,u.userId ,u.userName from t_incoming_outgoing io
-				LEFT JOIN t_incoming_type i on io.inTypeId = i.inTypeId
-				LEFT JOIN t_outgoing_type o on io.outTypeId = o.outTypeId
-				LEFT JOIN  t_user u on io.inOutCreatedUser = u.userId
-				where  io.inOutStatus = 'Y'  and io.inOutCreatedTime between #{start} and  #{end}
-				order by io.inOutCreatedTime ASC
-
+          select SUM(inOutMoney) as inOutMoney,inOutCreatedTime from t_incoming_outgoing io, t_company c
+         where io.companyId = c.companyId and c.companyId = #{companyId} and inOutStatus = 'Y' and
+            date_format(inOutCreatedTime,'%Y-%m')=date_format(now(),'%Y-%m')
         ]]>
+        <if test="inOutType ==0">
+
+        </if>
+        <if test="inOutType ==1">
+            and io.outTypeId is not null
+        </if>
+        <if test="inOutType ==2">
+            and io.inTypeId is not null
+        </if>
   </select>
+
 
     <select id="queryByCondition" resultMap="incomingOutgoingMap">
     <![CDATA[
-        select inTypeId, outTypeId, sum(inOutMoney) as inOutMoney,inOutCreatedTime from t_incoming_outgoing
-            where inOutStatus = 'Y' and  inOutCreatedTime >= #{start} and inOutCreatedTime <= #{end}
+        select SUM(inOutMoney) as inOutMoney,inOutCreatedTime from t_incoming_outgoing io, t_company c
+ where io.companyId = c.companyId and c.companyId = #{companyId} and inOutStatus = 'Y' and  inOutCreatedTime >= #{start} and inOutCreatedTime <= #{end}
         ]]>
+        <if test="inOutType ==0">
+
+        </if>
         <if test="inOutType ==1">
-            and outTypeId is not null
+            and io.outTypeId is not null
         </if>
         <if test="inOutType ==2">
-            and inTypeId is not null
+            and io.inTypeId is not null
         </if>
         <if test="type =='year'">
-            GROUP BY year(inOutCreatedTime);
+            GROUP BY year(io.inOutCreatedTime)  ORDER BY io.inOutCreatedTime ASC;
         </if>
         <if test="type =='quarter'">
-            GROUP BY quarter(inOutCreatedTime);
+            group by concat(date_format(io.inOutCreatedTime, '%Y'),FLOOR((date_format(io.inOutCreatedTime, '%m')+2)/3)) ORDER BY io.inOutCreatedTime ASC;
         </if>
         <if test="type =='month'">
-            GROUP BY month(inOutCreatedTime);
+            GROUP BY month(io.inOutCreatedTime) ORDER BY io.inOutCreatedTime ASC;
         </if>
         <if test="type =='week'">
-            GROUP BY week(inOutCreatedTime);
+            GROUP BY week(io.inOutCreatedTime) ORDER BY io.inOutCreatedTime ASC;
         </if>
         <if test="type =='day'">
-            GROUP BY day(inOutCreatedTime);
+            GROUP BY day(io.inOutCreatedTime) ORDER BY io.inOutCreatedTime ASC;
         </if>
   </select>
 

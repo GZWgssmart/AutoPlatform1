@@ -24,6 +24,12 @@
         fieldset legend {
             font: bold 14px/2 "\5fae\8f6f\96c5\9ed1";
         }
+
+        /* 让显示详细信息的窗口中的所有Input都不显示边框 */
+        #detailWindow input {
+            border:0px;
+        }
+
     </style>
 
 </head>
@@ -43,13 +49,13 @@
                 <th data-formatter="formatterRole">用户角色</th>
                 <th data-field="company" data-formatter="companyFormatter">所属公司</th>
                 <th data-field="userEmail">用户Email</th>
-                <th data-field="userAddress">地址</th>
+                <%--<th data-field="userAddress">地址</th>--%>
                 <th data-field="userPhone">用户手机号</th>
-                <th data-field="userIdentity">身份证号</th>
-                <th data-field="userWeChat">微信</th>
-                <th data-field="userBirthday" data-formatter="formatterDate">生日</th>
-                <th data-field="userCreatedTime" data-formatter=formatterDateTime>创建时间</th>
-                <th data-field="userLoginedTime" data-formatter="formatterDateTime">最近一次登录时间</th>
+                <%--<th data-field="userIdentity">身份证号</th>--%>
+                <%--<th data-field="userWeChat">微信</th>--%>
+                <%--<th data-field="userBirthday" data-formatter="formatterDate">生日</th>--%>
+                <%--<th data-field="userCreatedTime" data-formatter=formatterDateTime>创建时间</th>--%>
+                <%--<th data-field="userLoginedTime" data-formatter="formatterDateTime">最近一次登录时间</th>--%>
                 <th data-field="userStatus" data-formatter="formatterStatus">操作</th>
             </tr>
             </thead>
@@ -334,6 +340,125 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+<!-- 详细信息弹窗 -->
+<div class="modal fade" id="detailWindow" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content" style="width:900px; margin-left:-200px;">
+            <div class="modal-header" style="overflow:auto;">
+                <h3>详细信息</h3>
+            </div>
+            <form role="form" class="form-horizontal" id="detailForm" method="post">
+                <input type="hidden" define="emp.userId" class="form-control"/>
+                <div>
+                    <div class="col-md-7">
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">用户头像：</label>
+                            <div class="col-md-8">
+                                <img id="detailUserIcon" src="" style="width:222px;height:232px;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="form-group col-md-6 pull-left">
+                        <label class="col-md-4 control-label">姓名：</label>
+                        <div class="col-md-8">
+                            <input type="text" name="userName" define="emp.userName" class="form-control" disabled="true">  <%--此果文字会变成灰色，不可编辑。--%>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6 pull-left">
+                        <label class="col-md-4 control-label">Email：</label>
+                        <div class="col-md-8">
+                            <input type="text" define="emp.userEmail" class="form-control" disabled="true">  <%--此果文字会变成灰色，不可编辑。--%>
+                        </div>
+                    </div>
+                    <p class="clearfix"></p>
+                </div>
+                <div>
+                    <div class="form-group col-md-6 pull-left">
+                        <label class="col-md-4 control-label">手机号码：</label>
+                        <div class="col-md-8">
+                            <input type="number" define="emp.userPhone" class="form-control" disabled="true">  <%--此果文字会变成灰色，不可编辑。--%>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6 pull-left">
+                        <label class="col-md-4 control-label">身份证：</label>
+                        <div class="col-md-8">
+                            <input type="number" define="emp.userIdentity" class="form-control" disabled="true">  <%--此果文字会变成灰色，不可编辑。--%>
+                        </div>
+                    </div>
+                    <p class="clearfix"></p>
+                </div>
+                <div>
+                    <div class="form-group col-md-6 pull-left">
+                        <label class="col-md-4 control-label">角色：</label>
+                        <div class="col-md-8">
+                            <input define="emp.roleId" class="form-control userRole" type="text" disabled="true">  <%--此果文字会变成灰色，不可编辑。--%>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6 pull-left">
+                        <label class="col-md-4 control-label">用户描述：</label>
+                        <div class="col-md-8">
+                            <input type="text" define="emp.userDes" class="form-control" disabled="true">  <%--此果文字会变成灰色，不可编辑。--%>
+                        </div>
+                    </div>
+                    <p class="clearfix"></p>
+                </div>
+                <div>
+                    <div class="form-group col-md-6 pull-left">
+                        <label class="col-md-4 control-label">性别：</label>
+                        <div class="col-md-8">
+                            <input define="emp.userGender" type="text" class="form-control"  disabled="true">  <%--此果文字会变成灰色，不可编辑。--%>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6 pull-left">
+                        <label class="col-md-4 control-label">生日：</label>
+                        <div class="col-md-8">
+                            <input id="detailBirthday" readonly="true" type="date" define="emp.userBirthday"
+                               class="form-control datetimepicker" disabled="true">  <%--此果文字会变成灰色，不可编辑。--%>
+                        </div>
+                    </div>
+                    <p class="clearfix"></p>
+                </div>
+                <div>
+                    <div class="form-group col-md-6 pull-left">
+                        <label class="col-md-4 control-label">底薪：</label>
+                        <div class="col-md-8">
+                            <input type="number" define="emp.userSalary" name="userSalary"
+                                   class="form-control" disabled="true">  <%--此果文字会变成灰色，不可编辑。--%>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6 pull-left">
+                        <label class="col-md-4 control-label">昵称：</label>
+                        <div class="col-md-8">
+                            <input type="text" define="emp.userNickName" class="form-control" disabled="true">  <%--此果文字会变成灰色，不可编辑。--%>
+                        </div>
+                    </div>
+                    <p class="clearfix"></p>
+                </div>
+                <div>
+                    <div class="form-group col-md-6 pull-left">
+                        <label class="col-md-4 control-label">所属公司：</label>
+                        <div class="col-md-8">
+                            <input define="emp.companyId" class="form-control userCompany" style="width: 100%;" disabled="true">  <%--此果文字会变成灰色，不可编辑。--%>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-12 pull-right">
+                        <label class="col-md-2 control-label" style="top: 9px;right:5px">地址：</label>
+                        <div class="col-md-9" style="margin-top: 10px;display: block;">
+                            <input type="text" define="emp.userAddress" class="form-control" disabled="true">  <%--此果文字会变成灰色，不可编辑。--%>
+                        </div>
+                    </div>
+                    <p class="clearfix"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal"> 关闭</button>
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 <!-- 删除弹窗 -->
 <div class="modal fade" id="del" aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog">
@@ -416,7 +541,7 @@
                 // data 为controller返回的json
                 var resp= data.response;
                 if (resp.controllerResult.result == 'success') {
-                    $("#file1").val(resp.imgPath)
+                    $("#file").val(resp.imgPath)
                     alert('处理成功');
                 } else {
                     alert("上传失败")
@@ -441,9 +566,9 @@
         if(row.role != null && row.role!=""){
             var roles = null;
             $.each(row.role, function(index, value, item) {
-                if(roles =="" ||roles == null){
+                if(roles == "" ||roles == null){
                     roles = row.role.roleDes;
-                }else{
+                } else if(roles != row.role.roleDes) {
                     roles += "," + row.role.roleDes;
                 }
             });

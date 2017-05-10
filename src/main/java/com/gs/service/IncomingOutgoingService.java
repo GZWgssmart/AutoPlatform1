@@ -26,15 +26,15 @@ public interface IncomingOutgoingService extends BaseService<String, IncomingOut
     public int countByDisable();
 
     /**
-     * 根据时间段去查找
+     * 默认查询本月报表数据
      */
-    public List<IncomingOutgoing> queryByDate(String start,  String end);
+    public List<IncomingOutgoing> queryByDate(String inOutType, String companyId);
 
 
     /*
 * 根据年，月，季度，周，日查询所有收支记录
 * */
-    public List<IncomingOutgoing> queryByCondition(String start,String end,String inOutType, String type);
+    public List<IncomingOutgoing> queryByCondition(String start,String end,String inOutType, String companyId, String type);
 
 
 }

@@ -108,7 +108,7 @@
   <!-- 分页查询状态为不可用的员工及角色名称 -->
   <select id="queryByPagerDisable" resultMap="userBasicManageMap" parameterType="com.gs.common.bean.Pager">
     <![CDATA[
-      select u.*, r.*, r.roleDes, c.companyId, c.companyName from t_user u
+      select u.*, r.*, c.companyId, c.companyName from t_user u
         left join t_user_role ur on u.userId = ur.userId
         left join t_role r on r.roleId = ur.roleId
         left join t_company c on u.companyId = c.companyId

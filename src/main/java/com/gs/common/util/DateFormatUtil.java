@@ -13,6 +13,9 @@ import java.util.Map;
 public class DateFormatUtil {
 
     public static final String DEFAULT_PATTERN = "yyyy年MM月dd日 HH:mm:ss";
+    public static final String YEARFORMATER = "yyyy年";
+    public static final String MONTHFORMTER = "yyyy年MM月";
+    public static final String DAYFORMATER = "yyyy年MM月dd日";
 
     public static Map<String, ThreadLocal<DateFormat>> dfMap = new HashMap<String, ThreadLocal<DateFormat>>();
 
@@ -49,6 +52,17 @@ public class DateFormatUtil {
 
     public static String defaultFormat(Date date) {
         return format(date, DEFAULT_PATTERN);
+    }
+    public static String YearFormater(Date date) {
+        return format(date, YEARFORMATER);
+    }
+
+    public static String MonthFormater(Date date) {
+        return format(date, MONTHFORMTER);
+    }
+
+    public static String DayFormater(Date date) {
+        return format(date, DAYFORMATER);
     }
 
     public static String defaultFormat(Calendar cal) {

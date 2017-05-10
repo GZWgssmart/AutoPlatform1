@@ -137,7 +137,7 @@ li{
     width: 320px ;
 }
 .btm-des span:hover{
-    color: #01AAED;
+    color: #e6e6e6;
 }
 .btm-two{
     margin:15px 95px;
@@ -202,7 +202,7 @@ li{
 .t-bottom{
     text-align: center;
     width: 100%;
-    background-color: #0d8ddb;
+    background-color: #000;
 }
 .t-bottom span{
     color: white;

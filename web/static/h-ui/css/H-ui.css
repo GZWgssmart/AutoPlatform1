@@ -3079,12 +3079,12 @@ H-ui采用Font Awesome 3.2.1的整套图标，因为是图标字体，所以可�
     .navbar-wrapper{ height: 45px!important;background: black;}
     .logo{ margin-right: 0}
     .navbar .logo{height: 44px!important;line-height: 44px!important}
-    .navbar-nav > ul > li{ width: 100%; text-align: left; border-bottom: solid 1px #eee}
+    .navbar-nav > ul > li{ width: 100%; text-align: left; border-bottom: solid 0px #eee}
     .navbar-nav > ul > li > a{display:block;padding:0 15px; text-align: left}
     .navbar-nav > ul > li.dropDown.open > .dropDown-menu{ display: none}
     .navbar-nav > ul > li.dropDown > .dropDown_A > .Hui-iconfont{ display: none}
     .navbar-nav > ul > li,
-	.navbar-nav > ul > li > a{height: 44px!important;line-height: 44px!important;display:none;}
+	.navbar-nav > ul > li > a{height: 44px!important;line-height: 44px!important; width:50%;}
 
     .nav-collapse > ul,.nav-collapse > ul >li {width: 100%;display: block}
     .js .nav-collapse {position: absolute;display: block;float:none; clear:both;max-height: 0;clip: rect(0 0 0 0);margin-left: -15px; margin-right: -15px;overflow: hidden;

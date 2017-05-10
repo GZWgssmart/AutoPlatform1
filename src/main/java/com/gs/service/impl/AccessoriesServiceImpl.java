@@ -4,6 +4,7 @@ import com.gs.bean.Accessories;
 import com.gs.common.bean.Pager;
 import com.gs.dao.AccessoriesDAO;
 import com.gs.service.AccessoriesService;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -58,6 +59,11 @@ public class AccessoriesServiceImpl implements AccessoriesService {
 	@Override
 	public List<Accessories> queryByIdPager(String id, Pager pager) {
 		return accessoriesDAO.queryByIdPager(id,pager);
+	}
+
+	@Override
+	public int updateCount(@Param("accCount") int accCount,@Param("accId") String accId) {
+		return accessoriesDAO.updateCount(accCount,accId);
 	}
 
 	public List<Accessories> blurredQuery(Pager pager, Accessories accessories) {

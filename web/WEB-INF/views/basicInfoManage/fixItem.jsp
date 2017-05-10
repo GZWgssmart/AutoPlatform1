@@ -76,7 +76,7 @@
                             <input id="addacc" class="form-control" placeholder="请选择配件" readonly="true"
                                    style="width:52%;">
                             </input>
-                            <button type="button" class="btn btn-default" onclick="showAcc();">
+                            <button type="button" class="btn btn-default" onclick="showAcc('accWindow');">
                                 <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查看配件
                             </button>
                         </div>
@@ -146,51 +146,6 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<!-- 修改配件弹窗 -->
-<div class="modal fade" id="editDetailWindow" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-body">
-                <span class="glyphicon glyphicon-remove closeModal" onclick="closeEditForm()"></span>
-                <form role="form" class="form-horizontal" id="editDetailForm">
-                    <input id="editMaintainId" type="text" define="maintainFixAcc.maintainId" name="maintainId"/>
-                    <input type="hidden" define="maintainFixAcc.accessories.accName" name="maintainId"/>
-                    <input type="text" id="editItemId" name="mainAccId">
-                    <div class="modal-header" style="overflow:auto;">
-                        <h3>修改维修保养明细</h3>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">配件名称：</label>
-                        <div class="col-sm-9">
-                            <input id="editDetailacc" define="maintainFixAcc.accessories.accName"
-                                   class="form-control" placeholder="请选择配件" readonly="true"
-                                   style="width:52%;">
-                            </input>
-                            <button type="button" class="btn btn-default" onclick="showDetail();">
-                                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查看配件
-                            </button>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">配件数量：</label>
-                        <div class="col-sm-7">
-                            <input type="text" name="accCount" define="maintainFixAcc.accCount" placeholder="请输入配件数量" class="form-control">
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default"
-                                onclick="closeEditForm()">关闭
-                        </button>
-                        <button id="editDetailButton" type="button" onclick="editSubmit1()" class="btn btn-success">保存
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
-<!-- 明细表格 -->
 <div id="detailWindow" class="modal fade" aria-hidden="true" style="overflow-y:scroll" data-backdrop="static"
      keyboard:false>
     <div class="modal-dialog" style="width: 90%">
@@ -215,7 +170,7 @@
                 </table>
                 <div id="detailToolbar" class="btn-group">
                     <button id="btn_editDetail" type="button" class="btn btn-default" onclick="showEditDetail();">
-                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改配件
+                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改明细
                     </button>
                 </div>
                 <div class="modal-footer" style="border: none">

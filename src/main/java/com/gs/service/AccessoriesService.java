@@ -24,4 +24,6 @@ public interface AccessoriesService extends BaseService<String, Accessories>{
     public int countByDisable();
 
     public List<Accessories> queryByIdPager(@Param("id") String id, @Param("pager") Pager pager);
+
+    public int updateCount(@Param("accCount") int accCount,@Param("accId") String accId);
 }

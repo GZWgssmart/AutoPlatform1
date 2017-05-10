@@ -37,20 +37,20 @@ public class AccessoriesInventoryController {
     @Resource
     private AccessoriesService accessoriesService;
 
-//    /**
-//     * 查询所有的配件库存信息
-//     *
-//     * @return
-//     */
-//    @ResponseBody
-//    @RequestMapping(value = "queryAllAccInv", method = RequestMethod.POST)
-//    public List<Accessories> queryAllAccInv() {
-//        List<Accessories> accessoriesList = accessoriesService.queryAll();
-//        if (accessoriesList != null && !accessoriesList.equals("")) {
-//            return accessoriesList;
-//        }
-//        return null;
-//    }
+    /**
+     * 查询所有的配件库存信息
+     *
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "queryAll", method = RequestMethod.GET)
+    public List<Accessories> queryAll() {
+        List<Accessories> accessoriesList = accessoriesService.queryAll();
+        if (accessoriesList != null && !accessoriesList.equals("")) {
+            return accessoriesList;
+        }
+        return null;
+    }
 
     /**
      * 查询全部的配件信息
