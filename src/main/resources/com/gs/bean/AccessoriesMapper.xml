@@ -49,7 +49,7 @@
   <!-- 分页查询 -->
   <select id="queryByPager" resultMap="AccessoriesMap" parameterType="com.gs.common.bean.Pager">
     <![CDATA[
-      select ac.*,atp.accTypeId,atp.accTypeName,cm.companyId,cm.companyName,sp.supplyId,sp.supplyName
+      select ac.*,cm.companyId,cm.companyName,sp.supplyId,sp.supplyName,atp.accTypeId,atp.accTypeName
        from auto_platform.t_accessories ac
        LEFT JOIN auto_platform.t_accessories_type atp on ac.accTypeId=atp.accTypeId
        LEFT JOIN auto_platform.t_company cm on ac.companyId = cm.companyId
@@ -74,7 +74,7 @@
             INSERT INTO auto_platform.t_accessories
             (accId,accName, accCommodityCode, accDes, accPrice,accSalePrice,accTotal,accIdle, accUsedTime,accBuyedTime,supplyId,accCreatedTime,accTypeId,companyId,accStatus)
             VALUES
-            (uuid(),#{accName},#{accCommodityCode},#{accDes},abs(#{accPrice}),abs(#{accSalePrice}),abs(#{accTotal}),abs(#{accIdle}),CURRENT_TIMESTAMP ,CURRENT_TIMESTAMP ,#{supplyId},CURRENT_TIMESTAMP,#{accTypeId},#{companyId},'Y')
+            (#{accId},#{accName},#{accCommodityCode},#{accDes},abs(#{accPrice}),abs(#{accSalePrice}),abs(#{accTotal}),abs(#{accIdle}),CURRENT_TIMESTAMP ,CURRENT_TIMESTAMP ,#{supplyId},CURRENT_TIMESTAMP,#{accTypeId},#{companyId},'Y')
         ]]>
   </insert>
 
@@ -210,4 +210,11 @@
       atp.accTypeName LIKE '%${accInv.accTypeId}%'
     </if>
   </select>
+
+  <update id="updateCount">
+    <![CDATA[
+        UPDATE auto_platform.t_accessories SET accTotal = accTotal + #{accCount} WHERE accId = #{accId}
+        ]]>
+  </update>
+
 </mapper>

@@ -27,4 +27,6 @@ public interface AccessoriesDAO extends BaseDAO<String, Accessories>{
     public int countByBlurred(@Param("accInv")Accessories accessories);
 
     public List<Accessories> queryByIdPager(@Param("id") String id, @Param("pager") Pager pager);
+
+    public int updateCount(@Param("accCount") int accCount,@Param("accId") String accId);
 }

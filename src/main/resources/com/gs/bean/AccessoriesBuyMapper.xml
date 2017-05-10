@@ -28,6 +28,16 @@
             <id property="accName" column="accName"/>
         </association>
 
+        <association property="accessoriesType" javaType="com.gs.bean.AccessoriesType">
+            <id property="accTypeId" column="accTypeId"/>
+            <id property="accTypeName" column="accTypeName"/>
+        </association>
+
+        <association property="supply" javaType="com.gs.bean.Supply">
+            <id property="supplyId" column="supplyId"/>
+            <id property="supplyName" column="supplyName"/>
+        </association>
+
     </resultMap>
 
     <!--
@@ -42,10 +52,12 @@
     <!-- 分页查询 -->
     <select id="queryByPager" resultMap="AccessoriesBuyMap" parameterType="com.gs.common.bean.Pager">
         <![CDATA[
-          select ab.*,cp.companyId,cp.companyName,ac.accId,ac.accName
+          select ab.*,ac.accId,ac.accName,cp.companyId,cp.companyName,atp.accTypeId,atp.accTypeName,sp.supplyId,sp.supplyName
            from auto_platform.t_accessories_buy ab
            LEFT JOIN auto_platform.t_accessories ac on ab.accId=ac.accId
            LEFT JOIN auto_platform.t_company cp on ab.companyId=cp.companyId
+           LEFT JOIN auto_platform.t_accessories_type atp on ab.accTypeId=atp.accTypeId
+           LEFT JOIN auto_platform.t_supply sp on ab.supplyId=sp.supplyId
            where ab.accBuyStatus = 'Y' order by ab.accBuyCreatedTime Desc
         ]]>
         limit #{beginIndex}, #{pageSize};
@@ -64,9 +76,9 @@
     <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="AccessoriesBuy">
         <![CDATA[
             INSERT INTO auto_platform.t_accessories_buy
-            (accBuyId,accId, accBuyCount, accBuyPrice, accBuyTotal,accBuyDiscount, accBuyMoney, accBuyTime, accBuyCreatedTime,companyId, accBuyStatus)
+            (accBuyId,accId, accBuyCount, accBuyPrice, accBuyTotal,accBuyDiscount, accBuyMoney, accBuyTime, accBuyCreatedTime,companyId,supplyId,accTypeId, accBuyStatus)
             VALUES
-            (uuid(),#{accId},abs(#{accBuyCount}),abs(#{accBuyPrice}),abs(#{accBuyTotal}),abs(#{accBuyDiscount}),abs(#{accBuyMoney}),#{accBuyTime},CURRENT_TIMESTAMP ,#{companyId},'Y')
+            (uuid(),#{accId},abs(#{accBuyCount}),abs(#{accBuyPrice}),abs(#{accBuyTotal}),abs(#{accBuyDiscount}),abs(#{accBuyMoney}),#{accBuyTime},CURRENT_TIMESTAMP ,#{companyId},#{supplyId},#{accTypeId},'Y')
         ]]>
     </insert>
 
@@ -79,7 +91,7 @@
         SET accBuyCount=abs(#{accBuyCount}), accBuyPrice=abs(#{accBuyPrice}),
         accBuyTotal=abs(#{accBuyTotal}),accBuyDiscount=abs(#{accBuyDiscount}),
         accBuyMoney=abs(#{accBuyMoney}),accBuyTime=#{accBuyTime},
-        companyId=#{companyId},accId=#{accId}
+        companyId=#{companyId},accId=#{accId},accTypeId=#{accTypeId},supplyId=#{supplyId}
         WHERE accBuyId=#{accBuyId}
         ]]>
     </update>
@@ -123,6 +135,8 @@
        SELECT abu.*,cp.companyId,cp.companyName,ac.accId,ac.accName FROM auto_platform.t_accessories_buy abu
        LEFT JOIN auto_platform.t_company cp on cp.companyId=abu.companyId
        LEFT JOIN auto_platform.t_accessories ac on ac.accId=abu.accId
+       LEFT join auto_platform.t_accessories_type atp on atp.accTypeId=abu.accTypeId
+       LEFT JOIN auto_platform.t_supply sp on sp.supplyId=abu.supplyId
        WHERE accBuyStatus='N'
        ]]>
         limit #{beginIndex}, #{pageSize}
@@ -140,6 +154,8 @@
            select abu.*,cp.companyId,cp.companyName,ac.accId,ac.accName from auto_platform.t_accessories_buy abu
            LEFT JOIN auto_platform.t_company cp on abu.companyId=cp.companyId
            LEFT JOIN auto_platform.t_accessories ac on abu.accId=ac.accId
+           LEFT JOIN auto_platform.t_accessories_type atp on atp.accTypeId=abu.accTypeId
+           LEFT JOIN auto_platform.t_supply sp on sp.supplyId=abu.supplyId
            where 1=1 AND
         ]]>
         <if test="accBuy.companyId != '' and accBuy.companyId != null">
@@ -162,6 +178,8 @@
            select count(accBuyId) from auto_platform.t_accessories_buy abu
            LEFT JOIN auto_platform.t_company cp on abu.companyId=cp.companyId
            LEFT JOIN auto_platform.t_accessories ac on abu.accId=ac.accId
+           LEFT JOIN auto_platform.t_accessories_type atp on atp.accTypeId=abu.accTypeId
+           LEFT JOIN auto_platform.t_supply sp on sp.supplyId=abu.supplyId
            where 1=1 AND
         ]]>
         <if test="accBuy.companyId != '' and accBuy.companyId != null">
@@ -175,7 +193,6 @@
             ac.accName LIKE '%${accBuy.accId}%'
         </if>
     </select>
-
     <!--下单报表统计-->
 
     <select id="queryByCondition" resultMap="AccessoriesBuyMap">
