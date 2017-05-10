@@ -10,14 +10,12 @@ $(".paging-ul .paging-li ").each(function () {
     });
 });
 $(function () {
-    var wechat = document.getElementById("wechat-right");
+    var none = document.getElementById("wechat-right");
     var style = document.createElement('style');
     if (window.screen.width <= 456){
-        style.innerHTML = '.wechat-right:before{ border:solid 0px transparent}';
-        wechat.appendChild(style);
+        none.style.display="none";
     }else{
-        style.innerHTML = '.wechat-right:before{ top:250px,border: solid 60px transparent,border-right-color:rgba(0,0,0,0.5)}';
-        wechat.appendChild(style);
+        none.style.display="block";
     }
 
 });

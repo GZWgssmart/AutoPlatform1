@@ -20,33 +20,30 @@
     <link rel="stylesheet" href="/static/css/sweetalert.css">
     <link rel="stylesheet" href="/static/css/bootstrap-validate/bootstrapValidator.min.css">
 </head>
+<style>
+    body{
+        background: url(/static/img/Frontpage/515037.jpg);
+        font-family:Microsoft YaHei,Arial,simsun, Helvetica, sans-serif;
+    }
+    .float-e-margins{
+        border-radius:5px;
+        background: rgba(0,0,0,0.2);
+    }
+    .form-group label{
+        color: white;
+        font-size: 17px;
+    }
+</style>
 <body class="gray-bg">
 <div class="row">
-    <div class="col-sm-5" style="margin: 50px 30%;">
+    <div class="col-sm-5 col-md-5" style="margin: 50px 30%;">
         <div class="ibox float-e-margins">
-            <div class="ibox-title">
-                <h5>请登陆</h5>
-                <div class="ibox-tools">
-                    <a class="collapse-link">
-                        <i class="fa fa-chevron-up"></i>
-                    </a>
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="form_basic.html#">
-                        <i class="fa fa-wrench"></i>
-                    </a>
-                    <ul class="dropdown-menu dropdown-user">
-                        <li><a href="form_basic.html#">选项1</a>
-                        </li>
-                        <li><a href="form_basic.html#">选项2</a>
-                        </li>
-                    </ul>
-                    <a class="close-link">
-                        <i class="fa fa-times"></i>
-                    </a>
-                </div>
+            <div class="ibox-title" style="padding:15px 0;background:black;text-align: center;border-color: black;">
+                <span style="font-size: 30px;color: #fff;">登 录</span>
+
             </div>
-            <div class="ibox-content">
+            <div class="ibox-content" style="background: rgba(0,0,0,0.7);">
                 <form class="form-horizontal" id="loginForm">
-                    <p>欢迎登录本站(⊙o⊙)</p>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">帐号：</label>
 
@@ -65,8 +62,8 @@
                         <label class="col-sm-3 control-label">验证码：</label>
 
                         <div class="col-sm-8">
-                            <input type="text" name="checkCode" placeholder="验证码" class="form-control">
-                            <a href="javascript:;"><img style=" margin:10px 0 0 0; vertical-align:middle; height:35px;"
+                            <input style="width: 64%;float: right;" type="text" name="checkCode" placeholder="验证码" class="form-control">
+                            <a href="javascript:;"><img style=" margin:0px 0 0 0; vertical-align:middle; height:35px;"
                                                         src="<%=path %>/captcha"
                                                         onclick="this.src='<%=path %>/captcha?time=Math.random();'"></a>
                         </div>
@@ -74,7 +71,7 @@
                     </div>
                     <div class="form-group">
                         <div class="col-sm-offset-3 col-sm-8">
-                            <button class="btn btn-sm btn-white" type="button" id="loginButton" onclick="loginSubmit()">
+                            <button class="btn btn-block btn-success " type="button" id="loginButton" onclick="loginSubmit()">
                                 登 录
                             </button>
                         </div>

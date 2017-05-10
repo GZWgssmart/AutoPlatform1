@@ -113,3 +113,9 @@ input[type=time]{
 .wechat-right.remove:before{
     border:solid 0px transparent;
 }
+
+@media (max-width: 767px) {
+    #wechat-right {
+        display:none;
+    }
+}
