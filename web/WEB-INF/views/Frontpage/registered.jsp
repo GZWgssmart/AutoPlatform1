@@ -64,6 +64,9 @@
 
                             </div>
                             <div class="form-group">
+                                <label style="overflow: hidden;"><input type="checkbox" value="记住账号" style="position: relative;top:3px;width: 16px;height: 16px;"> <span style="font-size: 16px;">记住账号</span></label>
+                            </div>
+                            <div class="form-group">
                                 <button type="button" class="btn btn-success btn-block" value="登录" id="loginButton" onclick="loginSubmit()">登录</button>
                                 <button type="reset" class="btn btn-info btn-block" onclick="reg()" value="没有账号，立即注册">没有账号，立即注册</button>
                             </div>
