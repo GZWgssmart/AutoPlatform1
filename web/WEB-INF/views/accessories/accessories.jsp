@@ -19,7 +19,6 @@
     <link rel="stylesheet" href="/static/css/bootstrap-validate/bootstrapValidator.min.css">
     <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.css">
     <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/datetimepicker.less">
-
 </head>
 <body>
 <%@include file="../backstage/contextmenu.jsp" %>
@@ -29,9 +28,9 @@
             <thead>
             <tr>
                 <th data-radio="true" data-field="status"></th>
-                <th data-field="company.companyName">所属公司名称</th>
-                <th data-field="accessoriesType.accTypeName">配件所属类别</th>
-                <th data-field="supply.supplyName">所属供应商</th>
+                <th data-field="company.companyName" data-formatter="formatterNull">所属公司名称</th>
+                <th data-field="accessoriesType.accTypeName" data-formatter="formatterNull">配件所属类别</th>
+                <th data-field="supply.supplyName" data-formatter="formatterNull">所属供应商</th>
                 <th data-field="accName">配件名称</th>
                 <th data-field="accCommodityCode">配件商品条码</th>
                 <th data-field="accDes">配件描述</th>

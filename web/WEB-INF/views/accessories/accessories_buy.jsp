@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="/static/css/select2.min.css">
     <link rel="stylesheet" href="/static/css/sweetalert.css">
     <link rel="stylesheet" href="/static/css/table/table.css">
+    <link rel="stylesheet" href="/static/css/bootstrap-switch/bootstrap-switch.min.css">
     <link rel="stylesheet" href="/static/css/bootstrap-validate/bootstrapValidator.min.css">
     <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.css">
     <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/datetimepicker.less">
@@ -29,6 +30,8 @@
             <tr>
                 <th data-radio="true" data-field="status"></th>
                 <th data-field="company.companyName">所属公司</th>
+                <th data-field="supply.supplyName">供应商</th>
+                <th data-field="accessoriesType.accTypeName">配件分类</th>
                 <th data-field="accessories.accName">配件名称</th>
                 <th data-field="accBuyCount">购买数量</th>
                 <th data-field="accBuyPrice">购买单价</th>
@@ -56,7 +59,8 @@
             </button>
             <div class="input-group" style="width:350px;float:left;padding:0;margin:0 0 0 -1px;">
                 <div class="input-group-btn">
-                    <button type="button" id="ulButton" class="btn btn-default" style="border-radius:0px;" data-toggle="dropdown">汽车公司/配件<span class="caret"></span></button>
+                    <button type="button" id="ulButton" class="btn btn-default" style="border-radius:0px;"
+                            data-toggle="dropdown">汽车公司/配件<span class="caret"></span></button>
                     <ul class="dropdown-menu pull-right">
                         <li><a onclick="onclikLi(this)">汽车公司/配件</a></li>
                         <li class="divider"></li>
@@ -67,7 +71,8 @@
                     </ul>
                 </div><!-- /btn-group -->
                 <input id="ulInput" class="form-control" onkeypress="if(event.keyCode==13) {blurredQuery();}">
-                <a href="javaScript:;" onclick="blurredQuery()"><span class="glyphicon glyphicon-search search-style"></span></a>
+                <a href="javaScript:;" onclick="blurredQuery()"><span
+                        class="glyphicon glyphicon-search search-style"></span></a>
                 </input>
             </div><!-- /input-group -->
         </div>
@@ -78,10 +83,17 @@
     <div class="modal-dialog">
         <div class="modal-content" style="overflow:hidden;">
             <form class="form-horizontal" role="form" id="addForm" method="get">
+                <input name="accId" type="hidden" id="accInvId"/>
                 <div class="modal-header" style="overflow:auto;">
                     <h4>请填写配件采购信息</h4>
                 </div>
                 <br/>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">是否新增：</label>
+                    <div class="col-sm-7">
+                        <input id="app" type="checkbox" onchange="appOnChange()"/>
+                    </div>
+                </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">所属公司：</label>
                     <div class="col-sm-7">
@@ -90,46 +102,66 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">配件：</label>
+                    <label class="col-sm-3 control-label">供应商：</label>
                     <div class="col-sm-7">
-                        <select id="addAccInv" class="js-example-tags accInv" name="accId" style="width:100%">
+                        <select id="addSupply" class="js-example-tags supply" name="supplyId" style="width:100%">
                         </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">配件所属类别：</label>
+                    <div class="col-sm-7">
+                        <select id="addAccType" class="js-example-tags accType" name="accTypeId" style="width:100%">
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">配件名称：</label>
+                    <div class="col-sm-7">
+                        <input type="text" name="accName" id="accInvName" placeholder="请输入配件名称" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">购买时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="accBuyTime" placeholder="请输入购买时间" onclick="getDate('addDateTimePicker')" id="addDateTimePicker" class="form-control">
+                        <input type="text" name="accBuyTime" placeholder="请输入购买时间"
+                               onclick="getDate('addDateTimePicker')" id="addDateTimePicker" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">购买数量：</label>
                     <div class="col-sm-7">
-                        <input type="number" name="accBuyCount" onchange="Addcalculate();" id="addCountNum" placeholder="请输入购买数量" class="form-control">
+                        <input type="number" name="accBuyCount" onchange="Addcalculate();" id="addCountNum"
+                               placeholder="请输入购买数量" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">购买单价：</label>
                     <div class="col-sm-7">
-                        <input type="number" name="accBuyPrice" onchange="Addcalculate();" id="addBuyPrice" placeholder="请输入购买单价" class="form-control">
+                        <input type="number" name="accBuyPrice" onchange="Addcalculate();" id="addBuyPrice"
+                               placeholder="请输入购买单价" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">购买折扣：</label>
                     <div class="col-sm-7">
-                        <input type="number" min="0.0" step="0.1" onchange="Addcalculate();" max="1" name="accBuyDiscount" id="addBuyDiscount" placeholder="请输入购买折扣，0.1代表1折" class="form-control">
+                        <input type="number" min="0.0" step="0.1" onchange="Addcalculate();" max="1"
+                               name="accBuyDiscount" id="addBuyDiscount" placeholder="请输入购买折扣，0.1代表1折"
+                               class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">购买总价：</label>
                     <div class="col-sm-7">
-                        <input type="number" readonly="true" min="0.0" step="0.1" name="accBuyTotal" id="addBuyTotal" placeholder="请输入购买总价" class="form-control">
+                        <input type="number" readonly="true" min="0.0" step="0.1" name="accBuyTotal" id="addBuyTotal"
+                               placeholder="请输入购买总价" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">购买最终价：</label>
                     <div class="col-sm-7">
-                        <input type="number" readonly="true" min="0.0" step="0.1" name="accBuyMoney" id="addBuyMoney" placeholder="请输入购买最终价" class="form-control">
+                        <input type="number" readonly="true" min="0.0" step="0.1" name="accBuyMoney" id="addBuyMoney"
+                               placeholder="请输入购买最终价" class="form-control">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -155,51 +187,73 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">所属公司：</label>
                     <div class="col-sm-7">
-                        <select id="editCompany" class="js-example-tags company" define="AccessoriesBuy.companyId" name="companyId" style="width:100%">
+                        <select id="editCompany" class="js-example-tags company" define="AccessoriesBuy.companyId"
+                                name="companyId" style="width:100%">
                         </select>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">配件：</label>
+                    <label class="col-sm-3 control-label">配件名称：</label>
                     <div class="col-sm-7">
-                        <select id="editAccInv" class="js-example-tags accInv" define="AccessoriesBuy.accId" name="accId" style="width:100%">
+                        <select id="editAccInv" class="js-example-tags accInv" name="accId" style="width:100%">
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">供应商：</label>
+                    <div class="col-sm-7">
+                        <select id="editSupply" class="js-example-tags supply" name="supplyId" style="width:100%">
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">配件所属类别：</label>
+                    <div class="col-sm-7">
+                        <select id="editAccType" class="js-example-tags accType" name="accTypeId" style="width:100%">
                         </select>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">购买时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="accBuyTime" onclick="getDate('editDateTimePicker')" placeholder="请输入购买时间" id="editDateTimePicker" class="form-control">
+                        <input type="text" name="accBuyTime" onclick="getDate('editDateTimePicker')"
+                               placeholder="请输入购买时间" id="editDateTimePicker" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">购买数量：</label>
                     <div class="col-sm-7">
-                        <input type="number" name="accBuyCount" onchange="Editcalculate();" id="editBuyNum" define="AccessoriesBuy.accBuyCount" placeholder="请输入购买数量" class="form-control">
+                        <input type="number" name="accBuyCount" onchange="Editcalculate();" id="editBuyNum"
+                               define="AccessoriesBuy.accBuyCount" placeholder="请输入购买数量" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">购买单价：</label>
                     <div class="col-sm-7">
-                        <input type="number" name="accBuyPrice" onchange="Editcalculate();" id="editBuyPrice" define="AccessoriesBuy.accBuyPrice" placeholder="请输入购买单价" class="form-control">
+                        <input type="number" name="accBuyPrice" onchange="Editcalculate();" id="editBuyPrice"
+                               define="AccessoriesBuy.accBuyPrice" placeholder="请输入购买单价" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">购买折扣：</label>
                     <div class="col-sm-7">
-                        <input type="number" min="0.0" step="0.1" max="1" onchange="Editcalculate();" name="accBuyDiscount" id="editBuyDiscount" define="AccessoriesBuy.accBuyDiscount" placeholder="请输入折扣，0.1代表1折" class="form-control">
+                        <input type="number" min="0.0" step="0.1" max="1" onchange="Editcalculate();"
+                               name="accBuyDiscount" id="editBuyDiscount" define="AccessoriesBuy.accBuyDiscount"
+                               placeholder="请输入折扣，0.1代表1折" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">购买总价：</label>
                     <div class="col-sm-7">
-                        <input type="number" min="0.0" step="0.1" readonly="true" name="accBuyTotal" id="editBuyTotal" define="AccessoriesBuy.accBuyTotal" placeholder="请输入购买总价" class="form-control">
+                        <input type="number" min="0.0" step="0.1" readonly="true" name="accBuyTotal" id="editBuyTotal"
+                               define="AccessoriesBuy.accBuyTotal" placeholder="请输入购买总价" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">购买最终价：</label>
                     <div class="col-sm-7">
-                        <input type="number" readonly="true" min="0.0" step="0.1" name="accBuyMoney" id="editBuyMoney" define="AccessoriesBuy.accBuyMoney" placeholder="请输入购买最终价" class="form-control">
+                        <input type="number" readonly="true" min="0.0" step="0.1" name="accBuyMoney" id="editBuyMoney"
+                               define="AccessoriesBuy.accBuyMoney" placeholder="请输入购买最终价" class="form-control">
                     </div>
                 </div>
 
@@ -213,6 +267,44 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+<div id="appWindow" class="modal fade" aria-hidden="true" style="overflow-y:scroll" data-backdrop="static"
+     keyboard:false>
+    <div class="modal-dialog" style="width: 90%">
+        <div class="modal-content">
+            <div class="modal-body">
+                <span class="glyphicon glyphicon-remove closeModal" onclick="closeAppWin()"></span>
+                <h3>选择预约记录</h3>
+                <table id="accTable">
+                    <thead>
+                    <tr>
+                        <th data-radio="true" data-field="status"></th>
+                        <th data-field="company.companyName">所属公司名称</th>
+                        <th data-field="accessoriesType.accTypeName">配件所属类别</th>
+                        <th data-field="supply.supplyName">所属供应商</th>
+                        <th data-field="accName">配件名称</th>
+                        <th data-field="accCommodityCode">配件商品条码</th>
+                        <th data-field="accDes">配件描述</th>
+                        <th data-field="accPrice">配件价格</th>
+                        <th data-field="accSalePrice">配件售价</th>
+                        <th data-field="accTotal">配件数量</th>
+                        <th data-field="accIdle">配件可用数量</th>
+                        <th data-field="accUsedTime" data-formatter="formatterDateTime">最近一次领料时间</th>
+                        <th data-field="accBuyedTime" data-formatter="formatterDateTime">最近一次购买时间</th>
+                        <th data-field="accCreatedTime" data-formatter="formatterDateTime">配件创建时间</th>
+                        <th data-field="accStatus" data-formatter="statusFormatter">配件状态</th>
+                    </tr>
+                    </thead>
+                </table>
+                <div class="modal-footer" style="overflow:hidden;">
+                    <button type="button" class="btn btn-default" onclick="closeAppWin()">关闭
+                    </button>
+                    <input type="button" class="btn btn-primary" onclick="checkApp()" value="确定">
+                    </input>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- 删除弹窗 -->
 <div class="modal fade" id="del" aria-hidden="true">
@@ -264,6 +356,8 @@
 <script src="/static/js/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.js"></script>
 <script src="/static/js/bootstrap-dateTimePicker/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
 <script src="/static/js/backstage/main.js"></script>
+<script src="/static/js/bootstrap-switch/bootstrap-switch.js"></script>
+<script src="/static/js/plugins/suggest/bootstrap-suggest.min.js"></script>
 <script src="/static/js/bootstrap-validate/bootstrapValidator.js"></script>
 <script src="/static/js/backstage/accessories/accessories_buy.js"></script>
 </body>

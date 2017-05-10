@@ -67,10 +67,18 @@ function formatterStatus(value) {
 
 // 激活或禁用
 function statusFormatter(value, row, index) {
-    if(value == 'Y') {
-        return "&nbsp;&nbsp;<button type='button' class='btn btn-danger' onclick='inactive(\""+'/accInv/statusOperate?accId='+row.accId+'&accStatus=Y'+"\")'>禁用</a>";
+    if (value == 'Y') {
+        return "&nbsp;&nbsp;<button type='button' class='btn btn-danger' onclick='inactive(\"" + '/accInv/statusOperate?accId=' + row.accId + '&accStatus=Y' + "\")'>禁用</a>";
     } else {
-        return "&nbsp;&nbsp;<button type='button' class='btn btn-success' onclick='active(\""+'/checkin/statusOperate?accId='+ row.accId+'&accStatus=N'+ "\")'>激活</a>";
+        return "&nbsp;&nbsp;<button type='button' class='btn btn-success' onclick='active(\"" + '/checkin/statusOperate?accId=' + row.accId + '&accStatus=N' + "\")'>激活</a>";
+    }
+}
+
+function formatterNull(value, row, index) {
+    if (value == '' || value == null) {
+        return "-";
+    }else{
+        return value;
     }
 }
 
@@ -263,6 +271,7 @@ function formSubmit(url, formId, winId) {
         $("#" + formId).serialize(),
         function (data) {
             if (data.result == "success") {
+
                 $('#' + winId).modal('hide');
                 swal({
                     title: "",
@@ -275,12 +284,12 @@ function formSubmit(url, formId, winId) {
                     $("input[type=reset]").trigger("click"); // 移除表单中填的值
                     $('#addForm').data('bootstrapValidator').resetForm(true); // 移除所有验证样式
                     $("#addButton").removeAttr("disabled"); // 移除不可点击
-                    $("#" + formId).data('bootstrapValidator').destroy(); // 销毁此form表单
-                    $('#' + formId).data('bootstrapValidator', null);// 此form表单设置为空
                     $("#addCompany").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
                     $("#addSupply").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
                     $("#addAccType").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
                 }
+                $("#" + formId).data('bootstrapValidator').destroy(); // 销毁此form表单
+                $('#' + formId).data('bootstrapValidator', null);// 此form表单设置为空
             } else if (data.result == "fail") {
                 swal({
                     title: "",

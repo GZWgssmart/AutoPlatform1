@@ -4,8 +4,55 @@ var contentPath = ''
 $(function () {
     initTable('table', '/accBuy/queryByPage'); // 初始化表格
     initSelect2("company", "请选择所属公司", "/company/queryAllCompany");
-    initSelect2("accInv", "请选择配件", "/accInv/queryAllAccInv");
+    initSelect2("accType", "请选择配件分类", "/accType/queryAllAccType");
+    initSelect2("supply", "请选择供应商", "/supply/queryAllSupply");
+    initSelect2("accInv", "请选择配件名称", "/accInv/queryAllAccInv");
+    $("#app").bootstrapSwitch({
+        onText:"是",
+        offText:"否",
+        onColor:"success",
+        offColor:"danger",
+        size:"small",
+        onSwitchChange:function(event,state){
+            if(state==true){
+                app = true;
+                initTableNotTollbar("accTable", "/accInv/queryByPage");
+                $("#appWindow").modal('show');
+            }else if(state==false){
+                app = false;
+            }
+        }
+    })
+    $("#appWindow").on("hide.bs.modal", function () {
+        $("#addWindow").modal('show')
+        $('#app').bootstrapSwitch('state', false);
+    });
 });
+
+// 关闭预约
+function closeAppWin() {
+    $("#appWindow").modal('hide');
+    $("#addWinow").modal('show')
+}
+
+// 选择预约记录
+function checkApp() {
+    var row = $("#accTable").bootstrapTable('getSelections');
+    if (row.length != 1) {
+        swal({title:"",
+            text:"请选择一个配件",
+            confirmButtonText:"确认",
+            type:"error"})
+        return false;
+    } else {
+        appointment = row[0];
+        setData(appointment);
+        $("#appWindow").on("hide.bs.modal", function () {
+            $('#app').bootstrapSwitch('state', true);
+        });
+        $("#appWindow").modal('hide');
+    }
+}
 
 // 查看全部可用
 function showAvailable() {
@@ -36,6 +83,8 @@ function showEdit() {
         $("#editDateTimePicker").val(formatterDate(ceshi.accBuyTime))
         $('#editCompany').html('<option value="' + ceshi.company.companyId + '">' + ceshi.company.companyName + '</option>').trigger("change");
         $('#editAccInv').html('<option value="' + ceshi.accessories.accId + '">' + ceshi.accessories.accName + '</option>').trigger("change");
+        $('#editSupply').html('<option value="' + ceshi.supply.supplyId + '">' + ceshi.supply.supplyName + '</option>').trigger("change");
+        $('#editAccType').html('<option value="' + ceshi.accessoriesType.accTypeId + '">' + ceshi.accessoriesType.accTypeName + '</option>').trigger("change");
         validator('editForm'); // 初始化验证
     } else {
         swal({
@@ -200,7 +249,23 @@ function validator(formId) {
                     }
                 }
             },
-            accId: {
+            supplyId: {
+                message: '所属供应商不能为空',
+                validators: {
+                    notEmpty: {
+                        message: '所属供应商不能为空'
+                    }
+                }
+            },
+            accTypeId: {
+                message: '配件分类不能为空',
+                validators: {
+                    notEmpty: {
+                        message: '配件分类不能为空'
+                    }
+                }
+            },
+            accName: {
                 message: '配件编号不能为空',
                 validators: {
                     notEmpty: {
@@ -282,6 +347,8 @@ function formSubmit(url, formId, winId) {
         $("#" + formId).serialize(),
         function (data) {
             if (data.result == "success") {
+                var accId=document.getElementById("accInvId")
+                accId.value="";
                 $('#' + winId).modal('hide');
                 swal({
                     title: "",
@@ -294,11 +361,11 @@ function formSubmit(url, formId, winId) {
                     $("input[type=reset]").trigger("click"); // 移除表单中填的值
                     $('#addForm').data('bootstrapValidator').resetForm(true); // 移除所有验证样式
                     $("#addButton").removeAttr("disabled"); // 移除不可点击
-                    $("#" + formId).data('bootstrapValidator').destroy(); // 销毁此form表单
-                    $('#' + formId).data('bootstrapValidator', null);// 此form表单设置为空
                     $("#addCompany").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
                     $("#addAccType").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
                 }
+                $("#" + formId).data('bootstrapValidator').destroy(); // 销毁此form表单
+                $('#' + formId).data('bootstrapValidator', null);// 此form表单设置为空
             } else if (data.result == "fail") {
                 swal({
                     title: "",
@@ -377,3 +444,48 @@ function Editcalculate() {
         }
     }
 }
+
+
+var appointment;
+/** 监听switch的监听事件 */
+function appOnChange() {
+    if ($('#app').bootstrapSwitch('state')) {
+        if (appointment != null && appointment != "" && appointment != undefined) {
+            setData(appointment);
+        }
+    } else {
+        if (appointment != null && appointment != "" && appointment != undefined) {
+            clearAddForm();
+        }
+    }
+}
+
+function setData(appointment) {
+    $("#accInvId").val(appointment.accId);
+    $("#accInvName").val(appointment.accName);
+    $("#addDateTimePicker").val(formatterDate(appointment.accBuyedTime));
+    $("#addCountNum").val(appointment.accTotal);
+    $("#addBuyPrice").val(appointment.accPrice);
+    $("#addBuyTotal").val(appointment.accPrice);
+    $('#addCompany').html('<option value="' + appointment.company.companyId + '">' + appointment.company.companyName + '</option>').trigger("change");
+    $('#addSupply').html('<option value="' + appointment.supply.supplyId + '">' + appointment.supply.supplyName + '</option>').trigger("change");
+    $('#addAccType').html('<option value="' + appointment.accessoriesType.accTypeId + '">' + appointment.accessoriesType.accTypeName + '</option>').trigger("change");
+
+
+}
+
+/** 清除添加的form表单信息 */
+function clearAddForm() {
+    $('#accInvId').html('').trigger("change");
+    $('#accInvName').html('').trigger("change");
+    $('#addDateTimePicker').html('').trigger("change");
+    $('#addCountNum').html('').trigger("change");
+    $('#addBuyPrice').html('').trigger("change");
+    $('#addBuyTotal').html('').trigger("change");
+    $('#addCompany').html('').trigger("change");
+    $('#addSupply').html('').trigger("change");
+    $('#addAccType').html('').trigger("change");
+    $("input[type=reset]").trigger("click");
+}
+
+
