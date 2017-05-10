@@ -3,18 +3,25 @@ package com.gs.controller.maintainScheduleManage;
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.MaintainSchedule;
 import com.gs.common.bean.ComboBox4EasyUI;
+import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
 import com.gs.service.MaintainScheduleService;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -34,7 +41,7 @@ public class MaintainScheduleController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "queryALLschedule", method = RequestMethod.GET)
+    @RequestMapping(value = "queryAllschedule", method = RequestMethod.GET)
     public List<ComboBox4EasyUI> queryAllSchedule(){
         logger.info("查询全部维修保养进度管理");
         List<MaintainSchedule> maintainSchedules = maintainScheduleService.queryAll();
@@ -54,7 +61,7 @@ public class MaintainScheduleController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value="queryByPage", method=RequestMethod.GET)
+    @RequestMapping(value="queryByPage", method = RequestMethod.GET)
     public Pager4EasyUI queryByPager(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize){
         Pager pager = new Pager();
         pager.setPageNo(Integer.valueOf(pageNumber));
@@ -63,6 +70,46 @@ public class MaintainScheduleController {
         logger.info("分页查询维修保养进度管理成功");
         List<MaintainSchedule> maintainSchedules = maintainScheduleService.queryByPager(pager);
         return new Pager4EasyUI<MaintainSchedule>(pager.getTotalRecords(), maintainSchedules);
+    }
+
+    /**
+     * 添加维修保养进度管理
+     * @param maintainSchedule
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value="addSchedule", method = RequestMethod.POST)
+    public ControllerResult addSchedule(MaintainSchedule maintainSchedule){
+        if(maintainSchedule !=null && !maintainSchedule.equals("")){
+            maintainScheduleService.insert(maintainSchedule);
+            logger.info("添加成功");
+            return ControllerResult.getSuccessResult("添加成功");
+        }else{
+            return ControllerResult.getFailResult("添加失败，请检查输入的信息是否有误");
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "updateSchedule", method = RequestMethod.POST)
+    public ControllerResult updateSchedule(MaintainSchedule maintainSchedule){
+        if(maintainSchedule !=null && !maintainSchedule.equals("")){
+            maintainScheduleService.update(maintainSchedule);
+            logger.info("修改成功");
+            return ControllerResult.getSuccessResult("修改成功");
+        }else{
+            return ControllerResult.getFailResult("修改失败");
+        }
+    }
+
+    /**
+     * 日期格式
+     * @param binder
+     */
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        dateFormat.setLenient(false);
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
     }
 
 }

@@ -3,6 +3,8 @@ package com.gs.controller;
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.User;
 import com.gs.common.bean.ControllerResult;
+import com.gs.common.bean.Pager;
+import com.gs.common.bean.Pager4EasyUI;
 import com.gs.common.util.EncryptUtil;
 import com.gs.service.UserService;
 import org.apache.ibatis.annotations.Param;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 @RequestMapping("/user")
@@ -84,4 +87,6 @@ public class UserController {
             return ControllerResult.getFailResult("验证码输入错误，请输入正确的验证码！");
         }
     }
+
+   
 }

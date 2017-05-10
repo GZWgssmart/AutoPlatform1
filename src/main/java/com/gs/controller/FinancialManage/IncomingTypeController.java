@@ -84,6 +84,7 @@ public class IncomingTypeController {
     public ControllerResult add(IncomingType incomingType) {
         logger.info("添加收入类型");
         incomingType.setInTypeId(UUIDUtil.uuid());
+        incomingType.setCompanyId("1");
         incomingType.setInTypeStatus("Y");
         incomingTypeService.insert(incomingType);
         return ControllerResult.getSuccessResult("添加成功");

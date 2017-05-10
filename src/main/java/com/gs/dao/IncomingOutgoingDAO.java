@@ -31,11 +31,11 @@ public interface IncomingOutgoingDAO extends BaseDAO<String, IncomingOutgoing>{
     /**
      * 根据时间段去查找
      */
-    public List<IncomingOutgoing> queryByDate(@Param("start") String start, @Param("end") String end);
+    public List<IncomingOutgoing> queryByDate(@Param("inOutType")String inOutType,@Param("companyId")String companyId);
 
 
     /*
  * 根据年，月，季度，周，日查询所有收支记录
  * */
-    public List<IncomingOutgoing> queryByCondition(@Param("start")String start,@Param("end")String end,@Param("inOutType")String inOutType,@Param("type")String type);
+    public List<IncomingOutgoing> queryByCondition(@Param("start")String start,@Param("end")String end,@Param("inOutType")String inOutType,@Param("companyId")String companyId,@Param("type")String type);
 }

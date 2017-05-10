@@ -20,7 +20,7 @@
 
 
 <div class='container-fluid'>
-    <h2 class='page-header'>Bootstrap 选项卡</h2>
+    <h2 class='page-header'>财务图表</h2>
     <!--
         选项卡：通过BS的类来控制选项卡的样式
     -->
@@ -179,7 +179,7 @@
 </div>
 
 <!-- 显示Echarts图表 -->
-<div style="height:410px;min-height:100%;margin:0 auto;" id="main"></div>
+<div style="height:600px;min-height:100%;margin:0 auto;" id="main"></div>
 
 
 <script>

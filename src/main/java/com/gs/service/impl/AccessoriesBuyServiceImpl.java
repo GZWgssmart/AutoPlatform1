@@ -53,6 +53,16 @@ public class AccessoriesBuyServiceImpl implements AccessoriesBuyService {
 		return accessoriesBuyDAO.countByDisable();
 	}
 
+	@Override
+	public List<AccessoriesBuy> queryByCondition(String start, String end, String companyId, String type) {
+		return accessoriesBuyDAO.queryByCondition(start,end,companyId,type);
+	}
+
+	@Override
+	public List<AccessoriesBuy> queryByPayCondition(String start, String end, String companyId, String type) {
+		return accessoriesBuyDAO.queryByPayCondition(start, end, companyId, type);
+	}
+
 	public List<AccessoriesBuy> blurredQuery(Pager pager, AccessoriesBuy accessoriesBuy) {
 		return accessoriesBuyDAO.blurredQuery(pager,accessoriesBuy);
 	}

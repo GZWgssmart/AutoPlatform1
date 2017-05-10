@@ -6,9 +6,6 @@ body,html{
     overflow-x: hidden;
 }
 
-::-webkit-scrollbar {height: 6px;width:6px; border:2px solid #F5F5F5;}
-::-webkit-scrollbar-thumb {background-color:#F0F0F0; } /*这里是设置滚动条颜色的*/
-::-webkit-scrollbar-thumb:hover {background-color:#F99;}
 
 li{
     list-style-type:none;

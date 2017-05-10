@@ -30,7 +30,7 @@
 
                 </div>
                 <ul class="nav navbar-nav navbar-right" style="background-color:	#F5F5F5  ;">
-                    <li><a href="frontpageHome">主页</a></li>
+                    <li><a href="home">主页</a></li>
                     <li class="icon-li"><a href="/backstageIndex">后台</a></li>
                     <li class="icon-li"><a href="javaScript:;">关于我们</a></li>
                     <li id="menu-bg"><a href="javaScript:;">注册</a></li>

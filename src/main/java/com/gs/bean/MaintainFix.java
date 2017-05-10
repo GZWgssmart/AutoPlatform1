@@ -18,9 +18,17 @@ public class MaintainFix {
 
     private String maintainDes;//维修保养项目描述
 
-    private String companyId;//维修保养项目所属公司 来源于t_company表
-
     private String maintainStatus;//维修保养项目状态
+
+    private String companyId;
+
+    public String getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(String companyId) {
+        this.companyId = companyId;
+    }
 
     private Company company;//关联Company表
 
@@ -30,52 +38,12 @@ public class MaintainFix {
 
     private AccessoriesType accessoriesType;//关联accessoriesType
 
-    public AccessoriesType getAccessoriesType() {
-        return accessoriesType;
-    }
-
-    public void setAccessoriesType(AccessoriesType accessoriesType) {
-        this.accessoriesType = accessoriesType;
-    }
-
-    public Accessories getAccessories() {
-        return accessories;
-    }
-
-    public void setAccessories(Accessories accessories) {
-        this.accessories = accessories;
-    }
-
-    public MaintainFixAcc getMaintainFixAcc() {
-        return maintainFixAcc;
-    }
-
-    public void setMaintainFixAcc(MaintainFixAcc maintainFixAcc) {
-        this.maintainFixAcc = maintainFixAcc;
-    }
-
-    public Company getCompany() {
-        return company;
-    }
-
-    public void setCompany(Company company) {
-        this.company = company;
-    }
-
     public String getMaintainId() {
         return maintainId;
     }
 
     public void setMaintainId(String maintainId) {
         this.maintainId = maintainId;
-    }
-
-    public Double getMaintainManHourFee() {
-        return maintainManHourFee;
-    }
-
-    public void setMaintainManHourFee(Double maintainManHourFee) {
-        this.maintainManHourFee = maintainManHourFee;
     }
 
     public String getMaintainName() {
@@ -102,6 +70,14 @@ public class MaintainFix {
         this.maintainMoney = maintainMoney;
     }
 
+    public Double getMaintainManHourFee() {
+        return maintainManHourFee;
+    }
+
+    public void setMaintainManHourFee(Double maintainManHourFee) {
+        this.maintainManHourFee = maintainManHourFee;
+    }
+
     public String getMaintainOrFix() {
         return maintainOrFix;
     }
@@ -118,20 +94,44 @@ public class MaintainFix {
         this.maintainDes = maintainDes;
     }
 
-    public String getCompanyId() {
-        return companyId;
-    }
-
-    public void setCompanyId(String companyId) {
-        this.companyId = companyId;
-    }
-
     public String getMaintainStatus() {
         return maintainStatus;
     }
 
     public void setMaintainStatus(String maintainStatus) {
         this.maintainStatus = maintainStatus;
+    }
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
+    }
+
+    public MaintainFixAcc getMaintainFixAcc() {
+        return maintainFixAcc;
+    }
+
+    public void setMaintainFixAcc(MaintainFixAcc maintainFixAcc) {
+        this.maintainFixAcc = maintainFixAcc;
+    }
+
+    public Accessories getAccessories() {
+        return accessories;
+    }
+
+    public void setAccessories(Accessories accessories) {
+        this.accessories = accessories;
+    }
+
+    public AccessoriesType getAccessoriesType() {
+        return accessoriesType;
+    }
+
+    public void setAccessoriesType(AccessoriesType accessoriesType) {
+        this.accessoriesType = accessoriesType;
     }
 
     @Override
@@ -141,11 +141,14 @@ public class MaintainFix {
                 ", maintainName='" + maintainName + '\'' +
                 ", maintainHour=" + maintainHour +
                 ", maintainMoney=" + maintainMoney +
-                ", maintainManhourFee=" + maintainManHourFee +
+                ", maintainManHourFee=" + maintainManHourFee +
                 ", maintainOrFix='" + maintainOrFix + '\'' +
                 ", maintainDes='" + maintainDes + '\'' +
-                ", companyId='" + companyId + '\'' +
                 ", maintainStatus='" + maintainStatus + '\'' +
+                ", company=" + company +
+                ", maintainFixAcc=" + maintainFixAcc +
+                ", accessories=" + accessories +
+                ", accessoriesType=" + accessoriesType +
                 '}';
     }
 }

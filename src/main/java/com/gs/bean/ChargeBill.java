@@ -26,6 +26,7 @@ public class ChargeBill {
 
     private MaintainRecord maintainRecord;
 
+
     public MaintainRecord getMaintainRecord() {
         return maintainRecord;
     }

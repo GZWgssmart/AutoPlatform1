@@ -18,7 +18,7 @@
 
   <!-- 修改人员角色 -->
   <update id="update" parameterType="userRole">
-    <![CDATA[]
+    <![CDATA[
       update t_user_role set roleId = #{roleId} where userId = #{userId};
     ]]>
   </update>

@@ -218,6 +218,9 @@
 <script>
     $(function() {
         layui.use('laydate', function () {
+
+            var laydate = layui.laydate;
+
             //日期范围限制
             var start = {
                 format: 'yyyy-MM-dd hh:mm:ss',

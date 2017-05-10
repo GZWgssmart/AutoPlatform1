@@ -19,7 +19,7 @@ public class MaintainScheduleServiceImpl implements MaintainScheduleService {
 
     @Override
     public int insert(MaintainSchedule maintainSchedule) {
-        return 0;
+        return maintainScheduleDAO.insert(maintainSchedule);
     }
 
     @Override
@@ -44,7 +44,7 @@ public class MaintainScheduleServiceImpl implements MaintainScheduleService {
 
     @Override
     public int update(MaintainSchedule maintainSchedule) {
-        return 0;
+        return maintainScheduleDAO.update(maintainSchedule);
     }
 
     @Override
@@ -54,13 +54,13 @@ public class MaintainScheduleServiceImpl implements MaintainScheduleService {
 
     @Override
     public List<MaintainSchedule> queryAll() {
-        return null;
+        return maintainScheduleDAO.queryAll();
     }
 
 
     @Override
     public List<MaintainSchedule> queryAll(String status) {
-        return null;
+        return maintainScheduleDAO.queryAll();
     }
 
     @Override
@@ -74,13 +74,13 @@ public class MaintainScheduleServiceImpl implements MaintainScheduleService {
     }
 
     @Override
-    public List<MaintainSchedule> queryByPager(Pager pager) {
-        return null;
+    public int count() {
+        return maintainScheduleDAO.count();
     }
 
     @Override
-    public int count() {
-        return 0;
+    public List<MaintainSchedule> queryByPager(Pager pager) {
+        return maintainScheduleDAO.queryByPager(pager);
     }
 
     @Override

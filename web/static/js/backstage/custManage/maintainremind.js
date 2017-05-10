@@ -8,11 +8,12 @@ $(function () {
 function showEdit() {
     var row = $('table').bootstrapTable('getSelections');
     if (row.length > 0) {
+        alert(row[0].remindId);
         $("#editWindow").modal('show'); // 显示弹窗
         $("#editButton").removeAttr("disabled"); // 移除不可点击
         var MaintainRemind = row[0];
-        $('#editUserName').html('<option value="' + MaintainRemind.user.userId + '">' + MaintainRemind.user.userName + '</option>').trigger("change");
         $("#editForm").fill(MaintainRemind);
+        $('#editUserName').html('<option value="' + MaintainRemind.user.userId + '">' + MaintainRemind.user.userName + '</option>').trigger("change");
         validator('editForm');
     } else {
         swal({
@@ -20,6 +21,36 @@ function showEdit() {
             "text": "请先选择一条数据",
             "type": "warning"
         })
+    }
+}
+
+function showCheckUser() {
+    $("#showUserWindow").modal('show');
+    initTableNotTollbar("addUserTable","/maintainRemind/queryByPagerNull");
+}
+
+function closeUserWin() {
+    $("#showUserWindow").modal('hide');
+    // $("#addWindow").modal('show');
+}
+
+function checkUser() {
+    var row = $('#addUserTable').bootstrapTable('getSelections');
+    if(row.length != 1) {
+        swal({
+            "title": "",
+            "text": "只能选择一条数据",
+            "type": "warning"
+        })
+    } else {
+        alert(row[0].user.userId);
+        alert(row[0].user.userName);
+        $("#addRemindId").val(row[0].remindId);
+        $("#addLastMaintainTime").val(formatterDate(row[0].lastMaintainTime));
+        $("#addLastMaintainMileage").val(row[0].lastMaintainMileage);
+        $('#addUserId').val(row[0].user.userId);
+        $('#addUserName').val(row[0].user.userName);
+        $("#showUserWindow").modal('hide');
     }
 }
 
@@ -46,22 +77,22 @@ function validator(formId) {
                     }
                 }
             },
-            lastMaintainTime: {
-                message: '上次维修保养时间验证失败',
-                validators: {
-                    notEmpty: {
-                        message: '上次维修保养时间不能为空'
-                    }
-                }
-            },
-            lastMaintainMileage: {
-                message: '上次汽车行驶里程验证失败',
-                validators: {
-                    notEmpty: {
-                        message: '上次汽车行驶里程不能为空'
-                    }
-                }
-            },
+            // lastMaintainTime: {
+            //     message: '上次维修保养时间验证失败',
+            //     validators: {
+            //         notEmpty: {
+            //             message: '上次维修保养时间不能为空'
+            //         }
+            //     }
+            // },
+            // lastMaintainMileage: {
+            //     message: '上次汽车行驶里程验证失败',
+            //     validators: {
+            //         notEmpty: {
+            //             message: '上次汽车行驶里程不能为空'
+            //         }
+            //     }
+            // },
             remindMsg: {
                 message: '维修保养提醒内容验证失败',
                 validators: {
@@ -99,7 +130,7 @@ function validator(formId) {
 
         .on('success.form.bv', function (e) {
             if (formId == "addForm") {
-                formSubmit("/maintainRemind/insert", formId, "addWindow");
+                formSubmit("/maintainRemind/update", formId, "addWindow");
 
             } else if (formId == "editForm") {
                 formSubmit("/maintainRemind/update", formId, "editWindow");

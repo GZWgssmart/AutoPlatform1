@@ -17,7 +17,7 @@ public class CustomerManageController {
     /**
      * 维修保养记录管理
      */
-    @RequestMapping("maintainrecordIndex")
+    @RequestMapping(value = "maintainrecordIndex", method = RequestMethod.GET)
     public String maintainrecordIndex() {
         logger.info("跳转到维修保养记录管理");
         return "custManage/maintainrecord";
@@ -26,7 +26,7 @@ public class CustomerManageController {
     /**
      * 维修保养明细管理
      */
-    @RequestMapping("maintaindetailsIndex")
+    @RequestMapping(value = "maintaindetailsIndex", method = RequestMethod.GET)
     public String maintaindetailsIndex() {
         logger.info("跳转到维修保养明细管理");
         return "custManage/maintaindetails";
@@ -35,7 +35,7 @@ public class CustomerManageController {
     /**
      * 维修保养提醒
      */
-    @RequestMapping("maintainremindIndex")
+    @RequestMapping(value = "maintainremindIndex", method = RequestMethod.GET)
     public String maintainremindIndex() {
         logger.info("跳转到维修保养提醒");
         return "custManage/maintainremind";
@@ -44,7 +44,7 @@ public class CustomerManageController {
     /**
      * 短信群发提醒
      */
-    @RequestMapping("messagesendIndex")
+    @RequestMapping(value = "messagesendIndex", method = RequestMethod.GET)
     public String messagesendIndex() {
         logger.info("跳转到短信群发提醒");
         return "custManage/messagesend";
@@ -54,7 +54,7 @@ public class CustomerManageController {
     /**
      * 投诉管理
      */
-    @RequestMapping("complaintIndex")
+    @RequestMapping(value = "complaintIndex", method = RequestMethod.GET)
     public String complaintIndex() {
         logger.info("跳转到投诉管理");
         return "custManage/complaint";
@@ -63,7 +63,7 @@ public class CustomerManageController {
     /**
      * 跟踪回访管理
      */
-    @RequestMapping("tracklistIndex")
+    @RequestMapping(value = "tracklistIndex", method = RequestMethod.GET)
     public String tracklistIndex() {
         logger.info("跳转到跟踪回访管理");
         return "custManage/tracklist";
@@ -72,7 +72,7 @@ public class CustomerManageController {
     /**
      * 微信公众号查看
      */
-    @RequestMapping("wechatpublicIndex")
+    @RequestMapping(value = "wechatpublicIndex", method = RequestMethod.GET)
     public String wechatpublicIndex() {
         logger.info("跳转到微信公众号查看");
         return "custManage/wechatpublic";

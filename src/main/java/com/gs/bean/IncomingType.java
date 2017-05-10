@@ -5,6 +5,8 @@ public class IncomingType {
 
     private String inTypeName;
 
+    private String companyId;
+
     private String inTypeStatus;
 
     public String getInTypeId() {
@@ -29,5 +31,13 @@ public class IncomingType {
 
     public void setInTypeStatus(String inTypeStatus) {
         this.inTypeStatus = inTypeStatus;
+    }
+
+    public String getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(String companyId) {
+        this.companyId = companyId;
     }
 }

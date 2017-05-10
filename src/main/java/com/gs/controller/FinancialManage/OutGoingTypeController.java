@@ -84,6 +84,7 @@ public class OutGoingTypeController {
     public ControllerResult add(OutgoingType outgoingType) {
         logger.info("添加支出类型");
         outgoingType.setOutTypeId(UUIDUtil.uuid());
+        outgoingType.setCompanyId("1");
         outgoingType.setOutTypeStatus("Y");
         outgoingTypeService.insert(outgoingType);
         return ControllerResult.getSuccessResult("添加成功");

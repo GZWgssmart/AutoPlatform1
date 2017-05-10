@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="/static/css/select2.min.css">
     <link rel="stylesheet" href="/static/css/sweetalert.css">
     <link rel="stylesheet" href="/static/css/table/table.css">
+    <link rel="stylesheet" href="/static/css/bootstrap-switch/bootstrap-switch.min.css">
     <link rel="stylesheet" href="/static/css/bootstrap-validate/bootstrapValidator.min.css">
     <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.css">
     <link rel="stylesheet/less" href="/static/css/bootstrap-dateTimePicker/datetimepicker.less">
@@ -41,14 +42,14 @@
                 <th data-width="100" data-field="model.modelName">
                     汽车车型
                 </th>
+                <th data-width="180" data-field="arriveTime" data-formatter="formatterDate">
+                    到店时间
+                </th>
                 <th data-width="100" data-field="plate.plateName">
                     汽车车牌
                 </th>
                 <th data-width="100" data-field="carPlate">
                     车牌号码
-                </th>
-                <th data-width="180" data-field="arriveTime" data-formatter="formatterDate">
-                    到店时间
                 </th>
                 <th data-width="100" data-hide="all" data-field="maintainOrFix">
                     保养&nbsp;|&nbsp;维修
@@ -65,18 +66,15 @@
                 <th data-width="100" data-hide="all" data-field="appoitmentStatus" data-formatter="statusFormatter">
                     记录状态
                 </th>
-
-
-
             </tr>
             </thead>
         </table>
         <div id="toolbar" class="btn-group">
             <button id="btn_available" type="button" class="btn btn-default" onclick="showAvailable()">
-                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>可用登记记录
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>可用预约记录
             </button>
             <button id="btn_disable" type="button" class="btn btn-default" onclick="showDisable()">
-                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>禁用登记记录
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>禁用预约记录
             </button>
             <button id="btn_add" type="button" class="btn btn-default" onclick="showAdd();">
                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
@@ -106,102 +104,100 @@
 </div>
 
 <!-- 添加弹窗 -->
-<div id="addWindow" class="modal fade" style="overflow-y:scroll" data-backdrop="static" >
+<div id="addWindow" class="modal fade" style="overflow-y:scroll" data-backdrop="static">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form role="form" class="form-horizontal" id="addForm" method="post">
-                <div class="modal-header" style="overflow:auto;">
-                    <h4>添加预约信息</h4>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">是否为本店用户：</label>
-                    <div class="col-sm-7">
-                        <select class="js-example-tags form-control" id="app"
-                                onchange="checkAppointment(this)">
-                            <option value="N">否</option>
-                            <option value="Y">是</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">车主姓名：</label>
-                    <div class="col-sm-7">
-                        <input type="text" id="addUserName" placeholder="请输入车主姓名" name="userName" class="form-control"/>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">车主电话：</label>
-                    <div class="col-sm-7">
-                        <input type="number" id="addUserPhone" placeholder="请输入车主电话" name="userPhone" class="form-control" style="width:100%"/>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">汽车品牌：</label>
-                    <div class="col-sm-7">
-                        <select id="addCarBrand" class="js-example-tags carBrand" name="brandId" style="width:100%">
-                        </select>
-                    </div>
-                </div>
-                <div id="addModelDiv" style="display: none" class="form-group">
-                    <label class="col-sm-3 control-label">汽车车型：</label>
-                    <div class="col-sm-7">
-                        <select id="addCarModel" class="js-example-tags carModel" name="modelId" style="width:100%">
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">汽车颜色：</label>
-                    <div class="col-sm-7">
-                        <select id="addCarColor" class="js-example-tags carColor" name="colorId" style="width:100%">
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">汽车车牌：</label>
-                    <div class="col-sm-7">
-                        <select id="addCarPlate" class="js-example-tags carPlate" name="plateId" style="width:100%">
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">车牌号码：</label>
-                    <div class="col-sm-7">
-                        <input id="addPlate" name="carPlate" placeholder="请输入车牌号码" class="form-control"/>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">到店时间：</label>
-                    <div class="col-sm-7">     <!-- 当设置不可编辑后, 会修改颜色, 在min.css里搜索.form-control{background-color:#eee;opacity:1} -->
-                        <input id="addArriveTime" placeholder="请选择到店时间" onclick="getDate('addArriveTime')" readonly="true" type="text" name="arriveTime"
-                               class="form-control datetimepicker"/>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">已预约&nbsp;|&nbsp;未预约：</label>
-                    <div class="col-sm-7">
-                        <select id="addcurrentStatus" class="js-example-tags form-control" name="currentStatus">
-                            <option value="已预约">已预约</option>
-                            <option value="未预约">未预约</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">保养&nbsp;|&nbsp;维修：</label>
-                    <div class="col-sm-7">
-                        <select id="addMaintainOrFix" class="js-example-tags form-control" name="maintainOrFix">
-                            <option value="保养">保养</option>
-                            <option value="维修">维修</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-offset-8">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button class="btn btn-sm btn-success" id="addButton" onclick="addSubmit();" type="button">保 存</button>
-                    </div>
-                </div>
-            </form>
+            <div class="modal-body">
+                <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
+                    <form role="form" class="form-horizontal" id="addForm">
+                        <div class="modal-header" style="overflow:auto;">
+                            <h4>添加预约信息</h4>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">是否为本店用户：</label>
+                            <div class="col-sm-7">
+                                <input id="app" type="checkbox" onchange="appOnChange()"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">车主姓名：</label>
+                            <div class="col-sm-7">
+                                <input type="text" id="addUserName" placeholder="请输入车主姓名" name="userName" class="form-control"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">车主电话：</label>
+                            <div class="col-sm-7">
+                                <input type="number" id="addUserPhone" placeholder="请输入车主电话" name="userPhone" class="form-control" style="width:100%"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">汽车品牌：</label>
+                            <div class="col-sm-7">
+                                <select  id="addCarBrand" class="js-example-tags carBrand" name="brandId" style="width:100%">
+                                </select>
+                            </div>
+                        </div>
+                        <div id="addModelDiv" style="display: none" class="form-group">
+                            <label class="col-sm-3 control-label">汽车车型：</label>
+                            <div class="col-sm-7">
+                                <select   id="addCarModel"class="js-example-tags carModel" name="modelId" style="width:100%">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">到店时间：</label>
+                            <div class="col-sm-7">     <!-- 当设置不可编辑后, 会修改颜色, 在min.css里搜索.form-control{background-color:#eee;opacity:1} -->
+                                <input id="addArriveTime" placeholder="请选择到店时间" onclick="getDate('addArriveTime')" readonly="true" type="text" name="arriveTime"
+                                       class="form-control datetimepicker"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">汽车颜色：</label>
+                            <div class="col-sm-7">
+                                <select  class="js-example-tags carColor" name="colorId" style="width:100%">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">汽车车牌：</label>
+                            <div class="col-sm-7">
+                                <select  class="js-example-tags carPlate" name="plateId" style="width:100%">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">车牌号码：</label>
+                            <div class="col-sm-7">
+                                <input  name="carPlate" placeholder="请输入车牌号码" class="form-control"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">已预约&nbsp;|&nbsp;未预约：</label>
+                            <div class="col-sm-7">
+                                <select  class="js-example-tags form-control" name="currentStatus">
+                                    <option value="已预约">已预约</option>
+                                    <option value="未预约">未预约</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">保养&nbsp;|&nbsp;维修：</label>
+                            <div class="col-sm-7">
+                                <select  class="js-example-tags form-control" name="maintainOrFix">
+                                    <option value="保养">保养</option>
+                                    <option value="维修">维修</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-8">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                <button class="btn btn-sm btn-success" id="addButton" onclick="addSubmit();" type="button">保 存</button>
+                            </div>
+                        </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>
@@ -216,7 +212,7 @@
                 </div>
                 <input type="hidden" define="appointment.userId" name="userId" />
                 <input type="hidden" define="appointment.appointmentId" name="appointmentId"/>
-                <div class="form-group">
+                <div class="form-group ">
                     <label class="col-sm-3 control-label">车主姓名：</label>
                     <div class="col-sm-7">
                         <input type="text"  id="editUserName" name="userName" placeholder="车主姓名" define="appointment.userName" class="form-control"/>
@@ -280,6 +276,15 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <label class="col-sm-3 control-label">已预约&nbsp;|&nbsp;未预约：</label>
+                    <div class="col-sm-7">
+                        <select id="editcurrentStatus" define="appointment.currentStatus" class="js-example-tags form-control" name="currentStatus">
+                            <option value="已预约">已预约</option>
+                            <option value="未预约">未预约</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
                     <div class="col-sm-offset-8">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                         <button class="btn btn-sm btn-success" onclick="editSubmit();" type="button">保 存</button>
@@ -289,6 +294,7 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
 <div id="appWindow" class="modal fade" aria-hidden="true" style="overflow-y:scroll" data-backdrop="static" keyboard:false>
     <div class="modal-dialog">
         <div class="modal-content">
@@ -300,44 +306,56 @@
                             <thead>
                             <tr>
                                 <th data-checkbox="true"></th>
-                                <th data-field="userName">
-                                    车主姓名
+                                <th data-field="userEmail">
+                                    车主邮箱
                                 </th>
                                 <th data-field="userPhone">
                                     车主电话
                                 </th>
-                                <th data-field="brand.brandName">
-                                    汽车品牌
+                                <th data-field="userIdentity">
+                                    车主身份证
                                 </th>
-                                <th data-field="color.colorName">
-                                    汽车颜色
+                                <th data-field="userName">
+                                    车主姓名
                                 </th>
-                                <th data-field="model.modelName">
-                                    汽车车型
+                                <th data-field="userGender">
+                                    车主性别
                                 </th>
-                                <th data-field="plate.plateName">
-                                    汽车车牌
+                                <th data-field="userBirthday">
+                                    车主生日
                                 </th>
-                                <th data-field="carPlate">
-                                    车牌号码
+                                <th data-field="userAddress">
+                                    车主地址
                                 </th>
-                                <th data-field="arriveTime" data-formatter="formatterDate">
-                                    预计到店时间
+                                <th data-field="qqOpenId">
+                                    车主qq
                                 </th>
-                                <th data-field="maintainOrFix">
-                                    维修&nbsp;|&nbsp;保养
+                                <th data-field="weiboOpenId">
+                                    车主微博
                                 </th>
-                                <th data-field="appCreatedTime" data-formatter="formatterDate">
-                                    预约创建时间
+                                <th data-field="wechatOpenId">
+                                    车主微信
                                 </th>
-                                <th data-field="company.companyName">
-                                    汽修公司
+                                <th data-field="userIcon">
+                                    车主头像
                                 </th>
-                                <th data-field="appoitmentStatus" data-formatter="status">
-                                    预约状态
+                                <th data-field="userDes">
+                                    车主描叙
                                 </th>
-                                <th data-field="currentStatus">
-                                    已预约&nbsp;|&nbsp;未预约
+                                <th data-field="companyId">
+                                    车主所属公司
+                                </th>
+                                <th data-field="userSalary">
+                                    车主基本工资
+                                </th>
+                                <th data-field="userCreatedTime">
+                                    车主创建时间
+                                </th>
+                                <th data-field="userLoginedTime">
+                                    车主最近一次登录时间
+                                </th>
+                                <th data-field="userStatus">
+                                    车主状态
                                 </th>
                             </thead>
                             <tbody>
@@ -370,6 +388,7 @@
 <script src="/static/js/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.js"></script>
 <script src="/static/js/bootstrap-dateTimePicker/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
 <script src="/static/js/backstage/main.js"></script>
+<script src="/static/js/bootstrap-switch/bootstrap-switch.js"></script>
 <script src="/static/js/bootstrap-validate/bootstrapValidator.js"></script>
 <script src="/static/js/backstage/customerBooking/phoneResrvation.js"></script>
 </body>

@@ -1,4 +1,5 @@
-﻿<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+﻿<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -171,8 +172,8 @@
                     <li>
                         <a href="#"><i class="fa fa-ambulance"></i> <span class="nav-label">派工领料管理</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
-                            <li><a class="J_menuItem" href="pickingControll/materialsIndex">物料清单</a>
-                            </li>
+                            <li><a class="J_menuItem" href="pickingControll/materialsIndex">物料清单</a></li>
+                            <li><a class="J_menuItem" href="pickingControll/assignstaffIndex">指派员工</a></li>
                         </ul>
                     </li>
                     <li>
@@ -232,13 +233,15 @@
                             </li>
                             <li><a class="J_menuItem" href="/statistics/maintain">下单统计</a>
                             </li>
-
+                            <li><a class="J_menuItem" href="/statistics/pay">支付统计</a>
+                            </li>
                             <li><a class="J_menuItem" href="/statistics/maintaintype">消费统计</a>
                             </li>
                             <li><a class="J_menuItem" href="/statistics/maintain">维修保养统计</a>
                             </li>
-                            <li><a class="J_menuItem" href="/statistics/workorder">员工工单统计</a>
+                            <li><a class="J_menuItem" href="/statistics/workord">员工工单统计</a>
                             </li>
+
                             <li><a class="J_menuItem" href="/statistics/usematerials">物料使用统计</a>
                             </li>
                             <li><a class="J_menuItem" href="/statistics/maintaintype">维修类型统计</a>

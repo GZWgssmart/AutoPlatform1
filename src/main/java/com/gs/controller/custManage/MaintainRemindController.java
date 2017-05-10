@@ -2,13 +2,17 @@ package com.gs.controller.custManage;
 
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.MaintainRemind;
+import com.gs.bean.MessageSend;
 import com.gs.bean.User;
 import com.gs.common.bean.ComboBox4EasyUI;
+import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
 import com.gs.service.MaintainRemindService;
+import com.gs.service.MessageSendService;
 import com.gs.service.UserService;
 import org.apache.ibatis.annotations.Param;
+import org.joda.time.DateTime;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -16,6 +20,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
@@ -49,8 +54,11 @@ public class MaintainRemindController {
     @Resource
     private UserService userService;
 
+    @Resource
+    private MessageSendService messageSendService;
+
     @ResponseBody
-    @RequestMapping("queryByPager")
+    @RequestMapping(value = "queryByPager", method = RequestMethod.GET)
     public Pager4EasyUI<MaintainRemind> queryByPager(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
         logger.info("分页查看维修保养提醒记录");
         Pager pager = new Pager();
@@ -63,23 +71,32 @@ public class MaintainRemindController {
     }
 
     @ResponseBody
-    @RequestMapping("queryCombox")
-    public List<ComboBox4EasyUI> queryCombox() {
-        logger.info("查看用户");
-        List<User> users = userService.queryAll();
-        List<ComboBox4EasyUI> combo = new ArrayList<ComboBox4EasyUI>();
-        for(User user : users) {
-            ComboBox4EasyUI co = new ComboBox4EasyUI();
-            co.setId(user.getUserId());
-            co.setText(user.getUserName());
-            String userId = req.getParameter("userId");
-            if(user.getUserId().equals(userId)) {
-                co.setSelected(true);
-            }
-            combo.add(co);
-        }
-        return combo;
+    @RequestMapping(value = "queryByPagerNull", method = RequestMethod.GET)
+    public Pager4EasyUI<MaintainRemind> queryByPagerNull(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
+        logger.info("分页查看维修保养提醒记录");
+        Pager pager = new Pager();
+        pager.setPageNo(Integer.valueOf(pageNumber));
+        pager.setPageSize(Integer.valueOf(pageSize));
+        int count = maintainRemindService.countNull();
+        pager.setTotalRecords(count);
+        List<MaintainRemind> queryList = maintainRemindService.queryByPagerNull(pager);
+        return new Pager4EasyUI<MaintainRemind>(pager.getTotalRecords(), queryList);
     }
+
+    @ResponseBody
+    @RequestMapping(value = "update", method = RequestMethod.POST)
+    public ControllerResult update(MaintainRemind maintainRemind, MessageSend messageSend) {
+        logger.info("投诉记录修改操作");
+        maintainRemindService.update(maintainRemind);
+        messageSend.setMessageId(maintainRemind.getRemindId());
+        messageSend.setUserId(maintainRemind.getUserId());
+        messageSend.setSendTime(maintainRemind.getRemindTime());
+        messageSend.setSendMsg(maintainRemind.getRemindMsg());
+        messageSend.setSendCreatedTime(new Date());
+        messageSendService.insert(messageSend);
+        return ControllerResult.getSuccessResult("修改成功");
+    }
+
 
     /**
      * 时间格式化

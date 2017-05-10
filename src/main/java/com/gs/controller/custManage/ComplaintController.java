@@ -52,7 +52,7 @@ public class ComplaintController {
     private UserService userService;
 
     @ResponseBody
-    @RequestMapping("queryByPager")
+    @RequestMapping(value = "queryByPager", method = RequestMethod.GET)
     public Pager4EasyUI<Complaint> queryByPager(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
         logger.info("分页查看投诉记录");
         Pager pager = new Pager();
@@ -65,7 +65,7 @@ public class ComplaintController {
     }
 
     @ResponseBody
-    @RequestMapping("queryName")
+    @RequestMapping(value = "queryName", method = RequestMethod.GET)
     public Pager4EasyUI<Complaint> queryName(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize, Complaint complaint) {
         logger.info("模糊查询投诉记录");
         String text = req.getParameter("text");
@@ -92,7 +92,7 @@ public class ComplaintController {
     }
 
     @ResponseBody
-    @RequestMapping("queryCombox")
+    @RequestMapping(value = "queryCombox", method = RequestMethod.GET)
     public List<ComboBox4EasyUI> queryCombox() {
         logger.info("查看用户");
         List<User> users = userService.queryAll();

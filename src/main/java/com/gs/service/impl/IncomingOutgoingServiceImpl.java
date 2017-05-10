@@ -96,14 +96,14 @@ public class IncomingOutgoingServiceImpl implements IncomingOutgoingService {
         return incomingOutgoingDAO.countByDisable();
     }
 
-    public List<IncomingOutgoing> queryByDate(String start, String end) {
-        return incomingOutgoingDAO.queryByDate(start, end);
+    public List<IncomingOutgoing> queryByDate(String inOutType,String companyId) {
+        return incomingOutgoingDAO.queryByDate(inOutType,companyId);
     }
 
 
     @Override
-    public List<IncomingOutgoing> queryByCondition(String start, String end, String inOutType,String type) {
-        return incomingOutgoingDAO.queryByCondition(start, end,inOutType, type);
+    public List<IncomingOutgoing> queryByCondition(String start, String end, String inOutType,String companyId,String type) {
+        return incomingOutgoingDAO.queryByCondition(start, end,inOutType,companyId, type);
     }
 
     public List<IncomingOutgoing> blurredQuery(Pager pager, IncomingOutgoing incomingOutgoing) {

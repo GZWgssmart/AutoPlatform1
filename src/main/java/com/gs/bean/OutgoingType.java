@@ -7,6 +7,8 @@ public class OutgoingType {
 
     private String outTypeStatus;
 
+    private String companyId;
+
     public String getOutTypeId() {
         return outTypeId;
     }
@@ -25,6 +27,14 @@ public class OutgoingType {
 
     public String getOutTypeStatus() {
         return outTypeStatus;
+    }
+
+    public String getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(String companyId) {
+        this.companyId = companyId;
     }
 
     public void setOutTypeStatus(String outTypeStatus) {

@@ -15,6 +15,9 @@
         <result column="companyId" property="companyId"/>
         <result column="accBuyStatus" property="accBuyStatus"/>
 
+        <result column="count" property="count"/>
+        <result column="week" property="week"/>
+
         <association property="company" javaType="com.gs.bean.Company">
             <id property="companyId" column="companyId"/>
             <id property="companyName" column="companyName"/>
@@ -170,6 +173,55 @@
         </if>
         <if test="accBuy.accId!='' and accBuy.accId!= null">
             ac.accName LIKE '%${accBuy.accId}%'
+        </if>
+    </select>
+
+    <!--下单报表统计-->
+
+    <select id="queryByCondition" resultMap="AccessoriesBuyMap">
+        <![CDATA[
+            select count(*) as count ,week(ab.accBuyCreatedTime) as week, ab.accBuyCreatedTime from t_accessories_buy ab, t_company cc where ab.companyId = cc.companyId and ab.companyId = #{companyId}
+and ab.accBuyStatus = 'Y' and ab.accBuyCreatedTime >= #{start} and ab.accBuyCreatedTime <= #{end}
+        ]]>
+        <if test="type =='year'">
+            group by date_format(ab.accBuyCreatedTime, '%Y') ORDER BY ab.accBuyCreatedTime ASC;
+        </if>
+        <if test="type =='quarter'">
+            group by concat(date_format(ab.accBuyCreatedTime, '%Y'),FLOOR((date_format(ab.accBuyCreatedTime, '%m')+2)/3)) ORDER BY ab.accBuyCreatedTime ASC;
+        </if>
+        <if test="type =='month'">
+            group by date_format(ab.accBuyCreatedTime, '%y-%m') ORDER BY ab.accBuyCreatedTime ASC;
+        </if>
+        <if test="type =='week'">
+            group by date_format(ab.accBuyCreatedTime, '%y-%m') ORDER BY ab.accBuyCreatedTime ASC;
+        </if>
+        <if test="type =='day'">
+            group by date(ab.accBuyCreatedTime) ORDER BY ab.accBuyCreatedTime ASC;
+        </if>
+    </select>
+
+
+
+    <!--支付记录报表-->
+    <select id="queryByPayCondition" resultMap="AccessoriesBuyMap">
+        <![CDATA[
+       select sum(accBuyMoney) as accBuyMoney ,week(ab.accBuyCreatedTime) as week,ab.accBuyCreatedTime from t_accessories_buy ab, t_company cc where ab.companyId = cc.companyId and ab.companyId = #{companyId}
+and ab.accBuyStatus = 'Y' and ab.accBuyCreatedTime >= #{start} and ab.accBuyCreatedTime <= #{end}
+        ]]>
+        <if test="type =='year'">
+            group by date_format(ab.accBuyCreatedTime, '%Y') ORDER BY ab.accBuyCreatedTime ASC;
+        </if>
+        <if test="type =='quarter'">
+            group by concat(date_format(ab.accBuyCreatedTime, '%Y'),FLOOR((date_format(ab.accBuyCreatedTime, '%m')+2)/3)) ORDER BY ab.accBuyCreatedTime ASC;
+        </if>
+        <if test="type =='month'">
+            group by date_format(ab.accBuyCreatedTime, '%y-%m') ORDER BY ab.accBuyCreatedTime ASC;
+        </if>
+        <if test="type =='week'">
+            group by date_format(ab.accBuyCreatedTime, '%y-%m') ORDER BY ab.accBuyCreatedTime ASC;
+        </if>
+        <if test="type =='day'">
+            group by date(ab.accBuyCreatedTime) ORDER BY ab.accBuyCreatedTime ASC;
         </if>
     </select>
 

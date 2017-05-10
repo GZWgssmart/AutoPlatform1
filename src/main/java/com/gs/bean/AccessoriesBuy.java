@@ -33,6 +33,25 @@ public class AccessoriesBuy {
 
     private Accessories accessories;
 
+    private int count;
+    private int week;
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    public int getWeek() {
+        return week;
+    }
+
+    public void setWeek(int week) {
+        this.week = week;
+    }
+
     public String getAccBuyId() {
         return accBuyId;
     }

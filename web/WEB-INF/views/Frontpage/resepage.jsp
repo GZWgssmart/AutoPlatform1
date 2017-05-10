@@ -23,8 +23,8 @@
                 <ul class="nav-left-ul">
                     <li>欢迎您，请登录</li>
                     <a href="reg"><li>登录</li></a>
-                    <a href=""><li>绑定手机号</li></a>
-                    <a href="" class="right-ul"><li>我的中心</li></a>
+                    <a href="reg"><li>绑定手机号</li></a>
+                    <a href="userpage" class="right-ul"><li>我的中心</li></a>
                     <div class="clearfix"></div>
                 </ul>
             </div>

@@ -1,6 +1,7 @@
 package com.gs.controller.userManage;
 
 import ch.qos.logback.classic.Logger;
+import com.gs.bean.IncomingOutgoing;
 import com.gs.bean.WorkInfo;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.ComboBox4EasyUI;
@@ -36,11 +37,12 @@ public class OrderManageController {
 
     @Resource
     private WorkInfoService workInfoService;
+    //private MaintainRecordService maintainRecordService
 
     @ResponseBody
     @RequestMapping(value = "queryAll",method = RequestMethod.GET)
     public List<ComboBox4EasyUI> queryAllWork(){
-        logger.info("查询所有订单");
+        logger.info("查询所有工单");
         List<WorkInfo> workInfosList = workInfoService.queryAll();
         List<ComboBox4EasyUI> comboxs = new ArrayList<ComboBox4EasyUI>();
         for(WorkInfo work : workInfosList){
@@ -52,9 +54,6 @@ public class OrderManageController {
         return comboxs;
     }
 
-
-
-
     /*
      * 分页查询
      * @param pageNumber
@@ -65,7 +64,7 @@ public class OrderManageController {
     @ResponseBody
     @RequestMapping(value = "queryByPager",method = RequestMethod.GET)
     public Pager4EasyUI<WorkInfo> queryByPager(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
-        logger.info("收入类型分页查询");
+        logger.info("工单分页查询");
         Pager pager = new Pager();
         pager.setPageNo(Integer.valueOf(pageNumber));
         pager.setPageSize(Integer.valueOf(pageSize));
@@ -74,6 +73,17 @@ public class OrderManageController {
         return new Pager4EasyUI<WorkInfo>(pager.getTotalRecords(), worksList);
     }
 
+    @ResponseBody
+    @RequestMapping(value = "queryBySche",method = RequestMethod.GET)
+    public Pager4EasyUI<WorkInfo> queryBySche(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
+        logger.info("维修保养记录分页查询");
+        Pager pager = new Pager();
+        pager.setPageNo(Integer.valueOf(pageNumber));
+        pager.setPageSize(Integer.valueOf(pageSize));
+        pager.setTotalRecords(workInfoService.count());
+        List<WorkInfo> worksList = workInfoService.queryByPagerschelude(pager);
+        return new Pager4EasyUI<WorkInfo>(pager.getTotalRecords(), worksList);
+    }
 
 /*    @ResponseBody
     @RequestMapping(value="queryByUserId/{id}",method="RequestMethod.GET")
@@ -128,7 +138,7 @@ public class OrderManageController {
     @RequestMapping(value = "update", method = RequestMethod.POST)
     public ControllerResult updateWork(WorkInfo workInfo) {
         if(workInfo!=null && !workInfo.equals("")){
-            logger.info("修改订单");
+            logger.info("修改工单");
             System.out.println("fdjsldkfls");
             workInfoService.update(workInfo);
             return ControllerResult.getSuccessResult("修改成功");
@@ -169,5 +179,31 @@ public class OrderManageController {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         dateFormat.setLenient(false);
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
+    }
+
+    /**
+     * 根据年月日周季去查询所有的工单
+     */
+    @ResponseBody
+    @RequestMapping(value = "queryByCondition")
+    public List<WorkInfo> queryByCondition(String start, String end, String type){
+        List<WorkInfo> list = null;
+        if (type != null && !type.equals("")) {
+            if (type.equals("year")) {
+                list=workInfoService.queryByCondition(start, end,"1","year");
+                for (WorkInfo workInfo : list) {
+                    System.out.println(workInfo);
+                }
+            } else if (type.equals("quarter")) {
+                list=workInfoService.queryByCondition(start, end,"1","quarter");
+            } else if (type.equals("month")) {
+                list=workInfoService.queryByCondition(start, end,"1","month");
+            } else if (type.equals("week")) {
+                list=workInfoService.queryByCondition(start, end,"1","week");
+            } else if (type.equals("day")) {
+                list=workInfoService.queryByCondition(start,end,"1","day");
+            }
+        }
+        return list;
     }
 }

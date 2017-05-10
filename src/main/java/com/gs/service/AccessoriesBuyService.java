@@ -23,4 +23,16 @@ public interface AccessoriesBuyService extends BaseService<String, AccessoriesBu
      */
     public int countByDisable();
 
+    /**
+     * 下单统计
+     */
+    public List<AccessoriesBuy> queryByCondition( String start,String end, String companyId,String type);
+
+
+    /**
+     * 支付统计
+     */
+
+    public List<AccessoriesBuy> queryByPayCondition( String start,String end, String companyId,String type);
+
 }

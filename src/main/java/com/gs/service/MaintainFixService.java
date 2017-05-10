@@ -30,7 +30,4 @@ public interface MaintainFixService extends BaseService<String, MaintainFix>{
     public List<MaintainFix> queryByPagerDisableService(Pager pager);
 
     public int countByDisableService();
-
-    public List<MaintainFix> queryByDetailsByPager(Pager pager, String maintainId);
-    public int countByDetails(@Param("maintainId") String maintainId);
 }

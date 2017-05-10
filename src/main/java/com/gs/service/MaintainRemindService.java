@@ -1,6 +1,10 @@
 package com.gs.service;
 
 import com.gs.bean.MaintainRemind;
+import com.gs.common.bean.Pager;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
 *由CSWangBin技术支持
@@ -11,4 +15,7 @@ import com.gs.bean.MaintainRemind;
 */
 public interface MaintainRemindService extends BaseService<String, MaintainRemind>{
 
+    public List<MaintainRemind> queryByPagerNull(@Param("pager") Pager pager);
+
+    public int countNull();
 }

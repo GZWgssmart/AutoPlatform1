@@ -68,4 +68,13 @@ public class WorkInfoServiceImpl implements WorkInfoService {
 		return 0;
 	}
 
+	@Override
+	public List<WorkInfo> queryByCondition(String start, String end, String userId, String type) {
+		return workInfoDAO.queryByCondition(start, end, userId, type);
+	}
+
+	@Override
+	public List<WorkInfo> queryByPagerschelude(Pager pager) {
+		return workInfoDAO.queryByPagerschelude(pager);
+	}
 }
