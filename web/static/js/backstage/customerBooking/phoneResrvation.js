@@ -141,6 +141,7 @@ function checkApp() {
 function setData(user) {
     $("#addUserName").val(user.userName);
     $("#addUserPhone").val(user.userPhone);
+    validator('editForm'); // 初始化验证
    /**$("#addUserName").val(appointment.userName);
     $("#addUserPhone").val(appointment.userPhone);
     $("#addUserId").val(appointment.userId);
@@ -153,6 +154,15 @@ function setData(user) {
     $("#addMaintainOrFix").val(appointment.maintainOrFix);**/
 }
 
+/** 清除添加的form表单信息 */
+function clearAddForm() {
+    $('#addCarBrand').html('').trigger("change");
+    $('#addCarColor').html('').trigger("change");
+    $('#addCarModel').html('').trigger("change");
+    $('#addCarPlate').html('').trigger("change");
+    $("input[type=reset]").trigger("click");
+}
+
 function showEdit(){
     initDateTimePicker('editForm', 'arriveTime');
     var row =  $('#table').bootstrapTable('getSelections');
@@ -161,14 +171,11 @@ function showEdit(){
         $("#editWindow").modal('show'); // 显示弹窗
         $("#editButton").removeAttr("disabled");
         var appointment = row[0];
-        $("#editForm").fill(appointment);
-        $("#editUserName").fill(appointment.username);
-        $("#editUserPhone").fill(appointment.userPhone);
-        $("#editcurrentStatus").fill(appointment.currentStatus);
         $('#editCarBrand').html('<option value="' + appointment.brand.brandId + '">' + appointment.brand.brandName + '</option>').trigger("change");
         $('#editCarColor').html('<option value="' + appointment.color.colorId + '">' + appointment.color.colorName + '</option>').trigger("change");
         $('#editCarModel').html('<option value="' + appointment.model.modelId + '">' + appointment.model.modelName + '</option>').trigger("change");
         $('#editCarPlate').html('<option value="' + appointment.plate.plateId + '">' + appointment.plate.plateName + '</option>').trigger("change");
+        $("#editForm").fill(appointment);
         $('#editArriveTime').val(formatterDate(appointment.arriveTime));
         validator('editForm'); // 初始化验证
     }else{
