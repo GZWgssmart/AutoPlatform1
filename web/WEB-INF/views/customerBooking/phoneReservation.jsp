@@ -194,6 +194,7 @@
                             <div class="col-sm-offset-8">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                                 <button class="btn btn-sm btn-success" id="addButton" onclick="addSubmit();" type="button">保 存</button>
+                                <input type="reset" name="reset" style="display: none;"/>
                             </div>
                         </div>
                 </form>
@@ -215,13 +216,13 @@
                 <div class="form-group ">
                     <label class="col-sm-3 control-label">车主姓名：</label>
                     <div class="col-sm-7">
-                        <input type="text"  id="editUserName" name="userName" placeholder="车主姓名" define="appointment.userName" class="form-control"/>
+                        <input type="text"  name="userName" placeholder="车主姓名" define="appointment.userName" class="form-control"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">车主电话：</label>
                     <div class="col-sm-7">
-                        <input type="number" id="editUserPhone" name="userPhone" placeholder="车主电话" define="appointment.userPhone" class="form-control" style="width:100%"/>
+                        <input type="number" name="userPhone" placeholder="车主电话" define="appointment.userPhone" class="form-control" style="width:100%"/>
                     </div>
                 </div>
 
@@ -256,7 +257,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">车牌号码：</label>
                     <div class="col-sm-7">
-                        <input type="text" id="editPlateId" name="carPlate" placeholder="车牌号码" define="appointment.carPlate" class="form-control"/>
+                        <input type="text" name="carPlate" placeholder="车牌号码" define="appointment.carPlate" class="form-control"/>
                     </div>
                 </div>
                 <div class="form-group">
@@ -269,7 +270,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">保养&nbsp;|&nbsp;维修：</label>
                     <div class="col-sm-7">
-                        <select id="editMaintainOrFix" define="appointment.maintainOrFix" class="js-example-tags form-control" name="maintainOrFix">
+                        <select  define="appointment.maintainOrFix" class="js-example-tags form-control" name="maintainOrFix">
                             <option value="保养">保养</option>
                             <option value="维修">维修</option>
                         </select>
@@ -278,7 +279,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">已预约&nbsp;|&nbsp;未预约：</label>
                     <div class="col-sm-7">
-                        <select id="editcurrentStatus" define="appointment.currentStatus" class="js-example-tags form-control" name="currentStatus">
+                        <select  define="appointment.currentStatus" class="js-example-tags form-control" name="currentStatus">
                             <option value="已预约">已预约</option>
                             <option value="未预约">未预约</option>
                         </select>

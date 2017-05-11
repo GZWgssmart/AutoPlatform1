@@ -126,6 +126,7 @@ function validator(formId) {
 
                 } else if (formId == "accForm") {
                      formSubmit("/maintain/accadd", formId, "accWindow");
+
             } else if (formId == "accEditForm"){
                     formSubmit("/maintain/accedit",formId,"accEditWindow")
                 }
@@ -168,9 +169,10 @@ function editSubmit(){
     }
 }
 
-function showdetail() {
+function showdetai() {
     var row =  $('#detailTable').bootstrapTable('getSelections');
     if(row.length >0) {
+        $("#detailWindow").modal('hide');
         $("#accButton").removeAttr("disabled");
         // var MaintainFixMap = row[0];
         // $("#accForm").fill(MaintainFixMap);
@@ -218,7 +220,7 @@ function formSubmit(url, formId, winId){
                     $("#" + formId).data('bootstrapValidator').destroy(); // 销毁此form表单
                     $('#' + formId).data('bootstrapValidator', null);// 此form表单设置为空
                     $("#addAccessories").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
-                    $("#accWindow").modal("hide");
+                    // $("#accWindow").modal("hide");
                 }
             } else if (data.result == "fail") {
                 swal({title:"",

@@ -121,7 +121,7 @@
                         <div class="form-group col-md-6 pull-left">
                             <label class="col-md-4 control-label">联系电话：</label>
                             <div class="col-md-8">
-                                <input type="text" id="addSupplyTel" placeholder="请输入联系电话" name="supplyTel" class="form-control" style="width:100%"/>
+                                <input type="number" id="addSupplyTel" placeholder="请输入联系电话" name="supplyTel" class="form-control" style="width:100%"/>
                             </div>
                         </div>
                         <p class="clearfix"></p>
@@ -145,7 +145,7 @@
                         <div class="form-group col-md-6 pull-left">
                             <label class="col-md-4 control-label">供应商微信号：</label>
                             <div class="col-md-8">
-                                <input type="text"  name="supplyWeChat" placeholder="请输入供应商微信号" class="form-control">
+                                <input type="number"  name="supplyWeChat" placeholder="请输入供应商微信号" class="form-control">
                             </div>
                         </div>
                         <div class="form-group col-md-6 pull-left">
@@ -167,7 +167,7 @@
                         <div class="form-group col-md-6 pull-left">
                             <label class="col-md-4 control-label">支付宝账号：</label>
                             <div class="col-md-8">
-                                <input type="text"  name="supplyAlipay" placeholder="请输入支付宝账号" class="form-control">
+                                <input type="number"  name="supplyAlipay" placeholder="请输入支付宝账号" class="form-control">
                             </div>
                         </div>
                         <div class="form-group col-md-6 pull-left">
@@ -188,7 +188,7 @@
                         <div class="form-group col-md-6 pull-left">
                             <label class="col-md-4 control-label">银行卡卡号：</label>
                             <div class="col-md-8">
-                                <input type="text" placeholder="请输入银行卡卡号" name="supplyBankNo"  class="form-control">
+                                <input type="number" placeholder="请输入银行卡卡号" name="supplyBankNo"  class="form-control">
                             </div>
                         </div>
                         <p class="clearfix"></p>
@@ -227,7 +227,7 @@
                         <div class="form-group col-md-6 pull-left">
                             <label class="col-md-4 control-label">联系电话：</label>
                             <div class="col-md-8">
-                                <input type="text" define="supply.supplyTel" placeholder="请输入联系电话" name="supplyTel" class="form-control" style="width:100%"/>
+                                <input type="number" define="supply.supplyTel" placeholder="请输入联系电话" name="supplyTel" class="form-control" style="width:100%"/>
                             </div>
                         </div>
                         <p class="clearfix"></p>
@@ -251,7 +251,7 @@
                         <div class="form-group col-md-6 pull-left">
                             <label class="col-md-4 control-label">供应商微信号：</label>
                             <div class="col-md-8">
-                                <input type="text" define="supply.supplyWeChat" name="supplyWeChat"  class="form-control">
+                                <input type="number" define="supply.supplyWeChat" name="supplyWeChat"  class="form-control">
                             </div>
                         </div>
                         <div class="form-group col-md-6 pull-left">
@@ -273,7 +273,7 @@
                         <div class="form-group col-md-6 pull-left">
                             <label class="col-md-4 control-label">支付宝账号：</label>
                             <div class="col-md-8">
-                                <input type="text" define="supply.supplyAlipay"  name="supplyAlipay"  class="form-control">
+                                <input type="number" define="supply.supplyAlipay"  name="supplyAlipay"  class="form-control">
                             </div>
                         </div>
                         <div class="form-group col-md-6 pull-left">
@@ -294,7 +294,7 @@
                         <div class="form-group col-md-6 pull-left">
                             <label class="col-md-4 control-label">银行卡卡号：</label>
                             <div class="col-md-8">
-                                <input type="text" define="supply.supplyBankNo" name="supplyBankNo"  class="form-control">
+                                <input type="number" define="supply.supplyBankNo" name="supplyBankNo"  class="form-control">
                             </div>
                         </div>
                         <p class="clearfix"></p>

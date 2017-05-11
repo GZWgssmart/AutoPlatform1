@@ -100,12 +100,91 @@
     <![CDATA[
         UPDATE auto_platform.t_appointment SET userName = #{userName}, userPhone = #{userPhone},
         brandId = #{brandId}, colorId = #{colorId}, modelId = #{modelId}, plateId = #{plateId}, carPlate = #{carPlate},
-        arriveTime = #{arriveTime}, maintainOrFix = #{maintainOrFix}, currentStatus = #{currentStatus}
+        arriveTime = #{arriveTime}, maintainOrFix = #{maintainOrFix}, currentStatus = #{currentStatus},
          companyId = #{companyId}
          WHERE appointmentId = #{appointmentId}
     ]]>
   </insert>
+  <!-- 分页模糊查询 -->
+  <select id="blurredQuery" resultMap="appointmentMap" >
+    <![CDATA[
+           select am.*, cc.colorId, cc.colorName, cp.plateId, cp.plateName,
+            cm.modelId, cm.modelName, company.companyId,
+            company.companyName, cb.brandId, cb.brandName from t_appointment am
+           LEFT JOIN t_user u on u.userId =am.userId
+           LEFT JOIN t_car_color cc on am.colorId =cc.colorId
+           LEFT JOIN t_car_model cm on am.modelId = cm.modelId
+           LEFT JOIN t_car_plate cp on am.plateId = cp.plateId
+           LEFT JOIN t_company company on am.companyId = company.companyId
+           LEFT JOIN t_car_brand cb on am.brandId = cb.brandId
+           where 1=1 and
+      ]]>
+    <if test="appointment.userName != '' and appointment.userName != null">
+      ck.userName like '%${appointment.userName}%'
+    </if>
+    <if test="appointment.userName != '' and appointment.userName != null and
+            appointment.companyId != '' and appointment.companyId != null">
+      or
+    </if>
+    <if test="appointment.companyId != '' and appointment.companyId != null">
+      company.companyName like '%${appointment.companyId}%'
+    </if>
+    <if test="appointment.companyId != '' and appointment.companyId != null and
+            appointment.carPlate != '' and appointment.carPlate != null">
+      or
+    </if>
+    <if test="appointment.carPlate != '' and appointment.carPlate != null">
+      ck.carPlate like '%${appointment.carPlate}%'
+    </if>
+    <if test="appointment.carPlate != '' and appointment.carPlate != null and
+            appointment.userPhone != '' and appointment.userPhone != null">
+      or
+    </if>
+    <if test="appointment.userPhone != '' and appointment.userPhone != null">
+      ck.userPhone like '%${appointment.userPhone}%'
+    </if>
+    order by am.appCreatedTime Desc
+    limit #{pager.beginIndex}, #{pager.pageSize}
+  </select>
 
+  <!-- 分页模糊查询个数 -->
+  <select id="countByBlurred" resultType="int" >
+    <![CDATA[
+      select count(appointmentId) from t_appointment am
+      LEFT JOIN t_user u on u.userId =am.userId
+      LEFT JOIN t_car_color cc on am.colorId =cc.colorId
+      LEFT JOIN t_car_model cm on am.modelId = cm.modelId
+      LEFT JOIN t_car_plate cp on am.plateId = cp.plateId
+      LEFT JOIN t_company company on am.companyId = company.companyId
+      LEFT JOIN t_car_brand cb on am.brandId = cb.brandId
+      where 1=1 and
+    ]]>
+    <if test="appointment.userName != '' and appointment.userName != null">
+      ck.userName like '%${appointment.userName}%'
+    </if>
+    <if test="appointment.userName != '' and appointment.userName != null and
+    appointment.companyId != '' and appointment.companyId != null">
+      or
+    </if>
+    <if test="appointment.companyId != '' and appointment.companyId != null">
+      company.companyName like '%${appointment.companyId}%'
+    </if>
+    <if test="appointment.companyId != '' and appointment.companyId != null and
+    appointment.carPlate != '' and appointment.carPlate != null">
+      or
+    </if>
+    <if test="appointment.carPlate != '' and appointment.carPlate != null">
+      ck.carPlate like '%${appointment.carPlate}%'
+    </if>
+    <if test="appointment.carPlate != '' and appointment.carPlate != null and
+    appointment.userPhone != '' and appointment.userPhone != null">
+      or
+    </if>
+    <if test="appointment.userPhone != '' and appointment.userPhone != null">
+      ck.userPhone like '%${appointment.userPhone}%'
+    </if>
+  </select>
+  
   <!--冻结数据-->
   <update id="inactive" parameterType="Appointment">
     <![CDATA[
