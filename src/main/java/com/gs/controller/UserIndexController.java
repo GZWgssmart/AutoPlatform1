@@ -78,4 +78,10 @@ public class UserIndexController {
     public String myComment(){
         return "Frontpage/Personalcenter/Consumptionstatistics/mycomment";
     }
+
+    /*修改账号信息*/
+    @RequestMapping(value ="editinfomation",method=RequestMethod.GET)
+    public String editinfo(){
+        return "Frontpage/Personalcenter/AccountSettings/EditInfomation";
+    }
 }
