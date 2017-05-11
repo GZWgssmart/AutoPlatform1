@@ -121,14 +121,14 @@ function validator(formId) {
                     }
                 }
             },
-            companyId: {
+            /*companyId: {
                 message: '供应商所属公司验证失败',
                 validators: {
                     notEmpty: {
                         message: '供应商所属公司不能为空'
                     }
                 }
-            },
+            },*/
             supplyAlipay: {
                 message: '供应商支付宝验证失败',
                 validators: {
@@ -145,7 +145,7 @@ function validator(formId) {
                         message: '请输入正确的支付宝帐号'
                     }
                 }
-            },
+            }/*,
             supplyBank: {
                 message: '银行卡全称验证失败',
                 validators: {
@@ -178,7 +178,7 @@ function validator(formId) {
                         message: '请输入正确的卡号'
                     }
                 }
-            }
+            }*/
         }
     })
 
