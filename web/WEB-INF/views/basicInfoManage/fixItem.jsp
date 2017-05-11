@@ -257,8 +257,8 @@
                     </thead>
                 </table>
                 <div id="detailToolbar" class="btn-group">
-                    <button id="btn_editDetail" type="button" class="btn btn-default" onclick="showdetail();">
-                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改明细
+                    <button id="btn_editDetail" type="button" class="btn btn-default" onclick="showdetai();">
+                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改配件
                     </button>
                 </div>
                 <div class="modal-footer" style="border: none">
