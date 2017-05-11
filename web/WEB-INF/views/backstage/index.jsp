@@ -132,10 +132,6 @@
                             </li>
                             <li><a class="J_menuItem" href="/supplier/supplierInformation">供应商管理</a>
                             </li>
-                            <li><a class="J_menuItem" href="/supplier/orderStatistics">下单统计</a>
-                            </li>
-                            <li><a class="J_menuItem" href="/supplier/paymentStatistics">支付统计</a>
-                            </li>
                         </ul>
                     </li>
                     <li>
