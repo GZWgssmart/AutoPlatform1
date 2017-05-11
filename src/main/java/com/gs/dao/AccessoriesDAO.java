@@ -29,4 +29,6 @@ public interface AccessoriesDAO extends BaseDAO<String, Accessories>{
     public List<Accessories> queryByIdPager(@Param("id") String id, @Param("pager") Pager pager);
 
     public int updateCount(@Param("accCount") int accCount,@Param("accId") String accId);
+
+    public Accessories queryByName(@Param("accName") String accName);
 }

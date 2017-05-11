@@ -98,6 +98,7 @@ public class AccessoriesBuyController {
     @RequestMapping(value = "addAccBuy", method = RequestMethod.POST)
     public ControllerResult addAccBuy(AccessoriesBuy accessoriesBuy,@Param("accName")String accName) {
         logger.info("前台传过来的数据为："+accessoriesBuy.toString());
+        logger.info("前天传入的accName为"+accName);
         if (accessoriesBuy != null && !accessoriesBuy.equals("")) {
             if(accessoriesBuy.getAccId()!=null&&!accessoriesBuy.getAccId().equals("")){
                 accessoriesBuy.setAccBuyDiscount(1.0);
@@ -105,23 +106,34 @@ public class AccessoriesBuyController {
                 accessoriesService.updateCount(accessoriesBuy.getAccBuyCount(),accessoriesBuy.getAccId());
                 return ControllerResult.getSuccessResult("更新数量成功");
             }else{
-                Accessories acc=new Accessories();
-                String uuid=UUIDUtil.uuid();
-                acc.setAccId(uuid);
-                acc.setAccName(accName);
-                acc.setCompanyId(accessoriesBuy.getCompanyId());
-                acc.setAccTotal(accessoriesBuy.getAccBuyCount());
-                acc.setAccPrice(accessoriesBuy.getAccBuyPrice());
-                acc.setAccBuyedTime(accessoriesBuy.getAccBuyTime());
-                acc.setAccCommodityCode("");
-                acc.setAccSalePrice(accessoriesBuy.getAccBuyPrice());
-                acc.setAccIdle(accessoriesBuy.getAccBuyCount());
-                acc.setSupplyId(accessoriesBuy.getSupplyId());
-                acc.setAccTypeId(accessoriesBuy.getAccTypeId());
-                accessoriesService.insert(acc);
-                accessoriesBuy.setAccId(uuid);
-                accessoriesBuyService.insert(accessoriesBuy);
-                return ControllerResult.getSuccessResult("添加成功");
+                logger.info("为新建一个配件");
+                if(accName!=null&&!accName.equals("")){
+                    Accessories a=accessoriesService.queryByName(accName);
+                    if(a!=null){
+                        accessoriesBuy.setAccBuyDiscount(1.0);
+                        accessoriesBuyService.insert(accessoriesBuy);
+                        accessoriesService.updateCount(accessoriesBuy.getAccBuyCount(),accessoriesBuy.getAccId());
+                        return ControllerResult.getSuccessResult("更新数量成功");
+                    }else{
+                        Accessories acc=new Accessories();
+                        String uuid=UUIDUtil.uuid();
+                        acc.setAccId(uuid);
+                        acc.setAccName(accName);
+                        acc.setCompanyId(accessoriesBuy.getCompanyId());
+                        acc.setAccTotal(accessoriesBuy.getAccBuyCount());
+                        acc.setAccPrice(accessoriesBuy.getAccBuyPrice());
+                        acc.setAccBuyedTime(accessoriesBuy.getAccBuyTime());
+                        acc.setAccCommodityCode("");
+                        acc.setAccSalePrice(accessoriesBuy.getAccBuyPrice());
+                        acc.setAccIdle(accessoriesBuy.getAccBuyCount());
+                        acc.setSupplyId(accessoriesBuy.getSupplyId());
+                        acc.setAccTypeId(accessoriesBuy.getAccTypeId());
+                        accessoriesService.insert(acc);
+                        accessoriesBuy.setAccId(uuid);
+                        accessoriesBuyService.insert(accessoriesBuy);
+                        return ControllerResult.getSuccessResult("添加成功");
+                    }
+                }
             }
         }
         return ControllerResult.getFailResult("添加失败，请输入必要的信息");

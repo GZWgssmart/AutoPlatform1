@@ -217,4 +217,10 @@
         ]]>
   </update>
 
+  <select id="queryByName" resultMap="AccessoriesMap">
+    <![CDATA[
+        SELECT ac.accId,ac.accName FROM auto_platform.t_accessories ac WHERE accName=#{accName}
+    ]]>
+  </select>
+
 </mapper>

@@ -66,6 +66,12 @@ public class AccessoriesServiceImpl implements AccessoriesService {
 		return accessoriesDAO.updateCount(accCount,accId);
 	}
 
+	@Override
+	public Accessories queryByName(@Param("accName") String accName) {
+		return accessoriesDAO.queryByName(accName);
+	}
+
+
 	public List<Accessories> blurredQuery(Pager pager, Accessories accessories) {
 		return accessoriesDAO.blurredQuery(pager, accessories);
 	}
