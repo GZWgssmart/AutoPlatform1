@@ -84,16 +84,28 @@ public class MaintainRemindController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "update", method = RequestMethod.POST)
-    public ControllerResult update(MaintainRemind maintainRemind, MessageSend messageSend) {
-        logger.info("投诉记录修改操作");
+    @RequestMapping(value = "insert", method = RequestMethod.POST)
+    public ControllerResult insert(MaintainRemind maintainRemind, MessageSend messageSend) {
+        logger.info("维修保养提醒记录添加操作");
         maintainRemindService.update(maintainRemind);
         messageSend.setMessageId(maintainRemind.getRemindId());
         messageSend.setUserId(maintainRemind.getUserId());
         messageSend.setSendTime(maintainRemind.getRemindTime());
         messageSend.setSendMsg(maintainRemind.getRemindMsg());
         messageSend.setSendCreatedTime(new Date());
-        messageSendService.insert(messageSend);
+        messageSendService.insertRemind(messageSend);
+        return ControllerResult.getSuccessResult("添加成功");
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "update", method = RequestMethod.POST)
+    public ControllerResult update(MaintainRemind maintainRemind, MessageSend messageSend) {
+        logger.info("维修保养提醒记录修改操作");
+        maintainRemindService.update(maintainRemind);
+        messageSend.setSendTime(maintainRemind.getRemindTime());
+        messageSend.setSendMsg(maintainRemind.getRemindMsg());
+        messageSend.setSendCreatedTime(maintainRemind.getRemindCreatedTime());
+        messageSendService.update(messageSend);
         return ControllerResult.getSuccessResult("修改成功");
     }
 

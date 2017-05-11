@@ -32,4 +32,15 @@
     insert into t_message_send(messageId,userId,sendMsg,sendTime,sendCreatedTime) values(uuid(),#{userId},#{sendMsg},#{sendTime},#{sendCreatedTime})
   </insert>
 
+  <insert id="batchInsert"  parameterType="java.util.List">
+    insert into t_message_send (messageId,userId,sendMsg,sendTime, sendCreatedTime)values
+    <foreach collection="list" item="item" index="index" separator="," >
+      (uuid(),#{item.userId},#{item.sendMsg},#{item.sendTime}, #{item.sendCreatedTime})
+    </foreach>
+  </insert>
+
+  <update id="update" parameterType="messageSend">
+    update t_message_send set sendMsg=#{sendMsg},sendTime=#{sendTime},sendCreatedTime=#{sendCreatedTime} where messageId=#{messageId}
+  </update>
+
 </mapper>

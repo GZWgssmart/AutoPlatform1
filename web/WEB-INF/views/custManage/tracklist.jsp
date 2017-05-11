@@ -97,7 +97,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">跟踪回访创建时间：</label>
                     <div class="col-sm-7">
-                        <input id="start" name="trackCreatedTime" readonly class="layui-input" />
+                        <input id="addTrackCreatedTime" name="trackCreatedTime" readonly class="layui-input" />
                         <%--onclick="layui.laydate({elem: this, min: laydate.now(), format: 'yyyy-MM-dd hh:mm:ss', max: '2099-06-16 23:59:59'})"--%>
                     </div>
                 </div>
@@ -156,7 +156,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">跟踪回访创建时间：</label>
                     <div class="col-sm-7">
-                        <input id="editStart" name="trackCreatedTime" readonly define="TrackList.trackCreatedTime" class="layui-input">
+                        <input id="editTrackCreatedTime" name="trackCreatedTime" readonly define="TrackList.trackCreatedTime" class="layui-input">
                     </div>
                 </div>
                 <div class="form-group">
@@ -200,7 +200,7 @@
     layui.use('laydate', function(){
         var laydate = layui.laydate;
 
-        var start = {
+        var addTrackCreatedTime = {
             format: 'yyyy-MM-dd hh:mm:ss',
             min: laydate.now(), //设定最小日期为当前日期
             max: '2099-12-30 23:59:59', //最大日期
@@ -209,12 +209,12 @@
             festival: true
         };
 
-        document.getElementById('start').onclick = function () {
-            start.elem = this;
-            laydate(start);
+        document.getElementById('addTrackCreatedTime').onclick = function () {
+            addTrackCreatedTime.elem = this;
+            laydate(addTrackCreatedTime);
         }
 
-        var editStart = {
+        var editTrackCreatedTime = {
             format: 'yyyy-MM-dd hh:mm:ss',
             max: '2099-12-30 23:59:59', //最大日期
             istime: true,
@@ -222,9 +222,9 @@
             festival: true
         };
 
-        document.getElementById('editStart').onclick = function () {
-            editStart.elem = this;
-            laydate(editStart);
+        document.getElementById('editTrackCreatedTime').onclick = function () {
+            editTrackCreatedTime.elem = this;
+            laydate(editTrackCreatedTime);
         }
     });
 </script>

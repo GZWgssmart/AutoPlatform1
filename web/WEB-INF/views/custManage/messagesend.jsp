@@ -32,20 +32,15 @@
             <thead>
             <tr>
                 <th data-checkbox="true"></th>
-                <th data-field="userId">用户名</th>
-                <th data-field="sendTime">发送时间</th>
-                <th data-field="sendCreatedTime">发送记录创建时间</th>
+                <th data-field="user.userName">用户名</th>
+                <th data-field="sendTime" data-formatter="formatterDate">发送时间</th>
+                <th data-field="sendCreatedTime" data-formatter="formatterDate">发送记录创建时间</th>
                 <th data-field="sendMsg">发送内容</th>
             </tr>
             </thead>
         </table>
         <div id="toolbar" class="btn-group">
-            <button id="btn_add" type="button" class="btn btn-default" onclick="showAdd();">
-                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
-            </button>
-            <button id="btn_edit" type="button" class="btn btn-default" onclick="showEdit();">
-                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
-            </button>
+            <button type="button" class="btn btn-w-m btn-info" onclick="showAdd();">发送短信提醒</button>
         </div>
     </div>
 </div>
@@ -62,19 +57,22 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">用户名：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="userId" placeholder="请选择用户" class="form-control">
+                        <%--<input type="text" name="userId" placeholder="请选择用户" class="form-control">--%>
+                        <select id="addUserName" name="userId" class="form-control js-example-basic-multiple messageSend"
+                                multiple="multiple" style="width:100%">
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">发送时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="sendTime" value="2012-05-15 21:05" id="addDateTimePicker" class="form-control">
+                        <input id="addSendTime" name="sendTime" readonly class="layui-input">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">发送记录创建时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="sendCreatedTime" value="2012-05-15 21:05" id="addDateTimePicker1" class="form-control">
+                        <input id="addSendCreatedTime" name="sendCreatedTime" readonly class="layui-input">
                     </div>
                 </div>
                 <div class="form-group">
@@ -87,7 +85,7 @@
                 <div class="form-group">
                     <div class="col-sm-offset-8">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button class="btn btn-sm btn-success" type="submit">保 存</button>
+                        <button id="addButton" class="btn btn-sm btn-success" type="button" onclick="addSubmit()">保 存</button>
                     </div>
                 </div>
             </form>
@@ -96,52 +94,52 @@
 </div><!-- /.modal -->
 
 
-<!-- 修改弹窗 -->
-<div class="modal fade" id="editWindow" aria-hidden="true">
-    <div class="modal-dialog" style="width: 720px;height: auto;">
-        <div class="modal-content">
-            <form class="form-horizontal" id="editForm" method="post">
-                <div class="modal-header" style="overflow:auto;">
-                    <h4>请修改短信发送提醒信息</h4>
-                </div>
-                <br/>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">用户名：</label>
-                    <div class="col-sm-7">
-                        <input type="text" name="userId" define="MessageSend.userId" placeholder="请选择用户" class="form-control">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">发送时间：</label>
-                    <div class="col-sm-7">
-                        <input type="text" name="sendTime" define="MessageSend.sendTime" value="2012-05-15 21:05"
-                               id="editDateTimePicker" class="form-control">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">发送记录创建时间：</label>
-                    <div class="col-sm-7">
-                        <input type="text"  name="sendCreateTime" define="MessageSend.sendCreateTime" value="2012-05-15 21:05"
-                               id="editDateTimePicker1" class="form-control">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">发送内容：</label>
-                    <div class="col-sm-7">
-                        <textarea type="text" name="sendMsg"  define="MessageSend.sendMsg" placeholder="请输入发送内容" style="height: 100px;"
-                                  class="form-control"></textarea>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-offset-8">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button class="btn btn-sm btn-success" type="submit">保 存</button>
-                    </div>
-                </div>
-            </form>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+<%--<!-- 修改弹窗 -->--%>
+<%--<div class="modal fade" id="editWindow" aria-hidden="true">--%>
+    <%--<div class="modal-dialog" style="width: 720px;height: auto;">--%>
+        <%--<div class="modal-content">--%>
+            <%--<form class="form-horizontal" id="editForm" method="post">--%>
+                <%--<div class="modal-header" style="overflow:auto;">--%>
+                    <%--<h4>请修改短信发送提醒信息</h4>--%>
+                <%--</div>--%>
+                <%--<br/>--%>
+                <%--<div class="form-group">--%>
+                    <%--<label class="col-sm-3 control-label">用户名：</label>--%>
+                    <%--<div class="col-sm-7">--%>
+                        <%--<input type="text" name="userId" define="MessageSend.userId" placeholder="请选择用户" class="form-control">--%>
+                    <%--</div>--%>
+                <%--</div>--%>
+                <%--<div class="form-group">--%>
+                    <%--<label class="col-sm-3 control-label">发送时间：</label>--%>
+                    <%--<div class="col-sm-7">--%>
+                        <%--<input type="text" name="sendTime" define="MessageSend.sendTime" value="2012-05-15 21:05"--%>
+                               <%--id="editDateTimePicker" class="form-control">--%>
+                    <%--</div>--%>
+                <%--</div>--%>
+                <%--<div class="form-group">--%>
+                    <%--<label class="col-sm-3 control-label">发送记录创建时间：</label>--%>
+                    <%--<div class="col-sm-7">--%>
+                        <%--<input type="text"  name="sendCreateTime" define="MessageSend.sendCreateTime" value="2012-05-15 21:05"--%>
+                               <%--id="editDateTimePicker1" class="form-control">--%>
+                    <%--</div>--%>
+                <%--</div>--%>
+                <%--<div class="form-group">--%>
+                    <%--<label class="col-sm-3 control-label">发送内容：</label>--%>
+                    <%--<div class="col-sm-7">--%>
+                        <%--<textarea type="text" name="sendMsg"  define="MessageSend.sendMsg" placeholder="请输入发送内容" style="height: 100px;"--%>
+                                  <%--class="form-control"></textarea>--%>
+                    <%--</div>--%>
+                <%--</div>--%>
+                <%--<div class="form-group">--%>
+                    <%--<div class="col-sm-offset-8">--%>
+                        <%--<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>--%>
+                        <%--<button class="btn btn-sm btn-success" type="submit">保 存</button>--%>
+                    <%--</div>--%>
+                <%--</div>--%>
+            <%--</form>--%>
+        <%--</div><!-- /.modal-content -->--%>
+    <%--</div><!-- /.modal-dialog -->--%>
+<%--</div><!-- /.modal -->--%>
 
 <script src="/static/js/jquery.min.js"></script>
 <script src="/static/js/bootstrap.min.js"></script>
@@ -155,5 +153,39 @@
 <script src="/static/js/bootstrap-validate/bootstrapValidator.js"></script>
 <script src="/static/js/plugins/layui/layui.js" charset="utf-8"></script>
 <script src="/static/js/backstage/main.js"></script>
+<script>
+    layui.use('laydate', function(){
+
+        var laydate = layui.laydate;
+
+        var addSendTime = {
+            format: 'yyyy-MM-dd hh:mm:ss',
+            min: laydate.now(), //设定最小日期为当前日期
+            max: '2099-12-30 23:59:59', //最大日期
+            istime: true,
+            istoday: false,
+            festival: true
+        };
+
+        document.getElementById('addSendTime').onclick = function () {
+            addSendTime.elem = this;
+            laydate(addSendTime);
+        }
+
+        var addSendCreatedTime = {
+            format: 'yyyy-MM-dd hh:mm:ss',
+            max: '2099-12-30 23:59:59', //最大日期
+            istime: true,
+            istoday: false,
+            festival: true
+        };
+
+        document.getElementById('addSendCreatedTime').onclick = function () {
+            addSendCreatedTime.elem = this;
+            laydate(addSendCreatedTime);
+        }
+
+    });
+</script>
 </body>
 </html>

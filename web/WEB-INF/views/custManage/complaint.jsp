@@ -91,7 +91,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">投诉时间：</label>
                     <div class="col-sm-7">
-                        <input id="start" name="complaintCreatedTime" readonly class="layui-input" />
+                        <input id="addComplaintCreatedTime" name="complaintCreatedTime" readonly class="layui-input" />
                     </div>
                 </div>
                 <div class="form-group">
@@ -136,7 +136,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">投诉回复时间：</label>
                     <div class="col-sm-7">
-                        <input id="end" name="complaintReplyTime" readonly define="Complaint.complaintReplyTime" class="layui-input">
+                        <input id="addReplyComplaintReplyTime" name="complaintReplyTime" readonly define="Complaint.complaintReplyTime" class="layui-input">
                     </div>
                 </div>
                 <div class="form-group">
@@ -182,7 +182,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">投诉回复时间：</label>
                     <div class="col-sm-7">
-                        <input id="end_edit" name="complaintReplyTime" readonly  define="Complaint.complaintReplyTime" class="layui-input">
+                        <input id="editComplaintReplyTime" name="complaintReplyTime" readonly  define="Complaint.complaintReplyTime" class="layui-input">
                     </div>
                 </div>
                 <div class="form-group">
@@ -222,7 +222,7 @@
             var laydate = layui.laydate;
 
             //日期范围限制
-            var start = {
+            var addComplaintCreatedTime = {
                 format: 'yyyy-MM-dd hh:mm:ss',
                 min: laydate.now(), //设定最小日期为当前日期
                 max: '2099-12-30 23:59:59', //最大日期
@@ -231,7 +231,7 @@
                 festival: true
             };
 
-            var end = {
+            var addReplyComplaintReplyTime = {
                 format: 'yyyy-MM-dd hh:mm:ss',
                 min: laydate.now(),
                 max: '2099-12-30 23:59:59',
@@ -240,27 +240,27 @@
                 festival: true
             };
 
-            document.getElementById('start').onclick = function () {
-                start.elem = this;
-                laydate(start);
+            document.getElementById('addComplaintCreatedTime').onclick = function () {
+                addComplaintCreatedTime.elem = this;
+                laydate(addComplaintCreatedTime);
             }
 
-            document.getElementById('end').onclick = function () {
-                end.elem = this;
-                laydate(end);
+            document.getElementById('addReplyComplaintReplyTime').onclick = function () {
+                addReplyComplaintReplyTime.elem = this;
+                laydate(addReplyComplaintReplyTime);
             }
 
 
-            var end_edit = {
+            var editComplaintReplyTime = {
                 format: 'yyyy-MM-dd hh:mm:ss',
                 max: '2099-12-30 23:59:59',
                 istime: true,
                 istoday: false,
             };
 
-            document.getElementById('end_edit').onclick = function () {
-                end_edit.elem = this;
-                laydate(end_edit);
+            document.getElementById('editComplaintReplyTime').onclick = function () {
+                editComplaintReplyTime.elem = this;
+                laydate(editComplaintReplyTime);
             }
         });
     });

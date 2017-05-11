@@ -1,19 +1,44 @@
 $(function () {
     initTable('table', '/maintainRemind/queryByPager'); // 初始化表格
 
-    initSelect2("user", "请选择用户", "/maintainRemind/queryCombox");
+    // initSelect2("user", "请选择用户", "/maintainRemind/queryCombox");
 });
+
+function showRemindUser() {
+    $("#RemindUserWindow").modal('show');
+    initTableRemindNotTollbar("showRemindUserTable","/maintainRemind/queryByPagerNull");
+}
+
+function closeRemindUserWin() {
+    $("#RemindUserWindow").modal('hide');
+}
+
+// function layuiDateTime(){
+//     layui.use('laydate', function () {
+//         layui.laydate({
+//             format: 'yyyy-MM-dd hh:mm:ss',
+//             max: '2099-12-30 23:59:59',
+//             istime: true,
+//             istoday: false,
+//             festival: true
+//         })
+//     })
+// }
 
 //显示弹窗
 function showEdit() {
     var row = $('table').bootstrapTable('getSelections');
     if (row.length > 0) {
-        alert(row[0].remindId);
+        // alert(row[0].remindId);
         $("#editWindow").modal('show'); // 显示弹窗
         $("#editButton").removeAttr("disabled"); // 移除不可点击
         var MaintainRemind = row[0];
         $("#editForm").fill(MaintainRemind);
-        $('#editUserName').html('<option value="' + MaintainRemind.user.userId + '">' + MaintainRemind.user.userName + '</option>').trigger("change");
+        $("#editLastMaintainTime").val(formatterDate(MaintainRemind.lastMaintainTime));
+        $("#editRemindTime").val(formatterDate(MaintainRemind.remindTime));
+        $("#editRemindCreatedTime").val(formatterDate(MaintainRemind.remindCreatedTime));
+        $('#editUserId').val(MaintainRemind.user.userId);
+        $('#editUserName').val(MaintainRemind.user.userName);
         validator('editForm');
     } else {
         swal({
@@ -43,8 +68,8 @@ function checkUser() {
             "type": "warning"
         })
     } else {
-        alert(row[0].user.userId);
-        alert(row[0].user.userName);
+        // alert(row[0].user.userId);
+        // alert(row[0].user.userName);
         $("#addRemindId").val(row[0].remindId);
         $("#addLastMaintainTime").val(formatterDate(row[0].lastMaintainTime));
         $("#addLastMaintainMileage").val(row[0].lastMaintainMileage);
@@ -54,11 +79,34 @@ function checkUser() {
     }
 }
 
-//显示添加
-function showAdd() {
-    $("#addWindow").modal('show');
-    $("#addButton").removeAttr("disabled");
-    validator('addForm'); // 初始化验证
+// //显示添加
+// function showAdd() {
+//     $("#addWindow").modal('show');
+//     $("#addButton").removeAttr("disabled");
+//     validator('addForm'); // 初始化验证
+// }
+
+function showAddRemindUser() {
+    var row = $('#showRemindUserTable').bootstrapTable('getSelections');
+    if(row.length != 1) {
+        swal({
+            "title": "",
+            "text": "只能选择一条数据",
+            "type": "warning"
+        })
+    } else {
+        // alert(row[0].user.userId);
+        // alert(row[0].user.userName);
+        $("#addRemindId").val(row[0].remindId);
+        $("#addLastMaintainTime").val(formatterDate(row[0].lastMaintainTime));
+        $("#addLastMaintainMileage").val(row[0].lastMaintainMileage);
+        $('#addUserId').val(row[0].user.userId);
+        $('#addUserName').val(row[0].user.userName);
+        $("#RemindUserWindow").modal('hide');
+        $("#addWindow").modal('show');
+        $("#addButton").removeAttr("disabled");
+        validator('addForm'); // 初始化验证
+    }
 }
 
 function validator(formId) {
@@ -130,7 +178,7 @@ function validator(formId) {
 
         .on('success.form.bv', function (e) {
             if (formId == "addForm") {
-                formSubmit("/maintainRemind/update", formId, "addWindow");
+                formSubmit("/maintainRemind/insert", formId, "addWindow");
 
             } else if (formId == "editForm") {
                 formSubmit("/maintainRemind/update", formId, "editWindow");
@@ -149,7 +197,7 @@ function addSubmit(){
 
 function editSubmit(){
     $("#editForm").data('bootstrapValidator').validate();
-    if ($("#editFobootstrapValidatorrm").data('bootstrapValidator').isValid()) {
+    if ($("#editForm").data('bootstrapValidator').isValid()) {
         $("#editButton").attr("disabled","disabled");
     } else {
         $("#editButton").removeAttr("disabled");
@@ -183,4 +231,42 @@ function formSubmit(url, formId, winId){
                 $("#"+formId).removeAttr("disabled");
             }
         }, "json");
+}
+
+function initTableRemindNotTollbar(tableId, url) {
+    //先销毁表格
+    $('#' + tableId).bootstrapTable('destroy');
+    //初始化表格,动态从服务器加载数据
+    $("#" + tableId).bootstrapTable({
+        method: "get",  //使用get请求到服务器获取数据
+        url:  url, //获取数据的Servlet地址
+        striped: false,  //表格显示条纹
+        pagination: true, //启动分页
+        pageSize: 10,  //每页显示的记录数
+        pageNumber:1, //当前第几页
+        pageList: [10, 15, 20, 25, 30],  //记录数可选列表
+        showColumns: true,  //显示下拉框勾选要显示的列
+        showRefresh: true,  //显示刷新按钮
+        showToggle: true, // 显示详情
+        strictSearch: true,
+        clickToSelect: true,  //是否启用点击选中行
+        uniqueId: "id",                     //每一行的唯一标识，一般为主键列
+        sortable: true,                     //是否启用排序
+        sortOrder: "asc",
+        toolbar : "#remindToolbar",//排序方式
+        sidePagination: "server", //表示服务端请求
+
+
+        //设置为undefined可以获取pageNumber，pageSize，searchText，sortName，sortOrder
+        //设置为limit可以获取limit, offset, search, sort, order
+        queryParamsType : "undefined",
+        queryParams: function queryParams(params) {   //设置查询参数
+            var param = {
+                pageNumber: params.pageNumber,
+                pageSize: params.pageSize,
+                orderNum : $("#orderNum").val()
+            };
+            return param;
+        },
+    });
 }

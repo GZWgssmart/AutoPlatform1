@@ -43,12 +43,13 @@
             </thead>
         </table>
         <div id="toolbar" class="btn-group">
-            <button id="btn_add" type="button" class="btn btn-default" onclick="showAdd();">
-                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
+            <button type="button" class="btn btn-success" onclick="showRemindUser()">
+                查看需要维修保养提醒的车主
             </button>
-            <button id="btn_edit" type="button" class="btn btn-default" onclick="showEdit();">
-                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
-            </button>
+            <%--<button type="button" class="btn btn-w-m btn-info" onclick="showAdd();">保养提醒用户</button>--%>
+            <%--<button id="btn_edit" type="button" class="btn btn-default" onclick="showEdit();">--%>
+                <%--<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改--%>
+            <%--</button>--%>
         </div>
     </div>
 </div>
@@ -58,9 +59,10 @@
     <div class="modal-dialog" style="width: 790px;height: auto;">
         <div class="modal-content" style="overflow:hidden;">
             <form class="form-horizontal" id="addForm" method="post">
-                <input type="hidden" name="remindId" define="MaintainRemind.">
-                <input id="addLastMaintainTime" type="text" name="lastMaintainTime" define="MaintainRemind.lastMaintainTime">
-                <input id="addLastMaintainMileage" type="text" name="lastMaintainMileage" define="lastMaintainTime.lastMaintainMileage">
+                <input id="addRemindId" type="text" name="remindId">
+                <input id="addLastMaintainTime" type="text" name="lastMaintainTime" >
+                <input id="addLastMaintainMileage" type="text" name="lastMaintainMileage" >
+                <input id="addUserId" type="text" name="userId">
                 <div class="modal-header" style="overflow:auto;">
                     <h4>请填写维修维修保养提醒信息</h4>
                 </div>
@@ -68,8 +70,8 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">用户名：</label>
                     <div class="col-sm-7">
-                        <input id="addUserName" type="text" name="userId" readonly class="form-control">
-                        <button id="btn_available" type="button" class="btn btn-default" onclick="showCheckUser();">
+                        <input id="addUserName" type="text" readonly class="form-control" style="width: 315px;">
+                            <button type="button" class="btn btn-default" onclick="showCheckUser();">
                             <span class="glyphicon glyphicon-search" aria-hidden="true"></span>请选择用户
                         </button>
                     </div>
@@ -84,7 +86,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">维修保养提醒时间：</label>
                     <div class="col-sm-7">
-                        <input name="remindTime" readonly class="layui-input">
+                        <input id="addRemindTime" name="remindTime" readonly class="layui-input">
                     </div>
                 </div>
                 <div class="form-group">
@@ -99,7 +101,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">维修保养记录创建时间：</label>
                     <div class="col-sm-7">
-                        <input name="remindCreatedTime" readonly class="layui-input">
+                        <input id="addRemindCreatedTime" name="remindCreatedTime" readonly class="layui-input">
                     </div>
                 </div>
                 <div class="form-group">
@@ -120,6 +122,9 @@
         <div class="modal-content">
             <form class="form-horizontal" id="editForm" method="post">
                 <input type="hidden" name="remindId" define="MaintainRemind.remindId">
+                <input id="editLastMaintainTime" type="hidden" name="lastMaintainTime" define="MaintainRemind.lastMaintainTime">
+                <input id="editLastMaintainMileage" type="hidden" name="lastMaintainMileage" define="MaintainRemind.lastMaintainMileage">
+                <input id="editUserId" type="hidden" name="userId" define="MaintainRemind.user.userId">
                 <div class="modal-header" style="overflow:auto;">
                     <h4>请修改维修维修保养提醒信息</h4>
                 </div>
@@ -127,21 +132,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">用户名称：</label>
                     <div class="col-sm-7">
-                        <select id="editUserName" name="userId" class="form-control js-data-example-ajax user"
-                                style="width:100%">
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">上次维修保养时间：</label>
-                    <div class="col-sm-7">
-                        <input id="editLastMaintainTime" name="lastMaintainTime" define="MaintainRemind.lastMaintainTime" readonly class="layui-input">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">上次汽车行驶里程：</label>
-                    <div class="col-sm-7">
-                        <input type="text" name="lastMaintainMileage" define="MaintainRemind.lastMaintainMileage" placeholder="请输入上次汽车行驶里程" class="form-control">
+                        <input id="editUserName" type="text" readonly define="MaintainRemind.user.userName" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
@@ -175,7 +166,7 @@
                 <div class="form-group">
                     <div class="col-sm-offset-8">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button id="editButton" class="btn btn-sm btn-success" type="button" onclick="editSubmit">保 存</button>
+                        <button id="editButton" class="btn btn-sm btn-success" type="button" onclick="editSubmit()">保 存</button>
                     </div>
                 </div>
             </form>
@@ -185,11 +176,11 @@
 
 <div id="showUserWindow" class="modal fade" aria-hidden="true" style="overflow-y:scroll" data-backdrop="static"
      keyboard:false>
-    <div class="modal-dialog" style="width: 90%">
+    <div class="modal-dialog" style="width: 80%">
         <div class="modal-content">
             <div class="modal-body">
                 <span class="glyphicon glyphicon-remove closeModal" onclick="closeUserWin()"></span>
-                <h3>选择用户</h3>
+                <h3>选择车主</h3>
                 <table class="table table-hover" id="addUserTable" style="table-layout: fixed">
                     <thead>
                     <tr>
@@ -198,10 +189,10 @@
                             用户名称
                         </th>
                         <th data-field="lastMaintainTime" data-formatter="formatterDate">
-                            维修保养时间
+                            上次维修保养时间
                         </th>
                         <th data-field="lastMaintainMileage">
-                            汽车行驶里程
+                            上次汽车行驶里程
                         </th>
                     </tr>
                     </thead>
@@ -211,6 +202,43 @@
                     </button>
                     <input type="button" class="btn btn-primary" onclick="checkUser()" value="确定">
                     </input>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="RemindUserWindow" class="modal fade" aria-hidden="true" style="overflow-y:scroll" data-backdrop="static"
+     keyboard:false>
+    <div class="modal-dialog" style="width: 80%">
+        <div class="modal-content">
+            <div class="modal-body">
+                <span class="glyphicon glyphicon-remove closeModal" onclick="closeRemindUserWin()"></span>
+                <h3>查看需要维修保养提醒的车主</h3>
+                <table class="table table-hover" id="showRemindUserTable" style="table-layout: fixed">
+                    <thead>
+                    <tr>
+                        <th data-checkbox="true"></th>
+                        <th data-field="user.userName">
+                            用户名称
+                        </th>
+                        <th data-field="lastMaintainTime" data-formatter="formatterDate">
+                            上次维修保养时间
+                        </th>
+                        <th data-field="lastMaintainMileage">
+                            上次汽车行驶里程
+                        </th>
+                    </tr>
+                    </thead>
+                </table>
+                <div id="remindToolbar" class="btn-group">
+                    <button type="button" class="btn btn-w-m btn-info" onclick="showAddRemindUser();">保养提醒用户</button>
+                </div>
+                <div class="modal-footer" style="overflow:hidden;">
+                    <button type="button" class="btn btn-default" onclick="closeRemindUserWin()">关闭
+                    </button>
+                    <%--<input type="button" class="btn btn-primary" onclick="checkUser()" value="确定">--%>
+                    <%--</input>--%>
                 </div>
             </div>
         </div>
@@ -229,5 +257,64 @@
 <script src="/static/js/bootstrap-validate/bootstrapValidator.js"></script>
 <script src="/static/js/plugins/layui/layui.js" charset="utf-8"></script>
 <script src="/static/js/backstage/main.js"></script>
+<script>
+    layui.use('laydate', function(){
+        var laydate = layui.laydate;
+
+        var addRemindTime = {
+            format: 'yyyy-MM-dd hh:mm:ss',
+            min: laydate.now(), //设定最小日期为当前日期
+            max: '2099-12-30 23:59:59', //最大日期
+            istime: true,
+            istoday: false,
+            festival: true
+        };
+
+        document.getElementById('addRemindTime').onclick = function () {
+            addRemindTime.elem = this;
+            laydate(addRemindTime);
+        }
+
+        var addRemindCreatedTime = {
+            format: 'yyyy-MM-dd hh:mm:ss',
+            max: '2099-12-30 23:59:59', //最大日期
+            istime: true,
+            istoday: false,
+            festival: true
+        };
+
+        document.getElementById('addRemindCreatedTime').onclick = function () {
+            addRemindCreatedTime.elem = this;
+            laydate(addRemindCreatedTime);
+        }
+
+        var editRemindTime = {
+            format: 'yyyy-MM-dd hh:mm:ss',
+            min: laydate.now(), //设定最小日期为当前日期
+            max: '2099-12-30 23:59:59', //最大日期
+            istime: true,
+            istoday: false,
+            festival: true
+        };
+
+        document.getElementById('editRemindTime').onclick = function () {
+            editRemindTime.elem = this;
+            laydate(editRemindTime);
+        }
+
+        var editRemindCreatedTime = {
+            format: 'yyyy-MM-dd hh:mm:ss',
+            max: '2099-12-30 23:59:59', //最大日期
+            istime: true,
+            istoday: false,
+            festival: true
+        };
+
+        document.getElementById('editRemindCreatedTime').onclick = function () {
+            editRemindCreatedTime.elem = this;
+            laydate(editRemindCreatedTime);
+        }
+    });
+</script>
 </body>
 </html>

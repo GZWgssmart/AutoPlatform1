@@ -29,7 +29,7 @@ function showEdit() {
             var Complaint = row[0];
             $("#editForm").fill(Complaint);
             $('#editAdminName').html('<option value="' + Complaint.admin.userId + '">' + Complaint.admin.userName + '</option>').trigger("change");
-            $("#end_edit").val(formatterDate(Complaint.complaintReplyTime));
+            $("#editComplaintReplyTime").val(formatterDate(Complaint.complaintReplyTime));
             validator('editForm');
         } else {
             // swal({
@@ -52,7 +52,7 @@ function showEdit() {
                     $("#replyButton").removeAttr("disabled"); // 移除不可点击
                     var Complaint = row[0];
                     $("#addReplyForm").fill(Complaint);
-                    $("#end").val(formatterDate(Complaint.complaintReplyTime));
+                    $("#addReplyComplaintReplyTime").val(formatterDate(Complaint.complaintReplyTime));
                     validator('addReplyForm');
                 });
         }
@@ -73,7 +73,7 @@ function showReply() {
             $("#replyButton").removeAttr("disabled"); // 移除不可点击
             var Complaint = row[0];
             $("#addReplyForm").fill(Complaint);
-            $("#end").val(formatterDate(Complaint.complaintReplyTime));
+            $("#addReplyComplaintReplyTime").val(formatterDate(Complaint.complaintReplyTime));
             validator('addReplyForm');
         } else {
             swal({
@@ -198,6 +198,10 @@ function addReplySubmit(){
     }
 }
 
+$("#addReplyForm").submit(function(){
+    $(":submit",this).attr("disabled","disabled");
+});
+
 function formSubmit(url, formId, winId){
     $.post(url,
         $("#" + formId).serialize(),
@@ -216,17 +220,16 @@ function formSubmit(url, formId, winId){
                     $("#addButton").removeAttr("disabled"); // 移除不可点击
                     $("#" + formId).data('bootstrapValidator').destroy(); // 销毁此form表单
                     $('#' + formId).data('bootstrapValidator', null);// 此form表单设置为空
-                    $("#start").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
                     $("#addUserName").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
-                } else if(formId == 'addReplyForm'){
-                    $("input[type=reset]").trigger("click"); // 移除表单中填的值
-                    $('#addReplyForm').data('bootstrapValidator').resetForm(true); // 移除所有验证样式
-                    $("#replyButton").removeAttr("disabled"); // 移除不可点击
-                    $("#" + formId).data('bootstrapValidator').destroy(); // 销毁此form表单
-                    $('#' + formId).data('bootstrapValidator', null);// 此form表单设置为空
-                    // $("#start").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
-                    $("#addAdminName").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
                 }
+                // else if(formId == 'addReplyForm'){
+                //     $("input[type=reset]").trigger("click"); // 移除表单中填的值
+                //     $('#addReplyForm').data('bootstrapValidator').resetForm(true); // 移除所有验证样式
+                //     $("#replyButton").removeAttr("disabled"); // 移除不可点击
+                //     $("#" + formId).data('bootstrapValidator').destroy(); // 销毁此form表单
+                //     $('#' + formId).data('bootstrapValidator', null);// 此form表单设置为空
+                //     $("#addAdminName").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
+                // }
             } else if (data.result == "fail") {
                 swal({title:"",
                     text:"添加失败",

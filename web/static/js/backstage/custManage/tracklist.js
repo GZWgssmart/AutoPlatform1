@@ -15,14 +15,13 @@ function blurredQuery(){
 
 //显示弹窗
 function showEdit() {
-    initDateTimePicker('editForm', 'arriveTime');
     var row = $('table').bootstrapTable('getSelections');
     if (row.length > 0) {
         $("#editWindow").modal('show'); // 显示弹窗
         $("#editButton").removeAttr("disabled"); // 移除不可点击
         var TrackList = row[0];
         $("#editForm").fill(TrackList);
-        $("#editStart").val(formatterDate(TrackList.trackCreatedTime));
+        $("#editTrackCreatedTime").val(formatterDate(TrackList.trackCreatedTime));
         $('#editAdminName').html('<option value="' + TrackList.admin.userId + '">' + TrackList.admin.userName + '</option>').trigger("change");
         $('#editUserName').html('<option value="' + TrackList.user.userId + '">' + TrackList.user.userName + '</option>').trigger("change");
         validator('editForm');
@@ -37,7 +36,6 @@ function showEdit() {
 
 //显示添加
 function showAdd() {
-    initDateTimePicker('addForm', 'arriveTime');
     $("#addWindow").modal('show');
     $("#addButton").removeAttr("disabled");
     validator('addForm'); // 初始化验证
@@ -141,7 +139,6 @@ function formSubmit(url, formId, winId){
                     $("#addButton").removeAttr("disabled"); // 移除不可点击
                     $("#" + formId).data('bootstrapValidator').destroy(); // 销毁此form表单
                     $('#' + formId).data('bootstrapValidator', null);// 此form表单设置为空
-                    $("#start").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
                     $("#addAdminName").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
                     $("#addUserName").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
                 }
