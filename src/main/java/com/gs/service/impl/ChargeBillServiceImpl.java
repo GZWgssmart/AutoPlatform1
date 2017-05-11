@@ -95,10 +95,10 @@ public class ChargeBillServiceImpl implements ChargeBillService {
     }
 
     public List<ChargeBill> blurredQuery(Pager pager, ChargeBill chargeBill) {
-        return null;
+        return chargeBillDAO.blurredQuery(pager,chargeBill);
     }
 
     public int countByBlurred(ChargeBill chargeBill) {
-        return 0;
+        return chargeBillDAO.countByBlurred(chargeBill);
     }
 }

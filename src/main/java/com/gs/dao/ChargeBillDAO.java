@@ -2,6 +2,7 @@ package com.gs.dao;
 
 import com.gs.bean.ChargeBill;
 import com.gs.common.bean.Pager;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -24,5 +25,13 @@ public interface ChargeBillDAO extends BaseDAO<String, ChargeBill>{
      * 分页查询被禁用的记录
      */
     public int countByDisable();
+    /**
+     * 模糊查询
+     */
+    public List<ChargeBill> blurredQuery(@Param("pager")Pager pager, @Param("chargeBill")ChargeBill chargeBill);
 
+    /**
+     * 模糊查询的记录数
+     */
+    public int countByBlurred(@Param("chargeBill")ChargeBill chargeBill);
 }

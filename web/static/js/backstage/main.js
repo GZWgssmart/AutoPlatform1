@@ -4,14 +4,14 @@ $(function () {
 // 激活或禁用
 function showStatusFormatter(value) {
     if(value == 'Y') {
-        return "是";
+        return "可用";
     } else {
-        return "否";
+        return "禁用";
     }
 }
 
 // 初始化带有分秒的时间框
-function initDateTimePicker(formId, field){
+function initDateTimePicker(formId, fieldName){
     $(".datetimepicker").datetimepicker({
         language: 'zh-CN',
         format: 'yyyy-mm-dd hh:ii',
@@ -22,8 +22,8 @@ function initDateTimePicker(formId, field){
         autoclose: 1
     }).on('hide',function(e) {
         $('#'+formId).data('bootstrapValidator')
-            .updateStatus(field, 'NOT_VALIDATED',null)
-            .validateField(field);
+            .updateStatus(fieldName, 'NOT_VALIDATED',null)
+            .validateField(fieldName);
     });
 }
 

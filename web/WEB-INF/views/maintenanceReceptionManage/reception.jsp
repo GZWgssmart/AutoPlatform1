@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <html>
 <head>
     <meta charset="utf-8">
@@ -91,9 +92,11 @@
             <button id="btn_disable" type="button" class="btn btn-default" onclick="showDisable();">
                 <span class="glyphicon glyphicon-search" aria-hidden="true"></span>禁用登记记录
             </button>
-            <button id="btn_add" type="button" class="btn btn-default" onclick="showAdd();">
-                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
-            </button>
+            <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员">
+                <button id="btn_add" type="button" class="btn btn-default" onclick="showAdd();">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
+                </button>
+            </shiro:hasAnyRoles>
             <button id="btn_edit" type="button" class="btn btn-default" onclick="showEdit();">
                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
             </button>
@@ -277,6 +280,8 @@
                     <input type="hidden" define="checkin.checkinId" name="checkinId"/>
                     <input type="hidden" define="checkin.userId" name="userId"/>
                     <input type="hidden" define="checkin.appointmentId" name="appointmentId"/>
+                    <input type="hidden" define="checkin.checkinStatus" name="checkinStatus"/>
+                    <input type="hidden" define="checkin.checkinCreatedTime" name="checkinCreatedTime"/>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">保养&nbsp;|&nbsp;维修：</label>
                         <div class="col-sm-7">
@@ -486,6 +491,5 @@
 <script src="/static/js/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.js"></script>
 <script src="/static/js/bootstrap-dateTimePicker/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
 <script src="/static/js/backstage/maintenanceReception/reception.js"></script>
-
 </body>
 </html>

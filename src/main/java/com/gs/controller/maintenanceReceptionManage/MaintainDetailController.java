@@ -146,12 +146,12 @@ public class MaintainDetailController {
     @RequestMapping(value="blurredQuery", method = RequestMethod.GET)
     public Pager4EasyUI<MaintainRecord> blurredQuery(HttpServletRequest request, @Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
         logger.info("维修保养记录模糊查询");
+        Pager pager = new Pager();
+        pager.setPageNo(Integer.valueOf(pageNumber));
+        pager.setPageSize(Integer.valueOf(pageSize));
         String text = request.getParameter("text");
         String value = request.getParameter("value");
         if(text != null && text!="") {
-            Pager pager = new Pager();
-            pager.setPageNo(Integer.valueOf(pageNumber));
-            pager.setPageSize(Integer.valueOf(pageSize));
             List<MaintainRecord> maintainRecords = null;
             MaintainRecord maintainRecord = new MaintainRecord();
             Checkin checkin = new Checkin();
@@ -160,25 +160,23 @@ public class MaintainDetailController {
                 checkin.setCarPlate(value);
                 checkin.setUserName(value);
                 checkin.setCompanyId(value);
-                maintainRecord.setCheckin(checkin);
             }else if(text.equals("车主")){
                 checkin.setUserName(value);
-                maintainRecord.setCheckin(checkin);
             }else if(text.equals("汽车公司")){
                 checkin.setCompanyId(value);
-                maintainRecord.setCheckin(checkin);
             }else if(text.equals("车牌号")){
                 checkin.setCarPlate(value);
-                maintainRecord.setCheckin(checkin);
             }else if(text.equals("电话")){
                 checkin.setUserPhone(value);
-                maintainRecord.setCheckin(checkin);
             }
+            maintainRecord.setCheckin(checkin);
             maintainRecords = maintainRecordService.blurredQuery(pager, maintainRecord);
             pager.setTotalRecords(maintainRecordService.countByBlurred(maintainRecord));
             return new Pager4EasyUI<MaintainRecord>(pager.getTotalRecords(), maintainRecords);
         }else{
-            return null;
+            pager.setTotalRecords(maintainRecordService.count());
+            List<MaintainRecord> maintainRecords = maintainRecordService.queryByPager(pager);
+            return new Pager4EasyUI<MaintainRecord>(pager.getTotalRecords(), maintainRecords);
         }
     }
 

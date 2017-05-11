@@ -64,69 +64,88 @@
             <button id="btn_print" type="button" class="btn btn-default" onclick="showPrint();">
                 <span class="glyphicon glyphicon-print" aria-hidden="true"></span>打印
             </button>
+            <div class="input-group" style="width:350px;float:left;padding:0;margin:0 0 0 -1px;">
+                <div class="input-group-btn">
+                    <button type="button" id="ulButton" class="btn btn-default" style="border-radius:0px;"
+                            data-toggle="dropdown">车主/电话/汽车公司/车牌号<span class="caret"></span></button>
+                    <ul class="dropdown-menu pull-right">
+                        <li><a onclick="onclikLi(this)">车主/电话/汽车公司/车牌号</a></li>
+                        <li class="divider"></li>
+                        <li><a onclick="onclikLi(this)">车主</a></li>
+                        <li class="divider"></li>
+                        <li><a onclick="onclikLi(this)">电话</a></li>
+                        <li class="divider"></li>
+                        <li><a onclick="onclikLi(this)">汽车公司</a></li>
+                        <li class="divider"></li>
+                        <li><a onclick="onclikLi(this)">车牌号</a></li>
+                    </ul>
+                </div><!-- /btn-group -->
+                <input id="ulInput" class="form-control" onkeypress="if(event.keyCode==13) {blurredQuery();}">
+                <a href="javaScript:;" onclick="blurredQuery()"><span
+                        class="glyphicon glyphicon-search search-style"></span></a>
+                </input>
+            </div><!-- /input-group -->
         </div>
     </div>
 </div>
 
 <!-- 修改弹窗 -->
-<div class="modal fade" id="edit" aria-hidden="true" data-backdrop="static">
+<div class="modal fade" id="editWindow" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog">
         <div class="modal-content">
-            <hr/>
-            <form id="editForm" class="form-horizontal" method="post">
-                <div class="modal-header" style="overflow:auto;">
-                    <p>修改收费单据</p>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">总金额：</label>
-                    <div class="col-sm-7">
-                        <input type="number" name="chargeBillMoney" define="emp.name" class="form-control">
+            <div class="modal-body">
+            <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
+                <form id="editForm" role="form" class="form-horizontal">
+                    <div class="modal-header" style="overflow:auto;">
+                        <h4>修改收费单据</h4>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">实际付款：</label>
-                    <div class="col-sm-7">
-                        <input type="number" name="actualPayment" class="form-control">
+                    <input type="hidden" define="chargeBill.chargeBillId" name="chargeBillId"/>
+                    <input type="hidden" define="chargeBill.maintainRecordId" name="maintainRecordId"/>
+                    <input type="hidden" define="chargeBill.chargeBillStatus" name="chargeBillStatus"/>
+                    <input type="hidden" define="chargeBill.chargeCreatedTime" name="chargeCreatedTime"/>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" >付款方式：</label>
+                        <div class="col-sm-7">
+                            <input type="text" name="paymentMethod" define="chargeBill.paymentMethod" placeholder="请输入付款方式" class="form-control">
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">收费时间：</label>
-                    <div class="col-sm-7">
-                        <input type="text" name="chargeTime" class="form-control" onclick="getDate();" id="addDateTimePicker" >
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">总金额：</label>
+                        <div class="col-sm-7">
+                            <input type="number" name="chargeBillMoney" min="1" define="chargeBill.chargeBillMoney" placeholder="请输入总金额" class="form-control">
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label" >付款方式：</label>
-                    <div class="col-sm-7">
-                        <input type="text" name="paymentMethod" define="emp.price" class="form-control">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">实际付款：</label>
+                        <div class="col-sm-7">
+                            <input type="number" name="actualPayment" min="1" define="chargeBill.actualPayment" placeholder="请输入实际付款" class="form-control">
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">收费单据描述：</label>
-                    <div class="col-sm-7">
-                        <input type="text" name="chargeBillDes" class="form-control" maxlength="100">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">收费时间：</label>
+                        <div class="col-sm-7">
+                            <input id="addDatetimepicker" placeholder="请选择收费时间"
+                                   type="text" name="chargeTime" readonly="true"
+                                   class="form-control datetimepicker"/>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">收费单据状态：</label>
-                    <div class="col-sm-7">
-                        <select class="form-control">
-                            <option>可用</option>
-                            <option>不可用</option>
-                        </select>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">收费单据描述：</label>
+                        <div class="col-sm-7">
+                            <textarea type="textarea" name="chargeBillDes" class="form-control" define="chargeBill.chargeBillDes" placeholder="请输入收费单据描述" maxlength="100"></textarea>
+                        </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default"
-                            data-dismiss="modal">关闭
-                    </button>
-                    <button type="submit" class="btn btn-primary btn-sm">保存</button>
-                </div>
-            </form>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default"
+                                data-dismiss="modal">关闭
+                        </button>
+                        <button type="submit" class="btn btn-success btn-sm">保存</button>
+                    </div>
+                </form>
+            </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-
 <script src="/static/js/jquery.min.js"></script>
 <script src="/static/js/bootstrap.min.js"></script>
 <script src="/static/js/bootstrap-table/bootstrap-table.js"></script>

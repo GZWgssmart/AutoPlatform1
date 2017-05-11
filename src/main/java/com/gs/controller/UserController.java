@@ -2,10 +2,10 @@ package com.gs.controller;
 
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.User;
+import com.gs.common.Constants;
 import com.gs.common.bean.ControllerResult;
-import com.gs.common.bean.Pager;
-import com.gs.common.bean.Pager4EasyUI;
 import com.gs.common.util.EncryptUtil;
+import com.gs.common.util.SessionUtil;
 import com.gs.service.UserService;
 import org.apache.ibatis.annotations.Param;
 import org.apache.shiro.SecurityUtils;
@@ -22,8 +22,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.List;
+import java.io.IOException;
 
 @Controller
 @RequestMapping("/user")
@@ -38,6 +39,12 @@ public class UserController {
     @RequestMapping(value = "loginPage", method = RequestMethod.GET)
     public String loginPage() {
         return "user/login";
+    }
+
+    @RequestMapping(value = "redirectLogin", method = RequestMethod.GET)
+    public void redirectLoginPage(HttpServletResponse response) throws IOException {
+        response.getWriter().print("<html><script type='text/JavaScript'>top.location = \"/user/loginPage\";</script></html>");
+        response.setContentType("text/html");
     }
 
     /**
@@ -56,17 +63,17 @@ public class UserController {
             subject = SecurityUtils.getSubject();
             try {
                 subject.login(new UsernamePasswordToken(user1.getUserEmail(), EncryptUtil.md5Encrypt(user1.getUserPwd())));
-                if (subject.hasRole("systemSuperAdmin") || subject.hasRole("systemOrdinaryAdmin")
-                        || subject.hasRole("companySuperAdmin") || subject.hasRole("companyOrdinaryAdmin")
-                        || subject.hasRole("systemOrdinaryAdmin") || subject.hasRole("systemOrdinaryAdmin")
-                        || subject.hasRole("companyReceptionist") || subject.hasRole("companyTotalTC")
-                        || subject.hasRole("companyTechnician") || subject.hasRole("companyApprentice")
-                        || subject.hasRole("companySales") || subject.hasRole("companyFinancial")
-                        || subject.hasRole("companyProcurement") || subject.hasRole("companyLibraryTube")
-                        || subject.hasRole("companyHR") || subject.hasRole("otherPersonnel")) {
+                if (subject.hasRole(Constants.role_systemSuperAdmin) || subject.hasRole(Constants.role_systemOrdinaryAdmin)
+                        || subject.hasRole(Constants.role_companySuperAdmin) || subject.hasRole(Constants.role_companyOrdinaryAdmin)
+                        || subject.hasRole(Constants.role_companyReceptionist) || subject.hasRole(Constants.role_companyTotalTC)
+                        || subject.hasRole(Constants.role_companyTechnician) || subject.hasRole(Constants.role_companyApprentice)
+                        || subject.hasRole(Constants.role_companySales) || subject.hasRole(Constants.role_companyFinancial)
+                        || subject.hasRole(Constants.role_companyProcurement) || subject.hasRole(Constants.role_companyLibraryTube)
+                        || subject.hasRole(Constants.role_companyHR) || subject.hasRole(Constants.role_otherPersonnel)
+                        || subject.hasRole(Constants.role_owner)) {
                     logger.info("登录成功");
                     User user = userService.queryUser(user1.getUserEmail());
-                    session.setAttribute("user", user);
+                    session.setAttribute("subject", subject);
                     return ControllerResult.getSuccessResult("登录成功");
                 }else {
                     logger.info("抱歉，你的账号角色并不授权。请联系管理员激活账号！");
@@ -88,5 +95,27 @@ public class UserController {
         }
     }
 
-   
+    /**
+     * 退出登录
+     */
+    @RequestMapping(value="logout",method=RequestMethod.GET)
+    public String logout() {
+        Subject currentUser = SecurityUtils.getSubject();
+        currentUser.logout();
+        return "user/login";
+    }
+
+    /**
+     * 验证是否登录
+     */
+    @RequestMapping(value="isLogin",method=RequestMethod.POST)
+    @ResponseBody
+    public ControllerResult isLogin(HttpSession session) {
+        if(SessionUtil.isLogin(session)) {
+            return ControllerResult.getSuccessResult("已登录");
+        }else{
+            logger.info("请先登录");
+            return ControllerResult.getNotLoginResult("登录信息无效，请重新登录");
+        }
+    }
 }
