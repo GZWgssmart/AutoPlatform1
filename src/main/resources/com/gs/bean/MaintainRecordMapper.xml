@@ -4,6 +4,7 @@
     <resultMap id="MaintainRecordMap" type="MaintainRecord">
         <id column="recordId" property="recordId"/>
         <result column="checkinId" property="checkinId"/>
+        <result column="count" property="count"/>
         <result column="startTime" property="startTime"/>
         <result column="endTime" property="endTime"/>
         <result column="actualEndTime" property="actualEndTime"/>
@@ -279,5 +280,43 @@
         <if test="maintainRecord.checkin.userPhone != '' and maintainRecord.checkin.userPhone != null">
             ck.userPhone like '%${maintainRecord.checkin.userPhone}%'
         </if>
+    </select>
+
+
+    <!--维修记录的报表显示-->
+
+    <!--员工工单报表-->
+    <select id="queryByCondition" resultMap="MaintainRecordMap">
+        <![CDATA[
+         select COUNT(mr.recordId) as count, mr.recordCreatedTime from t_maintain_record mr
+				LEFT JOIN t_checkin ck on ck.checkinId =mr.checkinId
+               LEFT JOIN t_company c on c.companyId = c.companyId
+			where mr.recordStatus = 'Y'and c.companyId = #{companyId} and
+			mr.recordCreatedTime >= #{start} and mr.recordCreatedTime <= #{end}
+        ]]>
+        <if test="maintainOrFix ==0">
+        </if>
+        <if test="maintainOrFix ==1">
+            and ck.maintainOrFix = '保养'
+        </if>
+        <if test="maintainOrFix ==2">
+            and ck.maintainOrFix = '维修'
+        </if>
+        <if test="type =='year'">
+            group by date_format(mr.recordCreatedTime, '%Y') ORDER BY mr.recordCreatedTime ASC;
+        </if>
+        <if test="type =='quarter'">
+            group by concat(date_format(mr.recordCreatedTime, '%Y'),FLOOR((date_format(mr.recordCreatedTime, '%m')+2)/3)) ORDER BY mr.recordCreatedTime ASC;
+        </if>
+        <if test="type =='month'">
+            group by date_format(mr.recordCreatedTime, '%y-%m') ORDER BY mr.recordCreatedTime ASC;
+        </if>
+        <if test="type =='week'">
+            group by date_format(mr.recordCreatedTime, '%y-%m') ORDER BY mr.recordCreatedTime ASC;
+        </if>
+        <if test="type =='day'">
+            group by date(mr.recordCreatedTime) ORDER BY mr.recordCreatedTime ASC;
+        </if>
+
     </select>
 </mapper>

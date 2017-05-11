@@ -206,6 +206,7 @@ and wi.recordId = mr.recordId and mr.checkinId = c.checkinId and wi.userId = #{u
         <if test="type =='day'">
             group by date(workCreatedTime) ORDER BY wi.workCreatedTime ASC;
         </if>
+
     </select>
 
 </mapper>

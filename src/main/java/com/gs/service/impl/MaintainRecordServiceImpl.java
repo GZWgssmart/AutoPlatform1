@@ -67,4 +67,9 @@ public class MaintainRecordServiceImpl implements MaintainRecordService {
 	public int countByBlurredByRemind(MaintainRecord maintainRecord) {
 		return maintainRecordDAO.countByBlurredByRemind(maintainRecord);
 	}
+
+	@Override
+	public List<MaintainRecord> queryByCondition(String start, String end, String companyId,String maintainOrFix, String type) {
+		return maintainRecordDAO.queryByCondition(start,end,companyId,maintainOrFix,type);
+	}
 }

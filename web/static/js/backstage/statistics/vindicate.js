@@ -16,6 +16,9 @@ var option = {
          '<br/><font color=#B15BFF>&nbsp;&nbsp;&nbsp;&nbsp;●&nbsp;</font>{a2} : {c2} hPa '
          */
     },
+    legend: {
+        data: ['保养工单记录总数', '维修工单记录总数']
+    },
     dataZoom: [
         {
             type: 'slider',	//支持鼠标滚轮缩放
@@ -28,9 +31,6 @@ var option = {
             end: 100
         }
     ],
-    legend: {
-        data: ['收入', '支出']
-    },
     color:[
         '#FF3333',	//温度曲线颜色
         '#49ebff'//温度曲线颜色
@@ -73,13 +73,13 @@ var option = {
     ],
     series : [	//系列（内容）列表
         {
-            name:'收入',
+            name:'保养工单记录总数',
             type:'line',	//折线图表示（生成温度曲线）
             symbol:'emptycircle',	//设置折线图中表示每个坐标点的符号；emptycircle：空心圆；emptyrect：空心矩形；circle：实心圆；emptydiamond：菱形
             data:[]		//数据值通过Ajax动态获取
         },
         {
-            name:'支出',
+            name:'维修工单记录总数',
             type:'line',	//折线图表示（生成温度曲线）
             symbol:'emptycircle',	//设置折线图中表示每个坐标点的符号；emptycircle：空心圆；emptyrect：空心矩形；circle：实心圆；emptydiamond：菱形
             data:[]		//数据值通过Ajax动态获取
@@ -89,13 +89,9 @@ var option = {
 
 myChart.showLoading();	//数据加载完之前先显示一段简单的loading动画
 
-
-
-
 $.ajax({	//使用JQuery内置的Ajax方法
     type : "post",		//post请求方式
     async : true,		//异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
-  /*  url : "/incomingOutgoing/queryByCondition",	//请求发送到ShowInfoIndexServlet处*/
     data: {"start": "2017-1-1", "end": "2017-12-31", "type":"day"},		//请求内包含一个key为name，value为A0001的参数；服务器接收到客户端请求时通过request.getParameter方法获取该参数值
     dataType : "json",		//返回数据形式为json
     success : function(result) {
@@ -119,12 +115,12 @@ $.ajax({	//使用JQuery内置的Ajax方法
                 series: [	//填入系列（内容）数据
                     {
                         // 根据名字对应到相应的系列
-                        name: '收入',
+                        name: '保养工单记录总数',
                         data: inMoney
                     },
                     {
                         // 根据名字对应到相应的系列
-                        name: '支出',
+                        name: '维修工单记录总数',
                         data: outMoney
                     }
 
@@ -183,9 +179,13 @@ $('.form_Year').datetimepicker({
         autoclose: true //选择日期后自动关闭
     })
 
-var inMoney=[];		//湿度数组
-var outMoney=[];		//湿度数组
-var Datas=[];		//时间数组
+
+var maintainCount=[];		//湿度数组
+var preserveCount=[];		//湿度数组
+var workInfoDatas=[];		//时间数组
+
+
+
 
 function selectYears() {
     var start = $("#startYearInput").val() + "-01-01";
@@ -193,40 +193,35 @@ function selectYears() {
     $.ajax({	//使用JQuery内置的Ajax方法
         type: "post",		//post请求方式
         async: true,		//异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
-        url: "/incomingOutgoing/queryByCondition",	//请求发送到ShowInfoIndexServlet处
+        url: "/maintainDetail/queryByCondition",	//请求发送到ShowInfoIndexServlet处
         data: {"start": start, "end": end, "type":"year"},		//请求内包含一个key为name，value为A0001的参数；服务器接收到客户端请求时通过request.getParameter方法获取该参数值
         dataType: "json",		//返回数据形式为json
         success: function (result) {
             //请求成功时执行该函数内容，result即为服务器返回的json对象
             if (result !== null && result.length > 0) {
                 for (var i = 0; i < result.length; i++) {
-                    if (result[i].inMoney == null || result[i].outMoney == null) {
-                        inMoney.push(0);
-                        outMoney.push(0);
-                    } else {
-                        inMoney.push(result[i].inMoney);
-                        outMoney.push(result[i].outMoney);
-                    }
-                    Datas.push(result[i].date);
-
+                    maintainCount.push(result[i].maintainCount);
+                    preserveCount.push(result[i].preserveCount);
+                    workInfoDatas.push(result[i].date);
                 }
 
                 myChart.hideLoading();	//隐藏加载动画
 
                 myChart.setOption({		//载入数据
                     xAxis: {
-                        data: Datas,	//填入X轴数据
+                        data: workInfoDatas,	//填入X轴数据
                     },
                     series: [	//填入系列（内容）数据
                         {
                             // 根据名字对应到相应的系列
-                            name: '收入',
-                            data: inMoney
+                            name: '保养工单记录总数',
+                            data: maintainCount
                         },
+
                         {
                             // 根据名字对应到相应的系列
-                            name: '支出',
-                            data: outMoney
+                            name: '维修工单记录总数',
+                            data: preserveCount
                         }
 
                     ]
@@ -248,55 +243,52 @@ function selectYears() {
         }
     })
 
-
+    myChart.setOption(option, true);	//载入图表
 }
 
 
 function selectMonth() {
+
     var start = $("#startMonthInput").val() + "-01";
     var end = $("#endMonthInput").val() + "-31";
     $.ajax({	//使用JQuery内置的Ajax方法
         type: "post",		//post请求方式
         async: true,		//异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
-        url: "/incomingOutgoing/queryByCondition",	//请求发送到ShowInfoIndexServlet处
+        url: "/maintainDetail/queryByCondition",	//请求发送到ShowInfoIndexServlet处
         data: {"start": start, "end": end, "type":"month"},		//请求内包含一个key为name，value为A0001的参数；服务器接收到客户端请求时通过request.getParameter方法获取该参数值
         dataType: "json",		//返回数据形式为json
         success: function (result) {
             //请求成功时执行该函数内容，result即为服务器返回的json对象
 
 
-            if (result !== null && result.length > 0) {
+            if (result != null && result.length > 0) {
                 for (var i = 0; i < result.length; i++) {
-
-                    inMoney.push(result[i].inMoney);
-                    outMoney.push(result[i].outMoney);
-                    alert(result[i].inMoney)
-                    alert(result[i].outMoney)
-                    Datas.push(result[i].date);
+                    maintainCount.push(result[i].maintainCount);
+                    preserveCount.push(result[i].preserveCount);
+                    workInfoDatas.push(result[i].date);
 
                 }
-
                 myChart.hideLoading();	//隐藏加载动画
+
 
                 myChart.setOption({		//载入数据
                     xAxis: {
-                        data: Datas,	//填入X轴数据
+                        data: workInfoDatas	//填入X轴数据
                     },
                     series: [	//填入系列（内容）数据
                         {
                             // 根据名字对应到相应的系列
-                            name: '收入',
-                            data: inMoney
+                            name: '保养工单记录总数',
+                            data: maintainCount
                         },
+
                         {
                             // 根据名字对应到相应的系列
-                            name: '支出',
-                            data: outMoney
+                            name: '维修工单记录总数',
+                            data: preserveCount
                         }
-
                     ]
                 });
-
 
             }
             else {
@@ -316,53 +308,46 @@ function selectMonth() {
 }
 
 function selectDay() {
-    if (myChart) {
-        myChart.clear();
-    }
     var start = $("#startDayInput").val();
     var end = $("#endDayInput").val();
     $.ajax({	//使用JQuery内置的Ajax方法
         type: "post",		//post请求方式
         async: true,		//异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
-        url: "/incomingOutgoing/queryByCondition",	//请求发送到ShowInfoIndexServlet处
+        url: "/maintainDetail/queryByCondition",	//请求发送到ShowInfoIndexServlet处
         data: {"start": start, "end": end, "type":"day"},		//请求内包含一个key为name，value为A0001的参数；服务器接收到客户端请求时通过request.getParameter方法获取该参数值
         dataType: "json",		//返回数据形式为json
         success: function (result) {
             //请求成功时执行该函数内容，result即为服务器返回的json对象
 
 
-            if (result !== null && result.length > 0) {
+            if (result != null && result.length > 0) {
                 for (var i = 0; i < result.length; i++) {
-
-                    inMoney.push(result[i].inMoney);
-                    outMoney.push(result[i].outMoney);
-                    alert(result[i].inMoney)
-                    alert(result[i].outMoney)
-                    Datas.push(result[i].date);
+                    maintainCount.push(result[i].maintainCount);
+                    preserveCount.push(result[i].preserveCount);
+                    workInfoDatas.push(result[i].date);
 
                 }
-
                 myChart.hideLoading();	//隐藏加载动画
+
 
                 myChart.setOption({		//载入数据
                     xAxis: {
-                        data: Datas,	//填入X轴数据
+                        data: workInfoDatas	//填入X轴数据
                     },
                     series: [	//填入系列（内容）数据
                         {
                             // 根据名字对应到相应的系列
-                            name: '收入',
-                            data: inMoney
+                            name: '保养工单记录总数',
+                            data: maintainCount
                         },
+
                         {
                             // 根据名字对应到相应的系列
-                            name: '支出',
-                            data: outMoney
+                            name: '维修工单记录总数',
+                            data: preserveCount
                         }
-
                     ]
                 });
-
 
             }
             else {
@@ -387,43 +372,41 @@ function selectQuarter() {
     $.ajax({	//使用JQuery内置的Ajax方法
         type: "post",		//post请求方式
         async: true,		//异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
-        url: "/incomingOutgoing/queryByCondition",	//请求发送到ShowInfoIndexServlet处
+        url: "/maintainDetail/queryByCondition",	//请求发送到ShowInfoIndexServlet处
         data: {"start": start, "end": end, "type":"quarter"},		//请求内包含一个key为name，value为A0001的参数；服务器接收到客户端请求时通过request.getParameter方法获取该参数值
         dataType: "json",		//返回数据形式为json
         success: function (result) {
             //请求成功时执行该函数内容，result即为服务器返回的json对象
 
 
-            if (result !== null && result.length > 0) {
+            if (result != null && result.length > 0) {
                 for (var i = 0; i < result.length; i++) {
+                    maintainCount.push(result[i].maintainCount);
+                    preserveCount.push(result[i].preserveCount);
+                    workInfoDatas.push(formatterQuarterDate(result[i].date));
 
-                    inMoney.push(result[i].inMoney);
-                    outMoney.push(result[i].outMoney);
-
-                    Datas.push((formatterQuarterDate(result[i].date)));
                 }
-
                 myChart.hideLoading();	//隐藏加载动画
+
 
                 myChart.setOption({		//载入数据
                     xAxis: {
-                        data: Datas,	//填入X轴数据
+                        data: workInfoDatas	//填入X轴数据
                     },
                     series: [	//填入系列（内容）数据
                         {
                             // 根据名字对应到相应的系列
-                            name: '收入',
-                            data: inMoney
+                            name: '保养工单记录总数',
+                            data: maintainCount
                         },
+
                         {
                             // 根据名字对应到相应的系列
-                            name: '支出',
-                            data: outMoney
+                            name: '维修工单记录总数',
+                            data: preserveCount
                         }
-
                     ]
                 });
-
 
             }
             else {
@@ -449,43 +432,41 @@ function selectWeek() {
     $.ajax({	//使用JQuery内置的Ajax方法
         type: "post",		//post请求方式
         async: true,		//异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
-        url: "/incomingOutgoing/queryByCondition",	//请求发送到ShowInfoIndexServlet处
+        url: "/maintainDetail/queryByCondition",	//请求发送到ShowInfoIndexServlet处
         data: {"start": start, "end": end, "type":"week"},		//请求内包含一个key为name，value为A0001的参数；服务器接收到客户端请求时通过request.getParameter方法获取该参数值
         dataType: "json",		//返回数据形式为json
         success: function (result) {
             //请求成功时执行该函数内容，result即为服务器返回的json对象
 
 
-            if (result !== null && result.length > 0) {
+            if (result != null && result.length > 0) {
                 for (var i = 0; i < result.length; i++) {
-
-                    inMoney.push(result[i].inMoney);
-                    outMoney.push(result[i].outMoney);
-                    Datas.push(result[i].date);
+                    maintainCount.push(result[i].maintainCount);
+                    preserveCount.push(result[i].preserveCount);
+                    workInfoDatas.push(result[i].date);
 
                 }
-
                 myChart.hideLoading();	//隐藏加载动画
+
 
                 myChart.setOption({		//载入数据
                     xAxis: {
-                        data: Datas,	//填入X轴数据
+                        data: workInfoDatas	//填入X轴数据
                     },
                     series: [	//填入系列（内容）数据
                         {
                             // 根据名字对应到相应的系列
-                            name: '收入',
-                            data: inMoney
+                            name: '保养工单记录总数',
+                            data: maintainCount
                         },
+
                         {
                             // 根据名字对应到相应的系列
-                            name: '支出',
-                            data: outMoney
+                            name: '维修工单记录总数',
+                            data: preserveCount
                         }
-
                     ]
                 });
-
 
             }
             else {

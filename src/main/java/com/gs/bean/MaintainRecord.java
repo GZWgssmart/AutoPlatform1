@@ -26,6 +26,16 @@ public class MaintainRecord {
 
     private Checkin checkin; // 登记记录
 
+    private int count;
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
     // 打印需要字段
     private Double total; // 总计价钱
     private Date todayTime; // 日期
