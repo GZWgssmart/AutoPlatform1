@@ -16,6 +16,8 @@ public class DateFormatUtil {
     public static final String YEARFORMATER = "yyyy年";
     public static final String MONTHFORMTER = "yyyy年MM月";
     public static final String DAYFORMATER = "yyyy年MM月dd日";
+    public static final String MONTH = "MM月";
+    public static final String WEEK = "yyyy-MM-dd";
 
     public static Map<String, ThreadLocal<DateFormat>> dfMap = new HashMap<String, ThreadLocal<DateFormat>>();
 
@@ -63,6 +65,14 @@ public class DateFormatUtil {
 
     public static String DayFormater(Date date) {
         return format(date, DAYFORMATER);
+    }
+
+    public static String MONTH(Date date) {
+        return format(date, MONTH);
+    }
+
+    public static String WEEK(Date date) {
+        return format(date, WEEK);
     }
 
     public static String defaultFormat(Calendar cal) {

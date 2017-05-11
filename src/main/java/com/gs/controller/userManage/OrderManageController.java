@@ -181,9 +181,9 @@ public class OrderManageController {
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
     }
 
-    /**
+   /* *//**
      * 根据年月日周季去查询所有的工单
-     */
+     *//*
     @ResponseBody
     @RequestMapping(value = "queryByCondition")
     public List<WorkInfo> queryByCondition(String start, String end, String type){
@@ -205,5 +205,5 @@ public class OrderManageController {
             }
         }
         return list;
-    }
+    }*/
 }

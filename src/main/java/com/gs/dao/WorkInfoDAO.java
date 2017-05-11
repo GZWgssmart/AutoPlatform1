@@ -17,7 +17,7 @@ import java.util.List;
 @Repository
 public interface WorkInfoDAO extends BaseDAO<String, WorkInfo>{
 
-    public List<WorkInfo> queryByCondition(@Param("start") String start, @Param("end") String end, @Param("userId") String userId, @Param("type") String type);
+    public List<WorkInfo> queryByCondition(@Param("start") String start, @Param("end") String end, @Param("userId") String userId,@Param("maintainOrFix")String maintainOrFix, @Param("type") String type);
 
     public List<WorkInfo> queryByPagerschelude(Pager pager);
 

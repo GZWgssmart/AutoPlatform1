@@ -179,9 +179,16 @@
     <!--员工工单报表-->
     <select id="queryByCondition" resultMap="BaseResultMap">
         <![CDATA[
-   select count(*) as count  ,week(wi.workCreatedTime) as week,wi.workCreatedTime from t_work_info wi, t_user u where wi.userId = u.userId and wi.userId = #{userId} and wi.workStatus = 'Y' and
+   select count(*) as count ,week(wi.workCreatedTime) as week, wi.workCreatedTime from t_work_info wi, t_user u, t_maintain_record mr, t_checkin c where wi.userId = u.userId
+and wi.recordId = mr.recordId and mr.checkinId = c.checkinId and wi.userId = #{userId}  and wi.workStatus = 'Y' and
  wi.workCreatedTime >= #{start} and wi.workCreatedTime <= #{end}
         ]]>
+        <if test="maintainOrFix =='保养'">
+            and c.maintainOrFix = '保养'
+        </if>
+        <if test="maintainOrFix =='维修'">
+            and c.maintainOrFix = '维修'
+        </if>
         <if test="type =='year'">
             group by date_format(wi.workCreatedTime, '%Y') ORDER BY wi.workCreatedTime ASC;
         </if>

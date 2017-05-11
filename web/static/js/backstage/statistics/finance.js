@@ -98,7 +98,7 @@ myChart.showLoading();	//数据加载完之前先显示一段简单的loading动
 $.ajax({	//使用JQuery内置的Ajax方法
     type : "post",		//post请求方式
     async : true,		//异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
-    url : "/incomingOutgoing/queryByCondition",	//请求发送到ShowInfoIndexServlet处
+  /*  url : "/incomingOutgoing/queryByCondition",	//请求发送到ShowInfoIndexServlet处*/
     data: {"start": "2017-1-1", "end": "2017-12-31", "type":"day"},		//请求内包含一个key为name，value为A0001的参数；服务器接收到客户端请求时通过request.getParameter方法获取该参数值
     dataType : "json",		//返回数据形式为json
     success : function(result) {
@@ -399,10 +399,8 @@ function selectQuarter() {
 
                     inMoney.push(result[i].inMoney);
                     outMoney.push(result[i].outMoney);
-                    alert(result[i].inMoney)
-                    alert(result[i].outMoney)
-                    Datas.push(formatterQuarter(result[i].dateTime));
 
+                    Datas.push((formatterQuarterDate(result[i].date)));
                 }
 
                 myChart.hideLoading();	//隐藏加载动画
@@ -463,9 +461,11 @@ function selectWeek() {
 
                     inMoney.push(result[i].inMoney);
                     outMoney.push(result[i].outMoney);
-                    alert(result[i].inMoney)
-                    alert(result[i].outMoney)
-                    Datas.push(formatterWeek(result[i].dateTime));
+
+                    console.log(result[i].inMoney)
+                    console.log(result[i].outMoney)
+
+                    Datas.push(result[i].date);
 
                 }
 
