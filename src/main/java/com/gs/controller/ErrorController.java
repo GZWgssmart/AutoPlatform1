@@ -33,7 +33,7 @@ public class ErrorController {
     /**
      * 无角色
      */
-    @RequestMapping(value = "serverError", method = RequestMethod.GET)
+    @RequestMapping(value = "notRole", method = RequestMethod.GET)
     public String notRole() {
         logger.info("不拥有角色");
         return "error/notRole";
