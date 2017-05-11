@@ -44,4 +44,11 @@
       select count(maintainId) from t_maintain_fix where maintainId = #{maintainId}
 		]]>
   </select>
+
+  <update id="update" parameterType="MaintainFixAcc">
+    <![CDATA[
+      update t_maintain_fix_acc set accId = #{accId}, accCount = #{accCount} where mainAccId = #{mainAccId}
+    ]]>
+  </update>
+
 </mapper>

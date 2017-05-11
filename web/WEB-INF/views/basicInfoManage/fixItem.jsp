@@ -101,6 +101,50 @@
         </div>
     </div>
 </div>
+
+<div id="accEditWindow" class="modal fade" style="overflow-y:scroll" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
+                <form role="form" class="form-horizontal" id="accEditForm">
+                    <input type="hidden" id="editmaintainId" name="mainAccId">
+                    <input type="hidden" id="editaccId" name="accId">
+                    <div class="modal-header" style="overflow:auto;">
+                        <h3>请选择配件</h3>
+                    </div>
+                    <hr>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">配件名称：</label>
+                        <div class="col-sm-9">
+                            <input id="editaccName" class="form-control" placeholder="请选择配件" readonly="true"
+                                   style="width:52%;">
+                            </input>
+                            <button type="button" class="btn btn-default" onclick="showEidtAcc('accEditWindow');">
+                                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查看配件
+                            </button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">配件数量：</label>
+                        <div class="col-sm-7">
+                            <input type="text" id="editaccCount" name="accCount" placeholder="请输入配件数量" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="modal-footer" style="border: none">
+                        <button type="button" class="btn btn-default"
+                                data-dismiss="modal">关闭
+                        </button>
+                        <button id="accEidtButton" type="button" onclick="accEditaddSubmit()" class="btn btn-success">修改
+                        </button>
+                        <input type="reset" name="reset" style="display: none;"/>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 <%--所有配件--%>
 <div class="modal fade" id="accAllWindow" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog" style="width:90%;">
@@ -146,6 +190,50 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+<div class="modal fade" id="accEidtAllWindow" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog" style="width:90%;">
+        <div class="modal-content">
+            <div class="modal-body">
+                <span class="glyphicon glyphicon-remove closeModal" onclick="closeEidtWindow()"></span>
+                <div class="modal-header" style="overflow:auto;">
+                    <h3>请选择配件</h3>
+                </div>
+                <hr>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">配件类型：</label>
+                    <div class="col-sm-7">
+                        <select id="editAccessories" class="js-example-tags AccessoriesType" onchange="queryByTypeId2(this)" name="accId" style="width:100%" >
+                        </select>
+                    </div>
+                </div>
+                <table class="table table-hover" id="table2">
+                    <thead>
+                    <tr>
+                        <th data-radio="true"></th>
+                        <th data-field="accName" >
+                            配件名称
+                        </th>
+                        <th data-field="accIdle" >
+                            配件库可用数
+                        </th>
+                        <th data-field="accSalePrice" >
+                            配件单价
+                        </th>
+                    </tr>
+                    </thead>
+                </table>
+                <div class="modal-footer" style="border: none">
+                    <button id="closeEidtButton" type="button" class="btn btn-default"
+                            onclick="accEditAllcloseWindow()">关闭
+                    </button>
+                    <button id="itemEditButton" type="button" onclick="itemEditSubmit()" class="btn btn-success">确定
+                    </button>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 <div id="detailWindow" class="modal fade" aria-hidden="true" style="overflow-y:scroll" data-backdrop="static"
      keyboard:false>
     <div class="modal-dialog" style="width: 90%">
@@ -169,7 +257,7 @@
                     </thead>
                 </table>
                 <div id="detailToolbar" class="btn-group">
-                    <button id="btn_editDetail" type="button" class="btn btn-default" onclick="showEditDetail();">
+                    <button id="btn_editDetail" type="button" class="btn btn-default" onclick="showdetail();">
                         <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改明细
                     </button>
                 </div>
@@ -315,5 +403,6 @@
 <script src="/static/js/bootstrap-dateTimePicker/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
 <script src="/static/js/form/jquery.validate.js"></script>
 <script src="/static/js/backstage/basicInfoManage/fixItem.js"></script>
+
 </body>
 </html>

@@ -142,6 +142,18 @@ public class MaintainController {
     }
 
     @ResponseBody
+    @RequestMapping(value = "accedit",method =  RequestMethod.POST)
+    public ControllerResult accedit(MaintainFixAcc maintainFixAcc){
+        if(maintainFixAcc != null && !maintainFixAcc.equals("")){
+            logger.info("修改配件成功");
+            maintainFixAccService.update(maintainFixAcc);
+            return ControllerResult.getSuccessResult("修改配件成功");
+        }else {
+            return ControllerResult.getFailResult("添加配件失败，请输入必要的信息");
+        }
+    }
+
+    @ResponseBody
     @RequestMapping(value = "addMaintain",method = RequestMethod.POST)
     public ControllerResult InsertMaintain(MaintainFix maintainFix){
         if(maintainFix != null && !maintainFix.equals("")){
