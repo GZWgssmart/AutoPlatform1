@@ -108,7 +108,7 @@
         <div class="modal-content" >
             <form role="form" class="form-horizontal" id="addForm">
                 <div class="modal-header" style="overflow:auto;">
-                    <p>添加供应商信息</p>
+                    <h4>添加供应商信息</h4>
                 </div>
                 <div style="margin-left: auto;width:90%;margin-left:auto;margin-right:auto">
                     <div>
@@ -145,7 +145,7 @@
                         <div class="form-group col-md-6 pull-left">
                             <label class="col-md-4 control-label">供应商微信号：</label>
                             <div class="col-md-8">
-                                <input type="number"  name="supplyWeChat" placeholder="请输入供应商微信号" class="form-control">
+                                <input type="text"  name="supplyWeChat" placeholder="请输入供应商微信号" class="form-control">
                             </div>
                         </div>
                         <div class="form-group col-md-6 pull-left">
@@ -176,7 +176,7 @@
                                 <input type="text" placeholder="请输入银行卡全称" name="supplyBank" class="form-control">
                             </div>
                         </div>
-                        <p class="clearfix"></p>
+                       <p class="clearfix"></p>
                     </div>
                     <div>
                         <div class="form-group col-md-6 pull-left">
@@ -191,8 +191,8 @@
                                 <input type="number" placeholder="请输入银行卡卡号" name="supplyBankNo"  class="form-control">
                             </div>
                         </div>
-                        <p class="clearfix"></p>
                     </div>
+                    <p class="clearfix"></p>
                     <div class="modal-footer" >
                          <span id="addError"></span>
                          <button type="button" class="btn btn-default" data-dismiss="modal">关闭 </button>
@@ -214,7 +214,7 @@
                 <input type="hidden" name="supplyId" define="supply.supplyId"/>
                 <input type="hidden"name="supplyStatus" define="supply.supplyStatus">
                 <div class="modal-header" style="overflow:auto;">
-                    <p>修改供应商信息</p>
+                    <h4>修改供应商信息</h4>
                 </div>
                 <div style="margin-left: auto;width:90%;margin-left:auto;margin-right:auto">
                     <div>
@@ -251,7 +251,7 @@
                         <div class="form-group col-md-6 pull-left">
                             <label class="col-md-4 control-label">供应商微信号：</label>
                             <div class="col-md-8">
-                                <input type="number" define="supply.supplyWeChat" name="supplyWeChat"  class="form-control">
+                                <input type="text" define="supply.supplyWeChat" name="supplyWeChat"  class="form-control">
                             </div>
                         </div>
                         <div class="form-group col-md-6 pull-left">
@@ -263,13 +263,6 @@
                         <p class="clearfix"></p>
                     </div>
                     <div>
-                        <%--<div class="form-group col-md-6 pull-left">
-                            <label class="col-md-4 control-label">供应商所属公司：</label>
-                            <div class="col-md-8">
-                                <select id="editCompany" class="js-example-tags company" define="supply.companyId" name="companyId" style="width:100%">
-                                </select>
-                            </div>
-                        </div>--%>
                         <div class="form-group col-md-6 pull-left">
                             <label class="col-md-4 control-label">支付宝账号：</label>
                             <div class="col-md-8">
@@ -299,6 +292,7 @@
                         </div>
                         <p class="clearfix"></p>
                     </div>
+                    <p class="clearfix"></p>
                     <div class="modal-footer" >
                          <span id="editError"></span>
                          <button type="button" class="btn btn-default"data-dismiss="modal">关闭</button>
