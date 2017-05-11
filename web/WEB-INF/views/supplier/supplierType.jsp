@@ -28,7 +28,7 @@
         <table id="table">
             <thead>
             <tr>
-                <th data-checkbox="true"></th>
+                <th data-radio="true"></th>
                 <th data-field="supplyTypeName">供应商类型名称</th>
                 <th data-field="company.companyName">供应商类型所属公司</th>
                 <th data-field="supplyTypeDes">供应商类型描述内容</th>
@@ -63,9 +63,9 @@
                     <p>添加供应商类型信息</p>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">供应商类型：</label>
+                    <label class="col-sm-3 control-label">供应商类型名称：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="supplyTypeName" id="name" placeholder="请输入供应商类型" class="form-control">
+                        <input type="text" name="supplyTypeName" id="name" placeholder="请输入供应商类型名称" class="form-control">
                     </div>
                 </div>
                <%-- <div class="form-group">

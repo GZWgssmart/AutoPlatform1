@@ -28,7 +28,7 @@
         <table id="table">
             <thead>
             <tr>
-                <th data-checkbox="true"></th>
+                <th data-radio="true"></th>
                 <th data-field="supplyName">
                     供应商名称
                 </th>

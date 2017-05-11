@@ -38,18 +38,18 @@ public class SupplierController {
     /**
      * 下单统计
      */
-    @RequestMapping(value = "purchaseDetail", method = RequestMethod.GET)
-    public String purchaseDetail() {
+    @RequestMapping(value = "orderStatistics", method = RequestMethod.GET)
+    public String orderStatistics() {
         logger.info("下单统计");
-        return "supplier/purchaseDetail";
+        return "supplier/orderStatistics";
     }
 
     /**
      * 支付统计
      */
-    @RequestMapping(value = "purchaseBill", method = RequestMethod.GET)
-    public String purchaseBill() {
+    @RequestMapping(value = "paymentStatistics", method = RequestMethod.GET)
+    public String paymentStatistics() {
         logger.info("支付统计");
-        return "supplier/purchaseBill";
+        return "supplier/paymentStatistics";
     }
 }

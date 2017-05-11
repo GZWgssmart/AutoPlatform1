@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>采购明细</title>
+    <title>下单统计</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/css/bootstrap.min.css">
@@ -16,6 +16,9 @@
     <link rel="stylesheet" href="/static/css/select2.min.css">
     <link rel="stylesheet" href="/static/css/sweetalert.css">
     <link rel="stylesheet" href="/static/css/table/table.css">
+    <link rel="stylesheet" href="/static/css/bootstrap-validate/bootstrapValidator.min.css">
+    <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/datetimepicker.less">
 </head>
 <body>
 <%@include file="../backstage/contextmenu.jsp"%>
@@ -24,38 +27,19 @@
     <div class="panel-body" style="padding-bottom:0px;"  >
         <!--show-refresh, show-toggle的样式可以在bootstrap-table.js的948行修改-->
         <!-- table里的所有属性在bootstrap-table.js的240行-->
-        <table id="table"
-               data-toggle="table"
-               data-toolbar="#toolbar"
-               data-url="/table/query"
-               data-method="post"
-               data-query-params="queryParams"
-               data-pagination="true"
-               data-search="true"
-               data-show-refresh="true"
-               data-show-toggle="true"
-               data-show-columns="true"
-               data-page-size="10"
-               data-height="700"
-               data-id-field="id"
-               data-page-list="[5, 10, 20]"
-               data-cach="false"
-               data-click-to-select="true"
-               data-single-select="true">
+        <table id="table">
             <thead>
             <tr>
-                <th data-radio="true" data-field="status"></th>
-                <th data-width="15%" data-field="purchaseId">单号</th>
-                <th data-width="15%" data-field="barCode">条形码</th>
-                <th data-width="10%" data-field="productName">商品名称</th>
-                <th data-width="5%" data-field="Specifications">规格</th>
-                <th data-width="5%" data-field="Number">数量</th>
-                <th data-width="5%" data-field="price">进价</th>
-                <th data-width="5%" data-field="countPrice">合计</th>
-                <th data-width="10%" data-field="Supplier">供应商</th>
-                <th data-width="8%" data-field="purchaseType">采购类型</th>
-                <th data-width="15%" data-field="purchaseTime">采购时间</th>
-                <th data-width="20%" data-field="purchaseDes">备注</th>
+                <th data-checkbox="true"></th>
+                <th data-field="accessories.accName">商品名称</th>
+                <th data-field="accType.accTypeName">商品类型</th>
+                <th data-field="accBuyCount">商品数量</th>
+                <th data-field="accBuyPrice">商品单价</th>
+                <th data-field="accBuyMoney">商品总价</th>
+                <th data-field="supply.supplyName">下单供应商</th>
+                <th data-field="accBuyTime" data-formatter="formatterDate">下单时间</th>
+                <th data-field="accBuyCreatedTime" data-formatter="formatterDateTime">创建时间</th>
+                <th data-field="accBuyStatus" data-formatter="statusFormatter">下单状态</th>
             </tr>
             </thead>
         </table>
@@ -179,8 +163,12 @@
 <script src="/static/js/select2/select2.js"></script>
 <script src="/static/js/sweetalert/sweetalert.min.js"></script>
 <script src="/static/js/contextmenu.js"></script>
-<script src="/static/js/backstage/supplier/purchaseDetail.js"></script>
+<script src="/static/js/backstage/supplier/orderStatistics.js"></script>
 <script src="/static/js/bootstrap-select/bootstrap-select.js"></script>
+<script src="/static/js/bootstrap-validate/bootstrapValidator.js"></script>
+<script src="/static/js/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.js"></script>
+<script src="/static/js/bootstrap-dateTimePicker/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+<script src="/static/js/backstage/main.js"></script>
 
 </body>
 </html>

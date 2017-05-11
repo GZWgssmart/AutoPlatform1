@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="/static/css/select2.min.css">
     <link rel="stylesheet" href="/static/css/sweetalert.css">
     <link rel="stylesheet" href="/static/css/table/table.css">
+    <link rel="stylesheet" href="/static/css/bootstrap-validate/bootstrapValidator.min.css">
 </head>
 <body>
 <%@include file="../backstage/contextmenu.jsp"%>
@@ -24,36 +25,15 @@
     <div class="panel-body" style="padding-bottom:0px;"  >
         <!--show-refresh, show-toggle的样式可以在bootstrap-table.js的948行修改-->
         <!-- table里的所有属性在bootstrap-table.js的240行-->
-        <table id="table"
-               data-toggle="table"
-               data-toolbar="#toolbar"
-               data-url="/table/query"
-               data-method="post"
-               data-query-params="queryParams"
-               data-pagination="true"
-               data-search="true"
-               data-show-refresh="true"
-               data-show-toggle="true"
-               data-show-columns="true"
-               data-page-size="10"
-               data-height="700"
-               data-id-field="id"
-               data-page-list="[5, 10, 20]"
-               data-cach="false"
-               data-click-to-select="true"
-               data-single-select="true">
+        <table id="table">
             <thead>
             <tr>
-                <th data-radio="true" data-field="status"></th>
-                <th data-width="15%" data-field="purchaseId">单号</th>
-                <th data-width="5%" data-field="Specifications">规格</th>
-                <th data-width="5%" data-field="Number">数量</th>
-                <th data-width="5%" data-field="Number">优惠</th>
-                <th data-width="5%" data-field="price">付款</th>
-                <th data-width="5%" data-field="countPrice">欠款</th>
-                <th data-width="20%" data-field="Supplier">供应商</th>
-                <th data-width="20%" data-field="purchaseTime">创建时间</th>
-                <th data-width="20%" data-field="purchaseDes">备注</th>
+                <th data-checkbox="true"></th>
+                <th data-field="Specifications">商品名称</th>
+                <th data-field="price">付款</th>
+                <th data-field="countPrice">欠款</th>
+                <th data-field="Supplier">供应商</th>
+                <th data-field="purchaseTime">创建时间</th>
             </tr>
             </thead>
         </table>
@@ -177,8 +157,10 @@
 <script src="/static/js/select2/select2.js"></script>
 <script src="/static/js/sweetalert/sweetalert.min.js"></script>
 <script src="/static/js/contextmenu.js"></script>
-<script src="/static/js/backstage/supplier/purchaseBill.js"></script>
+<script src="/static/js/backstage/supplier/paymentStatistics.js"></script>
 <script src="/static/js/bootstrap-select/bootstrap-select.js"></script>
+<script src="/static/js/bootstrap-validate/bootstrapValidator.js"></script>
+<script src="/static/js/backstage/main.js"></script>
 
 </body>
 </html>
