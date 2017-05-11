@@ -15,7 +15,7 @@
 <link rel="stylesheet" href="/static/css/sweetalert.css">
 <link rel="stylesheet" href="/static/css/bootstrap-validate/bootstrapValidator.min.css">
 <link rel="stylesheet" href="/static/css/registeredStyle.css">
-<body onkeydown="keydown()">
+<body>
     <div class="main">
         <%--顶部导航栏--%>
         <div class="nav nav-first">
@@ -24,7 +24,6 @@
                     <div class="row">
                         <div class="col-xs-8 col-md-6">
                         <li>欢迎您，请登录</li>
-                        <a href="reg"><li>登录</li></a>
                         <a href="home"><li>返回首页</li></a>
                         </div>
                         <div class="col-xs-4 col-md-6">
@@ -39,13 +38,13 @@
 
         <div class="login-content">
 
-            <div class="content wow fadeInLeft animated" id="login">
+            <div class="content wow fadeInLeft animated" id="login" onkeydown="keydown()">
                 <div class="form-box">
                     <div class="form-logo">
-                        <h2 style="color: white">登录</h2>
+                        <h2 style="color: white;margin-top: 0;">登录</h2>
                     </div>
                     <div class="form-content">
-                        <form class="form" id="loginForm">
+                        <form class="form" id="loginForm" >
                             <div class="form-group">
                                 <input type="text" name="userEmail" id="email" class="form-control" placeholder="请输入邮箱/手机号">
                             </div>
@@ -55,9 +54,8 @@
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col-md-3 col-sm-3" style="width: 29.6%">
-                                    <a href="javascript:;"><img style="vertical-align:middle; height:35px;"
-                                                                src="/captcha"
-                                                                onclick="this.src='/captcha?time=Math.random();'"></a>
+                                    <a href="javascript:;">
+                                        <img style="vertical-align:middle; height:35px;" src="/captcha" onclick="this.src='/captcha?time=Math.random();'"></a>
                                     </div>
                                     <div class="col-md-8 col-sm-8" style="padding-right: 0px;"><input type="text" name="checkCode"  placeholder="验证码" class="form-control"></div>
                                 </div>
@@ -75,13 +73,13 @@
                     </div>
                 </div>
             </div>
-                <div class="content wow fadeInRight animated" id="reg" name="regs">
+                <div class="content wow fadeInRight animated" id="reg" name="regs" onkeydown="keydownres()">
                     <div class="form-box">
                         <div class="form-logo">
                             <h2 style="color: white">注册账号</h2>
                         </div>
                         <div class="form-content">
-                            <form class="form" action="" method="post">
+                            <form class="form" action="" method="post" onsubmit="return check();">
                                 <div class="form-group">
                                     <input name="email" type="text" id="phone" class="form-control" onblur="checkphone()" placeholder="请输入您的手机号" required>
                                     <span class="caveat" id="phone-caveat">手机号错误</span>
@@ -99,17 +97,17 @@
                                 </div>
                                 <div class="form-group">
                                     <input name="password" onblur="checkpwd()" type="password" id="password1" class="form-control" placeholder="请输入密码" required>
-                                    <span class="caveat" id="pws1-caveat">密码至少六位数</span>
+                                    <span class="caveat" id="pwd1-caveat">密码至少六位并且小于十八位</span>
                                 </div>
                                 <div class="form-group">
-                                    <input name="password2" type="password" id="password2" class="form-control" placeholder="请再次输入密码" required>
-                                    <span class="caveat" id="pws2-caveat">输入密码不一致</span>
+                                    <input name="password2" onblur="checkpwd2()" type="password" id="password2" class="form-control" placeholder="请再次输入密码" required>
+                                    <span class="caveat" id="pwd2-caveat">输入密码不一致</span>
                                 </div>
                                 <div class="form-group">
-                                    <input type="checkbox" required><a href="javaScript:;" style="padding: 3px 3px;font-size: 18px;">  我同意《用户服务协议》</a>
+                                    <input type="checkbox" required style="position: relative;top:2px;width: 14px;height: 14px;"><a class="surre" href="javaScript:;" style="padding: 3px 3px;font-size: 16px;">  我同意《用户服务协议》</a>
                                 </div>
                                 <div class="form-group">
-                                    <button type="submit" class="btn btn-success btn-block" value="确认注册">确认注册</button>
+                                    <button type="s ubmit" id="resbtn" class="btn btn-success btn-block" value="确认注册">确认注册</button>
                                     <button type="reset" class="btn btn-info btn-block" onclick="reg()" value="登录">登录</button>
                                 </div>
                             </form>
@@ -139,14 +137,16 @@
             $(".form-content form input").each(function () {
                 $(this).val('');
             });
-
+            document.title = "注册";
         }else if(reg.css("display") == "block"){
             reg.css("display","none");
             login.css("display","block");
             $(".form-content form input").each(function () {
                 $(this).val('');
             });
+            document.title = "账号登录";
         };
+
     };
     /*回车登录*/
     function keydown(){
@@ -154,6 +154,65 @@
             document.getElementById("loginButton").click();
         }
     }
+    function keydownres(){
+        if(event.keyCode == 13){
+            document.getElementById("resbtn").click();
+        }
+    }
+    /*注册验证*/
+    /*验证手机号*/
+    var checks;
+    function checkphone(){
+        var phoneValue = document.getElementById("phone").value;
+        var phone = document.getElementById("phone");
+        var phoneCaveat =document.getElementById("phone-caveat");
+        if(phoneValue.length > 0 && !(/^1[34578]\d{9}$/).test(phoneValue)){
+            phone.style.borderColor = "red";
+            phoneCaveat.style.display = "block";
+            checks = false;
+        }else if(/^1[34578]\d{9}$/.test(phoneValue)){
+            phone.style.borderColor = "#ccc";
+            phoneCaveat.style.display = "none";
+            checks = true;
+        }
+    }
+    /*验证密码*/
+    var pwd = document.getElementById("password1");
+    var pwd1caveat = document.getElementById("pwd1-caveat");
+    var pwd2 = document.getElementById("password2");
+    var pwd2caveat = document.getElementById("pwd2-caveat");
+    function checkpwd(){
+        if(pwd.value.length < 6 || pwd.value.length > 18){
+            pwd.style.borderColor = "red";
+            pwd1caveat.style.display ="block";
+            checks = false;
+        }else if(pwd.value.length >= 6 && pwd.value.length <= 18){
+            pwd.style.borderColor = "#ccc";
+            pwd1caveat.style.display = "none";
+            checks = true;
+        }
+    }
+    function checkpwd2(){
+        if(pwd.value != pwd2.value){
+            pwd2.style.borderColor = "red";
+            pwd2caveat.style.display ="block";
+            checks = false;
+        }else if(pwd.value == pwd2.value){
+            pwd2.style.borderColor = "#ccc";
+            pwd2caveat.style.display ="none";
+            checks = true;
+        }
+    }
+    function check(){
+        if(checks == true){
+            alert(checks)
+            return true;
+        }else{
+            alert(checks)
+            return false;
+        }
+    }
+
     $(function () {
         function bodyScroll(event) {
             event.preventDefault();

@@ -38,6 +38,12 @@ public class StatisticsController {
     }
 
 
+    @RequestMapping("vindicate")
+    public ModelAndView vindicatePage(){
+        ModelAndView mav = new ModelAndView("statistics/vindicate");
+        return mav;
+    }
+
     @RequestMapping("client")
     public ModelAndView clientPage(){
         ModelAndView mav = new ModelAndView("statistics/client");

@@ -2,6 +2,7 @@ package com.gs.service;
 
 import com.gs.bean.MaintainRecord;
 import com.gs.common.bean.Pager;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -22,5 +23,10 @@ public interface MaintainRecordService extends BaseService<String, MaintainRecor
      * 此模糊查询的记录数为提车提醒的
      */
     public int countByBlurredByRemind(MaintainRecord maintainRecord);
+
+    /**
+     *  维修记录报表
+     */
+    public List<MaintainRecord> queryByCondition(String start,String end, String companyId,String maintainOrFix, String type);
 
 }

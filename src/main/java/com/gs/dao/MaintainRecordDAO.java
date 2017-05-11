@@ -35,4 +35,9 @@ public interface MaintainRecordDAO extends BaseDAO<String, MaintainRecord>{
      */
     public int countByBlurredByRemind(@Param("maintainRecord")MaintainRecord maintainRecord);
 
+    /**
+     *  维修记录报表
+     */
+    public List<MaintainRecord> queryByCondition(@Param("start") String start,@Param("end") String end, @Param("companyId") String companyId,@Param("maintainOrFix")String maintainOrFix, @Param("type") String type);
+
 }

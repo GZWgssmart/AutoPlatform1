@@ -234,16 +234,13 @@
                             </li>
                             <li><a class="J_menuItem" href="/statistics/maintaintype">消费统计</a>
                             </li>
-                            <li><a class="J_menuItem" href="/statistics/maintain">维修保养统计</a>
+                            <li><a class="J_menuItem" href="/statistics/vindicate">维修保养统计</a>
                             </li>
                             <li><a class="J_menuItem" href="/statistics/workord">员工工单统计</a>
                             </li>
-
-                            <li><a class="J_menuItem" href="/statistics/usematerials">物料使用统计</a>
+                            <li><a class="J_menuItem" href="/statistics/usematerials">配件使用情况统计</a>
                             </li>
-                            <li><a class="J_menuItem" href="/statistics/maintaintype">维修类型统计</a>
-                            </li>
-                            <li><a class="J_menuItem" href="/statistics/stock">库存统计</a>
+                            <li><a class="J_menuItem" href="/statistics/maintaintype">维修项目统计</a>
                             </li>
                             <li><a class="J_menuItem" href="/statistics/finance">财务统计</a>
                             </li>
