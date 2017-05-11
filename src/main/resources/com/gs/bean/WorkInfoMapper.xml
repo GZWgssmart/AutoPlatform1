@@ -183,10 +183,12 @@
 and wi.recordId = mr.recordId and mr.checkinId = c.checkinId and wi.userId = #{userId}  and wi.workStatus = 'Y' and
  wi.workCreatedTime >= #{start} and wi.workCreatedTime <= #{end}
         ]]>
-        <if test="maintainOrFix =='保养'">
+        <if test="maintainOrFix ==0">
+        </if>
+        <if test="maintainOrFix ==1">
             and c.maintainOrFix = '保养'
         </if>
-        <if test="maintainOrFix =='维修'">
+        <if test="maintainOrFix ==2">
             and c.maintainOrFix = '维修'
         </if>
         <if test="type =='year'">

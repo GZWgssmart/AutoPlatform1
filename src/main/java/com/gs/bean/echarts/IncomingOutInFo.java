@@ -1,4 +1,4 @@
-package com.gs.bean;
+package com.gs.bean.echarts;
 
 import java.util.Date;
 

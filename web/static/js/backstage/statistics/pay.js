@@ -98,42 +98,38 @@ myChart.showLoading();	//数据加载完之前先显示一段简单的loading动
 $.ajax({	//使用JQuery内置的Ajax方法
     type : "post",		//post请求方式
     async : true,		//异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
-    url : "/incomingOutgoing/queryByCondition",	//请求发送到ShowInfoIndexServlet处
+    url : "/accBuy/queryByCondition",	//请求发送到ShowInfoIndexServlet处
     data: {"start": "2017-1-1", "end": "2017-12-31", "type":"day"},		//请求内包含一个key为name，value为A0001的参数；服务器接收到客户端请求时通过request.getParameter方法获取该参数值
     dataType : "json",		//返回数据形式为json
     success : function(result) {
         //请求成功时执行该函数内容，result即为服务器返回的json对象
 
 
-        if (result !== null && result.length > 0) {
+        if (result != null && result.length > 0) {
             for (var i = 0; i < result.length; i++) {
-                inMoney.push(result[i].inMoney);
-                outMoney.push(result[i].outMoney);
-                Datas.push(result[i].date);
+                console.log(result[i].outTypeId + "aaaaa")
+
+                accBuyMoney.push(result[i].accBuyMoney);
+                accBuyCreatedTime.push(formatterDay(result[i].accBuyCreatedTime));
+                //挨个取出温度、湿度、压强等值并填入前面声明的温度、湿度、压强等数组
+                console.log(result[i].inOutCreatedTime)
 
             }
-
             myChart.hideLoading();	//隐藏加载动画
+
 
             myChart.setOption({		//载入数据
                 xAxis: {
-                    data: Datas,	//填入X轴数据
+                    data: accBuyCreatedTime	//填入X轴数据
                 },
                 series: [	//填入系列（内容）数据
                     {
                         // 根据名字对应到相应的系列
-                        name: '收入',
-                        data: inMoney
-                    },
-                    {
-                        // 根据名字对应到相应的系列
-                        name: '支出',
-                        data: outMoney
+                        name: '下单支付金额',
+                        data: accBuyMoney
                     }
-
                 ]
             });
-
 
         }
         else {

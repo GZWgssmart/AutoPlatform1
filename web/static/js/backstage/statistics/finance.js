@@ -28,6 +28,9 @@ var option = {
             end: 100
         }
     ],
+    legend: {
+        data: ['收入', '支出']
+    },
     color:[
         '#FF3333',	//温度曲线颜色
         '#49ebff'//温度曲线颜色
@@ -70,19 +73,13 @@ var option = {
     ],
     series : [	//系列（内容）列表
         {
-            name:'数量',
+            name:'收入',
             type:'line',	//折线图表示（生成温度曲线）
             symbol:'emptycircle',	//设置折线图中表示每个坐标点的符号；emptycircle：空心圆；emptyrect：空心矩形；circle：实心圆；emptydiamond：菱形
             data:[]		//数据值通过Ajax动态获取
         },
         {
             name:'支出',
-            type:'line',	//折线图表示（生成温度曲线）
-            symbol:'emptycircle',	//设置折线图中表示每个坐标点的符号；emptycircle：空心圆；emptyrect：空心矩形；circle：实心圆；emptydiamond：菱形
-            data:[]		//数据值通过Ajax动态获取
-        },
-        {
-            name:'收入',
             type:'line',	//折线图表示（生成温度曲线）
             symbol:'emptycircle',	//设置折线图中表示每个坐标点的符号；emptycircle：空心圆；emptyrect：空心矩形；circle：实心圆；emptydiamond：菱形
             data:[]		//数据值通过Ajax动态获取
@@ -461,10 +458,6 @@ function selectWeek() {
 
                     inMoney.push(result[i].inMoney);
                     outMoney.push(result[i].outMoney);
-
-                    console.log(result[i].inMoney)
-                    console.log(result[i].outMoney)
-
                     Datas.push(result[i].date);
 
                 }

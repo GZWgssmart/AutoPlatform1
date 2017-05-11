@@ -16,6 +16,9 @@ var option = {
          '<br/><font color=#B15BFF>&nbsp;&nbsp;&nbsp;&nbsp;●&nbsp;</font>{a2} : {c2} hPa '
          */
     },
+    legend: {
+        data: ['保养工单记录总数', '维修工单记录总数']
+    },
     dataZoom: [
         {
             type: 'slider',	//支持鼠标滚轮缩放
@@ -70,19 +73,13 @@ var option = {
     ],
     series : [	//系列（内容）列表
         {
-            name:'数量',
+            name:'保养工单记录总数',
             type:'line',	//折线图表示（生成温度曲线）
             symbol:'emptycircle',	//设置折线图中表示每个坐标点的符号；emptycircle：空心圆；emptyrect：空心矩形；circle：实心圆；emptydiamond：菱形
             data:[]		//数据值通过Ajax动态获取
         },
         {
-            name:'支出',
-            type:'line',	//折线图表示（生成温度曲线）
-            symbol:'emptycircle',	//设置折线图中表示每个坐标点的符号；emptycircle：空心圆；emptyrect：空心矩形；circle：实心圆；emptydiamond：菱形
-            data:[]		//数据值通过Ajax动态获取
-        },
-        {
-            name:'收入',
+            name:'维修工单记录总数',
             type:'line',	//折线图表示（生成温度曲线）
             symbol:'emptycircle',	//设置折线图中表示每个坐标点的符号；emptycircle：空心圆；emptyrect：空心矩形；circle：实心圆；emptydiamond：菱形
             data:[]		//数据值通过Ajax动态获取
@@ -98,7 +95,6 @@ myChart.showLoading();	//数据加载完之前先显示一段简单的loading动
 $.ajax({	//使用JQuery内置的Ajax方法
     type : "post",		//post请求方式
     async : true,		//异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
-    url : "/incomingOutgoing/queryByCondition",	//请求发送到ShowInfoIndexServlet处
     data: {"start": "2017-1-1", "end": "2017-12-31", "type":"day"},		//请求内包含一个key为name，value为A0001的参数；服务器接收到客户端请求时通过request.getParameter方法获取该参数值
     dataType : "json",		//返回数据形式为json
     success : function(result) {
@@ -122,12 +118,12 @@ $.ajax({	//使用JQuery内置的Ajax方法
                 series: [	//填入系列（内容）数据
                     {
                         // 根据名字对应到相应的系列
-                        name: '收入',
+                        name: '保养工单记录总数',
                         data: inMoney
                     },
                     {
                         // 根据名字对应到相应的系列
-                        name: '支出',
+                        name: '维修工单记录总数',
                         data: outMoney
                     }
 
@@ -187,7 +183,8 @@ $('.form_Year').datetimepicker({
     })
 
 
-var count=[];		//湿度数组
+var maintainCount=[];		//湿度数组
+var preserveCount=[];		//湿度数组
 var workInfoDatas=[];		//时间数组
 
 
@@ -206,8 +203,9 @@ function selectYears() {
             //请求成功时执行该函数内容，result即为服务器返回的json对象
             if (result !== null && result.length > 0) {
                 for (var i = 0; i < result.length; i++) {
-                    count.push(result[i].count);
-                    workInfoDatas.push(formatterYear(result[i].workCreatedTime));
+                    maintainCount.push(result[i].maintainCount);
+                    preserveCount.push(result[i].preserveCount);
+                    workInfoDatas.push(result[i].date);
                 }
 
                 myChart.hideLoading();	//隐藏加载动画
@@ -219,8 +217,14 @@ function selectYears() {
                     series: [	//填入系列（内容）数据
                         {
                             // 根据名字对应到相应的系列
-                            name: '工单记录总数',
-                            data: count
+                            name: '保养工单记录总数',
+                            data: maintainCount
+                        },
+
+                        {
+                            // 根据名字对应到相应的系列
+                            name: '维修工单记录总数',
+                            data: preserveCount
                         }
 
                     ]
@@ -262,11 +266,9 @@ function selectMonth() {
 
             if (result != null && result.length > 0) {
                 for (var i = 0; i < result.length; i++) {
-                    console.log(result[i].outTypeId + "aaaaa")
-                    count.push(result[i].count);
-                    workInfoDatas.push(formatterMonth(result[i].workCreatedTime));
-                    //挨个取出温度、湿度、压强等值并填入前面声明的温度、湿度、压强等数组
-                    console.log(result[i].inOutCreatedTime)
+                    maintainCount.push(result[i].maintainCount);
+                    preserveCount.push(result[i].preserveCount);
+                    workInfoDatas.push(result[i].date);
 
                 }
                 myChart.hideLoading();	//隐藏加载动画
@@ -279,8 +281,14 @@ function selectMonth() {
                     series: [	//填入系列（内容）数据
                         {
                             // 根据名字对应到相应的系列
-                            name: '工单记录总数',
-                            data: count
+                            name: '保养工单记录总数',
+                            data: maintainCount
+                        },
+
+                        {
+                            // 根据名字对应到相应的系列
+                            name: '维修工单记录总数',
+                            data: preserveCount
                         }
                     ]
                 });
@@ -317,12 +325,9 @@ function selectDay() {
 
             if (result != null && result.length > 0) {
                 for (var i = 0; i < result.length; i++) {
-                    console.log(result[i].outTypeId + "aaaaa")
-
-                    count.push(result[i].count);
-                    workInfoDatas.push(formatterDay(result[i].workCreatedTime));
-                    //挨个取出温度、湿度、压强等值并填入前面声明的温度、湿度、压强等数组
-                    console.log(result[i].inOutCreatedTime)
+                    maintainCount.push(result[i].maintainCount);
+                    preserveCount.push(result[i].preserveCount);
+                    workInfoDatas.push(result[i].date);
 
                 }
                 myChart.hideLoading();	//隐藏加载动画
@@ -335,8 +340,14 @@ function selectDay() {
                     series: [	//填入系列（内容）数据
                         {
                             // 根据名字对应到相应的系列
-                            name: '工单记录总数',
-                            data: count
+                            name: '保养工单记录总数',
+                            data: maintainCount
+                        },
+
+                        {
+                            // 根据名字对应到相应的系列
+                            name: '维修工单记录总数',
+                            data: preserveCount
                         }
                     ]
                 });
@@ -373,12 +384,9 @@ function selectQuarter() {
 
             if (result != null && result.length > 0) {
                 for (var i = 0; i < result.length; i++) {
-
-                    count.push(result[i].count);
-
-                    workInfoDatas.push(formatterQuarter(result[i].workCreatedTime));
-                    //挨个取出温度、湿度、压强等值并填入前面声明的温度、湿度、压强等数组
-                    console.log(result[i].inOutCreatedTime)
+                    maintainCount.push(result[i].maintainCount);
+                    preserveCount.push(result[i].preserveCount);
+                    workInfoDatas.push(formatterQuarterDate(result[i].date));
 
                 }
                 myChart.hideLoading();	//隐藏加载动画
@@ -391,8 +399,14 @@ function selectQuarter() {
                     series: [	//填入系列（内容）数据
                         {
                             // 根据名字对应到相应的系列
-                            name: '工单记录总数',
-                            data: count
+                            name: '保养工单记录总数',
+                            data: maintainCount
+                        },
+
+                        {
+                            // 根据名字对应到相应的系列
+                            name: '维修工单记录总数',
+                            data: preserveCount
                         }
                     ]
                 });
@@ -430,9 +444,9 @@ function selectWeek() {
 
             if (result != null && result.length > 0) {
                 for (var i = 0; i < result.length; i++) {
-                    count.push(result[i].count);
-
-                    workInfoDatas.push(formatterYear(result[i].workCreatedTime) + "第" +  result[i].week + "周");
+                    maintainCount.push(result[i].maintainCount);
+                    preserveCount.push(result[i].preserveCount);
+                    workInfoDatas.push(result[i].date);
 
                 }
                 myChart.hideLoading();	//隐藏加载动画
@@ -445,8 +459,14 @@ function selectWeek() {
                     series: [	//填入系列（内容）数据
                         {
                             // 根据名字对应到相应的系列
-                            name: '工单记录总数',
-                            data: count
+                            name: '保养工单记录总数',
+                            data: maintainCount
+                        },
+
+                        {
+                            // 根据名字对应到相应的系列
+                            name: '维修工单记录总数',
+                            data: preserveCount
                         }
                     ]
                 });

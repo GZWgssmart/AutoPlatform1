@@ -1,14 +1,13 @@
 package com.gs.controller.FinancialManage;
 
 import ch.qos.logback.classic.Logger;
-import com.gs.bean.IncomingOutInFo;
+import com.gs.bean.echarts.IncomingOutInFo;
 import com.gs.bean.IncomingOutgoing;
+import com.gs.bean.echarts.QuarterUtil;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Echarts;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
-import com.gs.common.entity.EchartData;
-import com.gs.common.entity.Series;
 import com.gs.common.util.DateFormatUtil;
 import com.gs.service.IncomingOutgoingService;
 import org.apache.ibatis.annotations.Param;
@@ -19,8 +18,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -150,30 +147,12 @@ public class IncomingOutgoingController {
                 for (int p = 0; p < timeList.size(); p++) {
                     IncomingOutInFo io = new IncomingOutInFo();
                     String ag = DateFormatUtil.MonthFormater(timeList.get(p).getInOutCreatedTime());
-                    System.out.println(ag + "aaaaaaaaaaaaaaaaa");
-                    if (ag == "01月" || ag == "02月" || ag == "03月" ) {
-                        ag = "1-3月";
-                    } else if (ag == "04月" || ag == "05月" || ag == "06月"){
-                        ag = "4-6月";
-                    } else if (ag == "07月" || ag == "8月" || ag == "9月") {
-                        ag ="7-9月";
-                    } else if  (ag == "10月" || ag == "11月" || ag == "12月") {
-                        ag= "10-12月";
-                    }
-                    System.out.println(ag + "bbbbbbbbbbbbbbb");
+                    QuarterUtil.quarter(ag);
                     io.setDate(ag);
 
                     for (int j = 0; j < outList.size(); j++) {
                         String outTime = DateFormatUtil.MonthFormater(outList.get(j).getInOutCreatedTime());
-                        if (outTime == "01月" || outTime == "02月" || outTime == "03月" ) {
-                            outTime = "1-3月";
-                        } else if (outTime == "04月" || outTime == "05月" || outTime == "06月"){
-                            outTime = "4-6月";
-                        } else if (outTime == "07月" || outTime == "8月" || outTime == "9月") {
-                            outTime ="7-9月";
-                        } else if  (outTime == "10月" || outTime == "11月" || outTime == "12月") {
-                            outTime= "10-12月";
-                        }
+                        QuarterUtil.quarter(outTime);
                         if (ag.equals(outTime)) {
                             io.setOutMoney(outList.get(j).getInOutMoney());
                             break;
@@ -184,15 +163,7 @@ public class IncomingOutgoingController {
                     }
                     for (int k = 0; k < inList.size(); k++) {
                         String inTime = DateFormatUtil.MonthFormater(inList.get(k).getInOutCreatedTime());
-                        if (inTime == "01月" || inTime == "02月" || inTime == "03月" ) {
-                            inTime = "1-3月";
-                        } else if (inTime == "04月" || inTime == "05月" || inTime == "06月"){
-                            inTime = "4-6月";
-                        } else if (inTime == "07月" || inTime == "8月" || inTime == "9月") {
-                            inTime ="7-9月";
-                        } else if  (inTime == "10月" || inTime == "11月" || inTime == "12月") {
-                            inTime= "10-12月";
-                        }
+                        QuarterUtil.quarter(inTime);
                         if (ag.equals(inTime)) {
                             io.setInMoney(inList.get(k).getInOutMoney());
                             break;
@@ -244,7 +215,7 @@ public class IncomingOutgoingController {
                     String year = DateFormatUtil.YearFormater(timeList.get(p).getInOutCreatedTime());
                     String time = String.valueOf(Echarts.getWeek(ag));
                     String yearTime = time + year;
-                    io.setDate(year + "第"+ time + "周");
+                    io.setDate(year + "第" + time + "周");
                     for (int j = 0; j < outList.size(); j++) {
                         String outTime = DateFormatUtil.WEEK(outList.get(j).getInOutCreatedTime());
                         String outYear = DateFormatUtil.YearFormater(outList.get(j).getInOutCreatedTime());

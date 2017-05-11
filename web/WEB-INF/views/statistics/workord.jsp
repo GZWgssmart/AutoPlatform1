@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>- 观测数据 -</title>
+    <title>- 员工工单统计 -</title>
     <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.css">
     <link rel="stylesheet" href="/static/css/bootstrap.min.css">
     <link href="/static/css/select2/select2.css" rel="stylesheet">
@@ -20,7 +20,7 @@
 
 
 <div class='container-fluid'>
-    <h2 class='page-header'>支付统计</h2>
+    <h2 class='page-header'>员工工单统计</h2>
     <!--
         选项卡：通过BS的类来控制选项卡的样式
     -->
