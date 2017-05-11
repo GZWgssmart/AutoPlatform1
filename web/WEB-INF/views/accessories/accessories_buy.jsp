@@ -358,7 +358,6 @@
 <script src="/static/js/bootstrap-dateTimePicker/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
 <script src="/static/js/backstage/main.js"></script>
 <script src="/static/js/bootstrap-switch/bootstrap-switch.js"></script>
-<script src="/static/js/plugins/suggest/bootstrap-suggest.min.js"></script>
 <script src="/static/js/bootstrap-validate/bootstrapValidator.js"></script>
 <script src="/static/js/backstage/accessories/accessories_buy.js"></script>
 </body>
