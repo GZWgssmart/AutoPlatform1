@@ -579,14 +579,61 @@
         }
     }
 
+    var contentPath = ''
+    var roles = "系统超级管理员,系统普通管理员,汽修公司管理员,汽修公司接待员";
+
 //  查询不可用的
     function searchDisableStatus() {
-        initTable('table', '/userBasicManage/queryByPagerDisable');
+        $.post(contentPath + "/user/isLogin/" + roles, function (data) {
+            if (data.result == "success") {
+                initTable('table', '/userBasicManage/queryByPagerDisable');
+            } else if (data.result == "notLogin") {
+                swal({
+                    text: data.message,
+                    confirmButtonText: "确认", // 提示按钮上的文本
+                    type: "error"
+                }, function (isConfirm) {
+                    if (isConfirm) {
+                        top.location = "/user/loginPage";
+                    } else {
+                        top.location = "/user/loginPage";
+                    }
+                })
+            } else if (data.result = "notRole") {
+                swal({
+                    text: data.message,
+                    confirmButtonText: "确认", // 提示按钮上的文本
+                    type: "error"
+                })
+            }
+        })
     }
 
 //  查询可用的
     function searchRapidStatus() {
-        initTable('table', '/userBasicManage/queryByPager');
+        $.post(contentPath + "/user/isLogin/" + roles, function (data) {
+            if (data.result == "success") {
+                initTable('table', '/userBasicManage/queryByPager');
+            } else if (data.result == "notLogin") {
+                swal({
+                    text: data.message,
+                    confirmButtonText: "确认", // 提示按钮上的文本
+                    type: "error"
+                }, function (isConfirm) {
+                    if (isConfirm) {
+                        top.location = "/user/loginPage";
+                    } else {
+                        top.location = "/user/loginPage";
+                    }
+                })
+            } else if (data.result = "notRole") {
+                swal({
+                    text: data.message,
+                    confirmButtonText: "确认", // 提示按钮上的文本
+                    type: "error"
+                })
+            }
+        })
     }
 
     $.cxSelect.defaults.url = '/static/js/cityData.json';
