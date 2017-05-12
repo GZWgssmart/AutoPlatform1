@@ -6,9 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%
-    String path=request.getContextPath();
-%>
+<%@taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <html>
 <head>
     <title>配件分类管理</title>
@@ -37,34 +35,44 @@
             </thead>
         </table>
         <div id="toolbar" class="btn-group">
-            <button id="btn_available" type="button" class="btn btn-success" onclick="showAvailable();">
-                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询激活类型
-            </button>
-            <button id="btn_disable" type="button" class="btn btn-danger" onclick="showDisable();">
-                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询禁用类型
-            </button>
-            <button id="btn_add" type="button" class="btn btn-default" onclick="showAdd();">
-                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
-            </button>
-            <button id="btn_edit" type="button" class="btn btn-default" onclick="showEdit();">
-                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
-            </button>
-            <div class="input-group" style="width:350px;float:left;padding:0;margin:0 0 0 -1px;">
-                <div class="input-group-btn">
-                    <button type="button" id="ulButton" class="btn btn-default" style="border-radius:0px;" data-toggle="dropdown">所属公司/配件分类名称<span class="caret"></span></button>
-                    <ul class="dropdown-menu pull-right">
-                        <li><a onclick="onclikLi(this)">所属公司/配件分类名称</a></li>
-                        <li class="divider"></li>
-                        <li><a onclick="onclikLi(this)">所属公司</a></li>
-                        <li class="divider"></li>
-                        <li><a onclick="onclikLi(this)">配件分类名称</a></li>
-                        <li class="divider"></li>
-                    </ul>
-                </div><!-- /btn-group -->
-                <input id="ulInput" class="form-control" onkeypress="if(event.keyCode==13) {blurredQuery();}">
-                <a href="javaScript:;" onclick="blurredQuery()"><span class="glyphicon glyphicon-search search-style"></span></a>
-                </input>
-            </div><!-- /input-group -->
+            <shiro:hasAnyRoles name="汽修公司管理员,系统管理员">
+                <button id="btn_available" type="button" class="btn btn-success" onclick="showAvailable();">
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询激活类型
+                </button>
+            </shiro:hasAnyRoles>
+            <shiro:hasAnyRoles name="汽修公司管理员,系统管理员">
+                <button id="btn_disable" type="button" class="btn btn-danger" onclick="showDisable();">
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询禁用类型
+                </button>
+            </shiro:hasAnyRoles>
+            <shiro:hasAnyRoles name="汽修公司管理员">
+                <button id="btn_add" type="button" class="btn btn-default" onclick="showAdd();">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
+                </button>
+            </shiro:hasAnyRoles>
+            <shiro:hasAnyRoles name="汽修公司管理员">
+                <button id="btn_edit" type="button" class="btn btn-default" onclick="showEdit();">
+                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
+                </button>
+            </shiro:hasAnyRoles>
+            <shiro:hasAnyRoles name="汽修公司管理员,系统管理员">
+                <div class="input-group" style="width:350px;float:left;padding:0;margin:0 0 0 -1px;">
+                    <div class="input-group-btn">
+                        <button type="button" id="ulButton" class="btn btn-default" style="border-radius:0px;" data-toggle="dropdown">所属公司/配件分类名称<span class="caret"></span></button>
+                        <ul class="dropdown-menu pull-right">
+                            <li><a onclick="onclikLi(this)">所属公司/配件分类名称</a></li>
+                            <li class="divider"></li>
+                            <li><a onclick="onclikLi(this)">所属公司</a></li>
+                            <li class="divider"></li>
+                            <li><a onclick="onclikLi(this)">配件分类名称</a></li>
+                            <li class="divider"></li>
+                        </ul>
+                    </div><!-- /btn-group -->
+                    <input id="ulInput" class="form-control" onkeypress="if(event.keyCode==13) {blurredQuery();}">
+                    <a href="javaScript:;" onclick="blurredQuery()"><span class="glyphicon glyphicon-search search-style"></span></a>
+                    </input>
+                </div><!-- /input-group -->
+            </shiro:hasAnyRoles>
         </div>
     </div>
 </div>
