@@ -1,64 +1,188 @@
 var contentPath = ''
-
+var roles = "系统超级管理员,系统普通管理员,汽修公司管理员,汽修公司接待员";
 //初始化表格
 $(function () {
-    initTable('table', '/accType/queryByPage'); // 初始化表格
+    $.post(contentPath + "/user/isLogin/" + roles, function (data) {
+        if (data.result == "success") {
+            initTable('table', '/accType/queryByPage'); // 初始化表格
+            initSelect2("company", "请选择所属公司", "/company/queryAllCompany");
+        } else if (data.result == "notLogin") {
+            swal({
+                text: data.message,
+                confirmButtonText: "确认", // 提示按钮上的文本
+                type: "error"
+            }, function (isConfirm) {
+                if (isConfirm) {
+                    top.location = "/user/loginPage";
+                } else {
+                    top.location = "/user/loginPage";
+                }
+            })
+        } else if (data.result = "notRole") {
+            swal({
+                text: data.message,
+                confirmButtonText: "确认", // 提示按钮上的文本
+                type: "error"
+            })
+        }
+    })
 
-    initSelect2("company", "请选择所属公司", "/company/queryAllCompany");
 });
 
 // 查看全部可用
 function showAvailable() {
-    initTable('table', '/accType/queryByPage');
+    $.post(contentPath + "/user/isLogin/" + roles, function (data) {
+        if (data.result == "success") {
+            initTable('table', '/accType/queryByPage');
+        } else if (data.result == "notLogin") {
+            swal({
+                text: data.message,
+                confirmButtonText: "确认", // 提示按钮上的文本
+                type: "error"
+            }, function (isConfirm) {
+                if (isConfirm) {
+                    top.location = "/user/loginPage";
+                } else {
+                    top.location = "/user/loginPage";
+                }
+            })
+        } else if (data.result = "notRole") {
+            swal({
+                text: data.message,
+                confirmButtonText: "确认", // 提示按钮上的文本
+                type: "error"
+            })
+        }
+    })
 }
 // 查看全部禁用
 function showDisable() {
-    initTable('table', '/accType/queryByPagerDisable');
+    $.post(contentPath + "/user/isLogin/" + roles, function (data) {
+        if (data.result == "success") {
+            initTable('table', '/accType/queryByPagerDisable');
+        } else if (data.result == "notLogin") {
+            swal({
+                text: data.message,
+                confirmButtonText: "确认", // 提示按钮上的文本
+                type: "error"
+            }, function (isConfirm) {
+                if (isConfirm) {
+                    top.location = "/user/loginPage";
+                } else {
+                    top.location = "/user/loginPage";
+                }
+            })
+        } else if (data.result = "notRole") {
+            swal({
+                text: data.message,
+                confirmButtonText: "确认", // 提示按钮上的文本
+                type: "error"
+            })
+        }
+    })
 }
 
 // 模糊查询
 function blurredQuery(){
-    var button = $("#ulButton");// 获取模糊查询按钮
-    var text = button.text();// 获取模糊查询按钮文本
-    var vaule = $("#ulInput").val();// 获取模糊查询输入框文本
-    initTable('table', '/accType/blurredQuery?text='+text+'&value='+vaule);
+    $.post(contentPath + "/user/isLogin/" + roles, function (data) {
+        if (data.result == "success") {
+            var button = $("#ulButton");// 获取模糊查询按钮
+            var text = button.text();// 获取模糊查询按钮文本
+            var vaule = $("#ulInput").val();// 获取模糊查询输入框文本
+            initTable('table', '/accType/blurredQuery?text='+text+'&value='+vaule);
+        } else if (data.result == "notLogin") {
+            swal({
+                text: data.message,
+                confirmButtonText: "确认", // 提示按钮上的文本
+                type: "error"
+            }, function (isConfirm) {
+                if (isConfirm) {
+                    top.location = "/user/loginPage";
+                } else {
+                    top.location = "/user/loginPage";
+                }
+            })
+        } else if (data.result = "notRole") {
+            swal({
+                text: data.message,
+                confirmButtonText: "确认", // 提示按钮上的文本
+                type: "error"
+            })
+        }
+    })
 }
 
 //显示弹窗
 function showEdit() {
-    var row = $('table').bootstrapTable('getSelections');
-    if (row.length > 0) {
-        $("#editWindow").modal('show'); // 显示弹窗
-        $("#editButton").removeAttr("disabled");
-        var ceshi = row[0];
-        $("#editForm").fill(ceshi);
-        $('#editCompany').html('<option value="' + ceshi.company.companyId + '">' + ceshi.company.companyName + '</option>').trigger("change");
-        validator('editForm');
-    } else {
-        swal({
-            "title": "",
-            "text": "请修改配件类别信息",
-            confirmButtonColor: "#DD6B55", // 提示按钮的颜色
-            confirmButtonText:"确定", // 提示按钮上的文本
-            "type": "warning"
-        })
-    }
+    $.post(contentPath + "/user/isLogin/" + roles, function (data) {
+        if (data.result == "success") {
+            var row = $('table').bootstrapTable('getSelections');
+            if (row.length > 0) {
+                $("#editWindow").modal('show'); // 显示弹窗
+                $("#editButton").removeAttr("disabled");
+                var ceshi = row[0];
+                $("#editForm").fill(ceshi);
+                $('#editCompany').html('<option value="' + ceshi.company.companyId + '">' + ceshi.company.companyName + '</option>').trigger("change");
+                validator('editForm');
+            } else {
+                swal({
+                    "title": "",
+                    "text": "请修改配件类别信息",
+                    confirmButtonColor: "#DD6B55", // 提示按钮的颜色
+                    confirmButtonText:"确定", // 提示按钮上的文本
+                    "type": "warning"
+                })
+            }
+        } else if (data.result == "notLogin") {
+            swal({
+                text: data.message,
+                confirmButtonText: "确认", // 提示按钮上的文本
+                type: "error"
+            }, function (isConfirm) {
+                if (isConfirm) {
+                    top.location = "/user/loginPage";
+                } else {
+                    top.location = "/user/loginPage";
+                }
+            })
+        } else if (data.result = "notRole") {
+            swal({
+                text: data.message,
+                confirmButtonText: "确认", // 提示按钮上的文本
+                type: "error"
+            })
+        }
+    })
 }
 
 //显示添加
 function showAdd() {
-    $("#addWindow").modal('show');
-    $("#addButton").removeAttr("disabled");
-    validator('addForm'); // 初始化验证
+    $.post(contentPath + "/user/isLogin/" + roles, function (data) {
+        if (data.result == "success") {
+            $("#addWindow").modal('show');
+            $("#addButton").removeAttr("disabled");
+            validator('addForm'); // 初始化验证
+        } else if (data.result == "notLogin") {
+            swal({
+                text: data.message,
+                confirmButtonText: "确认", // 提示按钮上的文本
+                type: "error"
+            }, function (isConfirm) {
+                if (isConfirm) {
+                    top.location = "/user/loginPage";
+                } else {
+                    top.location = "/user/loginPage";
+                }
+            })
+        } else if (data.result = "notRole") {
+            swal({
+                text: data.message,
+                confirmButtonText: "确认", // 提示按钮上的文本
+                type: "error"
+            })
+        }
+    })
 }
-
-function formatRepo(repo) {
-    return repo.text
-}
-function formatRepoSelection(repo) {
-    return repo.text
-}
-
 //格式化页面上的配件分类状态
 function formatterStatus(value) {
     if (value == "Y") {
@@ -70,25 +194,33 @@ function formatterStatus(value) {
 
 // 激活或禁用
 function statusFormatter(value, row, index) {
-    if(value == 'Y') {
-        return "&nbsp;&nbsp;<button type='button' class='btn btn-danger' onclick='inactive(\""+'/accType/statusOperate?accTypeId='+row.accTypeId+'&accTypeStatus=Y'+"\")'>禁用</a>";
-    } else {
-        return "&nbsp;&nbsp;<button type='button' class='btn btn-success' onclick='active(\""+'/accType/statusOperate?accTypeId='+ row.accTypeId+'&accTypeStatus=N'+ "\")'>激活</a>";
-    }
-}
-
-//显示删除
-function showDel() {
-    var row = $('table').bootstrapTable('getSelections');
-    if (row.length > 0) {
-        $("#del").modal('show');
-    } else {
-        swal({
-            "title": "",
-            "text": "请先选择一条数据",
-            "type": "warning"
-        })
-    }
+    $.post(contentPath + "/user/isLogin/" + roles, function (data) {
+        if (data.result == "success") {
+            if(value == 'Y') {
+                return "&nbsp;&nbsp;<button type='button' class='btn btn-danger' onclick='inactive(\""+'/accType/statusOperate?accTypeId='+row.accTypeId+'&accTypeStatus=Y'+"\")'>禁用</a>";
+            } else {
+                return "&nbsp;&nbsp;<button type='button' class='btn btn-success' onclick='active(\""+'/accType/statusOperate?accTypeId='+ row.accTypeId+'&accTypeStatus=N'+ "\")'>激活</a>";
+            }
+        } else if (data.result == "notLogin") {
+            swal({
+                text: data.message,
+                confirmButtonText: "确认", // 提示按钮上的文本
+                type: "error"
+            }, function (isConfirm) {
+                if (isConfirm) {
+                    top.location = "/user/loginPage";
+                } else {
+                    top.location = "/user/loginPage";
+                }
+            })
+        } else if (data.result = "notRole") {
+            swal({
+                text: data.message,
+                confirmButtonText: "确认", // 提示按钮上的文本
+                type: "error"
+            })
+        }
+    })
 }
 
 function validator(formId) {
@@ -147,34 +279,56 @@ function editSubmit() {
 }
 
 function formSubmit(url, formId, winId) {
-    $.post(url,
-        $("#" + formId).serialize(),
-        function (data) {
-            if (data.result == "success") {
-                $('#' + winId).modal('hide');
-                swal({
-                    title: "",
-                    text: data.message,
-                    confirmButtonText: "确定", // 提示按钮上的文本
-                    type: "success"
-                })// 提示窗口, 修改成功
-                $('#table').bootstrapTable('refresh');
-                if (formId == 'addForm') {
-                    $("input[type=reset]").trigger("click"); // 移除表单中填的值
-                    $('#addForm').data('bootstrapValidator').resetForm(true); // 移除所有验证样式
-                    $("#addButton").removeAttr("disabled"); // 移除不可点击
-                    $("#addCompany").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
+    $.post(contentPath + "/user/isLogin/" + roles, function (data) {
+        if (data.result == "success") {
+            $.post(url,
+                $("#" + formId).serialize(),
+                function (data) {
+                    if (data.result == "success") {
+                        $('#' + winId).modal('hide');
+                        swal({
+                            title: "",
+                            text: data.message,
+                            confirmButtonText: "确定", // 提示按钮上的文本
+                            type: "success"
+                        })// 提示窗口, 修改成功
+                        $('#table').bootstrapTable('refresh');
+                        if (formId == 'addForm') {
+                            $("input[type=reset]").trigger("click"); // 移除表单中填的值
+                            $('#addForm').data('bootstrapValidator').resetForm(true); // 移除所有验证样式
+                            $("#addButton").removeAttr("disabled"); // 移除不可点击
+                            $("#addCompany").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
+                        }
+                        $("#" + formId).data('bootstrapValidator').destroy(); // 销毁此form表单
+                        $('#' + formId).data('bootstrapValidator', null);// 此form表单设置为空
+                    } else if (data.result == "fail") {
+                        swal({
+                            title: "",
+                            text: "添加失败",
+                            confirmButtonText: "确认",
+                            type: "error"
+                        })
+                        $("#" + formId).removeAttr("disabled");
+                    }
+                }, "json");
+        } else if (data.result == "notLogin") {
+            swal({
+                text: data.message,
+                confirmButtonText: "确认", // 提示按钮上的文本
+                type: "error"
+            }, function (isConfirm) {
+                if (isConfirm) {
+                    top.location = "/user/loginPage";
+                } else {
+                    top.location = "/user/loginPage";
                 }
-                $("#" + formId).data('bootstrapValidator').destroy(); // 销毁此form表单
-                $('#' + formId).data('bootstrapValidator', null);// 此form表单设置为空
-            } else if (data.result == "fail") {
-                swal({
-                    title: "",
-                    text: "添加失败",
-                    confirmButtonText: "确认",
-                    type: "error"
-                })
-                $("#" + formId).removeAttr("disabled");
-            }
-        }, "json");
+            })
+        } else if (data.result = "notRole") {
+            swal({
+                text: data.message,
+                confirmButtonText: "确认", // 提示按钮上的文本
+                type: "error"
+            })
+        }
+    })
 }

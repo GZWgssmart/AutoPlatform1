@@ -11,7 +11,7 @@
     <!--查询所有车牌-->
     <select id="queryAll" resultMap="plateMap" parameterType="com.gs.bean.User">
         <![CDATA[
-              select *  from  t_car_plate cp
+              select *  from  t_car_plate cp where 1=1 and cp.plateStatus='Y'
            ]]>
         <if test="companyId != '' and companyId !=null">
                and cp.companyId = #{user.companyId}
@@ -70,7 +70,7 @@
       select count(plateId) from t_car_plate cp where cp.plateStatus = 'N'
     ]]>
         <if test="companyId != '' and companyId !=null">
-            and cp.companyId = #{user.companyId}
+            and cp.companyId = #{companyId}
         </if>
     </select>
 
