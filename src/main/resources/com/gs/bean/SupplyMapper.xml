@@ -34,7 +34,7 @@
       select * FROM auto_platform.t_supply  s where 1=1 and s.supplyStatus = 'Y'
     ]]>
     <if test="companyId != '' and companyId !=null">
-      and s.companyId = #{user.companyId}
+      and s.companyId = #{companyId}
     </if>
   </select>
 
@@ -69,7 +69,7 @@
       select count(supplyId) from auto_platform.t_supply s where 1=1 and s.supplyStatus = 'Y'
     ]]>
     <if test="companyId != '' and companyId !=null">
-      and s.companyId = #{user.companyId}
+      and s.companyId = #{companyId}
     </if>
   </select>
  
@@ -78,7 +78,7 @@
       select count(supplyId) from auto_platform.t_supply s where s.supplyStatus = 'N'
     ]]>
     <if test="companyId != '' and companyId !=null">
-      and s.companyId = #{user.companyId}
+      and s.companyId = #{companyId}
     </if>
   </select>
 

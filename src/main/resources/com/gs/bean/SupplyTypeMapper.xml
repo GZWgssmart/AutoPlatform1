@@ -20,7 +20,7 @@
           select * from t_supply_type st where st.supplyTypeStatus = 'Y'
         ]]>
     <if test="companyId != '' and companyId !=null">
-        and st.companyId = #{user.companyId}
+        and st.companyId = #{companyId}
     </if>
   </select>
 
@@ -29,7 +29,7 @@
       select count(*) from t_supply_type st where st.supplyTypeStatus = 'Y'
     ]]>
     <if test="companyId != '' and companyId !=null">
-      and st.companyId = #{user.companyId}
+      and st.companyId = #{companyId}
     </if>
   </select>
 
@@ -51,7 +51,7 @@
         select count(*) from t_supply_type st where st.supplyTypeStatus = 'N'
     ]]>
     <if test="companyId != '' and companyId !=null">
-      and st.companyId = #{user.companyId}
+      and st.companyId = #{companyId}
     </if>
   </select>
 
