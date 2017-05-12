@@ -1,6 +1,7 @@
 package com.gs.service.impl;
 
 import com.gs.bean.Appointment;
+import com.gs.bean.User;
 import com.gs.common.bean.Pager;
 import com.gs.dao.AppointmentDAO;
 import com.gs.service.AppointmentService;
@@ -20,9 +21,10 @@ public class AppointmentServiceImpl implements AppointmentService {
 
 	@Resource
 	private AppointmentDAO appointmentDAO;
+	@Override
+	public int insert(Appointment appointment) {return appointmentDAO.insert(appointment);
+	}
 
-	public int insert(Appointment appointment) { return appointmentDAO.insert(appointment); }
-	public int batchInsert(List<Appointment> list) { return appointmentDAO.batchInsert(list); }
 	public int delete(Appointment appointment) { return appointmentDAO.delete(appointment); }
 	public int deleteById(String id) {
         return appointmentDAO.deleteById(id);
@@ -30,33 +32,36 @@ public class AppointmentServiceImpl implements AppointmentService {
 	public int batchDelete(List<Appointment> list) { return appointmentDAO.batchDelete(list); }
 	public int update(Appointment appointment) { return appointmentDAO.update(appointment); }
 	public int batchUpdate(List<Appointment> list) { return appointmentDAO.batchUpdate(list); }
-	public List<Appointment> queryAll() { return appointmentDAO.queryAll(); }
 
-	public List<Appointment> queryAll(String status) {
-		return appointmentDAO.queryAll();
+	@Override
+	public List<Appointment> queryAll(User user) {return appointmentDAO.queryAll(user);
 	}
-
+	@Override
+	public List<Appointment> queryAll(String status) {return appointmentDAO.queryAll(status);
+	}
 	public List<Appointment> queryByStatus(String status) { return appointmentDAO.queryAll(status); }
 	public Appointment query(Appointment appointment) { return appointmentDAO.query(appointment); }
 	public Appointment queryById(String id) { return appointmentDAO.queryById(id); }
 	public List<Appointment> queryByPager(Pager pager) { return appointmentDAO.queryByPager(pager); }
-	public int count() { return appointmentDAO.count(); }
+	@Override
+	public int count(User user) {return appointmentDAO.count(user);
+	}
 	public int inactive(String id) { return appointmentDAO.inactive(id); }
 	public int active(String id) { return appointmentDAO.active(id); }
-
 	public List<Appointment> queryByPagerDisable(Pager pager) {
 		return appointmentDAO.queryByPagerDisable(pager);
 	}
-
-	public int countByDisable() {
-		return appointmentDAO.countByDisable();
+	@Override
+	public int countByDisable(User user) {return appointmentDAO.countByDisable(user);
 	}
-
 	public List<Appointment> blurredQuery(Pager pager, Appointment appointment) {return appointmentDAO.blurredQuery(pager, appointment);
 	}
-
-	public int countByBlurred(Appointment appointment) {
-		return appointmentDAO.countByBlurred(appointment);
+	@Override
+	public int countByBlurred(Appointment appointment, User user) {return appointmentDAO.countByBlurred(appointment,user);
 	}
 
+	@Override
+	public int batchInsert(List<Appointment> list) {
+		return 0;
+	}
 }

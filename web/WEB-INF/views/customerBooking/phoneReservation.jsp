@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <html>
 <head>
     <meta charset="utf-8">
@@ -77,9 +78,11 @@
             <button id="btn_disable" type="button" class="btn btn-danger" onclick="showDisable()">
                 <span class="glyphicon glyphicon-search" aria-hidden="true"></span>禁用预约记录
             </button>
+            <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员">
             <button id="btn_add" type="button" class="btn btn-default" onclick="showAdd();">
                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
             </button>
+            </shiro:hasAnyRoles>
             <button id="btn_edit" type="button" class="btn btn-default" onclick="showEdit();">
                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
             </button>

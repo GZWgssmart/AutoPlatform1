@@ -12,4 +12,5 @@ import com.gs.bean.Appointment;
  */
 public interface AppointmentService extends BaseService<String, Appointment>{
 
+
 }

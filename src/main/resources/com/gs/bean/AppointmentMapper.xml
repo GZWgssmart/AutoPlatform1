@@ -57,6 +57,9 @@
        LEFT JOIN t_car_brand cb on am.brandId = cb.brandId
        where am.appoitmentStatus = 'Y' order by am.appCreatedTime Desc
     ]]>
+    <if test="companyId != '' and companyId != null">
+      and am.companyId = #{user.companyId}
+    </if>
     limit #{beginIndex}, #{pageSize}
   </select>
 
@@ -72,6 +75,9 @@
         LEFT JOIN t_car_brand cb on am.brandId = cb.brandId
         where am.appoitmentStatus = 'N' order by am.appCreatedTime Desc
      ]]>
+    <if test="companyId != '' and companyId != null">
+      and am.companyId = #{user.companyId}
+    </if>
       limit #{beginIndex}, #{pageSize}
   </select>
 
@@ -79,12 +85,18 @@
     <![CDATA[
       select count(appointmentId) from t_appointment am where am.appoitmentStatus = 'Y'
     ]]>
+    <if test="companyId != '' and companyId != null">
+      and am.companyId = #{user.companyId}
+    </if>
   </select>
 
   <select id="countByDisable" resultType="int" >
     <![CDATA[
       select count(appointmentId) from t_appointment am where am.appoitmentStatus = 'N'
     ]]>
+    <if test="companyId != '' and companyId != null">
+      and am.companyId = #{user.companyId}
+    </if>
   </select>
 
   <insert id="insert" parameterType="Appointment">
@@ -143,6 +155,9 @@
     <if test="appointment.userPhone != '' and appointment.userPhone != null">
       am.userPhone like '%${appointment.userPhone}%'
     </if>
+    <if test="pager.user.companyId != '' and pager.user.companyId != null">
+      and am.companyId = #{user.companyId}
+    </if>
     order by am.appCreatedTime Desc
     limit #{pager.beginIndex}, #{pager.pageSize}
   </select>
@@ -182,6 +197,9 @@
     </if>
     <if test="appointment.userPhone != '' and appointment.userPhone != null">
       am.userPhone like '%${appointment.userPhone}%'
+    </if>
+    <if test="companyId != '' and companyId != null">
+      and am.companyId = #{user.companyId}
     </if>
   </select>
 
