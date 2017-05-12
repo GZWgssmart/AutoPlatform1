@@ -16,12 +16,18 @@
     <![CDATA[
       select count(*) from t_outgoing_type o where o.outTypeStatus = 'Y'
     ]]>
+    <if test="companyId != '' and companyId != null">
+      and o.companyId = #{user.companyId}
+    </if>
   </select>
 
   <select id="queryByPager" resultMap="outGoingTypeMap" parameterType="com.gs.common.bean.Pager">
     <![CDATA[
         select * from t_outgoing_type o where 1 =1 and o.outTypeStatus = 'Y'
     ]]>
+    <if test="companyId != '' and companyId != null">
+      and o.companyId = #{user.companyId}
+    </if>
     limit #{beginIndex}, #{pageSize}
   </select>
 
@@ -29,12 +35,18 @@
     <![CDATA[
         select count(*) from t_outgoing_type o where o.outTypeStatus = 'N'
     ]]>
+    <if test="companyId != '' and companyId != null">
+      and o.companyId = #{user.companyId}
+    </if>
   </select>
 
   <select id="queryByPagerDisable" resultMap="outGoingTypeMap" parameterType="com.gs.common.bean.Pager">
     <![CDATA[
           select * from t_outgoing_type o where 1 =1 and o.outTypeStatus = 'N'
     ]]>
+    <if test="companyId != '' and companyId != null">
+      and o.companyId = #{user.companyId}
+    </if>
      limit #{beginIndex}, #{pageSize}
   </select>
 

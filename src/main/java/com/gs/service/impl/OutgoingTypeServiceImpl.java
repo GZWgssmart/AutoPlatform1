@@ -1,6 +1,7 @@
 package com.gs.service.impl;
 
 import com.gs.bean.OutgoingType;
+import com.gs.bean.User;
 import com.gs.common.bean.Pager;
 import com.gs.dao.OutgoingTypeDAO;
 import com.gs.service.OutgoingTypeService;
@@ -30,18 +31,18 @@ public class OutgoingTypeServiceImpl implements OutgoingTypeService {
 	public int batchDelete(List<OutgoingType> list) { return outgoingTypeDAO.batchDelete(list); }
 	public int update(OutgoingType outgoingType) { return outgoingTypeDAO.update(outgoingType); }
 	public int batchUpdate(List<OutgoingType> list) { return outgoingTypeDAO.batchUpdate(list); }
-	public List<OutgoingType> queryAll() { return outgoingTypeDAO.queryAll(); }
+	public List<OutgoingType> queryAll(User user) { return outgoingTypeDAO.queryAll(user); }
 
 	@Override
 	public List<OutgoingType> queryAll(String status) {
-		return outgoingTypeDAO.queryAll();
+		return outgoingTypeDAO.queryAll(status);
 	}
 
 	public List<OutgoingType> queryByStatus(String status) { return outgoingTypeDAO.queryAll(status); }
 	public OutgoingType query(OutgoingType outgoingType) { return outgoingTypeDAO.query(outgoingType); }
 	public OutgoingType queryById(String id) { return outgoingTypeDAO.queryById(id); }
 	public List<OutgoingType> queryByPager(Pager pager) { return outgoingTypeDAO.queryByPager(pager); }
-	public int count() { return outgoingTypeDAO.count(); }
+	public int count(User user) { return outgoingTypeDAO.count(user); }
 	public int inactive(String id) { return outgoingTypeDAO.inactive(id); }
 	public int active(String id) { return outgoingTypeDAO.active(id); }
 
@@ -52,12 +53,22 @@ public class OutgoingTypeServiceImpl implements OutgoingTypeService {
 	}
 
 	@Override
+	public int countByDisable(User user) {
+		return outgoingTypeDAO.countByDisable(user);
+	}
+
+	@Override
 	public int countByDisable() {
 		return outgoingTypeDAO.countByDisable();
 	}
 
 	public List<OutgoingType> blurredQuery(Pager pager, OutgoingType outgoingType) {
 		return null;
+	}
+
+	@Override
+	public int countByBlurred(OutgoingType outgoingType, User user) {
+		return 0;
 	}
 
 	public int countByBlurred(OutgoingType outgoingType) {

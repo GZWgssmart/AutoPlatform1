@@ -18,6 +18,19 @@ public class MaintainDetail {
 
     private MaintainFix maintainFix;
 
+    /**
+     * 根据维修项目名字统计维修记录数
+     */
+    private int count;
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
     // 打印需要字段
     private String disCount; // 折扣
 

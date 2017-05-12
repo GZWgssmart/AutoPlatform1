@@ -15,14 +15,20 @@
 
   <select id="count" resultType="int" >
     <![CDATA[
-      select count(*) from t_incoming_type i,t_company c where i.companyId = c.companyId  and c.companyId = #{companyId} and i.inTypeStatus = 'Y'
+      select count(*) from t_incoming_type i where i.inTypeStatus = 'Y'
     ]]>
+    <if test="companyId != '' and companyId != null">
+      and i.companyId = #{user.companyId}
+    </if>
   </select>
 
   <select id="queryByPager" resultMap="incomingTypeMap" parameterType="com.gs.common.bean.Pager">
     <![CDATA[
         select i.*, c.companyId from t_incoming_type i,t_company c where i.companyId = c.companyId  and c.companyId = #{companyId} and i.inTypeStatus = 'Y'
     ]]>
+    <if test="companyId != '' and companyId != null">
+      and i.companyId = #{user.companyId}
+    </if>
     limit #{beginIndex}, #{pageSize}
   </select>
 
@@ -30,12 +36,18 @@
     <![CDATA[
  select count(*) from t_incoming_type i,t_company c where i.companyId = c.companyId  and c.companyId = #{companyId} and i.inTypeStatus = 'N'
     ]]>
+    <if test="companyId != '' and companyId != null">
+      and i.companyId = #{user.companyId}
+    </if>
   </select>
 
   <select id="queryByPagerDisable" resultMap="incomingTypeMap" parameterType="com.gs.common.bean.Pager">
     <![CDATA[
       select i.*, c.companyId from t_incoming_type i,t_company c where i.companyId = c.companyId and c.companyId = #{companyId} and i.inTypeStatus = 'N'
     ]]>
+    <if test="companyId != '' and companyId != null">
+      and i.companyId = #{user.companyId}
+    </if>
     limit #{beginIndex}, #{pageSize}
   </select>
 

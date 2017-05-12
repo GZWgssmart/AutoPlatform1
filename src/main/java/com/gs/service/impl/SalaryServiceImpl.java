@@ -2,6 +2,7 @@ package com.gs.service.impl;
 
 import com.gs.bean.Checkin;
 import com.gs.bean.Salary;
+import com.gs.bean.User;
 import com.gs.dao.SalaryDAO;
 import com.gs.service.SalaryService;
 import org.springframework.stereotype.Service;
@@ -31,18 +32,19 @@ public class SalaryServiceImpl implements SalaryService {
 	public int batchDelete(List<Salary> list) { return salaryDAO.batchDelete(list); }
 	public int update(Salary salary) { return salaryDAO.update(salary); }
 	public int batchUpdate(List<Salary> list) { return salaryDAO.batchUpdate(list); }
-	public List<Salary> queryAll() { return salaryDAO.queryAll(); }
+	public List<Salary> queryAll(User user) { return salaryDAO.queryAll(user); }
 
 	@Override
 	public List<Salary> queryAll(String status) {
-		return salaryDAO.queryAll();
+		return salaryDAO.queryAll(status);
 	}
+
 
 	public List<Salary> queryByStatus(String status) { return salaryDAO.queryAll(status); }
 	public Salary query(Salary salary) { return salaryDAO.query(salary); }
 	public Salary queryById(String id) { return salaryDAO.queryById(id); }
 	public List<Salary> queryByPager(Pager pager) { return salaryDAO.queryByPager(pager); }
-	public int count() { return salaryDAO.count(); }
+	public int count(User user) { return salaryDAO.count(user); }
 	public int inactive(String id) { return salaryDAO.inactive(id); }
 	public int active(String id) { return salaryDAO.active(id); }
 
@@ -50,12 +52,17 @@ public class SalaryServiceImpl implements SalaryService {
 		return salaryDAO.queryByPagerDisable(pager);
 	}
 
-	public int countByDisable() {
-		return salaryDAO.countByDisable();
+	public int countByDisable(User user) {
+		return salaryDAO.countByDisable(user);
 	}
 
 	public List<Salary> blurredQuery(Pager pager, Salary salary) {
 		return null;
+	}
+
+	@Override
+	public int countByBlurred(Salary salary, User user) {
+		return 0;
 	}
 
 	public int countByBlurred(Salary salary) {

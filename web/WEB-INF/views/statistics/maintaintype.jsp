@@ -1,244 +1,245 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Administrator
-  Date: 2017-04-11
-  Time: 15:52
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" pageEncoding="UTF-8" %>
+<!DOCTYPE html>
 <html>
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>- 维修保养项目统计 -</title>
+    <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.css">
     <link rel="stylesheet" href="/static/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/static/css/bootstrap-table.css">
-    <link rel="stylesheet" href="/static/css/statistics_Private/daterangepicker.css">
-    <link rel="stylesheet" href="/static/css/statistics_Private/piecemeal.css">
+    <link rel="stylesheet" href="/static/css/select2.min.css">
+    <link href="/static/css/select2/select2.css" rel="stylesheet">
 
-    <script src="/static/js/jquery.min.js"></script>
-    <script src="/static/js/bootstrap.min.js"></script>
-    <script src="/static/js/bootstrap-table/bootstrap-table.js"></script>
-    <script src="/static/js/bootstrap-table/bootstrap-table-zh-CN.js"></script>
-    <script src="/static/js/echarts/echarts.js"></script>
-    <script src="/static/js/statistics_Private/moment.js"></script>
-    <script src="/static/js/statistics_Private/daterangepicker.js"></script>
-    <script src="/static/js/statistics_Private/piecemeal.js"></script>
-
-    <title>维修保养类型统计</title>
 </head>
+<style>
+    #tab1{
+        border: solid red  1px;
+        margin: 10px 15px;
+    }
+    .project{
+        margin-left:15px;
+        float: left;
+    }
+</style>
+<script type="text/javascript" src="/static/js/jquery.min.js"></script>
+<script type="text/javascript" src="/static/js/echarts/echarts.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+<script src="/static/js/bootstrap-select/select2.js"></script>
+<script type="text/javascript" src="/static/js/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.js"></script>
+
+
 <body>
-<%@include file="../backstage/contextmenu.jsp"%>
-<div class="head">
-    <div class="title" style="height:55px">
-        <h2 class="pull-left" style="bottom: 20px;">维修保养类型统计</h2>
-        <div id="reportrange" class="pull-right" style="background: #fff; left:100px;margin-right: 138px;position: relative;top:33px;cursor: pointer; padding: 5px 10px; border: 1px solid #ccc;">
-            <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>&nbsp;
-            <span></span> <b class="caret"></b>
-        </div>
-    </div>
-</div>
-
-<div class="container"  style="margin-top:10px">
-    <div  class="panel">
-        <div class="subtitle"><h3 > 维修保养类型统计</h3></div>
-        <div class="col-md-8">
-            <div id="echart" style="height:60%;width:100%"></div>
-        </div>
-        <div class="col-md-4"></div>
-    </div>
-    <div class="panel">
-        <div class="col-md-12">
-            <div class="subtitle"><h3> 维修/保养统计数据源</h3></div>
-            <table id="table"
-                   data-toggle="table"
-                   data-toolbar="#sourceTitle"
-                   data-url="/table/queryType"
-                   data-method="get"
-                   data-pagination="true"
-                   data-show-refresh="true"
-                   data-show-toggle="true"
-                   data-show-columns="true"
-                   data-page-size="10"
-                   data-id-field="id"
-                   data-page-list="[5, 10, 20]"
-                   data-cach="false">
-                <thead>
-                <tr>
-                    <th data-field="name"  data-align="center">
-                        类型名称
-                    </th>
-                    <th data-field="price" data-align="center">
-                        类型使用数量
-                    </th>
-                    <th data-field="todo" data-align="center" data-formatter=todoCell>
-                        操作
-                    </th>
-                </tr>
-                </thead>
-            </table>
-        </div>
-    </div>
-</div>
+<%@include file="../backstage/contextmenu.jsp" %>
 
 
-<div class="footer"></div>
+<div class='container-fluid'>
+    <h2 class='page-header'>维修保养项目统计</h2>
+    <!--
+        选项卡：通过BS的类来控制选项卡的样式
+    -->
+    <ul class='nav nav-tabs'>
+        <li class='active'><a href='#tab1' data-toggle='tab'>按年查找</a></li>
+        <li><a href='#tab2' data-toggle='tab'>按月查找</a></li>
+        <li><a href='#tab3' data-toggle='tab'>按日查找</a></li>
+        <li><a href='#tab4' data-toggle='tab'>按季度查找</a></li>
+        <li><a href='#tab5' data-toggle='tab'>按周查找</a></li>
+    </ul>
 
-<div class="modal fade" id="modal" tabindex="2" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content" style="width:100%;">
-            <div class="modal-header">
-                <h4 style="float:left" onclick="resTest()"> 维修/保养趋势 </h4>
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                    &times;
-                </button>
-            </div>
-            <div class="modal-title" style="width:100%;background-color: #1eacae">
-
-            </div>
-            <div class="modal-body" style="width:100%;height:80%">
-                <div id="detailsEchart" style="height:100%;width:100%"></div>
+    <!--
+        选项卡的内容定义
+    -->
+    <div class='tab-content'>
+        <div class="tab-pane active"  id='tab1'>
+            <div class="form-inline">
+                    <label>公司:</label>
+                    <select id="ab" name="Recognition" class="form-control select2" >
+                        <option>aaa</option>
+                        <option>bbb</option>
+                    </select>
+                <div class="project">
+                    <label>项目类型</label>
+                    <select id="pro" name="Recognition" class="form-control select2">
+                        <option>aaa</option>
+                        <option>bbb</option>
+                    </select>
+                </div>
             </div>
         </div>
+
+      <%--  <div class='tab-pane active' id='tab1'>
+            <div class="left col-xs-5 col-md-5 text-right">
+                <div class="form-group">
+                    <label class="control-label col-md-4">公司</label>
+                    <div class="col-xs-5 col-md-5">
+                        <select id="ab" name="Recognition" class="form-control select2" placeholder="请输入公司">
+                            <option>aaa</option>
+                            <option>bbb</option>
+                        </select>
+                    </div>
+                    <div class="col-xs-5">
+                        <select id="a" name="Recognition" class="form-control select2" placeholder="认可程度...">
+                            <option>aaa</option>
+                            <option>bbb</option>
+                        </select>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="right col-xs-2 text-left">
+                <div class="input-group" id="startYearInputId">
+                    <label>开始时间:</label>
+                    <input type="text" class="form-control form_Year" id="startYearInput" name="addtime"
+                           placeholder="请选择开始时间">
+                    <span class="input-group-addon" id="startYear"><span class="glyphicon glyphicon-time"
+                                                                         aria-hidden="true"></span></span>
+                </div>
+            </div>
+            <div class="left col-xs-2 text-right">
+                <label>结束时间:</label>
+            </div>
+            <div class="right col-xs-2 text-left" id="endYearInputId">
+                <div class="input-group">
+                    <input type="text" class="form-control form_Year" id="endYearInput" name="addtime"
+                           placeholder="请选择结束时间">
+                    <span class="input-group-addon" id="endYear"><span class="glyphicon glyphicon-time"
+                                                                       aria-hidden="true"></span></span>
+                </div>
+            </div>
+            <button id="yearBtnId" type="button" class="btn btn-default" onclick="selectYears();">
+                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>查询
+            </button>
+        </div>--%>
+        <div class='tab-pane' id='tab2'>
+            <div class="left col-xs-2 text-right">
+                <label>开始时间:</label>
+            </div>
+            <div class="right col-xs-2 text-left" id="startMonthInputId">
+                <div class="input-group">
+                    <input type="text" class="form-control form_Month" id="startMonthInput" name="addtime"
+                           placeholder="请选择开始时间">
+                    <span class="input-group-addon" id="startMonth"><span class="glyphicon glyphicon-time"
+                                                                          aria-hidden="true"></span></span>
+                </div>
+            </div>
+            <div class="left col-xs-2 text-right">
+                <label>结束时间:</label>
+            </div>
+            <div class="right col-xs-2 text-left" id="endMonthInputId">
+                <div class="input-group">
+                    <input type="text" class="form-control form_Month" id="endMonthInput" name="addtime"
+                           placeholder="请选择结束时间">
+                    <span class="input-group-addon" id="endMonth"><span class="glyphicon glyphicon-time"
+                                                                        aria-hidden="true"></span></span>
+                </div>
+            </div>
+            <button id="monthBtnId" type="button" class="btn btn-default" onclick="selectMonth();">
+                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>查询
+            </button>
+        </div>
+        <div class='tab-pane' id='tab3'>
+            <div class="left col-xs-2 text-right">
+                <label>开始时间:</label>
+            </div>
+            <div class="right col-xs-2 text-left" id="startDayInputId" >
+                <div class="input-group">
+                    <input type="text" class="form-control form_Day" id="startDayInput" name="addtime"
+                           placeholder="请选择开始时间">
+                    <span class="input-group-addon" id="startDay"><span class="glyphicon glyphicon-time"
+                                                                        aria-hidden="true"></span></span>
+                </div>
+            </div>
+            <div class="left col-xs-2 text-right">
+                <label>结束时间:</label>
+            </div>
+            <div class="right col-xs-2 text-left" id="endDayInputId">
+                <div class="input-group">
+                    <input type="text" class="form-control form_Day" id="endDayInput" name="addtime"
+                           placeholder="请选择结束时间">
+                    <span class="input-group-addon" id="endDay"><span class="glyphicon glyphicon-time"
+                                                                      aria-hidden="true"></span></span>
+                </div>
+            </div>
+
+            <button id="dayBtnId" type="button" class="btn btn-default"  onclick="selectDay();">
+                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>查询
+            </button>
+        </div>
+        <div class='tab-pane' id='tab4'>
+            <div class="left col-xs-2 text-right">
+                <label>开始时间:</label>
+            </div>
+            <div class="right col-xs-2 text-left" id="startQuarterInputId" >
+                <div class="input-group">
+                    <input type="text" class="form-control form_Day" id="startQuarterInput" name="addtime"
+                           placeholder="请选择开始时间">
+                    <span class="input-group-addon" id="startQuarter"><span class="glyphicon glyphicon-time"
+                                                                            aria-hidden="true"></span></span>
+                </div>
+            </div>
+            <div class="left col-xs-2 text-right">
+                <label>结束时间:</label>
+            </div>
+            <div class="right col-xs-2 text-left" id="endQuarterInputId">
+                <div class="input-group">
+                    <input type="text" class="form-control form_Day" id="endQuarterInput" name="addtime"
+                           placeholder="请选择结束时间">
+                    <span class="input-group-addon" id="endQuarter"><span class="glyphicon glyphicon-time"
+                                                                          aria-hidden="true"></span></span>
+                </div>
+            </div>
+
+            <button id="quarterBtnId" type="button" class="btn btn-default"  onclick="selectQuarter();">
+                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>查询
+            </button>
+        </div>
+        <div class='tab-pane' id='tab5'>
+            <div class="left col-xs-2 text-right">
+                <label>开始时间:</label>
+            </div>
+            <div class="right col-xs-2 text-left" id="startWeekInputId" >
+                <div class="input-group">
+                    <input type="text" class="form-control form_Day" id="startWeekInput" name="addtime"
+                           placeholder="请选择开始时间">
+                    <span class="input-group-addon" id="startWeek"><span class="glyphicon glyphicon-time"
+                                                                         aria-hidden="true"></span></span>
+                </div>
+            </div>
+            <div class="left col-xs-2 text-right">
+                <label>结束时间:</label>
+            </div>
+            <div class="right col-xs-2 text-left" id="endWeekInputId">
+                <div class="input-group">
+                    <input type="text" class="form-control form_Day" id="endWeekInput" name="addtime"
+                           placeholder="请选择结束时间">
+                    <span class="input-group-addon" id="endWeek"><span class="glyphicon glyphicon-time"
+                                                                       aria-hidden="true"></span></span>
+                </div>
+            </div>
+
+            <button id="weekBtnId" type="button" class="btn btn-default"  onclick="selectWeek();">
+                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>查询
+            </button>
+        </div>
     </div>
+
 </div>
 
-</body>
+<!-- 显示Echarts图表 -->
+<div style="height:600px;min-height:100%;margin:0 auto;" id="main"></div>
+
+
 <script>
-    var detailsEchart = echarts.init(document.getElementById("detailsEchart"));
-    $(function(){
-
-        var echart = echarts.init(document.getElementById("echart"));
-        var echartOption = {
-            legend: {
-                orient: 'vertical',
-                left: 'left',
-            },
-            tooltip : {},
-            toolbox: {
-                feature : {
-                    restore : {show: true},
-                    saveAsImage : {show: true}
-                }
-            },
-            series: {
-                name: '维修保养类型',
-                type: "pie"
-            },
-            labelLine: {
-                normal: {
-                    lineStyle: {
-                        color: 'rgba(0, 0, 0, 0.5)'
-                    },
-                    smooth: 0.2,
-                    length: 10,
-                    length2: 20
-                }
-            }
-        }
-        var detailEchartOption ={
-            legend: { data: ["维修/保养"], show: true},
-            xAxis: {
-                type: "time",
-                name: '日期',
-            },
-            yAxis: { name: '数量/个', type: 'value'},
-            series: {  name: '维修/保养数量', type: 'line'  },
-            tooltip: {},
-            dataZoom: [
-                {
-                    type: 'slider',
-                    show: true,
-                    xAxisIndex: [0]
-                },
-                {
-                    type: 'inside',
-                    xAxisIndex: [0]
-                }
-            ]
-        };
-        echart.setOption(echartOption);
-        detailsEchart.setOption(detailEchartOption);
-
-        initData($("#reportrange>span"));
-        setDaterangeReturnFun("#reportrange",daterangeReturnFun);
-        setMainEchartData(echart);
-
-        pageChangeEchartsResize(echart,detailsEchart);
-    });
-
-    function daterangeReturnFun(){
-        // 主图表更新 setNewEchartData
-        // table更新, setTableData
-    }
-
-    function setMainEchartData(echart){
-        $.get("/table/queryType",function(data){
-            var itemDatas= arrayObjs2Objs(data,"name","price");
-            var  titleDatas= arrayObjs2arrayAttr(data,"name");
-            var eachartOptionData ={
-                legend: {data: titleDatas},
-                series:{data:itemDatas}
-            };
-            echart.setOption(eachartOptionData);
-        })
-    }
-
-    function setTableData(table, data){
-        table.bootstrapTable("load",data);
-    }
-
-    function todoCell(index, row, element){
-        var viewbtn = '<div style="color:lightseagreen" onclick="openModal()">查看使用情况</div> ';
-        return viewbtn;
-    }
-
-    function openModal(){
-        $("#modal").modal("show");
-        var detailEchart =detailsEchart;
-        setDetailEchartNewData(detailEchart);
-        detailEchartResize(detailEchart );
-    }
-
-    function setDetailEchartNewData(detailEchart){
-        $.get("/table/queryType",function(data){
-            var itemDatas= arrayObjs2array(data,"name","price");
-            var  titleDatas= arrayObjs2arrayAttr(data,"name");
-            var date = new Date();
-            var addoneday = addOneDay(date);
-            var addtwoday = addOneDay(addoneday);
-            var detailEchartNewData = {
-                xAxis: {
-                    data: (function(){
-                        var dates = [];
-                        var date = new Date();
-                        for(var i =0;i<7;i++) {
-                            //var datestr = [date.getFullYear(), date.getMonth(), date.getDate()].join("-");
-                            dates.push(date.toString());
-                            date = addOneDay(date);
-                        }
-                        return dates;
-                    })()
-                },
-                series: {
-                    xAxisIndex: 0,
-                    yAxisIndex: 0,
-                    data: [[date,10],[addoneday,15],[addtwoday,18]]
-                }
-            }
-            detailEchart.setOption(detailEchartNewData);
-        })
-    }
-
-
-
-    function addOneDay(date){
-        return new Date(+date+oneDay());
-    }
-    function oneDay(){
-        return 24*3600*1000;
-    }
-
 
 
 
 </script>
+<!-- 显示Echarts图表 -->
+<script src="/static/js/backstage/statistics/myEcharts.js"></script>
+<script type="text/javascript" src="/static/js/backstage/statistics/maintainType.js"></script>
+
+<script src="/static/js/contextmenu.js"></script>
+<script src="/static/js/select2/select2.js"></script>
+
+</div>
+
+</body>
 </html>
