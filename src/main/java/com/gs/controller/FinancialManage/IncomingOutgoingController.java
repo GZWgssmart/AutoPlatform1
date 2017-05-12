@@ -55,7 +55,7 @@ public class IncomingOutgoingController {
                 List<IncomingOutgoing> incomingOutgoings = incomingOutgoingService.queryByPager(pager);
                 return new Pager4EasyUI<IncomingOutgoing>(pager.getTotalRecords(), incomingOutgoings);
             } else {
-                logger.info("此用户无拥有此方法的角色");
+                logger.info("此用户无拥有收支记录分页查询的角色");
                 return null;
             }
         } else {
@@ -81,7 +81,7 @@ public class IncomingOutgoingController {
                 List<IncomingOutgoing> incomingOutgoings = incomingOutgoingService.queryByPagerDisable(pager);
                 return new Pager4EasyUI<IncomingOutgoing>(pager.getTotalRecords(), incomingOutgoings);
             } else {
-                logger.info("此用户无拥有此方法的角色");
+                logger.info("此用户无拥禁用收支记录分页查询的角色");
                 return null;
             }
         } else {
@@ -113,7 +113,7 @@ public class IncomingOutgoingController {
                     return ControllerResult.getFailResult("操作失败");
                 }
             } else {
-                logger.info("此用户无拥有此方法的角色");
+                logger.info("此用户无拥启用和禁用收支记录的角色");
                 return null;
             }
         } else {
@@ -136,7 +136,7 @@ public class IncomingOutgoingController {
                 incomingOutgoingService.insert(incomingOutgoing);
                 return ControllerResult.getSuccessResult("添加成功");
             } else {
-                logger.info("此用户无拥有此方法的角色");
+                logger.info("此用户无拥添加收支记录的角色");
                 return null;
             }
         } else {
@@ -159,7 +159,7 @@ public class IncomingOutgoingController {
                 incomingOutgoingService.update(incomingOutgoing);
                 return ControllerResult.getSuccessResult("修改成功");
             } else {
-                logger.info("此用户无拥有此方法的角色");
+                logger.info("此用户无拥有修改收支记录的角色");
                 return null;
             }
         } else {

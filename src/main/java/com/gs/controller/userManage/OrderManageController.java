@@ -43,9 +43,7 @@ public class OrderManageController {
     @RequestMapping(value = "queryAll",method = RequestMethod.GET)
     public List<ComboBox4EasyUI> queryAllWork(){
         if(SessionUtil.isLogin(session)) {
-            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员," +
-                    "汽车公司总技师,汽车公司技师,汽车公司学徒,汽车公司销售人员,汽车公司财务人员,汽车公司采购人员," +
-                    "汽车公司库管人员,汽车公司人力资源管理部";
+            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师,汽车公司学徒,汽车公司销售人员,汽车公司财务人员,汽车公司采购人员,汽车公司库管人员,汽车公司人力资源管理部";
             if(RoleUtil.checkRoles(roles)) {
                 logger.info("查询所有订单");
                 List<WorkInfo> workInfosList = workInfoService.queryAll();
@@ -58,7 +56,7 @@ public class OrderManageController {
                 }
                 return comboxs;
             }else{
-                logger.info("此用户无拥有此方法角色");
+                logger.info("此用户无拥有工单查询方法的角色");
                 return null;
             }
         }else{
@@ -77,7 +75,7 @@ public class OrderManageController {
     @RequestMapping(value = "queryByPager",method = RequestMethod.GET)
     public Pager4EasyUI<WorkInfo> queryByPager(httpSession session, @Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
         if(SessionUtil.isLogin(session)) {
-                String roles="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员";
+          String roles="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员";
             if(RoleUtil.checkRoles(roles)) {
                 Pager pager = new Pager();
                 pager.setPageNo(Integer.valueOf(pageNumber));
@@ -86,7 +84,7 @@ public class OrderManageController {
                 List<WorkInfo> worksList = workInfoService.queryByPager(pager);
                 return new Pager4EasyUI<WorkInfo>(pager.getTotalRecords(), worksList);
             }else{
-                logger.info("此用户无拥有此方法角色");
+                logger.info("此用户无拥有可用工单分页查询的角色");
                 return null;
             }
         }else{
@@ -115,7 +113,7 @@ public class OrderManageController {
                 List<WorkInfo> worksList = workInfoService.queryByPagerschelude(pager);
                 return new Pager4EasyUI<WorkInfo>(pager.getTotalRecords(), worksList);
             }else{
-                logger.info("此用户无拥有此方法角色");
+                logger.info("此用户无拥有维修保养进度分页查询的角色");
                 return null;
             }
         }else{
@@ -145,7 +143,7 @@ public class OrderManageController {
     @RequestMapping(value="queryByPagerDisable", method = RequestMethod.GET)
     public Pager4EasyUI<WorkInfo> queryByPagerDisable(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
         if(SessionUtil.isLogin(session)) {
-            String roles="汽车公司总技师,公司超级管理员";
+            String roles="汽车公司总技师,汽车公司技师,公司超级管理员,公司普通管理员";
             if(RoleUtil.checkRoles(roles)) {
                 logger.info("分页查询所有被禁用登记记录");
                 Pager pager = new Pager();
@@ -155,7 +153,7 @@ public class OrderManageController {
                 List<WorkInfo> worklLis = workInfoService.queryByPagerDisable(pager);
                 return new Pager4EasyUI<WorkInfo>(pager.getTotalRecords(), worklLis);
             }else{
-                logger.info("此用户无拥有此方法角色");
+                logger.info("此用户无拥有查询未完成工单的角色");
                 return null;
             }
         }else{
@@ -188,7 +186,7 @@ public class OrderManageController {
     @RequestMapping(value = "update", method = RequestMethod.POST)
     public ControllerResult updateWork(WorkInfo workInfo) {
         if(SessionUtil.isLogin(session)) {
-            String roles="汽车公司总技师,公司超级管理员";
+            String roles="汽车公司总技师,汽车公司技师,公司超级管理员,公司普通管理员";
             if(RoleUtil.checkRoles(roles)) {
                 if(workInfo!=null && !workInfo.equals("")){
                     logger.info("修改工单");
@@ -199,14 +197,13 @@ public class OrderManageController {
                     return ControllerResult.getFailResult("修改失败，请输入正确的信息");
                 }
             }else{
-                logger.info("此用户无拥有此方法角色");
-                return null;
+                logger.info("此用户无拥有修改工单的角色");
+                return ControllerResult.getNotRoleResult("权限不足");
             }
         }else{
             logger.info("请先登录");
-            return null;
+            return ControllerResult.getNotLoginResult("登录信息无效，请重新登录");
         }
-
     }
 
 
@@ -233,13 +230,14 @@ public class OrderManageController {
                     return ControllerResult.getFailResult("操作失败");
                 }
             }else{
-                logger.info("此用户无拥有此方法角色");
-                return null;
+                logger.info("此用户无拥有工单更改状态角色");
+                return ControllerResult.getNotRoleResult("权限不足");
             }
         }else{
-                logger.info("请先登录");
-                return null;
-                }
+            logger.info("请先登录");
+            return ControllerResult.getNotLoginResult("登录信息无效，请重新登录");
+        }
+
     }
 
     /**
