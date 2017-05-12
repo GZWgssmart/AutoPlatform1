@@ -2,6 +2,7 @@ package com.gs.service.impl;
 
 import com.gs.bean.CarPlate;
 import com.gs.bean.Checkin;
+import com.gs.bean.User;
 import com.gs.dao.CarPlateDAO;
 import com.gs.service.CarPlateService;
 import org.springframework.stereotype.Service;
@@ -9,6 +10,9 @@ import javax.annotation.Resource;
 import java.util.List;
 
 import com.gs.common.bean.Pager;
+
+import static org.apache.shiro.web.filter.mgt.DefaultFilter.user;
+
 /**
 *由CSWangBin技术支持
 *
@@ -31,18 +35,18 @@ public class CarPlateServiceImpl implements CarPlateService {
 	public int batchDelete(List<CarPlate> list) { return carPlateDAO.batchDelete(list); }
 	public int update(CarPlate carPlate) { return carPlateDAO.update(carPlate); }
 	public int batchUpdate(List<CarPlate> list) { return carPlateDAO.batchUpdate(list); }
-	public List<CarPlate> queryAll() { return carPlateDAO.queryAll(); }
+	public List<CarPlate> queryAll(User user) { return carPlateDAO.queryAll(user); }
 
 	@Override
 	public List<CarPlate> queryAll(String status) {
-		return carPlateDAO.queryAll();
+		return carPlateDAO.queryAll(status);
 	}
 
 	public List<CarPlate> queryByStatus(String status) { return carPlateDAO.queryAll(status); }
 	public CarPlate query(CarPlate carPlate) { return carPlateDAO.query(carPlate); }
 	public CarPlate queryById(String id) { return carPlateDAO.queryById(id); }
 	public List<CarPlate> queryByPager(Pager pager) { return carPlateDAO.queryByPager(pager); }
-	public int count() { return carPlateDAO.count(); }
+	public int count(User user) { return carPlateDAO.count(user); }
 	public int inactive(String id) { return carPlateDAO.inactive(id); }
 	public int active(String id) { return carPlateDAO.active(id); }
 
@@ -50,15 +54,16 @@ public class CarPlateServiceImpl implements CarPlateService {
 		return carPlateDAO.queryByPagerDisable(pager);
 	}
 
-	public int countByDisable() {
-		return carPlateDAO.countByDisable();
+	@Override
+	public int countByDisable(User user) {
+		return carPlateDAO.countByDisable(user);
 	}
 
 	public List<CarPlate> blurredQuery(Pager pager, CarPlate carPlate) {
-		return null;
+		return carPlateDAO.blurredQuery(pager,carPlate);
 	}
-
-	public int countByBlurred(CarPlate carPlate) {
-		return 0;
+	@Override
+	public int countByBlurred(CarPlate carPlate, User user) {
+		return carPlateDAO.countByBlurred(carPlate,user);
 	}
 }

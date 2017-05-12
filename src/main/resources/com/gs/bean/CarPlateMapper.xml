@@ -8,31 +8,45 @@
     <result column="plateStatus" property="plateStatus" jdbcType="VARCHAR" />
   </resultMap>
 
-    <select id="queryAll" resultMap="plateMap">
+    <!--查询所有车牌-->
+    <select id="queryAll" resultMap="plateMap" parameterType="com.gs.bean.User">
         <![CDATA[
-           select *  from t_car_plate
-        ]]>
-    </select>
-
-     <select id="queryByPager" resultMap="plateMap"  parameterType="com.gs.common.bean.Pager">
-          <![CDATA[
-            select *  from t_car_plate cp where cp.plateStatus = 'Y'
+              select *  from  t_car_plate cp
            ]]>
-          limit #{beginIndex}, #{pageSize}
-      </select>
+        <if test="companyId != '' and companyId !=null">
+               and cp.companyId = #{user.companyId}
+           </if>
+        </select>
 
-    <select id="count" resultType="int" >
-        <![CDATA[
-      select count(plateId) from t_car_plate cp where cp.plateStatus = 'Y'
-    ]]>
-    </select>
+        <!--分页查询所有车牌-->
+         <select id="queryByPager" resultMap="plateMap"  parameterType="com.gs.common.bean.Pager">
+             <![CDATA[
+              select *  from t_car_plate cp where cp.plateStatus = 'Y'
+             ]]>
+             <if test="user.companyId != '' and user.companyId !=null">
+               and cp.companyId = #{user.companyId}
+             </if>
+              limit #{beginIndex}, #{pageSize}
+          </select>
 
+        <!--分页查询车牌总数-->
+        <select id="count" resultType="int" parameterType="com.gs.bean.User">
+            <![CDATA[
+          select count(plateId) from t_car_plate cp where cp.plateStatus = 'Y'
+        ]]>
+            <if test="companyId != '' and companyId !=null">
+                and cp.companyId = #{user.companyId}
+            </if>
+        </select>
+
+    <!--添加车牌-->
       <insert id="insert" parameterType="carplate">
          <![CDATA[
         insert into t_car_plate(plateId, plateName, plateDes, plateStatus) values(uuid(), #{plateName}, #{plateDes}, 'Y')
          ]]>
       </insert>
 
+    <!--修改车牌-->
       <update id="update" parameterType="carplate">
           <![CDATA[
         update t_car_plate set plateName = #{plateName},plateDes = #{plateDes} where plateId = #{plateId}
@@ -44,13 +58,20 @@
         <![CDATA[
        select * from t_car_plate cp where cp.plateStatus = 'N'
     ]]>
+        <if test="user.companyId != '' and user.companyId !=null">
+            and cp.companyId = #{user.companyId}
+        </if>
         limit #{beginIndex}, #{pageSize}
     </select>
+
     <!-- 分页查询禁用个数 -->
-    <select id="countByDisable" resultType="int" >
+    <select id="countByDisable" resultType="int" parameterType="com.gs.bean.User">
         <![CDATA[
       select count(plateId) from t_car_plate cp where cp.plateStatus = 'N'
     ]]>
+        <if test="companyId != '' and companyId !=null">
+            and cp.companyId = #{user.companyId}
+        </if>
     </select>
 
     <!--冻结数据-->
