@@ -1,5 +1,5 @@
 $(function () {
-    var roles = "平台管理员,汽修公司管理员,汽修公司财务人";
+    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员";
     $.post("/user/isLogin/"+roles, function (data) {
         if(data.result == 'success'){
             initTable('table', '/charge/queryByPager'); // 初始化表格
@@ -27,7 +27,7 @@ $(function () {
 
 // 查看全部可用
 function showAvailable(){
-    var roles = "平台管理员,汽修公司管理员,汽修公司财务人";
+    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员";
     $.post("/user/isLogin/"+roles, function (data) {
         if(data.result == 'success'){
             initTable('table', '/charge/queryByPager');
@@ -56,7 +56,7 @@ function showAvailable(){
 
 // 查看全部禁用
 function showDisable(){
-    var roles = "平台管理员,汽修公司管理员,汽修公司财务人";
+    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员";
     $.post("/user/isLogin/"+roles, function (data) {
         if(data.result == 'success'){
             initTable('table', '/charge/queryByPagerDisable');
@@ -83,7 +83,7 @@ function showDisable(){
 
 // 模糊查询
 function blurredQuery(){
-    var roles = "平台管理员,汽修公司管理员,汽修公司财务人";
+    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员";
     $.post("/user/isLogin/"+roles, function (data) {
         if(data.result == 'success'){
             var button = $("#ulButton");// 获取模糊查询按钮

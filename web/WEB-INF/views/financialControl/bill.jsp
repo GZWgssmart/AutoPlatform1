@@ -17,10 +17,10 @@
     <link rel="stylesheet" href="/static/css/bootstrap-validate/bootstrapValidator.min.css">
 </head>
 <body>
-<%@include file="../backstage/contextmenu.jsp"%>
+<%@include file="../backstage/contextmenu.jsp" %>
 
 <div class="container">
-    <div class="panel-body" style="padding-bottom:0px;"  >
+    <div class="panel-body" style="padding-bottom:0px;">
         <!--show-refresh, show-toggle的样式可以在bootstrap-table.js的948行修改-->
         <!-- table里的所有属性在bootstrap-table.js的240行-->
         <table id="table" style="table-layout: fixed">
@@ -34,7 +34,8 @@
                 <th data-width="90" data-field="maintainRecord.checkin.color.colorName">汽车颜色</th>
                 <th data-width="90" data-field="maintainRecord.checkin.plate.plateName">汽车车牌</th>
                 <th data-width="90" data-field="maintainRecord.checkin.carPlate">车牌号码</th>
-                <th data-width="180" data-field="maintainRecord.pickupTime" data-formatter="formatterDate">维修保养记录提车时间</th>
+                <th data-width="180" data-field="maintainRecord.pickupTime" data-formatter="formatterDate">维修保养记录提车时间
+                </th>
                 <th data-width="150" data-field="maintainRecord.recordDes">维修保养记录描述</th>
                 <th data-width="90" data-field="paymentMethod">付款方式</th>
                 <th data-width="90" data-field="chargeBillMoney">总金额</th>
@@ -48,33 +49,40 @@
             </thead>
         </table>
         <div id="toolbar" class="btn-group">
-            <button id="btn_available" type="button" class="btn btn-default" onclick="showAvailable();">
-                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>可用收费单据
-            </button>
-            <button id="btn_disable" type="button" class="btn btn-default" onclick="showDisable();">
-                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>禁用收费单据
-            </button>
-            <div class="input-group" style="width:350px;float:left;padding:0;margin:0 0 0 -1px;">
-                <div class="input-group-btn">
-                    <button type="button" id="ulButton" class="btn btn-default" style="border-radius:0px;"
-                            data-toggle="dropdown">车主/电话/汽车公司/车牌号<span class="caret"></span></button>
-                    <ul class="dropdown-menu pull-right">
-                        <li><a onclick="onclikLi(this)">车主/电话/汽车公司/车牌号</a></li>
-                        <li class="divider"></li>
-                        <li><a onclick="onclikLi(this)">车主</a></li>
-                        <li class="divider"></li>
-                        <li><a onclick="onclikLi(this)">电话</a></li>
-                        <li class="divider"></li>
-                        <li><a onclick="onclikLi(this)">汽车公司</a></li>
-                        <li class="divider"></li>
-                        <li><a onclick="onclikLi(this)">车牌号</a></li>
-                    </ul>
-                </div><!-- /btn-group -->
-                <input id="ulInput" class="form-control" onkeypress="if(event.keyCode==13) {blurredQuery();}">
-                <a href="javaScript:;" onclick="blurredQuery()"><span
-                        class="glyphicon glyphicon-search search-style"></span></a>
-                </input>
-            </div><!-- /input-group -->
+            <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员">
+                <button id="btn_available" type="button" class="btn btn-default" onclick="showAvailable();">
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>可用收费单据
+                </button>
+            </shiro:hasAnyRoles>
+            <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员">
+                <button id="btn_disable" type="button" class="btn btn-default" onclick="showDisable();">
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>禁用收费单据
+                </button>
+            </shiro:hasAnyRoles>
+            <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员">
+                <div class="input-group" style="width:350px;float:left;padding:0;margin:0 0 0 -1px;">
+                    <div class="input-group-btn">
+                        <button type="button" id="ulButton" class="btn btn-default" style="border-radius:0px;"
+                                data-toggle="dropdown">车主/电话/汽车公司/车牌号<span class="caret"></span></button>
+                        <ul class="dropdown-menu pull-right">
+                            <li><a onclick="onclikLi(this)">车主/电话/汽车公司/车牌号</a></li>
+                            <li class="divider"></li>
+                            <li><a onclick="onclikLi(this)">车主</a></li>
+                            <li class="divider"></li>
+                            <li><a onclick="onclikLi(this)">电话</a></li>
+                            <li class="divider"></li>
+                            <li><a onclick="onclikLi(this)">汽车公司</a></li>
+                            <li class="divider"></li>
+                            <li><a onclick="onclikLi(this)">车牌号</a></li>
+                        </ul>
+                    </div><!-- /btn-group -->
+                    <input id="ulInput" class="form-control" onkeypress="if(event.keyCode==13) {blurredQuery();}">
+                    <a href="javaScript:;" onclick="blurredQuery()"><span
+                            class="glyphicon glyphicon-search search-style"></span></a>
+                    </input>
+                </div>
+                <!-- /input-group -->
+            </shiro:hasAnyRoles>
         </div>
     </div>
 </div>

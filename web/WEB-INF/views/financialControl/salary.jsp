@@ -36,22 +36,22 @@
     </thead>
 </table>
 <div id="toolbar" class="btn-group">
-<shiro:hasAnyRoles name="平台管理员,汽修公司管理员,汽修公司财务人">
+<shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员">
     <button id="btn_add" type="button" class="btn btn-default" onclick="showAdd();">
     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
     </button>
 
-    <shiro:hasAnyRoles name="平台管理员,汽修公司管理员,汽修公司财务人">
+    <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员">
         <button id="btn_edit" type="button" class="btn btn-default" onclick="showEdit();">
             <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
         </button>
     </shiro:hasAnyRoles>
-    <shiro:hasAnyRoles name="平台管理员,汽修公司管理员,汽修公司财务人">
+    <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员">
         <button type="button" class="btn btn-default">
             <a href="/salary/exportExcel">导出数据</a>
         </button>
     </shiro:hasAnyRoles>
-    <shiro:hasAnyRoles name="平台管理员,汽修公司管理员,汽修公司财务人">
+    <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员">
         <button type="button" class="btn btn-default">
             <a href="javascript:void(0)" onclick="importData();">导入数据</a>
         </button>
