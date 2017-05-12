@@ -79,15 +79,15 @@
                             <h2 style="color: white">注册账号</h2>
                         </div>
                         <div class="form-content">
-                            <form class="form" action="" method="post" onsubmit="return check();">
+                            <form class="form" id="regform">
                                 <div class="form-group">
-                                    <input name="email" type="text" id="phone" class="form-control" onblur="checkphone()" placeholder="请输入您的手机号" required>
+                                    <input name="phone" type="text" id="phone" class="form-control" placeholder="请输入您的手机号" >
                                     <span class="caveat" id="phone-caveat">手机号错误</span>
                                 </div>
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-xs-7 col-md-8">
-                                            <input name="phonecode" type="text" id="phone-code" class="form-control" placeholder="请输入验证码" required>
+                                            <input name="phonecode" style="width: 105%" type="text" id="phone-code" class="form-control" placeholder="请输入验证码" >
                                         </div>
                                         <div class="col-xs-5 col-md-4">
                                             <a class="btn btn-info" style="margin-bottom: 0;">发送验证码</a>
@@ -96,18 +96,18 @@
                                     <span class="caveat" id="phonecode-caveat">验证码错误</span>
                                 </div>
                                 <div class="form-group">
-                                    <input name="password" onblur="checkpwd()" type="password" id="password1" class="form-control" placeholder="请输入密码" required>
+                                    <input name="password" type="password" id="password1" class="form-control" placeholder="请输入密码" >
                                     <span class="caveat" id="pwd1-caveat">密码至少六位并且小于十八位</span>
                                 </div>
                                 <div class="form-group">
-                                    <input name="password2" onblur="checkpwd2()" type="password" id="password2" class="form-control" placeholder="请再次输入密码" required>
+                                    <input name="password2" type="password" id="password2" class="form-control" placeholder="请再次输入密码" >
                                     <span class="caveat" id="pwd2-caveat">输入密码不一致</span>
                                 </div>
                                 <div class="form-group">
-                                    <input type="checkbox" required style="position: relative;top:2px;width: 14px;height: 14px;"><a class="surre" href="javaScript:;" style="padding: 3px 3px;font-size: 16px;">  我同意《用户服务协议》</a>
+                                    <input type="checkbox"  style="position: relative;top:2px;width: 14px;height: 14px;"><a class="surre" href="javaScript:;" style="padding: 3px 3px;font-size: 16px;">  我同意《用户服务协议》</a>
                                 </div>
                                 <div class="form-group">
-                                    <button type="s ubmit" id="resbtn" class="btn btn-success btn-block" value="确认注册">确认注册</button>
+                                    <button type="submit" id="resbtn" class="btn btn-success btn-block" value="确认注册" onclick="regSubmit()">确认注册</button>
                                     <button type="reset" class="btn btn-info btn-block" onclick="reg()" value="登录">登录</button>
                                 </div>
                             </form>
@@ -137,6 +137,7 @@
             $(".form-content form input").each(function () {
                 $(this).val('');
             });
+            validator2("regform");
             document.title = "注册";
         }else if(reg.css("display") == "block"){
             reg.css("display","none");
@@ -144,6 +145,7 @@
             $(".form-content form input").each(function () {
                 $(this).val('');
             });
+            validator("loginForm");
             document.title = "账号登录";
         };
 
@@ -159,59 +161,7 @@
             document.getElementById("resbtn").click();
         }
     }
-    /*注册验证*/
-    /*验证手机号*/
-    var checks;
-    function checkphone(){
-        var phoneValue = document.getElementById("phone").value;
-        var phone = document.getElementById("phone");
-        var phoneCaveat =document.getElementById("phone-caveat");
-        if(phoneValue.length > 0 && !(/^1[34578]\d{9}$/).test(phoneValue)){
-            phone.style.borderColor = "red";
-            phoneCaveat.style.display = "block";
-            checks = false;
-        }else if(/^1[34578]\d{9}$/.test(phoneValue)){
-            phone.style.borderColor = "#ccc";
-            phoneCaveat.style.display = "none";
-            checks = true;
-        }
-    }
-    /*验证密码*/
-    var pwd = document.getElementById("password1");
-    var pwd1caveat = document.getElementById("pwd1-caveat");
-    var pwd2 = document.getElementById("password2");
-    var pwd2caveat = document.getElementById("pwd2-caveat");
-    function checkpwd(){
-        if(pwd.value.length < 6 || pwd.value.length > 18){
-            pwd.style.borderColor = "red";
-            pwd1caveat.style.display ="block";
-            checks = false;
-        }else if(pwd.value.length >= 6 && pwd.value.length <= 18){
-            pwd.style.borderColor = "#ccc";
-            pwd1caveat.style.display = "none";
-            checks = true;
-        }
-    }
-    function checkpwd2(){
-        if(pwd.value != pwd2.value){
-            pwd2.style.borderColor = "red";
-            pwd2caveat.style.display ="block";
-            checks = false;
-        }else if(pwd.value == pwd2.value){
-            pwd2.style.borderColor = "#ccc";
-            pwd2caveat.style.display ="none";
-            checks = true;
-        }
-    }
-    function check(){
-        if(checks == true){
-            alert(checks)
-            return true;
-        }else{
-            alert(checks)
-            return false;
-        }
-    }
+
 
     $(function () {
         function bodyScroll(event) {

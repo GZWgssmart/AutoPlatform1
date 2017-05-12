@@ -23,7 +23,7 @@
                     <li><a href="#top">主页</a></li>
                     <li class="icon-li"><a href="#mc2-des" id="pt">平台介绍</a></li>
                     <li class="icon-li"><a href="#mc4-des" id="gn">功能介绍</a></li>
-                    <li class="icon-li"><a href="reg">登录</a></li>
+                    <li class="icon-li"><a href="user/loginPage">登录</a></li>
                     <li class="icon-li"><a href="javaScript:;">关于我们</a></li>
                     <li id="menu-bg"><a href="javaScript:;">汽修厂入驻</a></li>
                     <li id="menu-bg2"><a href="javaScript:;">汽配商入驻</a></li>

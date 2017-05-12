@@ -69,8 +69,8 @@
             </thead>
         </table>
         <div id="toolbar" class="btn-group">
-            <button id="btn_edit" type="button" class="btn btn-default" onclick="showEdit();">
-                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
+            <button id="btn_available" type="button" class="btn btn-default" onclick="showInfo();">
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span> 查看详情
             </button>
         </div>
     </div>
@@ -92,5 +92,20 @@
 <script src="/static/js/bootstrap-switch/bootstrap-switch.js"></script>
 <script src="/static/js/bootstrap-validate/bootstrapValidator.js"></script>
 <script src="/static/js/backstage/customerBooking/phoneResrvation.js"></script>
+<script>
+    function showInfo() {
+        var row = $('table').bootstrapTable('getSelections');
+        if (row.length > 0) {
+            /*显示窗口*/
+            alert("好棒棒哦！");
+        } else {
+            swal({
+                "title": "",
+                "text": "请先选择一条数据",
+                "type": "warning"
+            })
+        }
+    }
+</script>
 </body>
 </html>
