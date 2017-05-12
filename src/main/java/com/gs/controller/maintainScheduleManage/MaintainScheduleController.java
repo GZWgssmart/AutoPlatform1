@@ -56,7 +56,7 @@ public class MaintainScheduleController {
                 }
                 return comboxs;
             }else{
-                logger.info("此用户无拥有此方法角色");
+                logger.info("此用户没有查询进度方法的角色");
                 return null;
             }
         }else{
@@ -85,7 +85,7 @@ public class MaintainScheduleController {
                 List<MaintainSchedule> maintainSchedules = maintainScheduleService.queryByPager(pager);
                 return new Pager4EasyUI<MaintainSchedule>(pager.getTotalRecords(), maintainSchedules);
             }else{
-                logger.info("此用户无拥有此方法角色");
+                logger.info("此用户无拥有查询进度方法的角色");
                 return null;
             }
         }else{
@@ -113,7 +113,7 @@ public class MaintainScheduleController {
                     return ControllerResult.getFailResult("添加失败，请检查输入的信息是否有误");
                 }
             }else{
-                logger.info("此用户无拥有此方法角色");
+                logger.info("此用户无拥有添加进度方法的角色");
                 return null;
             }
         }else{
@@ -136,7 +136,7 @@ public class MaintainScheduleController {
                     return ControllerResult.getFailResult("修改失败");
                 }
             }else{
-                logger.info("此用户无拥有此方法角色");
+                logger.info("此用户无拥有更新方法的角色");
                 return null;
             }
         }else{
