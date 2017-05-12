@@ -2,7 +2,30 @@
  * 初始化表格
  */
 $(function () {
-    initTable("table", "/outGoingType/queryByPager"); // 初始化表格
+    var roles = "平台管理员,汽修公司管理员,汽修公司财务人";
+    $.post("/user/isLogin/"+roles, function (data) {
+        if(data.result == 'success'){
+            initTable("table", "/outGoingType/queryByPager"); // 初始化表格
+        }else if(data.result == 'notLogin'){
+            swal({title:"",
+                    text:data.message,
+                    confirmButtonText:"确认",
+                    type:"error"}
+                ,function(isConfirm){
+                    if(isConfirm){
+                        top.location = "/user/loginPage";
+                    }else{
+                        top.location = "/user/loginPage";
+                    }
+                })
+        }else if(data.result == 'notRole'){
+            swal({title:"",
+                text:data.message,
+                confirmButtonText:"确认",
+                type:"error"})
+        }
+    });
+
 });
 
 /**
@@ -44,7 +67,30 @@ function openStatusFormatter(index, row) {
  * @param id
  */
 function searchDisableStatus() {
-    initTable('table', '/outGoingType/queryByPagerDisable');
+    var roles = "平台管理员,汽修公司管理员,汽修公司财务人";
+    $.post("/user/isLogin/"+roles, function (data) {
+        if(data.result == 'success'){
+            initTable('table', '/outGoingType/queryByPagerDisable');
+        }else if(data.result == 'notLogin'){
+            swal({title:"",
+                    text:data.message,
+                    confirmButtonText:"确认",
+                    type:"error"}
+                ,function(isConfirm){
+                    if(isConfirm){
+                        top.location = "/user/loginPage";
+                    }else{
+                        top.location = "/user/loginPage";
+                    }
+                })
+        }else if(data.result == 'notRole'){
+            swal({title:"",
+                text:data.message,
+                confirmButtonText:"确认",
+                type:"error"})
+        }
+    });
+
 }
 
 /**
@@ -52,7 +98,30 @@ function searchDisableStatus() {
  * @param id
  */
 function searchRapidStatus() {
-    initTable('table', '/outGoingType/queryByPager');
+    var roles = "平台管理员,汽修公司管理员,汽修公司财务人";
+    $.post("/user/isLogin/"+roles, function (data) {
+        if(data.result == 'success'){
+            initTable('table', '/outGoingType/queryByPager');
+        }else if(data.result == 'notLogin'){
+            swal({title:"",
+                    text:data.message,
+                    confirmButtonText:"确认",
+                    type:"error"}
+                ,function(isConfirm){
+                    if(isConfirm){
+                        top.location = "/user/loginPage";
+                    }else{
+                        top.location = "/user/loginPage";
+                    }
+                })
+        }else if(data.result == 'notRole'){
+            swal({title:"",
+                text:data.message,
+                confirmButtonText:"确认",
+                type:"error"})
+        }
+    });
+
 }
 
 
@@ -60,33 +129,79 @@ function searchRapidStatus() {
  * 点击修改窗口
  */
 function showEdit() {
-    $("#editButton").removeAttr("disabled");
-    var row = $('table').bootstrapTable('getSelections');
-    if (row.length > 0) {
+    var roles = "平台管理员,汽修公司管理员,汽修公司财务人";
+    $.post("/user/isLogin/"+roles, function (data) {
+        if(data.result == 'success'){
+            $("#editButton").removeAttr("disabled");
+            var row = $('table').bootstrapTable('getSelections');
+            if (row.length > 0) {
 //                $('#editId').val(row[0].id);
 //                $('#editName').val(row[0].name);
 //                $('#editPrice').val(row[0].price);
-        $("#edit").modal('show'); // 显示弹窗
-        var outGoingType = row[0];
-        $("#editForm").fill(outGoingType);
-        validator("editForm");
-    } else {
-        swal({
-            title: "",
-            text: "请先选择一行数据",
-            type: "warning"
-        })
-    }
+                $("#edit").modal('show'); // 显示弹窗
+                var outGoingType = row[0];
+                $("#editForm").fill(outGoingType);
+                validator("editForm");
+            } else {
+                swal({
+                    title: "",
+                    text: "请先选择一行数据",
+                    type: "warning"
+                })
+            }
+        }else if(data.result == 'notLogin'){
+            swal({title:"",
+                    text:data.message,
+                    confirmButtonText:"确认",
+                    type:"error"}
+                ,function(isConfirm){
+                    if(isConfirm){
+                        top.location = "/user/loginPage";
+                    }else{
+                        top.location = "/user/loginPage";
+                    }
+                })
+        }else if(data.result == 'notRole'){
+            swal({title:"",
+                text:data.message,
+                confirmButtonText:"确认",
+                type:"error"})
+        }
+    });
+
 }
 
 /**
  * 点击添加窗口
  */
 function showAdd() {
-    $("#addButton").removeAttr("disabled");
-    $("#outTypeName").val("");
-    $("#add").modal('show');
-    validator("addForm");
+    var roles = "平台管理员,汽修公司管理员,汽修公司财务人";
+    $.post("/user/isLogin/"+roles, function (data) {
+        if(data.result == 'success'){
+            $("#addButton").removeAttr("disabled");
+            $("#outTypeName").val("");
+            $("#add").modal('show');
+            validator("addForm");
+        }else if(data.result == 'notLogin'){
+            swal({title:"",
+                    text:data.message,
+                    confirmButtonText:"确认",
+                    type:"error"}
+                ,function(isConfirm){
+                    if(isConfirm){
+                        top.location = "/user/loginPage";
+                    }else{
+                        top.location = "/user/loginPage";
+                    }
+                })
+        }else if(data.result == 'notRole'){
+            swal({title:"",
+                text:data.message,
+                confirmButtonText:"确认",
+                type:"error"})
+        }
+    });
+
 }
 
 /**

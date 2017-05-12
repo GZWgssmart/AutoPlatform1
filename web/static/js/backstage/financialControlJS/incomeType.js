@@ -4,7 +4,30 @@
  * 初始化表格
  */
 $(function () {
-    initTable("table", "/incomingType/queryByPager"); // 初始化表格
+    var roles = "平台管理员,汽修公司管理员,汽修公司财务人";
+    $.post("/user/isLogin/"+roles, function (data) {
+        if(data.result == 'success'){
+            initTable("table", "/incomingType/queryByPager"); // 初始化表格
+        }else if(data.result == 'notLogin'){
+            swal({title:"",
+                    text:data.message,
+                    confirmButtonText:"确认",
+                    type:"error"}
+                ,function(isConfirm){
+                    if(isConfirm){
+                        top.location = "/user/loginPage";
+                    }else{
+                        top.location = "/user/loginPage";
+                    }
+                })
+        }else if(data.result == 'notRole'){
+            swal({title:"",
+                text:data.message,
+                confirmButtonText:"确认",
+                type:"error"})
+        }
+    });
+
 });
 
 
@@ -46,7 +69,31 @@ function openStatusFormatter(index, row) {
  * @param id
  */
 function searchDisableStatus() {
-    initTable('table', '/incomingType/queryByPagerDisable');
+    var roles = "平台管理员,汽修公司管理员,汽修公司财务人";
+    $.post("/user/isLogin/"+roles, function (data) {
+        if(data.result == 'success'){
+            initTable('table', '/incomingType/queryByPagerDisable');
+        }else if(data.result == 'notLogin'){
+            swal({title:"",
+                    text:data.message,
+                    confirmButtonText:"确认",
+                    type:"error"}
+                ,function(isConfirm){
+                    if(isConfirm){
+                        top.location = "/user/loginPage";
+                    }else{
+                        top.location = "/user/loginPage";
+                    }
+                })
+        }else if(data.result == 'notRole'){
+            swal({title:"",
+                text:data.message,
+                confirmButtonText:"确认",
+                type:"error"})
+        }
+    });
+
+
 }
 
 /**
@@ -54,7 +101,30 @@ function searchDisableStatus() {
  * @param id
  */
 function searchRapidStatus() {
-    initTable('table', '/incomingType/queryByPager');
+    var roles = "平台管理员,汽修公司管理员,汽修公司财务人";
+    $.post("/user/isLogin/"+roles, function (data) {
+        if(data.result == 'success'){
+            initTable('table', '/incomingType/queryByPager');
+        }else if(data.result == 'notLogin'){
+            swal({title:"",
+                    text:data.message,
+                    confirmButtonText:"确认",
+                    type:"error"}
+                ,function(isConfirm){
+                    if(isConfirm){
+                        top.location = "/user/loginPage";
+                    }else{
+                        top.location = "/user/loginPage";
+                    }
+                })
+        }else if(data.result == 'notRole'){
+            swal({title:"",
+                text:data.message,
+                confirmButtonText:"确认",
+                type:"error"})
+        }
+    });
+
 }
 
 
@@ -62,32 +132,79 @@ function searchRapidStatus() {
  * 修改窗口
  */
 function showEdit(){
-    $("#editButton").removeAttr("disabled");
-    var row =  $('table').bootstrapTable('getSelections');
-    if(row.length >0) {
+    var roles = "平台管理员,汽修公司管理员,汽修公司财务人";
+    $.post("/user/isLogin/"+roles, function (data) {
+        if(data.result == 'success'){
+            $("#editButton").removeAttr("disabled");
+            var row =  $('table').bootstrapTable('getSelections');
+            if(row.length >0) {
 //                $('#editId').val(row[0].id);
 //                $('#editName').val(row[0].name);
 //                $('#editPrice').val(row[0].price);
-        $("#edit").modal('show'); // 显示弹窗
-        var incomingType = row[0];
-        $("#editForm").fill(incomingType);
-        validator("editForm");
-    }else{
-        swal({
-            title:"",
-            text:"请先选择一行数据",
-            type:"warning"})
-    }
+                $("#edit").modal('show'); // 显示弹窗
+                var incomingType = row[0];
+                $("#editForm").fill(incomingType);
+                validator("editForm");
+            }else{
+                swal({
+                    title:"",
+                    text:"请先选择一行数据",
+                    type:"warning"})
+            }
+        }else if(data.result == 'notLogin'){
+            swal({title:"",
+                    text:data.message,
+                    confirmButtonText:"确认",
+                    type:"error"}
+                ,function(isConfirm){
+                    if(isConfirm){
+                        top.location = "/user/loginPage";
+                    }else{
+                        top.location = "/user/loginPage";
+                    }
+                })
+        }else if(data.result == 'notRole'){
+            swal({title:"",
+                text:data.message,
+                confirmButtonText:"确认",
+                type:"error"})
+        }
+    });
+
 }
 
 /**
  * 添加窗口
  */
 function showAdd(){
-    $("#inTypeName").val("");
-    $("#add").modal('show');
-    $("#addButton").removeAttr("disabled");
-    validator("addForm");
+    var roles = "平台管理员,汽修公司管理员,汽修公司财务人";
+    $.post("/user/isLogin/"+roles, function (data) {
+        if(data.result == 'success'){
+            $("#inTypeName").val("");
+            $("#add").modal('show');
+            $("#addButton").removeAttr("disabled");
+            validator("addForm");
+        }else if(data.result == 'notLogin'){
+            swal({title:"",
+                    text:data.message,
+                    confirmButtonText:"确认",
+                    type:"error"}
+                ,function(isConfirm){
+                    if(isConfirm){
+                        top.location = "/user/loginPage";
+                    }else{
+                        top.location = "/user/loginPage";
+                    }
+                })
+        }else if(data.result == 'notRole'){
+            swal({title:"",
+                text:data.message,
+                confirmButtonText:"确认",
+                type:"error"})
+        }
+    });
+
+
 }
 
 /**

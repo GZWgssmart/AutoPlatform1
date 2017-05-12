@@ -2,7 +2,29 @@
  * 初始化表格
  */
 $(function () {
-    initTable("table", "/salary/queryByPager"); // 初始化表格
+    var roles = "平台管理员,汽修公司管理员,汽修公司财务人";
+    $.post("/user/isLogin/"+roles, function (data) {
+        if(data.result == 'success'){
+            initTable("table", "/salary/queryByPager/"+roles); // 初始化表格
+        }else if(data.result == 'notLogin'){
+            swal({title:"",
+                    text:data.message,
+                    confirmButtonText:"确认",
+                    type:"error"}
+                ,function(isConfirm){
+                    if(isConfirm){
+                        top.location = "/user/loginPage";
+                    }else{
+                        top.location = "/user/loginPage";
+                    }
+                })
+        }else if(data.result == 'notRole'){
+            swal({title:"",
+                text:data.message,
+                confirmButtonText:"确认",
+                type:"error"})
+        }
+    });
 });
 
 
@@ -75,31 +97,76 @@ function formatterDate(value) {
 
 
 function showEdit() {
-    $("#editButton").removeAttr("disabled");
-    $("input[type=reset]").trigger("click");
-    var row = $('table').bootstrapTable('getSelections');
-    if (row.length > 0) {
-        $("#edit").modal('show'); // 显示弹窗
-        var editDate = document.getElementById("salaryTimeUpdate");
-        var salary = row[0];
-        editDate.val = formatterDate(row[0].salaryTime);
-        $("#editForm").fill(salary);
-        validator("editForm");
+    var roles = "平台管理员,汽修公司管理员,汽修公司财务人";
+    $.post("/user/isLogin/"+roles, function (data) {
+        if(data.result == 'success'){
+            $("#editButton").removeAttr("disabled");
+            $("input[type=reset]").trigger("click");
+            var row = $('table').bootstrapTable('getSelections');
+            if (row.length > 0) {
+                $("#edit").modal('show'); // 显示弹窗
+                var editDate = document.getElementById("salaryTimeUpdate");
+                var salary = row[0];
+                editDate.val = formatterDate(row[0].salaryTime);
+                $("#editForm").fill(salary);
+                validator("editForm");
 
-    } else {
-        swal({
-            title: "",
-            text: "请先选择一行数据",
-            type: "warning"
-        })
-    }
+            } else {
+                swal({
+                    title: "",
+                    text: "请先选择一行数据",
+                    type: "warning"
+                })
+            }
+        }else if(data.result == 'notLogin'){
+            swal({title:"",
+                    text:data.message,
+                    confirmButtonText:"确认",
+                    type:"error"}
+                ,function(isConfirm){
+                    if(isConfirm){
+                        top.location = "/user/loginPage";
+                    }else{
+                        top.location = "/user/loginPage";
+                    }
+                })
+        }else if(data.result == 'notRole'){
+            swal({title:"",
+                text:data.message,
+                confirmButtonText:"确认",
+                type:"error"})
+        }
+    });
 }
 
 function showAdd() {
-    $("input[type=reset]").trigger("click");
-    $("#add").modal('show');
-    $("#addButton").removeAttr("disabled");
-    validator("addForm");
+    var roles = "平台管理员,汽修公司管理员,汽修公司财务人";
+    $.post("/user/isLogin/"+roles, function (data) {
+        if(data.result == 'success'){
+            $("input[type=reset]").trigger("click");
+            $("#add").modal('show');
+            $("#addButton").removeAttr("disabled");
+            validator("addForm");
+        }else if(data.result == 'notLogin'){
+            swal({title:"",
+                    text:data.message,
+                    confirmButtonText:"确认",
+                    type:"error"}
+                ,function(isConfirm){
+                    if(isConfirm){
+                        top.location = "/user/loginPage";
+                    }else{
+                        top.location = "/user/loginPage";
+                    }
+                })
+        }else if(data.result == 'notRole'){
+            swal({title:"",
+                text:data.message,
+                confirmButtonText:"确认",
+                type:"error"})
+        }
+    });
+
 }
 
 /** 选择人员 */

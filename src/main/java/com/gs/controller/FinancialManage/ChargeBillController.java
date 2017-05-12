@@ -38,7 +38,6 @@ public class ChargeBillController {
     @ResponseBody
     @RequestMapping(value = "queryByPager",method = RequestMethod.GET)
     public Pager4EasyUI<ChargeBill> queryByPager(HttpSession session, @Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
-
         if (SessionUtil.isLogin(session)) {
             String roles = "平台管理员,汽修公司管理员,汽修公司财务人员";
             if (RoleUtil.checkRoles(roles)) {
@@ -58,15 +57,11 @@ public class ChargeBillController {
             logger.info("请先登录");
             return null;
         }
-
-
     }
 
     @ResponseBody
     @RequestMapping(value = "queryByPagerDisable",method = RequestMethod.GET)
     public Pager4EasyUI<ChargeBill> queryByPagerDisable(HttpSession session, @Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
-
-
         if (SessionUtil.isLogin(session)) {
             String roles = "平台管理员,汽修公司管理员,汽修公司财务人员";
             if (RoleUtil.checkRoles(roles)) {
@@ -114,6 +109,4 @@ public class ChargeBillController {
         chargeBillService.insert(chargeBill);
         return ControllerResult.getSuccessResult("添加成功");
     }
-
-
 }

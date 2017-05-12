@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <html>
 <head>
     <meta charset="utf-8">
@@ -14,35 +15,43 @@
 </head>
 <body>
 
-<%@include file="../backstage/contextmenu.jsp"%>
+<%@include file="../backstage/contextmenu.jsp" %>
 
 <div class="container">
-    <div class="panel-body" style="padding-bottom:0px;"  >
+    <div class="panel-body" style="padding-bottom:0px;">
         <!--show-refresh, show-toggle的样式可以在bootstrap-table.js的948行修改-->
         <!-- table里的所有属性在bootstrap-table.js的240行-->
         <table id="table">
             <thead>
             <tr>
                 <th data-radio="true"></th>
-                    <th data-field="inTypeName">收入类型</th>
-                    <th data-formatter="statusFormatter">收入类型状态</th>
-                    <th data-formatter="openStatusFormatter">操作</th>
+                <th data-field="inTypeName">收入类型</th>
+                <th data-formatter="statusFormatter">收入类型状态</th>
+                <th data-formatter="openStatusFormatter">操作</th>
             </tr>
             </thead>
         </table>
         <div id="toolbar" class="btn-group">
-            <button id="btn_add" type="button" class="btn btn-default" onclick="showAdd();">
-                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
-            </button>
-            <button id="btn_edit" type="button" class="btn btn-default" onclick="showEdit();">
-                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
-            </button>
-            <button id="searchDisable" type="button" class="btn btn-default" onclick="searchDisableStatus();">
-                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询禁用类型
-            </button>
-            <button id="searchRapid" type="button" class="btn btn-default" onclick="searchRapidStatus();">
-                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询激活类型
-            </button>
+            <shiro:hasAnyRoles name="平台管理员,汽修公司管理员,汽修公司财务人">
+                <button id="btn_add" type="button" class="btn btn-default" onclick="showAdd();">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
+                </button>
+            </shiro:hasAnyRoles>
+            <shiro:hasAnyRoles name="平台管理员,汽修公司管理员,汽修公司财务人">
+                <button id="btn_edit" type="button" class="btn btn-default" onclick="showEdit();">
+                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
+                </button>
+            </shiro:hasAnyRoles>
+            <shiro:hasAnyRoles name="平台管理员,汽修公司管理员,汽修公司财务人">
+                <button id="searchDisable" type="button" class="btn btn-default" onclick="searchDisableStatus();">
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询禁用类型
+                </button>
+            </shiro:hasAnyRoles>
+            <shiro:hasAnyRoles name="平台管理员,汽修公司管理员,汽修公司财务人">
+                <button id="searchRapid" type="button" class="btn btn-default" onclick="searchRapidStatus();">
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询激活类型
+                </button>
+            </shiro:hasAnyRoles>
         </div>
     </div>
 </div>
@@ -60,13 +69,16 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">收入类型：</label>
                         <div class="col-sm-7">
-                            <input type="text" id="inTypeName" name="inTypeName" placeholder="请输入收入类型" class="form-control">
+                            <input type="text" id="inTypeName" name="inTypeName" placeholder="请输入收入类型"
+                                   class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-sm-offset-8">
-                            <button type="button"  class="btn btn-default" data-dismiss="modal">关闭</button>
-                            <button id="addButton" class="btn btn-sm btn-success" onclick="addSubmit();" type="button">保 存</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            <button id="addButton" class="btn btn-sm btn-success" onclick="addSubmit();" type="button">保
+                                存
+                            </button>
                         </div>
                     </div>
                 </form>
@@ -81,8 +93,8 @@
         <div class="modal-content">
             <div class="container" style="width: 80%;">
                 <form class="form-horizontal" role="form" id="editForm">
-                    <input type="hidden"name="inTypeId" define="inTypeName.inTypeId">
-                    <input type="hidden"name="inTypeStatus" define="inTypeName.inTypeStatus">
+                    <input type="hidden" name="inTypeId" define="inTypeName.inTypeId">
+                    <input type="hidden" name="inTypeStatus" define="inTypeName.inTypeStatus">
                     <div class="modal-header" style="overflow:auto;">
                         <h4>修改收入类型</h4>
                     </div>
@@ -90,13 +102,16 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">名称：</label>
                         <div class="col-sm-7">
-                            <input type="text" id="inUpdateTypeName"  define="incomingType.inTypeName"name="inTypeName" class="form-control">
+                            <input type="text" id="inUpdateTypeName" define="incomingType.inTypeName" name="inTypeName"
+                                   class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-sm-offset-8">
                             <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                            <button id="editButton" class="btn btn-sm btn-success" onclick="editSubmit()" type="button">保 存</button>
+                            <button id="editButton" class="btn btn-sm btn-success" onclick="editSubmit()" type="button">
+                                保 存
+                            </button>
                         </div>
                     </div>
                 </form>

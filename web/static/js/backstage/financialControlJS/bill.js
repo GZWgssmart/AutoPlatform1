@@ -1,76 +1,113 @@
-
-/**
- * 初始化表格
- */
 $(function () {
-    initTable("table", "/chargeBill/queryByPager"); // 初始化表格
+    var roles = "平台管理员,汽修公司管理员,汽修公司财务人";
+    $.post("/user/isLogin/"+roles, function (data) {
+        if(data.result == 'success'){
+            initTable('table', '/charge/queryByPager'); // 初始化表格
+        }else if(data.result == 'notLogin'){
+            swal({title:"",
+                    text:data.message,
+                    confirmButtonText:"确认",
+                    type:"error"}
+                ,function(isConfirm){
+                    if(isConfirm){
+                        top.location = "/user/loginPage";
+                    }else{
+                        top.location = "/user/loginPage";
+                    }
+                })
+        }else if(data.result == 'notRole'){
+            swal({title:"",
+                text:data.message,
+                confirmButtonText:"确认",
+                type:"error"})
+        }
+    });
+
 });
 
-//格式化不带时分秒的时间值。
-function formatterDate(value) {
-    if (value == undefined || value == null || value == '') {
-        return "";
-    } else {
-        var date = new Date(value);
-        var year = date.getFullYear().toString();
-        var month = (date.getMonth() + 1);
-        var day = date.getDate().toString();
-        if (month < 10) {
-            month = "0" + month;
+// 查看全部可用
+function showAvailable(){
+    var roles = "平台管理员,汽修公司管理员,汽修公司财务人";
+    $.post("/user/isLogin/"+roles, function (data) {
+        if(data.result == 'success'){
+            initTable('table', '/charge/queryByPager');
+        }else if(data.result == 'notLogin'){
+            swal({title:"",
+                    text:data.message,
+                    confirmButtonText:"确认",
+                    type:"error"}
+                ,function(isConfirm){
+                    if(isConfirm){
+                        top.location = "/user/loginPage";
+                    }else{
+                        top.location = "/user/loginPage";
+                    }
+                })
+        }else if(data.result == 'notRole'){
+            swal({title:"",
+                text:data.message,
+                confirmButtonText:"确认",
+                type:"error"})
         }
-        if (day < 10) {
-            day = "0" + day;
+    });
+
+
+}
+
+// 查看全部禁用
+function showDisable(){
+    var roles = "平台管理员,汽修公司管理员,汽修公司财务人";
+    $.post("/user/isLogin/"+roles, function (data) {
+        if(data.result == 'success'){
+            initTable('table', '/charge/queryByPagerDisable');
+        }else if(data.result == 'notLogin'){
+            swal({title:"",
+                    text:data.message,
+                    confirmButtonText:"确认",
+                    type:"error"}
+                ,function(isConfirm){
+                    if(isConfirm){
+                        top.location = "/user/loginPage";
+                    }else{
+                        top.location = "/user/loginPage";
+                    }
+                })
+        }else if(data.result == 'notRole'){
+            swal({title:"",
+                text:data.message,
+                confirmButtonText:"确认",
+                type:"error"})
         }
-        return year + "-" + month + "-" + day + ""
-    }
+    });
 }
 
-
-/**
- * 禁用激活
- * @param index
- * @param row
- * @returns {*}
- */
-function statusFormatter(value) {
-    /*处理数据*/
-    if (value == 'Y') {
-        return "&nbsp;&nbsp;激活";
-    } else {
-        return "&nbsp;&nbsp;禁用";
-    }
-
-}
-
-/**
- * 操作禁用激活
- * @param index
- * @param row
- * @returns {string}
- */
-function openStatusFormatter(value, row) {
-    /*处理数据*/
-    if (value == 'Y') {
-        return "&nbsp;&nbsp;<button type='button' class='btn btn-danger' onclick='active(\""+'/chargeBill/statusOperate?id='+row.chargeBillId+'&status=Y'+"\")'>禁用</a>";
-    } else {
-        return "&nbsp;&nbsp;<button type='button' class='btn btn-danger' onclick='inactive(\""+'/chargeBill/statusOperate?id='+row.chargeBillId+'&status=N'+"\")'>激活</a>";
-    }
+// 模糊查询
+function blurredQuery(){
+    var roles = "平台管理员,汽修公司管理员,汽修公司财务人";
+    $.post("/user/isLogin/"+roles, function (data) {
+        if(data.result == 'success'){
+            var button = $("#ulButton");// 获取模糊查询按钮
+            var text = button.text();// 获取模糊查询按钮文本
+            var vaule = $("#ulInput").val();// 获取模糊查询输入框文本
+            initTable('table', '/charge/blurredQuery?text='+text+'&value='+vaule);
+        }else if(data.result == 'notLogin'){
+            swal({title:"",
+                    text:data.message,
+                    confirmButtonText:"确认",
+                    type:"error"}
+                ,function(isConfirm){
+                    if(isConfirm){
+                        top.location = "/user/loginPage";
+                    }else{
+                        top.location = "/user/loginPage";
+                    }
+                })
+        }else if(data.result == 'notRole'){
+            swal({title:"",
+                text:data.message,
+                confirmButtonText:"确认",
+                type:"error"})
+        }
+    });
 
 }
-
-/**
- * 查询禁用支出类型
- * @param id
- */
-function searchDisableStatus() {
-    initTable('table', '/chargeBill/queryByPagerDisable');
-}
-
-/**
- * 查询激活支出类型
- * @param id
- */
-function searchRapidStatus() {
-    initTable('table', '/chargeBill/queryByPager');
-}
-
