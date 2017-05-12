@@ -320,17 +320,18 @@ public class AccessoriesBuyController {
         if(SessionUtil.isLogin(session)){
             if(RoleUtil.checkRoles(roles)){
                 List<AccessoriesBuy> list = null;
+                User user = (User) session.getAttribute("user");
                 if (type != null && !type.equals("")) {
                     if (type.equals("year")) {
-                        list = accessoriesBuyService.queryByCondition(start, end, "810375d6-33a4-11e7-bbfe-b025aa1dfac1", "year");
+                        list = accessoriesBuyService.queryByCondition(start, end, user.getCompanyId(), "year");
                     } else if (type.equals("quarter")) {
-                        list = accessoriesBuyService.queryByCondition(start, end, "810375d6-33a4-11e7-bbfe-b025aa1dfac1", "quarter");
+                        list = accessoriesBuyService.queryByCondition(start, end, user.getCompanyId(), "quarter");
                     } else if (type.equals("month")) {
-                        list = accessoriesBuyService.queryByCondition(start, end, "810375d6-33a4-11e7-bbfe-b025aa1dfac1", "month");
+                        list = accessoriesBuyService.queryByCondition(start, end, user.getCompanyId(), "month");
                     } else if (type.equals("week")) {
-                        list = accessoriesBuyService.queryByCondition(start, end, "810375d6-33a4-11e7-bbfe-b025aa1dfac1", "week");
+                        list = accessoriesBuyService.queryByCondition(start, end, user.getCompanyId(), "week");
                     } else if (type.equals("day")) {
-                        list = accessoriesBuyService.queryByCondition(start, end, "810375d6-33a4-11e7-bbfe-b025aa1dfac1", "day");
+                        list = accessoriesBuyService.queryByCondition(start, end, user.getCompanyId(), "day");
                     }
                 }
                 return list;
@@ -350,17 +351,18 @@ public class AccessoriesBuyController {
         if(SessionUtil.isLogin(session)){
             if(RoleUtil.checkRoles(roles)){
                 List<AccessoriesBuy> list = null;
+                User user = (User) session.getAttribute("user");
                 if (type != null && !type.equals("")) {
                     if (type.equals("year")) {
-                        list = accessoriesBuyService.queryByPayCondition(start, end, "810375d6-33a4-11e7-bbfe-b025aa1dfac1", "year");
+                        list = accessoriesBuyService.queryByPayCondition(start, end, user.getCompanyId(), "year");
                     } else if (type.equals("quarter")) {
-                        list = accessoriesBuyService.queryByPayCondition(start, end, "810375d6-33a4-11e7-bbfe-b025aa1dfac1", "quarter");
+                        list = accessoriesBuyService.queryByPayCondition(start, end, user.getCompanyId(), "quarter");
                     } else if (type.equals("month")) {
-                        list = accessoriesBuyService.queryByPayCondition(start, end, "810375d6-33a4-11e7-bbfe-b025aa1dfac1", "month");
+                        list = accessoriesBuyService.queryByPayCondition(start, end, user.getCompanyId(), "month");
                     } else if (type.equals("week")) {
-                        list = accessoriesBuyService.queryByPayCondition(start, end, "810375d6-33a4-11e7-bbfe-b025aa1dfac1", "week");
+                        list = accessoriesBuyService.queryByPayCondition(start, end, user.getCompanyId(), "week");
                     } else if (type.equals("day")) {
-                        list = accessoriesBuyService.queryByPayCondition(start, end, "810375d6-33a4-11e7-bbfe-b025aa1dfac1", "day");
+                        list = accessoriesBuyService.queryByPayCondition(start, end, user.getCompanyId(), "day");
                     }
                 }
                 return list;

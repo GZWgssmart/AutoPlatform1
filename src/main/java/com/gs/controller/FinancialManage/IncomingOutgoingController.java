@@ -172,181 +172,192 @@ public class IncomingOutgoingController {
 
     @ResponseBody
     @RequestMapping(value = "queryByCondition")
-    public List<IncomingOutInFo> queryByCondition(String start, String end, String type) {
+    public List<IncomingOutInFo> queryByCondition(HttpSession session, String start, String end, String type) {
         logger.info("按年月日周季查询财务报表");
         List<IncomingOutInFo> list = null;
         List<IncomingOutgoing> timeList = null;
         List<IncomingOutgoing> outList = null;
         List<IncomingOutgoing> inList = null;
+        User user = (User) session.getAttribute("user");
         list = new ArrayList<IncomingOutInFo>();
+        if (SessionUtil.isLogin(session)) {
+            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员";
+            if (RoleUtil.checkRoles(roles)) {
+                if (type != null && !type.equals("")) {
+                    if (type.equals("year")) {
+                        timeList = incomingOutgoingService.queryByCondition(start, end, "0", user.getCompanyId(), "year");
+                        outList = incomingOutgoingService.queryByCondition(start, end, "1", user.getCompanyId(), "year");
+                        inList = incomingOutgoingService.queryByCondition(start, end, "2", user.getCompanyId(), "year");
+                        for (int p = 0; p < timeList.size(); p++) {
+                            IncomingOutInFo io = new IncomingOutInFo();
+                            String ag = DateFormatUtil.YearFormater(timeList.get(p).getInOutCreatedTime());
+                            io.setDate(ag);
+                            for (int j = 0; j < outList.size(); j++) {
+                                String outTime = DateFormatUtil.YearFormater(outList.get(j).getInOutCreatedTime());
+                                if (ag.equals(outTime)) {
+                                    io.setOutMoney(outList.get(j).getInOutMoney());
+                                    break;
+                                } else {
+                                    io.setOutMoney(0.d);
+                                }
+                            }
+                            for (int k = 0; k < inList.size(); k++) {
+                                String inTime = DateFormatUtil.YearFormater(inList.get(k).getInOutCreatedTime());
+                                if (ag.equals(inTime)) {
+                                    io.setInMoney(inList.get(k).getInOutMoney());
+                                    break;
+                                } else {
+                                    io.setInMoney(0.d);
+                                }
+                            }
+                            list.add(io);
+                        }
+                    } else if (type.equals("quarter")) {
+                        timeList = incomingOutgoingService.queryByCondition(start, end, "0", user.getCompanyId(), "quarter");
+                        outList = incomingOutgoingService.queryByCondition(start, end, "1", user.getCompanyId(), "quarter");
+                        inList = incomingOutgoingService.queryByCondition(start, end, "2", user.getCompanyId(), "quarter");
+                        for (int p = 0; p < timeList.size(); p++) {
+                            IncomingOutInFo io = new IncomingOutInFo();
+                            String ag = DateFormatUtil.MonthFormater(timeList.get(p).getInOutCreatedTime());
+                            QuarterUtil.quarter(ag);
+                            io.setDate(ag);
 
-        if (type != null && !type.equals("")) {
-            if (type.equals("year")) {
-                timeList = incomingOutgoingService.queryByCondition(start, end, "0", "810375d6-33a4-11e7-bbfe-b025aa1dfac1", "year");
-                outList = incomingOutgoingService.queryByCondition(start, end, "1", "810375d6-33a4-11e7-bbfe-b025aa1dfac1", "year");
-                inList = incomingOutgoingService.queryByCondition(start, end, "2", "810375d6-33a4-11e7-bbfe-b025aa1dfac1", "year");
-                for (int p = 0; p < timeList.size(); p++) {
-                    IncomingOutInFo io = new IncomingOutInFo();
-                    String ag = DateFormatUtil.YearFormater(timeList.get(p).getInOutCreatedTime());
-                    io.setDate(ag);
-                    for (int j = 0; j < outList.size(); j++) {
-                        String outTime = DateFormatUtil.YearFormater(outList.get(j).getInOutCreatedTime());
-                        if (ag.equals(outTime)) {
-                            io.setOutMoney(outList.get(j).getInOutMoney());
-                            break;
-                        } else {
-                            io.setOutMoney(0.d);
+                            for (int j = 0; j < outList.size(); j++) {
+                                String outTime = DateFormatUtil.MonthFormater(outList.get(j).getInOutCreatedTime());
+                                QuarterUtil.quarter(outTime);
+                                if (ag.equals(outTime)) {
+                                    io.setOutMoney(outList.get(j).getInOutMoney());
+                                    break;
+
+                                } else {
+                                    io.setOutMoney(0.d);
+                                }
+                            }
+                            for (int k = 0; k < inList.size(); k++) {
+                                String inTime = DateFormatUtil.MonthFormater(inList.get(k).getInOutCreatedTime());
+                                QuarterUtil.quarter(inTime);
+                                if (ag.equals(inTime)) {
+                                    io.setInMoney(inList.get(k).getInOutMoney());
+                                    break;
+
+                                } else {
+                                    io.setInMoney(0.d);
+                                }
+                            }
+                            list.add(io);
+                        }
+                    } else if (type.equals("month")) {
+                        timeList = incomingOutgoingService.queryByCondition(start, end, "0", user.getCompanyId(), "month");
+                        outList = incomingOutgoingService.queryByCondition(start, end, "1", user.getCompanyId(), "month");
+                        inList = incomingOutgoingService.queryByCondition(start, end, "2", user.getCompanyId(), "month");
+                        for (int p = 0; p < timeList.size(); p++) {
+                            IncomingOutInFo io = new IncomingOutInFo();
+                            String ag = DateFormatUtil.MonthFormater(timeList.get(p).getInOutCreatedTime());
+
+                            for (int j = 0; j < outList.size(); j++) {
+                                String outTime = DateFormatUtil.MonthFormater(outList.get(j).getInOutCreatedTime());
+                                if (ag.equals(outTime)) {
+                                    io.setOutMoney(outList.get(j).getInOutMoney());
+                                    break;
+                                } else {
+                                    io.setOutMoney(0.d);
+                                }
+                            }
+                            for (int k = 0; k < inList.size(); k++) {
+                                String inTime = DateFormatUtil.MonthFormater(inList.get(k).getInOutCreatedTime());
+                                if (ag.equals(inTime)) {
+                                    io.setInMoney(inList.get(k).getInOutMoney());
+                                    break;
+                                } else {
+                                    io.setInMoney(0.d);
+
+                                }
+                            }
+                            list.add(io);
+                        }
+                    } else if (type.equals("week"))
+
+                    {
+                        timeList = incomingOutgoingService.queryByCondition(start, end, "0", user.getCompanyId(), "week");
+                        outList = incomingOutgoingService.queryByCondition(start, end, "1", user.getCompanyId(), "week");
+                        inList = incomingOutgoingService.queryByCondition(start, end, "2", user.getCompanyId(), "week");
+                        for (int p = 0; p < timeList.size(); p++) {
+                            IncomingOutInFo io = new IncomingOutInFo();
+                            String ag = DateFormatUtil.WEEK(timeList.get(p).getInOutCreatedTime());
+                            String year = DateFormatUtil.YearFormater(timeList.get(p).getInOutCreatedTime());
+                            String time = String.valueOf(Echarts.getWeek(ag));
+                            String yearTime = time + year;
+                            io.setDate(year + "第" + time + "周");
+                            for (int j = 0; j < outList.size(); j++) {
+                                String outTime = DateFormatUtil.WEEK(outList.get(j).getInOutCreatedTime());
+                                String outYear = DateFormatUtil.YearFormater(outList.get(j).getInOutCreatedTime());
+                                String out = String.valueOf(Echarts.getWeek(outTime));
+                                String yearOut = out + outYear;
+                                if (yearTime.equals(yearOut)) {
+                                    io.setOutMoney(outList.get(j).getInOutMoney());
+                                    break;
+                                } else {
+                                    io.setOutMoney(0.d);
+                                }
+                            }
+                            for (int k = 0; k < inList.size(); k++) {
+                                String inTime = DateFormatUtil.WEEK(inList.get(k).getInOutCreatedTime());
+                                String inYear = DateFormatUtil.YearFormater(inList.get(k).getInOutCreatedTime());
+                                String in = String.valueOf(Echarts.getWeek(inTime));
+                                String yearIn = in + inYear;
+                                if (yearTime.equals(yearIn)) {
+                                    io.setInMoney(inList.get(k).getInOutMoney());
+                                    break;
+                                } else {
+                                    io.setInMoney(0.d);
+
+                                }
+                            }
+                            list.add(io);
+                        }
+                    } else if (type.equals("day"))
+
+                    {
+                        timeList = incomingOutgoingService.queryByCondition(start, end, "0", user.getCompanyId(), "day");
+                        outList = incomingOutgoingService.queryByCondition(start, end, "1", user.getCompanyId(), "day");
+                        inList = incomingOutgoingService.queryByCondition(start, end, "2", user.getCompanyId(), "day");
+                        for (int p = 0; p < timeList.size(); p++) {
+                            IncomingOutInFo io = new IncomingOutInFo();
+                            String ag = DateFormatUtil.DayFormater(timeList.get(p).getInOutCreatedTime());
+                            io.setDate(ag);
+                            for (int j = 0; j < outList.size(); j++) {
+                                String outTime = DateFormatUtil.DayFormater(outList.get(j).getInOutCreatedTime());
+                                if (ag.equals(outTime)) {
+                                    io.setOutMoney(outList.get(j).getInOutMoney());
+                                    break;
+
+                                } else {
+                                    io.setOutMoney(0.d);
+                                }
+                            }
+                            for (int k = 0; k < inList.size(); k++) {
+                                String inTime = DateFormatUtil.DayFormater(inList.get(k).getInOutCreatedTime());
+                                if (ag.equals(inTime)) {
+                                    io.setInMoney(inList.get(k).getInOutMoney());
+                                    break;
+
+                                } else {
+                                    io.setInMoney(0.d);
+                                }
+                            }
+                            list.add(io);
                         }
                     }
-                    for (int k = 0; k < inList.size(); k++) {
-                        String inTime = DateFormatUtil.YearFormater(inList.get(k).getInOutCreatedTime());
-                        if (ag.equals(inTime)) {
-                            io.setInMoney(inList.get(k).getInOutMoney());
-                            break;
-                        } else {
-                            io.setInMoney(0.d);
-                        }
-                    }
-                    list.add(io);
+
                 }
-            } else if (type.equals("quarter")) {
-                timeList = incomingOutgoingService.queryByCondition(start, end, "0", "810375d6-33a4-11e7-bbfe-b025aa1dfac1", "quarter");
-                outList = incomingOutgoingService.queryByCondition(start, end, "1", "810375d6-33a4-11e7-bbfe-b025aa1dfac1", "quarter");
-                inList = incomingOutgoingService.queryByCondition(start, end, "2", "810375d6-33a4-11e7-bbfe-b025aa1dfac1", "quarter");
-                for (int p = 0; p < timeList.size(); p++) {
-                    IncomingOutInFo io = new IncomingOutInFo();
-                    String ag = DateFormatUtil.MonthFormater(timeList.get(p).getInOutCreatedTime());
-                    QuarterUtil.quarter(ag);
-                    io.setDate(ag);
-
-                    for (int j = 0; j < outList.size(); j++) {
-                        String outTime = DateFormatUtil.MonthFormater(outList.get(j).getInOutCreatedTime());
-                        QuarterUtil.quarter(outTime);
-                        if (ag.equals(outTime)) {
-                            io.setOutMoney(outList.get(j).getInOutMoney());
-                            break;
-
-                        } else {
-                            io.setOutMoney(0.d);
-                        }
-                    }
-                    for (int k = 0; k < inList.size(); k++) {
-                        String inTime = DateFormatUtil.MonthFormater(inList.get(k).getInOutCreatedTime());
-                        QuarterUtil.quarter(inTime);
-                        if (ag.equals(inTime)) {
-                            io.setInMoney(inList.get(k).getInOutMoney());
-                            break;
-
-                        } else {
-                            io.setInMoney(0.d);
-                        }
-                    }
-                    list.add(io);
-                }
-            } else if (type.equals("month")) {
-                timeList = incomingOutgoingService.queryByCondition(start, end, "0", "810375d6-33a4-11e7-bbfe-b025aa1dfac1", "month");
-                outList = incomingOutgoingService.queryByCondition(start, end, "1", "810375d6-33a4-11e7-bbfe-b025aa1dfac1", "month");
-                inList = incomingOutgoingService.queryByCondition(start, end, "2", "810375d6-33a4-11e7-bbfe-b025aa1dfac1", "month");
-                for (int p = 0; p < timeList.size(); p++) {
-                    IncomingOutInFo io = new IncomingOutInFo();
-                    String ag = DateFormatUtil.MonthFormater(timeList.get(p).getInOutCreatedTime());
-
-                    for (int j = 0; j < outList.size(); j++) {
-                        String outTime = DateFormatUtil.MonthFormater(outList.get(j).getInOutCreatedTime());
-                        if (ag.equals(outTime)) {
-                            io.setOutMoney(outList.get(j).getInOutMoney());
-                            break;
-                        } else {
-                            io.setOutMoney(0.d);
-                        }
-                    }
-                    for (int k = 0; k < inList.size(); k++) {
-                        String inTime = DateFormatUtil.MonthFormater(inList.get(k).getInOutCreatedTime());
-                        if (ag.equals(inTime)) {
-                            io.setInMoney(inList.get(k).getInOutMoney());
-                            break;
-                        } else {
-                            io.setInMoney(0.d);
-
-                        }
-                    }
-                    list.add(io);
-                }
-            } else if (type.equals("week"))
-
-            {
-                timeList = incomingOutgoingService.queryByCondition(start, end, "0", "810375d6-33a4-11e7-bbfe-b025aa1dfac1", "week");
-                outList = incomingOutgoingService.queryByCondition(start, end, "1", "810375d6-33a4-11e7-bbfe-b025aa1dfac1", "week");
-                inList = incomingOutgoingService.queryByCondition(start, end, "2", "810375d6-33a4-11e7-bbfe-b025aa1dfac1", "week");
-                for (int p = 0; p < timeList.size(); p++) {
-                    IncomingOutInFo io = new IncomingOutInFo();
-                    String ag = DateFormatUtil.WEEK(timeList.get(p).getInOutCreatedTime());
-                    String year = DateFormatUtil.YearFormater(timeList.get(p).getInOutCreatedTime());
-                    String time = String.valueOf(Echarts.getWeek(ag));
-                    String yearTime = time + year;
-                    io.setDate(year + "第" + time + "周");
-                    for (int j = 0; j < outList.size(); j++) {
-                        String outTime = DateFormatUtil.WEEK(outList.get(j).getInOutCreatedTime());
-                        String outYear = DateFormatUtil.YearFormater(outList.get(j).getInOutCreatedTime());
-                        String out = String.valueOf(Echarts.getWeek(outTime));
-                        String yearOut = out + outYear;
-                        if (yearTime.equals(yearOut)) {
-                            io.setOutMoney(outList.get(j).getInOutMoney());
-                            break;
-                        } else {
-                            io.setOutMoney(0.d);
-                        }
-                    }
-                    for (int k = 0; k < inList.size(); k++) {
-                        String inTime = DateFormatUtil.WEEK(inList.get(k).getInOutCreatedTime());
-                        String inYear = DateFormatUtil.YearFormater(inList.get(k).getInOutCreatedTime());
-                        String in = String.valueOf(Echarts.getWeek(inTime));
-                        String yearIn = in + inYear;
-                        if (yearTime.equals(yearIn)) {
-                            io.setInMoney(inList.get(k).getInOutMoney());
-                            break;
-                        } else {
-                            io.setInMoney(0.d);
-
-                        }
-                    }
-                    list.add(io);
-                }
-            } else if (type.equals("day"))
-
-            {
-                timeList = incomingOutgoingService.queryByCondition(start, end, "0", "810375d6-33a4-11e7-bbfe-b025aa1dfac1", "day");
-                outList = incomingOutgoingService.queryByCondition(start, end, "1", "810375d6-33a4-11e7-bbfe-b025aa1dfac1", "day");
-                inList = incomingOutgoingService.queryByCondition(start, end, "2", "810375d6-33a4-11e7-bbfe-b025aa1dfac1", "day");
-                for (int p = 0; p < timeList.size(); p++) {
-                    IncomingOutInFo io = new IncomingOutInFo();
-                    String ag = DateFormatUtil.DayFormater(timeList.get(p).getInOutCreatedTime());
-                    io.setDate(ag);
-                    for (int j = 0; j < outList.size(); j++) {
-                        String outTime = DateFormatUtil.DayFormater(outList.get(j).getInOutCreatedTime());
-                        if (ag.equals(outTime)) {
-                            io.setOutMoney(outList.get(j).getInOutMoney());
-                            break;
-
-                        } else {
-                            io.setOutMoney(0.d);
-                        }
-                    }
-                    for (int k = 0; k < inList.size(); k++) {
-                        String inTime = DateFormatUtil.DayFormater(inList.get(k).getInOutCreatedTime());
-                        if (ag.equals(inTime)) {
-                            io.setInMoney(inList.get(k).getInOutMoney());
-                            break;
-
-                        } else {
-                            io.setInMoney(0.d);
-                        }
-                    }
-                    list.add(io);
-                }
+            } else {
+                logger.info("此用户无拥有修改收支记录的角色");
+                return null;
             }
+        } else {
+            logger.info("请先登录");
+            return null;
         }
         return list;
     }
-
 }
