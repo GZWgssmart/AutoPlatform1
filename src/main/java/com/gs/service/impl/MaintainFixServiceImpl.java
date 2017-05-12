@@ -1,6 +1,7 @@
 package com.gs.service.impl;
 
 import com.gs.bean.MaintainFix;
+import com.gs.bean.User;
 import com.gs.common.bean.Pager;
 import com.gs.dao.MaintainFixDAO;
 import com.gs.service.MaintainFixService;
@@ -50,22 +51,38 @@ public class MaintainFixServiceImpl implements MaintainFixService {
 	public int batchDelete(List<MaintainFix> list) { return maintainFixDAO.batchDelete(list); }
 	public int update(MaintainFix maintainFix) { return maintainFixDAO.update(maintainFix); }
 	public int batchUpdate(List<MaintainFix> list) { return maintainFixDAO.batchUpdate(list); }
-	public List<MaintainFix> queryAll() { return maintainFixDAO.queryAll(); }
+
+	@Override
+	public List<MaintainFix> queryAll(User user) {
+		return maintainFixDAO.queryAll(user);
+	}
 
 	@Override
 	public List<MaintainFix> queryAll(String status) {
-		return maintainFixDAO.queryAll();
+		return maintainFixDAO.queryAll(status);
 	}
+
+
 	public List<MaintainFix> queryByStatus(String status) { return maintainFixDAO.queryAll(status); }
 	public MaintainFix query(MaintainFix maintainFix) { return maintainFixDAO.query(maintainFix); }
 	public MaintainFix queryById(String id) { return maintainFixDAO.queryById(id); }
 	public List<MaintainFix> queryByPager(Pager pager) { return maintainFixDAO.queryByPager(pager); }
-	public int count() { return maintainFixDAO.count(); }
+
+	@Override
+	public int count(User user) {
+		return maintainFixDAO.count(user);
+	}
+
 	public int inactive(String id) { return maintainFixDAO.inactive(id); }
 	public int active(String id) { return maintainFixDAO.active(id); }
 
 	public List<MaintainFix> queryByPagerDisable(Pager pager) {
 		return maintainFixDAO.queryByPagerDisable(pager);
+	}
+
+	@Override
+	public int countByDisable(User user) {
+		return maintainFixDAO.countByDisable(user);
 	}
 
 	public int countByDisable() {
@@ -74,6 +91,11 @@ public class MaintainFixServiceImpl implements MaintainFixService {
 
 	public List<MaintainFix> blurredQuery(Pager pager, MaintainFix maintainFix) {
 		return null;
+	}
+
+	@Override
+	public int countByBlurred(MaintainFix maintainFix, User user) {
+		return 0;
 	}
 
 	public int countByBlurred(MaintainFix maintainFix) {

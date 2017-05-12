@@ -1,49 +1,211 @@
 $(function () {
-    initTable('table', '/maintain/queryByPagerService'); // 初始化表格
-    // 初始化select2, 第一个参数是class的名字, 第二个参数是select2的提示语, 第三个参数是select2的查询url
-    initSelect2("company", "请选择公司", "/company/queryAllCompany");
-    initSelect2("AccessoriesType", "请选择配件类型", "/accType/queryAllAccType");
+    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司人力资源管理部";
+    $.post("/user/isLogin/"+roles, function (data) {
+        if(data.result == 'success'){
+            initTable('table', '/maintain/queryByPagerService'); // 初始化表格
+            // 初始化select2, 第一个参数是class的名字, 第二个参数是select2的提示语, 第三个参数是select2的查询url
+            initSelect2("company", "请选择公司", "/company/queryAllCompany");
+            initSelect2("AccessoriesType", "请选择配件类型", "/accType/queryAllAccType");
+        }else if(data.result == 'notLogin'){
+            swal({title:"",
+                    text:data.message,
+                    confirmButtonText:"确认",
+                    type:"error"}
+                ,function(isConfirm){
+                    if(isConfirm){
+                        top.location = "/user/loginPage";
+                    }else{
+                        top.location = "/user/loginPage";
+                    }
+                })
+        }else if(data.result == 'notRole'){
+            swal({title:"",
+                text:data.message,
+                confirmButtonText:"确认",
+                type:"error"})
+        }
+    });
+
 });
 
 // 查看全部可用
 function showAvailable(){
-    initTable('table', '/maintain/queryByPagerService');
+    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司人力资源管理部";
+    $.post("/user/isLogin/"+roles, function (data) {
+        if(data.result == 'success'){
+            initTable('table', '/maintain/queryByPagerService');
+        }else if(data.result == 'notLogin'){
+            swal({title:"",
+                    text:data.message,
+                    confirmButtonText:"确认",
+                    type:"error"}
+                ,function(isConfirm){
+                    if(isConfirm){
+                        top.location = "/user/loginPage";
+                    }else{
+                        top.location = "/user/loginPage";
+                    }
+                })
+        }else if(data.result == 'notRole'){
+            swal({title:"",
+                text:data.message,
+                confirmButtonText:"确认",
+                type:"error"})
+        }
+    });
+
 }
 // 查看全部禁用
 function showDisable(){
-    initTable('table', '/maintain/queryByPagerDisableService');
+    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司人力资源管理部";
+    $.post("/user/isLogin/"+roles, function (data) {
+        if(data.result == 'success'){
+            initTable('table', '/maintain/queryByPagerDisableService');
+        }else if(data.result == 'notLogin'){
+            swal({title:"",
+                    text:data.message,
+                    confirmButtonText:"确认",
+                    type:"error"}
+                ,function(isConfirm){
+                    if(isConfirm){
+                        top.location = "/user/loginPage";
+                    }else{
+                        top.location = "/user/loginPage";
+                    }
+                })
+        }else if(data.result == 'notRole'){
+            swal({title:"",
+                text:data.message,
+                confirmButtonText:"确认",
+                type:"error"})
+        }
+    });
+
 }
 
 function queryByTypeId(obj){
-    initTableNotTollbar("table1", "/accInv/queryByIdAcc?id=" + obj.value);
+    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司人力资源管理部";
+    $.post("/user/isLogin/"+roles, function (data) {
+        if(data.result == 'success'){
+            initTableNotTollbar("table1", "/accInv/queryByIdAcc?id=" + obj.value);
+        }else if(data.result == 'notLogin'){
+            swal({title:"",
+                    text:data.message,
+                    confirmButtonText:"确认",
+                    type:"error"}
+                ,function(isConfirm){
+                    if(isConfirm){
+                        top.location = "/user/loginPage";
+                    }else{
+                        top.location = "/user/loginPage";
+                    }
+                })
+        }else if(data.result == 'notRole'){
+            swal({title:"",
+                text:data.message,
+                confirmButtonText:"确认",
+                type:"error"})
+        }
+    });
+
 }
 
 function queryByTypeId2(obj){
-    initTableNotTollbar("table2", "/accInv/queryByIdAcc?id=" + obj.value);
+    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司人力资源管理部";
+    $.post("/user/isLogin/"+roles, function (data) {
+        if(data.result == 'success'){
+            initTableNotTollbar("table2", "/accInv/queryByIdAcc?id=" + obj.value);
+        }else if(data.result == 'notLogin'){
+            swal({title:"",
+                    text:data.message,
+                    confirmButtonText:"确认",
+                    type:"error"}
+                ,function(isConfirm){
+                    if(isConfirm){
+                        top.location = "/user/loginPage";
+                    }else{
+                        top.location = "/user/loginPage";
+                    }
+                })
+        }else if(data.result == 'notRole'){
+            swal({title:"",
+                text:data.message,
+                confirmButtonText:"确认",
+                type:"error"})
+        }
+    });
+
 }
 
 function showEdit() {
-    var row = $('#table').bootstrapTable('getSelections');
-    if (row.length > 0) {
-        $("#editWindow").modal('show'); // 显示弹窗
-        $("#editButton").removeAttr("disabled");
-        var MaintainFixMap = row[0];
-        $('#editcompany').html('<option value="' + MaintainFixMap.company.companyId + '">' + MaintainFixMap.company.companyName + '</option>').trigger("change");
-        $("#editForm").fill(MaintainFixMap);
-        validator('editForm');
-    } else {
-        swal({
-            "title": "",
-            "text": "请先选择一条数据",
-            "type": "warning"
-        })
-    }
+    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司人力资源管理部";
+    $.post("/user/isLogin/"+roles, function (data) {
+        if(data.result == 'success'){
+            var row = $('#table').bootstrapTable('getSelections');
+            if (row.length > 0) {
+                $("#editWindow").modal('show'); // 显示弹窗
+                $("#editButton").removeAttr("disabled");
+                var MaintainFixMap = row[0];
+                $('#editcompany').html('<option value="' + MaintainFixMap.company.companyId + '">' + MaintainFixMap.company.companyName + '</option>').trigger("change");
+                $("#editForm").fill(MaintainFixMap);
+                validator('editForm');
+            } else {
+                swal({
+                    "title": "",
+                    "text": "请先选择一条数据",
+                    "type": "warning"
+                })
+            }
+        }else if(data.result == 'notLogin'){
+            swal({title:"",
+                    text:data.message,
+                    confirmButtonText:"确认",
+                    type:"error"}
+                ,function(isConfirm){
+                    if(isConfirm){
+                        top.location = "/user/loginPage";
+                    }else{
+                        top.location = "/user/loginPage";
+                    }
+                })
+        }else if(data.result == 'notRole'){
+            swal({title:"",
+                text:data.message,
+                confirmButtonText:"确认",
+                type:"error"})
+        }
+    });
+
 }
 
 function showAdd() {
-    $("#addWindow").modal('show');
-    $("#addButton").removeAttr("disabled");
-    validator('addForm'); // 初始化验证
+    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司人力资源管理部";
+    $.post("/user/isLogin/"+roles, function (data) {
+        if(data.result == 'success'){
+            $("#addWindow").modal('show');
+            $("#addButton").removeAttr("disabled");
+            validator('addForm'); // 初始化验证
+        }else if(data.result == 'notLogin'){
+            swal({title:"",
+                    text:data.message,
+                    confirmButtonText:"确认",
+                    type:"error"}
+                ,function(isConfirm){
+                    if(isConfirm){
+                        top.location = "/user/loginPage";
+                    }else{
+                        top.location = "/user/loginPage";
+                    }
+                })
+        }else if(data.result == 'notRole'){
+            swal({title:"",
+                text:data.message,
+                confirmButtonText:"确认",
+                type:"error"})
+        }
+    });
+
+
 }
 
 function validator(formId) {
@@ -170,27 +332,54 @@ function editSubmit(){
 }
 
 function showdetai() {
-    var row =  $('#detailTable').bootstrapTable('getSelections');
-    if(row.length >0) {
-        $("#detailWindow").modal('hide');
-        $("#accButton").removeAttr("disabled");
-        // var MaintainFixMap = row[0];
-        // $("#accForm").fill(MaintainFixMap);
-        $("#editmaintainId").val(row[0].mainAccId);
-        $("#editaccId").val(row[0].accId);
-        $("#editaccCount").val(row[0].accCount);
-        $("#editaccName").val(row[0].accessories.accName);
-        $("#detailWindow").modal('hide');
-        $("#accEditWindow").modal('show');
-        validator('accEditForm'); // 初始化验证
-    }else{
-        swal({
-            title:"",
-            text: "请选择要添加配件的维修项目", // 主要文本
-            confirmButtonColor: "#DD6B55", // 提示按钮的颜色
-            confirmButtonText:"确定", // 提示按钮上的文本
-            type:"warning"}) // 提示类型
-    }
+    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司人力资源管理部";
+    $.post("/user/isLogin/"+roles, function (data) {
+        if(data.result == 'success'){
+            var row =  $('#detailTable').bootstrapTable('getSelections');
+            if(row.length >0) {
+                $("#detailWindow").modal('hide');
+                $("#accButton").removeAttr("disabled");
+                // var MaintainFixMap = row[0];
+                // $("#accForm").fill(MaintainFixMap);
+                $("#editmaintainId").val(row[0].mainAccId);
+                $("#editaccId").val(row[0].accId);
+                $("#editaccCount").val(row[0].accCount);
+                $("#editaccName").val(row[0].accessories.accName);
+                $("#detailWindow").modal('hide');
+                $("#accEditWindow").modal('show');
+                validator('accEditForm'); // 初始化验证
+            }else{
+                swal({
+                    title:"",
+                    text: "请选择要添加配件的维修项目", // 主要文本
+                    confirmButtonColor: "#DD6B55", // 提示按钮的颜色
+                    confirmButtonText:"确定", // 提示按钮上的文本
+                    type:"warning"}) // 提示类型
+            }
+        }else if (data.result == 'notLogin') {
+            swal({
+                    title: "",
+                    text: data.message,
+                    confirmButtonText: "确认",
+                    type: "error"
+                }
+                , function (isConfirm) {
+                    if (isConfirm) {
+                        top.location = "/user/loginPage";
+                    } else {
+                        top.location = "/user/loginPage";
+                    }
+                })
+        } else if (data.result == 'notRole') {
+            swal({
+                title: "",
+                text: data.message,
+                confirmButtonText: "确认",
+                type: "error"
+            })
+        }
+    });
+
 }
 
 
@@ -227,7 +416,33 @@ function formSubmit(url, formId, winId){
                     text:"添加失败",
                     confirmButtonText:"确认",
                     type:"error"})
-                $("#"+formId).removeAttr("disabled");
+                if(formId == 'addForm') {
+                    $("#addButton").removeAttr("disabled");
+                }else if(formId == 'editForm'){
+                    $("#editButton").removeAttr("disabled");
+                }
+            }else if (data.result == "notLogin") {
+                swal({title:"",
+                        text:data.message,
+                        confirmButtonText:"确认",
+                        type:"error"}
+                    ,function(isConfirm){
+                        if(isConfirm){
+                            top.location = "/user/loginPage";
+                        }else{
+                            top.location = "/user/loginPage";
+                        }
+                    })
+                if(formId == 'addForm') {
+                    $("#addButton").removeAttr("disabled");
+                }else if(formId == 'editForm'){
+                    $("#editButton").removeAttr("disabled");
+                }
+            }else if(data.result == 'notRole'){
+                swal({title:"",
+                    text:data.message,
+                    confirmButtonText:"确认",
+                    type:"error"})
             }
         }, "json");
 }
@@ -246,21 +461,48 @@ $("#accForm").submit(function(){
 
 // 添加配件窗口
 function showAddacc(){
-    var row =  $('#table').bootstrapTable('getSelections');
-    if(row.length >0) {
-        $("#accButton").removeAttr("disabled");
-        var MaintainFixMap = row[0];
-        $("#accForm").fill(MaintainFixMap);
-        $("#accWindow").modal('show');
-        validator('accForm'); // 初始化验证
-    }else{
-        swal({
-            title:"",
-            text: "请选择要添加配件的维修项目", // 主要文本
-            confirmButtonColor: "#DD6B55", // 提示按钮的颜色
-            confirmButtonText:"确定", // 提示按钮上的文本
-            type:"warning"}) // 提示类型
-    }
+    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司人力资源管理部";
+    $.post("/user/isLogin/"+roles, function (data) {
+        if(data.result == 'success'){
+            var row =  $('#table').bootstrapTable('getSelections');
+            if(row.length >0) {
+                $("#accButton").removeAttr("disabled");
+                var MaintainFixMap = row[0];
+                $("#accForm").fill(MaintainFixMap);
+                $("#accWindow").modal('show');
+                validator('accForm'); // 初始化验证
+            }else{
+                swal({
+                    title:"",
+                    text: "请选择要添加配件的维修项目", // 主要文本
+                    confirmButtonColor: "#DD6B55", // 提示按钮的颜色
+                    confirmButtonText:"确定", // 提示按钮上的文本
+                    type:"warning"}) // 提示类型
+            }
+        }else if (data.result == 'notLogin') {
+            swal({
+                    title: "",
+                    text: data.message,
+                    confirmButtonText: "确认",
+                    type: "error"
+                }
+                , function (isConfirm) {
+                    if (isConfirm) {
+                        top.location = "/user/loginPage";
+                    } else {
+                        top.location = "/user/loginPage";
+                    }
+                })
+        } else if (data.result == 'notRole') {
+            swal({
+                title: "",
+                text: data.message,
+                confirmButtonText: "确认",
+                type: "error"
+            })
+        }
+    });
+
 }
 
 function showAcc(windowId){
@@ -301,73 +543,154 @@ function closeEidtWindow(){
 
 // 在所有项目中点击确定
 function itemSubmit(){
-    var row =  $('#table1').bootstrapTable('getSelections');
-    if(row.length >0) {
-        $("#accAllWindow").modal('hide');
-        if($("#closeButton").hasClass('accWindow')){
-            $("#addaccId").val(row[0].accId);
-            $("#addacc").val(row[0].accName);
-            $("#accWindow").modal('show');
-            $("#closeButton").removeClass('accWindow');
-        }else if($("#closeButton").hasClass('editWindow')){
-            $("#editItemId").val(row[0].maintainId);
-            $("#editItem").val(row[0].maintainName);
-            $("#editWindow").modal('show');
-            $("#closeButton").removeClass('editWindow');
+    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司人力资源管理部";
+    $.post("/user/isLogin/"+roles, function (data) {
+        if(data.result == 'success'){
+            var row =  $('#table1').bootstrapTable('getSelections');
+            if(row.length >0) {
+                $("#accAllWindow").modal('hide');
+                if($("#closeButton").hasClass('accWindow')){
+                    $("#addaccId").val(row[0].accId);
+                    $("#addacc").val(row[0].accName);
+                    $("#accWindow").modal('show');
+                    $("#closeButton").removeClass('accWindow');
+                }else if($("#closeButton").hasClass('editWindow')){
+                    $("#editItemId").val(row[0].maintainId);
+                    $("#editItem").val(row[0].maintainName);
+                    $("#editWindow").modal('show');
+                    $("#closeButton").removeClass('editWindow');
+                }
+            }else{
+                swal({
+                    title:"",
+                    text: "请先选择维修保养项目", // 主要文本
+                    confirmButtonColor: "#DD6B55", // 提示按钮的颜色
+                    confirmButtonText:"确定", // 提示按钮上的文本
+                    type:"warning"}) // 提示类型
+            }
+        }else if (data.result == 'notLogin') {
+            swal({
+                    title: "",
+                    text: data.message,
+                    confirmButtonText: "确认",
+                    type: "error"
+                }
+                , function (isConfirm) {
+                    if (isConfirm) {
+                        top.location = "/user/loginPage";
+                    } else {
+                        top.location = "/user/loginPage";
+                    }
+                })
+        } else if (data.result == 'notRole') {
+            swal({
+                title: "",
+                text: data.message,
+                confirmButtonText: "确认",
+                type: "error"
+            })
         }
-    }else{
-        swal({
-            title:"",
-            text: "请先选择维修保养项目", // 主要文本
-            confirmButtonColor: "#DD6B55", // 提示按钮的颜色
-            confirmButtonText:"确定", // 提示按钮上的文本
-            type:"warning"}) // 提示类型
-    }
+    });
+
 }
 
 // 在所有项目中点击确定
 function itemEditSubmit(){
-    var row =  $('#table2').bootstrapTable('getSelections');
-    if(row.length >0) {
-        $("#accEidtAllWindow").modal('hide');
-        if($("#closeEidtButton").hasClass('accEditWindow')){
-            $("#editaccId").val(row[0].accId);
-            $("#editaccName").val(row[0].accName);
-            $("#accEditWindow").modal('show');
-            $("#closeEidtButton").removeClass('accEditWindow');
-        }else if($("#closeEidtButton").hasClass('editWindow')){
-            $("#editItemId").val(row[0].maintainId);
-            $("#editItem").val(row[0].maintainName);
-            $("#editWindow").modal('show');
-            $("#closeEidtButton").removeClass('editWindow');
+    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司人力资源管理部";
+    $.post("/user/isLogin/"+roles, function (data) {
+        if(data.result == 'success'){
+            var row =  $('#table2').bootstrapTable('getSelections');
+            if(row.length >0) {
+                $("#accEidtAllWindow").modal('hide');
+                if($("#closeEidtButton").hasClass('accEditWindow')){
+                    $("#editaccId").val(row[0].accId);
+                    $("#editaccName").val(row[0].accName);
+                    $("#accEditWindow").modal('show');
+                    $("#closeEidtButton").removeClass('accEditWindow');
+                }else if($("#closeEidtButton").hasClass('editWindow')){
+                    $("#editItemId").val(row[0].maintainId);
+                    $("#editItem").val(row[0].maintainName);
+                    $("#editWindow").modal('show');
+                    $("#closeEidtButton").removeClass('editWindow');
+                }
+            }else{
+                swal({
+                    title:"",
+                    text: "请先选择维修保养项目", // 主要文本
+                    confirmButtonColor: "#DD6B55", // 提示按钮的颜色
+                    confirmButtonText:"确定", // 提示按钮上的文本
+                    type:"warning"}) // 提示类型
+            }
+        }else if (data.result == 'notLogin') {
+            swal({
+                    title: "",
+                    text: data.message,
+                    confirmButtonText: "确认",
+                    type: "error"
+                }
+                , function (isConfirm) {
+                    if (isConfirm) {
+                        top.location = "/user/loginPage";
+                    } else {
+                        top.location = "/user/loginPage";
+                    }
+                })
+        } else if (data.result == 'notRole') {
+            swal({
+                title: "",
+                text: data.message,
+                confirmButtonText: "确认",
+                type: "error"
+            })
         }
-    }else{
-        swal({
-            title:"",
-            text: "请先选择维修保养项目", // 主要文本
-            confirmButtonColor: "#DD6B55", // 提示按钮的颜色
-            confirmButtonText:"确定", // 提示按钮上的文本
-            type:"warning"}) // 提示类型
-    }
+    });
+
 }
 
 
 
 // 显示所有明细
 function showDetail(){
-    var row =  $('#table').bootstrapTable('getSelections');
-    if(row.length >0) {
-        maintainId = row[0].maintainId;
-        $("#detailWindow").modal('show');
-        initDetailTable('detailTable', '/maintain/queryByDetailsByPager?maintainId='+row[0].maintainId);
-    }else{
-        swal({
-            title:"",
-            text: "请选择要查看明细的维修保养记录", // 主要文本
-            confirmButtonColor: "#DD6B55", // 提示按钮的颜色
-            confirmButtonText:"确定", // 提示按钮上的文本
-            type:"warning"}) // 提示类型
-    }
+    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司人力资源管理部";
+    $.post("/user/isLogin/"+roles, function (data) {
+        if(data.result == 'success'){
+            var row =  $('#table').bootstrapTable('getSelections');
+            if(row.length >0) {
+                maintainId = row[0].maintainId;
+                $("#detailWindow").modal('show');
+                initDetailTable('detailTable', '/maintain/queryByDetailsByPager?maintainId='+row[0].maintainId);
+            }else{
+                swal({
+                    title:"",
+                    text: "请选择要查看明细的维修保养记录", // 主要文本
+                    confirmButtonColor: "#DD6B55", // 提示按钮的颜色
+                    confirmButtonText:"确定", // 提示按钮上的文本
+                    type:"warning"}) // 提示类型
+            }
+        }else if (data.result == 'notLogin') {
+            swal({
+                    title: "",
+                    text: data.message,
+                    confirmButtonText: "确认",
+                    type: "error"
+                }
+                , function (isConfirm) {
+                    if (isConfirm) {
+                        top.location = "/user/loginPage";
+                    } else {
+                        top.location = "/user/loginPage";
+                    }
+                })
+        } else if (data.result == 'notRole') {
+            swal({
+                title: "",
+                text: data.message,
+                confirmButtonText: "确认",
+                type: "error"
+            })
+        }
+    });
+
 }
 
 

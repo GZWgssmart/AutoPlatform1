@@ -1,11 +1,5 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Administrator
-  Date: 2017/4/11
-  Time: 15:59
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%
     String path = request.getContextPath();
 %>
@@ -43,24 +37,36 @@
             </thead>
         </table>
         <div id="toolbar" class="btn-group">
-            <button id="btn_available" type="button" class="btn btn-default" onclick="showAvailable();">
-                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>可用保养记录
-            </button>
-            <button id="btn_disable" type="button" class="btn btn-default" onclick="showDisable();">
-                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>禁用保养记录
-            </button>
-            <button id="btn_add" type="button" class="btn btn-default" onclick="showAdd();">
-                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
-            </button>
-            <button id="btn_edit" type="button" class="btn btn-default" onclick="showEdit();">
-                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
-            </button>
-            <button id="btn_addAcc" type="button" class="btn btn-default" onclick="showAddacc();">
-                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>添加配件
-            </button>
-            <button id="btn_editAcc" type="button" class="btn btn-default" onclick="showDetail();">
-                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查看配件
-            </button>
+            <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司人力资源管理部">
+                <button id="btn_available" type="button" class="btn btn-default" onclick="showAvailable();">
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>可用保养记录
+                </button>
+            </shiro:hasAnyRoles>
+            <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司人力资源管理部">
+                <button id="btn_disable" type="button" class="btn btn-default" onclick="showDisable();">
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>禁用保养记录
+                </button>
+            </shiro:hasAnyRoles>
+            <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司人力资源管理部">
+                <button id="btn_add" type="button" class="btn btn-default" onclick="showAdd();">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
+                </button>
+            </shiro:hasAnyRoles>
+            <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司人力资源管理部">
+                <button id="btn_edit" type="button" class="btn btn-default" onclick="showEdit();">
+                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
+                </button>
+            </shiro:hasAnyRoles>
+            <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司人力资源管理部">
+                <button id="btn_addAcc" type="button" class="btn btn-default" onclick="showAddacc();">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>添加配件
+                </button>
+            </shiro:hasAnyRoles>
+            <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司人力资源管理部">
+                <button id="btn_editAcc" type="button" class="btn btn-default" onclick="showDetail();">
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查看配件
+                </button>
+            </shiro:hasAnyRoles>
         </div>
     </div>
 </div>
