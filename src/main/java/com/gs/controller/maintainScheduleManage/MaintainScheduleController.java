@@ -43,15 +43,26 @@ public class MaintainScheduleController {
     @ResponseBody
     @RequestMapping(value = "queryAllschedule", method = RequestMethod.GET)
     public List<ComboBox4EasyUI> queryAllSchedule(){
-        logger.info("查询全部维修保养进度管理");
-        List<MaintainSchedule> maintainSchedules = maintainScheduleService.queryAll();
-        List<ComboBox4EasyUI> comboxs = new ArrayList<ComboBox4EasyUI>();
-        for(MaintainSchedule m : maintainSchedules){
-            ComboBox4EasyUI comboBox4EasyUI = new ComboBox4EasyUI();
-            comboBox4EasyUI.setId(m.getMaintainScheduleId());
-            comboBox4EasyUI.setText(m.getMaintainScheduleId());
+        if(SessionUtil.isLogin(session)) {
+            String roles="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,车主,汽车公司接待员";
+            if(RoleUtil.checkRoles(roles)) {
+                logger.info("查询全部维修保养进度管理");
+                List<MaintainSchedule> maintainSchedules = maintainScheduleService.queryAll();
+                List<ComboBox4EasyUI> comboxs = new ArrayList<ComboBox4EasyUI>();
+                for(MaintainSchedule m : maintainSchedules){
+                    ComboBox4EasyUI comboBox4EasyUI = new ComboBox4EasyUI();
+                    comboBox4EasyUI.setId(m.getMaintainScheduleId());
+                    comboBox4EasyUI.setText(m.getMaintainScheduleId());
+                }
+                return comboxs;
+            }else{
+                logger.info("此用户无拥有此方法角色");
+                return null;
+            }
+        }else{
+            logger.info("请先登录");
+            return null;
         }
-        return comboxs;
     }
 
     /**
@@ -63,13 +74,24 @@ public class MaintainScheduleController {
     @ResponseBody
     @RequestMapping(value="queryByPage", method = RequestMethod.GET)
     public Pager4EasyUI queryByPager(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize){
-        Pager pager = new Pager();
-        pager.setPageNo(Integer.valueOf(pageNumber));
-        pager.setPageSize(Integer.valueOf(pageSize));
-        pager.setTotalRecords(maintainScheduleService.count());
-        logger.info("分页查询维修保养进度管理成功");
-        List<MaintainSchedule> maintainSchedules = maintainScheduleService.queryByPager(pager);
-        return new Pager4EasyUI<MaintainSchedule>(pager.getTotalRecords(), maintainSchedules);
+        if(SessionUtil.isLogin(session)) {
+            String roles="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,车主,汽车公司总技师";
+            if(RoleUtil.checkRoles(roles)) {
+                Pager pager = new Pager();
+                pager.setPageNo(Integer.valueOf(pageNumber));
+                pager.setPageSize(Integer.valueOf(pageSize));
+                pager.setTotalRecords(maintainScheduleService.count());
+                logger.info("分页查询维修保养进度管理成功");
+                List<MaintainSchedule> maintainSchedules = maintainScheduleService.queryByPager(pager);
+                return new Pager4EasyUI<MaintainSchedule>(pager.getTotalRecords(), maintainSchedules);
+            }else{
+                logger.info("此用户无拥有此方法角色");
+                return null;
+            }
+        }else{
+            logger.info("请先登录");
+            return null;
+        }
     }
 
     /**
@@ -80,24 +102,46 @@ public class MaintainScheduleController {
     @ResponseBody
     @RequestMapping(value="addSchedule", method = RequestMethod.POST)
     public ControllerResult addSchedule(MaintainSchedule maintainSchedule){
-        if(maintainSchedule !=null && !maintainSchedule.equals("")){
-            maintainScheduleService.insert(maintainSchedule);
-            logger.info("添加成功");
-            return ControllerResult.getSuccessResult("添加成功");
+        if(SessionUtil.isLogin(session)) {
+            String roles="系统超级管理员,公司超级管理员,公司普通管理员,汽车公司总技师";
+            if(RoleUtil.checkRoles(roles)) {
+                if(maintainSchedule !=null && !maintainSchedule.equals("")){
+                    maintainScheduleService.insert(maintainSchedule);
+                    logger.info("添加成功");
+                    return ControllerResult.getSuccessResult("添加成功");
+                }else{
+                    return ControllerResult.getFailResult("添加失败，请检查输入的信息是否有误");
+                }
+            }else{
+                logger.info("此用户无拥有此方法角色");
+                return null;
+            }
         }else{
-            return ControllerResult.getFailResult("添加失败，请检查输入的信息是否有误");
+            logger.info("请先登录");
+            return null;
         }
     }
 
     @ResponseBody
     @RequestMapping(value = "updateSchedule", method = RequestMethod.POST)
     public ControllerResult updateSchedule(MaintainSchedule maintainSchedule){
-        if(maintainSchedule !=null && !maintainSchedule.equals("")){
-            maintainScheduleService.update(maintainSchedule);
-            logger.info("修改成功");
-            return ControllerResult.getSuccessResult("修改成功");
+        if(SessionUtil.isLogin(session)) {
+            String roles="公司超级管理员,公司普通管理员,汽车公司总技师";
+            if(RoleUtil.checkRoles(roles)) {
+                if(maintainSchedule !=null && !maintainSchedule.equals("")){
+                    maintainScheduleService.update(maintainSchedule);
+                    logger.info("修改成功");
+                    return ControllerResult.getSuccessResult("修改成功");
+                }else{
+                    return ControllerResult.getFailResult("修改失败");
+                }
+            }else{
+                logger.info("此用户无拥有此方法角色");
+                return null;
+            }
         }else{
-            return ControllerResult.getFailResult("修改失败");
+            logger.info("请先登录");
+            return null;
         }
     }
 

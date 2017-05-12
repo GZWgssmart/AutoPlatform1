@@ -26,7 +26,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-/**工单管理
+/**订单查询
  * Created by jyy on 2017/4/20.
  */
 @Controller
@@ -42,16 +42,29 @@ public class OrderManageController {
     @ResponseBody
     @RequestMapping(value = "queryAll",method = RequestMethod.GET)
     public List<ComboBox4EasyUI> queryAllWork(){
-        logger.info("查询所有工单");
-        List<WorkInfo> workInfosList = workInfoService.queryAll();
-        List<ComboBox4EasyUI> comboxs = new ArrayList<ComboBox4EasyUI>();
-        for(WorkInfo work : workInfosList){
-            ComboBox4EasyUI comboBox4EasyUI = new ComboBox4EasyUI();
-            comboBox4EasyUI.setId(work.getWorkId());
-            comboBox4EasyUI.setText(work.getRecordId());
-            comboxs.add(comboBox4EasyUI);
+        if(SessionUtil.isLogin(session)) {
+            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员," +
+                    "汽车公司总技师,汽车公司技师,汽车公司学徒,汽车公司销售人员,汽车公司财务人员,汽车公司采购人员," +
+                    "汽车公司库管人员,汽车公司人力资源管理部";
+            if(RoleUtil.checkRoles(roles)) {
+                logger.info("查询所有订单");
+                List<WorkInfo> workInfosList = workInfoService.queryAll();
+                List<ComboBox4EasyUI> comboxs = new ArrayList<ComboBox4EasyUI>();
+                for(WorkInfo work : workInfosList){
+                    ComboBox4EasyUI comboBox4EasyUI = new ComboBox4EasyUI();
+                    comboBox4EasyUI.setId(work.getWorkId());
+                    comboBox4EasyUI.setText(work.getRecordId());
+                    comboxs.add(comboBox4EasyUI);
+                }
+                return comboxs;
+            }else{
+                logger.info("此用户无拥有此方法角色");
+                return null;
+            }
+        }else{
+            logger.info("请先登录");
+            return null;
         }
-        return comboxs;
     }
 
     /*
@@ -60,29 +73,55 @@ public class OrderManageController {
      * @param pageSize
      * @return
 */
-
     @ResponseBody
     @RequestMapping(value = "queryByPager",method = RequestMethod.GET)
-    public Pager4EasyUI<WorkInfo> queryByPager(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
-        logger.info("工单分页查询");
-        Pager pager = new Pager();
-        pager.setPageNo(Integer.valueOf(pageNumber));
-        pager.setPageSize(Integer.valueOf(pageSize));
-        pager.setTotalRecords(workInfoService.count());
-        List<WorkInfo> worksList = workInfoService.queryByPager(pager);
-        return new Pager4EasyUI<WorkInfo>(pager.getTotalRecords(), worksList);
+    public Pager4EasyUI<WorkInfo> queryByPager(httpSession session, @Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
+        if(SessionUtil.isLogin(session)) {
+                String roles="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员";
+            if(RoleUtil.checkRoles(roles)) {
+                Pager pager = new Pager();
+                pager.setPageNo(Integer.valueOf(pageNumber));
+                pager.setPageSize(Integer.valueOf(pageSize));
+                pager.setTotalRecords(workInfoService.count());
+                List<WorkInfo> worksList = workInfoService.queryByPager(pager);
+                return new Pager4EasyUI<WorkInfo>(pager.getTotalRecords(), worksList);
+            }else{
+                logger.info("此用户无拥有此方法角色");
+                return null;
+            }
+        }else{
+            logger.info("请先登录");
+            return null;
+        }
     }
 
+    /**
+     * 维修保养进度查看
+     * @param pageNumber
+     * @param pageSize
+     * @return
+     */
     @ResponseBody
     @RequestMapping(value = "queryBySche",method = RequestMethod.GET)
     public Pager4EasyUI<WorkInfo> queryBySche(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
-        logger.info("维修保养记录分页查询");
-        Pager pager = new Pager();
-        pager.setPageNo(Integer.valueOf(pageNumber));
-        pager.setPageSize(Integer.valueOf(pageSize));
-        pager.setTotalRecords(workInfoService.count());
-        List<WorkInfo> worksList = workInfoService.queryByPagerschelude(pager);
-        return new Pager4EasyUI<WorkInfo>(pager.getTotalRecords(), worksList);
+        if(SessionUtil.isLogin(session)) {
+            String roles="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,车主";
+            if(RoleUtil.checkRoles(roles)) {
+                logger.info("维修保养记录分页查询");
+                Pager pager = new Pager();
+                pager.setPageNo(Integer.valueOf(pageNumber));
+                pager.setPageSize(Integer.valueOf(pageSize));
+                pager.setTotalRecords(workInfoService.count());
+                List<WorkInfo> worksList = workInfoService.queryByPagerschelude(pager);
+                return new Pager4EasyUI<WorkInfo>(pager.getTotalRecords(), worksList);
+            }else{
+                logger.info("此用户无拥有此方法角色");
+                return null;
+            }
+        }else{
+            logger.info("请先登录");
+            return null;
+        }
     }
 
 /*    @ResponseBody
@@ -105,13 +144,24 @@ public class OrderManageController {
     @ResponseBody
     @RequestMapping(value="queryByPagerDisable", method = RequestMethod.GET)
     public Pager4EasyUI<WorkInfo> queryByPagerDisable(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
-        logger.info("分页查询所有被禁用登记记录");
-        Pager pager = new Pager();
-        pager.setPageNo(Integer.valueOf(pageNumber));
-        pager.setPageSize(Integer.valueOf(pageSize));
-        pager.setTotalRecords(workInfoService.countByDisable());
-        List<WorkInfo> worklLis = workInfoService.queryByPagerDisable(pager);
-        return new Pager4EasyUI<WorkInfo>(pager.getTotalRecords(), worklLis);
+        if(SessionUtil.isLogin(session)) {
+            String roles="汽车公司总技师,公司超级管理员";
+            if(RoleUtil.checkRoles(roles)) {
+                logger.info("分页查询所有被禁用登记记录");
+                Pager pager = new Pager();
+                pager.setPageNo(Integer.valueOf(pageNumber));
+                pager.setPageSize(Integer.valueOf(pageSize));
+                pager.setTotalRecords(workInfoService.countByDisable());
+                List<WorkInfo> worklLis = workInfoService.queryByPagerDisable(pager);
+                return new Pager4EasyUI<WorkInfo>(pager.getTotalRecords(), worklLis);
+            }else{
+                logger.info("此用户无拥有此方法角色");
+                return null;
+            }
+        }else{
+            logger.info("请先登录");
+            return null;
+        }
     }
 
 /*    *//**
@@ -137,13 +187,24 @@ public class OrderManageController {
     @ResponseBody
     @RequestMapping(value = "update", method = RequestMethod.POST)
     public ControllerResult updateWork(WorkInfo workInfo) {
-        if(workInfo!=null && !workInfo.equals("")){
-            logger.info("修改工单");
-            System.out.println("fdjsldkfls");
-            workInfoService.update(workInfo);
-            return ControllerResult.getSuccessResult("修改成功");
+        if(SessionUtil.isLogin(session)) {
+            String roles="汽车公司总技师,公司超级管理员";
+            if(RoleUtil.checkRoles(roles)) {
+                if(workInfo!=null && !workInfo.equals("")){
+                    logger.info("修改工单");
+                    System.out.println("fdjsldkfls");
+                    workInfoService.update(workInfo);
+                    return ControllerResult.getSuccessResult("修改成功");
+                }else{
+                    return ControllerResult.getFailResult("修改失败，请输入正确的信息");
+                }
+            }else{
+                logger.info("此用户无拥有此方法角色");
+                return null;
+            }
         }else{
-            return ControllerResult.getFailResult("修改失败，请输入正确的信息");
+            logger.info("请先登录");
+            return null;
         }
 
     }
@@ -155,19 +216,30 @@ public class OrderManageController {
     @ResponseBody
     @RequestMapping(value = "statusOperate",method = RequestMethod.POST)
     public ControllerResult inactive(String id,String status){
-        if (id != null && !id.equals("") && status != null && !status.equals("")) {
-            if (status.equals("N")) {
-                workInfoService.active(id);
-                logger.info("激活成功");
-                return ControllerResult.getSuccessResult("激活成功");
-            } else {
-                workInfoService.inactive(id);
-                logger.info("禁用成功");
-                return ControllerResult.getSuccessResult("禁用成功");
+        if(SessionUtil.isLogin(session)) {
+            String roles="汽车公司总技师,公司超级管理员";
+            if(RoleUtil.checkRoles(roles)) {
+                if (id != null && !id.equals("") && status != null && !status.equals("")) {
+                    if (status.equals("N")) {
+                        workInfoService.active(id);
+                        logger.info("激活成功");
+                        return ControllerResult.getSuccessResult("激活成功");
+                    } else {
+                        workInfoService.inactive(id);
+                        logger.info("禁用成功");
+                        return ControllerResult.getSuccessResult("禁用成功");
+                    }
+                } else {
+                    return ControllerResult.getFailResult("操作失败");
+                }
+            }else{
+                logger.info("此用户无拥有此方法角色");
+                return null;
             }
-        } else {
-            return ControllerResult.getFailResult("操作失败");
-        }
+        }else{
+                logger.info("请先登录");
+                return null;
+                }
     }
 
     /**
