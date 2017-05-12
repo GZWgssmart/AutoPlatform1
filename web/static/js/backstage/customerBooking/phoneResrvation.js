@@ -103,7 +103,6 @@ function showAvailable() {
     });
 
 }
-
 function showDisable() {
     $.post("/user/isLogin", function (data) {
         if(data.result == 'success'){

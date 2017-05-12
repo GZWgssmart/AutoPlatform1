@@ -161,7 +161,6 @@
     order by am.appCreatedTime Desc
     limit #{pager.beginIndex}, #{pager.pageSize}
   </select>
-
   <!-- 分页模糊查询个数 -->
   <select id="countByBlurred" resultType="int" >
     <![CDATA[

@@ -19,7 +19,6 @@
 <body>
 
 <%@include file="../backstage/contextmenu.jsp"%>
-
 <div class="container">
     <div class="panel-body" style="padding-bottom:0px;"  >
         <!--show-refredata-single-sesh, show-toggle的样式可以在bootstrap-table.js的948行修改-->

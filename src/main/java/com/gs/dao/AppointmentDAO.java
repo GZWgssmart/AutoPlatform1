@@ -20,7 +20,6 @@ import java.util.List;
 public interface AppointmentDAO extends BaseDAO<String, Appointment>{
 
     public int countByBlurred(Appointment appointment, User user);
-
     /**
      * 模糊查询
      */
