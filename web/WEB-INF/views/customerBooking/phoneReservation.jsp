@@ -26,7 +26,7 @@
         <table id="table">
             <thead>
             <tr>
-                <th data-checkbox="true"></th>
+                <th data-radio="true"></th>
                 <th data-width="100" data-field="userName" >
                     车主姓名
                 </th>
@@ -70,10 +70,11 @@
             </thead>
         </table>
         <div id="toolbar" class="btn-group">
-            <button id="btn_available" type="button" class="btn btn-default" onclick="showAvailable()">
+            <button id="btn_available" type="button" class="btn btn-success" onclick="showAvailable();">
                 <span class="glyphicon glyphicon-search" aria-hidden="true"></span>可用预约记录
             </button>
-            <button id="btn_disable" type="button" class="btn btn-default" onclick="showDisable()">
+
+            <button id="btn_disable" type="button" class="btn btn-danger" onclick="showDisable()">
                 <span class="glyphicon glyphicon-search" aria-hidden="true"></span>禁用预约记录
             </button>
             <button id="btn_add" type="button" class="btn btn-default" onclick="showAdd();">
@@ -82,17 +83,19 @@
             <button id="btn_edit" type="button" class="btn btn-default" onclick="showEdit();">
                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
             </button>
-            <div class="input-group" style="width:350px;float:left;padding:0;margin:0 0 0 -1px;">
+            <div class="input-group" style="width:450px;float:left;padding:0;margin:0 0 0 -1px;">
                 <div class="input-group-btn">
-                    <button type="button" id="ulButton" class="btn btn-default" style="border-radius:0px;" data-toggle="dropdown">车主/汽车公司/汽车车牌<span class="caret"></span></button>
+                    <button type="button" id="ulButton" class="btn btn-default" style="border-radius:0px;" data-toggle="dropdown">车主姓名/车主电话/汽车公司<span class="caret"></span></button>
                     <ul class="dropdown-menu pull-right">
-                        <li><a onclick="onclikLi(this)">车主/汽车公司/汽车车牌</a></li>
+                        <li><a onclick="onclikLi(this)">车主姓名/车主电话/汽车公司</a></li>
                         <li class="divider"></li>
-                        <li><a onclick="onclikLi(this)">车主</a></li>
+                        <li><a onclick="onclikLi(this)">车主姓名</a></li>
+                        <li class="divider"></li>
+                        <li><a onclick="onclikLi(this)">车主电话</a></li>
                         <li class="divider"></li>
                         <li><a onclick="onclikLi(this)">汽车公司</a></li>
                         <li class="divider"></li>
-                        <li><a onclick="onclikLi(this)">汽车车牌</a></li>
+                        <li><a onclick="onclikLi(this)">汽车车牌号</a></li>
                     </ul>
                 </div><!-- /btn-group -->
                 <input id="ulInput" class="form-control" onkeypress="if(event.keyCode==13) {blurredQuery();}">
@@ -111,10 +114,10 @@
                 <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
                     <form role="form" class="form-horizontal" id="addForm">
                         <div class="modal-header" style="overflow:auto;">
-                            <h4>添加预约信息</h4>
+                            <h4>添加电话预约信息</h4>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">是否为本店用户：</label>
+                            <label class="col-sm-3 control-label">是否为本店会员：</label>
                             <div class="col-sm-7">
                                 <input id="app" type="checkbox" onchange="appOnChange()"/>
                             </div>
@@ -169,7 +172,7 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">车牌号码：</label>
                             <div class="col-sm-7">
-                                <input  name="carPlate" placeholder="请输入车牌号码" class="form-control"/>
+                                <input  type="number" name="carPlate" placeholder="请输入车牌号码" class="form-control"/>
                             </div>
                         </div>
                         <div class="form-group">
@@ -226,14 +229,14 @@
                     </div>
                 </div>
 
-                <div id="editModelDiv" class="form-group">
+                <div class="form-group">
                     <label class="col-sm-3 control-label">汽车品牌：</label>
                     <div class="col-sm-7">
                         <select id="editCarBrand" class="js-example-tags carBrand" define="appointment.brandId" name="brandId" style="width:100%">
                         </select>
                     </div>
                 </div>
-                <div class="form-group">
+                <div id="editModelDiv" style="display: none" class="form-group">
                     <label class="col-sm-3 control-label">汽车车型：</label>
                     <div class="col-sm-7">
                         <select id="editCarModel" class="js-example-tags carModel" define="appointment.modelId" name="modelId" style="width:100%">
@@ -288,7 +291,7 @@
                 <div class="form-group">
                     <div class="col-sm-offset-8">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button class="btn btn-sm btn-success" onclick="editSubmit();" type="button">保 存</button>
+                        <button class="btn btn-sm btn-success" onclick="editSubmit();" type="button">添加</button>
                     </div>
                 </div>
             </form>
@@ -308,55 +311,61 @@
                             <tr>
                                 <th data-checkbox="true"></th>
                                 <th data-field="userEmail">
-                                    车主邮箱
+                                    用户邮箱
                                 </th>
                                 <th data-field="userPhone">
-                                    车主电话
+                                    用户电话
                                 </th>
                                 <th data-field="userIdentity">
-                                    车主身份证
+                                    用户身份证
+                                </th>
+                                <th data-field="userPwd">
+                                    用户密码
+                                </th>
+                                <th data-field="userNickname">
+                                    用户昵称
                                 </th>
                                 <th data-field="userName">
-                                    车主姓名
+                                    用户姓名
                                 </th>
                                 <th data-field="userGender">
-                                    车主性别
+                                    用户性别
                                 </th>
                                 <th data-field="userBirthday">
-                                    车主生日
+                                    用户生日
                                 </th>
                                 <th data-field="userAddress">
-                                    车主地址
+                                    用户地址
                                 </th>
                                 <th data-field="qqOpenId">
-                                    车主qq
+                                    用户qq
                                 </th>
                                 <th data-field="weiboOpenId">
-                                    车主微博
+                                    用户微博
                                 </th>
                                 <th data-field="wechatOpenId">
-                                    车主微信
+                                    用户微信
                                 </th>
                                 <th data-field="userIcon">
-                                    车主头像
+                                    用户头像
                                 </th>
                                 <th data-field="userDes">
-                                    车主描叙
+                                    用户描叙
                                 </th>
                                 <th data-field="companyId">
-                                    车主所属公司
+                                    用户所属公司
                                 </th>
                                 <th data-field="userSalary">
-                                    车主基本工资
+                                    用户基本工资
                                 </th>
                                 <th data-field="userCreatedTime">
-                                    车主创建时间
+                                    用户创建时间
                                 </th>
                                 <th data-field="userLoginedTime">
-                                    车主最近一次登录时间
+                                    用户最近一次登录时间
                                 </th>
                                 <th data-field="userStatus">
-                                    车主状态
+                                    用户状态
                                 </th>
                             </thead>
                             <tbody>

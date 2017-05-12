@@ -124,7 +124,7 @@ public class PhoneReservationController {
     @ResponseBody
     @RequestMapping(value="blurredQuery", method = RequestMethod.GET)
     public Pager4EasyUI<Appointment> blurredQuery(HttpServletRequest request, @Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
-        logger.info("登记记录模糊查询");
+        logger.info("预约记录模糊查询");
         String text = request.getParameter("text");
         String value = request.getParameter("value");
         if(text != null && text!="") {
@@ -133,18 +133,18 @@ public class PhoneReservationController {
             pager.setPageSize(Integer.valueOf(pageSize));
             List<Appointment> appointments = null;
             Appointment appointment = new Appointment();
-            if(text.equals("车主/电话/汽车公司/车牌号")){ // 当多种模糊搜索条件时
+            if(text.equals("车主姓名/车主电话/汽车公司/汽车车牌号")){ // 当多种模糊搜索条件时
                 appointment.setUserName(value);
                 appointment.setCompanyId(value);
                 appointment.setCarPlate(value);
                 appointment.setUserPhone(value);
-            }else if(text.equals("车主")){
+            }else if(text.equals("车主姓名")){
                 appointment.setUserName(value);
             }else if(text.equals("汽车公司")){
                 appointment.setCompanyId(value);
-            }else if(text.equals("车牌号")){
+            }else if(text.equals("汽车车牌号")){
                 appointment.setCarPlate(value);
-            }else if(text.equals("电话")){
+            }else if(text.equals("车主电话")){
                 appointment.setUserPhone(value);
             }
             appointments = appointmentService.blurredQuery(pager, appointment);

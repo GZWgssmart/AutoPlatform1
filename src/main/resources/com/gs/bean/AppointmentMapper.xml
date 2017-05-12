@@ -120,7 +120,7 @@
            where 1=1 and
       ]]>
     <if test="appointment.userName != '' and appointment.userName != null">
-      ck.userName like '%${appointment.userName}%'
+      am.userName like '%${appointment.userName}%'
     </if>
     <if test="appointment.userName != '' and appointment.userName != null and
             appointment.companyId != '' and appointment.companyId != null">
@@ -134,14 +134,14 @@
       or
     </if>
     <if test="appointment.carPlate != '' and appointment.carPlate != null">
-      ck.carPlate like '%${appointment.carPlate}%'
+      am.carPlate like '%${appointment.carPlate}%'
     </if>
     <if test="appointment.carPlate != '' and appointment.carPlate != null and
             appointment.userPhone != '' and appointment.userPhone != null">
       or
     </if>
     <if test="appointment.userPhone != '' and appointment.userPhone != null">
-      ck.userPhone like '%${appointment.userPhone}%'
+      am.userPhone like '%${appointment.userPhone}%'
     </if>
     order by am.appCreatedTime Desc
     limit #{pager.beginIndex}, #{pager.pageSize}
@@ -160,7 +160,7 @@
       where 1=1 and
     ]]>
     <if test="appointment.userName != '' and appointment.userName != null">
-      ck.userName like '%${appointment.userName}%'
+      am.userName like '%${appointment.userName}%'
     </if>
     <if test="appointment.userName != '' and appointment.userName != null and
     appointment.companyId != '' and appointment.companyId != null">
@@ -174,17 +174,17 @@
       or
     </if>
     <if test="appointment.carPlate != '' and appointment.carPlate != null">
-      ck.carPlate like '%${appointment.carPlate}%'
+      am.carPlate like '%${appointment.carPlate}%'
     </if>
     <if test="appointment.carPlate != '' and appointment.carPlate != null and
     appointment.userPhone != '' and appointment.userPhone != null">
       or
     </if>
     <if test="appointment.userPhone != '' and appointment.userPhone != null">
-      ck.userPhone like '%${appointment.userPhone}%'
+      am.userPhone like '%${appointment.userPhone}%'
     </if>
   </select>
-  
+
   <!--冻结数据-->
   <update id="inactive" parameterType="Appointment">
     <![CDATA[
