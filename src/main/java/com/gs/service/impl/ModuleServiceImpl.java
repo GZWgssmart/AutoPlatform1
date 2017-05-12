@@ -2,6 +2,7 @@ package com.gs.service.impl;
 
 import com.gs.bean.Checkin;
 import com.gs.bean.Module;
+import com.gs.bean.User;
 import com.gs.dao.ModuleDAO;
 import com.gs.service.ModuleService;
 import org.springframework.stereotype.Service;
@@ -31,7 +32,7 @@ public class ModuleServiceImpl implements ModuleService {
 	public int batchDelete(List<Module> list) { return moduleDAO.batchDelete(list); }
 	public int update(Module module) { return moduleDAO.update(module); }
 	public int batchUpdate(List<Module> list) { return moduleDAO.batchUpdate(list); }
-	public List<Module> queryAll() { return moduleDAO.queryAll(); }
+	public List<Module> queryAll(User user) { return moduleDAO.queryAll(user); }
 
 	@Override
 	public List<Module> queryAll(String status) {
@@ -42,7 +43,7 @@ public class ModuleServiceImpl implements ModuleService {
 	public Module query(Module module) { return moduleDAO.query(module); }
 	public Module queryById(String id) { return moduleDAO.queryById(id); }
 	public List<Module> queryByPager(Pager pager) { return moduleDAO.queryByPager(pager); }
-	public int count() { return moduleDAO.count(); }
+	public int count(User user) { return moduleDAO.count(user); }
 	public int inactive(String id) { return moduleDAO.inactive(id); }
 	public int active(String id) { return moduleDAO.active(id); }
 
@@ -50,12 +51,17 @@ public class ModuleServiceImpl implements ModuleService {
 		return moduleDAO.queryByPagerDisable(pager);
 	}
 
-	public int countByDisable() {
-		return moduleDAO.countByDisable();
+	public int countByDisable(User user) {
+		return moduleDAO.countByDisable(user);
 	}
 
 	public List<Module> blurredQuery(Pager pager, Module module) {
 		return null;
+	}
+
+	@Override
+	public int countByBlurred(Module module, User user) {
+		return 0;
 	}
 
 	public int countByBlurred(Module module) {

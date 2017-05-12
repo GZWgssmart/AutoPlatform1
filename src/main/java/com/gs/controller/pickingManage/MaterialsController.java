@@ -1,13 +1,17 @@
 package com.gs.controller.pickingManage;
 
+import ch.qos.logback.classic.Logger;
 import com.gs.bean.MaterialList;
 import com.gs.bean.MaterialReturn;
 import com.gs.bean.MaterialUse;
+import com.gs.bean.User;
 import com.gs.bean.view.MaterialURTemp;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
+import com.gs.common.util.SessionUtil;
 import com.gs.common.util.UUIDUtil;
+import com.gs.controller.SystemManageController;
 import com.gs.service.MaterialListService;
 import com.gs.service.MaterialReturnService;
 import com.gs.service.MaterialUseService;
@@ -20,6 +24,7 @@ import org.activiti.engine.impl.persistence.entity.HistoricVariableInstanceEntit
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
 import org.activiti.engine.task.TaskQuery;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,6 +32,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -41,6 +47,9 @@ import java.util.Map;
 @Controller
 @RequestMapping("/materials")
 public class MaterialsController {
+
+    private Logger logger = (Logger) LoggerFactory.getLogger(SystemManageController.class);
+
 
     @Resource
     private MaterialListService materialListService;
@@ -73,49 +82,63 @@ public class MaterialsController {
 
     @ResponseBody       //可能用不到了
     @RequestMapping("queryUserMaterialsByPager")
-    public Pager4EasyUI materialsByPager(@RequestParam("pageNumber") int pageNumber, @RequestParam("pageSize") int pageSize){
-        final  String userId = "1";
-        Pager pager = new Pager();
-        Pager4EasyUI pager4EasyUI = new Pager4EasyUI();
-        pager.setPageNo(pageNumber);
-        pager.setPageSize(pageSize);
-        int total = materialListService.count(userId);
-        pager4EasyUI.setTotal(total);
-        List list = materialListService.queryByPager(userId,pager);
-        pager4EasyUI.setRows(list);
-        return pager4EasyUI;
+    public Pager4EasyUI materialsByPager(@RequestParam("pageNumber") int pageNumber, @RequestParam("pageSize") int pageSize, HttpSession session){
+        if(SessionUtil.isLogin(session)) {
+            final  String userId = "1";
+            Pager pager = new Pager();
+            Pager4EasyUI pager4EasyUI = new Pager4EasyUI();
+            pager.setPageNo(pageNumber);
+            pager.setPageSize(pageSize);
+            int total = materialListService.count(userId);
+            pager4EasyUI.setTotal(total);
+            List list = materialListService.queryByPager(userId,pager);
+            pager4EasyUI.setRows(list);
+            return pager4EasyUI;
+        } else {
+            logger.info("请先登录");
+            return null;
+        }
     }
 
     @ResponseBody
     @RequestMapping("history")
-    public Pager4EasyUI historyByPager(@RequestParam("pageNumber") int pageNumber, @RequestParam("pageSize") int pageSize){
-        final String tempUserId = "1";
-
-        Pager4EasyUI pager4EasyUI = new Pager4EasyUI();
-        Pager pager = new Pager();
-        //当前以用户1号查询,后期需要判断是否拥有查询所有领用记录才可以使用
-        int total = materialUseService.countUserHist(tempUserId);
-        pager.setPageNo(pageNumber);
-        pager.setPageSize(pageSize);
-        pager4EasyUI.setTotal(total);
-        List rows = materialUseService.userHistByPager(pager,tempUserId);
-        pager4EasyUI.setRows(rows);
-        return pager4EasyUI;
+    public Pager4EasyUI historyByPager(@RequestParam("pageNumber") int pageNumber, @RequestParam("pageSize") int pageSize, HttpSession session){
+        if(SessionUtil.isLogin(session)) {
+            final String tempUserId = "1";
+            Pager4EasyUI pager4EasyUI = new Pager4EasyUI();
+            Pager pager = new Pager();
+            //当前以用户1号查询,后期需要判断是否拥有查询所有领用记录才可以使用
+            int total = materialUseService.countUserHist(tempUserId);
+            pager.setPageNo(pageNumber);
+            pager.setPageSize(pageSize);
+            pager4EasyUI.setTotal(total);
+            List rows = materialUseService.userHistByPager(pager,tempUserId);
+            pager4EasyUI.setRows(rows);
+            return pager4EasyUI;
+        } else {
+            logger.info("请先登录");
+            return null;
+        }
     }
 
     @ResponseBody
     @RequestMapping("recordAccsByPager")
-    public Pager4EasyUI recordAccsByPager(@RequestParam("pageNumber") int pageNumber, @RequestParam("pageSize") int pageSize,@RequestParam("recordId")String recordId){
-        Pager pager = new Pager();
-        pager.setPageNo(pageNumber);
-        pager.setPageSize(pageSize);
-        int total = materialListService.countRecordAccs(recordId);
-        Pager4EasyUI pager4EasyUI = new Pager4EasyUI();
-        pager4EasyUI.setTotal(total);
-        List list = materialListService.recordAccsByPager(recordId,pager);
-        setFlowingVars(list);
-        pager4EasyUI.setRows(list);
-        return pager4EasyUI;
+    public Pager4EasyUI recordAccsByPager(@RequestParam("pageNumber") int pageNumber, @RequestParam("pageSize") int pageSize,@RequestParam("recordId")String recordId, HttpSession session){
+        if(SessionUtil.isLogin(session)) {
+            Pager pager = new Pager();
+            pager.setPageNo(pageNumber);
+            pager.setPageSize(pageSize);
+            int total = materialListService.countRecordAccs(recordId);
+            Pager4EasyUI pager4EasyUI = new Pager4EasyUI();
+            pager4EasyUI.setTotal(total);
+            List list = materialListService.recordAccsByPager(recordId, pager);
+            setFlowingVars(list);
+            pager4EasyUI.setRows(list);
+            return pager4EasyUI;
+        } else {
+            logger.info("请先登录");
+            return null;
+        }
     }
 
     private void setFlowingVars(List<MaterialList> list) {
@@ -132,26 +155,33 @@ public class MaterialsController {
 
     @ResponseBody
     @RequestMapping("doReview")
-    public ControllerResult doReview(MaterialURTemp materialUse, HttpServletRequest req){ // 审核退料与领料申请
-        TaskQuery taskQuery = taskService.createTaskQuery();
-        final String curUserID = "2";
+    public ControllerResult doReview(MaterialURTemp materialUse, HttpServletRequest req, HttpSession session){ // 审核退料与领料申请
+        if(SessionUtil.isLogin(session)) {
+            User user = (User) session.getAttribute("user");
+            TaskQuery taskQuery = taskService.createTaskQuery();
+            final String curUserID = user.getUserId();
 
-        String proInsId = materialUse.getProcessInstanceId();
-        Task task = taskQuery.processInstanceId(proInsId).singleResult();
+            String proInsId = materialUse.getProcessInstanceId();
+            Task task = taskQuery.processInstanceId(proInsId).singleResult();
 
 
-        boolean isOK  = Boolean.parseBoolean(req.getParameter("isOK"));
-        String respMsg = materialUse.getRespMsg();
+            boolean isOK = Boolean.parseBoolean(req.getParameter("isOK"));
+            String respMsg = materialUse.getRespMsg();
 
-        Map map = new HashMap();
-        map.put("isOK",isOK ); map.put("respMsg", respMsg);
-        String resultPre = "拒绝";
-        if(isOK) {
-            resultPre = "同意";
+            Map map = new HashMap();
+            map.put("isOK", isOK);
+            map.put("respMsg", respMsg);
+            String resultPre = "拒绝";
+            if (isOK) {
+                resultPre = "同意";
 
+            }
+            taskService.setAssignee(task.getId(), curUserID);
+            return nextTask(proInsId, task.getId(), map, resultPre);
+        } else {
+            logger.info("请先登录");
+            return null;
         }
-        taskService.setAssignee(task.getId(), curUserID);
-        return nextTask(proInsId, task.getId(), map, resultPre);
     }
 
     private ControllerResult nextTask(String proInsId, String taskId, Map map, String otherMsg) {
@@ -211,9 +241,14 @@ public class MaterialsController {
 
     @ResponseBody
     @RequestMapping("insert")
-    public ControllerResult insertMaterials(MaterialList materialList){
-        int resultCount = materialListService.insert(materialList);
-        return isSuc(resultCount,"添加成功","添加失败");
+    public ControllerResult insertMaterials(MaterialList materialList, HttpSession session){
+        if(SessionUtil.isLogin(session)) {
+            int resultCount = materialListService.insert(materialList);
+            return isSuc(resultCount,"添加成功","添加失败");
+        } else {
+            logger.info("请先登录");
+            return null;
+        }
     }
 
     private ControllerResult isSuc(int resultCount,String sucmsg,String ermsg) {

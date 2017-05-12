@@ -1,5 +1,6 @@
 package com.gs.controller.systemManage;
 
+import ch.qos.logback.classic.Logger;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.gs.bean.Accessories;
 import com.gs.bean.MaterialReturn;
@@ -9,7 +10,9 @@ import com.gs.bean.view.VariableInstanceTemp;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
+import com.gs.common.util.SessionUtil;
 import com.gs.common.util.UUIDUtil;
+import com.gs.controller.SystemManageController;
 import com.gs.service.*;
 import org.activiti.engine.*;
 import org.activiti.engine.history.HistoricProcessInstance;
@@ -29,6 +32,7 @@ import org.activiti.engine.task.TaskQuery;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -46,6 +50,9 @@ import java.util.*;
 @Controller
 @RequestMapping("/flow")
 public class FlowController {
+
+    private Logger logger = (Logger) LoggerFactory.getLogger(SystemManageController.class);
+
     @Resource
     private MaterialListService materialListService;
 
@@ -78,11 +85,17 @@ public class FlowController {
     @ResponseBody
     @RequestMapping("queryAllFile")
     public Pager4EasyUI queryAllProcessFile(@RequestParam("pageNumber")int pageNo, @RequestParam("pageSize")int pageSize,HttpSession session) {
+        if(SessionUtil.isLogin(session)) {
         Pager pager = new Pager();
         pager.setPageNo(pageNo);
         pager.setPageSize(pageSize);
         return getAllBpmnFileMsg(pager,session);
+        } else {
+            logger.info("请先登录");
+            return null;
+        }
     }
+
     private Pager4EasyUI getAllBpmnFileMsg( Pager pager, HttpSession session) {
         String rootPath = session.getServletContext().getRealPath("/");
         rootPath += "/WEB-INF/classes/com/gs/bpmn";
@@ -134,15 +147,21 @@ public class FlowController {
     @ResponseBody
     @RequestMapping("deployFile")
     public ControllerResult deployFile(@RequestParam("fileName")String fileName, HttpSession session) {
-        try {
-            DeploymentBuilder depBuil = repositoryService.createDeployment();
-            depBuil.addClasspathResource("com/gs/bpmn/"+ fileName);
-            depBuil.deploy();
-        } catch(Exception e) {
-            e.printStackTrace();
-            return ControllerResult.getFailResult("部署失败,请刷新页面");
+        if(SessionUtil.isLogin(session)) {
+            try {
+                DeploymentBuilder depBuil = repositoryService.createDeployment();
+                depBuil.addClasspathResource("com/gs/bpmn/"+ fileName);
+                depBuil.deploy();
+            } catch(Exception e) {
+                e.printStackTrace();
+                return ControllerResult.getFailResult("部署失败,请刷新页面");
+            }
+            return ControllerResult.getSuccessResult("部署成功");
+        } else {
+            logger.info("请先登录");
+            return null;
         }
-        return ControllerResult.getSuccessResult("部署成功");
+
     }
 
 
