@@ -19,7 +19,17 @@ public class MaintainRemind {
 
     private Date remindCreatedTime;
 
+    private String companyId;
+
     private User user;
+
+    public String getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(String companyId) {
+        this.companyId = companyId;
+    }
 
     public User getUser() {
         return user;

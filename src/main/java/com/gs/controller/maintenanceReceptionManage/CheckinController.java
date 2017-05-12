@@ -10,6 +10,7 @@ import com.gs.common.bean.Pager4EasyUI;
 import com.gs.common.util.RoleUtil;
 import com.gs.common.util.SessionUtil;
 import com.gs.common.util.UUIDUtil;
+import com.gs.service.AppointmentService;
 import com.gs.service.CheckinService;
 import com.gs.service.MaintainRecordService;
 import org.apache.ibatis.annotations.Param;
@@ -45,6 +46,9 @@ public class CheckinController {
     // 维修保养记录service
     @Resource
     private MaintainRecordService maintainRecordService;
+    // 预约记录service
+    @Resource
+    private AppointmentService appointmentService;
 
     /**
      * 查询所有登记记录
@@ -111,7 +115,6 @@ public class CheckinController {
                 logger.info("添加登记记录");
                 if(checkin != null) {
                     if(checkin.getAppointmentId()!= null && checkin.getAppointmentId() != ""){
-
                     }
                     checkin.setCheckinId(UUIDUtil.uuid());
                     checkin.setCompanyId(user.getCompanyId());

@@ -9,6 +9,7 @@
     <result column="remindMsg" property="remindMsg" jdbcType="VARCHAR" />
     <result column="remindTime" property="remindTime" jdbcType="TIMESTAMP" />
     <result column="remindType" property="remindType" jdbcType="VARCHAR" />
+    <result column="companyId" property="companyId" jdbcType="VARCHAR" />
     <result column="remindCreatedTime" property="remindCreatedTime" jdbcType="TIMESTAMP" />
 
     <association property="user" javaType="com.gs.bean.User">
@@ -55,5 +56,11 @@
       and mr.companyId = #{user.companyId}
     </if>
   </select>
-
+  <insert id="insert"  parameterType="maintainremind">
+    <![CDATA[
+			insert into t_maintain_remind(remindId, userId, lastMaintainTime, lastMaintainMileage, remindMsg, remindTime, remindType,
+				companyId, remindCreatedTime)
+				values(#{remindId}, #{userId}, now(), #{lastMaintainMileage}, #{remindMsg}, #{companyId}, now())
+		]]>
+  </insert>
 </mapper>
