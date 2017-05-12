@@ -89,7 +89,9 @@ function showEdit() {
     } else {
         swal({
             "title": "",
-            "text": "请先选择一条数据",
+            "text": "请修改配件采购信息",
+            confirmButtonColor: "#DD6B55", // 提示按钮的颜色
+            confirmButtonText:"确定", // 提示按钮上的文本
             "type": "warning"
         })
     }
@@ -290,19 +292,11 @@ function validator(formId) {
                     }
                 }
             },
-            accBuyTotal: {
-                message: '购买总价不能为空',
+            accBuyDiscount: {
+                message: '购买折扣不能为空',
                 validators: {
                     notEmpty: {
-                        message: '购买总价不能为空'
-                    }
-                }
-            },
-            accBuyMoney: {
-                message: '购买最终价不能为空',
-                validators: {
-                    notEmpty: {
-                        message: '购买最终价不能为空'
+                        message: '购买折扣不能为空'
                     }
                 }
             }

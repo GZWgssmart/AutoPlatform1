@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import sun.reflect.generics.reflectiveObjects.LazyReflectiveObjectGenerator;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -110,7 +111,9 @@ public class AccessoriesBuyController {
                 if(accName!=null&&!accName.equals("")){
                     Accessories a=accessoriesService.queryByName(accName);
                     if(a!=null){
+                        logger.info("a不等于null");
                         accessoriesBuy.setAccBuyDiscount(1.0);
+                        accessoriesBuy.setAccId(a.getAccId());
                         accessoriesBuyService.insert(accessoriesBuy);
                         accessoriesService.updateCount(accessoriesBuy.getAccBuyCount(),accessoriesBuy.getAccId());
                         return ControllerResult.getSuccessResult("更新数量成功");
@@ -223,12 +226,12 @@ public class AccessoriesBuyController {
             pager.setPageSize(Integer.parseInt(pageSize));
             List<AccessoriesBuy> accessoriesBuys = null;
             AccessoriesBuy accessoriesBuy = new AccessoriesBuy();
-            if (text.equals("汽车公司/配件")) {
+            if (text.equals("汽车公司/配件名称")) {
                 accessoriesBuy.setCompanyId(value);
                 accessoriesBuy.setAccId(value);
             } else if (text.equals("汽车公司")) {
                 accessoriesBuy.setCompanyId(value);
-            } else if (text.equals("配件")) {
+            } else if (text.equals("配件名称")) {
                 accessoriesBuy.setAccId(value);
             }
             accessoriesBuys = accessoriesBuyService.blurredQuery(pager, accessoriesBuy);

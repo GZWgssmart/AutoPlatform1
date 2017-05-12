@@ -60,13 +60,13 @@
             <div class="input-group" style="width:350px;float:left;padding:0;margin:0 0 0 -1px;">
                 <div class="input-group-btn">
                     <button type="button" id="ulButton" class="btn btn-default" style="border-radius:0px;"
-                            data-toggle="dropdown">汽车公司/配件<span class="caret"></span></button>
+                            data-toggle="dropdown">汽车公司/配件名称<span class="caret"></span></button>
                     <ul class="dropdown-menu pull-right">
-                        <li><a onclick="onclikLi(this)">汽车公司/配件</a></li>
+                        <li><a onclick="onclikLi(this)">汽车公司/配件名称</a></li>
                         <li class="divider"></li>
                         <li><a onclick="onclikLi(this)">汽车公司</a></li>
                         <li class="divider"></li>
-                        <li><a onclick="onclikLi(this)">配件</a></li>
+                        <li><a onclick="onclikLi(this)">配件名称</a></li>
                         <li class="divider"></li>
                     </ul>
                 </div><!-- /btn-group -->
@@ -124,7 +124,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">购买时间：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="accBuyTime" placeholder="请输入购买时间"
+                        <input type="text" name="accBuyTime" placeholder="请选择购买时间"
                                onclick="getDate('addDateTimePicker')" id="addDateTimePicker" class="form-control">
                     </div>
                 </div>
@@ -138,14 +138,14 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">购买单价：</label>
                     <div class="col-sm-7">
-                        <input type="number" name="accBuyPrice" onchange="Addcalculate();" id="addBuyPrice"
+                        <input type="number" min="0" name="accBuyPrice" onchange="Addcalculate();" id="addBuyPrice"
                                placeholder="请输入购买单价" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">购买折扣：</label>
                     <div class="col-sm-7">
-                        <input type="number" min="0.0" step="0.1" onchange="Addcalculate();" max="1"
+                        <input type="number" min="0.0" step="0.1" max="1" value="1" onchange="Addcalculate();"
                                name="accBuyDiscount" id="addBuyDiscount" placeholder="请输入购买折扣，0.1代表1折"
                                class="form-control">
                     </div>
@@ -154,20 +154,20 @@
                     <label class="col-sm-3 control-label">购买总价：</label>
                     <div class="col-sm-7">
                         <input type="number" readonly="true" min="0.0" step="0.1" name="accBuyTotal" id="addBuyTotal"
-                               placeholder="请输入购买总价" class="form-control">
+                               class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">购买最终价：</label>
                     <div class="col-sm-7">
                         <input type="number" readonly="true" min="0.0" step="0.1" name="accBuyMoney" id="addBuyMoney"
-                               placeholder="请输入购买最终价" class="form-control">
+                               class="form-control">
                     </div>
                 </div>
                 <div class="modal-footer">
                     <div class="col-sm-offset-8">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button id="addButton" type="button" onclick="addSubmit()" class="btn btn-success">保存</button>
+                        <button id="addButton" type="button" onclick="addSubmit()" class="btn btn-success">添加</button>
                         <input type="reset" name="reset" style="display: none;"/>
                     </div>
                 </div>
@@ -182,7 +182,7 @@
             <form class="form-horizontal" role="form" id="editForm" method="post">
                 <input type="hidden" name="accBuyId" define="AccessoriesBuy.accBuyId"/>
                 <div class="modal-header" style="overflow:auto;">
-                    <h4>请填写配件采购信息</h4>
+                    <h4>请修改配件采购信息</h4>
                 </div>
                 <br/>
                 <div class="form-group">
@@ -247,21 +247,21 @@
                     <label class="col-sm-3 control-label">购买总价：</label>
                     <div class="col-sm-7">
                         <input type="number" min="0.0" step="0.1" readonly="true" name="accBuyTotal" id="editBuyTotal"
-                               define="AccessoriesBuy.accBuyTotal" placeholder="请输入购买总价" class="form-control">
+                               define="AccessoriesBuy.accBuyTotal" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">购买最终价：</label>
                     <div class="col-sm-7">
                         <input type="number" readonly="true" min="0.0" step="0.1" name="accBuyMoney" id="editBuyMoney"
-                               define="AccessoriesBuy.accBuyMoney" placeholder="请输入购买最终价" class="form-control">
+                               define="AccessoriesBuy.accBuyMoney" class="form-control">
                     </div>
                 </div>
 
                 <div class="modal-footer">
                     <div class="col-sm-offset-8">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button id="editButton" type="button" onclick="editSubmit()" class="btn btn-success">保存</button>
+                        <button id="editButton" type="button" onclick="editSubmit()" class="btn btn-success">修改</button>
                     </div>
                 </div>
             </form>
@@ -274,7 +274,7 @@
         <div class="modal-content">
             <div class="modal-body">
                 <span class="glyphicon glyphicon-remove closeModal" onclick="closeAppWin()"></span>
-                <h3>选择预约记录</h3>
+                <h3>选择库存记录</h3>
                 <table id="accTable">
                     <thead>
                     <tr>
