@@ -16,9 +16,5 @@ public interface AccessoriesTypeService extends BaseService<String, AccessoriesT
     /**
      * 分页查询被禁用的记录
      */
-    public List<AccessoriesType> queryByPagerDisable(Pager pager);
-    /**
-     * 分页查询被禁用的记录
-     */
     public int countByDisable();
 }

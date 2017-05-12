@@ -16,9 +16,5 @@ public interface AccessoriesSaleService extends BaseService<String, AccessoriesS
     /**
      * 分页查询被禁用的记录
      */
-    public List<AccessoriesSale> queryByPagerDisable(Pager pager);
-    /**
-     * 分页查询被禁用的记录
-     */
     public int countByDisable();
 }

@@ -1,6 +1,7 @@
 package com.gs.dao;
 
 import com.gs.bean.Accessories;
+import com.gs.bean.User;
 import com.gs.common.bean.Pager;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -31,4 +32,6 @@ public interface AccessoriesDAO extends BaseDAO<String, Accessories>{
     public int updateCount(@Param("accCount") int accCount,@Param("accId") String accId);
 
     public Accessories queryByName(@Param("accName") String accName);
+
+    public int countByBlurred(Accessories accessories, User user);
 }

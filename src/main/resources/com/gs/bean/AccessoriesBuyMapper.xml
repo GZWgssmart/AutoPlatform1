@@ -47,8 +47,11 @@
     -->
     <select id="queryAll" resultMap="AccessoriesBuyMap">
         <![CDATA[
-            select * from auto_platform.t_accessories_buy
+            select * from auto_platform.t_accessories_buy ab WHERE
         ]]>
+        <if test="companyId != '' and companyId !=null">
+            ab.companyId = #{user.companyId}
+        </if>
     </select>
 
     <!-- 分页查询 -->
@@ -60,16 +63,23 @@
            LEFT JOIN auto_platform.t_company cp on ab.companyId=cp.companyId
            LEFT JOIN auto_platform.t_accessories_type atp on ab.accTypeId=atp.accTypeId
            LEFT JOIN auto_platform.t_supply sp on ab.supplyId=sp.supplyId
-           where ab.accBuyStatus = 'Y' order by ab.accBuyCreatedTime Desc
+           where ab.accBuyStatus = 'Y'
         ]]>
+        <if test="user.companyId != '' and user.companyId != null">
+            and ab.companyId = #{user.companyId}
+        </if>
+        order by ab.accBuyCreatedTime Desc
         limit #{beginIndex}, #{pageSize};
     </select>
 
     <!-- 查询有多少配件销售采购信息 -->
     <select id="count" resultType="int" >
         <![CDATA[
-      select count(*) from auto_platform.t_accessories_buy u where 1 =1 and u.accBuyStatus = 'Y'
-    ]]>
+           select count(accBuyId) from auto_platform.t_accessories_buy u where u.accBuyStatus = 'Y'
+        ]]>
+        <if test="companyId != '' and companyId !=null">
+            and u.companyId = #{user.companyId}
+        </if>
     </select>
 
     <!--
@@ -139,15 +149,21 @@
        LEFT JOIN auto_platform.t_accessories ac on ac.accId=abu.accId
        LEFT join auto_platform.t_accessories_type atp on atp.accTypeId=abu.accTypeId
        LEFT JOIN auto_platform.t_supply sp on sp.supplyId=abu.supplyId
-       WHERE accBuyStatus='N'
+       WHERE accBuyStatus='N' order by abu.accBuyCreatedTime Desc
        ]]>
+        <if test="user.companyId != '' and user.companyId !=null">
+            and abu.companyId = #{user.companyId}
+        </if>
         limit #{beginIndex}, #{pageSize}
     </select>
 
     <select id="countByDisable" resultType="int" >
         <![CDATA[
-      select count(accBuyId) from auto_platform.t_accessories_buy ck where ck.accBuyStatus = 'N'
-    ]]>
+          select count(accBuyId) from auto_platform.t_accessories_buy abu where abu.accBuyStatus = 'N'
+        ]]>
+        <if test="companyId != '' and companyId !=null">
+            and abu.companyId = #{user.companyId}
+        </if>
     </select>
 
     <!-- 分页模糊查询 -->
@@ -160,6 +176,9 @@
            LEFT JOIN auto_platform.t_supply sp on sp.supplyId=abu.supplyId
            where 1=1 AND
         ]]>
+        <if test="pager.user.companyId != '' and pager.user.companyId !=null">
+            and abu.companyId = #{pager.user.companyId}
+        </if>
         <if test="accBuy.companyId != '' and accBuy.companyId != null">
             cp.companyName like '%${accBuy.companyId}%'
         </if>
@@ -184,6 +203,9 @@
            LEFT JOIN auto_platform.t_supply sp on sp.supplyId=abu.supplyId
            where 1=1 AND
         ]]>
+        <if test="user.companyId != '' and user.companyId !=null">
+            and abu.companyId = #{user.companyId}
+        </if>
         <if test="accBuy.companyId != '' and accBuy.companyId != null">
             cp.companyName like '%${accBuy.companyId}%'
         </if>

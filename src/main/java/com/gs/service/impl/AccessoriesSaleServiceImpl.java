@@ -3,6 +3,7 @@ package com.gs.service.impl;
 import com.gs.bean.AccessoriesBuy;
 import com.gs.bean.AccessoriesSale;
 import com.gs.bean.Checkin;
+import com.gs.bean.User;
 import com.gs.common.bean.Pager;
 import com.gs.dao.AccessoriesSaleDAO;
 import com.gs.service.AccessoriesSaleService;
@@ -32,23 +33,37 @@ public class AccessoriesSaleServiceImpl implements AccessoriesSaleService {
 	public int batchDelete(List<AccessoriesSale> list) { return accessoriesSaleDAO.batchDelete(list); }
 	public int update(AccessoriesSale accessoriesSale) { return accessoriesSaleDAO.update(accessoriesSale); }
 	public int batchUpdate(List<AccessoriesSale> list) { return accessoriesSaleDAO.batchUpdate(list); }
-	public List<AccessoriesSale> queryAll() { return accessoriesSaleDAO.queryAll(); }
+
+	@Override
+	public List<AccessoriesSale> queryAll(User user) {
+		return accessoriesSaleDAO.queryAll(user);
+	}
 
 	@Override
 	public List<AccessoriesSale> queryAll(String status) {
-		return accessoriesSaleDAO.queryAll();
+		return accessoriesSaleDAO.queryAll(status);
 	}
 
 	public List<AccessoriesSale> queryByStatus(String status) { return accessoriesSaleDAO.queryAll(status); }
 	public AccessoriesSale query(AccessoriesSale accessoriesSale) { return accessoriesSaleDAO.query(accessoriesSale); }
 	public AccessoriesSale queryById(String id) { return accessoriesSaleDAO.queryById(id); }
 	public List<AccessoriesSale> queryByPager(Pager pager) { return accessoriesSaleDAO.queryByPager(pager); }
-	public int count() { return accessoriesSaleDAO.count(); }
+
+	@Override
+	public int count(User user) {
+		return accessoriesSaleDAO.count(user);
+	}
+
 	public int inactive(String id) { return accessoriesSaleDAO.inactive(id); }
 	public int active(String id) { return accessoriesSaleDAO.active(id); }
 
 	public List<AccessoriesSale> queryByPagerDisable(Pager pager) {
 		return accessoriesSaleDAO.queryByPagerDisable(pager);
+	}
+
+	@Override
+	public int countByDisable(User user) {
+		return accessoriesSaleDAO.countByDisable(user);
 	}
 
 	public int countByDisable() {
@@ -59,7 +74,8 @@ public class AccessoriesSaleServiceImpl implements AccessoriesSaleService {
 		return accessoriesSaleDAO.blurredQuery(pager,accessoriesSale);
 	}
 
-	public int countByBlurred(AccessoriesSale accessoriesSale) {
-		return accessoriesSaleDAO.countByBlurred(accessoriesSale);
+	@Override
+	public int countByBlurred(AccessoriesSale accessoriesSale, User user) {
+		return accessoriesSaleDAO.countByBlurred(accessoriesSale,user);
 	}
 }

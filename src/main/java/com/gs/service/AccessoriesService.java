@@ -14,14 +14,6 @@ import java.util.List;
 *@des 配件表
 */
 public interface AccessoriesService extends BaseService<String, Accessories>{
-    /**
-     * 分页查询被禁用的记录
-     */
-    public List<Accessories> queryByPagerDisable(Pager pager);
-    /**
-     * 分页查询被禁用的记录
-     */
-    public int countByDisable();
 
     public List<Accessories> queryByIdPager(@Param("id") String id, @Param("pager") Pager pager);
 
