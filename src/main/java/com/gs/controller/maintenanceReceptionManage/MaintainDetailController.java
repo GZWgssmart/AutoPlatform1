@@ -164,7 +164,6 @@ public class MaintainDetailController {
                 logger.info("用户确认明细清单, 这时生成所有物料清单和工单");
                 if(recordId != null && recordId != "" && ids!= null && ids != "") {
                     List<MaintainFixAcc> maintainFixAccs = maintainFixAccService.queryByRecord(ids);
-                    System.out.print(maintainFixAccs);
                     if(maintainFixAccs != null) {
                             List<MaterialList> materialLists = new ArrayList<MaterialList>();
                             for (MaintainFixAcc m : maintainFixAccs) {
@@ -179,9 +178,11 @@ public class MaintainDetailController {
                             WorkInfo w = new WorkInfo();
                             w.setRecordId(recordId);
                             workInfoService.insert(w);
+                            // 修改维修保养记录
                             // 修改维修保养记录中的开始时间
                             MaintainRecord maintainRecord = maintainRecordService.queryById(recordId);
                             maintainRecord.setStartTime(new Date());
+                            maintainRecord.setCurrentStatus("用户已签字");
                             maintainRecordService.update(maintainRecord);
                             return ControllerResult.getSuccessResult("确定成功");
                     }else{

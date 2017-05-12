@@ -2,7 +2,6 @@ package com.gs.service;
 
 import com.gs.bean.MaintainRecord;
 import com.gs.common.bean.Pager;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -29,4 +28,8 @@ public interface MaintainRecordService extends BaseService<String, MaintainRecor
      */
     public List<MaintainRecord> queryByCondition(String start,String end, String companyId,String maintainOrFix, String type);
 
+    /**
+     * 修改维修保养记录当前状态
+     */
+    public void updateCurrentStatus(String recordId);
 }
