@@ -2,6 +2,7 @@ package com.gs.service.impl;
 
 import com.gs.bean.AccessoriesType;
 import com.gs.bean.Checkin;
+import com.gs.bean.User;
 import com.gs.dao.AccessoriesTypeDAO;
 import com.gs.service.AccessoriesTypeService;
 import org.springframework.stereotype.Service;
@@ -52,16 +53,13 @@ public class AccessoriesTypeServiceImpl implements AccessoriesTypeService {
         return accessoriesTypeDAO.batchUpdate(list);
     }
 
-    public List<AccessoriesType> queryAll() {
-        return accessoriesTypeDAO.queryAll();
+    @Override
+    public List<AccessoriesType> queryAll(User user) {
+        return accessoriesTypeDAO.queryAll(user);
     }
 
     @Override
     public List<AccessoriesType> queryAll(String status) {
-        return accessoriesTypeDAO.queryAll();
-    }
-
-    public List<AccessoriesType> queryByStatus(String status) {
         return accessoriesTypeDAO.queryAll(status);
     }
 
@@ -77,8 +75,9 @@ public class AccessoriesTypeServiceImpl implements AccessoriesTypeService {
         return accessoriesTypeDAO.queryByPager(pager);
     }
 
-    public int count() {
-        return accessoriesTypeDAO.count();
+    @Override
+    public int count(User user) {
+        return accessoriesTypeDAO.count(user);
     }
 
     public int inactive(String id) {
@@ -95,6 +94,11 @@ public class AccessoriesTypeServiceImpl implements AccessoriesTypeService {
     }
 
     @Override
+    public int countByDisable(User user) {
+        return accessoriesTypeDAO.countByDisable(user);
+    }
+
+    @Override
     public int countByDisable() {
         return accessoriesTypeDAO.countByDisable();
     }
@@ -103,7 +107,8 @@ public class AccessoriesTypeServiceImpl implements AccessoriesTypeService {
         return accessoriesTypeDAO.blurredQuery(pager, accessoriesType);
     }
 
-    public int countByBlurred(AccessoriesType accessoriesType) {
-        return accessoriesTypeDAO.countByBlurred(accessoriesType);
+    @Override
+    public int countByBlurred(AccessoriesType accessoriesType, User user) {
+        return accessoriesTypeDAO.countByBlurred(accessoriesType, user);
     }
 }

@@ -19,8 +19,11 @@
     -->
     <select id="queryAll" resultMap="AccessoriesTypeMap">
       <![CDATA[
-        SELECT *FROM auto_platform.t_accessories_type WHERE accTypeStatus='Y'
+        SELECT *FROM auto_platform.t_accessories_type atp WHERE
         ]]>
+        <if test="companyId != '' and companyId !=null">
+            atp.companyId = #{user.companyId}
+        </if>
     </select>
 
     <!-- 分页查询 -->
@@ -31,14 +34,20 @@
         LEFT JOIN auto_platform.t_company cp on ast.companyId=cp.companyId
         where ast.accTypeStatus = 'Y'
         ]]>
+        <if test="user.companyId != '' and user.companyId != null">
+            and ast.companyId = #{user.companyId}
+        </if>
         limit #{beginIndex}, #{pageSize};
     </select>
 
     <!--查询有多少配件分类信息-->
     <select id="count" resultType="int" >
     <![CDATA[
-      select count(*) from auto_platform.t_accessories_type u where 1 =1 and u.accTypeStatus = 'Y'
+      select count(accTypeId) from auto_platform.t_accessories_type atp WHERE atp.accTypeStatus = 'Y'
     ]]>
+    <if test="companyId != '' and companyId !=null">
+        and atp.companyId = #{user.companyId}
+    </if>
   </select>
 
     <!--
@@ -85,17 +94,23 @@
 
     <select id="queryByPagerDisable" resultMap="AccessoriesTypeMap" parameterType="com.gs.common.bean.Pager">
         <![CDATA[
-      SELECT atp.*,cp.companyId,cp.companyName FROM auto_platform.t_accessories_type atp
-       LEFT JOIN auto_platform.t_company cp on cp.companyId=atp.companyId
-      WHERE accTypeStatus='N'
-    ]]>
-        limit #{beginIndex}, #{pageSize}
+          SELECT atp.*,cp.companyId,cp.companyName FROM auto_platform.t_accessories_type atp
+           LEFT JOIN auto_platform.t_company cp on cp.companyId=atp.companyId
+          WHERE accTypeStatus='N'
+        ]]>
+        <if test="user.companyId != '' and user.companyId !=null">
+            and atp.companyId = #{user.companyId}
+        </if>
+      limit #{beginIndex}, #{pageSize}
     </select>
 
-    <select id="countByDisable" resultType="int" >
+    <select id="countByDisable" resultType="int" parameterType="com.gs.bean.User">
         <![CDATA[
-      select count(accTypeId) from auto_platform.t_accessories_type ck where ck.accTypeStatus = 'N'
-    ]]>
+          select count(accTypeId) from auto_platform.t_accessories_type atp where atp.accTypeStatus = 'N'
+        ]]>
+        <if test="companyId != '' and companyId !=null">
+            and atp.companyId = #{user.companyId}
+        </if>
     </select>
 
     <!-- 分页模糊查询 -->
@@ -105,6 +120,9 @@
            LEFT JOIN auto_platform.t_company cp on atp.companyId=cp.companyId
            where 1=1 AND
         ]]>
+        <if test="pager.user.companyId != '' and pager.user.companyId !=null">
+            and atp.companyId = #{pager.user.companyId}
+        </if>
         <if test="accType.companyId != '' and accType.companyId != null">
             cp.companyName like '%${accType.companyId}%'
         </if>
@@ -125,6 +143,9 @@
            LEFT JOIN auto_platform.t_company cp on cp.companyId=atp.companyId
            where 1=1 AND
         ]]>
+        <if test="user.companyId != '' and user.companyId !=null">
+            and atp.companyId = #{user.companyId}
+        </if>
         <if test="accType.companyId != '' and accType.companyId != null">
             cp.companyName like '%${accType.companyId}%'
         </if>

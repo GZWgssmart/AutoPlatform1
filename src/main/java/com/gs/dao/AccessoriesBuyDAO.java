@@ -1,6 +1,7 @@
 package com.gs.dao;
 
 import com.gs.bean.AccessoriesBuy;
+import com.gs.bean.User;
 import com.gs.common.bean.Pager;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -47,5 +48,7 @@ public interface AccessoriesBuyDAO extends BaseDAO<String, AccessoriesBuy>{
      */
 
     public List<AccessoriesBuy> queryByPayCondition(@Param("start") String start, @Param("end")String end, @Param("companyId")String companyId,@Param("type")String type);
+
+    public int countByBlurred(AccessoriesBuy accessories, User user);
 
 }
