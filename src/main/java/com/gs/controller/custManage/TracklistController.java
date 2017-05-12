@@ -7,6 +7,8 @@ import com.gs.common.bean.ComboBox4EasyUI;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
+import com.gs.common.util.RoleUtil;
+import com.gs.common.util.SessionUtil;
 import com.gs.service.TrackListService;
 import com.gs.service.UserService;
 import org.apache.ibatis.annotations.Param;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -49,20 +52,32 @@ public class TracklistController {
 
     @ResponseBody
     @RequestMapping(value = "queryByPager", method = RequestMethod.GET)
-    public Pager4EasyUI<TrackList> queryByPager(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
-        logger.info("分页查看跟踪回访记录");
-        Pager pager = new Pager();
-        pager.setPageNo(Integer.valueOf(pageNumber));
-        pager.setPageSize(Integer.valueOf(pageSize));
-        int count = trackListService.count();
-        pager.setTotalRecords(count);
-        List<TrackList> queryList = trackListService.queryByPager(pager);
-        return new Pager4EasyUI<TrackList>(pager.getTotalRecords(), queryList);
+    public Pager4EasyUI<TrackList> queryByPager(HttpSession session, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
+        if (SessionUtil.isLogin(session)) {
+            String roles = "";
+            if (RoleUtil.checkRoles(roles)) {
+                logger.info("分页查看跟踪回访记录");
+                Pager pager = new Pager();
+                pager.setPageNo(Integer.valueOf(pageNumber));
+                pager.setPageSize(Integer.valueOf(pageSize));
+                int count = trackListService.count((User) session.getAttribute("user"));
+                pager.setTotalRecords(count);
+                pager.setUser((User) session.getAttribute("user"));
+                List<TrackList> queryList = trackListService.queryByPager(pager);
+                return new Pager4EasyUI<TrackList>(pager.getTotalRecords(), queryList);
+            } else {
+                logger.info("此用户无拥有此方法");
+                return null;
+            }
+        } else {
+            logger.info("请先登录");
+            return null;
+        }
     }
 
     @ResponseBody
     @RequestMapping(value = "queryName", method = RequestMethod.GET)
-    public Pager4EasyUI<TrackList> queryName(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize, TrackList trackList) {
+    public Pager4EasyUI<TrackList> queryName(HttpSession session, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize, TrackList trackList) {
         logger.info("模糊查询跟踪回访记录");
         String text = req.getParameter("text");
         String value = req.getParameter("value");
@@ -79,8 +94,9 @@ public class TracklistController {
             } else if (text.equals("回访问题")) {
                 trackList.setTrackContent(value);
             }
-            int count = trackListService.countName(trackList);
+            int count = trackListService.countName(trackList,(User)session.getAttribute("user"));
             pager.setTotalRecords(count);
+            pager.setUser((User)session.getAttribute("user"));
             List<TrackList> queryList = trackListService.queryByPagerName(pager,trackList);
             return new Pager4EasyUI<TrackList>(pager.getTotalRecords(), queryList);
         }
@@ -89,16 +105,16 @@ public class TracklistController {
 
     @ResponseBody
     @RequestMapping(value = "queryCombox", method = RequestMethod.GET)
-    public List<ComboBox4EasyUI> queryCombox() {
+    public List<ComboBox4EasyUI> queryCombox(HttpSession session) {
         logger.info("查看用户");
-        List<User> users = userService.queryAll();
+        List<User> users = userService.queryAll((User)session.getAttribute("user"));
         List<ComboBox4EasyUI> combo = new ArrayList<ComboBox4EasyUI>();
-        for(User user : users) {
+        for(User u : users) {
             ComboBox4EasyUI co = new ComboBox4EasyUI();
-            co.setId(user.getUserId());
-            co.setText(user.getUserName());
+            co.setId(u.getUserId());
+            co.setText(u.getUserName());
             String userId = req.getParameter("userId");
-            if(user.getUserId().equals(userId)) {
+            if(u.getUserId().equals(userId)) {
                 co.setSelected(true);
             }
             combo.add(co);

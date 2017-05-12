@@ -1,6 +1,7 @@
 package com.gs.service.impl;
 
 import com.gs.bean.Complaint;
+import com.gs.bean.User;
 import com.gs.common.bean.Pager;
 import com.gs.dao.ComplaintDAO;
 import com.gs.service.ComplaintService;
@@ -30,18 +31,18 @@ public class ComplaintServiceImpl implements ComplaintService {
 	public int batchDelete(List<Complaint> list) { return complaintDAO.batchDelete(list); }
 	public int update(Complaint complaint) { return complaintDAO.update(complaint); }
 	public int batchUpdate(List<Complaint> list) { return complaintDAO.batchUpdate(list); }
-	public List<Complaint> queryAll() { return complaintDAO.queryAll(); }
+	public List<Complaint> queryAll(User user) { return complaintDAO.queryAll(user); }
 
 	@Override
 	public List<Complaint> queryAll(String status) {
-		return complaintDAO.queryAll();
+		return complaintDAO.queryAll(status);
 	}
 
 	public List<Complaint> queryByStatus(String status) { return complaintDAO.queryAll(status); }
 	public Complaint query(Complaint complaint) { return complaintDAO.query(complaint); }
 	public Complaint queryById(String id) { return complaintDAO.queryById(id); }
 	public List<Complaint> queryByPager(Pager pager) { return complaintDAO.queryByPager(pager); }
-	public int count() { return complaintDAO.count(); }
+	public int count(User user) { return complaintDAO.count(user); }
 	public int inactive(String id) { return complaintDAO.inactive(id); }
 	public int active(String id) { return complaintDAO.active(id); }
 
@@ -49,12 +50,17 @@ public class ComplaintServiceImpl implements ComplaintService {
 		return complaintDAO.queryByPagerDisable(pager);
 	}
 
-	public int countByDisable() {
-		return complaintDAO.countByDisable();
+	public int countByDisable(User user) {
+		return complaintDAO.countByDisable(user);
 	}
 
 	public List<Complaint> blurredQuery(Pager pager, Complaint complaint) {
 		return null;
+	}
+
+	@Override
+	public int countByBlurred(Complaint complaint, User user) {
+		return 0;
 	}
 
 	public int countByBlurred(Complaint complaint) {
@@ -67,7 +73,7 @@ public class ComplaintServiceImpl implements ComplaintService {
 	}
 
 	@Override
-	public int countName(Complaint complaint) {
-		return complaintDAO.countName(complaint);
+	public int countName(Complaint complaint, User user) {
+		return complaintDAO.countName(complaint, user);
 	}
 }

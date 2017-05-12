@@ -8,6 +8,8 @@ import com.gs.common.bean.ComboBox4EasyUI;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
+import com.gs.common.util.RoleUtil;
+import com.gs.common.util.SessionUtil;
 import com.gs.service.MaintainRemindService;
 import com.gs.service.MessageSendService;
 import com.gs.service.UserService;
@@ -25,6 +27,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -59,28 +62,52 @@ public class MaintainRemindController {
 
     @ResponseBody
     @RequestMapping(value = "queryByPager", method = RequestMethod.GET)
-    public Pager4EasyUI<MaintainRemind> queryByPager(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
-        logger.info("分页查看维修保养提醒记录");
-        Pager pager = new Pager();
-        pager.setPageNo(Integer.valueOf(pageNumber));
-        pager.setPageSize(Integer.valueOf(pageSize));
-        int count = maintainRemindService.count();
-        pager.setTotalRecords(count);
-        List<MaintainRemind> queryList = maintainRemindService.queryByPager(pager);
-        return new Pager4EasyUI<MaintainRemind>(pager.getTotalRecords(), queryList);
+    public Pager4EasyUI<MaintainRemind> queryByPager(HttpSession session, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize, User user) {
+        if (SessionUtil.isLogin(session)) {
+            String roles = "";
+            if (RoleUtil.checkRoles(roles)) {
+                logger.info("分页查看维修保养提醒记录");
+                Pager pager = new Pager();
+                pager.setPageNo(Integer.valueOf(pageNumber));
+                pager.setPageSize(Integer.valueOf(pageSize));
+                int count = maintainRemindService.count((User) session.getAttribute("user"));
+                pager.setTotalRecords(count);
+                pager.setUser((User) session.getAttribute("user"));
+                List<MaintainRemind> queryList = maintainRemindService.queryByPager(pager);
+                return new Pager4EasyUI<MaintainRemind>(pager.getTotalRecords(), queryList);
+            } else {
+                logger.info("此用户无拥有此方法");
+                return null;
+            }
+        } else {
+            logger.info("请先登录");
+            return null;
+        }
     }
 
     @ResponseBody
     @RequestMapping(value = "queryByPagerNull", method = RequestMethod.GET)
-    public Pager4EasyUI<MaintainRemind> queryByPagerNull(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
-        logger.info("分页查看维修保养提醒记录");
-        Pager pager = new Pager();
-        pager.setPageNo(Integer.valueOf(pageNumber));
-        pager.setPageSize(Integer.valueOf(pageSize));
-        int count = maintainRemindService.countNull();
-        pager.setTotalRecords(count);
-        List<MaintainRemind> queryList = maintainRemindService.queryByPagerNull(pager);
-        return new Pager4EasyUI<MaintainRemind>(pager.getTotalRecords(), queryList);
+    public Pager4EasyUI<MaintainRemind> queryByPagerNull(HttpSession session, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
+        if (SessionUtil.isLogin(session)) {
+            String roles = "";
+            if (RoleUtil.checkRoles(roles)) {
+                logger.info("分页查看维修保养提醒记录");
+                Pager pager = new Pager();
+                pager.setPageNo(Integer.valueOf(pageNumber));
+                pager.setPageSize(Integer.valueOf(pageSize));
+                int count = maintainRemindService.countNull((User) session.getAttribute("user"));
+                pager.setTotalRecords(count);
+                pager.setUser((User) session.getAttribute("user"));
+                List<MaintainRemind> queryList = maintainRemindService.queryByPagerNull(pager);
+                return new Pager4EasyUI<MaintainRemind>(pager.getTotalRecords(), queryList);
+            } else {
+                logger.info("此用户无拥有此方法");
+                return null;
+            }
+        } else {
+            logger.info("请先登录");
+            return null;
+        }
     }
 
     @ResponseBody

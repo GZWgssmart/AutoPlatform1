@@ -21,6 +21,16 @@ public class Complaint {
 
     private User admin;
 
+    private Company company;
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
+    }
+
     public User getUser() {
         return user;
     }

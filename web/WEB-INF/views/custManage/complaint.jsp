@@ -33,6 +33,7 @@
             <tr>
                 <th data-checkbox="true"></th>
                 <th data-field="user.userName">投诉人</th>
+                <th data-field="company.companyName">投诉人所属公司</th>
                 <th data-field="complaintCreatedTime" data-formatter="formatterDate">投诉时间</th>
                 <th data-field="complaintContent">投诉内容</th>
                 <th data-formatter="formatterUserName">投诉回复人</th>
@@ -45,10 +46,10 @@
             <button id="btn_add" type="button" class="btn btn-default" onclick="showAdd();">
                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
             </button>
-            <button id="btn_application" type="button" class="btn btn-success" onclick="showReply();">回复</button>
-            <button id="btn_edit" type="button" class="btn btn-default" onclick="showEdit();">
-                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
-            </button>
+            <button id="btn_application" type="button" class="btn btn-success" onclick="showReply();">回复车主</button>
+            <%--<button id="btn_edit" type="button" class="btn btn-default" onclick="showEdit();">--%>
+                <%--<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改--%>
+            <%--</button>--%>
             <div class="input-group" style="width:350px;float:left;padding:0;margin:0 0 0 -1px;">
                 <div class="input-group-btn">
                     <button type="button" id="ulButton" class="btn btn-default" style="border-radius:0px;"
@@ -129,8 +130,9 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">投诉回复人：</label>
                     <div class="col-sm-7">
-                        <select id="addAdminName" name="complaintReplyUser" class="form-control js-data-example-ajax admin" style="width:100%">
-                        </select>
+                        <%--<select id="addAdminName" name="complaintReplyUser" class="form-control js-data-example-ajax admin" style="width:100%">--%>
+                        <%--</select>--%>
+                        <input id="addAdminId" name="complaintReplyUser" readonly define="Complaint.complaintReplyUser" value="${sessionScope.user.userName}" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">

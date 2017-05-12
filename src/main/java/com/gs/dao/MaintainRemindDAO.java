@@ -1,6 +1,7 @@
 package com.gs.dao;
 
 import com.gs.bean.MaintainRemind;
+import com.gs.bean.User;
 import com.gs.common.bean.Pager;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -19,5 +20,5 @@ public interface MaintainRemindDAO extends BaseDAO<String, MaintainRemind>{
 
     public List<MaintainRemind> queryByPagerNull(@Param("pager") Pager pager);
 
-    public int countNull();
+    public int countNull(@Param("user") User user);
 }
