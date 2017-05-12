@@ -55,7 +55,7 @@ public class IncomingTypeController {
                 List<IncomingType> incomingTypes = incomingTypeService.queryByPager(pager);
                 return new Pager4EasyUI<IncomingType>(pager.getTotalRecords(), incomingTypes);
             } else {
-                logger.info("此用户无拥有此方法的角色");
+                logger.info("此用户无拥有收入类型分页查询的角色");
                 return null;
             }
         } else {
@@ -78,7 +78,7 @@ public class IncomingTypeController {
                 List<IncomingType> incomingTypes = incomingTypeService.queryByPagerDisable(pager);
                 return new Pager4EasyUI<IncomingType>(pager.getTotalRecords(), incomingTypes);
             } else {
-                logger.info("此用户无拥有此方法的角色");
+                logger.info("此用户无拥有禁用收入类型分页查询的角色");
                 return null;
             }
         } else {
@@ -90,20 +90,33 @@ public class IncomingTypeController {
 
     @ResponseBody
     @RequestMapping(value = "statusOperate", method = RequestMethod.POST)
-    public ControllerResult inactive(String id, String status) {
-        if (id != null && !id.equals("") && status != null && !status.equals("")) {
-            if (status.equals("N")) {
-                incomingTypeService.active(id);
-                logger.info("激活成功");
-                return ControllerResult.getSuccessResult("激活成功");
+    public ControllerResult inactive(HttpSession session,String id, String status) {
+        if (SessionUtil.isLogin(session)) {
+            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员";
+            if (RoleUtil.checkRoles(roles)) {
+                if (id != null && !id.equals("") && status != null && !status.equals("")) {
+                    if (status.equals("N")) {
+                        incomingTypeService.active(id);
+                        logger.info("激活成功");
+                        return ControllerResult.getSuccessResult("激活成功");
+                    } else {
+                        incomingTypeService.inactive(id);
+                        logger.info("禁用成功");
+                        return ControllerResult.getSuccessResult("禁用成功");
+                    }
+                } else {
+                    return ControllerResult.getFailResult("操作失败");
+                }
             } else {
-                incomingTypeService.inactive(id);
-                logger.info("禁用成功");
-                return ControllerResult.getSuccessResult("禁用成功");
+                logger.info("此用户无拥有操作收入类型禁用启用的角色");
+                return null;
             }
         } else {
-            return ControllerResult.getFailResult("操作失败");
+            logger.info("请先登录");
+            return null;
         }
+
+
     }
 
     @ResponseBody
@@ -120,7 +133,7 @@ public class IncomingTypeController {
                 incomingTypeService.insert(incomingType);
                 return ControllerResult.getSuccessResult("添加成功");
             } else {
-                logger.info("此用户无拥有此方法的角色");
+                logger.info("此用户无拥有添加收入类型的角色");
                 return null;
             }
         } else {
@@ -160,7 +173,7 @@ public class IncomingTypeController {
                 return ControllerResult.getSuccessResult("修改成功");
 
             } else {
-                logger.info("此用户无拥有此方法的角色");
+                logger.info("此用户无拥有修改收入类型的角色");
                 return null;
             }
         } else {
