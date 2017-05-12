@@ -134,7 +134,7 @@
 
     <select id="queryByPagerDisable" resultMap="AccessoriesBuyMap" parameterType="com.gs.common.bean.Pager">
         <![CDATA[
-       SELECT abu.*,cp.companyId,cp.companyName,ac.accId,ac.accName FROM auto_platform.t_accessories_buy abu
+       SELECT abu.*,cp.companyId,cp.companyName,ac.accId,ac.accName,atp.accTypeId,atp.accTypeName,sp.supplyId,sp.supplyName FROM auto_platform.t_accessories_buy abu
        LEFT JOIN auto_platform.t_company cp on cp.companyId=abu.companyId
        LEFT JOIN auto_platform.t_accessories ac on ac.accId=abu.accId
        LEFT join auto_platform.t_accessories_type atp on atp.accTypeId=abu.accTypeId
@@ -153,7 +153,7 @@
     <!-- 分页模糊查询 -->
     <select id="blurredQuery" resultMap="AccessoriesBuyMap" >
         <![CDATA[
-           select abu.*,cp.companyId,cp.companyName,ac.accId,ac.accName from auto_platform.t_accessories_buy abu
+           select abu.*,cp.companyId,cp.companyName,ac.accId,ac.accName,atp.accTypeId,atp.accTypeName,sp.supplyId,sp.supplyName from auto_platform.t_accessories_buy abu
            LEFT JOIN auto_platform.t_company cp on abu.companyId=cp.companyId
            LEFT JOIN auto_platform.t_accessories ac on abu.accId=ac.accId
            LEFT JOIN auto_platform.t_accessories_type atp on atp.accTypeId=abu.accTypeId
