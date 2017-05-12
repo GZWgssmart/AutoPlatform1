@@ -17,25 +17,38 @@
     <result column="companyStatus" property="companyStatus" jdbcType="VARCHAR" />
   </resultMap>
 
-  <select id="queryAll" resultMap="companyMap">
+  <!--查询所有公司-->
+  <select id="queryAll" resultMap="companyMap" parameterType="com.gs.bean.User">
     <![CDATA[
-    select * from t_company
+    select * from t_company tc where 1=1 and tc.companyStatus='Y'
     ]]>
+    <if test="companyId != '' and companyId !=null">
+      and tc.companyId = #{user.companyId}
+    </if>
   </select>
 
+  <!--分页查询所有公司-->
   <select id="queryByPager" resultMap="companyMap" parameterType="com.gs.common.bean.Pager">
     <![CDATA[
        select * from t_company tc  where tc.companyStatus = 'Y'
      ]]>
+    <if test="user.companyId != '' and user.companyId != null">
+      and tc.companyId = #{user.companyId}
+    </if>
     limit #{beginIndex}, #{pageSize}
   </select>
 
-  <select id="count" resultType="int" >
+  <!--分页查询公司总数-->
+  <select id="count" resultType="int" parameterType="com.gs.bean.User">
     <![CDATA[
       select count(companyId) from t_company tc where tc.companyStatus = 'Y'
     ]]>
+    <if test="companyId !='' and companyId != null" >
+      and tc.companyId = #{user.companyId}
+    </if>
   </select>
 
+  <!--添加公司-->
   <insert id="insert"  parameterType="company">
     <![CDATA[
 			INSERT into t_company(companyId, companyName, companyAddress, companyTel,companyPricipal,companyWebsite,companyOpendate,companySize,companyLongitude,companyLatitude,companyDes,companyStatus)
@@ -43,6 +56,7 @@
      ]]>
   </insert>
 
+  <!--修改公司-->
   <update id="update" parameterType="company">
     <![CDATA[
 			update t_company set companyName = #{companyName},companyAddress = #{companyAddress},companyTel = #{companyTel},companyPricipal = #{companyPricipal},companyWebsite = #{companyWebsite},companyOpendate = #{companyOpendate},companySize = #{companySize},companyLongitude = #{companyLongitude},companyLatitude = #{companyLatitude},companyDes = #{companyDes}where companyId = #{companyId}
@@ -54,15 +68,21 @@
     <![CDATA[
        select * from t_company tc  where tc.companyStatus = 'N'
     ]]>
+    <if test="user.companyId != '' and user.companyId !=null">
+      and tc.companyId = #{user.companyId}
+    </if>
     limit #{beginIndex}, #{pageSize}
   </select>
-  <!-- 分页查询禁用个数 -->
-  <select id="countByDisable" resultType="int" >
-    <![CDATA[
-      select count(companyId) from t_company c where c.companyStatus = 'N'
-    ]]>
-  </select>
 
+  <!-- 分页查询禁用个数 -->
+  <select id="countByDisable" resultType="int" parameterType="com.gs.bean.User">
+    <![CDATA[
+      select count(companyId) from t_company tc where tc.companyStatus = 'N'
+    ]]>
+    <if test="companyId != '' and companyId !=null">
+      and tc.companyId = #{companyId}
+    </if>
+  </select>
 
   <!--冻结数据-->
   <update id="inactive" keyProperty="companyId" parameterType="company">

@@ -175,16 +175,35 @@ function validator(formId) {
 
 //初始化文件上传控件
 $(function () {
-    //0.初始化fileinput
-    var oFileInput = new FileInput();
-    oFileInput.Init("add_companyLogo", "/file/addFile");
+
+    $("#add_companyLogo").fileinput({
+        language: 'zh', //设置语言
+        showCaption: true, //是否显示文件的标题
+        showPreview: true, //是否显示文件的预览图
+        showRemove: true, //是否显示删除/清空按钮
+        showUpload: true, //是否显示文件上传按钮
+        showCancel: true, //是否显示取消文件上传按钮
+        uploadAsync: true,
+        minFileCount: 1,
+        maxFileCount: 6,
+//        validateInitialCount: true,
+        enctype: 'multipart/form-data',
+        uploadUrl: '<%=path %>/company/editFile', //上传的地址
+//      maxFileSize: 5000,
+//      browseClass: "btn btn-primary", //按钮样式
+//        allowedPreviewTypes: ['image'], //可以配置哪些文件类型被允许显示为预览,用默认较好
+//        allowedFileTypes: ['image'],
+//        browseClass: "btn btn-primary", //按钮样式
+//        previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
+        allowedFileExtensions: ['jpg', 'png', 'gif']
+    });
 });
 
-$(function () {
-    //0.初始化fileinput
-    var oFileInput = new FileInput();
-    oFileInput.Init("edit_companyLogo", "/file/editFile");
-});
+// $(function () {
+//     //0.初始化fileinput
+//     var oFileInput = new FileInput();
+//     oFileInput.Init("edit_companyLogo", "/company/editFile");
+// });
 
 //初始化fileinput
 var FileInput = function () {

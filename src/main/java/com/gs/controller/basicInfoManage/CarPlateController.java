@@ -46,6 +46,7 @@ public class CarPlateController {
                 Pager pager = new Pager();
                 pager.setPageNo(Integer.valueOf(pageNumber));
                 pager.setPageSize(Integer.valueOf(pageSize));
+                pager.setUser((User)session.getAttribute("user"));
                 pager.setTotalRecords(carPlateService.count((User) session.getAttribute("user")));
                 List<CarPlate> carPlates = carPlateService.queryByPager(pager);
                 return new Pager4EasyUI<CarPlate>(pager.getTotalRecords(), carPlates);
