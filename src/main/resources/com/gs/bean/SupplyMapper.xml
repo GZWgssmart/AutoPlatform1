@@ -31,7 +31,7 @@
 
   <select id="queryAll" resultMap="supplyMap" parameterType="com.gs.bean.User">
     <![CDATA[
-      select * FROM auto_platform.t_supply s
+      select * FROM auto_platform.t_supply  s where 1=1 and s.supplyStatus = 'Y'
     ]]>
     <if test="companyId != '' and companyId !=null">
       and s.companyId = #{user.companyId}

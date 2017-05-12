@@ -17,10 +17,10 @@
 
   <select id="queryAll" resultMap="supplyTypeMap" parameterType="com.gs.bean.User">
     <![CDATA[
-          select * from t_supply_type;
+          select * from t_supply_type st where st.supplyTypeStatus = 'Y'
         ]]>
     <if test="companyId != '' and companyId !=null">
-      and st.companyId = #{user.companyId}
+        and st.companyId = #{user.companyId}
     </if>
   </select>
 
