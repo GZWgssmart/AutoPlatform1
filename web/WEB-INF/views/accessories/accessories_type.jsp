@@ -101,7 +101,7 @@
                 <div class="modal-footer">
                     <div class="col-sm-offset-8">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button id="addButton" type="button" onclick="addSubmit()" class="btn btn-success">保存</button>
+                        <button id="addButton" type="button" onclick="addSubmit()" class="btn btn-success">添加</button>
                     </div>
                 </div>
             </form>
@@ -141,7 +141,7 @@
                 <div class="modal-footer">
                     <div class="col-sm-offset-8">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button id="editButton" type="button" onclick="editSubmit()" class="btn btn-success">保存</button>
+                        <button id="editButton" type="button" onclick="editSubmit()" class="btn btn-success">修改</button>
                     </div>
                 </div>
             </form>
