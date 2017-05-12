@@ -46,16 +46,27 @@ public class SupplyController {
     @ResponseBody
     @RequestMapping(value = "queryAllSupply",method = RequestMethod.GET)
     public List<ComboBox4EasyUI> queryAllSupply(HttpSession session){
-        logger.info("查询所有的供应商信息");
-        List<Supply> supplys = supplyService.queryAll((User)session.getAttribute("user"));
-        List<ComboBox4EasyUI> comboxs =  new ArrayList<ComboBox4EasyUI>();
-        for(Supply s : supplys){
-            ComboBox4EasyUI comboBox4EasyUI = new ComboBox4EasyUI();
-            comboBox4EasyUI.setId(s.getSupplyId());
-            comboBox4EasyUI.setText(s.getSupplyName());
-            comboxs.add(comboBox4EasyUI);
+        if (SessionUtil.isLogin(session)) {
+            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员";
+            if (RoleUtil.checkRoles(roles)) {
+                logger.info("查询所有的供应商信息");
+                List<Supply> supplys = supplyService.queryAll((User) session.getAttribute("user"));
+                List<ComboBox4EasyUI> comboxs = new ArrayList<ComboBox4EasyUI>();
+                for (Supply s : supplys) {
+                    ComboBox4EasyUI comboBox4EasyUI = new ComboBox4EasyUI();
+                    comboBox4EasyUI.setId(s.getSupplyId());
+                    comboBox4EasyUI.setText(s.getSupplyName());
+                    comboxs.add(comboBox4EasyUI);
+                }
+                return comboxs;
+            } else {
+                logger.info("此用户无拥有此方法角色");
+                return null;
+            }
+        } else {
+            logger.info("请先登录");
+            return null;
         }
-        return comboxs;
     }
 
 
@@ -67,7 +78,7 @@ public class SupplyController {
     @RequestMapping(value = "queryByPager",method = RequestMethod.GET)
     public Pager4EasyUI<Supply> queryByPager(HttpSession session, @Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
         if (SessionUtil.isLogin(session)) {
-            String roles = "系统超级管理员,系统普通管理员,汽修公司管理员";
+            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员";
             if (RoleUtil.checkRoles(roles)) {
                 logger.info("供应商分页查询");
                 Pager pager = new Pager();
@@ -95,14 +106,21 @@ public class SupplyController {
     @RequestMapping(value = "queryByPagerDisable",method = RequestMethod.GET)
     public Pager4EasyUI<Supply> queryByPagerDisable(HttpSession session,@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
         if(SessionUtil.isLogin(session)) {
-            logger.info("供应商禁用分页查询");
-            Pager pager = new Pager();
-            pager.setPageNo(Integer.valueOf(pageNumber));
-            pager.setPageSize(Integer.valueOf(pageSize));
-            pager.setUser((User)session.getAttribute("user"));
-            pager.setTotalRecords(supplyService.countByDisable((User)session.getAttribute("user")));
-            List<Supply> supplyList = supplyService.queryByPagerDisable(pager);
-            return new Pager4EasyUI<Supply>(pager.getTotalRecords(), supplyList);
+            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员";
+            if (RoleUtil.checkRoles(roles)) {
+                logger.info("供应商禁用分页查询");
+                Pager pager = new Pager();
+                pager.setPageNo(Integer.valueOf(pageNumber));
+                pager.setPageSize(Integer.valueOf(pageSize));
+                pager.setUser((User)session.getAttribute("user"));
+                pager.setTotalRecords(supplyService.countByDisable((User)session.getAttribute("user")));
+                List<Supply> supplyList = supplyService.queryByPagerDisable(pager);
+                return new Pager4EasyUI<Supply>(pager.getTotalRecords(), supplyList);
+            }else {
+                logger.info("此用户无拥有此方法角色");
+                return null;
+            }
+
         }else{
             logger.info("请先登录");
             return null;
@@ -117,16 +135,22 @@ public class SupplyController {
     @RequestMapping(value = "addSupply", method = RequestMethod.POST)
     public ControllerResult addSupply(HttpSession session,Supply supply) {
         if(SessionUtil.isLogin(session)) {
-            logger.info("添加供应商记录");
-            if (supply != null && !supply.equals("")) {
-                supply.setCompanyId("a3fba179-3388-11e7-be46-1c3947c698fd");
-                supplyService.insert(supply);
-                logger.info("添加成功");
-                return ControllerResult.getSuccessResult("添加成功");
-            } else {
-                return ControllerResult.getFailResult("添加失败，请输入必要的信息");
+            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员";
+            if (RoleUtil.checkRoles(roles)) {
+                logger.info("添加供应商记录");
+                if (supply != null && !supply.equals("")) {
+                    User user = (User)session.getAttribute("user");
+                    supply.setCompanyId(user.getCompanyId());
+                    supplyService.insert(supply);
+                    logger.info("添加供应商记录成功");
+                    return ControllerResult.getSuccessResult("添加供应商记录成功");
+                } else {
+                    return ControllerResult.getFailResult("添加供应商记录失败");
+                }
+            }else {
+                logger.info("此用户无拥有此方法角色");
+                return null;
             }
-
         }else{
             logger.info("请先登录");
             return ControllerResult.getNotLoginResult("登录信息无效，请重新登录");
@@ -143,14 +167,21 @@ public class SupplyController {
     @RequestMapping(value = "updateSupply", method = RequestMethod.POST)
     public ControllerResult updateSupply(HttpSession session,Supply supply) {
         if(SessionUtil.isLogin(session)) {
-            logger.info("修改供应商记录");
-            if (supply != null && !supply.equals("")) {
-                supply.setCompanyId("a3fba179-3388-11e7-be46-1c3947c698fd");
-                supplyService.update(supply);
-                logger.info("修改成功");
-                return ControllerResult.getSuccessResult("修改成功");
-            } else {
-                return ControllerResult.getFailResult("修改失败");
+            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员";
+            if (RoleUtil.checkRoles(roles)) {
+                logger.info("修改供应商记录");
+                if (supply != null && !supply.equals("")) {
+                    User user = (User)session.getAttribute("user");
+                    supply.setCompanyId(user.getCompanyId());
+                    supplyService.update(supply);
+                    logger.info("修改供应商记录成功");
+                    return ControllerResult.getSuccessResult("修改供应商记录成功");
+                } else {
+                    return ControllerResult.getFailResult("修改供应商记录失败");
+                }
+            }else {
+                logger.info("此用户无拥有此方法角色");
+                return null;
             }
         }else{
             logger.info("请先登录");
@@ -166,18 +197,24 @@ public class SupplyController {
     @RequestMapping(value = "statusOperate",method = RequestMethod.POST)
     public ControllerResult inactive(HttpSession session,String id,String status){
         if(SessionUtil.isLogin(session)) {
-            if (id != null && !id.equals("") && status != null && !status.equals("")) {
-                if (status.equals("N")) {
-                    supplyService.active(id);
-                    logger.info("激活成功");
-                    return ControllerResult.getSuccessResult("激活成功");
+            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员";
+            if (RoleUtil.checkRoles(roles)) {
+                if (id != null && !id.equals("") && status != null && !status.equals("")) {
+                    if (status.equals("N")) {
+                        supplyService.active(id);
+                        logger.info("供应商记录激活成功");
+                        return ControllerResult.getSuccessResult("供应商记录激活成功");
+                    } else {
+                        supplyService.inactive(id);
+                        logger.info("供应商记录禁用成功");
+                        return ControllerResult.getSuccessResult("供应商记录禁用成功");
+                    }
                 } else {
-                    supplyService.inactive(id);
-                    logger.info("禁用成功");
-                    return ControllerResult.getSuccessResult("禁用成功");
+                    return ControllerResult.getFailResult("操作失败");
                 }
-            } else {
-                return ControllerResult.getFailResult("操作失败");
+            }else {
+                logger.info("此用户无拥有此方法角色");
+                return null;
             }
         }else{
             logger.info("请先登录");
@@ -194,36 +231,42 @@ public class SupplyController {
     @RequestMapping(value="blurredQuery", method = RequestMethod.GET)
     public Pager4EasyUI<Supply> blurredQuery(HttpSession session,HttpServletRequest request, @Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
         if(SessionUtil.isLogin(session)) {
-            logger.info("供应商记录模糊查询");
-            Pager pager = new Pager();
-            pager.setPageNo(Integer.valueOf(pageNumber));
-            pager.setPageSize(Integer.valueOf(pageSize));
-            String text = request.getParameter("text");
-            String value = request.getParameter("value");
-            if(text != null && text!="" && value != null && value != "") {
-                List<Supply> supplys = null;
-                Supply supply = new Supply();
-                if(text.equals("供应商/供应商类型/所属公司")){
-                    supply.setSupplyName(value);
-                    supply.setSupplyTypeId(value);
-                    supply.setCompanyId(value);
-                }else if(text.equals("供应商")){
-                    supply.setSupplyName(value);
-                }else if(text.equals("供应商类型")) {
-                    supply.setSupplyTypeId(value);
-                }else if(text.equals("所属公司")){
-                    supply.setCompanyId(value);
+            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员";
+            if (RoleUtil.checkRoles(roles)) {
+                logger.info("供应商记录模糊查询");
+                Pager pager = new Pager();
+                pager.setPageNo(Integer.valueOf(pageNumber));
+                pager.setPageSize(Integer.valueOf(pageSize));
+                String text = request.getParameter("text");
+                String value = request.getParameter("value");
+                if(text != null && text!="" && value != null && value != "") {
+                    List<Supply> supplys = null;
+                    Supply supply = new Supply();
+                    if(text.equals("供应商/供应商类型/所属公司")){
+                        supply.setSupplyName(value);
+                        supply.setSupplyTypeId(value);
+                        supply.setCompanyId(value);
+                    }else if(text.equals("供应商")){
+                        supply.setSupplyName(value);
+                    }else if(text.equals("供应商类型")) {
+                        supply.setSupplyTypeId(value);
+                    }else if(text.equals("所属公司")){
+                        supply.setCompanyId(value);
+                    }
+                    supplys = supplyService.blurredQuery(pager,supply);
+                    pager.setUser((User)session.getAttribute("user"));
+                    pager.setTotalRecords(supplyService.countByBlurred(supply,(User)session.getAttribute("user")));
+                    System.out.print(supplys);
+                    return new Pager4EasyUI<Supply>(pager.getTotalRecords(), supplys);
+                }else{ // 当在模糊查询输入框中输入的值为空时, 使它查询全部
+                    pager.setUser((User)session.getAttribute("user"));
+                    pager.setTotalRecords(supplyService.count((User)session.getAttribute("user")));
+                    List<Supply> supplys = supplyService.queryByPager(pager);
+                    return new Pager4EasyUI<Supply>(pager.getTotalRecords(), supplys);
                 }
-                supplys = supplyService.blurredQuery(pager,supply);
-                pager.setUser((User)session.getAttribute("user"));
-                pager.setTotalRecords(supplyService.countByBlurred(supply,(User)session.getAttribute("user")));
-                System.out.print(supplys);
-                return new Pager4EasyUI<Supply>(pager.getTotalRecords(), supplys);
-            }else{ // 当在模糊查询输入框中输入的值为空时, 使它查询全部
-                pager.setUser((User)session.getAttribute("user"));
-                pager.setTotalRecords(supplyService.count((User)session.getAttribute("user")));
-                List<Supply> supplys = supplyService.queryByPager(pager);
-                return new Pager4EasyUI<Supply>(pager.getTotalRecords(), supplys);
+            }else {
+                logger.info("此用户无拥有此方法角色");
+                return null;
             }
         }else{
             logger.info("请先登录");

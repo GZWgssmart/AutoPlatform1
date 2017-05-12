@@ -66,9 +66,11 @@
             </thead>
         </table>
         <div id="toolbar" class="btn-group">
-            <button id="btn_add" type="button" class="btn btn-default" onclick="showAdd();">
-                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
-            </button>
+            <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员">
+                    <button id="btn_add" type="button" class="btn btn-default" onclick="showAdd();">
+                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
+                    </button>
+             </shiro:hasAnyRoles>
             <button id="btn_edit" type="button" class="btn btn-default" onclick="showEdit();">
                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
             </button>
