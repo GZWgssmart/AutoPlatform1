@@ -1,6 +1,7 @@
 package com.gs.service.impl;
 
 import com.gs.bean.ChargeBill;
+import com.gs.bean.User;
 import com.gs.common.bean.Pager;
 import com.gs.dao.ChargeBillDAO;
 import com.gs.service.ChargeBillService;
@@ -50,8 +51,8 @@ public class ChargeBillServiceImpl implements ChargeBillService {
         return chargeBillDAO.batchUpdate(list);
     }
 
-    public List<ChargeBill> queryAll() {
-        return chargeBillDAO.queryAll();
+    public List<ChargeBill> queryAll(User user) {
+        return chargeBillDAO.queryAll(user);
     }
 
     public List<ChargeBill> queryAll(String status) {
@@ -74,8 +75,8 @@ public class ChargeBillServiceImpl implements ChargeBillService {
         return chargeBillDAO.queryByPager(pager);
     }
 
-    public int count() {
-        return chargeBillDAO.count();
+    public int count(User user) {
+        return chargeBillDAO.count(user);
     }
 
     public int inactive(String id) {
@@ -90,15 +91,15 @@ public class ChargeBillServiceImpl implements ChargeBillService {
         return chargeBillDAO.queryByPagerDisable(pager);
     }
 
-    public int countByDisable() {
-        return chargeBillDAO.countByDisable();
+    public int countByDisable(User user) {
+        return chargeBillDAO.countByDisable(user);
     }
 
     public List<ChargeBill> blurredQuery(Pager pager, ChargeBill chargeBill) {
         return chargeBillDAO.blurredQuery(pager,chargeBill);
     }
 
-    public int countByBlurred(ChargeBill chargeBill) {
-        return chargeBillDAO.countByBlurred(chargeBill);
+    public int countByBlurred(ChargeBill chargeBill,User user) {
+        return chargeBillDAO.countByBlurred(chargeBill, user);
     }
 }

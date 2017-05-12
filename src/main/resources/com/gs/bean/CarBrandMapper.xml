@@ -8,31 +8,45 @@
     <result column="brandStatus" property="brandStatus" jdbcType="VARCHAR" />
   </resultMap>
 
-  <select id="queryAll" resultMap="carbrandMap">
+  <!--查询所有-->
+  <select id="queryAll" resultMap="carbrandMap" parameterType="com.gs.bean.User">
     <![CDATA[
-          select * from t_car_brand;
+          select * from t_car_brand cb where 1=1 and cb.brandStatus = 'Y'
       ]]>
+    <if test="companyId != '' and companyId !=null">
+      and cb.companyId = #{user.companyId}
+    </if>
   </select>
 
+  <!--分页查询所有汽车品牌-->
   <select id="queryByPager" resultMap="carbrandMap" parameterType="com.gs.common.bean.Pager">
     <![CDATA[
        select * from t_car_brand cb  where cb.brandStatus = 'Y'
      ]]>
+    <if test="user.companyId != '' and user.companyId !=null">
+      and cb.companyId = #{user.companyId}
+    </if>
     limit #{beginIndex}, #{pageSize}
   </select>
 
-  <select id="count" resultType="int" >
+  <!--分页查询所有总数-->
+  <select id="count" resultType="int" parameterType="com.gs.bean.User">
     <![CDATA[
-      select count(brandId) from t_car_brand cb where cb.brandStatus = 'Y'
+      select count(brandId) from t_car_brand cb where 1=1 and cb.brandStatus = 'Y'
     ]]>
+    <if test="companyId != '' and companyId !=null">
+      and cb.companyId = #{companyId}
+    </if>
   </select>
 
+  <!--添加汽车品牌-->
   <insert id="insert"  parameterType="carbrand">
     <![CDATA[
     INSERT into t_car_brand(brandId, brandName, brandDes, brandStatus) values(uuid(), #{brandName}, #{brandDes},'Y')
      ]]>
   </insert>
 
+  <!--修改汽车品牌-->
   <update id="update" parameterType="carbrand">
     <![CDATA[
       update t_car_brand set brandName = #{brandName},brandDes = #{brandDes} where brandId = #{brandId}
@@ -44,13 +58,19 @@
     <![CDATA[
        select * from t_car_brand cb where cb.brandStatus = 'N'
     ]]>
+    <if test="user.companyId != '' and user.companyId !=null">
+      and cb.companyId = #{user.companyId}
+    </if>
     limit #{beginIndex}, #{pageSize}
   </select>
   <!-- 分页查询禁用个数 -->
-  <select id="countByDisable" resultType="int" >
+  <select id="countByDisable" resultType="int" parameterType="com.gs.bean.User">
     <![CDATA[
       select count(brandId) from t_car_brand cb where cb.brandStatus = 'N'
     ]]>
+    <if test="companyId != '' and companyId !=null">
+      and cb.companyId = #{companyId}
+    </if>
   </select>
 
   <!--冻结数据-->

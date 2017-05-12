@@ -11,6 +11,9 @@
     <link rel="stylesheet" href="/static/css/table/table.css">
     <link rel="stylesheet" href="/static/css/bootstrap-validate/bootstrapValidator.min.css">
     <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.css">
+
+    <!-- 引入ystep样式 -->
+    <link rel="stylesheet" href="/static/css/Schedule/ystep.css">
 </head>
 <body>
 <%@include file="../backstage/contextmenu.jsp" %>
@@ -28,10 +31,14 @@
                 <th data-field="maintainRecord.checkin.brand.brandName">汽车品牌</th>
                 <th data-field="maintainRecord.checkin.color.colorName">汽车颜色</th>
                 <th data-field="maintainRecord.checkin.plate.plateName">车牌号码</th>
-                <th data-field="maintainRecord.startTime" data-formatter="formatterDateTime">保养开始时间</th>
-                <th data-field="maintainRecord.actualEndTime" data-formatter="formatterDateTime">保养结束时间</th>
-                <th data-field="maintainRecord.pickupTime" data-formatter="formatterDateTime">车主提车时间</th>
-                <th data-field="maintainRecord.recordDes">维修保养进度描述</th>
+                <th data-field="maintainRecord.checkin.company.companyName">汽修公司</th>
+                <th data-field="maintainRecord.checkin.model.modelName">汽车车型</th>
+                <th data-field="maintainRecord.checkin.carPlate">车牌名称</th>
+                <%--<th data-field="maintainRecord.startTime" data-formatter="formatterDateTime">保养开始时间</th>--%>
+                <%--<th data-field="maintainRecord.actualEndTime" data-formatter="formatterDateTime">保养结束时间</th>--%>
+                <%--<th data-field="maintainRecord.pickupTime" data-formatter="formatterDateTime">车主提车时间</th>--%>
+                <%--<th data-field="maintainRecord.recordDes">维修保养记录描述</th>--%>
+
                 <th data-field="workStatus">维修保养状态</th>
             </tr>
             </thead>
@@ -51,6 +58,9 @@
             </button>
             <button id="btn_delete" type="button" class="btn btn-default" onclick="showDel();">
                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
+            </button>
+            <button id="btn_editAcc" type="button" class="btn btn-default" onclick="showSchedule();">
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查看维修保养进度
             </button>
         </div>
     </div>
@@ -181,6 +191,23 @@
     </div>
 </div>
 
+<%--查看进度--%>
+<div id="ScheduleWindow" class="modal fade" aria-hidden="true" style="overflow-y:scroll" data-backdrop="static" keyboard:false>
+    <div class="modal-dialog" style="overflow:hidden;">
+        <div class="modal-content">
+            <div class="modal-body">
+                <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
+                <h3 class="m-t-none m-b">车辆维修保养进度</h3>
+                <hr>
+                    <div class="ystep2"></div>
+                <div class="modal-footer" style="border: none">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- 删除弹窗 -->
 <div class="modal fade" id="del" aria-hidden="true">
     <div class="modal-dialog" style="overflow:hidden;">
@@ -220,6 +247,11 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+<!-- 引入jquery -->
+<script src="/static/js/Schedule/jquery.min.js"></script>
+
+
 <script src="/static/js/jquery.min.js"></script>
 <script src="/static/js/bootstrap.min.js"></script>
 <script src="/static/js/bootstrap-table/bootstrap-table.js"></script>
@@ -233,9 +265,31 @@
 <script src="/static/js/bootstrap-dateTimePicker/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
 <script src="/static/js/backstage/main.js"></script>
 <script src="/static/js/backstage/basicInfoManage/maintenance.js"></script>
-<seript>
 
-
-</seript>
+<%--插入ystep插件--%>
+<script src="/static/js/Schedule/ystep.js"></script>
+<script>
+    $(".ystep2").loadStep({
+        size: "large",
+        color: "green",
+        steps: [{
+        title: "发起",
+        content: "实名用户/公益组织发起项目"
+        },{
+        title: "审核",
+        content: "乐捐平台工作人员审核项目"
+        },{
+        title: "募款",
+        content: "乐捐项目上线接受公众募款"
+        },{
+        title: "执行",
+        content: "项目执行者线下开展救护行动"
+        },{
+        title: "结项",
+        content: "项目执行者公示善款使用报告"
+        }]
+    });
+    $(".ystep2").setStep(5);
+</script>
 </body>
 </html>

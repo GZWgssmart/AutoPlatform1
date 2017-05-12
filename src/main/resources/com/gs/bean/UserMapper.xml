@@ -86,10 +86,14 @@
   <select id="queryByPagerAll" resultMap="userBasicManageMap" parameterType="com.gs.common.bean.Pager">
     <![CDATA[
       select u.*, r.*, c.companyId, c.companyName from t_user u
-        left join t_user_role ur on u.userId = ur.userId
-        left join t_role r on r.roleId = ur.roleId
-        left join t_company c on u.companyId = c.companyId
+          left join t_user_role ur on u.userId = ur.userId
+          left join t_role r on r.roleId = ur.roleId
+          left join t_company c on u.companyId = c.companyId
+        where 1 = 1
     ]]>
+    <if test="user.companyId != null and user.companyId != ''">
+        and c.companyId = #{user.companyId}
+    </if>
      limit #{beginIndex}, #{pageSize};
   </select>
 
@@ -102,6 +106,9 @@
         left join t_company c on u.companyId = c.companyId
         where u.userStatus = 'Y'
     ]]>
+    <if test="user.companyId != null and user.companyId != ''">
+      and c.companyId = #{user.companyId}
+    </if>
      limit #{beginIndex}, #{pageSize};
   </select>
 
@@ -114,27 +121,47 @@
         left join t_company c on u.companyId = c.companyId
         where u.userStatus = 'N'
     ]]>
+    <if test="user.companyId != null and user.companyId != ''">
+      and c.companyId = #{user.companyId}
+    </if>
     limit #{beginIndex}, #{pageSize};
   </select>
 
-  <select id="count" resultType="int" >
+  <select id="count" resultType="int" parameterType="user">
     <![CDATA[
-      select count(*) from t_user u where 1 =1 and u.userStatus = 'Y'
+      select count(*) from t_user u where u.userStatus = 'Y'
     ]]>
+    <if test="user.companyId != null and user.companyId != ''">
+      and c.companyId = #{companyId}
+    </if>
   </select>
 
   <!-- 查询所有员工的基本信息 -->
   <select id="queryAll" resultMap="userBasicManageMap">
     <![CDATA[
-      select * from t_user;
+      select u.*, r.*, c.companyId, c.companyName from t_user u
+        left join t_user_role ur on u.userId = ur.userId
+        left join t_role r on r.roleId = ur.roleId
+        left join t_company c on u.companyId = c.companyId
+      where 1 = 1
     ]]>
+    <if test="user.companyId != null and user.companyId != ''">
+      and c.companyId = #{user.companyId}
+    </if>
   </select>
 
-  <!-- 根据id查询所有员工的基本信息 -->
+  <!-- 根据id查询员工的基本信息 -->
   <select id="queryById" resultMap="userBasicManageMap" parameterType="String">
     <![CDATA[
-      select * from t_user u where u.userId = #{userId};
+      select u.*, r.*, c.companyId, c.companyName from t_user u
+          left join t_user_role ur on u.userId = ur.userId
+          left join t_role r on r.roleId = ur.roleId
+          left join t_company c on u.companyId = c.companyId
+       where u.userId = #{userId}
     ]]>
+    <if test="user.companyId != null and user.companyId != ''">
+      and c.companyId = #{user.companyId}
+    </if>
   </select>
 
   <select id="queryRoles" parameterType="String" resultType="String">
@@ -177,7 +204,11 @@
   <!-- 测试用，不要删  -->
   <select id ="queryByPhone" resultMap="userBasicManageMap">
     <![CDATA[
-      select * from t_user where userPhone= #{userPhone}
+      select  u.*, r.*, c.companyId, c.companyName from t_user u
+          left join t_user_role ur on u.userId = ur.userId
+          left join t_role r on r.roleId = ur.roleId
+          left join t_company c on u.companyId = c.companyId
+       where userPhone= #{userPhone}
     ]]>
   </select>
   <!-- 同上 -->

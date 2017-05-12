@@ -138,7 +138,7 @@ public class CompanyController {
                 }
             } else {
                 logger.info("请先登录");
-                return ControllerResult.getNotLoginResult("添加信息无效，请重新登录");
+                return ControllerResult.getNotLoginResult("登录信息无效，请重新登录");
             }
     }
 
@@ -161,7 +161,7 @@ public class CompanyController {
             }
         } else {
             logger.info("请先登录");
-            return ControllerResult.getNotLoginResult("修改信息无效，请重新登录");
+            return ControllerResult.getNotLoginResult("登录信息无效，请重新登录");
         }
     }
 
@@ -190,7 +190,7 @@ public class CompanyController {
             }
         } else {
             logger.info("请先登录");
-            return ControllerResult.getNotLoginResult("修改状态无效，请重新登录");
+            return ControllerResult.getNotLoginResult("登录信息无效，请重新登录");
         }
     }
 

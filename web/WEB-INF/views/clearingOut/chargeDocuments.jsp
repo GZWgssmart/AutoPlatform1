@@ -48,43 +48,54 @@
             </thead>
         </table>
         <div id="toolbar" class="btn-group">
-            <button id="btn_available" type="button" class="btn btn-default" onclick="showAvailable();">
-                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>可用收费单据
-            </button>
-            <button id="btn_disable" type="button" class="btn btn-default" onclick="showDisable();">
-                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>禁用收费单据
-            </button>
-            <button id="btn_edit" type="button" class="btn btn-default" onclick="showEdit();">
-                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
-            </button>
-
-            <button id="btn_Export" type="button" class="btn btn-default"><a href="/charge/exportExcel">
-                <span class="glyphicon glyphicon-export" aria-hidden="true"></span>导出</a>
-            </button>
-            <button id="btn_print" type="button" class="btn btn-default" onclick="showPrint();">
-                <span class="glyphicon glyphicon-print" aria-hidden="true"></span>打印
-            </button>
-            <div class="input-group" style="width:350px;float:left;padding:0;margin:0 0 0 -1px;">
-                <div class="input-group-btn">
-                    <button type="button" id="ulButton" class="btn btn-default" style="border-radius:0px;"
-                            data-toggle="dropdown">车主/电话/汽车公司/车牌号<span class="caret"></span></button>
-                    <ul class="dropdown-menu pull-right">
-                        <li><a onclick="onclikLi(this)">车主/电话/汽车公司/车牌号</a></li>
-                        <li class="divider"></li>
-                        <li><a onclick="onclikLi(this)">车主</a></li>
-                        <li class="divider"></li>
-                        <li><a onclick="onclikLi(this)">电话</a></li>
-                        <li class="divider"></li>
-                        <li><a onclick="onclikLi(this)">汽车公司</a></li>
-                        <li class="divider"></li>
-                        <li><a onclick="onclikLi(this)">车牌号</a></li>
-                    </ul>
-                </div><!-- /btn-group -->
-                <input id="ulInput" class="form-control" onkeypress="if(event.keyCode==13) {blurredQuery();}">
-                <a href="javaScript:;" onclick="blurredQuery()"><span
-                        class="glyphicon glyphicon-search search-style"></span></a>
-                </input>
-            </div><!-- /input-group -->
+            <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员">
+                        <button id="btn_available" type="button" class="btn btn-default" onclick="showAvailable();">
+                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>可用收费单据
+                        </button>
+            </shiro:hasAnyRoles>
+            <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员">
+                        <button id="btn_disable" type="button" class="btn btn-default" onclick="showDisable();">
+                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>禁用收费单据
+                        </button>
+            </shiro:hasAnyRoles>
+            <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司接待员">
+                        <button id="btn_edit" type="button" class="btn btn-default" onclick="showEdit();">
+                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
+                        </button>
+            </shiro:hasAnyRoles>
+            <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司接待员">
+                        <button id="btn_Export" type="button" class="btn btn-default"><a href="/charge/exportExcel">
+                            <span class="glyphicon glyphicon-export" aria-hidden="true"></span>导出</a>
+                        </button>
+            </shiro:hasAnyRoles>
+            <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司接待员">
+                        <button id="btn_print" type="button" class="btn btn-default" onclick="showPrint();">
+                            <span class="glyphicon glyphicon-print" aria-hidden="true"></span>打印
+                        </button>
+            </shiro:hasAnyRoles>
+            <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员">
+                        <div class="input-group" style="width:350px;float:left;padding:0;margin:0 0 0 -1px;">
+                            <div class="input-group-btn">
+                                <button type="button" id="ulButton" class="btn btn-default" style="border-radius:0px;"
+                                        data-toggle="dropdown">车主/电话/汽车公司/车牌号<span class="caret"></span></button>
+                                <ul class="dropdown-menu pull-right">
+                                    <li><a onclick="onclikLi(this)">车主/电话/汽车公司/车牌号</a></li>
+                                    <li class="divider"></li>
+                                    <li><a onclick="onclikLi(this)">车主</a></li>
+                                    <li class="divider"></li>
+                                    <li><a onclick="onclikLi(this)">电话</a></li>
+                                    <li class="divider"></li>
+                                    <li><a onclick="onclikLi(this)">汽车公司</a></li>
+                                    <li class="divider"></li>
+                                    <li><a onclick="onclikLi(this)">车牌号</a></li>
+                                </ul>
+                            </div><!-- /btn-group -->
+                            <input id="ulInput" class="form-control" onkeypress="if(event.keyCode==13) {blurredQuery();}">
+                            <a href="javaScript:;" onclick="blurredQuery()"><span
+                                    class="glyphicon glyphicon-search search-style"></span></a>
+                            </input>
+                        </div><!-- /input-group -->
+            </shiro:hasAnyRoles>
         </div>
     </div>
 </div>

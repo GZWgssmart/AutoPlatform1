@@ -81,16 +81,22 @@
     </association>
   </resultMap>
 
-    <select id="count" resultType="int">
+    <select id="count" resultType="int" parameterType="com.gs.bean.User">
         <![CDATA[
           SELECT count(workId) FROM t_work_info w where 1 =1 and w.workStatus='Y'
         ]]>
+        <if test="companyId != '' and companyId !=null">
+            and s.companyId = #{companyId}
+        </if>
     </select>
 
-    <select id="countByDisable" resultType="int" >
+    <select id="countByDisable" resultType="int" parameterType="com.gs.bean.User">
         <![CDATA[
         SELECT count(*) FROM t_work_info w WHERE w.workStatus='N'
-    ]]>
+       ]]>
+        <if test="companyId != '' and companyId !=null">
+            and s.companyId = #{companyId}
+        </if>
     </select>
 
     <!--分页所有完成查询全部-->
@@ -100,8 +106,12 @@
             tmR.pickupTime,u.userNickName FROM t_work_info w
             Left JOIN t_maintain_Record tmR on w.recordId = tmR.recordId
             Left JOIN t_user u on w.userId = u.userId
-            where w.workStatus = 'Y' order by w.workCreatedTime Desc
+            where w.workStatus = 'Y'
         ]]>
+        <if test="user.companyId != '' and user.companyId !=null">
+            and s.companyId = #{user.companyId}
+        </if>
+        order by w.workCreatedTime Desc
         limit #{beginIndex}, #{pageSize}
     </select>
 
@@ -115,14 +125,18 @@
 			cb.brandId, cb.brandName,
 			cc.colorId, cc.colorName,
 			cp.plateId,cp.plateName,
+			md.moduleId,md.moduleName,
 			u.userId, u.userName, u.userPhone
             from t_work_info wi, t_maintain_record m, t_checkin ck, t_company gs, t_car_brand cb,
-            t_car_color cc, t_car_plate cp, t_user u
+            t_car_color cc, t_car_plate cp, t_module md, t_user u
             where wi.workId = m.recordId and wi.workId = ck.checkinId and ck.brandId = cb.brandId
             and ck.colorId = cc.colorId and ck.plateId = cp.plateId
-            and ck.companyId = gs.companyId and u.userId = wi.workId
+            and ck.companyId = gs.companyId and ck.modelId = md.moduleId and u.userId = wi.workId
             and wi.workStatus = 'Y'
         ]]>
+        <if test="user.companyId != '' and user.companyId !=null">
+            and s.companyId = #{user.companyId}
+        </if>
             limit #{beginIndex}, #{pageSize}
     </select>
 
@@ -134,15 +148,22 @@
             u.userNickName FROM t_work_info w
             Left JOIN t_maintain_Record tmR on w.recordId = tmR.recordId
             Left JOIN t_user u on w.userId = u.userId
-            where w.workStatus = 'N' order by w.workCreatedTime Desc
+            where w.workStatus = 'N'
         ]]>
+        <if test="user.companyId != '' and user.companyId !=null">
+            and s.companyId = #{user.companyId}
+        </if>
+        order by w.workCreatedTime Desc
         limit #{beginIndex}, #{pageSize}
     </select>
 
-  <select id="queryAll" resultMap="BaseResultMap">
+  <select id="queryAll" resultMap="BaseResultMap" parameterType="com.gs.bean.User">
       <![CDATA[
         SELECT * FROM t_work_info
          ]]>
+      <if test="companyId != '' and companyId !=null">
+          and s.companyId = #{companyId}
+      </if>
   </select>
 
    <!-- 添加数据 -->

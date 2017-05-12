@@ -1,7 +1,13 @@
 package com.gs.dao;
 
 import com.gs.bean.CarBrand;
+import com.gs.bean.User;
+import com.gs.common.bean.Pager;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
 /**
 *由CSWangBin技术支持
 *
@@ -12,4 +18,13 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CarBrandDAO extends BaseDAO<String, CarBrand>{
 
+    /**
+     * 模糊查询
+     */
+    public List<CarBrand> blurredQuery(@Param("pager")Pager pager, @Param("carBrand")CarBrand carBrand);
+
+    /**
+     * 模糊查询的记录数
+     */
+    public int countByBlurred(@Param("carBrand")CarBrand carBrand, @Param("user")User user);
 }

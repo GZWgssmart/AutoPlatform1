@@ -9,9 +9,7 @@ import com.gs.common.bean.ComboBox4EasyUI;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
-import com.gs.common.util.EncryptUtil;
-import com.gs.common.util.FileUtil;
-import com.gs.common.util.UUIDUtil;
+import com.gs.common.util.*;
 import com.gs.service.UserRoleService;
 import com.gs.service.UserService;
 import org.activiti.engine.impl.Page;
@@ -78,25 +76,34 @@ public class UserBasicManageController {
      */
     @ResponseBody
     @RequestMapping(value = "addUser", method = RequestMethod.POST)
-    public Map addUser(User user, HttpServletRequest request ) {
-        logger.info("添加人员");
-        Map map= new HashMap();
-        String province = request.getParameter("province");
-        String city = request.getParameter("city");
-        String area = request.getParameter("area");
-        user.setUserAddress(province + "-" + city + "-" + area);
-        user.setUserPwd(EncryptUtil.md5Encrypt("123123"));
-
-        userService.insert(user);
-        User userTemp= userService.queryByPhone(user.getUserPhone());
-        map.put("user",userTemp);
-
-        UserRole userRole = new UserRole();
-        userRole.setUserId(userTemp.getUserId());
-        userRole.setRoleId(user.getRoleId());
-        userRoleService.insert(userRole);
-        map.put("controllerResult", ControllerResult.getSuccessResult("添加成功"));
-        return map;
+    public Map addUser(User user, HttpServletRequest request, HttpSession session) {
+        if(SessionUtil.isLogin(session)) {
+            String roles = "公司超级管理员, 公司普通管理员，汽车公司人力资源管理部, 系统超级管理员，系统普通管理员";
+            if (RoleUtil.checkRoles(roles)) {
+                logger.info("添加人员");
+                Map map = new HashMap();
+                String province = request.getParameter("province");
+                String city = request.getParameter("city");
+                String area = request.getParameter("area");
+                user.setUserAddress(province + "-" + city + "-" + area);
+                user.setUserPwd(EncryptUtil.md5Encrypt("123123"));
+                userService.insert(user);
+                User userTemp = userService.queryByPhone(user.getUserPhone());
+                map.put("user", userTemp);
+                UserRole userRole = new UserRole();
+                userRole.setUserId(userTemp.getUserId());
+                userRole.setRoleId(user.getRoleId());
+                userRoleService.insert(userRole);
+                map.put("controllerResult", ControllerResult.getSuccessResult("添加成功"));
+                return map;
+            } else {
+                logger.info("此用户没有该操作所属的角色");
+                return null;
+            }
+        } else {
+            logger.info("请先登录");
+            return null;
+        }
     }
 
     @ResponseBody
@@ -119,6 +126,7 @@ public class UserBasicManageController {
         byte[] temp = new byte[1024];
         int len = -1;
         String rootPath = session.getServletContext().getRealPath("/");
+        System.out.println("文件保存根路径: -------------------------------" + rootPath);
         savePath =rootPath + "/"+ savePath ;
         try {
             File saveDir = new File(savePath);
@@ -148,37 +156,57 @@ public class UserBasicManageController {
      */
     @ResponseBody
     @RequestMapping(value = "updateUser", method =RequestMethod.POST)
-    public Map updateUser(User user,HttpServletRequest request) {
-        Map map = new HashMap();
-
-        String province = request.getParameter("editProvince");
-        String city = request.getParameter("editCity");
-        String area = request.getParameter("editArea");
-        user.setUserAddress(province + "-" + city + "-" + area);
-        userService.update(user);
-
-        UserRole userRole = new UserRole();
-        userRole.setUserId(user.getUserId());
-        userRole.setRoleId(user.getRoleId());
-        userRoleService.update(userRole);
-        logger.info("修改成功");
-        map.put("controllerResult", ControllerResult.getSuccessResult("修改成功"));
-        return map;
+    public Map updateUser(User user,HttpServletRequest request, HttpSession session) {
+        if(SessionUtil.isLogin(session)) {
+            String roles = "公司超级管理员, 公司普通管理员，汽车公司人力资源管理部, 系统超级管理员，系统普通管理员";
+            if (RoleUtil.checkRoles(roles)) {
+                Map map = new HashMap();
+                String province = request.getParameter("editProvince");
+                String city = request.getParameter("editCity");
+                String area = request.getParameter("editArea");
+                user.setUserAddress(province + "-" + city + "-" + area);
+                userService.update(user);
+                UserRole userRole = new UserRole();
+                userRole.setUserId(user.getUserId());
+                userRole.setRoleId(user.getRoleId());
+                userRoleService.update(userRole);
+                logger.info("修改成功");
+                map.put("controllerResult", ControllerResult.getSuccessResult("修改成功"));
+                return map;
+            } else {
+                logger.info("此用户没有该操作所属的角色");
+                return null;
+            }
+        } else {
+            logger.info("请先登录");
+            return null;
+        }
     }
 
     @ResponseBody
     @RequestMapping(value = "updateStatus", method = RequestMethod.POST)
-    public ControllerResult updateStatus(String id, String status) {
-        if(status.equals("Y")) {
-            userService.inactive(id);
-            logger.info("修改状态成功，已禁用");
-            return ControllerResult.getSuccessResult("修改状态成功，已禁用");
-        } else if(status.equals("N")) {
-            userService.active(id);
-            logger.info("修改状态成功，已激活");
-            return ControllerResult.getSuccessResult("修改状态成功，已激活");
+    public ControllerResult updateStatus(String id, String status, HttpSession session) {
+        if(SessionUtil.isLogin(session)) {
+            String roles = "公司超级管理员, 公司普通管理员，汽车公司人力资源管理部, 系统超级管理员，系统普通管理员";
+            if (RoleUtil.checkRoles(roles)) {
+                if (status.equals("Y")) {
+                    userService.inactive(id);
+                    logger.info("修改状态成功，已禁用");
+                    return ControllerResult.getSuccessResult("修改状态成功，已禁用");
+                } else if (status.equals("N")) {
+                    userService.active(id);
+                    logger.info("修改状态成功，已激活");
+                    return ControllerResult.getSuccessResult("修改状态成功，已激活");
+                }
+                return ControllerResult.getFailResult("修改状态失败");
+            } else {
+                logger.info("此用户没有该操作所属的角色");
+                return null;
+            }
+        } else {
+            logger.info("请先登录");
+            return null;
         }
-        return ControllerResult.getFailResult("修改状态失败");
     }
 
     /**
@@ -186,14 +214,26 @@ public class UserBasicManageController {
      */
     @ResponseBody
     @RequestMapping(value="queryByPagerAll", method = RequestMethod.GET)
-    public Pager4EasyUI queryByPagerAll(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
-        Pager pager = new Pager();
-        pager.setPageNo(Integer.valueOf(pageNumber));
-        pager.setPageSize(Integer.valueOf(pageSize));
-        pager.setTotalRecords(userService.count());
-        logger.info("分页查询人员基本信息成功");
-        List<User> users = userService.queryByPagerAll(pager);
-        return new Pager4EasyUI<User>(pager.getTotalRecords(), users);
+    public Pager4EasyUI queryByPagerAll(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize,HttpSession session) {
+        if(SessionUtil.isLogin(session)) {
+            String roles = "公司超级管理员, 公司普通管理员，汽车公司人力资源管理部, 系统超级管理员，系统普通管理员";
+            if (RoleUtil.checkRoles(roles)) {
+                Pager pager = new Pager();
+                pager.setPageNo(Integer.valueOf(pageNumber));
+                pager.setPageSize(Integer.valueOf(pageSize));
+                pager.setUser((User) session.getAttribute("user"));
+                pager.setTotalRecords(userService.count((User) session.getAttribute("user")));
+                logger.info("分页查询人员基本信息成功");
+                List<User> users = userService.queryByPagerAll(pager, (User) session.getAttribute("user"));
+                return new Pager4EasyUI<User>(pager.getTotalRecords(), users);
+            } else {
+                logger.info("此用户没有该操作所属的角色");
+                return null;
+            }
+        } else {
+            logger.info("请先登录");
+            return null;
+        }
     }
 
     /**
@@ -201,14 +241,26 @@ public class UserBasicManageController {
      */
     @ResponseBody
     @RequestMapping(value="queryByPager", method = RequestMethod.GET)
-    public Pager4EasyUI queryByPager(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
-        Pager pager = new Pager();
-        pager.setPageNo(Integer.valueOf(pageNumber));
-        pager.setPageSize(Integer.valueOf(pageSize));
-        pager.setTotalRecords(userService.count());
-        logger.info("分页查询分页查询状态为可用的人员基本信息成功");
-        List<User> users = userService.queryByPager(pager);
-        return new Pager4EasyUI<User>(pager.getTotalRecords(), users);
+    public Pager4EasyUI queryByPager(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize, HttpSession session) {
+        if(SessionUtil.isLogin(session)) {
+            String roles = "公司超级管理员, 公司普通管理员，汽车公司人力资源管理部, 系统超级管理员，系统普通管理员";
+            if (RoleUtil.checkRoles(roles)) {
+                Pager pager = new Pager();
+                pager.setPageNo(Integer.valueOf(pageNumber));
+                pager.setPageSize(Integer.valueOf(pageSize));
+                pager.setUser((User) session.getAttribute("user"));
+                pager.setTotalRecords(userService.count((User) session.getAttribute("user")));
+                logger.info("分页查询分页查询状态为可用的人员基本信息成功");
+                List<User> users = userService.queryByPager(pager);
+                return new Pager4EasyUI<User>(pager.getTotalRecords(), users);
+            } else {
+                logger.info("此用户没有该操作所属的角色");
+                return null;
+            }
+        } else {
+            logger.info("请先登录");
+            return null;
+        }
     }
 
     /**
@@ -216,14 +268,26 @@ public class UserBasicManageController {
      */
     @ResponseBody
     @RequestMapping(value="queryByPagerDisable", method = RequestMethod.GET)
-    public Pager4EasyUI queryByPagerDisable(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
-        Pager pager = new Pager();
-        pager.setPageNo(Integer.valueOf(pageNumber));
-        pager.setPageSize(Integer.valueOf(pageSize));
-        pager.setTotalRecords(userService.count());
-        logger.info("分页查询分页查询状态为不可用的人员基本信息成功");
-        List<User> users = userService.queryByPagerDisable(pager);
-        return new Pager4EasyUI<User>(pager.getTotalRecords(), users);
+    public Pager4EasyUI queryByPagerDisable(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize, HttpSession session) {
+        if(SessionUtil.isLogin(session)) {
+            String roles = "公司超级管理员, 公司普通管理员，汽车公司人力资源管理部, 系统超级管理员，系统普通管理员";
+            if (RoleUtil.checkRoles(roles)) {
+                Pager pager = new Pager();
+                pager.setPageNo(Integer.valueOf(pageNumber));
+                pager.setPageSize(Integer.valueOf(pageSize));
+                pager.setUser((User) session.getAttribute("user"));
+                pager.setTotalRecords(userService.count((User) session.getAttribute("user")));
+                logger.info("分页查询分页查询状态为不可用的人员基本信息成功");
+                List<User> users = userService.queryByPagerDisable(pager);
+                return new Pager4EasyUI<User>(pager.getTotalRecords(), users);
+            } else {
+                logger.info("此用户没有该操作所属的角色");
+                return null;
+            }
+        } else {
+            logger.info("请先登录");
+            return null;
+        }
     }
 
     /**
@@ -231,8 +295,8 @@ public class UserBasicManageController {
      */
     @ResponseBody
     @RequestMapping(value = "queryAll", method = RequestMethod.GET)
-    public List<ComboBox4EasyUI> queryAll() {
-        List<User> users = userService.queryAll();
+    public List<ComboBox4EasyUI> queryAll(HttpSession session) {
+        List<User> users = userService.queryAll((User)session.getAttribute("user"));
         List<ComboBox4EasyUI> combo = new ArrayList<ComboBox4EasyUI>();
         for(User u: users) {
             ComboBox4EasyUI c = new ComboBox4EasyUI();

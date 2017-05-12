@@ -31,12 +31,16 @@
         </association>
     </resultMap>
 
-    <select id="count" resultType="int">
+    <select id="count" resultType="int" parameterType="com.gs.bean.User">
     <![CDATA[
 
       select count(*) from t_incoming_outgoing i, t_company c where c.companyId = i.companyId and  i.inOutStatus = 'Y'
 
         ]]>
+        <if test="companyId != '' and companyId != null">
+            and io.companyId = #{companyId}
+        </if>
+        limit #{beginIndex}, #{pageSize}
   </select>
 
     <select id="queryByPager" resultMap="incomingOutgoingMap" parameterType="com.gs.common.bean.Pager">
@@ -49,7 +53,7 @@
 				where  io.inOutStatus = 'Y'
 				order by io.inOutCreatedTime Desc
     ]]>
-        <if test="companyId != '' and companyId != null">
+        <if test="user.companyId != '' and user.companyId != null">
             and io.companyId = #{user.companyId}
         </if>
     limit #{beginIndex}, #{pageSize}
@@ -88,14 +92,14 @@
   </select>
 
 
-    <select id="countByDisable" resultType="int">
+    <select id="countByDisable" resultType="int" parameterType="com.gs.bean.User">
     <![CDATA[
 
         select count(*) from t_incoming_outgoing io where  i.inOutStatus = 'N'
 
         ]]>
         <if test="companyId != '' and companyId != null">
-            and io.companyId = #{user.companyId}
+            and io.companyId = #{companyId}
         </if>
   </select>
 
@@ -109,7 +113,7 @@
 				where  io.inOutStatus = 'N'
 				order by io.inOutCreatedTime Desc
     ]]>
-        <if test="companyId != '' and companyId != null">
+        <if test="user.companyId != '' and user.companyId != null">
             and io.companyId = #{user.companyId}
         </if>
     limit #{beginIndex}, #{pageSize}

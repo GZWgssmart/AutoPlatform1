@@ -67,7 +67,7 @@ public class SalaryController {
                 List<Salary> salaries = salaryService.queryByPager(pager);
                 return new Pager4EasyUI<Salary>(pager.getTotalRecords(), salaries);
             } else {
-                logger.info("此用户无拥有此方法的角色");
+                logger.info("此用户无拥有工资信息分页查询的角色");
                 return null;
             }
         } else {
@@ -97,7 +97,7 @@ public class SalaryController {
                 salaryService.insert(salary);
                 return ControllerResult.getSuccessResult("添加成功");
             } else {
-                logger.info("此用户无拥有此方法的角色");
+                logger.info("此用户无拥有添加工资信息的角色");
                 return null;
             }
         } else {
@@ -130,7 +130,7 @@ public class SalaryController {
                 salaryService.update(salary);
                 return ControllerResult.getSuccessResult("修改成功");
             } else {
-                logger.info("此用户无拥有此方法的角色");
+                logger.info("此用户无拥有修改工资信息的角色");
                 return null;
             }
         } else {
@@ -174,7 +174,7 @@ public class SalaryController {
                 }
                 return null;
             } else {
-                logger.info("此用户无拥有此方法的角色");
+                logger.info("此用户无拥有导出工资信息的角色");
                 return null;
             }
         } else {
