@@ -54,6 +54,7 @@ public class PhoneReservationController {
                  pager.setPageNo(Integer.valueOf(pageNumber));
                  pager.setPageSize(Integer.valueOf(pageSize));
                  pager.setTotalRecords(appointmentService.count((User)session.getAttribute("user")));
+                 pager.setUser((User)session.getAttribute("user"));
                  List<Appointment> appointments = appointmentService.queryByPager(pager);
                  return new Pager4EasyUI<Appointment>(pager.getTotalRecords(), appointments);
              }else {
@@ -103,6 +104,7 @@ public class PhoneReservationController {
         if (SessionUtil.isLogin(session)){
             String roles = "公司超级管理员,公司普通管理员,汽修公司接待员";
             if (RoleUtil.checkRoles(roles)) {
+                User user = (User)session.getAttribute("user");
                 logger.info("添加电话预约");
                 if (appointment != null) {
                     appointment.setCompanyId("c515f5d623e011e7a97af832e40312b3");
@@ -117,7 +119,7 @@ public class PhoneReservationController {
             }
         }else {
             logger.info("请先登录");
-            return ControllerResult.getNotLoginResult("登录信息无效，请重新登录");
+            return ControllerResult.getNotLoginResult("添加电话预约无效，请重新登录");
         }
     }
 
@@ -133,6 +135,7 @@ public class PhoneReservationController {
             String roles = "公司超级管理员,公司普通管理员,汽车公司接待员";
             if (RoleUtil.checkRoles(roles)) {
                 logger.info("修改电话预约");
+                User user = (User)session.getAttribute("user");
                 appointment.setCompanyId("c515f5d623e011e7a97af832e40312b3");
                 appointmentService.update(appointment);
                 return ControllerResult.getSuccessResult("修改电话预约成功");
