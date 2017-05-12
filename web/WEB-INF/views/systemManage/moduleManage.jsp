@@ -83,6 +83,17 @@
            border-radius: 8px;
            float:left;
        }
+       #otherModule {
+           height:100%;
+           position:fixed;
+           margin-bottom:0px;
+           right:0px;
+           bottom:0px;
+           -webkit-box-shadow: 2px 0px 10px #909090;
+           -moz-box-shadow: 2px 0px 10px #909090;
+           box-shadow: 2px 0px 10px #909090;
+           background:#fff
+       }
 
         .modulePanel > .panel-heading {
             width:100%;
@@ -101,6 +112,7 @@
        #otherModule.col-md-3{
            padding:0;
        }
+
         .modulePanel > .panel-heading div {
             display: inline;
             font-weight: bold;
@@ -168,9 +180,9 @@
             <div class="panel-body col-md-9" id="modulePanels" style="padding-bottom:0px;float:right"  >
             </div>
          </div>
-        <div class = "col-md-3" id="otherModule"  style="height:100%;border: 1px solid #999; margin-bottom:0px;position:fixed; right:0px;bottom:0px;background:#fff" >
+        <div class = "col-md-3" id="otherModule"   >
             <div class = "panel-heading" style="width:100%;border-radius: 0" data-id = "module-">
-                <div style="display: inline"><span style="font-weight: bold;">其它</span></div>
+                <div style="display: inline"><span style="font-weight: bold;">其它</span><small style="margin-left:10px;"><span style="margin-right:3px;">简介</span><span>未被分配到模块里的权限</span></small></div>
                 <p class="clearfix"></p>
             </div>
             <ul  class="panel-body connectedSortable" style="overflow:auto;height:85%;width:100%;border:none" >
@@ -229,11 +241,9 @@
 <script src="/static/js/contextmenu.js"></script>
 <script src="/static/js/bootstrap-validate/bootstrapValidator.js"></script>
 <script src="/static/js/backstage/systemManage/jquery.nestable.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="/static/js/backstage/systemManage/jquery-ui.custom.js"></script>
 <script src="/static/js/backstage/systemManage/moduleManage.js"></script>
 </body>
-<script>
 
-</script>
 </html>
 

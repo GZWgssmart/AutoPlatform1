@@ -1,6 +1,14 @@
 package com.gs.bean;
 
+import org.dom4j.Document;
+import org.dom4j.Element;
+import org.dom4j.io.SAXReader;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.net.URL;
 import java.util.Date;
+import java.util.List;
 
 public class MaterialUse {
     private String materialUseId;
@@ -91,4 +99,5 @@ public class MaterialUse {
     public void setAccessories(Accessories accessories) {
         this.accessories = accessories;
     }
+
 }

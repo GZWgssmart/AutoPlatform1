@@ -36,6 +36,15 @@ public class PickingController {
     }
 
     /**
+     * 物料管理
+     */
+    @RequestMapping(value="mattermanageIndex",method = RequestMethod.GET)
+    public String mattermanageIndex(){
+        logger.info("跳转到物料管理页面");
+        return "picking/mattermanage";
+    }
+
+    /**
      * 领料管理
      */
     @RequestMapping(value="acquisitionIndex",method = RequestMethod.GET)

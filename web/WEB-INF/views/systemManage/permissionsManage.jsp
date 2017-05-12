@@ -26,7 +26,7 @@
 <%@include file="../backstage/contextmenu.jsp"%>
 
 <div class="container">
-    <div class="nav">
+<%--    <div class="nav">
         <ul id="myTab" class="nav nav-tabs">
             <li class="pull-right" onclick = "recycle()">
                 <a  data-toggle="tab" >
@@ -39,17 +39,12 @@
                 </a>
             </li>
         </ul>
-    </div>
-
+    </div>--%>
     <div class="panel-body" style="padding-bottom:0px;"  >
-        <!--show-refresh, show-toggle的样式可以在bootstrap-table.js的948行修改-->
-        <!-- table里的所有属性在bootstrap-table.js的240行-->
         <table id="table">
             <thead>
             <tr>
-                <th data-checkbox	="true" data-field="status"></th>
-                <th  data-field="permissionName">权限名称</th>
-                <th data-field="permissionZhname">权限中文名称</th>
+                <th data-field="permissionZhname">权限名称</th>
                 <th  data-field="permissionDes">权限描述</th>
                 <th data-field="permissionStatus" data-formatter=formatterstatus>权限状态</th>
                 <th data-field="module" data-formatter=formatterfun>权限所属模块</th>
@@ -58,76 +53,26 @@
             </thead>
         </table>
         <div id="toolbar" class="btn-group">
-            <button id="btn_add" type="button" class="btn btn-default" onclick="showAdd();">
-                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
-            </button>
-            <button id="btn_delete" type="button" class="btn btn-default" onclick="updStatuses();">
+            <%--<button id="btn_add" type="button" class="btn btn-default" onclick="showAdd();">--%>
+                <%--<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增--%>
+            <%--</button>--%>
+    <%--        <button id="btn_delete" type="button" class="btn btn-default" onclick="updStatuses();">
                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
             </button>
         </div>
-
         <div id="toolbar2" class="btn-group">
             <button  type="button" class="btn btn-default" onclick="updStatuses();">
                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>还原
             </button>
-        </div>
+        </div>--%>
     </div>
 </div>
-
-<!-- 添加弹窗 -->
-<div class="modal fade" id="add" aria-hidden="true" data-backdrop="static">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <hr/>
-            <form id="addForm" class="form-horizontal" method="post">
-                <input type="reset" name="reset" style="display: none;"/>
-                <div class="modal-header" style="overflow:auto;">
-                    <p>添加权限</p>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">权限名称：</label>
-                    <div class="col-sm-7">
-                        <input type="text" name="permissionName" define="emp.name" class="form-control" maxlength="20">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">权限中文名称：</label>
-                    <div class="col-sm-7">
-                        <input type="text" name="permissionZhname" define="emp.name" class="form-control" maxlength="20">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">权限描述：</label>
-                    <div class="col-sm-7">
-                        <input type="text" name="permissionDes" define="emp.name" class="form-control" maxlength="500">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">权限所属模块：</label>
-                    <div class="col-sm-7">
-                        <%--<input type="text" name="modulePermission" define="emp.name" class="form-control" maxlength="500">--%>
-                        <select id="addSelect" name="module.moduleId"  class="js-example-basic-multiple form-control"  style="width:300px;"></select>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default"
-                            data-dismiss="modal">关闭
-                    </button>
-                    <button id="addButton" type="submit" class="btn btn-primary btn-sm">保存</button>
-                </div>
-            </form>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
-
 <!-- 修改弹窗 -->
 <div class="modal fade" id="edit" aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h3></h3>
-                <input>
             </div>
             <hr/>
             <form id="editForm" class="form-horizontal">
@@ -204,7 +149,7 @@
                 validating: 'glyphicon glyphicon-refresh'
             },
             fields: {
-                permissionName: {
+                permissionZhname: {
                     message: '权限名称验证失败',
                     validators: {
                         notEmpty: {
@@ -213,28 +158,11 @@
                         stringLength: {
                             min: 3,
                             max: 20,
-                            message: "权限长度必须在3至20个字符之间"
+                            message: '权限名称必须在3至20个字符之间'
                         },
                         regexp: {
                             regexp: /^[^$&,""''\s]+$/,
                             message: '权限名称不允许存在符号'
-                        }
-                    }
-                },
-                permissionZhname: {
-                    message: '权限中文名称验证失败',
-                    validators: {
-                        notEmpty: {
-                            message: '权限中文名称不能为空'
-                        },
-                        stringLength: {
-                            min: 3,
-                            max: 20,
-                            message: '权限中文名称必须在3至20个字符之间'
-                        },
-                        regexp: {
-                            regexp: /^[^$&,""''\s]+$/,
-                            message: '权限中文名称不允许存在符号'
                         }
                     }
                 },
@@ -253,13 +181,7 @@
                 },
             }
         }) .on('success.form.bv', function (e) {
-            var title =$("#edit .modal-header> input").val();
-            // $("#"+formId).data('bootstrapValidator').resetForm(true);
-            if(title === "add") {
-                formSubmit("/permission/insert", formId, addServlet);
-            }else if (title === "edit"){
                 formSubmit("/permission/update", formId, editServlet);
-            }
         })
     }
     function formSubmit(url, formId,fun){
@@ -274,19 +196,19 @@
         if(row.permissionStatus === "Y"){
             return '<div style="color:#428bca">' +
                     '<a class="edit"  href="javascript:void(0)"><span class="glyphicon glyphicon-edit" ></span></a>' +
-                    '&nbsp;&nbsp;&nbsp;'+
-                    '<a class="updstatus" href="javascript:void(0)"><span class="glyphicon glyphicon-remove" ></span></a>' +
-                    '</div> ';
-        }else {
+                    '&nbsp;&nbsp;&nbsp;'
+            /*'<a class="updstatus" href="javascript:void(0)"><span class="glyphicon glyphicon-remove" ></span></a>' +
+            '</div> ';*/
+        }/*else {
             return '<button id="btn_available"  type="button" class="btn btn-success updstatus">还原</button>';
-        }
+        }*/
     }
     function todoCellEvent(){
         window.operateEvents = {
             'click .edit': function (e, value, row, index) {
                 var permission = row;
                 $("#edit .modal-header> input").val("edit");
-                $("#edit .modal-header> h3").text("修改权限");
+                $("#edit .modal-header> h3").text("修改 " + permission.permissionZhname);
                 $("#editForm").fill(permission);
                 $("#edit").modal('show'); // 显示弹窗
             },
@@ -412,11 +334,11 @@
         }) // 提示类型
     }
 
-    function showAdd(){
-        $("#edit .modal-header> input").val("add");
-        $("#edit .modal-header> h3").text("添加权限");
-        $("#edit").modal('show'); // 显示弹窗
-    }
+//    function showAdd(){
+//        $("#edit .modal-header> input").val("add");
+//        $("#edit .modal-header> h3").text("添加权限");
+//        $("#edit").modal('show'); // 显示弹窗
+//    }
     function closeModal(){
         $("#edit").modal("hide");
         $("#editForm").data('bootstrapValidator').resetForm(true);
@@ -472,76 +394,76 @@
     }
 
     // 批量删除与还原
-    function updStatuses(){
-        var rows =  $('#table').bootstrapTable('getSelections');
-        var status = "删除";
-        if(rows.length >0) {
-            var row = rows[0];
-            var permissionStatus = "Y";
-            if(row.permissionStatus === 'N') {
-                status = "还原";
-                permissionStatus = "N";
-            }
-            swal(
-                    {title:"",
-                        text:"您确定要"+status+"此权限吗",
-                        type:"warning",
-                        showCancelButton:true,
-                        confirmButtonColor:"#DD6B55",
-                        confirmButtonText:"我确定",
-                        cancelButtonText:"再考虑一下",
-                        closeOnConfirm:false,
-                        closeOnCancel:false
-                    },function(isConfirm){
-                        if(isConfirm)
-                        {
-                            var ids = [];
-                            $.each(rows, function(index,ele){
-                                ids.push(ele.permissionId);
-                            });
-                            $.post("/permission/updateStatuses",
-                            "status="+permissionStatus+"&permissionIdsStr="+ids.join(","),
-                                    function (data){
-                                        if(data.result === "success"){
-                                            swal({title:"",
-                                                text:status + "成功",
-                                                type:"success",
-                                                confirmButtonText:"确认",
-                                            },function(){
-                                                if(row.permissionStatus === 'N') {
-                                                    recycle();
-                                                } else {
-                                                    canUse();
-                                                }
-                                            })
-                                        }  else {
-                                            swal({title:"",
-                                                text:status + "失败",
-                                                type:"error",
-                                                confirmButtonText:"确认",
-                                            },function(){
-                                            })
-                                        }
-                                    }
-                            );
-                        }
-                        else{
-                            swal({title:"",
-                                text:"已取消",
-                                confirmButtonText:"确认",
-                                type:"error"})
-                        }
-                    })
-        }else{
-            swal({
-                title:"",
-                text: "请先选择要改变的权限", // 主要文本
-                confirmButtonColor: "#DD6B55", // 提示按钮的颜色
-                confirmButtonText:"确定", // 提示按钮上的文本
-                type:"warning"}) // 提示类型
-        }
-
-    }
+//    function updStatuses(){
+//        var rows =  $('#table').bootstrapTable('getSelections');
+//        var status = "删除";
+//        if(rows.length >0) {
+//            var row = rows[0];
+//            var permissionStatus = "Y";
+//            if(row.permissionStatus === 'N') {
+//                status = "还原";
+//                permissionStatus = "N";
+//            }
+//            swal(
+//                    {title:"",
+//                        text:"您确定要"+status+"此权限吗",
+//                        type:"warning",
+//                        showCancelButton:true,
+//                        confirmButtonColor:"#DD6B55",
+//                        confirmButtonText:"我确定",
+//                        cancelButtonText:"再考虑一下",
+//                        closeOnConfirm:false,
+//                        closeOnCancel:false
+//                    },function(isConfirm){
+//                        if(isConfirm)
+//                        {
+//                            var ids = [];
+//                            $.each(rows, function(index,ele){
+//                                ids.push(ele.permissionId);
+//                            });
+//                            $.post("/permission/updateStatuses",
+//                            "status="+permissionStatus+"&permissionIdsStr="+ids.join(","),
+//                                    function (data){
+//                                        if(data.result === "success"){
+//                                            swal({title:"",
+//                                                text:status + "成功",
+//                                                type:"success",
+//                                                confirmButtonText:"确认",
+//                                            },function(){
+//                                                if(row.permissionStatus === 'N') {
+//                                                    recycle();
+//                                                } else {
+//                                                    canUse();
+//                                                }
+//                                            })
+//                                        }  else {
+//                                            swal({title:"",
+//                                                text:status + "失败",
+//                                                type:"error",
+//                                                confirmButtonText:"确认",
+//                                            },function(){
+//                                            })
+//                                        }
+//                                    }
+//                            );
+//                        }
+//                        else{
+//                            swal({title:"",
+//                                text:"已取消",
+//                                confirmButtonText:"确认",
+//                                type:"error"})
+//                        }
+//                    })
+//        }else{
+//            swal({
+//                title:"",
+//                text: "请先选择要改变的权限", // 主要文本
+//                confirmButtonColor: "#DD6B55", // 提示按钮的颜色
+//                confirmButtonText:"确定", // 提示按钮上的文本
+//                type:"warning"}) // 提示类型
+//        }
+//
+//    }
 
 
 </script>

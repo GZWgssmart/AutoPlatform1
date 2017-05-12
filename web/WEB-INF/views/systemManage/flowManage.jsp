@@ -11,37 +11,36 @@
     <link rel="stylesheet" href="/static/css/bootstrap-table.css">
     <link rel="stylesheet" href="/static/css/select2.min.css">
     <link rel="stylesheet" href="/static/css/sweetalert.css">
+<style>
+    .disabled, .disabled:hover, .disabled:active, .disabled:focus,
+    #table .btn-danger.disabled:hover,
+    #table .btn-danger.disabled:focus
+    {
+        background-color: #aaa;
+        border: 1px solid #aaa;
+    }
+    #table .btn-danger.disabled:focus,
+    .disabled:focus {
+        outline: none;
+    }
+</style>
 </head>
 <body>
 <%@include file="../backstage/contextmenu.jsp"%>
 
 <div class="container">
     <div class="panel-body" style="padding-bottom:0px;"  >
-        <!--show-refresh, show-toggle的样式可以在bootstrap-table.js的948行修改-->
-        <!-- table里的所有属性在bootstrap-table.js的240行-->
-        <table id="table"
-               data-toggle="table"
-               data-toolbar="#toolbar"
-               data-url="/table/query"
-               data-method="post"
-               data-query-params="queryParams"
-               data-pagination="true"
-               data-search="true"
-               data-show-refresh="true"
-               data-show-toggle="true"
-               data-show-columns="true"
-               data-page-size="10"
-               data-height="543"
-               data-id-field="id"
-               data-page-list="[5, 10, 20]"
-               data-cach="false"
-               data-click-to-select="true"
-               data-single-select="true">
+        <table id="table">
             <thead>
             <tr>
                 <th data-radio="true" data-field="status"></th>
-                <th  data-field="name">用户账号</th>
-                <th data-field="price">用户密码</th>
+                <th  data-field="flowName" >名称</th>
+                <th data-field="lastModified" data-formatter = "formatterDate">最后修改时间
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </th>
+                <th data-field="price" data-formatter = "flowStatusFormatter">状态</th>
+                <th data-field="todoCell" data-formatter = "todoCell" data-events= "todoCellBtnEvent">操作</th>
             </tr>
             </thead>
         </table>
@@ -59,100 +58,8 @@
     </div>
 </div>
 
-<!-- 添加弹窗 -->
-<div class="modal fade" id="add" aria-hidden="true" style="overflow:hidden;">
-    <div class="modal-dialog" style="overflow:hidden;">
-        <div class="modal-content" style="overflow:hidden;">
-            <form action="/table/edit" onsubmit="return checkAdd()" id="addForm" method="post">
-                <div class="modal-header" style="overflow:hidden;">
-                    <input type="text" id="addId" placeholder="请输入标题" style="width:300px;margin-left:70px;" maxlength="15" name="top-search"/>
-                    <input type="text" id="addPrice" placeholder="请输入标题" style="width:300px;margin-left:70px;" maxlength="15" name="top-search"/>
-                    <br />
-                    <select id="addSelect"  class="js-example-basic-multiple" multiple="multiple" style="width:300px;margin-left:70px;">
-                    </select>
-                </div>
-                <div class="modal-body" style="overflow:hidden;">
-                    <textarea id="addName" placeholder="请输入描述"  style="width:530px;height:100px;" maxlength="142"></textarea>
-                </div>
-                <div class="modal-footer" style="overflow:hidden;">
-                    <span id="addError" style="color: red;"></span>
-                    <button type="button" class="btn btn-default"
-                            data-dismiss="modal">关闭
-                    </button>
-                    <button type="button" class="btn btn-primary">
-                        保存
-                    </button>
-                </div>
-            </form>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
 
 
-<!-- 修改弹窗 -->
-<div class="modal fade" id="edit" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <form id="editForm" class="data1" id="editForm" method="post">
-                <div class="modal-header" style="overflow:hidden;">
-                    <input type="text"  define="ceshi.id" name="id" placeholder="请输入标题" style="width:300px;margin-left:70px;" maxlength="15"/>
-                    <input type="text"  define="ceshi.price" name="price"  placeholder="请输入标题" style="width:300px;margin-left:70px;" maxlength="15"/>
-                </div>
-                <div class="modal-body">
-                    <textarea type="text"  define="ceshi.name" name="name" placeholder="请输入描述"  style="width:530px;height:100px;" maxlength="142"></textarea>
-                </div>
-                <div class="modal-footer">
-                    <span id="editError" style="color: red;"></span>
-                    <button type="button" class="btn btn-default"
-                            data-dismiss="modal">关闭
-                    </button>
-                    <button type="button" onclick="checkEdit()" class="btn btn-primary">
-                        保存
-                    </button>
-                </div>
-            </form>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
-<!-- 删除弹窗 -->
-<div class="modal fade" id="del" aria-hidden="true">
-    <div class="modal-dialog" style="overflow:hidden;">
-        <form action="/table/edit" method="post">
-            <div class="modal-content">
-                <input type="hidden" id="delNoticeId"/>
-                <div class="modal-footer" style="text-align: center;">
-                    <h2>确认删除吗?</h2>
-                    <button type="button" class="btn btn-default"
-                            data-dismiss="modal">关闭
-                    </button>
-                    <button type="sumbit" class="btn btn-primary" onclick="del()">
-                        确认
-                    </button>
-                </div>
-            </div><!-- /.modal-content -->
-        </form>
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
-<!-- 提示弹窗 -->
-<div class="modal fade" id="tanchuang" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                提示
-            </div>
-            <div class="modal-body">
-                请先选择某一行
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default"
-                        data-dismiss="modal">关闭
-                </button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
 <script src="/static/js/jquery.min.js"></script>
 <script src="/static/js/bootstrap.min.js"></script>
 <script src="/static/js/bootstrap-table/bootstrap-table.js"></script>
@@ -161,94 +68,146 @@
 <script src="/static/js/select2/select2.js"></script>
 <script src="/static/js/sweetalert/sweetalert.min.js"></script>
 <script src="/static/js/contextmenu.js"></script>
+<script src="/static/js/backstage/main.js"></script>
 <script>
+    window.todoCellBtnEvent = {
+        "click .cold" :     coldBtnClick ,
+        "dblclick .cold" :  updBtnClick ,
+        "click .upd"    :   function(e, val, row, idx) {updateProceDef(e.currentTarget, "/flow/deployFile", row.fileName);},
+        "click .deploy" : function(e, val, row, idx) {updateProceDef(e.currentTarget,"/flow/deployFile", row.fileName);}
+    };
+
+
+
+
     $(function () {
-        $('#table').bootstrapTable('hideColumn', 'id');
-
-        $("#addSelect").select2({
-                language: 'zh-CN'
-            }
-        );
-
-        //绑定Ajax的内容
-        $.getJSON("/table/queryType", function (data) {
-            $("#addSelect").empty();//清空下拉框
-            $.each(data, function (i, item) {
-                $("#addSelect").append("<option value='" + data[i].id + "'>&nbsp;" + data[i].name + "</option>");
-            });
-        })
-//            $("#addSelect").on("select2:select",
-//                    function (e) {
-//                        alert(e)
-//                        alert("select2:select", e);
-//            });
+        initTable('table', '/flow/queryAllFile',"#toolbar"); // 初始化表格
     });
 
-    function showEdit(){
-        var row =  $('table').bootstrapTable('getSelections');
-        if(row.length >0) {
-//                $('#editId').val(row[0].id);
-//                $('#editName').val(row[0].name);
-//                $('#editPrice').val(row[0].price);
-            $("#edit").modal('show'); // 显示弹窗
-            var ceshi = row[0];
-            $("#editForm").fill(ceshi);
-        }else{
-            //layer.msg("请先选择某一行", {time : 1500, icon : 2});
-            layer.alert("请先选择某一行");
+    function flowStatusFormatter(el, row, index) {
+        var stat = checkDeployTime(row);
+        if(stat === "NEW") {
+            return "已有新版本,请重新部署";
+        } else if(stat === "OK"){
+            return "已经部署";
+        } else if(stat === "NO") {
+            return "未部署";
         }
     }
 
-    function showAdd(){
-
-        $("#add").modal('show');
+    function todoCell(el, row, index) {
+        var stat = checkDeployTime(row);
+        var btn = "";
+        console.log(this);
+        if(stat === "OK") {
+            btn = '<button  type="button"   class="btn btn-danger cold disabled " >'
+                    + '禁用'
+                    + '</button>';
+        } else if (stat === "NEW") {
+            btn = '<button  type="button" class="btn btn-warning upd" style="margin-right:10px;" >'
+                    + '更新'
+                    + '</button>';
+            btn +=  '<button  type="button"  class="btn btn-danger cold disabled "  >'
+                    + '禁用'
+                    + '</button>';
+        } else if(stat === "NO") {
+            btn = '<button  type="button" class="btn btn-primary deploy" >'
+                    + '部署'
+                    + '</button>';
+        }
+        return btn;
     }
 
-    function formatRepo(repo){return repo.text}
-    function formatRepoSelection(repo){return repo.text}
-
-    function showDel(){
-        var row =  $('table').bootstrapTable('getSelections');
-        if(row.length >0) {
-            $("#del").modal('show');
-        }else{
-            $("#tanchuang").modal('show');
+    function coldBtnClick(e, val, row, idx) {
+        var enterCtrlKey = e.ctrlKey;
+        var curBtn = e.currentTarget;
+        var $curBtn = $(curBtn);
+        if(!enterCtrlKey) {
+            if (!$curBtn.hasClass("disabled")) {
+                console.log("禁用这个流程模版");
+                swal(
+                        {title:"",
+                            text:"确定删除该流程模型吗",
+                            type:"warning",
+                            showCancelButton:true,
+                            confirmButtonColor:"#DD6B55",
+                            confirmButtonText:"我确定",
+                            cancelButtonText:"再考虑一下",
+                            closeOnConfirm:false,
+                            closeOnCancel:false
+                        },function(isConfirm){
+                            if(isConfirm){
+                                removeProceDef("/flow/removeProcessDeploy",row.flowKey);
+                            }else{
+                                swal({title:"", text:"已取消",  confirmButtonText:"确认", type:"success"})
+                            }
+                        })
+            }
         }
     }
 
-    function checkAdd(){
-        var id = $('#addId').val();
-        var name = $('#addName').val();
-        var price = $('#addPrice').val();
-        var reslist=$("#addSelect").select2("data"); //获取多选的值
-        alert(reslist.length)
-        if(id != "" && name != "" && price != ""){
-            return true;
-        }else{
-            var error = document.getElementById("addError");
-            error.innerHTML = "请输入正确的数据";
-            return false;
+    function updBtnClick(e,val, row, idx) {
+        var enterCtrlKey = e.ctrlKey;
+        var curBtn = e.currentTarget;
+        var $curBtn = $(curBtn);
+        if(enterCtrlKey) {
+            if($curBtn.hasClass("disabled")) {
+                $curBtn.removeClass("disabled");
+            } else {
+                $curBtn.addClass("disabled");
+            }
         }
     }
+    function updateProceDef(btn, url, fileName) {
+        console.log(btn);
+        $(btn).attr("disabled");
+        $.post(url, "fileName="+fileName,
+                function(data) {
+                    if(data.result === "success"){
+                        swal({ title:"", text: data.message, type:"success"});// 提示窗口, 修改成功
+                        $('#table').bootstrapTable("refresh");
+                    } else {
+                        swal({ title:"", text: data.message, type:"error"});// 提示窗口, 修改失败
+                    }
+                });
 
-    function checkEdit() {
-        $.post("/table/edit",
-            $("#editForm").serialize(),
-            function (data) {
-                if (data.result == "success") {
-                    $("#edit").modal('hide'); // 关闭指定的窗口
-                    $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
-                    swal({
-                        title:"",
-                        text: data.message,
-                        type:"success"})// 提示窗口, 修改成功
-                } else if (data.result == "fail") {
-                    //$.messager.alert("提示", data.result.message, "info");
+    }
+
+    function removeProceDef(url, flowKey) {
+        $.post(url, "flowKey="+flowKey,
+                function (data) {
+                    if(data.result === "success"){
+                        swal({ title:"", text: data.message, type:"success"});// 提示窗口, 修改成功
+                        $('#table').bootstrapTable("refresh");
+                    } else {
+                        swal({ title:"", text: data.message, type:"error"});// 提示窗口, 修改失败
+                    }
                 }
-            }, "json"
-        );
+        )
     }
 
+
+
+
+    function checkDeployTime(row) {
+        var time = row.deployDatetime;
+        if(time != undefined && time != null && time != "") {
+            if(time < row.lastModified) {
+                return "NEW";
+            }
+            return "OK";
+        } else {
+            return "NO";
+        }
+    }
+
+
+    function deployDateFormatter(el, row, index) {
+        if(row.flowDeployDate != null) {
+            formatterDate(row.flowDeployDate,row,index);
+        }
+        return "";
+    }
 </script>
 </body>
 </html>

@@ -8,7 +8,10 @@ import com.gs.service.MaterialUseService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 /**
 *由CSWangBin技术支持
 *
@@ -31,18 +34,18 @@ public class MaterialUseServiceImpl implements MaterialUseService {
 	public int batchDelete(List<MaterialUse> list) { return materialUseDAO.batchDelete(list); }
 	public int update(MaterialUse materialUse) { return materialUseDAO.update(materialUse); }
 	public int batchUpdate(List<MaterialUse> list) { return materialUseDAO.batchUpdate(list); }
-	public List<MaterialUse> queryAll() { return materialUseDAO.queryAll(); }
+	public List<MaterialUse> queryAll(User user) { return materialUseDAO.queryAll(user); }
 
 	@Override
 	public List<MaterialUse> queryAll(String status) {
-		return materialUseDAO.queryAll();
+		return materialUseDAO.queryAll(status);
 	}
 
 	public List<MaterialUse> queryByStatus(String status) { return materialUseDAO.queryAll(status); }
 	public MaterialUse query(MaterialUse materialUse) { return materialUseDAO.query(materialUse); }
 	public MaterialUse queryById(String id) { return materialUseDAO.queryById(id); }
 	public List<MaterialUse> queryByPager(Pager pager) { return materialUseDAO.queryByPager(pager); }
-	public int count() { return materialUseDAO.count(); }
+	public int count(User user) { return materialUseDAO.count(user); }
 	public int inactive(String id) { return materialUseDAO.inactive(id); }
 	public int active(String id) { return materialUseDAO.active(id); }
 
@@ -50,12 +53,17 @@ public class MaterialUseServiceImpl implements MaterialUseService {
 		return materialUseDAO.queryByPagerDisable(pager);
 	}
 
-	public int countByDisable() {
-		return materialUseDAO.countByDisable();
+	public int countByDisable(User user) {
+		return materialUseDAO.countByDisable(user);
 	}
 
 	public List<MaterialUse> blurredQuery(Pager pager, MaterialUse materialUse) {
 		return null;
+	}
+
+	@Override
+	public int countByBlurred(MaterialUse materialUse, User user) {
+		return 0;
 	}
 
 	public int countByBlurred(MaterialUse materialUse) {
@@ -82,7 +90,86 @@ public class MaterialUseServiceImpl implements MaterialUseService {
 		return materialUseDAO.countMaterials(userId);
 	}
 
-	/**
+	@Override
+	public List<MaterialURTemp> queryUseFlowingbyPager(String flowName, String companyId, String roleId,Pager pager) {
+		Map paramMap = new HashMap();
+		paramMap.put("flowName",flowName);
+		paramMap.put("companyId",companyId);
+		paramMap.put("roleId",roleId);
+		paramMap.put("isUse",true);
+		paramMap.put("pager",pager);
+		return  materialUseDAO.queryMaterialFlowingbyPager(paramMap);
+	}
+
+	@Override
+	public int countUseFlowing(String flowName, String companyId,String roleId) {
+		Map paramMap = new HashMap();
+		paramMap.put("flowName",flowName);
+		paramMap.put("companyId",companyId);
+		paramMap.put("roleId",roleId);
+		paramMap.put("isUse",true);
+		return materialUseDAO.countMaterialFlowing(paramMap);
+	}
+
+	@Override
+	public List<MaterialURTemp> queryReturnFlowingbyPager(String flowName, String companyId, String roleId, Pager pager) {
+		Map paramMap = new HashMap();
+		paramMap.put("flowName",flowName);
+		paramMap.put("companyId",companyId);
+		paramMap.put("roleId",roleId);
+		paramMap.put("isUse",false);
+		paramMap.put("pager",pager);
+		return materialUseDAO.queryMaterialFlowingbyPager(paramMap);
+	}
+
+	@Override
+	public int countReturnFlowing(String flowName, String companyId, String roleId) {
+		Map paramMap = new HashMap();
+		paramMap.put("roleId",roleId);
+		paramMap.put("flowName",flowName);
+		paramMap.put("companyId",companyId);
+		paramMap.put("isUse",false);
+		return materialUseDAO.countMaterialFlowing(paramMap);
+	}
+
+	@Override
+	public List queryHistoryFlowingbyPager(String companyId, String flowName, String taskKey, Pager pager) {
+		Map paramMap = new HashMap();
+		paramMap.put("companyId", companyId);
+		paramMap.put("flowName", flowName);
+		paramMap.put("taskKey", taskKey);
+		paramMap.put("pager", pager);
+		return materialUseDAO.queryHistoryFlowingbyPager(paramMap);
+	}
+
+	@Override
+	public int countHistoryFlowing(String companyId, String flowName) {
+		Map paramMap = new HashMap();
+		paramMap.put("companyId", companyId);
+		paramMap.put("flowName", flowName);
+		return materialUseDAO.countHistoryFlowing(paramMap);
+	}
+
+    @Override
+    public List queryUserFlowingByPager(String flowName, String userId, String reviewTaskName, Pager pager) {
+        Map paramMap = new HashMap();
+        paramMap.put("flowName", flowName);
+        paramMap.put("userId", userId);
+        paramMap.put("reviewTaskName", reviewTaskName);
+        paramMap.put("pager", pager);
+        return materialUseDAO.queryUserFlowingByPager(paramMap);
+    }
+
+    @Override
+    public int countUserFlowing(String flowName, String userId) {
+        Map paramMap = new HashMap();
+        paramMap.put("flowName", flowName);
+        paramMap.put("userId", userId);
+        return materialUseDAO.countUserFlowing(paramMap);
+    }
+
+
+    /**
 	 *
 	 * 不是应该放在这个Bean中的,但是会与其他人的有碰撞,所以放在这里
 	 *
@@ -153,8 +240,13 @@ public class MaterialUseServiceImpl implements MaterialUseService {
 		return materialUseDAO.updWorkInfoUser(recordId, userId);
 	}
 
+    @Override
+    public Accessories accQueryById(String accId) {
+        return materialUseDAO.accQueryById(accId);
+    }
 
-	private class Flag{
+
+    private class Flag{
 		private  String flag;
 		private String id;
 

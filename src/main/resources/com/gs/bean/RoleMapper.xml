@@ -41,7 +41,7 @@
   </insert>
   
   <update id="update" parameterType="role">
-    update t_role set roleName = #{roleName}, roleDes =#{roleDes}
+    update t_role set roleDes =#{roleDes}
      where roleId = #{roleId}
   </update>
 

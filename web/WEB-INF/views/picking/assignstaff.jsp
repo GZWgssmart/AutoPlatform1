@@ -123,7 +123,6 @@
                         <th data-width="110" data-field="carmodel" data-formatter="infoFormatter"></th>
                     </tr>
                     </thead>
-
                 </table>
             </div>
             <div class="modal-footer">

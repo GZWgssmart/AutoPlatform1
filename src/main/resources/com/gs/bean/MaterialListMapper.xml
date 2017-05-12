@@ -119,4 +119,18 @@
         </foreach>
     </insert>
 
+    <!-- 与流程相关的副查询 -->
+    <select id="queryFlowVarsByRecordId" parameterType="hashMap" resultMap="com.gs.dao.MaterialUseDAO.mterialFlowView" >
+      select ruvar.* from act_re_procdef repro
+      left join act_ru_execution ruexe on repro.ID_ = ruexe.PROC_DEF_ID_
+      left join act_ru_variable ruvar on ruexe.PROC_INST_ID_ = ruvar.PROC_INST_ID_
+      where repro.KEY_ = #{flowKey} and ruexe.PROC_INST_ID_ in
+        ( select DISTINCT ruvar1.PROC_INST_ID_ from act_ru_variable ruvar1
+            where repro.KEY_ = "material" and ruvar1.name_ = #{inVarName} and ruvar1.text_ = #{inVarValue} and
+             ruvar1.PROC_INST_ID_ in
+             (select DISTINCT ruvar2.PROC_INST_ID_  from act_ru_variable ruvar2
+                where repro.KEY_ = "material" and ruvar2.name_ = #{outVarName} and ruvar2.text_ = #{outVarValue}
+             )
+        )
+    </select>
 </mapper>

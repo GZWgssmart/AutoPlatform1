@@ -1,10 +1,12 @@
 package com.gs.service;
 
 import com.gs.bean.MaterialList;
+import com.gs.bean.view.MaterialURTemp;
 import com.gs.bean.view.MaterialView;
 import com.gs.common.bean.Pager;
 
 import java.util.List;
+import java.util.Map;
 
 /**
 *由CSWangBin技术支持
@@ -22,4 +24,7 @@ public interface MaterialListService extends BaseService<String, MaterialList>{
     public int countRecordAccs(String recordId);
 
     public void insertList(List<MaterialList> materialLists);
+
+    // 与流程相关, 副查询
+    public MaterialURTemp queryFlowVarsByRecordId(String recordId, String accId);
 }

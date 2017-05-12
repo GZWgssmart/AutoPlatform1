@@ -1,6 +1,7 @@
 package com.gs.bean;
 
 import java.util.Date;
+import java.util.Map;
 
 /**
  *  @Autho 程燕
@@ -18,6 +19,8 @@ public class MaterialList {
     private Date materialCreatedTime;
 
     private String materialStatus;
+
+    private Map other;
 
     /**
      *  关联其它表的其它实例
@@ -126,4 +129,13 @@ public class MaterialList {
     public void setMaterialReturn(MaterialReturn materialReturn) {
         this.materialReturn = materialReturn;
     }
+
+    public Map getOther() {
+        return other;
+    }
+
+    public void setOther(Map other) {
+        this.other = other;
+    }
+
 }

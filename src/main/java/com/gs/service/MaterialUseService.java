@@ -6,6 +6,7 @@ import com.gs.common.bean.Pager;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 /**
 *由CSWangBin技术支持
@@ -22,6 +23,22 @@ public interface MaterialUseService extends BaseService<String, MaterialUse>{
 
     public int countHist();
     public int countUserHist(String userId);
+
+    public List<MaterialURTemp> queryUseFlowingbyPager(String flowName, String companyId, String roleId , Pager pager);
+
+    public int countUseFlowing(String flowName,String companyId, String roleId);
+
+    public List<MaterialURTemp> queryReturnFlowingbyPager(String flowName, String companyId, String roleId , Pager pager);
+
+    public int countReturnFlowing(String flowName,String companyId, String roleId);
+
+    public List queryHistoryFlowingbyPager(String companyId,String  flowName,String taskKey, Pager pager);
+
+    public int countHistoryFlowing(String companyId, String flowName);
+
+    public List queryUserFlowingByPager(String flowName, String userId, String reviewTaskName, Pager pager);
+
+    public int countUserFlowing(String flowName, String userId);
 
     /**
      *
@@ -42,4 +59,6 @@ public interface MaterialUseService extends BaseService<String, MaterialUse>{
     public List<DetailTemp> queryDetailsByRecordId(String recordId, String companyId, Pager pager);
     public int countDetailsByRecordId(String recordId,String companyId);
     public int updWorkInfoUser(String recordId, String userId);
+
+    public Accessories accQueryById(String accId);
 }

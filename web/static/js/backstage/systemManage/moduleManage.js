@@ -2,7 +2,6 @@ var initObj = {};
 $(function() {
     initModules();
     init();
-    validator('addForm');
     windowScrollListener();
 });
 
@@ -48,8 +47,7 @@ function initLeftNav(modules) {
 }
 
 function showAdd(){
-    $("#addForm").data('bootstrapValidator').resetForm(true);
-    $("input[type=reset]").trigger("click");
+    validator('addForm');
     $("#addButton").removeAttr("disabled");
     $("#addModal .modal-header> input").val("addForm");
     $("#addModal").modal('show');
@@ -78,15 +76,16 @@ function delModule(el) {
         })
 }
 function showEdit(moduleId) {
-    $("#addForm").data('bootstrapValidator').resetForm(true);
-    $("#addButton").removeAttr("disabled");
+    validator('addForm');
     $("#addModal .modal-header> input").val("editForm");
+    $("#addButton").removeAttr("disabled");
     var module = getModule(moduleId);
     $("#addForm").fill(module);
     $("#addModal").modal('show');
 }
 function closeModal(){
     $("#addModal").modal("hide");
+    $("input[type=reset]").trigger("click");
     $("#addForm").data('bootstrapValidator').resetForm(true);
     $("#addForm").data('bootstrapValidator').destroy(); // 销毁此form表单
     $("#addForm").data('bootstrapValidator', null);// 此form表单设置为空
@@ -98,7 +97,10 @@ function getModulePanel(module){
     outtest.push('<div class="panel modulePanel" ></div>');
     var headingtest = [];
     headingtest.push('<div class="panel-heading" data-id="'+ module.moduleId+ '" >');
-    headingtest.push('<div><span>'+ module.moduleName + '</span></div>');
+    headingtest.push('<div><span>'+ module.moduleName + '</span>');
+    headingtest.push('<small><span style="margin-right:3px; margin-left:10px">简介:</span>');
+    headingtest.push('<span>' + module.moduleDes +'</span></small>');
+    headingtest.push('</div>');
     headingtest.push('<div style="float:right">');
     headingtest.push('<span  class="glyphicon glyphicon-edit" onclick="showEdit(\''+ module.moduleId +'\')"></span>');
     headingtest.push('<span  class="glyphicon glyphicon-remove" onclick="delModule(this)"></span>');
@@ -200,7 +202,6 @@ function formSubmit(url, modalId ,formId, flag) {
                 title = "添加";
             }
             if (data.controllResult.result == "success") {
-                closeModal();
                 swal({
                     title:"",
                     text:data.controllResult.message,
@@ -212,6 +213,7 @@ function formSubmit(url, modalId ,formId, flag) {
                         appendModulePanel(data.module);
                     } else {
                         var inputs = $("#" + formId).find("input");
+                        var textarea = $("#" + formId).find("textarea");
                         var module = {}
                         for(var i = 0,len = inputs.length; i<len; i++) {
                             var input = inputs[i];
@@ -222,10 +224,11 @@ function formSubmit(url, modalId ,formId, flag) {
                                 module.moduleName = $(input).val();
                             }
                         }
+                            module.moduleDes = textarea.val();
                         updBodyModulePanel(module);
                         updateLeftNavTitle(module);
                     }
-
+                    closeModal();
                 });// 提示窗口, 修改成功
             } else if (data.controllResult.result == "fail") {
                 swal({title:"",
@@ -301,12 +304,8 @@ function appendModulePanel(module) {
     modulePanels.append(panel);
     canDragSetting();
 }
-function updateModuelPanelTitle(modulePanel, newTitle) {
-    var heading = $(modulePanel).children(".panel-heading")
-    var titleDiv = $(heading[0]).children("div")
-    var span = $(titleDiv[0]).children("span")
-    $(span).text(newTitle);
-}
+
+
 function deleteLeftNav(moduleId) {
     var ulEl = $($("#navbar").children("ul"));
     var lis = ulEl.find("li");
@@ -352,7 +351,20 @@ function getModulePanelByModuleId(moduelId) {
 function updBodyModulePanel(module) {
     var modulePanel = getModulePanelByModuleId(module.moduleId);
     updateModuelPanelTitle(modulePanel,module.moduleName);
+    updateModulePanelDes(modulePanel, module.moduleDes);
     updateModule(module.moduleId, module.moduleName);
+}
+function updateModuelPanelTitle(modulePanel, newTitle) {
+    var heading = $(modulePanel).children(".panel-heading")
+    var titleDiv = $(heading[0]).children("div")
+    var span = $(titleDiv[0]).children("span")
+    $(span).text(newTitle);
+}
+function updateModulePanelDes(modulePanel, newDes) {
+    var heading = $(modulePanel).children(".panel-heading")
+    var titleDiv = $(heading[0]).children("div");
+    var span= $(titleDiv[0]).find("small span")[1];
+    $(span).text(newDes);
 }
 
 function canDragSetting() {

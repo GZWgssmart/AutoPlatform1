@@ -29,6 +29,12 @@
         li[data-id|=module]>div[data-role="wrapper"]{
             font-weight: bold;
         }
+
+        #addForm .form-control[readonly] {
+            background-color:#fff;
+            border:none;
+            box-shadow: none;
+        }
     </style>
 </head>
 <body>
@@ -49,8 +55,8 @@
                         <div class="col-md-8" >
                             <div style="float: right;">
                                 <button type="button" class="btn btn-default" style="margin-right:5px;" onclick="showEdit()"><span class="glyphicon glyphicon-edit" style="margin-right:5px"></span>修改</button>
-                                <button type="button" class="btn btn-default" style="margin-right:5px;" onclick="showAdd()"><span class="glyphicon glyphicon-plus" style="margin-right:5px"></span>添加</button>
-                                <button type="button" class="btn btn-default" onclick="showDel()"><span class="	glyphicon glyphicon-minus" style="margin-right:5px"></span>回收</button>
+                                <%--<button type="button" class="btn btn-default" style="margin-right:5px;" onclick="showAdd()"><span class="glyphicon glyphicon-plus" style="margin-right:5px"></span>添加</button>--%>
+                                <%--<button type="button" class="btn btn-default" onclick="showDel()"><span class="	glyphicon glyphicon-minus" style="margin-right:5px"></span>回收</button>--%>
                             </div>
                         </div>
                         <p class="clearfix"></p>
@@ -66,7 +72,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="tab-pane" id = "recyclebin">
+               <%-- <div class="tab-pane" id = "recyclebin">
                     <div class="panel" style="margin-bottom:1px;">
                         <h3>这是回收站</h3>
                     </div>
@@ -89,7 +95,7 @@
                             </tbody>
                         </table>
                     </div>
-                </div>
+                </div>--%>
             </div>
         </div>
     </div>
@@ -110,7 +116,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">角色名称：</label>
                     <div class="col-sm-7">
-                        <input type="text" define="role.roleName" data-field="roleName" name="roleName" placeholder="请输入角色名称"  class="form-control" style="width:100%"/>
+                        <input type="text" define="role.roleName" readonly data-field="roleName" name="roleName" placeholder="请输入角色名称"  class="form-control" style="width:100%;"/>
                     </div>
                 </div>
                 <div class="form-group">
@@ -122,7 +128,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default"
-                            data-dismiss="modal">关闭
+                            onclick = "formModalclose('addModal', 'addForm' )">关闭
                     </button>
                     <button id="addButton" type="button" class="btn btn-primary btn-sm" onclick="addSubmit()" >保存</button>
                 </div>
@@ -131,6 +137,26 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+<!-- 修改角色权限弹窗 -->
+<div class="modal fade" id="editPermission" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="panel-heading">
+                <h4 style="display: inline-block">修改角色权限</h4>
+                <div style="float:right"><span data-dismiss="modal">关闭</span></div>
+            </div>
+            <div class="panel-body" style="width: 60%;margin-left: auto;margin-right: auto;">
+                <div class="col-md-12">
+                    <div id = "staTree" ></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default"  data-dismiss="modal">取消</button>
+                <button  type="submit" class="btn btn-primary btn-sm" onclick="savePermission()">保存</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 
 <script src="/static/js/jquery.min.js"></script>
@@ -153,18 +179,9 @@
     var trees = {};
 $(function(){
     var roleId;
-    //setModules(modules);
-    //setPermission(permissions);
+
     initAll();
-    //testinitModules(modules);
-    //testinitRolePermission(rolePermissions);
-   // testinitPermission(permissions);
 
-    //setModules(modules);
-    //setPermission(permissions);
-
-   // staTree = initStaticTree("#staTree", permissions, modules, rolePermissions);
-    //dnyTree =initDynTree("#dnyTree",modules, rolePermissions);
 });
     function resetModules() {
         initObj.modules =  $.ajax({url:"/module/queryAll",async:false});
@@ -187,7 +204,7 @@ $(function(){
             initObj.rolePermissions=  $.ajax({url:"/role/permissions/"+initObj.roles.responseJSON[0].roleId ,async:false});
             initObj.role = initObj.roles.responseJSON[0];
             setPageTitle();
-            var dnyTree = initDnyTree("#dnyTree",initObj.modules.responseJSON, initObj.rolePermissions.responseJSON);//初始了树
+            initDnyTree("#dnyTree",initObj.modules.responseJSON, initObj.rolePermissions.responseJSON);//初始了树
             trees.staTree = initStaticTree("#staTree", initObj.permissions.responseJSON,initObj.modules.responseJSON, initObj.rolePermissions.responseJSON)
         },500);
     }
@@ -216,8 +233,8 @@ $(function(){
             oneBar.push("</a></li>");
             bar.append(oneBar.join(""));
         }
-        var recyclebin = '<li><a href="#recyclebin" data-toggle="tab"  onclick="recyclebin()"><span class="glyphicon glyphicon-trash" style="margin-right:6px"></span>回收站</a></li>'
-        bar.append(recyclebin);
+        /*var recyclebin = '<li><a href="#recyclebin" data-toggle="tab"  onclick="recyclebin()"><span class="glyphicon glyphicon-trash" style="margin-right:6px"></span>回收站</a></li>'*/
+        /*bar.append(recyclebin);*/
     }
 
  function setPageTitle(){
@@ -262,27 +279,41 @@ function setRole(roleId){
 
 function reloadStatic(staTree,permissions, modules, rolePermissions){
     var nodeData = bean4StaTreeData(permissions,modules, rolePermissions);
+    console.log($("#staTree").tree());
     $("#staTree").tree().render(nodeData);
     $("#staTree").tree().expandAll();		// 展开全部
 }
 function reloadDny(modules, rolePermissions) {
     var nodeData =  bean4DnyTreeData(modules,rolePermissions);
+    console.log(nodeData);
     $("#dnyTree").tree().render(nodeData);
     $("#dnyTree").tree().expandAll();
+    if(nodeData.length) {
+        removeNotHasElMsg("#dnyTree");
+    } else {
+        appendNotHasElMsg("#dnyTree", "暂无权限")
+    }
+
+}
+function appendNotHasElMsg(el, msg) {
+    removeNotHasElMsg(el);
+    var appElHtml = "<h2 class='msg' style='color:#aaa; font-family:\"微软雅黑\"'>"+ msg +"</h2>"
+    $(el).append(appElHtml);
+}
+function removeNotHasElMsg(el) {
+    $(el).children(".msg").remove();
 }
 function setRolePermission(roleId){
         initObj.rolePermissions=  $.ajax({url:"/role/permissions/"+roleId ,async:false});
 }
 
- function initDnyTree(treeid,modules, rolePermissions){
-        var treenodes = bean4DnyTreeData(modules, rolePermissions);
-        var dnyTree = $(treeid).tree({
+    function initDnyTree(treeid,modules, rolePermissions){
+        $(treeid).tree({
             primaryKey: 'id',
             uiLibrary: 'materialdesign',
-            childrenField: 'permissions',
-            dataSource: treenodes
+            childrenField: 'permissions'
         });
-        dnyTree.expandAll();
+        reloadDny(modules, rolePermissions);
         return dnyTree;
     }
     function initStaticTree(treeid, permissions, modules, rolePermissions) {		//添加了方法
@@ -311,12 +342,14 @@ function setRolePermission(roleId){
                 if(permission.moduleId === module.moduleId) {
                     var pernode ={};
                     pernode.id = "permission-"+permission.permissionId;
-                    pernode.text = permission.permissionName;
+                    pernode.text = permission.permissionZhname;
                     pernodes.push(pernode);
                 }
             }
-            molnode.permissions = pernodes;
-            molnodes.push(molnode);
+            if(pernodes.length > 0) {
+                molnode.permissions = pernodes;
+                molnodes.push(molnode);
+            }
         }
         var otherMolnode = {};
         var otherPernodes = [];
@@ -327,12 +360,14 @@ function setRolePermission(roleId){
             if(permission.moduleId === "" || permission.moduleId === null) {
                 var pernode ={};
                 pernode.id = "permission-"+permission.permissionId;
-                pernode.text = permission.permissionName;
+                pernode.text = permission.permissionZhname;
                 otherPernodes.push(pernode);
             }
         }
-        otherMolnode.permissions = otherPernodes;
-        molnodes.push(otherMolnode);
+        if(pernodes.length > 0) {
+            otherMolnode.permissions = otherPernodes;
+            molnodes.push(otherMolnode);
+        }
         return molnodes;
     }
     function bean4StaTreeData(permissions, modules, rolePermissions){
@@ -349,7 +384,7 @@ function setRolePermission(roleId){
                 var permission = permissions[j];
                 if(permission.permissionStatus==='Y'){
                     pernode.id = "permission-"+permission.permissionId;
-                    pernode.text=permission.permissionName;
+                    pernode.text=permission.permissionZhname;
                     if(permission.moduleId === module.moduleId){
                         for(var k = 0,klen=rolePermissions.length; k<klen; k++) {
                             if(rolePermissions[k].permissionId === permission.permissionId){
@@ -363,11 +398,15 @@ function setRolePermission(roleId){
                     }
                 }
             }
-            molnode.permissions =pernodes;
-            molnodes.push(molnode);
+            if(pernodes.length >0){
+                molnode.permissions =pernodes;
+                molnodes.push(molnode);
+            }
         }
-        var otherMolnode = getModuleByAlonePers(permissions,rolePermissions);
-        molnodes.push(otherMolnode);
+        if(pernodes.length >0) {
+            var otherMolnode = getModuleByAlonePers(permissions, rolePermissions);
+            molnodes.push(otherMolnode);
+        }
         return molnodes;
     }
     function getModuleByAlonePers(permissions, rolePermissions){
@@ -380,7 +419,7 @@ function setRolePermission(roleId){
            if(permission.permissionStatus==='Y' && (permission.moduleId === "" || permission.moduleId === null)) {
                var pernode = {};
                pernode.id = "permission-"+permission.permissionId;
-               pernode.text=permission.permissionName;
+               pernode.text=permission.permissionZhname;
                for(var k = 0,klen=rolePermissions.length; k<klen; k++) {
                    if(rolePermissions[k].permissionId === permission.permissionId){
                        pernode.checked = true;
@@ -419,32 +458,35 @@ function setRolePermission(roleId){
     /**
      *  添加 相关
      * */
-    function showAdd(){
-        $("input[type=reset]").trigger("click");
+/*    function showAdd(){
         $("#addButton").removeAttr("disabled");
         $("#addModal").modal('show');
+        var roleNameInput = $("#addForm").find("input[name=roleName]");
+        $(roleNameInput).removeAttr("readonly");
         validator('addForm');
         $("#addModal .modal-header> h3").text("添加角色");
         $("#addModal .modal-header> input").val("addForm");
-    }
+    }*/
     function showEdit(){
-        $("input[type=reset]").trigger("click");
         $("#addButton").removeAttr("disabled");
         $("#addModal").modal('show');
         validator('addForm');
         $("#addModal .modal-header> h3").text("修改角色");
         $("#addModal .modal-header> input").val("editForm");
         var role = initObj.role;
+        var roleNameInput = $("#addForm").find("input[name=roleName]");
+        $(roleNameInput).attr("readonly");
         $("#addForm").fill(role);
     }
-    function addSubmit() {
+   /* function addSubmit() {
+        $("#addButton").attr("disabled");
         $("#addForm").data('bootstrapValidator').validate();
         if ($("#addForm").data('bootstrapValidator').isValid()) {
             $("#addButton").attr("disabled","disabled");
         } else {
             $("#addButton").removeAttr("disabled");
         }
-    }
+    }*/
     function validator(formId) {
         $('#' + formId).bootstrapValidator({
             feedbackIcons: {
@@ -504,12 +546,10 @@ function setRolePermission(roleId){
                             text: data.message,
                             confirmButtonText:"确定", // 提示按钮上的文本
                             type:"success"});// 提示窗口, 修改成功
-                        if(flag === "addForm") {
+                        /*if(flag === "addForm") {
                             resetRole();
                             initRoleTabs();
-                        } else {
-                            // todo updateTitle();
-                            console.log("修改成功")
+                        } else {*/
                             var roleNameEl = $("#"+formId).find("input[name=roleName]")[0];
                             var roleIdEl = $("#"+formId).find("input[name=roleId]")[0];
                             var roleDesEl = $("#" + formId).find("textarea")[0];
@@ -521,7 +561,7 @@ function setRolePermission(roleId){
                             updateRole(role);
                             setPageTitle();
                             setNavName();
-                        }
+                      /*  }*/
                         formModalclose(modalId,formId);
                     } else if (data.result == "fail") {
                         swal({title:"",
@@ -535,16 +575,14 @@ function setRolePermission(roleId){
 
     }
 
-function formModalclose(modalId,formId ) {
+    function formModalclose(modalId,formId ) {
+        $("#"+modalId).modal('hide');
+        $("#" + formId).data('bootstrapValidator').resetForm(true);
+        $("#" + formId).data('bootstrapValidator').destroy(); // 销毁此form表单
+        $('#' + formId).data('bootstrapValidator', null);// 此form表单设置为空
+        $("input[type=reset]").trigger("click");
+    }
 
-    $("#"+modalId).modal('hide');
-    $("#" + formId).data('bootstrapValidator').resetForm(true);
-    $("#" + formId).data('bootstrapValidator').destroy(); // 销毁此form表单
-    $('#' + formId).data('bootstrapValidator', null);// 此form表单设置为空
-}
-    /**
-     * 修改相关
-     */
     function savePermission(){
         var addAndRemoveIds = getAddedAndRemovePermissionIds();
         var roleId = initObj.role.roleId;
@@ -556,18 +594,23 @@ function formModalclose(modalId,formId ) {
                         swal({
                             title:"",
                             text: data.message,
-                            type:"success"}, function(isConfirm) {
-                            setRolePermission(roleId);
-                            var rolePermissions = initObj.rolePermissions.responseJSON;
-                            reloadDny(initObj.modules.responseJSON, rolePermissions);
+                            type:"success"},
+                            function(isConfirm) {
+                                $("#editPermission").modal("hide");
+                                setRolePermission(roleId);
+                                var rolePermissions = initObj.rolePermissions.responseJSON;
+                                reloadDny(initObj.modules.responseJSON, rolePermissions);
                         });// 提示窗口, 修改成功
                     } else if (data.result == "fail") {
                         swal({
                             title:"",
                             text: data.message,
-                            type:"error"});// 提示窗口, 修改成功
+                            type:"error"},function(isConfirm) {
+                            $("#editPermission").modal("hide");
+                        });// 提示窗口, 修改成功
                         //$.messager.alert("提示", data.result.message, "info");
                     }
+
                 })
     }
 function getAddedAndRemovePermissionIds(){
@@ -577,7 +620,7 @@ function getAddedAndRemovePermissionIds(){
     var oldPermissionIds = rolePermissionsObj2permissionIds(oldRolePermission);
     var addedPermissionIds = contrast(currPermissionIds,oldPermissionIds);
     var removedPermissionIds = contrast(oldPermissionIds, currPermissionIds);
-    var resultObj = {added: addedPermissionIds.join("-"), removed: removedPermissionIds.join("-")};
+    var resultObj = {added: addedPermissionIds.join("|"), removed: removedPermissionIds.join("|")};
     return resultObj;
 }
 function  filterPermissionIds(nodes){
@@ -649,7 +692,7 @@ function contrast(cur, sou){
 }
 
 // 回收站
-    function showDel(){ //删除角色
+   /* function showDel(){ //删除角色
             swal(
                     {title:"",
                         text:"您确定要删除此角色吗",
@@ -704,6 +747,6 @@ function contrast(cur, sou){
                 initRoleTabs();
             });
         });
-    }
+    }*/
 </script>
 </html>

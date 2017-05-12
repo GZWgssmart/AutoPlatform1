@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 /**
 *由CSWangBin技术支持
@@ -19,11 +20,19 @@ import java.util.List;
 public interface MaterialUseDAO extends BaseDAO<String, MaterialUse>{
 
     public List<MaterialURTemp> materialByPager(@Param("pager")Pager pager);
-
     public List<MaterialURTemp> materialByPager(@Param("pager")Pager pager,@Param("userId")String userId);
+    public List<MaterialURTemp> queryMaterialFlowingbyPager(Map hashMap);
+    public List queryHistoryFlowingbyPager(Map hashMap);
+    public List queryUserFlowingByPager(Map hashMap);
+
 
     public int countMaterials();
     public int countMaterials(@Param("userId")String userId);
+    public int countMaterialFlowing(Map hashMap);
+    public int countHistoryFlowing(Map hashMap);
+    public int countUserFlowing(Map hashMap);
+
+
 
     /**
      *
@@ -46,5 +55,7 @@ public interface MaterialUseDAO extends BaseDAO<String, MaterialUse>{
     public int countDetailsByRecordId(@Param("recordId")String recordId,@Param("companyId")String companyId);
 
     public int updWorkInfoUser(@Param("recordId")String recordId, @Param("userId")String userId);
+
+    public Accessories accQueryById(String accId);
 
 }

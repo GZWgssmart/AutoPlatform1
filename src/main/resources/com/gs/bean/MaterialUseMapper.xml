@@ -74,6 +74,26 @@
       </association>
   </resultMap>
 
+  <resultMap id="mterialFlowView" type="com.gs.bean.view.MaterialURTemp">
+      <id property="processInstanceId" column="PROC_INST_ID_"  />
+      <result property="taskId" column="taskId" />
+      <association property="workInfo" javaType="WorkInfo" >
+          <association property="user" javaType="user" >
+              <result column="userName" property="userName"></result>
+          </association>
+      </association>
+      <association property="taskTemp" javaType="org.activiti.engine.impl.persistence.entity.HistoricTaskInstanceEntity">
+          <id property="id" column="taskId" jdbcType="VARCHAR" />
+          <result property="startTime" column="taskSTART_TIME_"  />
+          <result property="endTime" column="taskEND_TIME_" jdbcType="TIMESTAMP" />
+      </association>
+      <association property="processInstance" javaType="org.activiti.engine.impl.persistence.entity.HistoricProcessInstanceEntity">
+          <id property="processInstanceId" column="PROC_INST_ID_"  />
+          <result property="startTime" column="START_TIME_"  />
+          <result property="endTime" column="END_TIME_"  />
+      </association>
+
+  </resultMap>
 
     <insert id="insert" parameterType="materialUse">
         insert into t_material_use
@@ -125,6 +145,131 @@
               workinfo.userId = #{userId}
             </if>
         </where>
+    </select>
+
+    <!-- 审核流程的人流程页面 -->
+    <select id="queryMaterialFlowingbyPager" resultMap="mterialFlowView" parameterType="hashMap">
+       select
+        hipro.*,
+        rutask.ID_ as "taskId"
+       from act_ru_execution ruexe1
+        LEFT JOIN act_ru_task rutask on  ruexe1.PROC_INST_ID_ = rutask.PROC_INST_ID_
+        left join act_ru_identitylink ruiden1 on ruiden1.TASK_ID_ = rutask.ID_
+        left join act_hi_procinst hipro on ruexe1.PROC_INST_ID_ = hipro.PROC_INST_ID_
+         where ruiden1.TYPE_ = 'candidate'
+            and ruiden1.GROUP_ID_ = #{roleId}
+            and ruexe1.PROC_INST_ID_ in (		/*		-- 最外层, 这层过滤出库管可以审核的流程*/
+                select ruexe.PROC_INST_ID_ from act_re_procdef reprodep		/*-- 第一层嵌套,这层查询出所属公司的申请流程*/
+                    left join act_ru_execution ruexe on reprodep.ID_ = ruexe.PROC_DEF_ID_
+                    left join act_ru_identitylink ruiden on ruiden.PROC_INST_ID_ = ruexe.PROC_INST_ID_
+                    left join act_ru_variable rvar on ruexe.PROC_INST_ID_ = rvar.PROC_INST_ID_
+                    where reprodep.KEY_ = #{flowName}
+                        and ruiden.TYPE_ = "starter"
+                        and ruiden.USER_ID_ in (
+                            select userId from t_user where companyId = #{companyId} /*-- 第二层嵌套, 这层查询出所属公司的员工ID,流程发起人是公司的员工*/
+                        )
+                        and rvar.name_ = 'accCount'
+
+        <choose>
+            <when test="isUse== true">
+                <![CDATA[
+                  and rvar.text_  > 0
+                ]]>
+            </when>
+            <when test="isUse == false">
+                <![CDATA[
+                 and rvar.text_  < 0
+                ]]>
+            </when>
+        </choose>
+            ) order by hipro.start_time_ desc
+        limit #{pager.beginIndex}, #{pager.pageSize}
+    </select>
+    <select id="countMaterialFlowing" parameterType="hashMap" resultType="int">
+        select count(DISTINCT ruexe1.PROC_INST_ID_ ) from act_ru_execution ruexe1
+        LEFT JOIN act_ru_task rutask on  ruexe1.PROC_INST_ID_ = rutask.PROC_INST_ID_
+        left join act_ru_identitylink ruiden1 on ruiden1.TASK_ID_ = rutask.ID_
+        where ruiden1.TYPE_ = 'candidate'
+        and ruiden1.GROUP_ID_ = #{roleId}
+        and ruexe1.PROC_INST_ID_ in (				/*-- 最外层, 这层过滤出库管可以审核的流程*/
+            select ruexe.PROC_INST_ID_ from act_re_procdef reprodep		/*-- 第一层嵌套,这层查询出所属公司的申请流程*/
+                    left join act_ru_execution ruexe on reprodep.ID_ = ruexe.PROC_DEF_ID_
+                    left join act_ru_identitylink ruiden on ruiden.PROC_INST_ID_ = ruexe.PROC_INST_ID_
+                    left join act_ru_variable rvar on ruexe.PROC_INST_ID_ = rvar.PROC_INST_ID_
+                    where reprodep.KEY_ = #{flowName}
+                        and ruiden.TYPE_ = "starter"
+                        and ruiden.USER_ID_ in (
+                            select userId from t_user where companyId = #{companyId}	/*--  第二层嵌套, 这层查询出所属公司的员工ID,流程发起人是公司的员工*/
+                        )
+                        and rvar.name_ = 'accCount'
+        <choose>
+            <when test="isUse== true">
+                <![CDATA[
+                  and rvar.text_  > 0
+                ]]>
+            </when>
+            <when test="isUse == false">
+                <![CDATA[
+                 and rvar.text_  < 0
+                ]]>
+            </when>
+        </choose>
+        )
+    </select>
+
+    <select id = "queryHistoryFlowingbyPager" resultMap="mterialFlowView" parameterType="hashMap">
+        select
+            hipro.* ,
+            hitask.id_ as "taskId",
+            tuser.userName
+        from act_re_procdef repro
+            left join act_hi_procinst hipro on repro.ID_ = hipro.proc_def_id_
+            left join (select ID_, PROC_INST_ID_ , max(TASK_DEF_KEY_) as 'TASK_DEF_KEY_', name_, ASSIGNEE_  from act_hi_taskinst hitask group by PROC_INST_ID_ , TASK_DEF_KEY_)as hitask on hitask.PROC_INST_ID_ = hipro.ID_
+            left join t_user tuser on hitask.assignee_ = tuser.userId
+            where hipro.start_User_ID_ in (
+                (select tuser.userId from t_company company left join t_user tuser on company.companyId = tuser.companyId
+                where company.companyId = #{companyId} )
+            ) and repro.key_ = #{flowName}
+            and hitask.TASK_DEF_KEY_ = #{taskKey}
+        and hipro.end_time_ is not null
+        limit #{pager.beginIndex}, #{pager.pageSize}
+    </select>
+    <select id="countHistoryFlowing"  parameterType="hashMap" resultType="int">
+      select count(DISTINCT hipro.id_) from act_re_procdef repro
+            left join act_hi_procinst hipro on repro.ID_ = hipro.proc_def_id_
+            where hipro.start_User_ID_ in (
+                (select tuser.userId from t_company company left join t_user tuser on company.companyId = tuser.companyId
+                where company.companyId = #{companyId} )
+            ) and repro.key_ = #{flowName}
+      and hipro.end_time_ is not null
+    </select>
+
+    <select id = "queryUserFlowingByPager" resultMap="mterialFlowView" parameterType="hashMap" >
+        select
+        tuser.userName,
+        hipro.PROC_INST_ID_,
+        hitask.id_  as "taskId",
+        hitask.START_TIME_ as "taskSTART_TIME_",
+        hitask.END_TIME_ as "taskEND_TIME_"
+        from act_re_procdef repro
+        left join act_ru_execution ruexe on repro.ID_ =  ruexe.PROC_DEF_ID_
+        left join act_hi_procinst hipro on ruexe.PROC_INST_ID_ = hipro.PROC_INST_ID_
+        left join (select PROC_INST_ID_,id_  , TASK_DEF_KEY_, ASSIGNEE_, max(START_TIME_) as 'START_TIME_', END_TIME_ from act_hi_taskinst  group by PROC_INST_ID_, TASK_DEF_KEY_) hitask
+                    on hipro.ID_ = hitask.PROC_INST_ID_
+        left join t_user tuser on tuser.userId = hitask.ASSIGNEE_
+        where hipro.END_TIME_ is null
+        and repro.KEY_ = #{flowName}
+        and hitask.TASK_DEF_KEY_ = #{reviewTaskName}
+        and hipro.START_USER_ID_ = #{userId}
+        limit #{pager.beginIndex}, #{pager.pageSize}
+    </select>
+
+    <select id="countUserFlowing" parameterType="hashMap" resultType="int">
+        select count(DISTINCT ruexe.PROC_INST_ID_) from act_re_procdef repro
+        left join act_ru_execution ruexe on repro.ID_ =  ruexe.PROC_DEF_ID_
+        left join act_hi_procinst hipro on ruexe.PROC_INST_ID_ = hipro.PROC_INST_ID_
+        where repro.KEY_ = #{flowName}
+        and hipro.START_USER_ID_ = #{userId};
     </select>
 
   <!-- 其它的 不与这个表相关的-->
@@ -248,6 +393,10 @@
         left join t_maintain_detail detail on record.recordId = detail.maintainRecordId
         left join t_maintain_fix fix on detail.maintainItemId = fix.maintainId
         where record.recordId = #{recordId} and fix.companyId = #{companyId}
+    </select>
+
+    <select id = "accQueryById" resultType="Accessories">
+        select * from t_accessories where accId = #{accId}
     </select>
 
     <update id = "updWorkInfoUser"  >

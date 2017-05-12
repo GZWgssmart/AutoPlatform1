@@ -39,7 +39,7 @@
   </insert>
 
   <update id="update" parameterType="permission">
-    update t_permission set permissionName= #{permissionName}, permissionZHName=#{permissionZhname}, permissionDes=#{permissionDes}
+    update t_permission set permissionZHName=#{permissionZhname}, permissionDes=#{permissionDes}
     where permissionId = #{permissionId}
   </update>
 
