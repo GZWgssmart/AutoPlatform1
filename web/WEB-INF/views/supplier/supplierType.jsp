@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: AngeJob
-  Date: 2017/4/12
-  Time: 10:42
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <html>
@@ -24,8 +17,6 @@
 
 <div class="container">
     <div class="panel-body" style="padding-bottom:0px;"  >
-        <!--show-refresh, show-toggle的样式可以在bootstrap-table.js的948行修改-->
-        <!-- table里的所有属性在bootstrap-table.js的240行-->
         <table id="table">
             <thead>
             <tr>
@@ -38,18 +29,26 @@
             </thead>
         </table>
         <div id="toolbar" class="btn-group">
-            <button id="btn_add" type="button" class="btn btn-default" onclick="showAdd();">
-                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
-            </button>
-            <button id="btn_edit" type="button" class="btn btn-default" onclick="showEdit();">
-                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
-            </button>
-            <button id="searchDisable" type="button" class="btn btn-danger" onclick="searchDisableStatus();">
-                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询禁用类型
-            </button>
-            <button id="searchRapid" type="button" class="btn btn-success" onclick="searchRapidStatus();">
-                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询激活类型
-            </button>
+            <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员">
+                <button id="btn_add" type="button" class="btn btn-default" onclick="showAdd();">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
+                </button>
+            </shiro:hasAnyRoles>
+            <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员">
+                <button id="btn_edit" type="button" class="btn btn-default" onclick="showEdit();">
+                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
+                </button>
+            </shiro:hasAnyRoles>
+            <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员">
+                <button id="searchDisable" type="button" class="btn btn-danger" onclick="searchDisableStatus();">
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询禁用类型
+                </button>
+            </shiro:hasAnyRoles>
+            <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员">
+                <button id="searchRapid" type="button" class="btn btn-success" onclick="searchRapidStatus();">
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询激活类型
+                </button>
+            </shiro:hasAnyRoles>
         </div>
     </div>
 </div>
