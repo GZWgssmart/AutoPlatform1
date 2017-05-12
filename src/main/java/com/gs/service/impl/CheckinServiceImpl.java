@@ -1,6 +1,7 @@
 package com.gs.service.impl;
 
 import com.gs.bean.Checkin;
+import com.gs.bean.User;
 import com.gs.common.bean.Pager;
 import com.gs.dao.CheckinDAO;
 import com.gs.service.CheckinService;
@@ -55,8 +56,8 @@ public class CheckinServiceImpl implements CheckinService {
 		return checkinDAO.blurredQuery(pager, checkin);
 	}
 
-	public int countByBlurred(Checkin checkin) {
-		return checkinDAO.countByBlurred(checkin);
+	public int countByBlurred(Checkin checkin, User user) {
+		return checkinDAO.countByBlurred(checkin, user);
 	}
 
 }

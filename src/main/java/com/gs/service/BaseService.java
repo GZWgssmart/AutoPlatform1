@@ -1,5 +1,6 @@
 package com.gs.service;
 
+import com.gs.bean.User;
 import com.gs.common.bean.Pager;
 
 import java.io.Serializable;
@@ -71,7 +72,7 @@ public interface BaseService<PK extends Serializable, T> {
      *
      * @return
      */
-    public List<T> queryAll();
+    public List<T> queryAll(User user);
 
     /**
      * 查询指定状态的所有记录
@@ -110,7 +111,7 @@ public interface BaseService<PK extends Serializable, T> {
      *
      * @return
      */
-    public int count();
+    public int count(User user);
 
     /**
      * 冻结数据
@@ -136,7 +137,7 @@ public interface BaseService<PK extends Serializable, T> {
     /**
      * 分页查询被禁用的记录
      */
-    public int countByDisable();
+    public int countByDisable(User user);
     /**
      * 模糊查询
      */
@@ -145,6 +146,6 @@ public interface BaseService<PK extends Serializable, T> {
     /**
      * 模糊查询的记录数
      */
-    public int countByBlurred(T t);
+    public int countByBlurred(T t, User user);
 
 }

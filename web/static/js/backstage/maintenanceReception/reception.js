@@ -1,5 +1,6 @@
 $(function () {
-    $.post("/user/isLogin", function (data) {
+    var roles = "系统超级管理员,系统普通管理员,汽修公司管理员,汽修公司接待员";
+    $.post("/user/isLogin/"+roles, function (data) {
         if(data.result == 'success'){
             initTable('table', '/checkin/queryByPager'); // 初始化表格
 
@@ -39,6 +40,11 @@ $(function () {
                         top.location = "/user/loginPage";
                     }
                 })
+        }else if(data.result == 'notRole'){
+            swal({title:"",
+                    text:data.message,
+                    confirmButtonText:"确认",
+                    type:"error"})
         }
     });
 });
@@ -80,7 +86,8 @@ function statusFormatter(value, row, index) {
 
 // 查看全部可用
 function showAvailable(){
-    $.post("/user/isLogin", function (data) {
+    var roles = "系统超级管理员,系统普通管理员,汽修公司管理员,汽修公司接待员";
+    $.post("/user/isLogin/"+roles, function (data) {
                 if(data.result == 'success'){
                     initTable('table', '/checkin/queryByPager');
                 }else if(data.result == 'notLogin'){
@@ -95,6 +102,11 @@ function showAvailable(){
                                 top.location = "/user/loginPage";
                             }
                         })
+                }else if(data.result == 'notRole'){
+                    swal({title:"",
+                        text:data.message,
+                        confirmButtonText:"确认",
+                        type:"error"})
                 }
             });
 }

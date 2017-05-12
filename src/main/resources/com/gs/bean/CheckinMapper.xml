@@ -60,12 +60,16 @@
        LEFT JOIN t_car_plate cp on ck.plateId = cp.plateId
        LEFT JOIN t_company company on ck.companyId = company.companyId
        LEFT JOIN t_car_brand cb on ck.brandId = cb.brandId
-       where ck.checkinStatus = 'Y' order by ck.checkinCreatedTime Desc
-    ]]>
-    limit #{beginIndex}, #{pageSize}
+       where ck.checkinStatus = 'Y'
+       ]]>
+       <if test="user.companyId != '' and user.companyId != null">
+       and ck.companyId = #{user.companyId}
+       </if>
+       order by ck.checkinCreatedTime Desc
+       limit #{beginIndex}, #{pageSize}
   </select>
 
-  <select id="count" resultType="int" >
+  <select id="count" resultType="int">
      <![CDATA[
       select count(checkinId) from t_checkin ck where ck.checkinStatus = 'Y'
     ]]>

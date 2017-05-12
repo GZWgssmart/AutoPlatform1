@@ -1,5 +1,6 @@
 package com.gs.dao;
 
+import com.gs.bean.User;
 import com.gs.common.bean.Pager;
 
 import java.io.Serializable;
@@ -63,7 +64,7 @@ public interface BaseDAO<PK extends Serializable, T> {
      * 查询所有记录
      * @return
      */
-    public List<T> queryAll();
+    public List<T> queryAll(User user);
 
     /**
      * 查询指定状态的所有记录
@@ -97,7 +98,7 @@ public interface BaseDAO<PK extends Serializable, T> {
      * 计数
      * @return
      */
-    public int count();
+    public int count(User user);
 
     /**
      * 冻结数据
@@ -121,6 +122,6 @@ public interface BaseDAO<PK extends Serializable, T> {
     /**
      * 分页查询被禁用的记录
      */
-    public int countByDisable();
+    public int countByDisable(User user);
 
 }

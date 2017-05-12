@@ -1,6 +1,7 @@
 package com.gs.dao;
 
 import com.gs.bean.Checkin;
+import com.gs.bean.User;
 import com.gs.common.bean.Pager;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -24,5 +25,5 @@ public interface CheckinDAO extends BaseDAO<String, Checkin>{
     /**
      * 模糊查询的记录数
      */
-    public int countByBlurred(@Param("checkin")Checkin checkin);
+    public int countByBlurred(@Param("checkin")Checkin checkin, @Param("user") User user);
 }

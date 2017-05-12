@@ -5,6 +5,7 @@ import com.gs.bean.User;
 import com.gs.common.Constants;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.util.EncryptUtil;
+import com.gs.common.util.RoleUtil;
 import com.gs.common.util.SessionUtil;
 import com.gs.service.UserService;
 import org.apache.ibatis.annotations.Param;
@@ -16,6 +17,7 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -108,11 +110,16 @@ public class UserController {
     /**
      * 验证是否登录
      */
-    @RequestMapping(value="isLogin",method=RequestMethod.POST)
+    @RequestMapping(value="isLogin/{roles}",method=RequestMethod.POST)
     @ResponseBody
-    public ControllerResult isLogin(HttpSession session) {
+    public ControllerResult isLogin(@PathVariable("roles") String roles, HttpSession session) {
         if(SessionUtil.isLogin(session)) {
-            return ControllerResult.getSuccessResult("已登录");
+            if(RoleUtil.checkRoles(roles)){
+                return ControllerResult.getSuccessResult("拥有角色");
+            }else{
+                logger.info("无进入方法角色");
+                return ControllerResult.getNotRoleResult("权限不足");
+            }
         }else{
             logger.info("请先登录");
             return ControllerResult.getNotLoginResult("登录信息无效，请重新登录");
