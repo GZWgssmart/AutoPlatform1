@@ -1,13 +1,26 @@
-var contentPath='';
-
 $(function () {
     initTable('table', '/maintain/queryByPagerMaintain'); // 初始化表格
-
     // 初始化select2, 第一个参数是class的名字, 第二个参数是select2的提示语, 第三个参数是select2的查询url
     initSelect2("Company", "请选择公司", "/company/queryAllCompany");
     initSelect2("AccessoriesType", "请选择配件类型", "/accType/queryAllAccType");
 });
 
+// 查看全部可用
+function showAvailable(){
+    initTable('table', '/maintain/queryByPagerMaintain');
+}
+// 查看全部禁用
+function showDisable(){
+    initTable('table', '/maintain/queryByPagerDisable');
+}
+
+function queryByTypeId(obj){
+    initTableNotTollbar("table1", "/accInv/queryByIdAcc?id=" + obj.value);
+}
+
+function queryByTypeId2(obj){
+    initTableNotTollbar("table2", "/accInv/queryByIdAcc?id=" + obj.value);
+}
 
 function showEdit() {
     var row = $('#table').bootstrapTable('getSelections');
@@ -26,7 +39,6 @@ function showEdit() {
         })
     }
 }
-
 
 function showAdd() {
     $("#addWindow").modal('show');
@@ -113,7 +125,10 @@ function validator(formId) {
                 formSubmit("/maintain/update", formId, "editWindow");
 
             }else if (formId == "accForm") {
-                formSubmit1("/maintain/accadd", formId, "accWindow");
+                formSubmit("/maintain/accadd", formId, "accWindow");
+
+            }else if (formId == "accEditForm"){
+                formSubmit("/maintain/accedit",formId,"accEditWindow")
             }
         })
 
@@ -128,6 +143,24 @@ function addSubmit() {
     }
 }
 
+function accaddSubmit(){
+    $("#accForm").data('bootstrapValidator').validate();
+    if ($("#accForm").data('bootstrapValidator').isValid()) {
+        $("#accButton").attr("disabled","disabled");
+    } else {
+        $("#accButton").removeAttr("disabled");
+    }
+}
+
+function accEditaddSubmit(){
+    $("#accEditForm").data('bootstrapValidator').validate();
+    if ($("#accEditForm").data('bootstrapValidator').isValid()) {
+        $("#accEidtButton").attr("disabled","disabled");
+    } else {
+        $("#accEidtButton").removeAttr("disabled");
+    }
+}
+
 function editSubmit() {
     $("#editForm").data('bootstrapValidator').validate();
     if ($("#editForm").data('bootstrapValidator').isValid()) {
@@ -137,7 +170,31 @@ function editSubmit() {
     }
 }
 
-function formSubmit1(url, formId, winId){
+function showdetai() {
+    var row =  $('#detailTable').bootstrapTable('getSelections');
+    if(row.length >0) {
+        $("#detailWindow").modal('hide');
+        $("#accButton").removeAttr("disabled");
+        // var MaintainFixMap = row[0];
+        // $("#accForm").fill(MaintainFixMap);
+        $("#editmaintainId").val(row[0].mainAccId);
+        $("#editaccId").val(row[0].accId);
+        $("#editaccCount").val(row[0].accCount);
+        $("#editaccName").val(row[0].accessories.accName);
+        $("#detailWindow").modal('hide');
+        $("#accEditWindow").modal('show');
+        validator('accEditForm'); // 初始化验证
+    }else{
+        swal({
+            title:"",
+            text: "请选择要添加配件的维修项目", // 主要文本
+            confirmButtonColor: "#DD6B55", // 提示按钮的颜色
+            confirmButtonText:"确定", // 提示按钮上的文本
+            type:"warning"}) // 提示类型
+    }
+}
+
+function formSubmit(url, formId, winId){
     $.post(url,
         $("#" + formId).serialize(),
         function (data) {
@@ -149,13 +206,21 @@ function formSubmit1(url, formId, winId){
                     confirmButtonText:"确定", // 提示按钮上的文本
                     type:"success"})// 提示窗口, 修改成功
                 $('#table').bootstrapTable('refresh');
-                if(formId == 'accForm'){
+                if(formId == 'addForm'){
+                    $("input[type=reset]").trigger("click"); // 移除表单中填的值
+                    $('#addForm').data('bootstrapValidator').resetForm(true); // 移除所有验证样式
+                    $("#addButton").removeAttr("disabled"); // 移除不可点击
+                    $("#" + formId).data('bootstrapValidator').destroy(); // 销毁此form表单
+                    $('#' + formId).data('bootstrapValidator', null);// 此form表单设置为空
+                    $("#addCompany").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
+                } else if(formId == 'accForm'){
                     $("input[type=reset]").trigger("click"); // 移除表单中填的值
                     $('#accForm').data('bootstrapValidator').resetForm(true); // 移除所有验证样式
                     $("#accButton").removeAttr("disabled"); // 移除不可点击
                     $("#" + formId).data('bootstrapValidator').destroy(); // 销毁此form表单
                     $('#' + formId).data('bootstrapValidator', null);// 此form表单设置为空
-                    // $("#addCompany").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
+                    $("#addAccessories").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
+                    // $("#accWindow").modal("hide");
                 }
             } else if (data.result == "fail") {
                 swal({title:"",
@@ -163,39 +228,6 @@ function formSubmit1(url, formId, winId){
                     confirmButtonText:"确认",
                     type:"error"})
                 $("#"+formId).removeAttr("disabled");
-            }
-        }, "json");
-}
-
-function formSubmit(url, formId, winId) {
-    $.post(url,
-        $("#" + formId).serialize(),
-        function (data) {
-            if (data.result == "success") {
-                $('#' + winId).modal('hide');
-                swal({
-                    title: "",
-                    text: data.message,
-                    confirmButtonText: "确定", // 提示按钮上的文本
-                    type: "success"
-                })// 提示窗口, 修改成功
-                $('#table').bootstrapTable('refresh');
-                if (formId == 'addForm') {
-                    $("input[type=reset]").trigger("click"); // 移除表单中填的值
-                    $('#addForm').data('bootstrapValidator').resetForm(true); // 移除所有验证样式
-                    $("#addButton").removeAttr("disabled"); // 移除不可点击
-                    $("#" + formId).data('bootstrapValidator').destroy(); // 销毁此form表单
-                    $('#' + formId).data('bootstrapValidator', null);// 此form表单设置为空
-                    $("#addCompany").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
-                }
-            } else if (data.result == "fail") {
-                swal({
-                    title: "",
-                    text: "添加失败",
-                    confirmButtonText: "确认",
-                    type: "error"
-                })
-                $("#" + formId).removeAttr("disabled");
             }
         }, "json");
 }
@@ -209,18 +241,10 @@ function statusFormatter(value, row, index) {
     }
 }
 
-// 查看全部可用
-function showAvailable(){
-    initTable('table', '/maintain/queryByPagerMaintain');
-}
-// 查看全部禁用
-function showDisable(){
-    initTable('table', '/maintain/queryByPagerDisable');
-}
+$("#accForm").submit(function(){
+    $(":submit",this).attr("disabled","disabled");
+});
 
-function queryByTypeId(obj){
-    initTableNotTollbar("table1", "/accInv/queryByIdAcc?id=" + obj.value);
-}
 // 添加配件窗口
 function showAddacc(){
     var row =  $('#table').bootstrapTable('getSelections');
@@ -239,10 +263,18 @@ function showAddacc(){
             type:"warning"}) // 提示类型
     }
 }
+
+
 function showAcc(windowId){
     $("#"+ windowId).modal('hide');
     $("#accAllWindow").modal('show');
     $("#closeButton").addClass(windowId);
+}
+
+function showEidtAcc(windowId) {
+    $("#"+ windowId).modal('hide');
+    $("#accEidtAllWindow").modal('show');
+    $("#closeEidtButton").addClass(windowId);
 }
 
 //所有配件窗口关闭按钮
@@ -251,19 +283,22 @@ function accAllcloseWindow(){
     $("#accWindow").modal('show');
 }
 
+//所有配件窗口关闭按钮
+function accEditAllcloseWindow(){
+    $("#accEidtAllWindow").modal('hide');
+    $("#accEditWindow").modal('show');
+}
+
 //所有配件窗口关闭图标
 function closeWindow(){
     $("#accAllWindow").modal('hide');
     $("#accWindow").modal('show');
 }
 
-function accaddSubmit(){
-    $("#accForm").data('bootstrapValidator').validate();
-    if ($("#accForm").data('bootstrapValidator').isValid()) {
-        $("#accButton").attr("disabled","disabled");
-    } else {
-        $("#accButton").removeAttr("disabled");
-    }
+//所有配件窗口关闭图标
+function closeEidtWindow(){
+    $("#accEidtAllWindow").modal('hide');
+    $("#accEditWindow").modal('show');
 }
 
 // 在所有项目中点击确定
@@ -292,8 +327,33 @@ function itemSubmit(){
     }
 }
 
-var maintainId = "";
+// 在所有项目中点击确定
+function itemEditSubmit(){
+    var row =  $('#table2').bootstrapTable('getSelections');
+    if(row.length >0) {
+        $("#accEidtAllWindow").modal('hide');
+        if($("#closeEidtButton").hasClass('accEditWindow')){
+            $("#editaccId").val(row[0].accId);
+            $("#editaccName").val(row[0].accName);
+            $("#accEditWindow").modal('show');
+            $("#closeEidtButton").removeClass('accEditWindow');
+        }else if($("#closeEidtButton").hasClass('editWindow')){
+            $("#editItemId").val(row[0].maintainId);
+            $("#editItem").val(row[0].maintainName);
+            $("#editWindow").modal('show');
+            $("#closeEidtButton").removeClass('editWindow');
+        }
+    }else{
+        swal({
+            title:"",
+            text: "请先选择维修保养项目", // 主要文本
+            confirmButtonColor: "#DD6B55", // 提示按钮的颜色
+            confirmButtonText:"确定", // 提示按钮上的文本
+            type:"warning"}) // 提示类型
+    }
+}
 
+// var maintainId = "";
 // 显示所有明细
 function showDetail(){
     var row =  $('#table').bootstrapTable('getSelections');
@@ -310,6 +370,7 @@ function showDetail(){
             type:"warning"}) // 提示类型
     }
 }
+
 function initDetailTable(tableId, url) {
     //先销毁表格
     $('#' + tableId).bootstrapTable('destroy');
