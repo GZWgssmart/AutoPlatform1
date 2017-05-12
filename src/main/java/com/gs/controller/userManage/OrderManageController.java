@@ -1,13 +1,13 @@
 package com.gs.controller.userManage;
 
 import ch.qos.logback.classic.Logger;
-import com.gs.bean.IncomingOutgoing;
 import com.gs.bean.WorkInfo;
 import com.gs.bean.echarts.QuarterUtil;
 import com.gs.bean.echarts.WorkInFoBean;
 import com.gs.common.bean.*;
 import com.gs.common.util.DateFormatUtil;
-import com.gs.common.util.UUIDUtil;
+import com.gs.common.util.RoleUtil;
+import com.gs.common.util.SessionUtil;
 import com.gs.service.WorkInfoService;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
@@ -20,9 +20,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import java.text.DateFormat;
-import java.util.ArrayList;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -41,7 +42,7 @@ public class OrderManageController {
 
     @ResponseBody
     @RequestMapping(value = "queryAll",method = RequestMethod.GET)
-    public List<ComboBox4EasyUI> queryAllWork(){
+    public List<ComboBox4EasyUI> queryAllWork(HttpSession session){
         if(SessionUtil.isLogin(session)) {
             String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师,汽车公司学徒,汽车公司销售人员,汽车公司财务人员,汽车公司采购人员,汽车公司库管人员,汽车公司人力资源管理部";
             if(RoleUtil.checkRoles(roles)) {
@@ -101,7 +102,7 @@ public class OrderManageController {
      */
     @ResponseBody
     @RequestMapping(value = "queryBySche",method = RequestMethod.GET)
-    public Pager4EasyUI<WorkInfo> queryBySche(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
+    public Pager4EasyUI<WorkInfo> queryBySche(HttpSession session,@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
         if(SessionUtil.isLogin(session)) {
             String roles="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,车主";
             if(RoleUtil.checkRoles(roles)) {
@@ -141,7 +142,7 @@ public class OrderManageController {
      */
     @ResponseBody
     @RequestMapping(value="queryByPagerDisable", method = RequestMethod.GET)
-    public Pager4EasyUI<WorkInfo> queryByPagerDisable(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
+    public Pager4EasyUI<WorkInfo> queryByPagerDisable(HttpSession session,@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
         if(SessionUtil.isLogin(session)) {
             String roles="汽车公司总技师,汽车公司技师,公司超级管理员,公司普通管理员";
             if(RoleUtil.checkRoles(roles)) {
@@ -184,7 +185,7 @@ public class OrderManageController {
      */
     @ResponseBody
     @RequestMapping(value = "update", method = RequestMethod.POST)
-    public ControllerResult updateWork(WorkInfo workInfo) {
+    public ControllerResult updateWork(HttpSession session,WorkInfo workInfo) {
         if(SessionUtil.isLogin(session)) {
             String roles="汽车公司总技师,汽车公司技师,公司超级管理员,公司普通管理员";
             if(RoleUtil.checkRoles(roles)) {
@@ -212,7 +213,7 @@ public class OrderManageController {
      */
     @ResponseBody
     @RequestMapping(value = "statusOperate",method = RequestMethod.POST)
-    public ControllerResult inactive(String id,String status){
+    public ControllerResult inactive(HttpSession session,String id,String status){
         if(SessionUtil.isLogin(session)) {
             String roles="汽车公司总技师,公司超级管理员";
             if(RoleUtil.checkRoles(roles)) {

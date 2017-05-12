@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -42,7 +43,7 @@ public class MaintainScheduleController {
      */
     @ResponseBody
     @RequestMapping(value = "queryAllschedule", method = RequestMethod.GET)
-    public List<ComboBox4EasyUI> queryAllSchedule(){
+    public List<ComboBox4EasyUI> queryAllSchedule(HttpSession session){
         if(SessionUtil.isLogin(session)) {
             String roles="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,车主,汽车公司接待员";
             if(RoleUtil.checkRoles(roles)) {
@@ -73,7 +74,7 @@ public class MaintainScheduleController {
      */
     @ResponseBody
     @RequestMapping(value="queryByPage", method = RequestMethod.GET)
-    public Pager4EasyUI queryByPager(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize){
+    public Pager4EasyUI queryByPager(HttpSession session,@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize){
         if(SessionUtil.isLogin(session)) {
             String roles="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,车主,汽车公司总技师";
             if(RoleUtil.checkRoles(roles)) {
@@ -101,7 +102,7 @@ public class MaintainScheduleController {
      */
     @ResponseBody
     @RequestMapping(value="addSchedule", method = RequestMethod.POST)
-    public ControllerResult addSchedule(MaintainSchedule maintainSchedule){
+    public ControllerResult addSchedule(HttpSession session,MaintainSchedule maintainSchedule){
         if(SessionUtil.isLogin(session)) {
             String roles="系统超级管理员,公司超级管理员,公司普通管理员,汽车公司总技师";
             if(RoleUtil.checkRoles(roles)) {
@@ -124,7 +125,7 @@ public class MaintainScheduleController {
 
     @ResponseBody
     @RequestMapping(value = "updateSchedule", method = RequestMethod.POST)
-    public ControllerResult updateSchedule(MaintainSchedule maintainSchedule){
+    public ControllerResult updateSchedule(HttpSession session, MaintainSchedule maintainSchedule){
         if(SessionUtil.isLogin(session)) {
             String roles="公司超级管理员,公司普通管理员,汽车公司总技师";
             if(RoleUtil.checkRoles(roles)) {
