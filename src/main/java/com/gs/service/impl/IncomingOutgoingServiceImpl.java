@@ -1,9 +1,11 @@
 package com.gs.service.impl;
 
 import com.gs.bean.IncomingOutgoing;
+import com.gs.bean.User;
 import com.gs.common.bean.Pager;
 import com.gs.dao.IncomingOutgoingDAO;
 import com.gs.service.IncomingOutgoingService;
+import org.activiti.engine.impl.Page;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -50,12 +52,17 @@ public class IncomingOutgoingServiceImpl implements IncomingOutgoingService {
         return incomingOutgoingDAO.batchUpdate(list);
     }
 
-    public List<IncomingOutgoing> queryAll() {
-        return incomingOutgoingDAO.queryAll();
+    public List<IncomingOutgoing> queryAll(User user) {
+        return incomingOutgoingDAO.queryAll(user);
     }
 
+    @Override
     public List<IncomingOutgoing> queryAll(String status) {
-        return incomingOutgoingDAO.queryAll();
+        return incomingOutgoingDAO.queryAll(status);
+    }
+
+    public List<IncomingOutgoing> queryAll(User user,String status) {
+        return incomingOutgoingDAO.queryAll(user);
     }
 
 
@@ -75,8 +82,8 @@ public class IncomingOutgoingServiceImpl implements IncomingOutgoingService {
         return incomingOutgoingDAO.queryByPager(pager);
     }
 
-    public int count() {
-        return incomingOutgoingDAO.count();
+    public int count(User user) {
+        return incomingOutgoingDAO.count(user);
     }
 
     public int inactive(String id) {
@@ -90,6 +97,11 @@ public class IncomingOutgoingServiceImpl implements IncomingOutgoingService {
 
     public List<IncomingOutgoing> queryByPagerDisable(Pager pager) {
         return incomingOutgoingDAO.queryByPagerDisable(pager);
+    }
+
+    @Override
+    public int countByDisable(User user) {
+        return incomingOutgoingDAO.countByDisable();
     }
 
     public int countByDisable() {
@@ -110,7 +122,13 @@ public class IncomingOutgoingServiceImpl implements IncomingOutgoingService {
         return null;
     }
 
-    public int countByBlurred(IncomingOutgoing incomingOutgoing) {
+    @Override
+    public int countByBlurred(IncomingOutgoing incomingOutgoing, User user) {
+        return 0;
+    }
+
+    public int countByBlurred(IncomingOutgoing incomingOutgoing)
+    {
         return 0;
     }
 }

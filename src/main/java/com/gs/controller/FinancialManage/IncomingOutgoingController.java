@@ -1,6 +1,8 @@
 package com.gs.controller.FinancialManage;
 
 import ch.qos.logback.classic.Logger;
+import com.gs.bean.IncomingType;
+import com.gs.bean.User;
 import com.gs.bean.echarts.IncomingOutInFo;
 import com.gs.bean.IncomingOutgoing;
 import com.gs.bean.echarts.QuarterUtil;
@@ -9,6 +11,8 @@ import com.gs.common.bean.Echarts;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
 import com.gs.common.util.DateFormatUtil;
+import com.gs.common.util.RoleUtil;
+import com.gs.common.util.SessionUtil;
 import com.gs.service.IncomingOutgoingService;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
@@ -18,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import java.util.*;
 
 /**
@@ -37,28 +42,52 @@ public class IncomingOutgoingController {
 
     @ResponseBody
     @RequestMapping(value = "queryByPager", method = RequestMethod.GET)
-    public Pager4EasyUI<IncomingOutgoing> queryByPager(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
+    public Pager4EasyUI<IncomingOutgoing> queryByPager(HttpSession session, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
+        if (SessionUtil.isLogin(session)) {
+            String roles = "平台管理员,汽修公司管理员,汽修公司财务人员";
+            if (RoleUtil.checkRoles(roles)) {
+                logger.info("收支记录分页查询");
+                Pager pager = new Pager();
+                pager.setPageNo(Integer.valueOf(pageNumber));
+                pager.setPageSize(Integer.valueOf(pageSize));
+                pager.setUser((User) session.getAttribute("user"));
+                pager.setTotalRecords(incomingOutgoingService.count((User) session.getAttribute("user")));
+                List<IncomingOutgoing> incomingOutgoings = incomingOutgoingService.queryByPager(pager);
+                return new Pager4EasyUI<IncomingOutgoing>(pager.getTotalRecords(), incomingOutgoings);
+            } else {
+                logger.info("此用户无拥有此方法的角色");
+                return null;
+            }
+        } else {
+            logger.info("请先登录");
+            return null;
+        }
 
-        logger.info("收支记录分页查询");
-        Pager pager = new Pager();
-        pager.setPageNo(Integer.valueOf(pageNumber));
-        pager.setPageSize(Integer.valueOf(pageSize));
-        pager.setTotalRecords(incomingOutgoingService.count());
-        List<IncomingOutgoing> incomingOutgoings = incomingOutgoingService.queryByPager(pager);
-        return new Pager4EasyUI<IncomingOutgoing>(pager.getTotalRecords(), incomingOutgoings);
 
     }
 
     @ResponseBody
     @RequestMapping(value = "queryByPagerDisable", method = RequestMethod.GET)
-    public Pager4EasyUI<IncomingOutgoing> queryByPagerDisable(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
-        logger.info("收支记录分页查询");
-        Pager pager = new Pager();
-        pager.setPageNo(Integer.valueOf(pageNumber));
-        pager.setPageSize(Integer.valueOf(pageSize));
-        pager.setTotalRecords(incomingOutgoingService.countByDisable());
-        List<IncomingOutgoing> incomingOutgoings = incomingOutgoingService.queryByPagerDisable(pager);
-        return new Pager4EasyUI<IncomingOutgoing>(pager.getTotalRecords(), incomingOutgoings);
+    public Pager4EasyUI<IncomingOutgoing> queryByPagerDisable(HttpSession session, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
+        if (SessionUtil.isLogin(session)) {
+            String roles = "平台管理员,汽修公司管理员,汽修公司财务人员";
+            if (RoleUtil.checkRoles(roles)) {
+                logger.info("禁用收支记录分页查询");
+                Pager pager = new Pager();
+                pager.setPageNo(Integer.valueOf(pageNumber));
+                pager.setPageSize(Integer.valueOf(pageSize));
+                pager.setUser((User) session.getAttribute("user"));
+                pager.setTotalRecords(incomingOutgoingService.countByDisable((User) session.getAttribute("user")));
+                List<IncomingOutgoing> incomingOutgoings = incomingOutgoingService.queryByPagerDisable(pager);
+                return new Pager4EasyUI<IncomingOutgoing>(pager.getTotalRecords(), incomingOutgoings);
+            } else {
+                logger.info("此用户无拥有此方法的角色");
+                return null;
+            }
+        } else {
+            logger.info("请先登录");
+            return null;
+        }
     }
 
     /**

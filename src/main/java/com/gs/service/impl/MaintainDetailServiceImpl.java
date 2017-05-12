@@ -75,4 +75,9 @@ public class MaintainDetailServiceImpl implements MaintainDetailService {
 	public List<MaintainDetail> queryByRecordId(String maintainRecordId) {
 		return maintainDetailDAO.queryByRecordId(maintainRecordId);
 	}
+
+	@Override
+	public List<MaintainDetail> queryByCondition(String start, String end, String companyId, String maintainId, String type) {
+		return maintainDetailDAO.queryByCondition(start, end, companyId, maintainId, type);
+	}
 }

@@ -4,9 +4,12 @@ import ch.qos.logback.classic.Logger;
 import com.gs.bean.Checkin;
 import com.gs.bean.IncomingType;
 import com.gs.bean.OutgoingType;
+import com.gs.bean.User;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
+import com.gs.common.util.RoleUtil;
+import com.gs.common.util.SessionUtil;
 import com.gs.common.util.UUIDUtil;
 import com.gs.controller.FinancialViewController;
 import com.gs.service.IncomingTypeService;
@@ -19,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -38,26 +42,49 @@ public class IncomingTypeController {
 
     @ResponseBody
     @RequestMapping(value = "queryByPager",method = RequestMethod.GET)
-    public Pager4EasyUI<IncomingType> queryByPager(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
-        logger.info("收入类型分页查询");
-        Pager pager = new Pager();
-        pager.setPageNo(Integer.valueOf(pageNumber));
-        pager.setPageSize(Integer.valueOf(pageSize));
-        pager.setTotalRecords(incomingTypeService.count());
-        List<IncomingType> incomingTypes = incomingTypeService.queryByPager(pager);
-        return new Pager4EasyUI<IncomingType>(pager.getTotalRecords(), incomingTypes);
+    public Pager4EasyUI<IncomingType> queryByPager(HttpSession session, @Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
+        if (SessionUtil.isLogin(session)) {
+            String roles = "平台管理员,汽修公司管理员,汽修公司财务人员";
+            if (RoleUtil.checkRoles(roles)) {
+                logger.info("收入类型分页查询");
+                Pager pager = new Pager();
+                pager.setPageNo(Integer.valueOf(pageNumber));
+                pager.setPageSize(Integer.valueOf(pageSize));
+                pager.setUser((User) session.getAttribute("user"));
+                pager.setTotalRecords(incomingTypeService.count((User) session.getAttribute("user")));
+                List<IncomingType> incomingTypes = incomingTypeService.queryByPager(pager);
+                return new Pager4EasyUI<IncomingType>(pager.getTotalRecords(), incomingTypes);
+            } else {
+                logger.info("此用户无拥有此方法的角色");
+                return null;
+            }
+        } else {
+            logger.info("请先登录");
+            return null;
+        }
     }
 
     @ResponseBody
     @RequestMapping(value = "queryByPagerDisable",method = RequestMethod.GET)
-    public Pager4EasyUI<IncomingType> queryByPagerDisable(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
-        logger.info("收入类型分页查询");
-        Pager pager = new Pager();
-        pager.setPageNo(Integer.valueOf(pageNumber));
-        pager.setPageSize(Integer.valueOf(pageSize));
-        pager.setTotalRecords(incomingTypeService.countByDisable());
-        List<IncomingType> incomingTypes = incomingTypeService.queryByPagerDisable(pager);
-        return new Pager4EasyUI<IncomingType>(pager.getTotalRecords(), incomingTypes);
+    public Pager4EasyUI<IncomingType> queryByPagerDisable(HttpSession session, @Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
+        if (SessionUtil.isLogin(session)) {
+            String roles = "平台管理员,汽修公司管理员,汽修公司财务人员";
+            if (RoleUtil.checkRoles(roles)) {
+                logger.info("禁用收入类型分页查询");
+                Pager pager = new Pager();
+                pager.setPageNo(Integer.valueOf(pageNumber));
+                pager.setUser((User) session.getAttribute("user"));
+                pager.setTotalRecords(incomingTypeService.countByDisable((User) session.getAttribute("user")));
+                List<IncomingType> incomingTypes = incomingTypeService.queryByPagerDisable(pager);
+                return new Pager4EasyUI<IncomingType>(pager.getTotalRecords(), incomingTypes);
+            } else {
+                logger.info("此用户无拥有此方法的角色");
+                return null;
+            }
+        } else {
+            logger.info("请先登录");
+            return null;
+        }
     }
 
 

@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>- 维修保养统计 -</title>
+    <title>- 维修保养项目统计 -</title>
     <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.css">
     <link rel="stylesheet" href="/static/css/bootstrap.min.css">
     <link href="/static/css/select2/select2.css" rel="stylesheet">
@@ -20,7 +20,7 @@
 
 
 <div class='container-fluid'>
-    <h2 class='page-header'>维修保养统计</h2>
+    <h2 class='page-header'>维修保养项目统计</h2>
     <!--
         选项卡：通过BS的类来控制选项卡的样式
     -->

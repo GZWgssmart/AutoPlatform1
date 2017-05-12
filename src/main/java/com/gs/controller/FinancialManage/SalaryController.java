@@ -1,12 +1,16 @@
 package com.gs.controller.FinancialManage;
 
+import com.gs.bean.OutgoingType;
 import com.gs.bean.Salary;
+import com.gs.bean.User;
 import com.gs.common.Methods;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
 import com.gs.common.util.ExcelExport;
 import com.gs.common.util.ExcelReader;
+import com.gs.common.util.RoleUtil;
+import com.gs.common.util.SessionUtil;
 import com.gs.service.SalaryService;
 import org.apache.commons.io.FileUtils;
 import org.apache.ibatis.annotations.Param;
@@ -22,6 +26,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.InputStream;
 import java.text.DateFormat;
@@ -48,14 +53,27 @@ public class SalaryController {
 
     @ResponseBody
     @RequestMapping(value = "queryByPager", method = RequestMethod.GET)
-    public Pager4EasyUI<Salary> queryByPager(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
-        logger.info("工资信息分页查询");
-        Pager pager = new Pager();
-        pager.setPageNo(Integer.valueOf(pageNumber));
-        pager.setPageSize(Integer.valueOf(pageSize));
-        pager.setTotalRecords(salaryService.count());
-        List<Salary> salaries = salaryService.queryByPager(pager);
-        return new Pager4EasyUI<Salary>(pager.getTotalRecords(), salaries);
+    public Pager4EasyUI<Salary> queryByPager(HttpSession session, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
+        if (SessionUtil.isLogin(session)) {
+            String roles = "平台管理员,汽修公司管理员,汽修公司财务人员";
+            if (RoleUtil.checkRoles(roles)) {
+                logger.info("工资信息分页查询");
+                Pager pager = new Pager();
+                pager.setPageNo(Integer.valueOf(pageNumber));
+                pager.setPageSize(Integer.valueOf(pageSize));
+                pager.setUser((User) session.getAttribute("user"));
+                pager.setTotalRecords(salaryService.count((User) session.getAttribute("user")));
+                List<Salary> salaries = salaryService.queryByPager(pager);
+                return new Pager4EasyUI<Salary>(pager.getTotalRecords(), salaries);
+            } else {
+                logger.info("此用户无拥有此方法的角色");
+                return null;
+            }
+        } else {
+            logger.info("请先登录");
+            return null;
+        }
+
     }
 
 
@@ -95,35 +113,47 @@ public class SalaryController {
     }
 
     @RequestMapping(value = "exportExcel")
-    public ModelAndView exportExcel(HttpServletRequest request, HttpServletResponse response) {
-        try {
-            Salary salary = new Salary();
-            // 查询工资信息
-            List<Salary> userlist = salaryService.queryAll();
-            String title = "员工工资信息";
-            String[] rowsName = new String[]{"工资发放编号", "用户编号", "用户名称", "奖金", "罚款", "总工资", "工资发放描述", "工资发放时间", "工资发放创建时间"};
-            List<Object[]> dataList = new ArrayList<Object[]>();
-            Object[] objs = null;
-            for (int i = 0; i < userlist.size(); i++) {
-                Salary salary1 = userlist.get(i);
-                objs = new Object[rowsName.length];
-                objs[0] = salary1.getSalaryId();
-                objs[1] = salary1.getUserId();
-                objs[2] = salary1.getUser().getUserName();
-                objs[3] = salary1.getPrizeSalary();
-                objs[4] = salary1.getMinusSalay();
-                objs[5] = salary1.getTotalSalary();
-                objs[6] = salary1.getSalaryDes();
-                objs[7] = salary1.getSalaryTime();
-                objs[8] = salary1.getSalaryCreatedTime();
-                dataList.add(objs);
+    public ModelAndView exportExcel(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+        if (SessionUtil.isLogin(session)) {
+            String roles = "平台管理员,汽修公司管理员,汽修公司财务人员";
+            if (RoleUtil.checkRoles(roles)) {
+                try {
+                    Salary salary = new Salary();
+                    // 查询工资信息
+                    List<Salary> userlist = salaryService.queryAll((User) session.getAttribute("user"));
+                    String title = "员工工资信息";
+                    String[] rowsName = new String[]{"工资发放编号", "用户编号", "用户名称", "奖金", "罚款", "总工资", "工资发放描述", "工资发放时间", "工资发放创建时间"};
+                    List<Object[]> dataList = new ArrayList<Object[]>();
+                    Object[] objs = null;
+                    for (int i = 0; i < userlist.size(); i++) {
+                        Salary salary1 = userlist.get(i);
+                        objs = new Object[rowsName.length];
+                        objs[0] = salary1.getSalaryId();
+                        objs[1] = salary1.getUserId();
+                        objs[2] = salary1.getUser().getUserName();
+                        objs[3] = salary1.getPrizeSalary();
+                        objs[4] = salary1.getMinusSalay();
+                        objs[5] = salary1.getTotalSalary();
+                        objs[6] = salary1.getSalaryDes();
+                        objs[7] = salary1.getSalaryTime();
+                        objs[8] = salary1.getSalaryCreatedTime();
+                        dataList.add(objs);
+                    }
+                    ExcelExport ex = new ExcelExport(title, rowsName, dataList, response);
+                    ex.exportData();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                return null;
+            } else {
+                logger.info("此用户无拥有此方法的角色");
+                return null;
             }
-            ExcelExport ex = new ExcelExport(title, rowsName, dataList, response);
-            ex.exportData();
-        } catch (Exception e) {
-            e.printStackTrace();
+        } else {
+            logger.info("请先登录");
+            return null;
         }
-        return null;
+
     }
 
 

@@ -16,4 +16,6 @@ public interface MaintainDetailService extends BaseService<String, MaintainDetai
     public List<MaintainDetail> queryByDetailByPager(Pager pager, String maintainRecordId);
     public int countByDetail(String maintainRecordId);
     public List<MaintainDetail> queryByRecordId(String maintainRecordId);
+
+    public List<MaintainDetail> queryByCondition(String start, String end, String companyId, String maintainId,String type);
 }

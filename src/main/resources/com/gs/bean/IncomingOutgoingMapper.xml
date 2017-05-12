@@ -34,7 +34,7 @@
     <select id="count" resultType="int">
     <![CDATA[
 
-      select count(*) from t_incoming_outgoing i where i.inOutStatus = 'Y'
+      select count(*) from t_incoming_outgoing i, t_company c where c.companyId = i.companyId and  i.inOutStatus = 'Y'
 
         ]]>
   </select>
@@ -49,24 +49,10 @@
 				where  io.inOutStatus = 'Y'
 				order by io.inOutCreatedTime Desc
     ]]>
+        <if test="companyId != '' and companyId != null">
+            and io.companyId = #{user.companyId}
+        </if>
     limit #{beginIndex}, #{pageSize}
-  </select>
-
-    <select id="queryByDate" resultMap="incomingOutgoingMap">
-    <![CDATA[
-          select SUM(inOutMoney) as inOutMoney,inOutCreatedTime from t_incoming_outgoing io, t_company c
-         where io.companyId = c.companyId and c.companyId = #{companyId} and inOutStatus = 'Y' and
-            date_format(inOutCreatedTime,'%Y-%m')=date_format(now(),'%Y-%m')
-        ]]>
-        <if test="inOutType ==0">
-
-        </if>
-        <if test="inOutType ==1">
-            and io.outTypeId is not null
-        </if>
-        <if test="inOutType ==2">
-            and io.inTypeId is not null
-        </if>
   </select>
 
 
@@ -101,47 +87,16 @@
         </if>
   </select>
 
-    <select id="queryByMonth" resultMap="incomingOutgoingMap">
-        <![CDATA[
-      select io.inTypeId,  io.outTypeId, sum(io.inOutMoney) as inOutMoney,io.inOutCreatedTime  from t_incoming_outgoing io, t_company c where c.companyId = io.companyId and io.companyId = "1"
- and io.inOutStatus = 'Y' and  io.inOutCreatedTime >= '2009-01-01' and io.inOutCreatedTime <= '2019-12-31' and io.companyId =${companyId}
-      ]]>
-    </select>
-
-    <select id="queryByDay" resultMap="incomingOutgoingMap">
-        <![CDATA[
-
-            select inTypeId, outTypeId, sum(inOutMoney) as inOutMoney,inOutCreatedTime from t_incoming_outgoing
-            where inOutStatus = 'Y' and inOutCreatedTime >= #{start} and inOutCreatedTime <= #{end}
-            GROUP BY day(inOutCreatedTime) order by inOutCreatedTime ASC;
-        ]]>
-    </select>
-
-
-    <select id="queryByQuarter" resultMap="incomingOutgoingMap">
-    <![CDATA[
-             select inTypeId, outTypeId, sum(inOutMoney) as inOutMoney,inOutCreatedTime from t_incoming_outgoing
-        where inOutStatus = 'Y' and inOutCreatedTime >= #{start} and inOutCreatedTime <= #{end}
-        GROUP BY quarter(inOutCreatedTime) order by inOutCreatedTime ASC;
-
-        ]]>
-  </select>
-
-    <select id="queryByWeek" resultMap="incomingOutgoingMap">
-        <![CDATA[
-       select inTypeId, outTypeId, sum(inOutMoney) as inOutMoney,inOutCreatedTime from t_incoming_outgoing
-	where inOutStatus = 'Y' and inOutCreatedTime >= #{start} and inOutCreatedTime <= #{end}
-	GROUP BY week(inOutCreatedTime) order by inOutCreatedTime ASC;
-
-        ]]>
-    </select>
 
     <select id="countByDisable" resultType="int">
     <![CDATA[
 
-        select count(*) from t_incoming_outgoing i where i.inOutStatus = 'N'
+        select count(*) from t_incoming_outgoing io where  i.inOutStatus = 'N'
 
         ]]>
+        <if test="companyId != '' and companyId != null">
+            and io.companyId = #{user.companyId}
+        </if>
   </select>
 
     <select id="queryByPagerDisable" resultMap="incomingOutgoingMap" parameterType="com.gs.common.bean.Pager">
@@ -154,6 +109,9 @@
 				where  io.inOutStatus = 'N'
 				order by io.inOutCreatedTime Desc
     ]]>
+        <if test="companyId != '' and companyId != null">
+            and io.companyId = #{user.companyId}
+        </if>
     limit #{beginIndex}, #{pageSize}
   </select>
 
