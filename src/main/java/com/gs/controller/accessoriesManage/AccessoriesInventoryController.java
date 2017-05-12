@@ -139,10 +139,10 @@ public class AccessoriesInventoryController {
     public ControllerResult updateAccInv(Accessories accessories) {
         if(accessories!=null&&!accessories.equals("")){
             accessoriesService.update(accessories);
-            logger.info("更新成功");
-            return ControllerResult.getSuccessResult("更新成功");
+            logger.info("修改成功");
+            return ControllerResult.getSuccessResult("修改成功");
         }else{
-            return ControllerResult.getFailResult("更新失败");
+            return ControllerResult.getFailResult("修改失败");
         }
     }
 
@@ -195,14 +195,14 @@ public class AccessoriesInventoryController {
             pager.setPageSize(Integer.parseInt(pageSize));
             List<Accessories> accessoriesList = null;
             Accessories accessories = new Accessories();
-            if (text.equals("汽车公司/配件/供应商/配件类型")) {
+            if (text.equals("汽车公司/配件名称/供应商/配件类型")) {
                 accessories.setCompanyId(value);
                 accessories.setAccName(value);
                 accessories.setSupplyId(value);
                 accessories.setAccTypeId(value);
             } else if (text.equals("汽车公司")) {
                 accessories.setCompanyId(value);
-            } else if (text.equals("配件")) {
+            } else if (text.equals("配件名称")) {
                 accessories.setAccName(value);
             }else if(text.equals("供应商")){
                 accessories.setSupplyId(value);

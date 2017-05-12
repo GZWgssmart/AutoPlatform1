@@ -42,7 +42,9 @@ function showEdit() {
     } else {
         swal({
             "title": "",
-            "text": "请先选择一条数据",
+            "text": "请修改配件库存信息",
+            confirmButtonColor: "#DD6B55", // 提示按钮的颜色
+            confirmButtonText:"确定", // 提示按钮上的文本
             "type": "warning"
         })
     }
@@ -70,7 +72,7 @@ function statusFormatter(value, row, index) {
     if (value == 'Y') {
         return "&nbsp;&nbsp;<button type='button' class='btn btn-danger' onclick='inactive(\"" + '/accInv/statusOperate?accId=' + row.accId + '&accStatus=Y' + "\")'>禁用</a>";
     } else {
-        return "&nbsp;&nbsp;<button type='button' class='btn btn-success' onclick='active(\"" + '/checkin/statusOperate?accId=' + row.accId + '&accStatus=N' + "\")'>激活</a>";
+        return "&nbsp;&nbsp;<button type='button' class='btn btn-success' onclick='active(\"" + '/accInv/statusOperate?accId=' + row.accId + '&accStatus=N' + "\")'>激活</a>";
     }
 }
 
