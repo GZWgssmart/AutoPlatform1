@@ -1,6 +1,7 @@
 package com.gs.controller.userManage;
 
 import ch.qos.logback.classic.Logger;
+import com.gs.bean.User;
 import com.gs.bean.WorkInfo;
 import com.gs.bean.echarts.QuarterUtil;
 import com.gs.bean.echarts.WorkInFoBean;
@@ -47,7 +48,7 @@ public class OrderManageController {
             String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师,汽车公司学徒,汽车公司销售人员,汽车公司财务人员,汽车公司采购人员,汽车公司库管人员,汽车公司人力资源管理部";
             if(RoleUtil.checkRoles(roles)) {
                 logger.info("查询所有订单");
-                List<WorkInfo> workInfosList = workInfoService.queryAll();
+                List<WorkInfo> workInfosList = workInfoService.queryAll((User) session.getAttribute("user"));
                 List<ComboBox4EasyUI> comboxs = new ArrayList<ComboBox4EasyUI>();
                 for(WorkInfo work : workInfosList){
                     ComboBox4EasyUI comboBox4EasyUI = new ComboBox4EasyUI();
@@ -74,14 +75,14 @@ public class OrderManageController {
 */
     @ResponseBody
     @RequestMapping(value = "queryByPager",method = RequestMethod.GET)
-    public Pager4EasyUI<WorkInfo> queryByPager(httpSession session, @Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
+    public Pager4EasyUI<WorkInfo> queryByPager(HttpSession session, @Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
         if(SessionUtil.isLogin(session)) {
           String roles="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员";
             if(RoleUtil.checkRoles(roles)) {
                 Pager pager = new Pager();
                 pager.setPageNo(Integer.valueOf(pageNumber));
                 pager.setPageSize(Integer.valueOf(pageSize));
-                pager.setTotalRecords(workInfoService.count());
+                pager.setTotalRecords(workInfoService.count((User) session.getAttribute("user")));
                 List<WorkInfo> worksList = workInfoService.queryByPager(pager);
                 return new Pager4EasyUI<WorkInfo>(pager.getTotalRecords(), worksList);
             }else{
@@ -110,7 +111,7 @@ public class OrderManageController {
                 Pager pager = new Pager();
                 pager.setPageNo(Integer.valueOf(pageNumber));
                 pager.setPageSize(Integer.valueOf(pageSize));
-                pager.setTotalRecords(workInfoService.count());
+                pager.setTotalRecords(workInfoService.count((User) session.getAttribute("user")));
                 List<WorkInfo> worksList = workInfoService.queryByPagerschelude(pager);
                 return new Pager4EasyUI<WorkInfo>(pager.getTotalRecords(), worksList);
             }else{
@@ -150,7 +151,7 @@ public class OrderManageController {
                 Pager pager = new Pager();
                 pager.setPageNo(Integer.valueOf(pageNumber));
                 pager.setPageSize(Integer.valueOf(pageSize));
-                pager.setTotalRecords(workInfoService.countByDisable());
+                pager.setTotalRecords(workInfoService.countByDisable((User) session.getAttribute("user")));
                 List<WorkInfo> worklLis = workInfoService.queryByPagerDisable(pager);
                 return new Pager4EasyUI<WorkInfo>(pager.getTotalRecords(), worklLis);
             }else{
@@ -254,169 +255,184 @@ public class OrderManageController {
 
     @ResponseBody
     @RequestMapping(value = "queryByCondition")
-    public List<WorkInFoBean> queryByCondition(String start, String end, String type){
+    public List<WorkInFoBean> queryByCondition(HttpSession session, String start, String end, String type){
         logger.info("根据年月日周季去查询所有的工单");
         List<WorkInFoBean> list = null;
         List<WorkInfo> timeList = null;
         List<WorkInfo> maintainList = null;
         List<WorkInfo> preserveList = null;
         list = new ArrayList<WorkInFoBean>();
-        if (type != null && !type.equals("")) {
-            if (type.equals("year")) {
-                timeList = workInfoService.queryByCondition(start, end,"1","0","year");
-                maintainList=workInfoService.queryByCondition(start, end,"1","1","year");
-                preserveList=workInfoService.queryByCondition(start, end,"1","2","year");
-                for (int p = 0; p < timeList.size(); p++) {
-                    WorkInFoBean io = new WorkInFoBean();
-                    String ag = DateFormatUtil.YearFormater(timeList.get(p).getWorkCreatedTime());
-                    io.setDate(ag);
-                    for (int j = 0; j < maintainList.size(); j++) {
-                        String outTime = DateFormatUtil.YearFormater(maintainList.get(j).getWorkCreatedTime());
-                        if (ag.equals(outTime)) {
-                            io.setMaintainCount(maintainList.get(j).getCount());
-                            break;
-                        } else {
-                            io.setMaintainCount(0);
+        User user = (User)session.getAttribute("user");
+        if(SessionUtil.isLogin(session)) {
+            String roles="汽车公司总技师,公司超级管理员";
+            if(RoleUtil.checkRoles(roles)) {
+                if (type != null && !type.equals("")) {
+                    if (type.equals("year")) {
+                        timeList = workInfoService.queryByCondition(start, end,user.getUserId(),"0","year");
+                        maintainList=workInfoService.queryByCondition(start, end,user.getUserId(),"1","year");
+                        preserveList=workInfoService.queryByCondition(start, end,user.getUserId(),"2","year");
+                        for (int p = 0; p < timeList.size(); p++) {
+                            WorkInFoBean io = new WorkInFoBean();
+                            String ag = DateFormatUtil.YearFormater(timeList.get(p).getWorkCreatedTime());
+                            io.setDate(ag);
+                            for (int j = 0; j < maintainList.size(); j++) {
+                                String outTime = DateFormatUtil.YearFormater(maintainList.get(j).getWorkCreatedTime());
+                                if (ag.equals(outTime)) {
+                                    io.setMaintainCount(maintainList.get(j).getCount());
+                                    break;
+                                } else {
+                                    io.setMaintainCount(0);
+                                }
+                            }
+                            for (int k = 0; k < preserveList.size(); k++) {
+                                String inTime = DateFormatUtil.YearFormater(preserveList.get(k).getWorkCreatedTime());
+                                if (ag.equals(inTime)) {
+                                    io.setPreserveCount(preserveList.get(k).getCount());
+                                    break;
+                                } else {
+                                    io.setPreserveCount(0);
+                                }
+                            }
+                            list.add(io);
                         }
-                    }
-                    for (int k = 0; k < preserveList.size(); k++) {
-                        String inTime = DateFormatUtil.YearFormater(preserveList.get(k).getWorkCreatedTime());
-                        if (ag.equals(inTime)) {
-                            io.setPreserveCount(preserveList.get(k).getCount());
-                            break;
-                        } else {
-                            io.setPreserveCount(0);
-                        }
-                    }
-                    list.add(io);
-                }
 
-            } else if (type.equals("quarter")) {
-                timeList = workInfoService.queryByCondition(start, end,"1","0","quarter");
-                maintainList=workInfoService.queryByCondition(start, end,"1","1","quarter");
-                preserveList=workInfoService.queryByCondition(start, end,"1","2","quarter");
-                for (int p = 0; p < timeList.size(); p++) {
-                    WorkInFoBean io = new WorkInFoBean();
-                    String ag = DateFormatUtil.MonthFormater(timeList.get(p).getWorkCreatedTime());
-                    QuarterUtil.quarter(ag);
-                    io.setDate(ag);
-                    for (int j = 0; j < maintainList.size(); j++) {
-                        String outTime = DateFormatUtil.MonthFormater(maintainList.get(j).getWorkCreatedTime());
-                        QuarterUtil.quarter(outTime);
-                        if (ag.equals(outTime)) {
-                            io.setMaintainCount(maintainList.get(j).getCount());
-                            break;
-                        } else {
-                            io.setMaintainCount(0);
+                    } else if (type.equals("quarter")) {
+                        timeList = workInfoService.queryByCondition(start, end,user.getUserId(),"0","quarter");
+                        maintainList=workInfoService.queryByCondition(start, end,user.getUserId(),"1","quarter");
+                        preserveList=workInfoService.queryByCondition(start, end,user.getUserId(),"2","quarter");
+                        for (int p = 0; p < timeList.size(); p++) {
+                            WorkInFoBean io = new WorkInFoBean();
+                            String ag = DateFormatUtil.MonthFormater(timeList.get(p).getWorkCreatedTime());
+                            QuarterUtil.quarter(ag);
+                            io.setDate(ag);
+                            for (int j = 0; j < maintainList.size(); j++) {
+                                String outTime = DateFormatUtil.MonthFormater(maintainList.get(j).getWorkCreatedTime());
+                                QuarterUtil.quarter(outTime);
+                                if (ag.equals(outTime)) {
+                                    io.setMaintainCount(maintainList.get(j).getCount());
+                                    break;
+                                } else {
+                                    io.setMaintainCount(0);
+                                }
+                            }
+                            for (int k = 0; k < preserveList.size(); k++) {
+                                String inTime = DateFormatUtil.MonthFormater(preserveList.get(k).getWorkCreatedTime());
+                                QuarterUtil.quarter(inTime);
+                                if (ag.equals(inTime)) {
+                                    io.setPreserveCount(preserveList.get(k).getCount());
+                                    break;
+                                } else {
+                                    io.setPreserveCount(0);
+                                }
+                            }
+                            list.add(io);
+                        }
+                    } else if (type.equals("month")) {
+                        timeList = workInfoService.queryByCondition(start, end,user.getUserId(),"0","month");
+                        maintainList=workInfoService.queryByCondition(start, end,user.getUserId(),"1","month");
+                        preserveList=workInfoService.queryByCondition(start, end,user.getUserId(),"2","month");
+                        for (int p = 0; p < timeList.size(); p++) {
+                            WorkInFoBean io = new WorkInFoBean();
+                            String ag = DateFormatUtil.MonthFormater(timeList.get(p).getWorkCreatedTime());
+                            io.setDate(ag);
+                            for (int j = 0; j < maintainList.size(); j++) {
+                                String outTime = DateFormatUtil.MonthFormater(maintainList.get(j).getWorkCreatedTime());
+                                if (ag.equals(outTime)) {
+                                    io.setMaintainCount(maintainList.get(j).getCount());
+                                    break;
+                                } else {
+                                    io.setMaintainCount(0);
+                                }
+                            }
+                            for (int k = 0; k < preserveList.size(); k++) {
+                                String inTime = DateFormatUtil.MonthFormater(preserveList.get(k).getWorkCreatedTime());
+                                if (ag.equals(inTime)) {
+                                    io.setPreserveCount(preserveList.get(k).getCount());
+                                    break;
+                                } else {
+                                    io.setPreserveCount(0);
+                                }
+                            }
+                            list.add(io);
+                        }
+                    } else if (type.equals("week")) {
+                        timeList = workInfoService.queryByCondition(start, end,user.getUserId(),"0","day");
+                        maintainList=workInfoService.queryByCondition(start, end,user.getUserId(),"1","day");
+                        preserveList=workInfoService.queryByCondition(start, end,user.getUserId(),"2","day");
+                        for (int p = 0; p < timeList.size(); p++) {
+                            WorkInFoBean io = new WorkInFoBean();
+                            String ag = DateFormatUtil.WEEK(timeList.get(p).getWorkCreatedTime());
+                            String year = DateFormatUtil.YearFormater(timeList.get(p).getWorkCreatedTime());
+                            String time = String.valueOf(Echarts.getWeek(ag));
+                            String yearTime = time + year;
+                            io.setDate(year + "第" + time + "周");
+                            for (int j = 0; j < maintainList.size(); j++) {
+                                String outTime = DateFormatUtil.WEEK(maintainList.get(j).getWorkCreatedTime());
+                                String outYear = DateFormatUtil.YearFormater(maintainList.get(j).getWorkCreatedTime());
+                                String out = String.valueOf(Echarts.getWeek(outTime));
+                                String yearOut = out + outYear;
+                                if (yearTime.equals(yearOut)) {
+                                    io.setMaintainCount(maintainList.get(j).getCount());
+                                    break;
+                                } else {
+                                    io.setMaintainCount(0);
+                                }
+                            }
+                            for (int k = 0; k < preserveList.size(); k++) {
+                                String inTime = DateFormatUtil.WEEK(preserveList.get(k).getWorkCreatedTime());
+                                String inYear = DateFormatUtil.YearFormater(preserveList.get(k).getWorkCreatedTime());
+                                String in = String.valueOf(Echarts.getWeek(inTime));
+                                String yearIn = in + inYear;
+                                if (yearTime.equals(yearIn)) {
+                                    io.setPreserveCount(preserveList.get(k).getCount());
+                                    break;
+                                } else {
+                                    io.setPreserveCount(0);
+                                }
+                            }
+                            list.add(io);
+                        }
+                    } else if (type.equals("day")) {
+                        timeList = workInfoService.queryByCondition(start, end,user.getUserId(),"0","day");
+                        maintainList=workInfoService.queryByCondition(start, end,user.getUserId(),"1","day");
+                        preserveList=workInfoService.queryByCondition(start, end,user.getUserId(),"2","day");
+                        for (int p = 0; p < timeList.size(); p++) {
+                            WorkInFoBean io = new WorkInFoBean();
+                            String ag = DateFormatUtil.DayFormater(timeList.get(p).getWorkCreatedTime());
+                            io.setDate(ag);
+                            for (int j = 0; j < maintainList.size(); j++) {
+                                String outTime = DateFormatUtil.DayFormater(maintainList.get(j).getWorkCreatedTime());
+                                if (ag.equals(outTime)) {
+                                    io.setMaintainCount(maintainList.get(j).getCount());
+                                    break;
+                                } else {
+                                    io.setMaintainCount(0);
+                                }
+                            }
+                            for (int k = 0; k < preserveList.size(); k++) {
+                                String inTime = DateFormatUtil.DayFormater(preserveList.get(k).getWorkCreatedTime());
+                                if (ag.equals(inTime)) {
+                                    io.setPreserveCount(preserveList.get(k).getCount());
+                                    break;
+                                } else {
+                                    io.setPreserveCount(0);
+                                }
+                            }
+                            list.add(io);
                         }
                     }
-                    for (int k = 0; k < preserveList.size(); k++) {
-                        String inTime = DateFormatUtil.MonthFormater(preserveList.get(k).getWorkCreatedTime());
-                        QuarterUtil.quarter(inTime);
-                        if (ag.equals(inTime)) {
-                            io.setPreserveCount(preserveList.get(k).getCount());
-                            break;
-                        } else {
-                            io.setPreserveCount(0);
-                        }
-                    }
-                    list.add(io);
                 }
-            } else if (type.equals("month")) {
-                timeList = workInfoService.queryByCondition(start, end,"1","0","month");
-                maintainList=workInfoService.queryByCondition(start, end,"1","1","month");
-                preserveList=workInfoService.queryByCondition(start, end,"1","2","month");
-                for (int p = 0; p < timeList.size(); p++) {
-                    WorkInFoBean io = new WorkInFoBean();
-                    String ag = DateFormatUtil.MonthFormater(timeList.get(p).getWorkCreatedTime());
-                    io.setDate(ag);
-                    for (int j = 0; j < maintainList.size(); j++) {
-                        String outTime = DateFormatUtil.MonthFormater(maintainList.get(j).getWorkCreatedTime());
-                        if (ag.equals(outTime)) {
-                            io.setMaintainCount(maintainList.get(j).getCount());
-                            break;
-                        } else {
-                            io.setMaintainCount(0);
-                        }
-                    }
-                    for (int k = 0; k < preserveList.size(); k++) {
-                        String inTime = DateFormatUtil.MonthFormater(preserveList.get(k).getWorkCreatedTime());
-                        if (ag.equals(inTime)) {
-                            io.setPreserveCount(preserveList.get(k).getCount());
-                            break;
-                        } else {
-                            io.setPreserveCount(0);
-                        }
-                    }
-                    list.add(io);
-                }
-            } else if (type.equals("week")) {
-                timeList = workInfoService.queryByCondition(start, end,"1","0","day");
-                maintainList=workInfoService.queryByCondition(start, end,"1","1","day");
-                preserveList=workInfoService.queryByCondition(start, end,"1","2","day");
-                for (int p = 0; p < timeList.size(); p++) {
-                    WorkInFoBean io = new WorkInFoBean();
-                    String ag = DateFormatUtil.WEEK(timeList.get(p).getWorkCreatedTime());
-                    String year = DateFormatUtil.YearFormater(timeList.get(p).getWorkCreatedTime());
-                    String time = String.valueOf(Echarts.getWeek(ag));
-                    String yearTime = time + year;
-                    io.setDate(year + "第" + time + "周");
-                    for (int j = 0; j < maintainList.size(); j++) {
-                        String outTime = DateFormatUtil.WEEK(maintainList.get(j).getWorkCreatedTime());
-                        String outYear = DateFormatUtil.YearFormater(maintainList.get(j).getWorkCreatedTime());
-                        String out = String.valueOf(Echarts.getWeek(outTime));
-                        String yearOut = out + outYear;
-                        if (yearTime.equals(yearOut)) {
-                            io.setMaintainCount(maintainList.get(j).getCount());
-                            break;
-                        } else {
-                            io.setMaintainCount(0);
-                        }
-                    }
-                    for (int k = 0; k < preserveList.size(); k++) {
-                        String inTime = DateFormatUtil.WEEK(preserveList.get(k).getWorkCreatedTime());
-                        String inYear = DateFormatUtil.YearFormater(preserveList.get(k).getWorkCreatedTime());
-                        String in = String.valueOf(Echarts.getWeek(inTime));
-                        String yearIn = in + inYear;
-                        if (yearTime.equals(yearIn)) {
-                            io.setPreserveCount(preserveList.get(k).getCount());
-                            break;
-                        } else {
-                            io.setPreserveCount(0);
-                        }
-                    }
-                    list.add(io);
-                }
-            } else if (type.equals("day")) {
-                timeList = workInfoService.queryByCondition(start, end,"1","0","day");
-                maintainList=workInfoService.queryByCondition(start, end,"1","1","day");
-                preserveList=workInfoService.queryByCondition(start, end,"1","2","day");
-                for (int p = 0; p < timeList.size(); p++) {
-                    WorkInFoBean io = new WorkInFoBean();
-                    String ag = DateFormatUtil.DayFormater(timeList.get(p).getWorkCreatedTime());
-                    io.setDate(ag);
-                    for (int j = 0; j < maintainList.size(); j++) {
-                        String outTime = DateFormatUtil.DayFormater(maintainList.get(j).getWorkCreatedTime());
-                        if (ag.equals(outTime)) {
-                            io.setMaintainCount(maintainList.get(j).getCount());
-                            break;
-                        } else {
-                            io.setMaintainCount(0);
-                        }
-                    }
-                    for (int k = 0; k < preserveList.size(); k++) {
-                        String inTime = DateFormatUtil.DayFormater(preserveList.get(k).getWorkCreatedTime());
-                        if (ag.equals(inTime)) {
-                            io.setPreserveCount(preserveList.get(k).getCount());
-                            break;
-                        } else {
-                            io.setPreserveCount(0);
-                        }
-                    }
-                    list.add(io);
-                }
+                return list;
+            }else{
+                logger.info("此用户无拥有工单更改状态角色");
+                return null;
             }
+        }else{
+            logger.info("请先登录");
+            return null;
         }
-        return list;
+
+
+
     }
 }

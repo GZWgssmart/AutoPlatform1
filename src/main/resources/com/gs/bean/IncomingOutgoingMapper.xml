@@ -60,11 +60,14 @@
   </select>
 
 
-    <select id="queryByCondition" resultMap="incomingOutgoingMap">
+    <select id="queryByCondition" resultMap="incomingOutgoingMap"  parameterType="com.gs.bean.User">
     <![CDATA[
-        select SUM(inOutMoney) as inOutMoney,inOutCreatedTime from t_incoming_outgoing io, t_company c
- where io.companyId = c.companyId and c.companyId = #{companyId} and inOutStatus = 'Y' and  inOutCreatedTime >= #{start} and inOutCreatedTime <= #{end}
+        select SUM(inOutMoney) as inOutMoney,inOutCreatedTime from t_incoming_outgoing io
+ where inOutStatus = 'Y' and  inOutCreatedTime >= #{start} and inOutCreatedTime <= #{end}
         ]]>
+        <if test="companyId != '' and companyId != null">
+            and io.companyId = #{companyId}
+        </if>
         <if test="inOutType ==0">
 
         </if>
