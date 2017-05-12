@@ -69,10 +69,13 @@
        limit #{beginIndex}, #{pageSize}
   </select>
 
-  <select id="count" resultType="int">
+  <select id="count" resultType="int" parameterType="com.gs.bean.User">
      <![CDATA[
       select count(checkinId) from t_checkin ck where ck.checkinStatus = 'Y'
     ]]>
+    <if test="companyId != '' and companyId != null">
+      and ck.companyId = #{user.companyId}
+    </if>
   </select>
 
   <insert id="insert"  parameterType="checkin">
@@ -94,6 +97,7 @@
 				maintainOrFix = #{maintainOrFix}, checkinCreatedTime = #{checkinCreatedTime}, companyId = #{companyId}, checkinStatus = #{checkinStatus}, ifClearCar = #{ifClearCar}, nowOil = #{nowOil} where checkinId = #{checkinId}
 		]]>
   </update>
+
   <!-- 分页查询禁用 -->
   <select id="queryByPagerDisable" resultMap="checkinMap" parameterType="com.gs.common.bean.Pager">
     <![CDATA[
@@ -105,19 +109,27 @@
        LEFT JOIN t_car_plate cp on ck.plateId = cp.plateId
        LEFT JOIN t_company company on ck.companyId = company.companyId
        LEFT JOIN t_car_brand cb on ck.brandId = cb.brandId
-       where ck.checkinStatus = 'N' order by ck.checkinCreatedTime Desc
-    ]]>
-    limit #{beginIndex}, #{pageSize}
+       where ck.checkinStatus = 'N'
+       ]]>
+       <if test="user.companyId != '' and user.companyId != null">
+       and ck.companyId = #{user.companyId}
+       </if>
+       order by ck.checkinCreatedTime Desc
+       limit #{beginIndex}, #{pageSize}
   </select>
+
   <!-- 分页查询禁用个数 -->
-  <select id="countByDisable" resultType="int" >
+  <select id="countByDisable" resultType="int" parameterType="com.gs.bean.User">
     <![CDATA[
       select count(checkinId) from t_checkin ck where ck.checkinStatus = 'N'
     ]]>
+    <if test="companyId != '' and companyId != null">
+      and ck.companyId = #{companyId}
+    </if>
   </select>
 
   <!-- 分页模糊查询 -->
-  <select id="blurredQuery" resultMap="checkinMap" >
+  <select id="blurredQuery" resultMap="checkinMap">
     <![CDATA[
            select ck.*, cc.colorId, cc.colorName, cp.plateId, cp.plateName,
             cm.modelId, cm.modelName, company.companyId,
@@ -128,8 +140,12 @@
            LEFT JOIN t_car_plate cp on ck.plateId = cp.plateId
            LEFT JOIN t_company company on ck.companyId = company.companyId
            LEFT JOIN t_car_brand cb on ck.brandId = cb.brandId
-           where 1=1 and
-      ]]>
+           where 1=1
+           ]]>
+           <if test="pager.user.companyId != '' and pager.user.companyId != null">
+              and ck.companyId = #{pager.user.companyId}
+            </if>
+            and
             <if test="checkin.userName != '' and checkin.userName != null">
               ck.userName like '%${checkin.userName}%'
             </if>
@@ -168,32 +184,36 @@
       LEFT JOIN t_car_plate cp on ck.plateId = cp.plateId
       LEFT JOIN t_company company on ck.companyId = company.companyId
       LEFT JOIN t_car_brand cb on ck.brandId = cb.brandId
-      where 1=1 and
-    ]]>
-    <if test="checkin.userName != '' and checkin.userName != null">
-      ck.userName like '%${checkin.userName}%'
-    </if>
-    <if test="checkin.userName != '' and checkin.userName != null and
-    checkin.companyId != '' and checkin.companyId != null">
-      or
-    </if>
-    <if test="checkin.companyId != '' and checkin.companyId != null">
-      company.companyName like '%${checkin.companyId}%'
-    </if>
-    <if test="checkin.companyId != '' and checkin.companyId != null and
-    checkin.carPlate != '' and checkin.carPlate != null">
-      or
-    </if>
-    <if test="checkin.carPlate != '' and checkin.carPlate != null">
-      ck.carPlate like '%${checkin.carPlate}%'
-    </if>
-    <if test="checkin.carPlate != '' and checkin.carPlate != null and
-    checkin.userPhone != '' and checkin.userPhone != null">
-      or
-    </if>
-    <if test="checkin.userPhone != '' and checkin.userPhone != null">
-      ck.userPhone like '%${checkin.userPhone}%'
-    </if>
+      where 1=1
+      ]]>
+      <if test="user.companyId != '' and user.companyId != null">
+              and ck.companyId = #{user.companyId}
+      </if>
+      and
+      <if test="checkin.userName != '' and checkin.userName != null">
+        ck.userName like '%${checkin.userName}%'
+      </if>
+      <if test="checkin.userName != '' and checkin.userName != null and
+      checkin.companyId != '' and checkin.companyId != null">
+        or
+      </if>
+      <if test="checkin.companyId != '' and checkin.companyId != null">
+        company.companyName like '%${checkin.companyId}%'
+      </if>
+      <if test="checkin.companyId != '' and checkin.companyId != null and
+      checkin.carPlate != '' and checkin.carPlate != null">
+        or
+      </if>
+      <if test="checkin.carPlate != '' and checkin.carPlate != null">
+        ck.carPlate like '%${checkin.carPlate}%'
+      </if>
+      <if test="checkin.carPlate != '' and checkin.carPlate != null and
+      checkin.userPhone != '' and checkin.userPhone != null">
+        or
+      </if>
+      <if test="checkin.userPhone != '' and checkin.userPhone != null">
+        ck.userPhone like '%${checkin.userPhone}%'
+      </if>
   </select>
 
   <!--冻结数据-->

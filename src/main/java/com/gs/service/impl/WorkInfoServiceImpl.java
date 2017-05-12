@@ -1,5 +1,6 @@
 package com.gs.service.impl;
 
+import com.gs.bean.User;
 import com.gs.bean.WorkInfo;
 import com.gs.dao.WorkInfoDAO;
 import com.gs.service.WorkInfoService;
@@ -30,18 +31,12 @@ public class WorkInfoServiceImpl implements WorkInfoService {
 	public int batchDelete(List<WorkInfo> list) { return workInfoDAO.batchDelete(list); }
 	public int update(WorkInfo workInfo) { return workInfoDAO.update(workInfo); }
 	public int batchUpdate(List<WorkInfo> list) { return workInfoDAO.batchUpdate(list); }
-	public List<WorkInfo> queryAll() { return workInfoDAO.queryAll(); }
 
-	@Override
-	public List<WorkInfo> queryAll(String status) {
-		return workInfoDAO.queryAll();
-	}
 
 	public List<WorkInfo> queryByStatus(String status) { return workInfoDAO.queryAll(status); }
 	public WorkInfo query(WorkInfo workInfo) { return workInfoDAO.query(workInfo); }
 	public WorkInfo queryById(String id) { return workInfoDAO.queryById(id); }
 	public List<WorkInfo> queryByPager(Pager pager) { return workInfoDAO.queryByPager(pager); }
-	public int count() { return workInfoDAO.count(); }
 	public int inactive(String id) { return workInfoDAO.inactive(id); }
 	public int active(String id) { return workInfoDAO.active(id); }
 
@@ -50,22 +45,11 @@ public class WorkInfoServiceImpl implements WorkInfoService {
 		return workInfoDAO.queryByPagerDisable(pager);
 	}
 
-	@Override
-	public int countByDisable() {
-		return workInfoDAO.countByDisable();
-	}
 
 	@Override
 	public List<WorkInfo> blurredQuery(Pager pager, WorkInfo workInfo) {
 //		return workInfoDAO.blurredQuery(pager,workInfo);
 		return null;
-	}
-
-	@Override
-	public int countByBlurred(WorkInfo workInfo)
-	{
-//		return workInfoDAO.countByBlurred(workInfo);
-		return 0;
 	}
 
 	@Override
@@ -76,5 +60,30 @@ public class WorkInfoServiceImpl implements WorkInfoService {
 	@Override
 	public List<WorkInfo> queryByPagerschelude(Pager pager) {
 		return workInfoDAO.queryByPagerschelude(pager);
+	}
+
+	@Override
+	public List<WorkInfo> queryAll(User user) {
+		return null;
+	}
+
+	@Override
+	public List<WorkInfo> queryAll(String status) {
+		return null;
+	}
+
+	@Override
+	public int count(User user) {
+		return 0;
+	}
+
+	@Override
+	public int countByDisable(User user) {
+		return 0;
+	}
+
+	@Override
+	public int countByBlurred(WorkInfo workInfo, User user) {
+		return 0;
 	}
 }

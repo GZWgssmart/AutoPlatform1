@@ -17,10 +17,10 @@ import java.util.Set;
 public interface UserDAO extends BaseDAO<String, User>{
 
 //  分页查询全部，不分状态
-    public List<User> queryByPagerAll(Pager pager);
+    public List<User> queryByPagerAll(Pager pager, User user);
 
     //  分页查询被禁用的记录
-    public List<User> queryByPagerDisable(Pager pager);
+    public List<User> queryByPagerDisable(Pager pager, User user);
 
     /**
      * 根据维修保养记录查询到用户的email发送邮件提醒车主进行提车

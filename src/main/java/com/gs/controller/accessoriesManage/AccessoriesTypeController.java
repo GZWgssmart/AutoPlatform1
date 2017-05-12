@@ -42,9 +42,6 @@ public class AccessoriesTypeController {
 
     @Resource
     private AccessoriesTypeService accessoriesTypeService;
-
-    private String roles = "系统超级管理员,系统普通管理员,汽修公司管理员,汽修公司接待员";
-
     /**
      * 查询全部的配件分类
      */
@@ -52,6 +49,7 @@ public class AccessoriesTypeController {
     @RequestMapping(value = "queryAllAccType", method = RequestMethod.GET)
     public List<ComboBox4EasyUI> queryAllAccType(HttpSession session) {
         if (SessionUtil.isLogin(session)) {
+            String roles="汽修公司管理员,系统管理员";
             if (RoleUtil.checkRoles(roles)) {
                 logger.info("查询所有配件分类信息");
                 List<AccessoriesType> accessoriesTypes = accessoriesTypeService.queryAll((User) session.getAttribute("user"));
@@ -81,6 +79,7 @@ public class AccessoriesTypeController {
     @RequestMapping(value = "queryByPage", method = RequestMethod.GET)
     public Pager4EasyUI queryByPager(HttpSession session, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
         if (SessionUtil.isLogin(session)) {
+            String roles="汽修公司管理员,系统管理员";
             if (RoleUtil.checkRoles(roles)) {
                 Pager pager = new Pager();
                 pager.setPageNo(Integer.valueOf(pageNumber));
@@ -111,6 +110,7 @@ public class AccessoriesTypeController {
     @RequestMapping(value = "addAccType", method = RequestMethod.POST)
     public ControllerResult addAccType(HttpSession session, AccessoriesType accessoriesType) {
         if (SessionUtil.isLogin(session)) {
+            String roles="汽修公司管理员";
             if (RoleUtil.checkRoles(roles)) {
                 if (accessoriesType != null && !accessoriesType.equals("")) {
                     accessoriesTypeService.insert(accessoriesType);
@@ -118,35 +118,6 @@ public class AccessoriesTypeController {
                     return ControllerResult.getSuccessResult("添加成功");
                 } else {
                     return ControllerResult.getFailResult("添加失败");
-                }
-            } else {
-                logger.info("此用户无拥有此方法角色");
-                return null;
-            }
-        } else {
-            logger.info("请先登陆");
-            return null;
-        }
-
-    }
-
-    /**
-     * 删除配件分类
-     *
-     * @param id
-     * @return
-     */
-    @ResponseBody
-    @RequestMapping(value = "removeAccType", method = RequestMethod.POST)
-    public ControllerResult removeAccType(HttpSession session, String id) {
-        if (SessionUtil.isLogin(session)) {
-            if (RoleUtil.checkRoles(roles)) {
-                if (id != null && !id.equals("")) {
-                    accessoriesTypeService.deleteById(id);
-                    logger.info("添加成功");
-                    return ControllerResult.getSuccessResult("删除成功");
-                } else {
-                    return ControllerResult.getFailResult("删除失败");
                 }
             } else {
                 logger.info("此用户无拥有此方法角色");
@@ -168,6 +139,7 @@ public class AccessoriesTypeController {
     @RequestMapping(value = "updateAccType", method = RequestMethod.POST)
     public ControllerResult updateAccType(HttpSession session, AccessoriesType accessoriesType) {
         if (SessionUtil.isLogin(session)) {
+            String roles="汽修公司管理员";
             if (RoleUtil.checkRoles(roles)) {
                 if (accessoriesType != null && !accessoriesType.equals("")) {
                     accessoriesTypeService.update(accessoriesType);
@@ -197,6 +169,7 @@ public class AccessoriesTypeController {
     @RequestMapping(value = "queryByPagerDisable", method = RequestMethod.GET)
     public Pager4EasyUI<AccessoriesType> queryByPagerDisable(HttpSession session, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
         if (SessionUtil.isLogin(session)) {
+            String roles="汽修公司管理员,系统管理员";
             if (RoleUtil.checkRoles(roles)) {
                 logger.info("分页查询所有被禁用登记记录");
                 Pager pager = new Pager();
@@ -224,6 +197,7 @@ public class AccessoriesTypeController {
     @RequestMapping(value = "statusOperate", method = RequestMethod.POST)
     public ControllerResult inactive(HttpSession session, String accTypeId, String accTypeStatus) {
         if (SessionUtil.isLogin(session)) {
+            String roles="汽修公司管理员";
             if (RoleUtil.checkRoles(roles)) {
                 if (accTypeId != null && !accTypeId.equals("") && accTypeStatus != null && !accTypeStatus.equals("")) {
                     if (accTypeStatus.equals("N")) {
@@ -254,6 +228,7 @@ public class AccessoriesTypeController {
     @RequestMapping(value = "blurredQuery", method = RequestMethod.GET)
     public Pager4EasyUI<AccessoriesType> blurredQuery(HttpSession session, HttpServletRequest request, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
         if (SessionUtil.isLogin(session)) {
+            String roles="汽修公司管理员,系统管理员";
             if (RoleUtil.checkRoles(roles)) {
                 logger.info("配件分类模糊查询");
                 String text = request.getParameter("text");

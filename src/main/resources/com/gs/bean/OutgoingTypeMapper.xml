@@ -12,12 +12,12 @@
   </resultMap>
 
 
-  <select id="count" resultType="int" >
+  <select id="count" resultType="int" parameterType="com.gs.bean.User">
     <![CDATA[
       select count(*) from t_outgoing_type o where o.outTypeStatus = 'Y'
     ]]>
     <if test="companyId != '' and companyId != null">
-      and o.companyId = #{user.companyId}
+      and o.companyId = #{companyId}
     </if>
   </select>
 
@@ -25,18 +25,18 @@
     <![CDATA[
         select * from t_outgoing_type o where 1 =1 and o.outTypeStatus = 'Y'
     ]]>
-    <if test="companyId != '' and companyId != null">
+    <if test="user.companyId != '' and user.companyId != null">
       and o.companyId = #{user.companyId}
     </if>
     limit #{beginIndex}, #{pageSize}
   </select>
 
-  <select id="countByDisable" resultType="int" >
+  <select id="countByDisable" resultType="int" parameterType="com.gs.bean.User" >
     <![CDATA[
         select count(*) from t_outgoing_type o where o.outTypeStatus = 'N'
     ]]>
     <if test="companyId != '' and companyId != null">
-      and o.companyId = #{user.companyId}
+      and o.companyId = #{companyId}
     </if>
   </select>
 
@@ -44,7 +44,7 @@
     <![CDATA[
           select * from t_outgoing_type o where 1 =1 and o.outTypeStatus = 'N'
     ]]>
-    <if test="companyId != '' and companyId != null">
+    <if test="user.companyId != '' and user.companyId != null">
       and o.companyId = #{user.companyId}
     </if>
      limit #{beginIndex}, #{pageSize}

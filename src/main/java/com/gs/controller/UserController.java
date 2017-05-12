@@ -27,6 +27,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Date;
 
 @Controller
 @RequestMapping("/user")
@@ -71,10 +72,11 @@ public class UserController {
                         || subject.hasRole(Constants.role_companyTechnician) || subject.hasRole(Constants.role_companyApprentice)
                         || subject.hasRole(Constants.role_companySales) || subject.hasRole(Constants.role_companyFinancial)
                         || subject.hasRole(Constants.role_companyProcurement) || subject.hasRole(Constants.role_companyLibraryTube)
-                        || subject.hasRole(Constants.role_companyHR) || subject.hasRole(Constants.role_otherPersonnel)
-                        || subject.hasRole(Constants.role_owner)) {
+                        || subject.hasRole(Constants.role_companyHR)) {
                     logger.info("登录成功");
                     User user = userService.queryUser(user1.getUserEmail());
+                    user.setUserLoginedTime(new Date());
+                    userService.update(user);
                     session.setAttribute("user", user);
                     return ControllerResult.getSuccessResult("登录成功");
                 }else {

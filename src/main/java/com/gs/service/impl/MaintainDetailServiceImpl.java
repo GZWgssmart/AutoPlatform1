@@ -1,6 +1,7 @@
 package com.gs.service.impl;
 
 import com.gs.bean.MaintainDetail;
+import com.gs.bean.User;
 import com.gs.common.bean.Pager;
 import com.gs.dao.MaintainDetailDAO;
 import com.gs.service.MaintainDetailService;
@@ -30,18 +31,18 @@ public class MaintainDetailServiceImpl implements MaintainDetailService {
 	public int batchDelete(List<MaintainDetail> list) { return maintainDetailDAO.batchDelete(list); }
 	public int update(MaintainDetail maintainDetail) { return maintainDetailDAO.update(maintainDetail); }
 	public int batchUpdate(List<MaintainDetail> list) { return maintainDetailDAO.batchUpdate(list); }
-	public List<MaintainDetail> queryAll() { return maintainDetailDAO.queryAll(); }
+	public List<MaintainDetail> queryAll(User user) { return maintainDetailDAO.queryAll(user); }
 
 	@Override
 	public List<MaintainDetail> queryAll(String status) {
-		return maintainDetailDAO.queryAll();
+		return maintainDetailDAO.queryAll(status);
 	}
 
 	public List<MaintainDetail> queryByStatus(String status) { return maintainDetailDAO.queryAll(status); }
 	public MaintainDetail query(MaintainDetail maintainDetail) { return maintainDetailDAO.query(maintainDetail); }
 	public MaintainDetail queryById(String id) { return maintainDetailDAO.queryById(id); }
 	public List<MaintainDetail> queryByPager(Pager pager) { return maintainDetailDAO.queryByPager(pager); }
-	public int count() { return maintainDetailDAO.count(); }
+	public int count(User user) { return maintainDetailDAO.count(user); }
 	public int inactive(String id) { return maintainDetailDAO.inactive(id); }
 	public int active(String id) { return maintainDetailDAO.active(id); }
 
@@ -49,15 +50,15 @@ public class MaintainDetailServiceImpl implements MaintainDetailService {
 		return maintainDetailDAO.queryByPagerDisable(pager);
 	}
 
-	public int countByDisable() {
-		return maintainDetailDAO.countByDisable();
+	public int countByDisable(User user) {
+		return maintainDetailDAO.countByDisable(user);
 	}
 
 	public List<MaintainDetail> blurredQuery(Pager pager, MaintainDetail maintainDetail) {
 		return null;
 	}
 
-	public int countByBlurred(MaintainDetail maintainDetail) {
+	public int countByBlurred(MaintainDetail maintainDetail, User user) {
 		return 0;
 	}
 

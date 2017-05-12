@@ -1,6 +1,7 @@
 package com.gs.service.impl;
 
 import com.gs.bean.CarBrand;
+import com.gs.bean.User;
 import com.gs.common.bean.Pager;
 import com.gs.dao.CarBrandDAO;
 import com.gs.service.CarBrandService;
@@ -30,18 +31,20 @@ public class CarBrandServiceImpl implements CarBrandService {
 	public int batchDelete(List<CarBrand> list) { return carBrandDAO.batchDelete(list); }
 	public int update(CarBrand carBrand) { return carBrandDAO.update(carBrand); }
 	public int batchUpdate(List<CarBrand> list) { return carBrandDAO.batchUpdate(list); }
-	public List<CarBrand> queryAll() { return carBrandDAO.queryAll(); }
+
+	public List<CarBrand> queryAll(User user) { return carBrandDAO.queryAll(user); }
 
 
 	public List<CarBrand> queryAll(String status) {
-		return carBrandDAO.queryAll();
+		return carBrandDAO.queryAll(status);
 	}
 
 	public List<CarBrand> queryByStatus(String status) { return carBrandDAO.queryAll(status); }
 	public CarBrand query(CarBrand carBrand) { return carBrandDAO.query(carBrand); }
 	public CarBrand queryById(String id) { return carBrandDAO.queryById(id); }
 	public List<CarBrand> queryByPager(Pager pager) { return carBrandDAO.queryByPager(pager); }
-	public int count() { return carBrandDAO.count(); }
+
+	public int count(User user) { return carBrandDAO.count(user); }
 	public int inactive(String id) { return carBrandDAO.inactive(id); }
 	public int active(String id) { return carBrandDAO.active(id); }
 
@@ -49,15 +52,15 @@ public class CarBrandServiceImpl implements CarBrandService {
 		return carBrandDAO.queryByPagerDisable(pager);
 	}
 
-	public int countByDisable() {
-		return carBrandDAO.countByDisable();
+	public int countByDisable(User user) {
+		return carBrandDAO.countByDisable(user);
 	}
 
 	public List<CarBrand> blurredQuery(Pager pager, CarBrand carBrand) {
-		return null;
+		return carBrandDAO.blurredQuery(pager,carBrand);
 	}
 
-	public int countByBlurred(CarBrand carBrand) {
-		return 0;
+	public int countByBlurred(CarBrand carBrand,User user ) {
+		return carBrandDAO.countByBlurred(carBrand,user);
 	}
 }

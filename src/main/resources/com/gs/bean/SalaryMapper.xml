@@ -19,12 +19,12 @@
 
   </resultMap>
 
-  <select id="count" resultType="int" >
+  <select id="count" resultType="int" parameterType="com.gs.bean.User">
     <![CDATA[
        select count(*) from t_salary s where 1 =1
     ]]>
     <if test="user.companyId != '' and user.companyId != null">
-      and s.companyId = #{user.companyId}
+      and s.companyId = #{companyId}
     </if>
   </select>
 

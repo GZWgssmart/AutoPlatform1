@@ -1,6 +1,7 @@
 package com.gs.controller;
 
 import ch.qos.logback.classic.Logger;
+import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +20,7 @@ public class EmployeController {
     /**
      * 员工基本信息跳转页面
      */
+    @RequiresAuthentication
     @RequestMapping(value = "empInformation", method = RequestMethod.GET)
     public String empInformation() {
         logger.info("员工基本信息跳转页面");
@@ -28,6 +30,7 @@ public class EmployeController {
     /**
      * 员工工资跳转页面
      */
+    @RequiresAuthentication
     @RequestMapping(value = "empWages", method = RequestMethod.GET)
     public String empWages() {
         logger.info("员工工资跳转页面");
@@ -36,6 +39,7 @@ public class EmployeController {
     /**
      * 员工工单跳转页面
      */
+    @RequiresAuthentication
     @RequestMapping(value = "workInfo", method = RequestMethod.GET)
     public String workInfo() {
         logger.info("员工工单跳转页面");

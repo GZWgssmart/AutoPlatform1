@@ -2,6 +2,7 @@ package com.gs.dao;
 
 import com.gs.bean.Appointment;
 import com.gs.bean.Checkin;
+import com.gs.bean.User;
 import com.gs.common.bean.Pager;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -18,6 +19,7 @@ import java.util.List;
 @Repository
 public interface AppointmentDAO extends BaseDAO<String, Appointment>{
 
+    public int countByBlurred(Appointment appointment, User user);
     /**
      * 模糊查询
      */

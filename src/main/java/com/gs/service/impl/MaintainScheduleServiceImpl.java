@@ -1,6 +1,7 @@
 package com.gs.service.impl;
 
 import com.gs.bean.MaintainSchedule;
+import com.gs.bean.User;
 import com.gs.common.bean.Pager;
 import com.gs.dao.MaintainScheduleDAO;
 import com.gs.service.MaintainScheduleService;
@@ -53,17 +54,6 @@ public class MaintainScheduleServiceImpl implements MaintainScheduleService {
     }
 
     @Override
-    public List<MaintainSchedule> queryAll() {
-        return maintainScheduleDAO.queryAll();
-    }
-
-
-    @Override
-    public List<MaintainSchedule> queryAll(String status) {
-        return maintainScheduleDAO.queryAll();
-    }
-
-    @Override
     public MaintainSchedule query(MaintainSchedule maintainSchedule) {
         return null;
     }
@@ -71,11 +61,6 @@ public class MaintainScheduleServiceImpl implements MaintainScheduleService {
     @Override
     public MaintainSchedule queryById(String id) {
         return null;
-    }
-
-    @Override
-    public int count() {
-        return maintainScheduleDAO.count();
     }
 
     @Override
@@ -99,17 +84,33 @@ public class MaintainScheduleServiceImpl implements MaintainScheduleService {
     }
 
     @Override
-    public int countByDisable() {
-        return 0;
-    }
-
-    @Override
     public List<MaintainSchedule> blurredQuery(Pager pager, MaintainSchedule maintainSchedule) {
         return null;
     }
 
+
     @Override
-    public int countByBlurred(MaintainSchedule maintainSchedule) {
+    public List<MaintainSchedule> queryAll(User user) {
+        return null;
+    }
+
+    @Override
+    public int count(User user) {
         return 0;
+    }
+
+    @Override
+    public int countByDisable(User user) {
+        return 0;
+    }
+
+    @Override
+    public int countByBlurred(MaintainSchedule maintainSchedule, User user) {
+        return 0;
+    }
+
+    @Override
+    public List<MaintainSchedule> queryAll(String status) {
+        return null;
     }
 }
