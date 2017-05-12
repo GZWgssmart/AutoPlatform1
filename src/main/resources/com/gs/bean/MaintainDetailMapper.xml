@@ -27,15 +27,22 @@
     <![CDATA[
        select md.*, mf.maintainId, mf.maintainName from t_maintain_detail md
        LEFT JOIN t_maintain_fix mf on md.maintainItemId = mf.maintainId
-       order by md.mdCreatedTime Desc
+       where 1=1
     ]]>
+    <if test="user.companyId != '' and user.companyId != null">
+      and ck.companyId = #{user.companyId}
+    </if>
+    order by md.mdCreatedTime Desc
     limit #{beginIndex}, #{pageSize}
   </select>
 
-  <select id="count" resultType="int" >
+  <select id="count" resultType="int" parameterType="com.gs.bean.User">
     <![CDATA[
-      select count(maintainDetailId) from t_maintain_detail
+      select count(maintainDetailId) from t_maintain_detail where 1=1
     ]]>
+    <if test="companyId != '' and companyId != null">
+      and ck.companyId = #{user.companyId}
+    </if>
   </select>
 
   <select id="queryByDetailByPager" resultMap="maintainDetailMap">
@@ -59,7 +66,7 @@
     ]]>
   </select>
 
-  <select id="countByDetail" resultType="int" >
+  <select id="countByDetail" resultType="int">
     <![CDATA[
       select count(maintainDetailId) from t_maintain_detail where maintainRecordId = #{maintainRecordId}
     ]]>

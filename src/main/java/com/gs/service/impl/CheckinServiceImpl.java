@@ -31,7 +31,7 @@ public class CheckinServiceImpl implements CheckinService {
 	public int batchDelete(List<Checkin> list) { return checkinDAO.batchDelete(list); }
 	public int update(Checkin checkin) { return checkinDAO.update(checkin); }
 	public int batchUpdate(List<Checkin> list) { return checkinDAO.batchUpdate(list); }
-	public List<Checkin> queryAll() { return checkinDAO.queryAll(); }
+	public List<Checkin> queryAll(User user) { return checkinDAO.queryAll(user); }
 
 	public List<Checkin> queryAll(String status) {
 		return checkinDAO.queryAll(status);
@@ -40,7 +40,7 @@ public class CheckinServiceImpl implements CheckinService {
 	public Checkin query(Checkin checkin) { return checkinDAO.query(checkin); }
 	public Checkin queryById(String id) { return checkinDAO.queryById(id); }
 	public List<Checkin> queryByPager(Pager pager) { return checkinDAO.queryByPager(pager); }
-	public int count() { return checkinDAO.count(); }
+	public int count(User user) { return checkinDAO.count(user); }
 	public int inactive(String id) { return checkinDAO.inactive(id); }
 	public int active(String id) { return checkinDAO.active(id); }
 
@@ -48,8 +48,8 @@ public class CheckinServiceImpl implements CheckinService {
 		return checkinDAO.queryByPagerDisable(pager);
 	}
 
-	public int countByDisable() {
-		return checkinDAO.countByDisable();
+	public int countByDisable(User user) {
+		return checkinDAO.countByDisable(user);
 	}
 
 	public List<Checkin> blurredQuery(Pager pager, Checkin checkin) {

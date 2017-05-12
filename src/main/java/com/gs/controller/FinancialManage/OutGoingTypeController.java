@@ -57,7 +57,7 @@ public class OutGoingTypeController {
                 List<OutgoingType> outgoingTypes = outgoingTypeService.queryByPager(pager);
                 return new Pager4EasyUI<OutgoingType>(pager.getTotalRecords(), outgoingTypes);
             } else {
-                logger.info("此用户无拥有此方法的角色");
+                logger.info("此用户无拥有支出类型分页查询的角色");
                 return null;
             }
         } else {
@@ -82,7 +82,7 @@ public class OutGoingTypeController {
                 List<OutgoingType> outgoingTypes = outgoingTypeService.queryByPagerDisable(pager);
                 return new Pager4EasyUI<OutgoingType>(pager.getTotalRecords(), outgoingTypes);
             } else {
-                logger.info("此用户无拥有此方法的角色");
+                logger.info("此用户无拥有禁用支出类型分页查询的角色");
                 return null;
             }
         } else {
@@ -97,7 +97,7 @@ public class OutGoingTypeController {
     public ControllerResult inactive(HttpSession session, String id, String status) {
 
         if (SessionUtil.isLogin(session)) {
-            String roles = "   系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员";
+            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员";
             if (RoleUtil.checkRoles(roles)) {
                 if (id != null && !id.equals("") && status != null && !status.equals("")) {
                     if (status.equals("N")) {
@@ -113,7 +113,7 @@ public class OutGoingTypeController {
                     return ControllerResult.getFailResult("操作失败");
                 }
             } else {
-                logger.info("此用户无拥有此方法的角色");
+                logger.info("此用户无拥有操作支出类型禁用启用的角色");
                 return null;
             }
         } else {
@@ -138,7 +138,7 @@ public class OutGoingTypeController {
                 outgoingTypeService.insert(outgoingType);
                 return ControllerResult.getSuccessResult("添加成功");
             } else {
-                logger.info("此用户无拥有此方法的角色");
+                logger.info("此用户无拥有添加支出类型的角色");
                 return null;
             }
         } else {
@@ -172,7 +172,7 @@ public class OutGoingTypeController {
                 outgoingTypeService.update(outgoingType);
                 return ControllerResult.getSuccessResult("修改成功");
             } else {
-                logger.info("此用户无拥有此方法的角色");
+                logger.info("此用户无拥有修改支出类型的角色");
                 return null;
             }
         } else {

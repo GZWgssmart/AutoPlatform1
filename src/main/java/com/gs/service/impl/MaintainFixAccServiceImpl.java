@@ -3,6 +3,7 @@ package com.gs.service.impl;
 import com.gs.bean.Checkin;
 import com.gs.bean.MaintainFix;
 import com.gs.bean.MaintainFixAcc;
+import com.gs.bean.User;
 import com.gs.dao.MaintainFixAccDAO;
 import com.gs.service.MaintainFixAccService;
 import org.springframework.stereotype.Service;
@@ -32,18 +33,28 @@ public class MaintainFixAccServiceImpl implements MaintainFixAccService {
 	public int batchDelete(List<MaintainFixAcc> list) { return maintainFixAccDAO.batchDelete(list); }
 	public int update(MaintainFixAcc maintainFixAcc) { return maintainFixAccDAO.update(maintainFixAcc); }
 	public int batchUpdate(List<MaintainFixAcc> list) { return maintainFixAccDAO.batchUpdate(list); }
-	public List<MaintainFixAcc> queryAll() { return maintainFixAccDAO.queryAll(); }
+
+	@Override
+	public List<MaintainFixAcc> queryAll(User user) {
+		return maintainFixAccDAO.queryAll(user);
+	}
 
 	@Override
 	public List<MaintainFixAcc> queryAll(String status) {
-		return maintainFixAccDAO.queryAll();
-	}
+		return maintainFixAccDAO.queryAll(status);
+}
+
 
 	public List<MaintainFixAcc> queryByStatus(String status) { return maintainFixAccDAO.queryAll(status); }
 	public MaintainFixAcc query(MaintainFixAcc maintainFixAcc) { return maintainFixAccDAO.query(maintainFixAcc); }
 	public MaintainFixAcc queryById(String id) { return maintainFixAccDAO.queryById(id); }
 	public List<MaintainFixAcc> queryByPager(Pager pager) { return maintainFixAccDAO.queryByPager(pager); }
-	public int count() { return maintainFixAccDAO.count(); }
+
+	@Override
+	public int count(User user) {
+		return maintainFixAccDAO.count(user);
+	}
+
 	public int inactive(String id) { return maintainFixAccDAO.inactive(id); }
 	public int active(String id) { return maintainFixAccDAO.active(id); }
 
@@ -51,12 +62,18 @@ public class MaintainFixAccServiceImpl implements MaintainFixAccService {
 		return maintainFixAccDAO.queryByPagerDisable(pager);
 	}
 
-	public int countByDisable() {
-		return maintainFixAccDAO.countByDisable();
+	@Override
+	public int countByDisable(User user) {
+		return maintainFixAccDAO.countByDisable(user);
 	}
 
 	public List<MaintainFixAcc> blurredQuery(Pager pager, MaintainFixAcc maintainFixAcc) {
 		return null;
+	}
+
+	@Override
+	public int countByBlurred(MaintainFixAcc maintainFixAcc, User user) {
+		return 0;
 	}
 
 	public int countByBlurred(MaintainFixAcc maintainFixAcc) {

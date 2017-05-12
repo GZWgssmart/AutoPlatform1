@@ -41,8 +41,11 @@
 -->
   <select id="queryAll" resultMap="AccessoriesMap">
     <![CDATA[
-            select * from auto_platform.t_accessories WHERE accStatus='Y'
+            select * from auto_platform.t_accessories ac WHERE
         ]]>
+    <if test="companyId != '' and companyId !=null">
+      ac.companyId = #{user.companyId}
+    </if>
   </select>
 
 
@@ -54,16 +57,23 @@
        LEFT JOIN auto_platform.t_accessories_type atp on ac.accTypeId=atp.accTypeId
        LEFT JOIN auto_platform.t_company cm on ac.companyId = cm.companyId
        LEFT JOIN auto_platform.t_supply sp on ac.supplyId = sp.supplyId
-      where ac.accStatus = 'Y' order by ac.accCreatedTime Desc
+      where ac.accStatus = 'Y'
     ]]>
+    <if test="user.companyId != '' and user.companyId != null">
+      and ac.companyId = #{user.companyId}
+    </if>
+    order by ac.accCreatedTime Desc
     limit #{beginIndex}, #{pageSize};
   </select>
 
   <!--查询有多少配件信息-->
   <select id="count" resultType="int" >
     <![CDATA[
-      select count(*) from auto_platform.t_accessories u where 1 =1 and u.accStatus = 'Y'
+      select count(accId) from auto_platform.t_accessories u WHERE u.accStatus = 'Y'
     ]]>
+    <if test="companyId != '' and companyId !=null">
+      and u.companyId = #{user.companyId}
+    </if>
   </select>
 
   <!--
@@ -128,26 +138,35 @@
         LEFT JOIN auto_platform.t_company cp on cp.companyId=ac.companyId
         LEFT join auto_platform.t_accessories_type atp on atp.accTypeId=ac.accTypeId
         LEFT join auto_platform.t_supply sp on sp.supplyId=ac.supplyId
-       WHERE accStatus='N'
+       WHERE accStatus='N' order by ac.accCreatedTime Desc
     ]]>
+    <if test="user.companyId != '' and user.companyId !=null">
+      and ac.companyId = #{user.companyId}
+    </if>
     limit #{beginIndex}, #{pageSize}
   </select>
 
-  <select id="countByDisable" resultType="int" >
+  <select id="countByDisable" resultType="int" parameterType="com.gs.bean.User">
     <![CDATA[
-      select count(accId) from auto_platform.t_accessories ck where ck.accStatus = 'N'
+      select count(accId) from auto_platform.t_accessories ac where ac.accStatus = 'N'
     ]]>
+    <if test="companyId != '' and companyId !=null">
+      and ac.companyId = #{user.companyId}
+    </if>
   </select>
 
   <!-- 分页模糊查询 -->
   <select id="blurredQuery" resultMap="AccessoriesMap" >
     <![CDATA[
-           select ac.*,cp.companyId,cp.companyName,sp.supplyId,sp.supplyName,atp.accTypeId,atp.accTypeName from auto_platform.t_accessories ac
-           LEFT JOIN auto_platform.t_company cp on ac.companyId=cp.companyId
-           LEFT JOIN auto_platform.t_supply sp on ac.supplyId=sp.supplyId
-           LEFT JOIN auto_platform.t_accessories_type atp on ac.accTypeId=atp.accTypeId
-           where 1=1 AND
-        ]]>
+       select ac.*,cp.companyId,cp.companyName,sp.supplyId,sp.supplyName,atp.accTypeId,atp.accTypeName from auto_platform.t_accessories ac
+       LEFT JOIN auto_platform.t_company cp on ac.companyId=cp.companyId
+       LEFT JOIN auto_platform.t_supply sp on ac.supplyId=sp.supplyId
+       LEFT JOIN auto_platform.t_accessories_type atp on ac.accTypeId=atp.accTypeId
+       where 1=1 AND
+    ]]>
+    <if test="pager.user.companyId != '' and pager.user.companyId !=null">
+      and ac.companyId = #{pager.user.companyId}
+    </if>
     <if test="accInv.companyId != '' and accInv.companyId != null">
       cp.companyName like '%${accInv.companyId}%'
     </if>
@@ -179,12 +198,15 @@
   <!-- 分页模糊查询个数 -->
   <select id="countByBlurred" resultType="int" >
     <![CDATA[
-           select count(accId) FROM auto_platform.t_accessories ac
-           LEFT JOIN auto_platform.t_company cp on cp.companyId=ac.companyId
-           LEFT JOIN auto_platform.t_supply sp on sp.supplyId=ac.supplyId
-           LEFT JOIN auto_platform.t_accessories_type atp on atp.accTypeId=ac.accTypeId
-           where 1=1 AND
-        ]]>
+     select count(accId) FROM auto_platform.t_accessories ac
+     LEFT JOIN auto_platform.t_company cp on cp.companyId=ac.companyId
+     LEFT JOIN auto_platform.t_supply sp on sp.supplyId=ac.supplyId
+     LEFT JOIN auto_platform.t_accessories_type atp on atp.accTypeId=ac.accTypeId
+     where 1=1 AND
+    ]]>
+    <if test="user.companyId != '' and user.companyId !=null">
+      and ac.companyId = #{user.companyId}
+    </if>
     <if test="accInv.companyId != '' and accInv.companyId != null">
       cp.companyName like '%${accInv.companyId}%'
     </if>

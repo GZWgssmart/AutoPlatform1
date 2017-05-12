@@ -25,17 +25,23 @@
     </resultMap>
 
     <!--查询全部-->
-    <select id="queryAll" resultMap="MaintainScheduleMap">
+    <select id="queryAll" resultMap="MaintainScheduleMap" parameterType="com.gs.bean.User">
       <![CDATA[
-          select * from auto_platform.t_maintain_schedule
+          select * from auto_platform.t_maintain_schedule where 1=1 and msStatus='Y'
         ]]>
+        <if test="user.companyId != '' and user.companyId !=null">
+            and s.companyId = #{user.companyId}
+        </if>
     </select>
 
     <!--计数激活状态-->
-    <select id="count" resultType="int">
+    <select id="count" resultType="int" parameterType="com.gs.bean.User">
         <![CDATA[
           select count(maintainScheduleId) from t_maintain_schedule where msStatus='Y'
         ]]>
+        <if test="user.companyId != '' and user.companyId !=null">
+            and s.companyId = #{user.companyId}
+        </if>
     </select>
 
     <!--分页查询-->
@@ -44,8 +50,12 @@
           select ms.*,c.recordId,c.checkinId
           from auto_platform.t_maintain_schedule ms
           LEFT JOIN t_maintain_record c on ms.maintainScheduleId=c.recordId
-          where ms.msStatus='Y' order by ms.msCreatedTime Desc
+          where ms.msStatus='Y'
         ]]>
+        <if test="user.companyId != '' and user.companyId !=null">
+            and s.companyId = #{user.companyId}
+        </if>
+        order by ms.msCreatedTime Desc
         limit #{beginIndex}, #{pageSize};
     </select>
 

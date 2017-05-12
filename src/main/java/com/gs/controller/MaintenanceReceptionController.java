@@ -33,6 +33,7 @@ public class MaintenanceReceptionController {
      * 维修保养明细管理
      * @return
      */
+    @RequiresAuthentication
     @RequestMapping("subsidiary")
     public String subsidiary() {
         logger.info("跳转到维修保养明细管理");

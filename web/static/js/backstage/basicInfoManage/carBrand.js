@@ -1,28 +1,104 @@
 $(function () {
-    initTable('table', '/carBrand/queryByPagerCarBrand'); // 初始化表格
+    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师,汽车公司学徒,汽车公司销售人员,汽车公司财务人员,汽车公司采购人员,汽车公司库管人员,汽车公司人力资源管理部";
+    $.post("/user/isLogin/"+roles, function (data) {
+        if(data.result == 'success'){
+            initTable('table', '/carBrand/queryByPagerCarBrand'); // 初始化表格
+        }else if(data.result == 'notLogin'){
+            swal({title:"",
+                    text:data.message,
+                    confirmButtonText:"确认",
+                    type:"error"}
+                ,function(isConfirm){
+                    if(isConfirm){
+                        top.location = "/user/loginPage";
+                    }else{
+                        top.location = "/user/loginPage";
+                    }
+                })
+        }else if(data.result == 'notRole'){
+            swal({title:"",
+                text:data.message,
+                confirmButtonText:"确认",
+                type:"error"})
+        }
+    });
 });
 
 function showEdit() {
-    var row = $('table').bootstrapTable('getSelections');
-    if (row.length > 0) {
-        $("#editWindow").modal('show'); // 显示弹窗
-        $("#editButton").removeAttr("disabled");
-        var ceshi = row[0];
-        $("#editForm").fill(ceshi);
-        validator('editForm');
-    } else {
-        swal({
-            "title": "",
-            "text": "请先选择一条数据",
-            "type": "warning"
-        })
-    }
+    var roles = "系统超级管理员,系统普通管理员";
+    $.post("/user/isLogin/"+roles, function (data) {
+        if (data.result == 'success') {
+            var row = $('#table').bootstrapTable('getSelections');
+            if (row.length > 0) {
+                $("#editWindow").modal('show'); // 显示弹窗
+                $("#editButton").removeAttr("disabled");
+                var ceshi = row[0];
+                $("#editForm").fill(ceshi);
+                validator('editForm');
+            } else {
+                swal({
+                    title: "",
+                    text: "请选择要修改的品牌记录", // 主要文本
+                    confirmButtonColor: "#DD6B55", // 提示按钮的颜色
+                    confirmButtonText: "确定", // 提示按钮上的文本
+                    type: "warning"
+                })
+            }
+        }else if (data.result == 'notLogin') {
+            swal({
+                    title: "",
+                    text: data.message,
+                    confirmButtonText: "确认",
+                    type: "error"
+                }
+                , function (isConfirm) {
+                    if (isConfirm) {
+                        top.location = "/user/loginPage";
+                    } else {
+                        top.location = "/user/loginPage";
+                    }
+                })
+        } else if (data.result == 'notRole') {
+            swal({
+                title: "",
+                text: data.message,
+                confirmButtonText: "确认",
+                type: "error"
+            })
+        }
+    });
 }
 
 function showAdd() {
-    $("#addWindow").modal('show');
-    $("#addButton").removeAttr("disabled");
-    validator('addForm'); // 初始化验证
+    var roles = "系统超级管理员,系统普通管理员";
+    $.post("/user/isLogin/"+roles, function (data) {
+        if (data.result == 'success') {
+            $("#addWindow").modal('show');
+            $("#addButton").removeAttr("disabled");
+            validator('addForm'); // 初始化验证
+        }else if (data.result == 'notLogin') {
+            swal({
+                    title: "",
+                    text: data.message,
+                    confirmButtonText: "确认",
+                    type: "error"
+                }
+                , function (isConfirm) {
+                    if (isConfirm) {
+                        top.location = "/user/loginPage";
+                    } else {
+                        top.location = "/user/loginPage";
+                    }
+                })
+        } else if (data.result == 'notRole') {
+            swal({
+                title: "",
+                text: data.message,
+                confirmButtonText: "确认",
+                type: "error"
+            })
+        }
+    });
 }
 
 function validator(formId) {
@@ -110,8 +186,35 @@ function formSubmit(url, formId, winId){
                     text:"添加失败",
                     confirmButtonText:"确认",
                     type:"error"})
-                $("#"+formId).removeAttr("disabled");
+                if(formId == 'addForm') {
+                    $("#addButton").removeAttr("disabled");
+                }else if(formId == 'editForm'){
+                    $("#editButton").removeAttr("disabled");
+                }
+            }else if (data.result == "notLogin") {
+                swal({title:"",
+                        text:data.message,
+                        confirmButtonText:"确认",
+                        type:"error"}
+                    ,function(isConfirm){
+                        if(isConfirm){
+                            top.location = "/user/loginPage";
+                        }else{
+                            top.location = "/user/loginPage";
+                        }
+                    })
+                if(formId == 'addForm') {
+                    $("#addButton").removeAttr("disabled");
+                }else if(formId == 'editForm'){
+                    $("#editButton").removeAttr("disabled");
+                }
+            }else if(data.result == 'notRole'){
+                swal({title:"",
+                    text:data.message,
+                    confirmButtonText:"确认",
+                    type:"error"})
             }
+
         }, "json");
 }
 
@@ -126,9 +229,54 @@ function statusFormatter(value, row, index) {
 
 // 查看全部可用
 function showAvailable(){
-    initTable('table', '/carBrand/queryByPagerCarBrand');
+    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师,汽车公司学徒,汽车公司销售人员,汽车公司财务人员,汽车公司采购人员,汽车公司库管人员,汽车公司人力资源管理部";
+    $.post("/user/isLogin/"+roles, function (data) {
+        if(data.result == 'success'){
+            initTable('table', '/carBrand/queryByPagerCarBrand');
+        }else if(data.result == 'notLogin'){
+            swal({title:"",
+                    text:data.message,
+                    confirmButtonText:"确认",
+                    type:"error"}
+                ,function(isConfirm){
+                    if(isConfirm){
+                        top.location = "/user/loginPage";
+                    }else{
+                        top.location = "/user/loginPage";
+                    }
+                })
+        }else if(data.result == 'notRole'){
+            swal({title:"",
+                text:data.message,
+                confirmButtonText:"确认",
+                type:"error"})
+        }
+    });
+
 }
 // 查看全部禁用
 function showDisable(){
-    initTable('table', '/carBrand/queryByPagerDisable');
+    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师,汽车公司学徒,汽车公司销售人员,汽车公司财务人员,汽车公司采购人员,汽车公司库管人员,汽车公司人力资源管理部";
+    $.post("/user/isLogin/"+roles, function (data) {
+        if(data.result == 'success'){
+            initTable('table', '/carBrand/queryByPagerDisable');
+        }else if(data.result == 'notLogin'){
+            swal({title:"",
+                    text:data.message,
+                    confirmButtonText:"确认",
+                    type:"error"}
+                ,function(isConfirm){
+                    if(isConfirm){
+                        top.location = "/user/loginPage";
+                    }else{
+                        top.location = "/user/loginPage";
+                    }
+                })
+        }else if(data.result == 'notRole'){
+            swal({title:"",
+                text:data.message,
+                confirmButtonText:"确认",
+                type:"error"})
+        }
+    });
 }

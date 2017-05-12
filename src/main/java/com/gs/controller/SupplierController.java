@@ -31,6 +31,7 @@ public class SupplierController {
      * 供应商管理
      * @return
      */
+    @RequiresAuthentication
     @RequestMapping(value = "supplierInformation", method = RequestMethod.GET)
     public String supplierInformation() {
         logger.info("供应商管理");

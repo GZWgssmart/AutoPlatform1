@@ -23,26 +23,27 @@
       <result property="maintainDes" column="maintainDes"/>
     </association>
   </resultMap>
+
   <select id="queryByRecord" resultMap="maintainFixAccMap">
     select * from t_maintain_fix_acc where maintainId in (${fixId})
   </select>
-
-
-  <insert id="insert" parameterType="MaintainFixAcc">
-    <![CDATA[
-            insert into t_maintain_fix_acc (mainAccId, maintainId, accId, accCount) VALUES (uuid(),#{maintainId},#{accId},#{accCount})
-		]]>
-  </insert>
 
   <select id="queryByDetailsByPager" resultMap="maintainFixAccMap" parameterType="com.gs.common.bean.Pager">
     <![CDATA[
      select fix.*,acc.*,a.accName, c.companyId, c.companyName from t_maintain_fix fix,t_maintain_fix_acc acc,t_accessories a, t_company c where fix.maintainId = acc.maintainId and a.accId = acc.accId and c.companyId = fix.companyId and fix.maintainId = #{maintainId} limit #{pager.beginIndex}, #{pager.pageSize}
     ]]>
+    <if test="user.companyId != '' and user.companyId !=null">
+      and fix.companyId = #{user.companyId}
+    </if>
   </select>
-  <select id="countByDetails" resultType="int">
+
+  <select id="countByDetails" resultType="int" parameterType="com.gs.bean.User">
     <![CDATA[
-      select count(maintainId) from t_maintain_fix where maintainId = #{maintainId}
+      select count(maintainId) from t_maintain_fix fix where maintainId = #{maintainId}
 		]]>
+    <if test="companyId != '' and companyId !=null">
+      and fix.companyId = #{companyId}
+    </if>
   </select>
 
   <update id="update" parameterType="MaintainFixAcc">
@@ -50,5 +51,11 @@
       update t_maintain_fix_acc set accId = #{accId}, accCount = #{accCount} where mainAccId = #{mainAccId}
     ]]>
   </update>
+
+  <insert id="insert" parameterType="MaintainFixAcc">
+    <![CDATA[
+            insert into t_maintain_fix_acc (mainAccId, maintainId, accId, accCount) VALUES (uuid(),#{maintainId},#{accId},#{accCount})
+		]]>
+  </insert>
 
 </mapper>

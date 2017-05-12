@@ -60,7 +60,7 @@ public class SupplyController {
                 }
                 return comboxs;
             } else {
-                logger.info("此用户无拥有此方法角色");
+                logger.info("此用户无拥有查询所有供应商的角色");
                 return null;
             }
         } else {
@@ -89,7 +89,7 @@ public class SupplyController {
                 List<Supply> supplyList = supplyService.queryByPager(pager);
                 return new Pager4EasyUI<Supply>(pager.getTotalRecords(), supplyList);
             } else {
-                logger.info("此用户无拥有此方法角色");
+                logger.info("此用户无拥有供应商分页查询角色");
                 return null;
             }
         } else {
@@ -117,7 +117,7 @@ public class SupplyController {
                 List<Supply> supplyList = supplyService.queryByPagerDisable(pager);
                 return new Pager4EasyUI<Supply>(pager.getTotalRecords(), supplyList);
             }else {
-                logger.info("此用户无拥有此方法角色");
+                logger.info("此用户无拥有供应商禁用分页查询角色");
                 return null;
             }
 
@@ -148,7 +148,7 @@ public class SupplyController {
                     return ControllerResult.getFailResult("添加供应商记录失败");
                 }
             }else {
-                logger.info("此用户无拥有此方法角色");
+                logger.info("此用户无拥有添加供应商记录角色");
                 return null;
             }
         }else{
@@ -180,7 +180,7 @@ public class SupplyController {
                     return ControllerResult.getFailResult("修改供应商记录失败");
                 }
             }else {
-                logger.info("此用户无拥有此方法角色");
+                logger.info("此用户无拥有修改供应商记录角色");
                 return null;
             }
         }else{
@@ -213,7 +213,7 @@ public class SupplyController {
                     return ControllerResult.getFailResult("操作失败");
                 }
             }else {
-                logger.info("此用户无拥有此方法角色");
+                logger.info("此用户无拥有对供应商记录状态做激活与禁用的角色");
                 return null;
             }
         }else{
@@ -265,7 +265,7 @@ public class SupplyController {
                     return new Pager4EasyUI<Supply>(pager.getTotalRecords(), supplys);
                 }
             }else {
-                logger.info("此用户无拥有此方法角色");
+                logger.info("此用户无拥有供应商记录模糊查询角色");
                 return null;
             }
         }else{

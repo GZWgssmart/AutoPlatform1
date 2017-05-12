@@ -6,6 +6,25 @@ $(function(){
     // initSelect2("maintainRecord","请选择保养记录编号","/maintainRecord/queryByPager");
 })
 
+
+
+// 显示所有明细
+function showSchedule(){
+    var row =  $('#table').bootstrapTable('getSelections');
+    if(row.length >0) {
+        //maintainId = row[0].maintainId;
+        $("#ScheduleWindow").modal('show');
+        //initDetailTable('detailTable', '/maintain/queryByDetailsByPager?maintainId='+row[0].maintainId);
+    }else{
+        swal({
+            title:"",
+            text: "请选择要查看明细的维修保养记录", // 主要文本
+            confirmButtonColor: "#DD6B55", // 提示按钮的颜色
+            confirmButtonText:"确定", // 提示按钮上的文本
+            type:"warning"}) // 提示类型
+    }
+}
+
 //显示添加
 function showAdd() {
     $("#addWindow").modal('show');

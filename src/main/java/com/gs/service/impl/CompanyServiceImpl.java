@@ -1,6 +1,7 @@
 package com.gs.service.impl;
 
 import com.gs.bean.Company;
+import com.gs.bean.User;
 import com.gs.common.bean.Pager;
 import com.gs.dao.CompanyDAO;
 import com.gs.service.CompanyService;
@@ -30,18 +31,18 @@ public class CompanyServiceImpl implements CompanyService {
 	public int batchDelete(List<Company> list) { return companyDAO.batchDelete(list); }
 	public int update(Company company) { return companyDAO.update(company); }
 	public int batchUpdate(List<Company> list) { return companyDAO.batchUpdate(list); }
-	public List<Company> queryAll() { return companyDAO.queryAll(); }
+	public List<Company> queryAll(User user) { return companyDAO.queryAll(user); }
 
 	@Override
 	public List<Company> queryAll(String status) {
-		return companyDAO.queryAll();
+		return companyDAO.queryAll(status);
 	}
 
 	public List<Company> queryByStatus(String status) { return companyDAO.queryAll(status); }
 	public Company query(Company company) { return companyDAO.query(company); }
 	public Company queryById(String id) { return companyDAO.queryById(id); }
 	public List<Company> queryByPager(Pager pager) { return companyDAO.queryByPager(pager); }
-	public int count() { return companyDAO.count(); }
+	public int count(User user) { return companyDAO.count(user); }
 	public int inactive(String id) { return companyDAO.inactive(id); }
 	public int active(String id) { return companyDAO.active(id); }
 
@@ -49,15 +50,18 @@ public class CompanyServiceImpl implements CompanyService {
 		return companyDAO.queryByPagerDisable(pager);
 	}
 
-	public int countByDisable() {
-		return companyDAO.countByDisable();
+	public int countByDisable(User user) {
+		return companyDAO.countByDisable(user);
 	}
 
+	@Override
 	public List<Company> blurredQuery(Pager pager, Company company) {
-		return null;
+		return companyDAO.blurredQuery(pager,company);
 	}
 
-	public int countByBlurred(Company company) {
-		return 0;
+	@Override
+	public int countByBlurred(Company company, User user) {
+		return companyDAO.countByDisable(user);
 	}
+
 }

@@ -1,6 +1,7 @@
 package com.gs.service.impl;
 
 import com.gs.bean.AccessoriesBuy;
+import com.gs.bean.User;
 import com.gs.common.bean.Pager;
 import com.gs.dao.AccessoriesBuyDAO;
 import com.gs.service.AccessoriesBuyService;
@@ -30,23 +31,37 @@ public class AccessoriesBuyServiceImpl implements AccessoriesBuyService {
 	public int batchDelete(List<AccessoriesBuy> list) { return accessoriesBuyDAO.batchDelete(list); }
 	public int update(AccessoriesBuy accessoriesBuy) { return accessoriesBuyDAO.update(accessoriesBuy); }
 	public int batchUpdate(List<AccessoriesBuy> list) { return accessoriesBuyDAO.batchUpdate(list); }
-	public List<AccessoriesBuy> queryAll() { return accessoriesBuyDAO.queryAll(); }
 
-
-	public List<AccessoriesBuy> queryAll(String status) {
-		return accessoriesBuyDAO.queryAll();
+	@Override
+	public List<AccessoriesBuy> queryAll(User user) {
+		return accessoriesBuyDAO.queryAll(user);
 	}
+
+	@Override
+	public List<AccessoriesBuy> queryAll(String status) {
+		return accessoriesBuyDAO.queryAll(status);
+	}
+
 
 	public List<AccessoriesBuy> queryByStatus(String status) { return accessoriesBuyDAO.queryAll(status); }
 	public AccessoriesBuy query(AccessoriesBuy accessoriesBuy) { return accessoriesBuyDAO.query(accessoriesBuy); }
 	public AccessoriesBuy queryById(String id) { return accessoriesBuyDAO.queryById(id); }
 	public List<AccessoriesBuy> queryByPager(Pager pager) { return accessoriesBuyDAO.queryByPager(pager); }
-	public int count() { return accessoriesBuyDAO.count(); }
+
+	@Override
+	public int count(User user) {
+		return accessoriesBuyDAO.count(user);
+	}
 	public int inactive(String id) { return accessoriesBuyDAO.inactive(id); }
 	public int active(String id) { return accessoriesBuyDAO.active(id); }
 
 	public List<AccessoriesBuy> queryByPagerDisable(Pager pager) {
 		return accessoriesBuyDAO.queryByPagerDisable(pager);
+	}
+
+	@Override
+	public int countByDisable(User user) {
+		return accessoriesBuyDAO.countByDisable(user);
 	}
 
 	public int countByDisable() {
@@ -67,7 +82,8 @@ public class AccessoriesBuyServiceImpl implements AccessoriesBuyService {
 		return accessoriesBuyDAO.blurredQuery(pager,accessoriesBuy);
 	}
 
-	public int countByBlurred(AccessoriesBuy accessoriesBuy) {
-		return accessoriesBuyDAO.countByBlurred(accessoriesBuy);
+	@Override
+	public int countByBlurred(AccessoriesBuy accessoriesBuy, User user) {
+		return accessoriesBuyDAO.countByBlurred(accessoriesBuy, user);
 	}
 }

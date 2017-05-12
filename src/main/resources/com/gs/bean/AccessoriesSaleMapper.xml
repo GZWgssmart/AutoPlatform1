@@ -30,8 +30,11 @@
 -->
   <select id="queryAll" resultMap="AccessoriesSaleMap">
     <![CDATA[
-            select * from auto_platform.t_accessories_sale
+            select * from auto_platform.t_accessories_sale ase WHERE
         ]]>
+    <if test="companyId != '' and companyId !=null">
+      ase.companyId = #{user.companyId}
+    </if>
   </select>
 
   <!-- 分页查询 -->
@@ -41,16 +44,23 @@
       from auto_platform.t_accessories_sale aca
       LEFT JOIN auto_platform.t_company cp ON aca.companyId=cp.companyId
       LEFT JOIN auto_platform.t_accessories ac ON aca.accId=ac.accId
-      where aca.accSaleStatus = 'Y' order by aca.accSaleCreatedTime Desc
+      where aca.accSaleStatus = 'Y'
     ]]>
+    <if test="user.companyId != '' and user.companyId != null">
+      and aca.companyId = #{user.companyId}
+    </if>
+    order by aca.accSaleCreatedTime Desc
     limit #{beginIndex}, #{pageSize};
   </select>
 
   <!--查询有多少配件销售信息-->
   <select id="count" resultType="int" >
     <![CDATA[
-      select count(*) from auto_platform.t_accessories_sale u where 1 =1 and u.accSaleStatus = 'Y'
+      select count(accSaleId) from auto_platform.t_accessories_sale u WHERE u.accSaleStatus = 'Y'
     ]]>
+    <if test="companyId != '' and companyId !=null">
+      and u.companyId = #{user.companyId}
+    </if>
   </select>
 
   <!--
@@ -107,25 +117,34 @@
        SELECT asa.*,cp.companyName,cp.companyId,ac.accId,ac.accName FROM auto_platform.t_accessories_sale asa
        LEFT JOIN auto_platform.t_company cp on cp.companyId=asa.companyId
        LEFT JOIN auto_platform.t_accessories ac on ac.accId=asa.accId
-       WHERE accSaleStatus='N'
+       WHERE accSaleStatus='N' order by asa.accSaleCreatedTime Desc
     ]]>
+    <if test="user.companyId != '' and user.companyId !=null">
+      and asa.companyId = #{user.companyId}
+    </if>
     limit #{beginIndex}, #{pageSize}
   </select>
 
-  <select id="countByDisable" resultType="int" >
+  <select id="countByDisable" resultType="int" parameterType="com.gs.bean.User">
     <![CDATA[
-      select count(accSaleId) from auto_platform.t_accessories_sale ck where ck.accSaleStatus = 'N'
+      select count(accSaleId) from auto_platform.t_accessories_sale asa where asa.accSaleStatus = 'N'
     ]]>
+    <if test="companyId != '' and companyId !=null">
+      and asa.companyId = #{user.companyId}
+    </if>
   </select>
 
   <!-- 分页模糊查询 -->
   <select id="blurredQuery" resultMap="AccessoriesSaleMap" >
     <![CDATA[
-           select asa.*,cp.companyId,cp.companyName,ac.accId,ac.accName from auto_platform.t_accessories_sale asa
-           LEFT JOIN auto_platform.t_company cp on asa.companyId=cp.companyId
-           LEFT JOIN auto_platform.t_accessories ac on asa.accId=ac.accId
-           where 1=1 AND
-        ]]>
+     select asa.*,cp.companyId,cp.companyName,ac.accId,ac.accName from auto_platform.t_accessories_sale asa
+     LEFT JOIN auto_platform.t_company cp on asa.companyId=cp.companyId
+     LEFT JOIN auto_platform.t_accessories ac on asa.accId=ac.accId
+     where 1=1 AND
+    ]]>
+    <if test="pager.user.companyId != '' and pager.user.companyId !=null">
+      and asa.companyId = #{pager.user.companyId}
+    </if>
     <if test="accSale.companyId != '' and accSale.companyId != null">
       cp.companyName like '%${accSale.companyId}%'
     </if>
@@ -143,11 +162,14 @@
   <!-- 分页模糊查询个数 -->
   <select id="countByBlurred" resultType="int" >
     <![CDATA[
-           select count(accSaleId) FROM auto_platform.t_accessories_sale asa
-           LEFT JOIN auto_platform.t_company cp on cp.companyId=asa.companyId
-           LEFT JOIN auto_platform.t_accessories ac on ac.accId=asa.accId
-           where 1=1 AND
-        ]]>
+     select count(accSaleId) FROM auto_platform.t_accessories_sale asa
+     LEFT JOIN auto_platform.t_company cp on cp.companyId=asa.companyId
+     LEFT JOIN auto_platform.t_accessories ac on ac.accId=asa.accId
+     where 1=1 AND
+    ]]>
+    <if test="user.companyId != '' and user.companyId !=null">
+      and asa.companyId = #{user.companyId}
+    </if>
     <if test="accSale.companyId != '' and accSale.companyId != null">
       cp.companyName like '%${accSale.companyId}%'
     </if>

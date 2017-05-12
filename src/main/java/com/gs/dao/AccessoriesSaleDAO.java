@@ -1,6 +1,7 @@
 package com.gs.dao;
 
 import com.gs.bean.AccessoriesSale;
+import com.gs.bean.User;
 import com.gs.common.bean.Pager;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -34,4 +35,6 @@ public interface AccessoriesSaleDAO extends BaseDAO<String, AccessoriesSale>{
      * 模糊查询的记录数
      */
     public int countByBlurred(@Param("accSale")AccessoriesSale accessoriesSale);
+
+    public int countByBlurred(AccessoriesSale accessoriesSale, User user);
 }

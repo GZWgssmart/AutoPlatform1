@@ -38,7 +38,7 @@ public class MaintainRecordController {
         Pager pager = new Pager();
         pager.setPageNo(Integer.valueOf(pageNumber));
         pager.setPageSize(Integer.valueOf(pageSize));
-        int count = maintainRecordService.count();
+        int count = maintainRecordService.count()
         pager.setTotalRecords(count);
         List<MaintainRecord> queryList = maintainRecordService.queryByPager(pager);
         return new Pager4EasyUI<MaintainRecord>(pager.getTotalRecords(), queryList);
