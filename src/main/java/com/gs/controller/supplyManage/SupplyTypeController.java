@@ -1,8 +1,6 @@
 package com.gs.controller.supplyManage;
 
 import ch.qos.logback.classic.Logger;
-import com.gs.bean.CarColor;
-import com.gs.bean.Supply;
 import com.gs.bean.SupplyType;
 import com.gs.bean.User;
 import com.gs.common.bean.ComboBox4EasyUI;
@@ -57,7 +55,7 @@ public class SupplyTypeController {
                 }
                 return comboxs;
             }else{
-                logger.info("此用户无拥有此方法角色");
+                logger.info("此用户无拥有查询全部供应商类型记录角色");
                 return null;
             }
         }else{
@@ -86,7 +84,7 @@ public class SupplyTypeController {
                 List<SupplyType> supplyTypeList = supplyTypeService.queryByPager(pager);
                 return new Pager4EasyUI<SupplyType>(pager.getTotalRecords(), supplyTypeList);
             }else{
-                logger.info("此用户无拥有此方法角色");
+                logger.info("此用户无拥有供应商类型记录分页查询角色");
                 return null;
             }
         }else{
@@ -111,7 +109,7 @@ public class SupplyTypeController {
                 List<SupplyType> supplyTypeList = supplyTypeService.queryByPagerDisable(pager);
                 return new Pager4EasyUI<SupplyType>(pager.getTotalRecords(), supplyTypeList);
             }else{
-                logger.info("此用户无拥有此方法角色");
+                logger.info("此用户无拥有供应商类型记录禁用分页查询角色");
                 return null;
             }
         }else{
@@ -143,7 +141,7 @@ public class SupplyTypeController {
                     return ControllerResult.getFailResult("添加供应商类型记录失败");
                 }
             }else{
-                logger.info("此用户无拥有此方法角色");
+                logger.info("此用户无拥有添加供应商类型记录角色");
                 return null;
             }
         }else{
@@ -175,7 +173,7 @@ public class SupplyTypeController {
                     return ControllerResult.getFailResult("修改供应商类型记录失败");
                 }
             }else{
-                logger.info("此用户无拥有此方法角色");
+                logger.info("此用户无拥有修改供应商类型记录角色");
                 return null;
             }
         }else{
@@ -208,7 +206,7 @@ public class SupplyTypeController {
                     return ControllerResult.getFailResult("操作失败");
                 }
             }else{
-                logger.info("此用户无拥有此方法角色");
+                logger.info("此用户无拥有对供应商类型记录状态做激活与禁用的角色");
                 return null;
             }
 
