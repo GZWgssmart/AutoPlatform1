@@ -73,7 +73,7 @@ public class UserController {
                         || subject.hasRole(Constants.role_owner)) {
                     logger.info("登录成功");
                     User user = userService.queryUser(user1.getUserEmail());
-                    session.setAttribute("subject", subject);
+                    session.setAttribute("user", user);
                     return ControllerResult.getSuccessResult("登录成功");
                 }else {
                     logger.info("抱歉，你的账号角色并不授权。请联系管理员激活账号！");
