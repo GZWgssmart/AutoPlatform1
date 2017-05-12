@@ -1,6 +1,7 @@
 package com.gs.service.impl;
 
 import com.gs.bean.Supply;
+import com.gs.bean.User;
 import com.gs.common.bean.Pager;
 import com.gs.dao.SupplyDAO;
 import com.gs.service.SupplyService;
@@ -30,17 +31,28 @@ public class SupplyServiceImpl implements SupplyService {
 	public int batchDelete(List<Supply> list) { return supplyDAO.batchDelete(list); }
 	public int update(Supply supply) { return supplyDAO.update(supply); }
 	public int batchUpdate(List<Supply> list) { return supplyDAO.batchUpdate(list); }
-	public List<Supply> queryAll() { return supplyDAO.queryAll(); }
 
-	public List<Supply> queryAll(String status) {
-		return supplyDAO.queryAll();
+	@Override
+	public List<Supply> queryAll(User user) {
+		return supplyDAO.queryAll(user);
 	}
+
+	@Override
+	public List<Supply> queryAll(String status) {
+		return supplyDAO.queryAll(status);
+	}
+
 
 	public List<Supply> queryByStatus(String status) { return supplyDAO.queryAll(status); }
 	public Supply query(Supply supply) { return supplyDAO.query(supply); }
 	public Supply queryById(String id) { return supplyDAO.queryById(id); }
 	public List<Supply> queryByPager(Pager pager) { return supplyDAO.queryByPager(pager); }
-	public int count() { return supplyDAO.count(); }
+
+	@Override
+	public int count(User user) {
+		return supplyDAO.count(user);
+	}
+
 	public int inactive(String id) { return supplyDAO.inactive(id); }
 	public int active(String id) { return supplyDAO.active(id); }
 
@@ -49,7 +61,8 @@ public class SupplyServiceImpl implements SupplyService {
 		return supplyDAO.queryByPagerDisable(pager);
 	}
 
-	public int countByDisable() {
+	@Override
+	public int countByDisable(User user) {
 		return supplyDAO.countByDisable();
 	}
 
@@ -57,7 +70,9 @@ public class SupplyServiceImpl implements SupplyService {
 		return supplyDAO.blurredQuery(pager,supply);
 	}
 
-	public int countByBlurred(Supply supply) {
-		return supplyDAO.countByBlurred(supply);
+	@Override
+	public int countByBlurred(Supply supply, User user) {
+		return supplyDAO.countByBlurred(supply,user);
 	}
+
 }

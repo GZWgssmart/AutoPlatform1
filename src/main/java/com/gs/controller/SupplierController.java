@@ -1,6 +1,7 @@
 package com.gs.controller;
 
 import ch.qos.logback.classic.Logger;
+import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +20,7 @@ public class SupplierController {
      * 供应商类型管理
      * @return
      */
+    @RequiresAuthentication
     @RequestMapping(value = "supplierType", method = RequestMethod.GET)
     public String supplierType() {
         logger.info("供应商类型管理");

@@ -1,18 +1,48 @@
-var contentPath = ''
 $(function () {
-    initTable("table", "/supply/queryByPager"); // 初始化表格
+    $.post("/user/isLogin", function (data) {
+        if(data.result == 'success'){
+            initTable("table", "/supply/queryByPager"); // 初始化表格
 
-    initSelect2("company", "请选择所属公司", "/company/queryAllCompany");
-    initSelect2("supplyType", "请选择供应商类型", "/supplyType/queryAllSupplyType"); // 初始化select2, 第一个参数是class的名字, 第二个参数是select2的提示语, 第三个参数是select2的查询url
+            initSelect2("company", "请选择所属公司", "/company/queryAllCompany");
+            initSelect2("supplyType", "请选择供应商类型", "/supplyType/queryAllSupplyType");
+        }else if(data.result == 'notLogin'){
+            swal({title:"",
+                    text:data.message,
+                    confirmButtonText:"确认",
+                    type:"error"}
+                ,function(isConfirm){
+                    if(isConfirm){
+                        top.location = "/user/loginPage";
+                    }else{
+                        top.location = "/user/loginPage";
+                    }
+                })
+        }
+    });
 });
-
 
 // 模糊查询
 function blurredQuery(){
-    var button = $("#ulButton");// 获取模糊查询按钮
-    var text = button.text();// 获取模糊查询按钮文本
-    var vaule = $("#ulInput").val();// 获取模糊查询输入框文本
-    initTable('table', '/supply/blurredQuery?text='+text+'&value='+vaule);
+    $.post("/user/isLogin", function (data) {
+        if(data.result == 'success'){
+            var button = $("#ulButton");// 获取模糊查询按钮
+            var text = button.text();// 获取模糊查询按钮文本
+            var vaule = $("#ulInput").val();// 获取模糊查询输入框文本
+            initTable('table', '/supply/blurredQuery?text='+text+'&value='+vaule);
+        }else if(data.result == 'notLogin'){
+            swal({title:"",
+                    text:data.message,
+                    confirmButtonText:"确认",
+                    type:"error"}
+                ,function(isConfirm){
+                    if(isConfirm){
+                        top.location = "/user/loginPage";
+                    }else{
+                        top.location = "/user/loginPage";
+                    }
+                })
+        }
+    });
 }
 
 function showEdit(){
@@ -297,23 +327,43 @@ function statusFormatter(value, row, index) {
     }
 }
 
-/**
- * 查询禁用支出类型
- * @param id
- */
-function searchDisableStatus() {
-    initTable('table', '/supply/queryByPagerDisable');
+// 查看全部可用
+function searchRapidStatus(){
+    $.post("/user/isLogin", function (data) {
+        if(data.result == 'success'){
+            initTable('table', '/supply/queryByPager');
+        }else if(data.result == 'notLogin'){
+            swal({title:"",
+                    text:data.message,
+                    confirmButtonText:"确认",
+                    type:"error"}
+                ,function(isConfirm){
+                    if(isConfirm){
+                        top.location = "/user/loginPage";
+                    }else{
+                        top.location = "/user/loginPage";
+                    }
+                })
+        }
+    });
 }
-
-/**
- * 查询激活支出类型
- * @param id
- */
-function searchRapidStatus() {
-    initTable('table', '/supply/queryByPager');
+// 查看全部禁用
+function searchDisableStatus(){
+    $.post("/user/isLogin", function (data) {
+        if(data.result == 'success'){
+            initTable('table', '/supply/queryByPagerDisable');
+        }else if(data.result == 'notLogin'){
+            swal({title:"",
+                    text:data.message,
+                    confirmButtonText:"确认",
+                    type:"error"}
+                ,function(isConfirm){
+                    if(isConfirm){
+                        top.location = "/user/loginPage";
+                    }else{
+                        top.location = "/user/loginPage";
+                    }
+                })
+        }
+    });
 }
-/*
-
-function formatRepo(repo){return repo.text}
-function formatRepoSelection(repo){return repo.text}
-*/

@@ -15,16 +15,22 @@
 
   </resultMap>
 
-  <select id="queryAll" resultMap="supplyTypeMap">
+  <select id="queryAll" resultMap="supplyTypeMap" parameterType="com.gs.bean.User">
     <![CDATA[
           select * from t_supply_type;
         ]]>
+    <if test="companyId != '' and companyId !=null">
+      and st.companyId = #{user.companyId}
+    </if>
   </select>
 
-  <select id="count" resultType="int" >
+  <select id="count" resultType="int" parameterType="com.gs.bean.User">
     <![CDATA[
       select count(*) from t_supply_type st where st.supplyTypeStatus = 'Y'
     ]]>
+    <if test="companyId != '' and companyId !=null">
+      and st.companyId = #{user.companyId}
+    </if>
   </select>
 
   <select id="queryByPager" resultMap="supplyTypeMap" parameterType="com.gs.common.bean.Pager">
@@ -34,13 +40,19 @@
         LEFT JOIN auto_platform.t_company cp on st.companyId=cp.companyId
         where st.supplyTypeStatus = 'Y'
     ]]>
+    <if test="user.companyId != '' and user.companyId !=null">
+      and st.companyId = #{user.companyId}
+    </if>
     limit #{beginIndex}, #{pageSize}
   </select>
 
-  <select id="countByDisable" resultType="int" >
+  <select id="countByDisable" resultType="int" parameterType="com.gs.bean.User">
     <![CDATA[
         select count(*) from t_supply_type st where st.supplyTypeStatus = 'N'
     ]]>
+    <if test="companyId != '' and companyId !=null">
+      and st.companyId = #{user.companyId}
+    </if>
   </select>
 
   <select id="queryByPagerDisable" resultMap="supplyTypeMap" parameterType="com.gs.common.bean.Pager">
@@ -50,6 +62,9 @@
         LEFT JOIN auto_platform.t_company cp on st.companyId=cp.companyId
         where st.supplyTypeStatus = 'N'
     ]]>
+    <if test="user.companyId != '' and user.companyId !=null">
+      and st.companyId = #{user.companyId}
+    </if>
     limit #{beginIndex}, #{pageSize}
   </select>
   <!--

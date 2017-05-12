@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <html>
 <head>
     <title>供应商类型管理</title>
@@ -56,8 +57,9 @@
 <!-- 添加弹窗 -->
 
 <div id="addWindow" class="modal fade" style="overflow-y:scroll" data-backdrop="static" >
-    <div class="modal-dialog"  style="width: 750px;height: auto;" >
+    <div class="modal-dialog">
         <div class="modal-content" >
+                <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
                 <form class="form-horizontal"  role="form" id="addForm" method="post">
                 <div class="modal-header" style="overflow:auto;">
                     <h4>添加供应商类型信息</h4>
@@ -96,8 +98,9 @@
 
 <!-- 修改弹窗 -->
 <div id="editWindow" class="modal fade" style="overflow-y:scroll" data-backdrop="static">
-    <div class="modal-dialog"  style="width: 750px;height: auto;">
+    <div class="modal-dialog">
         <div class="modal-content">
+            <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
             <form  class="form-horizontal"  id="editForm" method="post">
                 <input type="hidden" name="supplyTypeId" define="supplyType.supplyTypeId"/>
                 <div class="modal-header" style="overflow:auto;">

@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <html>
 <head>
     <title>供应商管理</title>
@@ -104,8 +105,9 @@
 <!-- 添加弹窗 -->
 
 <div id="addWindow" class="modal fade" style="overflow-y:scroll" data-backdrop="static" >
-    <div class="modal-dialog"  style="width:1030px;">
+    <div class="modal-dialog">
         <div class="modal-content" >
+            <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
             <form role="form" class="form-horizontal" id="addForm">
                 <div class="modal-header" style="overflow:auto;">
                     <h4>添加供应商信息</h4>
@@ -208,15 +210,16 @@
 
 <!-- 修改弹窗 -->
 <div id="editWindow" class="modal fade" style="overflow-y:scroll" data-backdrop="static" >
-    <div class="modal-dialog"  style="width:1030px;">
+    <div class="modal-dialog"  style="width:90%">
         <div class="modal-content">
+            <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
             <form role="form" class="form-horizontal" id="editForm">
                 <input type="hidden" name="supplyId" define="supply.supplyId"/>
                 <input type="hidden"name="supplyStatus" define="supply.supplyStatus">
                 <div class="modal-header" style="overflow:auto;">
                     <h4>修改供应商信息</h4>
                 </div>
-                <div style="margin-left: auto;width:90%;margin-left:auto;margin-right:auto">
+                <div>
                     <div>
                         <div class="form-group col-md-6 pull-left">
                             <label class="col-md-4 control-label">供应商名称：</label>

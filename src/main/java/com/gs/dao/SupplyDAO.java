@@ -2,8 +2,10 @@ package com.gs.dao;
 
 import com.gs.bean.Checkin;
 import com.gs.bean.Supply;
+import com.gs.bean.User;
 import com.gs.common.bean.Pager;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.security.access.method.P;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -35,6 +37,6 @@ public interface SupplyDAO extends BaseDAO<String, Supply>{
     /**
      * 模糊查询的记录数
      */
-    public int countByBlurred(@Param("supply")Supply supply);
+    public int countByBlurred(@Param("supply")Supply supply, @Param("user")User user);
 
 }

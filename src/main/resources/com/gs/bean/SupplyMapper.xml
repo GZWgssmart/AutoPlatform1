@@ -29,10 +29,13 @@
 
   </resultMap>
 
-  <select id="queryAll" resultMap="supplyMap">
+  <select id="queryAll" resultMap="supplyMap" parameterType="com.gs.bean.User">
     <![CDATA[
-      select * FROM auto_platform.t_supply
+      select * FROM auto_platform.t_supply s
     ]]>
+    <if test="companyId != '' and companyId !=null">
+      and s.companyId = #{user.companyId}
+    </if>
   </select>
 
   <select id="queryByPager" resultMap="supplyMap" parameterType="com.gs.common.bean.Pager">
@@ -42,6 +45,9 @@
         LEFT JOIN t_company co on s.companyId = co.companyId
         where s.supplyStatus = 'Y' order by s.supplyCreatedTime Desc
     ]]>
+    <if test="user.companyId != '' and user.companyId !=null">
+      and s.companyId = #{user.companyId}
+    </if>
     limit #{beginIndex}, #{pageSize}
   </select>
 
@@ -52,19 +58,28 @@
         LEFT JOIN t_company co on s.companyId = co.companyId
         where s.supplyStatus = 'N' order by s.supplyCreatedTime Desc
     ]]>
+    <if test="user.companyId != '' and user.companyId !=null">
+      and s.companyId = #{user.companyId}
+    </if>
     limit #{beginIndex}, #{pageSize}
   </select>
 
-  <select id="count" resultType="int" >
+  <select id="count" resultType="int" parameterType="com.gs.bean.User">
     <![CDATA[
       select count(supplyId) from auto_platform.t_supply s where 1=1 and s.supplyStatus = 'Y'
     ]]>
+    <if test="companyId != '' and companyId !=null">
+      and s.companyId = #{user.companyId}
+    </if>
   </select>
  
-  <select id="countByDisable" resultType="int" >
+  <select id="countByDisable" resultType="int" parameterType="com.gs.bean.User">
     <![CDATA[
       select count(supplyId) from auto_platform.t_supply s where s.supplyStatus = 'N'
     ]]>
+    <if test="companyId != '' and companyId !=null">
+      and s.companyId = #{user.companyId}
+    </if>
   </select>
 
   <!--
@@ -115,6 +130,9 @@
         LEFT JOIN t_company co on s.companyId = co.companyId
         where 1=1 and
       ]]>
+    <if test="pager.user.companyId != '' and pager.user.companyId !=null">
+      and s.companyId = #{pager.user.companyId}
+    </if>
     <if test="supply.supplyName != '' and supply.supplyName != null">
       s.supplyName like '%${supply.supplyName}%'
     </if>
@@ -137,13 +155,16 @@
   </select>
 
   <!-- 分页模糊查询个数 -->
-  <select id="countByBlurred" resultType="int" >
+  <select id="countByBlurred" resultType="int">
     <![CDATA[
       select count(supplyId) from auto_platform.t_supply s
       LEFT JOIN t_supply_type st on s.supplyTypeId = st.supplyTypeId
       LEFT JOIN t_company co on s.companyId = co.companyId
       where 1=1 and
     ]]>
+    <if test="user.companyId != '' and user.companyId !=null">
+      and s.companyId = #{user.companyId}
+    </if>
     <if test="supply.supplyName != '' and supply.supplyName != null">
       s.supplyName like '%${supply.supplyName}%'
     </if>
@@ -161,6 +182,6 @@
     <if test="supply.supplyTypeId != '' and supply.supplyTypeId != null">
       st.supplyTypeName like '%${supply.supplyTypeId}%'
     </if>
-  </select>
+    </select>
 
 </mapper>
