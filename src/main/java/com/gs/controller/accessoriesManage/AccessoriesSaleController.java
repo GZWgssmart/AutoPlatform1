@@ -191,12 +191,12 @@ public class AccessoriesSaleController {
             pager.setPageSize(Integer.parseInt(pageSize));
             List<AccessoriesSale> accessoriesSales = null;
             AccessoriesSale accessoriesSale = new AccessoriesSale();
-            if (text.equals("汽车公司/配件")) {
+            if (text.equals("汽车公司/配件名称")) {
                 accessoriesSale.setCompanyId(value);
                 accessoriesSale.setAccId(value);
             } else if (text.equals("汽车公司")) {
                 accessoriesSale.setCompanyId(value);
-            } else if (text.equals("配件")) {
+            } else if (text.equals("配件名称")) {
                 accessoriesSale.setAccId(value);
             }
             accessoriesSales = accessoriesSaleService.blurredQuery(pager, accessoriesSale);

@@ -39,7 +39,9 @@ function showEdit() {
     } else {
         swal({
             "title": "",
-            "text": "请先选择一条数据",
+            "text": "请修改配件销售信息",
+            confirmButtonColor: "#DD6B55", // 提示按钮的颜色
+            confirmButtonText:"确定", // 提示按钮上的文本
             "type": "warning"
         })
     }
@@ -194,6 +196,7 @@ function formSubmit(url, formId, winId) {
                     $("input[type=reset]").trigger("click"); // 移除表单中填的值
                     $('#addForm').data('bootstrapValidator').resetForm(true); // 移除所有验证样式
                     $("#addButton").removeAttr("disabled"); // 移除不可点击
+                    $("#addAccInv").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
                     $("#addCompany").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
                     $("#addAccType").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
                 }
@@ -228,10 +231,10 @@ function validator(formId) {
                 }
             },
             accId: {
-                message: '配件编号不能为空',
+                message: '配件名称不能为空',
                 validators: {
                     notEmpty: {
-                        message: '配件编号不能为空'
+                        message: '配件名称不能为空'
                     }
                 }
             },
@@ -259,14 +262,6 @@ function validator(formId) {
                     }
                 }
             },
-            accSaleTotal: {
-                message: '配件销售总价不能为空',
-                validators: {
-                    notEmpty: {
-                        message: '配件销售总价不能为空'
-                    }
-                }
-            },
             accSaleDiscount: {
                 message: '配件销售折扣不能为空',
                 validators: {
@@ -274,15 +269,7 @@ function validator(formId) {
                         message: '配件销售折扣不能为空'
                     }
                 }
-            },
-            accSaleMoney: {
-                message: '配件销售最终价不能为空',
-                validators: {
-                    notEmpty: {
-                        message: '配件销售最终价不能为空'
-                    }
-                }
-            },
+            }
         }
     }).on('success.form.bv', function (e) {
         if (formId == "addForm") {
@@ -293,4 +280,52 @@ function validator(formId) {
 
         }
     })
+}
+
+function Addcalculate() {
+    //购买数量
+    var countNum = document.getElementById("addCountNum").value;
+    //购买单价
+    var buyPrice = document.getElementById("addSalePrice").value;
+    //购买折扣
+    var buyDiscount = document.getElementById("addSaleDiscount").value;
+    //购买总价
+    var addBuyTotal = document.getElementById("addSaleTotal");
+    //如果有折扣，则加入折扣进行计算，如果没有最终价格为购买总价。
+    var addBuyMoney = document.getElementById("addSaleMoney");
+    if (countNum != null && buyPrice != null && countNum != "" && buyPrice != "") {
+        //计算出的总价需要进行四舍五入计算。
+        var totalPrice = Math.floor(parseFloat(buyPrice * 100 * countNum)) / 100;
+        //把计算后的值，填入购买总价中。
+        addBuyTotal.value = totalPrice;
+        if (buyDiscount != null && buyDiscount != "") {
+            addBuyMoney.value = totalPrice * buyDiscount;
+        } else {
+            addBuyMoney.value = totalPrice;
+        }
+    }
+}
+
+function Editcalculate() {
+    //购买数量
+    var countNum = document.getElementById("editSaleNum").value;
+    //购买单价
+    var buyPrice = document.getElementById("editSalePrice").value;
+    //购买折扣
+    var buyDiscount = document.getElementById("editSaleDiscount").value;
+    //购买总价
+    var addBuyTotal = document.getElementById("editSaleTotal");
+    //如果有折扣，则加入折扣进行计算，如果没有最终价格为购买总价。
+    var addBuyMoney = document.getElementById("editSaleMoney");
+    if (countNum != null && buyPrice != null && countNum != "" && buyPrice != "") {
+        //计算出的总价需要进行四舍五入计算。
+        var totalPrice = Math.floor(parseFloat(buyPrice * 100 * countNum)) / 100;
+        //把计算后的值，填入购买总价中。
+        addBuyTotal.value = totalPrice;
+        if (buyDiscount != null && buyDiscount != "") {
+            addBuyMoney.value = totalPrice * buyDiscount;
+        } else {
+            addBuyMoney.value = totalPrice;
+        }
+    }
 }

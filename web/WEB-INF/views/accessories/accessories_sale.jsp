@@ -56,13 +56,13 @@
             </button>
             <div class="input-group" style="width:350px;float:left;padding:0;margin:0 0 0 -1px;">
                 <div class="input-group-btn">
-                    <button type="button" id="ulButton" class="btn btn-default" style="border-radius:0px;" data-toggle="dropdown">汽车公司/配件<span class="caret"></span></button>
+                    <button type="button" id="ulButton" class="btn btn-default" style="border-radius:0px;" data-toggle="dropdown">汽车公司/配件名称<span class="caret"></span></button>
                     <ul class="dropdown-menu pull-right">
-                        <li><a onclick="onclikLi(this)">汽车公司/配件</a></li>
+                        <li><a onclick="onclikLi(this)">汽车公司/配件名称</a></li>
                         <li class="divider"></li>
                         <li><a onclick="onclikLi(this)">汽车公司</a></li>
                         <li class="divider"></li>
-                        <li><a onclick="onclikLi(this)">配件</a></li>
+                        <li><a onclick="onclikLi(this)">配件名称</a></li>
                         <li class="divider"></li>
                     </ul>
                 </div><!-- /btn-group -->
@@ -107,37 +107,37 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">配件销售数量：</label>
                     <div class="col-sm-7">
-                        <input type="number" name="accSaleCount" placeholder="请输入配件销售数量" class="form-control">
+                        <input type="number" id="addCountNum" name="accSaleCount" onchange="Addcalculate();" placeholder="请输入配件销售数量" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">配件销售单价：</label>
                     <div class="col-sm-7">
-                        <input type="number" name="accSalePrice" placeholder="请输入配件销售单价" class="form-control">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">配件销售总价：</label>
-                    <div class="col-sm-7">
-                        <input type="number" name="accSaleTotal" placeholder="请输入配件销售总价" class="form-control">
+                        <input type="number" min="0" id="addSalePrice" name="accSalePrice" onchange="Addcalculate();" placeholder="请输入配件销售单价" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">配件销售折扣：</label>
                     <div class="col-sm-7">
-                        <input type="number" name="accSaleDiscount" placeholder="请输入配件销售折扣" class="form-control">
+                        <input type="number" min="0.0" step="0.1" max="1" value="1" id="addSaleDiscount" name="accSaleDiscount" placeholder="请输入配件销售折扣" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">配件销售总价：</label>
+                    <div class="col-sm-7">
+                        <input type="number" readonly="true" min="0.0" step="0.1" id="addSaleTotal" name="accSaleTotal" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">配件销售最终价：</label>
                     <div class="col-sm-7">
-                        <input type="number" name="accSaleMoney" placeholder="请输入配件销售最终价" class="form-control">
+                        <input type="number" readonly="true" min="0.0" step="0.1" id="addSaleMoney" name="accSaleMoney" class="form-control">
                     </div>
                 </div>
                 <div class="modal-footer">
                     <div class="col-sm-offset-8">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button id="addButton" type="button" onclick="addSubmit()" class="btn btn-success">保存</button>
+                        <button id="addButton" type="button" onclick="addSubmit()" class="btn btn-success">添加</button>
                     </div>
                 </div>
             </form>
@@ -151,7 +151,7 @@
             <form class="form-horizontal" role="form" id="editForm" method="post">
                 <input type="hidden" name="accSaleId" define="AccessoriesSale.accSaleId"/>
                 <div class="modal-header" style="overflow:auto;">
-                    <h4>请填写配件销售信息</h4>
+                    <h4>请修改配件销售信息</h4>
                 </div>
                 <br/>
                 <div class="form-group">
@@ -179,42 +179,42 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">配件销售数量：</label>
                     <div class="col-sm-7">
-                        <input type="number" name="accSaleCount" define="AccessoriesSale.accSaleCount"
+                        <input type="number" id="editSaleNum" name="accSaleCount" onchange="Editcalculate()" define="AccessoriesSale.accSaleCount"
                                placeholder="请输入配件销售数量" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">配件销售单价：</label>
                     <div class="col-sm-7">
-                        <input type="number" name="accSalePrice" define="AccessoriesSale.accSalePrice"
+                        <input type="number" id="editSalePrice" name="accSalePrice" onchange="Editcalculate()" define="AccessoriesSale.accSalePrice"
                                placeholder="请输入配件销售单价" class="form-control">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">配件销售总价：</label>
-                    <div class="col-sm-7">
-                        <input type="number" name="accSaleTotal" define="AccessoriesSale.accSaleTotal"
-                               placeholder="请输入配件销售总价" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">配件销售折扣：</label>
                     <div class="col-sm-7">
-                        <input type="number" name="accSaleDiscount" define="AccessoriesSale.accSaleDiscount"
+                        <input type="number" id="editSaleDiscount" name="accSaleDiscount" define="AccessoriesSale.accSaleDiscount"
                                placeholder="请输入配件销售折扣" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">配件销售总价：</label>
+                    <div class="col-sm-7">
+                        <input type="number" id="editSaleTotal" name="accSaleTotal" define="AccessoriesSale.accSaleTotal"
+                               placeholder="请输入配件销售总价" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">配件销售最终价：</label>
                     <div class="col-sm-7">
-                        <input type="number" name="accSaleMoney" define="AccessoriesSale.accSaleMoney"
+                        <input type="number" id="editSaleMoney" name="accSaleMoney" define="AccessoriesSale.accSaleMoney"
                                placeholder="请输入配件销售最终价" class="form-control">
                     </div>
                 </div>
                 <div class="modal-footer">
                     <div class="col-sm-offset-8">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button id="editButton" type="button" onclick="editSubmit()" class="btn btn-success">保存</button>
+                        <button id="editButton" type="button" onclick="editSubmit()" class="btn btn-success">修改</button>
                     </div>
                 </div>
             </form>
