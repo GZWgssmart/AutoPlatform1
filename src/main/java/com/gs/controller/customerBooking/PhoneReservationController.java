@@ -187,15 +187,16 @@ public class PhoneReservationController {
      */
     @ResponseBody
     @RequestMapping(value="blurredQuery", method = RequestMethod.GET)
-    public Pager4EasyUI<Appointment> blurredQuery(User user,HttpSession session,HttpServletRequest request, @Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
+    public Pager4EasyUI<Appointment> blurredQuery(HttpSession session,HttpServletRequest request, @Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
         if (SessionUtil.isLogin(session)) {
             String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽修公司接待员";
             if (RoleUtil.checkRoles(roles)) {
                 logger.info("预约记录模糊查询");
+                Pager pager = new Pager();
                 String text = request.getParameter("text");
                 String value = request.getParameter("value");
                 if (text != null && text != "") {
-                    Pager pager = new Pager();
+
                     pager.setPageNo(Integer.valueOf(pageNumber));
                     pager.setPageSize(Integer.valueOf(pageSize));
                     List<Appointment> appointments = null;
@@ -215,11 +216,13 @@ public class PhoneReservationController {
                         appointment.setUserPhone(value);
                     }
                     appointments = appointmentService.blurredQuery(pager, appointment);
-                    pager.setTotalRecords(appointmentService.countByBlurred(appointment,user));
+                    pager.setTotalRecords(appointmentService.countByBlurred(appointment,(User)session.getAttribute("user")));
                     System.out.print(appointments);
                     return new Pager4EasyUI<Appointment>(pager.getTotalRecords(), appointments);
                 } else {
-                    return null;
+                    pager.setTotalRecords(appointmentService.count((User)session.getAttribute("user")));
+                    List<Appointment> appointments = appointmentService.queryByPager(pager);
+                    return new Pager4EasyUI<Appointment>(pager.getTotalRecords(), appointments);;
                 }
             }else {
                 logger.info("此用户无拥有此方法角色");
