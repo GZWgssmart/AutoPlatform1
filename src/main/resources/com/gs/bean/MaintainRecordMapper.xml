@@ -63,48 +63,72 @@
     </resultMap>
 
     <select id="queryByPager" resultMap="MaintainRecordMap" parameterType="com.gs.common.bean.Pager">
-    select m.*, ck.*, cc.colorId, cc.colorName, cp.plateId, cp.plateName,
+        <![CDATA[
+            select m.*, ck.*, cc.colorId, cc.colorName, cp.plateId, cp.plateName,
+            cm.modelId, cm.modelName, company.companyId,
+            company.companyName,company.companyAddress,
+            company.companyAddress, company.companyTel,
+            company.companyLogo, cb.brandId, cb.brandName
+            from t_maintain_record m, t_checkin ck, t_car_brand cb,
+             t_car_color cc, t_car_model cm, t_car_plate cp, t_company company
+              where m.checkinId = ck.checkinId and ck.brandId = cb.brandId
+              and ck.colorId = cc.colorId and ck.modelId = cm.modelId
+             and ck.plateId = cp.plateId and ck.companyId = company.companyId
+             and m.recordStatus = 'Y'
+         ]]>
+        <if test="user.companyId != '' and user.companyId != null">
+            and ck.companyId = #{user.companyId}
+        </if>
+        limit #{beginIndex}, #{pageSize}
+  </select>
+
+    <select id="queryById" resultMap="MaintainRecordMap">
+    <![CDATA[
+        select m.*, ck.*, cc.colorId, cc.colorName, cp.plateId, cp.plateName,
         cm.modelId, cm.modelName, company.companyId,
         company.companyName,company.companyAddress,
         company.companyAddress, company.companyTel,
         company.companyLogo, cb.brandId, cb.brandName
         from t_maintain_record m, t_checkin ck, t_car_brand cb,
-         t_car_color cc, t_car_model cm, t_car_plate cp, t_company company
-          where m.checkinId = ck.checkinId and ck.brandId = cb.brandId
-          and ck.colorId = cc.colorId and ck.modelId = cm.modelId
-         and ck.plateId = cp.plateId and ck.companyId = company.companyId
-         and m.recordStatus = 'Y'
-          limit #{beginIndex}, #{pageSize}
-  </select>
-
-    <select id="queryById" resultMap="MaintainRecordMap">
-    select m.*, ck.*, cc.colorId, cc.colorName, cp.plateId, cp.plateName,
-    cm.modelId, cm.modelName, company.companyId,
-    company.companyName,company.companyAddress,
-    company.companyAddress, company.companyTel,
-    company.companyLogo, cb.brandId, cb.brandName
-    from t_maintain_record m, t_checkin ck, t_car_brand cb,
-    t_car_color cc, t_car_model cm, t_car_plate cp, t_company company
-    where m.checkinId = ck.checkinId and ck.brandId = cb.brandId
-    and ck.colorId = cc.colorId and ck.modelId = cm.modelId
-    and ck.plateId = cp.plateId and ck.companyId = company.companyId
-    and m.recordStatus = 'Y' and m.recordId = #{id}
+        t_car_color cc, t_car_model cm, t_car_plate cp, t_company company
+        where m.checkinId = ck.checkinId and ck.brandId = cb.brandId
+        and ck.colorId = cc.colorId and ck.modelId = cm.modelId
+        and ck.plateId = cp.plateId and ck.companyId = company.companyId
+        and m.recordStatus = 'Y' and m.recordId = #{id}
+    ]]>
   </select>
 
     <select id="queryByPagerDisable" resultMap="MaintainRecordMap" parameterType="com.gs.common.bean.Pager">
-    select m.*,c.checkinId as checkin_id,c.userName as user_name from t_maintain_record m, t_checkin c where m.checkinId = c.checkinId and m.recordStatus = 'N' limit #{beginIndex}, #{pageSize}
+     <![CDATA[
+         select m.*,c.checkinId as checkin_id,c.userName as user_name from t_maintain_record m,
+         t_checkin c where m.checkinId = c.checkinId and m.recordStatus = 'N'
+     ]]>
+      <if test="user.companyId != '' and user.companyId != null">
+          and ck.companyId = #{user.companyId}
+      </if>
+      limit #{beginIndex}, #{pageSize}
   </select>
 
-    <select id="count" resultType="int">
-    select count(recordId) from t_maintain_record where recordStatus = 'Y'
+    <select id="count" resultType="int" parameterType="com.gs.bean.User">
+      select count(recordId) from t_maintain_record mr, t_checkin ck where recordStatus = 'Y'
+      <if test="companyId != '' and companyId != null">
+         and ck.companyId = #{user.companyId}
+      </if>
   </select>
 
-    <select id="countByDisable" resultType="int">
-    select count(recordId) from t_maintain_record where recordStatus = 'N'
+    <select id="countByDisable" resultType="int" parameterType="com.gs.bean.User">
+    select count(recordId) from t_maintain_record mr, t_checkin ck where recordStatus = 'N'
+        <if test="companyId != '' and companyId != null">
+            and mr.companyId = #{user.companyId}
+        </if>
   </select>
 
-    <select id="queryAll" resultMap="MaintainRecordMap">
-    select m.*,c.checkinId as checkin_id,c.userName as user_name from t_maintain_record m, t_checkin c where m.checkinId = c.checkinId
+    <select id="queryAll" resultMap="MaintainRecordMap" parameterType="com.gs.bean.User">
+    select m.*,ck.checkinId as checkin_id,ck.userName as user_name
+    from t_maintain_record m, t_checkin ck where m.checkinId = ck.checkinId
+        <if test="companyId != '' and companyId != null">
+            and ck.companyId = #{user.companyId}
+        </if>
   </select>
 
     <update id="inactive" parameterType="string">
@@ -137,8 +161,12 @@
             where 1=1 and m.checkinId = ck.checkinId and ck.brandId = cb.brandId
             and ck.colorId = cc.colorId and ck.modelId = cm.modelId
             and ck.plateId = cp.plateId and ck.companyId = company.companyId
-            and m.recordStatus = 'Y' and
+            and m.recordStatus = 'Y'
       ]]>
+        <if test="pager.user.companyId != '' and pager.user.companyId != null">
+            and ck.companyId = #{pager.user.companyId}
+        </if>
+        and
         <if test="maintainRecord.checkin.userName != '' and maintainRecord.checkin.userName != null">
             ck.userName like '%${maintainRecord.checkin.userName}%'
         </if>
@@ -175,8 +203,12 @@
             where 1=1 and m.checkinId = ck.checkinId and ck.brandId = cb.brandId
             and ck.colorId = cc.colorId and ck.modelId = cm.modelId
             and ck.plateId = cp.plateId and ck.companyId = company.companyId
-            and m.recordStatus = 'Y' and
+            and m.recordStatus = 'Y'
       ]]>
+        <if test="user.companyId != '' and user.companyId != null">
+            and ck.companyId = #{user.companyId}
+        </if>
+        and
         <if test="maintainRecord.checkin.userName != '' and maintainRecord.checkin.userName != null">
             ck.userName like '%${maintainRecord.checkin.userName}%'
         </if>

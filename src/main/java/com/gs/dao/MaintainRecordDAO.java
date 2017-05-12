@@ -1,6 +1,7 @@
 package com.gs.dao;
 
 import com.gs.bean.MaintainRecord;
+import com.gs.bean.User;
 import com.gs.common.bean.Pager;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -24,7 +25,7 @@ public interface MaintainRecordDAO extends BaseDAO<String, MaintainRecord>{
     /**
      * 模糊查询的记录数
      */
-    public int countByBlurred(@Param("maintainRecord")MaintainRecord maintainRecord);
+    public int countByBlurred(@Param("maintainRecord")MaintainRecord maintainRecord, @Param("user")User user);
     /**
      * 模糊查询
      */

@@ -69,39 +69,49 @@
             </thead>
         </table>
         <div id="toolbar" class="btn-group">
-            <button id="btn_available" type="button" class="btn btn-default" onclick="showNoRemind();">
-                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>未提醒维修保养记录
-            </button>
-            <button id="btn_disable" type="button" class="btn btn-default" onclick="showYesRemind();">
-                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>已提醒维修保养记录
-            </button>
-            <button id="btn_bell" type="button" class="btn btn-default" onclick="showBell();">
-                <span class="glyphicon glyphicon-bell" aria-hidden="true"></span>提醒
-            </button>
-            <button id="btn_bellAll" type="button" class="btn btn-default" onclick="showBellAll();">
-                <span class="glyphicon glyphicon-bell" aria-hidden="true"></span>全部提醒
-            </button>
-            <div class="input-group" style="width:350px;float:left;padding:0;margin:0 0 0 -1px;">
-                <div class="input-group-btn">
-                    <button type="button" id="ulButton" class="btn btn-default" style="border-radius:0px;"
-                            data-toggle="dropdown">车主/电话/汽车公司/车牌号<span class="caret"></span></button>
-                    <ul class="dropdown-menu pull-right">
-                        <li><a onclick="onclikLi(this)">车主/电话/汽车公司/车牌号</a></li>
-                        <li class="divider"></li>
-                        <li><a onclick="onclikLi(this)">车主</a></li>
-                        <li class="divider"></li>
-                        <li><a onclick="onclikLi(this)">电话</a></li>
-                        <li class="divider"></li>
-                        <li><a onclick="onclikLi(this)">汽车公司</a></li>
-                        <li class="divider"></li>
-                        <li><a onclick="onclikLi(this)">车牌号</a></li>
-                    </ul>
-                </div><!-- /btn-group -->
-                <input id="ulInput" class="form-control" onkeypress="if(event.keyCode==13) {blurredQuery();}">
-                <a href="javaScript:;" onclick="blurredQuery()"><span
-                        class="glyphicon glyphicon-search search-style"></span></a>
-                </input>
-            </div><!-- /input-group -->
+            <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员">
+                        <button id="btn_available" type="button" class="btn btn-default" onclick="showNoRemind();">
+                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>未提醒维修保养记录
+                        </button>
+            </shiro:hasAnyRoles>
+            <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员">
+                        <button id="btn_disable" type="button" class="btn btn-default" onclick="showYesRemind();">
+                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>已提醒维修保养记录
+                        </button>
+            </shiro:hasAnyRoles>
+            <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司接待员">
+                        <button id="btn_bell" type="button" class="btn btn-default" onclick="showBell();">
+                            <span class="glyphicon glyphicon-bell" aria-hidden="true"></span>提醒
+                        </button>
+            </shiro:hasAnyRoles>
+            <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司接待员">
+                        <button id="btn_bellAll" type="button" class="btn btn-default" onclick="showBellAll();">
+                            <span class="glyphicon glyphicon-bell" aria-hidden="true"></span>全部提醒
+                        </button>
+            </shiro:hasAnyRoles>
+            <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员">
+                        <div class="input-group" style="width:350px;float:left;padding:0;margin:0 0 0 -1px;">
+                            <div class="input-group-btn">
+                                <button type="button" id="ulButton" class="btn btn-default" style="border-radius:0px;"
+                                        data-toggle="dropdown">车主/电话/汽车公司/车牌号<span class="caret"></span></button>
+                                <ul class="dropdown-menu pull-right">
+                                    <li><a onclick="onclikLi(this)">车主/电话/汽车公司/车牌号</a></li>
+                                    <li class="divider"></li>
+                                    <li><a onclick="onclikLi(this)">车主</a></li>
+                                    <li class="divider"></li>
+                                    <li><a onclick="onclikLi(this)">电话</a></li>
+                                    <li class="divider"></li>
+                                    <li><a onclick="onclikLi(this)">汽车公司</a></li>
+                                    <li class="divider"></li>
+                                    <li><a onclick="onclikLi(this)">车牌号</a></li>
+                                </ul>
+                            </div><!-- /btn-group -->
+                            <input id="ulInput" class="form-control" onkeypress="if(event.keyCode==13) {blurredQuery();}">
+                            <a href="javaScript:;" onclick="blurredQuery()"><span
+                                    class="glyphicon glyphicon-search search-style"></span></a>
+                            </input>
+                        </div><!-- /input-group -->
+            </shiro:hasAnyRoles>
         </div>
     </div>
 </div>
