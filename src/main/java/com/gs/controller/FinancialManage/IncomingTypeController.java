@@ -44,7 +44,7 @@ public class IncomingTypeController {
     @RequestMapping(value = "queryByPager",method = RequestMethod.GET)
     public Pager4EasyUI<IncomingType> queryByPager(HttpSession session, @Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
         if (SessionUtil.isLogin(session)) {
-            String roles = "平台管理员,汽修公司管理员,汽修公司财务人员";
+            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员";
             if (RoleUtil.checkRoles(roles)) {
                 logger.info("收入类型分页查询");
                 Pager pager = new Pager();
@@ -68,7 +68,7 @@ public class IncomingTypeController {
     @RequestMapping(value = "queryByPagerDisable",method = RequestMethod.GET)
     public Pager4EasyUI<IncomingType> queryByPagerDisable(HttpSession session, @Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
         if (SessionUtil.isLogin(session)) {
-            String roles = "平台管理员,汽修公司管理员,汽修公司财务人员";
+            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员";
             if (RoleUtil.checkRoles(roles)) {
                 logger.info("禁用收入类型分页查询");
                 Pager pager = new Pager();
@@ -108,13 +108,26 @@ public class IncomingTypeController {
 
     @ResponseBody
     @RequestMapping(value = "add",method = RequestMethod.POST)
-    public ControllerResult add(IncomingType incomingType) {
-        logger.info("添加收入类型");
-        incomingType.setInTypeId(UUIDUtil.uuid());
-        incomingType.setCompanyId("1");
-        incomingType.setInTypeStatus("Y");
-        incomingTypeService.insert(incomingType);
-        return ControllerResult.getSuccessResult("添加成功");
+    public ControllerResult add(HttpSession session, IncomingType incomingType) {
+        if (SessionUtil.isLogin(session)) {
+            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员";
+            if (RoleUtil.checkRoles(roles)) {
+                logger.info("添加收入类型");
+                incomingType.setInTypeId(UUIDUtil.uuid());
+                User user = (User)session.getAttribute("user");
+                incomingType.setCompanyId(user.getCompanyId());
+                incomingType.setInTypeStatus("Y");
+                incomingTypeService.insert(incomingType);
+                return ControllerResult.getSuccessResult("添加成功");
+            } else {
+                logger.info("此用户无拥有此方法的角色");
+                return null;
+            }
+        } else {
+            logger.info("请先登录");
+            return null;
+        }
+
     }
 
     /**
@@ -136,10 +149,24 @@ public class IncomingTypeController {
 
     @ResponseBody
     @RequestMapping(value = "update", method = RequestMethod.POST)
-    public ControllerResult update(IncomingType incomingType) {
-        logger.info("修改收入类型");
-        incomingTypeService.update(incomingType);
-        return ControllerResult.getSuccessResult("修改成功");
+    public ControllerResult update(HttpSession session, IncomingType incomingType) {
+        if (SessionUtil.isLogin(session)) {
+            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员";
+            if (RoleUtil.checkRoles(roles)) {
+                logger.info("修改收入类型");
+                User user = (User)session.getAttribute("user");
+                incomingType.setCompanyId(user.getCompanyId());
+                incomingTypeService.update(incomingType);
+                return ControllerResult.getSuccessResult("修改成功");
+
+            } else {
+                logger.info("此用户无拥有此方法的角色");
+                return null;
+            }
+        } else {
+            logger.info("请先登录");
+            return null;
+        }
     }
 
 

@@ -104,7 +104,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">本次服务评价：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="serviceEvaluate" placeholder="请输入本次服务评价（1-10分）" class="form-control"></input>
+                        <input type="number" name="serviceEvaluate" min="1" max="10" placeholder="请输入本次服务评价（1-10分）" class="form-control"></input>
                     </div>
                 </div>
                 <div class="form-group">
@@ -140,9 +140,10 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">回访人：</label>
                     <div class="col-sm-7">
-                        <select id="editAdminName" name="userId" class="form-control js-data-example-ajax admin"
-                                style="width:100%">
-                        </select>
+                        <%--<select id="editAdminName" name="userId" class="form-control js-data-example-ajax admin"--%>
+                                <%--style="width:100%">--%>
+                        <%--</select>--%>
+                        <input type="text" name="userId" readonly define="TrackList.userId" class="form-control" value="${sessionScope.user.userName}" >
                     </div>
                 </div>
                 <div class="form-group">
@@ -162,7 +163,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">本次服务评价：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="serviceEvaluate" define="TrackList.serviceEvaluate" placeholder="请输入本次服务评价（1-10分）" class="form-control"></input>
+                        <input type="number" name="serviceEvaluate" min="1" max="10 " define="TrackList.serviceEvaluate" placeholder="请输入本次服务评价（1-10分）" class="form-control"></input>
                     </div>
                 </div>
                 <div class="form-group">

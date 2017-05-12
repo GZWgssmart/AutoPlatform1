@@ -23,13 +23,19 @@
   <select id="queryByPager" resultMap="BaseResultMap" parameterType="com.gs.common.bean.Pager">
     SELECT t.*,u.userId AS user_id,u.userName AS user_name,
     u2.userId AS admin_id,u2.userName AS admin_name FROM t_track_list t
-    LEFT JOIN t_user u ON t.userId = u.userId
-    LEFT  JOIN t_user u2 ON t.trackUser = u2.userId
+    LEFT JOIN t_user u ON t.trackUser = u.userId
+    LEFT  JOIN t_user u2 ON t.userId = u2.userId
+    <if test="user.companyId != null and user.companyId != ''">
+      and t.companyId = #{user.companyId}
+    </if>
     limit #{beginIndex}, #{pageSize}
   </select>
 
-  <select id="count" resultType="int" >
-    select count(trackId) from t_track_list
+  <select id="count" resultType="int" parameterType="com.gs.bean.User" >
+    select count(t.trackId) from t_track_list t where 1=1
+    <if test="companyId != null and companyId != ''">
+      and t.companyId = #{user.companyId}
+    </if>
   </select>
 
   <update id="update" parameterType="trackList">
@@ -46,6 +52,9 @@
     LEFT JOIN t_user u ON t.userId = u.userId
     LEFT  JOIN t_user u2 ON t.trackUser = u2.userId
     where 1=1
+    <if test="user.companyId != null and user.companyId != ''">
+      and t.companyId = #{user.companyId}
+    </if>
     <if test="trackList.userId != null and trackList.userId != ''">
       and u2.userName like concat('%',#{trackList.userId},'%')
     </if>
@@ -61,11 +70,14 @@
     limit #{pager.beginIndex}, #{pager.pageSize}
   </select>
 
-  <select id="countName"  resultType="int">
+  <select id="countName"  resultType="int" parameterType="com.gs.bean.User">
     SELECT count(trackId) FROM t_track_list t
     LEFT JOIN t_user u ON t.userId = u.userId
     LEFT  JOIN t_user u2 ON t.trackUser = u2.userId
     where 1=1
+    <if test="user.companyId != null and user.companyId != ''">
+      and t.companyId = #{user.companyId}
+    </if>
     <if test="trackList.userId != null and trackList.userId != ''">
       and u2.userName like concat('%',#{trackList.userId},'%')
     </if>

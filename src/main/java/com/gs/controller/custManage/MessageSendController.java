@@ -7,6 +7,8 @@ import com.gs.common.bean.ComboBox4EasyUI;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
+import com.gs.common.util.RoleUtil;
+import com.gs.common.util.SessionUtil;
 import com.gs.service.MessageSendService;
 import com.gs.service.UserService;
 import org.apache.ibatis.annotations.Param;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -49,15 +52,27 @@ public class MessageSendController {
 
     @ResponseBody
     @RequestMapping(value = "queryByPager", method = RequestMethod.GET)
-    public Pager4EasyUI<MessageSend> queryByPager(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
-        logger.info("分页查看短信提醒记录");
-        Pager pager = new Pager();
-        pager.setPageNo(Integer.valueOf(pageNumber));
-        pager.setPageSize(Integer.valueOf(pageSize));
-        int count = messageSendService.count();
-        pager.setTotalRecords(count);
-        List<MessageSend> queryList = messageSendService.queryByPager(pager);
-        return new Pager4EasyUI<MessageSend>(pager.getTotalRecords(), queryList);
+    public Pager4EasyUI<MessageSend> queryByPager(HttpSession session, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
+        if (SessionUtil.isLogin(session)) {
+            String roles = "";
+            if (RoleUtil.checkRoles(roles)) {
+                logger.info("分页查看短信提醒记录");
+                Pager pager = new Pager();
+                pager.setPageNo(Integer.valueOf(pageNumber));
+                pager.setPageSize(Integer.valueOf(pageSize));
+                int count = messageSendService.count((User) session.getAttribute("user"));
+                pager.setTotalRecords(count);
+                pager.setUser((User) session.getAttribute("user"));
+                List<MessageSend> queryList = messageSendService.queryByPager(pager);
+                return new Pager4EasyUI<MessageSend>(pager.getTotalRecords(), queryList);
+            } else {
+                logger.info("此用户无拥有此方法");
+                return null;
+            }
+        } else {
+            logger.info("请先登录");
+            return null;
+        }
     }
 
     @ResponseBody
@@ -79,9 +94,9 @@ public class MessageSendController {
 
     @ResponseBody
     @RequestMapping(value = "queryCombox", method = RequestMethod.GET)
-    public List<ComboBox4EasyUI> queryCombox() {
+    public List<ComboBox4EasyUI> queryCombox(HttpSession session) {
         logger.info("查看用户");
-        List<User> users = userService.queryAll();
+        List<User> users = userService.queryAll((User)session.getAttribute("user"));
         List<ComboBox4EasyUI> combo = new ArrayList<ComboBox4EasyUI>();
         for(User user : users) {
             ComboBox4EasyUI co = new ComboBox4EasyUI();

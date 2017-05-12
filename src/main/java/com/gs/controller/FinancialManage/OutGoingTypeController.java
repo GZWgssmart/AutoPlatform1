@@ -43,10 +43,10 @@ public class OutGoingTypeController {
     public OutgoingTypeService outgoingTypeService;
 
     @ResponseBody
-    @RequestMapping(value = "queryByPager",method = RequestMethod.GET)
-    public Pager4EasyUI<OutgoingType> queryByPager(HttpSession session, @Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
+    @RequestMapping(value = "queryByPager", method = RequestMethod.GET)
+    public Pager4EasyUI<OutgoingType> queryByPager(HttpSession session, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
         if (SessionUtil.isLogin(session)) {
-            String roles = "平台管理员,汽修公司管理员,汽修公司财务人员";
+            String roles = "   系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员";
             if (RoleUtil.checkRoles(roles)) {
                 logger.info("支出类型分页查询");
                 Pager pager = new Pager();
@@ -68,10 +68,10 @@ public class OutGoingTypeController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "queryByPagerDisable",method = RequestMethod.GET)
-    public Pager4EasyUI<OutgoingType> queryByPagerDisable(HttpSession session,@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
+    @RequestMapping(value = "queryByPagerDisable", method = RequestMethod.GET)
+    public Pager4EasyUI<OutgoingType> queryByPagerDisable(HttpSession session, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
         if (SessionUtil.isLogin(session)) {
-            String roles = "平台管理员,汽修公司管理员,汽修公司财务人员";
+            String roles = "   系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员";
             if (RoleUtil.checkRoles(roles)) {
                 logger.info("禁用支出类型分页查询");
                 Pager pager = new Pager();
@@ -94,38 +94,66 @@ public class OutGoingTypeController {
 
     @ResponseBody
     @RequestMapping(value = "statusOperate", method = RequestMethod.POST)
-    public ControllerResult inactive(String id, String status) {
-        if (id != null && !id.equals("") && status != null && !status.equals("")) {
-            if (status.equals("N")) {
-                outgoingTypeService.active(id);
-                logger.info("激活成功");
-                return ControllerResult.getSuccessResult("激活成功");
+    public ControllerResult inactive(HttpSession session, String id, String status) {
+
+        if (SessionUtil.isLogin(session)) {
+            String roles = "   系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员";
+            if (RoleUtil.checkRoles(roles)) {
+                if (id != null && !id.equals("") && status != null && !status.equals("")) {
+                    if (status.equals("N")) {
+                        outgoingTypeService.active(id);
+                        logger.info("激活成功");
+                        return ControllerResult.getSuccessResult("激活成功");
+                    } else {
+                        outgoingTypeService.inactive(id);
+                        logger.info("禁用成功");
+                        return ControllerResult.getSuccessResult("禁用成功");
+                    }
+                } else {
+                    return ControllerResult.getFailResult("操作失败");
+                }
             } else {
-                outgoingTypeService.inactive(id);
-                logger.info("禁用成功");
-                return ControllerResult.getSuccessResult("禁用成功");
+                logger.info("此用户无拥有此方法的角色");
+                return null;
             }
         } else {
-            return ControllerResult.getFailResult("操作失败");
+            logger.info("请先登录");
+            return null;
         }
+
     }
 
     @ResponseBody
-    @RequestMapping(value = "add",method = RequestMethod.POST)
-    public ControllerResult add(OutgoingType outgoingType) {
-        logger.info("添加支出类型");
-        outgoingType.setOutTypeId(UUIDUtil.uuid());
-        outgoingType.setCompanyId("1");
-        outgoingType.setOutTypeStatus("Y");
-        outgoingTypeService.insert(outgoingType);
-        return ControllerResult.getSuccessResult("添加成功");
+    @RequestMapping(value = "add", method = RequestMethod.POST)
+    public ControllerResult add(HttpSession session, OutgoingType outgoingType) {
+        if (SessionUtil.isLogin(session)) {
+            String roles = "   系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员";
+            if (RoleUtil.checkRoles(roles)) {
+                logger.info("添加支出类型");
+                outgoingType.setOutTypeId(UUIDUtil.uuid());
+                User user = (User) session.getAttribute("user");
+                outgoingType.setCompanyId(user.getCompanyId());
+                outgoingType.setCompanyId("1");
+                outgoingType.setOutTypeStatus("Y");
+                outgoingTypeService.insert(outgoingType);
+                return ControllerResult.getSuccessResult("添加成功");
+            } else {
+                logger.info("此用户无拥有此方法的角色");
+                return null;
+            }
+        } else {
+            logger.info("请先登录");
+            return null;
+        }
+
     }
+
 
     @ResponseBody
     @RequestMapping(value = "checkOutTypeName", method = RequestMethod.GET)
     public boolean checkOutTypeName(String outTypeName) {
         OutgoingType outgoingType = outgoingTypeService.queryById(outTypeName);
-        if(outgoingType != null){
+        if (outgoingType != null) {
             return true;
         }
         return false;
@@ -133,11 +161,25 @@ public class OutGoingTypeController {
 
     @ResponseBody
     @RequestMapping(value = "update", method = RequestMethod.POST)
-    public ControllerResult update(OutgoingType outgoingType) {
-        System.out.printf(outgoingType.getOutTypeId() +"," + outgoingType.getOutTypeName());
-        logger.info("修改支出类型");
-        outgoingTypeService.update(outgoingType);
-        return ControllerResult.getSuccessResult("修改成功");
+    public ControllerResult update(HttpSession session, OutgoingType outgoingType) {
+        if (SessionUtil.isLogin(session)) {
+            String roles = "   系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员";
+            if (RoleUtil.checkRoles(roles)) {
+                System.out.printf(outgoingType.getOutTypeId() + "," + outgoingType.getOutTypeName());
+                logger.info("修改支出类型");
+                User user = (User) session.getAttribute("user");
+                outgoingType.setCompanyId(user.getCompanyId());
+                outgoingTypeService.update(outgoingType);
+                return ControllerResult.getSuccessResult("修改成功");
+            } else {
+                logger.info("此用户无拥有此方法的角色");
+                return null;
+            }
+        } else {
+            logger.info("请先登录");
+            return null;
+        }
+
     }
 
 

@@ -74,6 +74,7 @@ function showReply() {
             var Complaint = row[0];
             $("#addReplyForm").fill(Complaint);
             $("#addReplyComplaintReplyTime").val(formatterDate(Complaint.complaintReplyTime));
+            // $("#addAdminId").val(Complaint.admin.userId);
             validator('addReplyForm');
         } else {
             swal({

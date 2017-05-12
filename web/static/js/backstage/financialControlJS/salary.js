@@ -2,7 +2,7 @@
  * 初始化表格
  */
 $(function () {
-    var roles = "平台管理员,汽修公司管理员,汽修公司财务人";
+    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员";
     $.post("/user/isLogin/"+roles, function (data) {
         if(data.result == 'success'){
             initTable("table", "/salary/queryByPager/"+roles); // 初始化表格
@@ -97,7 +97,7 @@ function formatterDate(value) {
 
 
 function showEdit() {
-    var roles = "平台管理员,汽修公司管理员,汽修公司财务人";
+    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员";
     $.post("/user/isLogin/"+roles, function (data) {
         if(data.result == 'success'){
             $("#editButton").removeAttr("disabled");
@@ -140,7 +140,7 @@ function showEdit() {
 }
 
 function showAdd() {
-    var roles = "平台管理员,汽修公司管理员,汽修公司财务人";
+    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员";
     $.post("/user/isLogin/"+roles, function (data) {
         if(data.result == 'success'){
             $("input[type=reset]").trigger("click");

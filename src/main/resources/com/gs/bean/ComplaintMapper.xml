@@ -19,13 +19,27 @@
       <id column="admin_id" property="userId"></id>
       <result column="admin_name" property="userName"></result>
     </association>
+
+    <association property="company" javaType="com.gs.bean.Company">
+      <id column="company_id" property="companyId"></id>
+      <result column="company_name" property="companyName"></result>
+      <result column="company_address" property="companyAddress"></result>
+      <result column="company_tel" property="companyTel"></result>
+    </association>
   </resultMap>
 
   <select id="queryByPager" resultMap="BaseResultMap" parameterType="com.gs.common.bean.Pager">
     SELECT c.*,u.userId AS user_id,u.userName AS user_name,
-    u2.userId AS admin_id,u2.userName AS admin_name FROM t_complaint c
+    u2.userId AS admin_id,u2.userName AS admin_name,
+    co.companyId AS company_id,co.companyName AS company_name,
+    co.companyAddress AS company_address,co.companyTel AS company_tel
+    FROM t_company co,t_complaint c
     LEFT JOIN t_user u ON c.userId = u.userId
     LEFT  JOIN t_user u2 ON c.complaintReplyUser = u2.userId
+    WHERE u.companyId = co.companyId
+    <if test="user.companyId != null and user.companyId != ''">
+      and c.companyId = #{user.companyId}
+    </if>
     limit #{beginIndex}, #{pageSize}
   </select>
 
@@ -35,6 +49,9 @@
     LEFT JOIN t_user u ON c.userId = u.userId
     LEFT  JOIN t_user u2 ON c.complaintReplyUser = u2.userId
     where 1=1
+    <if test="user.companyId != null and user.companyId != ''">
+      and c.companyId = #{user.companyId}
+    </if>
     <if test="complaint.userId != null and complaint.userId != ''">
       and u.userName like concat('%',#{complaint.userId},'%')
     </if>
@@ -50,11 +67,14 @@
     limit #{pager.beginIndex}, #{pager.pageSize}
   </select>
 
-  <select id="countName"  resultType="int">
+  <select id="countName"  resultType="int" parameterType="com.gs.bean.User">
     SELECT count(complaintId) FROM t_complaint c
     LEFT JOIN t_user u ON c.userId = u.userId
     LEFT  JOIN t_user u2 ON c.complaintReplyUser = u2.userId
     where 1=1
+    <if test="user.companyId != null and user.companyId != ''">
+      and c.companyId = #{user.companyId}
+    </if>
     <if test="complaint.userId != null and complaint.userId != ''">
       and u.userName like concat('%',#{complaint.userId},'%')
     </if>
@@ -69,8 +89,11 @@
     </if>
   </select>
 
-  <select id="count" resultType="int" >
-    select count(complaintId) from t_complaint
+  <select id="count" resultType="int" parameterType="com.gs.bean.User">
+    select count(c.complaintId) from t_complaint c where 1=1
+    <if test="companyId != null and companyId != ''">
+      and c.companyId = #{user.companyId}
+    </if>
   </select>
 
   <update id="update" parameterType="complaint">

@@ -22,6 +22,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import sun.plugin2.os.windows.SECURITY_ATTRIBUTES;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -55,7 +56,7 @@ public class SalaryController {
     @RequestMapping(value = "queryByPager", method = RequestMethod.GET)
     public Pager4EasyUI<Salary> queryByPager(HttpSession session, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
         if (SessionUtil.isLogin(session)) {
-            String roles = "平台管理员,汽修公司管理员,汽修公司财务人员";
+            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员";
             if (RoleUtil.checkRoles(roles)) {
                 logger.info("工资信息分页查询");
                 Pager pager = new Pager();
@@ -86,10 +87,24 @@ public class SalaryController {
 
     @ResponseBody
     @RequestMapping(value = "add", method = RequestMethod.POST)
-    public ControllerResult add(Salary salary) {
-        logger.info("添加工资信息");
-        salaryService.insert(salary);
-        return ControllerResult.getSuccessResult("添加成功");
+    public ControllerResult add(HttpSession session,Salary salary) {
+        if (SessionUtil.isLogin(session)) {
+            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员";
+            if (RoleUtil.checkRoles(roles)) {
+                logger.info("添加工资信息");
+                User user = (User) session.getAttribute("user");
+                salary.setCompanyId(user.getCompanyId());
+                salaryService.insert(salary);
+                return ControllerResult.getSuccessResult("添加成功");
+            } else {
+                logger.info("此用户无拥有此方法的角色");
+                return null;
+            }
+        } else {
+            logger.info("请先登录");
+            return null;
+        }
+
     }
 
     @ResponseBody
@@ -105,17 +120,30 @@ public class SalaryController {
 
     @ResponseBody
     @RequestMapping(value = "update", method = RequestMethod.POST)
-    public ControllerResult update(Salary salary) {
-        logger.info("修改工资信息");
-        System.out.printf(salary.getUserId() + "ddddddd" + salary.getSalaryId() + "ccc" + salary.getPrizeSalary());
-        salaryService.update(salary);
-        return ControllerResult.getSuccessResult("修改成功");
-    }
+    public ControllerResult update(HttpSession session, Salary salary) {
+        if (SessionUtil.isLogin(session)) {
+            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员";
+            if (RoleUtil.checkRoles(roles)) {
+                logger.info("修改工资信息");
+                User user = (User) session.getAttribute("user");
+                salary.setCompanyId(user.getCompanyId());
+                salaryService.update(salary);
+                return ControllerResult.getSuccessResult("修改成功");
+            } else {
+                logger.info("此用户无拥有此方法的角色");
+                return null;
+            }
+        } else {
+            logger.info("请先登录");
+            return null;
+        }
+
+}
 
     @RequestMapping(value = "exportExcel")
     public ModelAndView exportExcel(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
         if (SessionUtil.isLogin(session)) {
-            String roles = "平台管理员,汽修公司管理员,汽修公司财务人员";
+            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员";
             if (RoleUtil.checkRoles(roles)) {
                 try {
                     Salary salary = new Salary();

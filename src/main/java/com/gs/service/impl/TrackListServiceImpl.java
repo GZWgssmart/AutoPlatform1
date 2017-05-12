@@ -1,6 +1,7 @@
 package com.gs.service.impl;
 
 import com.gs.bean.TrackList;
+import com.gs.bean.User;
 import com.gs.dao.TrackListDAO;
 import com.gs.service.TrackListService;
 import org.apache.ibatis.annotations.Param;
@@ -31,18 +32,18 @@ public class TrackListServiceImpl implements TrackListService {
 	public int batchDelete(List<TrackList> list) { return trackListDAO.batchDelete(list); }
 	public int update(TrackList trackList) { return trackListDAO.update(trackList); }
 	public int batchUpdate(List<TrackList> list) { return trackListDAO.batchUpdate(list); }
-	public List<TrackList> queryAll() { return trackListDAO.queryAll(); }
+	public List<TrackList> queryAll(User user) { return trackListDAO.queryAll(user); }
 
 	@Override
 	public List<TrackList> queryAll(String status) {
-		return trackListDAO.queryAll();
+		return trackListDAO.queryAll(status);
 	}
 
 	public List<TrackList> queryByStatus(String status) { return trackListDAO.queryAll(status); }
 	public TrackList query(TrackList trackList) { return trackListDAO.query(trackList); }
 	public TrackList queryById(String id) { return trackListDAO.queryById(id); }
 	public List<TrackList> queryByPager(Pager pager) { return trackListDAO.queryByPager(pager); }
-	public int count() { return trackListDAO.count(); }
+	public int count(User user) { return trackListDAO.count(user); }
 	public int inactive(String id) { return trackListDAO.inactive(id); }
 	public int active(String id) { return trackListDAO.active(id); }
 
@@ -50,12 +51,17 @@ public class TrackListServiceImpl implements TrackListService {
 		return trackListDAO.queryByPagerDisable(pager);
 	}
 
-	public int countByDisable() {
-		return trackListDAO.countByDisable();
+	public int countByDisable(User user) {
+		return trackListDAO.countByDisable(user);
 	}
 
 	public List<TrackList> blurredQuery(Pager pager, TrackList trackList) {
 		return null;
+	}
+
+	@Override
+	public int countByBlurred(TrackList trackList, User user) {
+		return 0;
 	}
 
 	public int countByBlurred(TrackList trackList) {
@@ -68,7 +74,7 @@ public class TrackListServiceImpl implements TrackListService {
 	}
 
 	@Override
-	public int countName(@Param("trackList") TrackList trackList) {
-		return trackListDAO.countName(trackList);
+	public int countName(@Param("trackList") TrackList trackList, @Param("user") User user) {
+		return trackListDAO.countName(trackList,user);
 	}
 }

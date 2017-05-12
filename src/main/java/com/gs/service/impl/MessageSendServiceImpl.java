@@ -1,6 +1,7 @@
 package com.gs.service.impl;
 
 import com.gs.bean.MessageSend;
+import com.gs.bean.User;
 import com.gs.common.bean.Pager;
 import com.gs.dao.MessageSendDAO;
 import com.gs.service.MessageSendService;
@@ -30,18 +31,18 @@ public class MessageSendServiceImpl implements MessageSendService {
 	public int batchDelete(List<MessageSend> list) { return messageSendDAO.batchDelete(list); }
 	public int update(MessageSend messageSend) { return messageSendDAO.update(messageSend); }
 	public int batchUpdate(List<MessageSend> list) { return messageSendDAO.batchUpdate(list); }
-	public List<MessageSend> queryAll() { return messageSendDAO.queryAll(); }
+	public List<MessageSend> queryAll(User user) { return messageSendDAO.queryAll(user); }
 
 	@Override
 	public List<MessageSend> queryAll(String status) {
-		return messageSendDAO.queryAll();
+		return messageSendDAO.queryAll(status);
 	}
 
 	public List<MessageSend> queryByStatus(String status) { return messageSendDAO.queryAll(status); }
 	public MessageSend query(MessageSend messageSend) { return messageSendDAO.query(messageSend); }
 	public MessageSend queryById(String id) { return messageSendDAO.queryById(id); }
 	public List<MessageSend> queryByPager(Pager pager) { return messageSendDAO.queryByPager(pager); }
-	public int count() { return messageSendDAO.count(); }
+	public int count(User user) { return messageSendDAO.count(user); }
 	public int inactive(String id) { return messageSendDAO.inactive(id); }
 	public int active(String id) { return messageSendDAO.active(id); }
 
@@ -49,12 +50,17 @@ public class MessageSendServiceImpl implements MessageSendService {
 		return messageSendDAO.queryByPagerDisable(pager);
 	}
 
-	public int countByDisable() {
-		return messageSendDAO.countByDisable();
+	public int countByDisable(User user) {
+		return messageSendDAO.countByDisable(user);
 	}
 
 	public List<MessageSend> blurredQuery(Pager pager, MessageSend messageSend) {
 		return null;
+	}
+
+	@Override
+	public int countByBlurred(MessageSend messageSend, User user) {
+		return 0;
 	}
 
 	public int countByBlurred(MessageSend messageSend) {

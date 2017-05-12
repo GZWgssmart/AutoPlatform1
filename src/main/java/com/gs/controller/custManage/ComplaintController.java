@@ -8,6 +8,8 @@ import com.gs.common.bean.ComboBox4EasyUI;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
+import com.gs.common.util.RoleUtil;
+import com.gs.common.util.SessionUtil;
 import com.gs.service.ComplaintService;
 import com.gs.service.UserService;
 import org.apache.ibatis.annotations.Param;
@@ -23,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -53,20 +56,33 @@ public class ComplaintController {
 
     @ResponseBody
     @RequestMapping(value = "queryByPager", method = RequestMethod.GET)
-    public Pager4EasyUI<Complaint> queryByPager(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
-        logger.info("分页查看投诉记录");
-        Pager pager = new Pager();
-        pager.setPageNo(Integer.valueOf(pageNumber));
-        pager.setPageSize(Integer.valueOf(pageSize));
-        int count = complaintService.count();
-        pager.setTotalRecords(count);
-        List<Complaint> queryList = complaintService.queryByPager(pager);
-        return new Pager4EasyUI<Complaint>(pager.getTotalRecords(), queryList);
+    public Pager4EasyUI<Complaint> queryByPager(HttpSession session, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
+        if(SessionUtil.isLogin(session)) {
+            String roles = "系统超级管理员,系统普通管理员,";
+            if(RoleUtil.checkRoles(roles)) {
+                logger.info("分页查看投诉记录");
+                Pager pager = new Pager();
+                pager.setPageNo(Integer.valueOf(pageNumber));
+                pager.setPageSize(Integer.valueOf(pageSize));
+                User user = (User) session.getAttribute("user");
+                int count = complaintService.count(user);
+                pager.setTotalRecords(count);
+                pager.setUser((User)session.getAttribute("user"));
+                List<Complaint> queryList = complaintService.queryByPager(pager);
+                return new Pager4EasyUI<Complaint>(pager.getTotalRecords(), queryList);
+            } else {
+                logger.info("此用户无拥有此方法");
+                return null;
+            }
+        } else {
+            logger.info("请先登录");
+            return null;
+        }
     }
 
     @ResponseBody
     @RequestMapping(value = "queryName", method = RequestMethod.GET)
-    public Pager4EasyUI<Complaint> queryName(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize, Complaint complaint) {
+    public Pager4EasyUI<Complaint> queryName(HttpSession session, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize, Complaint complaint) {
         logger.info("模糊查询投诉记录");
         String text = req.getParameter("text");
         String value = req.getParameter("value");
@@ -83,8 +99,9 @@ public class ComplaintController {
             } else if (text.equals("投诉回复内容")) {
                 complaint.setComplaintReply(value);
             }
-            int count = complaintService.countName(complaint);
+            int count = complaintService.countName(complaint,(User)session.getAttribute("user"));
             pager.setTotalRecords(count);
+            pager.setUser((User)session.getAttribute("user"));
             List<Complaint> queryList = complaintService.queryByPagerName(pager,complaint);
             return new Pager4EasyUI<Complaint>(pager.getTotalRecords(), queryList);
         }
@@ -93,9 +110,9 @@ public class ComplaintController {
 
     @ResponseBody
     @RequestMapping(value = "queryCombox", method = RequestMethod.GET)
-    public List<ComboBox4EasyUI> queryCombox() {
+    public List<ComboBox4EasyUI> queryCombox(HttpSession session) {
         logger.info("查看用户");
-        List<User> users = userService.queryAll();
+        List<User> users = userService.queryAll((User) session.getAttribute("user"));
         List<ComboBox4EasyUI> combo = new ArrayList<ComboBox4EasyUI>();
         for(User user : users) {
             ComboBox4EasyUI co = new ComboBox4EasyUI();
@@ -120,8 +137,10 @@ public class ComplaintController {
 
     @ResponseBody
     @RequestMapping(value = "updateReply", method = RequestMethod.POST)
-    public ControllerResult updateReply(Complaint complaint) {
+    public ControllerResult updateReply(HttpSession session, Complaint complaint) {
         logger.info("投诉记录回复操作");
+        User user = (User) session.getAttribute("user");
+        complaint.setComplaintReplyUser(user.getUserId());
         complaintService.update(complaint);
         return ControllerResult.getSuccessResult("回复成功");
     }

@@ -1,9 +1,11 @@
 package com.gs.service.impl;
 
 import com.gs.bean.MaintainRemind;
+import com.gs.bean.User;
 import com.gs.common.bean.Pager;
 import com.gs.dao.MaintainRemindDAO;
 import com.gs.service.MaintainRemindService;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -30,18 +32,18 @@ public class MaintainRemindServiceImpl implements MaintainRemindService {
 	public int batchDelete(List<MaintainRemind> list) { return maintainRemindDAO.batchDelete(list); }
 	public int update(MaintainRemind maintainRemind) { return maintainRemindDAO.update(maintainRemind); }
 	public int batchUpdate(List<MaintainRemind> list) { return maintainRemindDAO.batchUpdate(list); }
-	public List<MaintainRemind> queryAll() { return maintainRemindDAO.queryAll(); }
+	public List<MaintainRemind> queryAll(User user) { return maintainRemindDAO.queryAll(user); }
 
 	@Override
 	public List<MaintainRemind> queryAll(String status) {
-		return maintainRemindDAO.queryAll();
+		return maintainRemindDAO.queryAll(status);
 	}
 
 	public List<MaintainRemind> queryByStatus(String status) { return maintainRemindDAO.queryAll(status); }
 	public MaintainRemind query(MaintainRemind maintainRemind) { return maintainRemindDAO.query(maintainRemind); }
 	public MaintainRemind queryById(String id) { return maintainRemindDAO.queryById(id); }
 	public List<MaintainRemind> queryByPager(Pager pager) { return maintainRemindDAO.queryByPager(pager); }
-	public int count() { return maintainRemindDAO.count(); }
+	public int count(User user) { return maintainRemindDAO.count(user); }
 	public int inactive(String id) { return maintainRemindDAO.inactive(id); }
 	public int active(String id) { return maintainRemindDAO.active(id); }
 
@@ -49,12 +51,17 @@ public class MaintainRemindServiceImpl implements MaintainRemindService {
 		return maintainRemindDAO.queryByPagerDisable(pager);
 	}
 
-	public int countByDisable() {
-		return maintainRemindDAO.countByDisable();
+	public int countByDisable(User user) {
+		return maintainRemindDAO.countByDisable(user);
 	}
 
 	public List<MaintainRemind> blurredQuery(Pager pager, MaintainRemind maintainRemind) {
 		return null;
+	}
+
+	@Override
+	public int countByBlurred(MaintainRemind maintainRemind, User user) {
+		return 0;
 	}
 
 	public int countByBlurred(MaintainRemind maintainRemind) {
@@ -67,7 +74,7 @@ public class MaintainRemindServiceImpl implements MaintainRemindService {
 	}
 
 	@Override
-	public int countNull() {
-		return maintainRemindDAO.countNull();
+	public int countNull(@Param("user")User user) {
+		return maintainRemindDAO.countNull(user);
 	}
 }
