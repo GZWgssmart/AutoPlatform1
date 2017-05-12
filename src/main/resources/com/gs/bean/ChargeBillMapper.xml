@@ -88,19 +88,28 @@
         and ck.plateId = cp.plateId and ck.companyId = company.companyId
         and c.chargeBillStatus = 'Y'
     ]]>
+    <if test="user.companyId != '' and user.companyId != null">
+      and c.companyId = #{user.companyId}
+    </if>
     limit #{beginIndex}, #{pageSize}
   </select>
 
-  <select id="count" resultType="int" >
+  <select id="count" resultType="int" parameterType="com.gs.bean.User">
     <![CDATA[
       select count(*) from t_charge_bill c where c.chargeBillStatus = 'Y'
     ]]>
+    <if test="companyId != '' and companyId != null">
+      and c.companyId = #{companyId}
+    </if>
   </select>
 
-  <select id="countByDisable" resultType="int" >
+  <select id="countByDisable" resultType="int" parameterType="com.gs.bean.User">
     <![CDATA[
         select count(*) from t_charge_bill c where c.chargeBillStatus = 'N'
     ]]>
+    <if test="companyId != '' and companyId != null">
+      and c.companyId = #{companyId}
+    </if>
   </select>
 
   <select id="queryByPagerDisable" resultMap="chargeBillMap" parameterType="com.gs.common.bean.Pager">
@@ -116,6 +125,9 @@
         and ck.plateId = cp.plateId and ck.companyId = company.companyId
         and c.chargeBillStatus = 'N'
     ]]>
+    <if test="user.companyId != '' and user.companyId != null">
+      and c.companyId = #{user.companyId}
+    </if>
     limit #{beginIndex}, #{pageSize}
   </select>
 
@@ -135,7 +147,7 @@
     ]]>
   </select>
 
-  <select id="queryAll" resultMap="chargeBillMap" parameterType="com.gs.common.bean.Pager">
+  <select id="queryAll" resultMap="chargeBillMap" parameterType="com.gs.bean.User">
     <![CDATA[
         select c.*, ck.*, cc.colorId, cc.colorName, cp.plateId, cp.plateName,
         cm.modelId, cm.modelName, cb.brandId, cb.brandName, company.companyId, company.companyName,
@@ -147,7 +159,10 @@
         m.checkinId = ck.checkinId and ck.brandId = cb.brandId
         and ck.colorId = cc.colorId and ck.modelId = cm.modelId
         and ck.plateId = cp.plateId and ck.companyId = company.companyId and c.chargeBillStatus = 'Y'
-    ]]>
+        ]]>
+        <if test="companyId != '' and companyId != null">
+        and ck.companyId = #{companyId}
+        </if>
   </select>
 
   <insert id="insert" useGeneratedKeys="true" keyProperty="chargeBillId" parameterType="chargeBill">
@@ -194,8 +209,12 @@
            LEFT JOIN t_car_plate cp on ck.plateId = cp.plateId
            LEFT JOIN t_company company on ck.companyId = company.companyId
            LEFT JOIN t_car_brand cb on ck.brandId = cb.brandId
-           where 1=1 and
+           where 1=1
       ]]>
+    <if test="pager.user.companyId != '' and pager.user.companyId != null">
+      and ck.companyId = #{pager.user.companyId}
+    </if>
+    and
     <if test="chargeBill.maintainRecord.checkin.userName != '' and chargeBill.maintainRecord.checkin.userName != null">
       ck.userName like '%${chargeBill.maintainRecord.checkin.userName}%'
     </if>
@@ -236,8 +255,12 @@
            LEFT JOIN t_car_plate cp on ck.plateId = cp.plateId
            LEFT JOIN t_company company on ck.companyId = company.companyId
            LEFT JOIN t_car_brand cb on ck.brandId = cb.brandId
-      where 1=1 and
+      where 1=1
     ]]>
+    <if test="user.companyId != '' and user.companyId != null">
+      and ck.companyId = #{user.companyId}
+    </if>
+    and
     <if test="chargeBill.maintainRecord.checkin.userName != '' and chargeBill.maintainRecord.checkin.userName != null">
       ck.userName like '%${chargeBill.maintainRecord.checkin.userName}%'
     </if>

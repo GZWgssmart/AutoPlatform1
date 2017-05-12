@@ -1,6 +1,7 @@
 package com.gs.service.impl;
 
 import com.gs.bean.MaintainRecord;
+import com.gs.bean.User;
 import com.gs.common.bean.Pager;
 import com.gs.dao.MaintainRecordDAO;
 import com.gs.service.MaintainRecordService;
@@ -30,17 +31,17 @@ public class MaintainRecordServiceImpl implements MaintainRecordService {
 	public int batchDelete(List<MaintainRecord> list) { return maintainRecordDAO.batchDelete(list); }
 	public int update(MaintainRecord maintainRecord) { return maintainRecordDAO.update(maintainRecord); }
 	public int batchUpdate(List<MaintainRecord> list) { return maintainRecordDAO.batchUpdate(list); }
-	public List<MaintainRecord> queryAll() { return maintainRecordDAO.queryAll(); }
+	public List<MaintainRecord> queryAll(User user) { return maintainRecordDAO.queryAll(user); }
 
 	public List<MaintainRecord> queryAll(String status) {
-		return maintainRecordDAO.queryAll();
+		return maintainRecordDAO.queryAll(status);
 	}
 
 	public List<MaintainRecord> queryByStatus(String status) { return maintainRecordDAO.queryAll(status); }
 	public MaintainRecord query(MaintainRecord maintainRecord) { return maintainRecordDAO.query(maintainRecord); }
 	public MaintainRecord queryById(String id) { return maintainRecordDAO.queryById(id); }
 	public List<MaintainRecord> queryByPager(Pager pager) { return maintainRecordDAO.queryByPager(pager); }
-	public int count() { return maintainRecordDAO.count(); }
+	public int count(User user) { return maintainRecordDAO.count(user); }
 	public int inactive(String id) { return maintainRecordDAO.inactive(id); }
 	public int active(String id) { return maintainRecordDAO.active(id); }
 
@@ -48,16 +49,16 @@ public class MaintainRecordServiceImpl implements MaintainRecordService {
 		return maintainRecordDAO.queryByPagerDisable(pager);
 	}
 
-	public int countByDisable() {
-		return maintainRecordDAO.countByDisable();
+	public int countByDisable(User user) {
+		return maintainRecordDAO.countByDisable(user);
 	}
 
 	public List<MaintainRecord> blurredQuery(Pager pager, MaintainRecord maintainRecord) {
 		return maintainRecordDAO.blurredQuery(pager, maintainRecord);
 	}
 
-	public int countByBlurred(MaintainRecord maintainRecord) {
-		return maintainRecordDAO.countByBlurred(maintainRecord);
+	public int countByBlurred(MaintainRecord maintainRecord,User user) {
+		return maintainRecordDAO.countByBlurred(maintainRecord, user);
 	}
 
 	public List<MaintainRecord> blurredQueryByRemind(Pager pager, MaintainRecord maintainRecord) {

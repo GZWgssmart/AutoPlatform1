@@ -9,6 +9,8 @@ import com.gs.common.bean.Echarts;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
 import com.gs.common.util.DateFormatUtil;
+import com.gs.common.util.RoleUtil;
+import com.gs.common.util.SessionUtil;
 import com.gs.service.*;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -56,14 +59,25 @@ public class MaintainDetailController {
      */
     @ResponseBody
     @RequestMapping(value="queryByPager", method = RequestMethod.GET)
-    public Pager4EasyUI<MaintainDetail> queryByPager(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
-        logger.info("分页查询所有明细");
-        Pager pager = new Pager();
-        pager.setPageNo(Integer.valueOf(pageNumber));
-        pager.setPageSize(Integer.valueOf(pageSize));
-        pager.setTotalRecords(maintainDetailService.count());
-        List<MaintainDetail> maintainDetails = maintainDetailService.queryByPager(pager);
-        return new Pager4EasyUI<MaintainDetail>(pager.getTotalRecords(), maintainDetails);
+    public Pager4EasyUI<MaintainDetail> queryByPager(HttpSession session, @Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
+        if(SessionUtil.isLogin(session)) {
+            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师";
+            if(RoleUtil.checkRoles(roles)) {
+                logger.info("分页查询所有明细");
+                Pager pager = new Pager();
+                pager.setPageNo(Integer.valueOf(pageNumber));
+                pager.setPageSize(Integer.valueOf(pageSize));
+                pager.setTotalRecords(maintainDetailService.count((User)session.getAttribute("user")));
+                List<MaintainDetail> maintainDetails = maintainDetailService.queryByPager(pager);
+                return new Pager4EasyUI<MaintainDetail>(pager.getTotalRecords(), maintainDetails);
+            }else{
+                logger.info("此用户无拥有可用维修保养明细分页查询的角色");
+                return null;
+            }
+        }else{
+            logger.info("请先登录");
+            return null;
+        }
     }
 
     /**
@@ -72,15 +86,26 @@ public class MaintainDetailController {
      */
     @ResponseBody
     @RequestMapping(value="queryByDetailPager/{recordId}", method = RequestMethod.GET)
-    public Pager4EasyUI<MaintainDetail> queryByRecordIdPager(@PathVariable("recordId") String recordId, @Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
-        logger.info("分页查询此记录下所有明细");
-        Pager pager = new Pager();
-        pager.setPageNo(Integer.valueOf(pageNumber));
-        pager.setPageSize(Integer.valueOf(pageSize));
-        pager.setTotalRecords(maintainDetailService.countByDetail(recordId));
-        List<MaintainDetail> maintainDetails = maintainDetailService.queryByDetailByPager(pager, recordId);
-        System.out.print(maintainDetails);
-        return new Pager4EasyUI<MaintainDetail>(pager.getTotalRecords(), maintainDetails);
+    public Pager4EasyUI<MaintainDetail> queryByRecordIdPager(HttpSession session, @PathVariable("recordId") String recordId, @Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
+        if(SessionUtil.isLogin(session)) {
+            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师";
+            if(RoleUtil.checkRoles(roles)) {
+                logger.info("分页查询此记录下所有明细");
+                Pager pager = new Pager();
+                pager.setPageNo(Integer.valueOf(pageNumber));
+                pager.setPageSize(Integer.valueOf(pageSize));
+                pager.setTotalRecords(maintainDetailService.countByDetail(recordId));
+                List<MaintainDetail> maintainDetails = maintainDetailService.queryByDetailByPager(pager, recordId);
+                System.out.print(maintainDetails);
+                return new Pager4EasyUI<MaintainDetail>(pager.getTotalRecords(), maintainDetails);
+            }else{
+                logger.info("此用户无拥有根据维修保养记录查询此记录下的维修保养明细分页查询的角色");
+                return null;
+            }
+        }else{
+            logger.info("请先登录");
+            return null;
+        }
     }
 
     /**
@@ -88,10 +113,21 @@ public class MaintainDetailController {
      */
     @ResponseBody
     @RequestMapping(value = "add", method = RequestMethod.POST)
-    public ControllerResult add(MaintainDetail maintainDetail) {
-        logger.info("添加维修保养明细");
-        maintainDetailService.insert(maintainDetail);
-        return ControllerResult.getSuccessResult("添加成功");
+    public ControllerResult add(HttpSession session, MaintainDetail maintainDetail) {
+        if(SessionUtil.isLogin(session)) {
+            String roles = "公司超级管理员,公司普通管理员,汽车公司接待员";
+            if(RoleUtil.checkRoles(roles)) {
+                logger.info("添加维修保养明细");
+                maintainDetailService.insert(maintainDetail);
+                return ControllerResult.getSuccessResult("添加成功");
+            }else{
+                logger.info("此用户无拥有添加维修保养明细的角色");
+                return ControllerResult.getNotRoleResult("权限不足");
+            }
+        }else{
+            logger.info("请先登录");
+            return ControllerResult.getNotLoginResult("登录信息无效，请重新登录");
+        }
     }
 
     /**
@@ -99,10 +135,21 @@ public class MaintainDetailController {
      */
     @ResponseBody
     @RequestMapping(value = "edit", method = RequestMethod.POST)
-    public ControllerResult edit(MaintainDetail maintainDetail) {
-        logger.info("修改维修保养明细");
-        maintainDetailService.update(maintainDetail);
-        return ControllerResult.getSuccessResult("修改成功");
+    public ControllerResult edit(HttpSession session, MaintainDetail maintainDetail) {
+        if(SessionUtil.isLogin(session)) {
+            String roles = "公司超级管理员,公司普通管理员,汽车公司接待员";
+            if(RoleUtil.checkRoles(roles)) {
+                logger.info("修改维修保养明细");
+                maintainDetailService.update(maintainDetail);
+                return ControllerResult.getSuccessResult("修改成功");
+            }else{
+                logger.info("此用户无拥有修改维修保养明细的角色");
+                return ControllerResult.getNotRoleResult("权限不足");
+            }
+        }else{
+            logger.info("请先登录");
+            return ControllerResult.getNotLoginResult("登录信息无效，请重新登录");
+        }
     }
 
     /**
@@ -110,35 +157,46 @@ public class MaintainDetailController {
      */
     @ResponseBody
     @RequestMapping(value = "userConfirm/{recordId}/{ids}", method = RequestMethod.POST)
-    public ControllerResult userConfirm(@PathVariable("recordId") String recordId,@PathVariable("ids") String ids) {
-        logger.info("用户确认明细清单, 这时生成所有物料清单和工单");
-        if(recordId != null && recordId != "" && ids!= null && ids != "") {
-            List<MaintainFixAcc> maintainFixAccs = maintainFixAccService.queryByRecord(ids);
-            System.out.print(maintainFixAccs);
-            if(maintainFixAccs != null) {
-                    List<MaterialList> materialLists = new ArrayList<MaterialList>();
-                    for (MaintainFixAcc m : maintainFixAccs) {
-                        MaterialList materialList = new MaterialList();
-                        materialList.setMaintainRecordId(recordId);
-                        materialList.setAccId(m.getAccId());
-                        materialList.setMaterialCount(m.getAccCount());
-                        materialLists.add(materialList);
+    public ControllerResult userConfirm(HttpSession session, @PathVariable("recordId") String recordId,@PathVariable("ids") String ids) {
+        if(SessionUtil.isLogin(session)) {
+            String roles = "公司超级管理员,公司普通管理员,汽车公司接待员,车主";
+            if(RoleUtil.checkRoles(roles)) {
+                logger.info("用户确认明细清单, 这时生成所有物料清单和工单");
+                if(recordId != null && recordId != "" && ids!= null && ids != "") {
+                    List<MaintainFixAcc> maintainFixAccs = maintainFixAccService.queryByRecord(ids);
+                    System.out.print(maintainFixAccs);
+                    if(maintainFixAccs != null) {
+                            List<MaterialList> materialLists = new ArrayList<MaterialList>();
+                            for (MaintainFixAcc m : maintainFixAccs) {
+                                MaterialList materialList = new MaterialList();
+                                materialList.setMaintainRecordId(recordId);
+                                materialList.setAccId(m.getAccId());
+                                materialList.setMaterialCount(m.getAccCount());
+                                materialLists.add(materialList);
+                            }
+                            materialListService.insertList(materialLists); // 生成物料清单
+                            // 用户确认之后, 生成工单, 指派员工进行施工
+                            WorkInfo w = new WorkInfo();
+                            w.setRecordId(recordId);
+                            workInfoService.insert(w);
+                            // 修改维修保养记录中的开始时间
+                            MaintainRecord maintainRecord = maintainRecordService.queryById(recordId);
+                            maintainRecord.setStartTime(new Date());
+                            maintainRecordService.update(maintainRecord);
+                            return ControllerResult.getSuccessResult("确定成功");
+                    }else{
+                        return ControllerResult.getFailResult("确定失败, 此维修保养记录中的所有明细中的维修项目并没有配件");
                     }
-                    materialListService.insertList(materialLists); // 生成物料清单
-                    // 用户确认之后, 生成工单, 指派员工进行施工
-                    WorkInfo w = new WorkInfo();
-                    w.setRecordId(recordId);
-                    workInfoService.insert(w);
-                    // 修改维修保养记录中的开始时间
-                    MaintainRecord maintainRecord = maintainRecordService.queryById(recordId);
-                    maintainRecord.setStartTime(new Date());
-                    maintainRecordService.update(maintainRecord);
-                    return ControllerResult.getSuccessResult("确定成功");
+                }else{
+                    return ControllerResult.getFailResult("确定失败");
+                }
             }else{
-                return ControllerResult.getFailResult("确定失败, 此维修保养记录中的所有明细中的维修项目并没有配件");
+                logger.info("此用户无拥有确认维修保养明细的角色");
+                return ControllerResult.getNotRoleResult("权限不足");
             }
         }else{
-            return ControllerResult.getFailResult("确定失败");
+            logger.info("请先登录");
+            return ControllerResult.getNotLoginResult("登录信息无效，请重新登录");
         }
     }
 
@@ -148,39 +206,50 @@ public class MaintainDetailController {
      */
     @ResponseBody
     @RequestMapping(value="blurredQuery", method = RequestMethod.GET)
-    public Pager4EasyUI<MaintainRecord> blurredQuery(HttpServletRequest request, @Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
-        logger.info("维修保养记录模糊查询");
-        Pager pager = new Pager();
-        pager.setPageNo(Integer.valueOf(pageNumber));
-        pager.setPageSize(Integer.valueOf(pageSize));
-        String text = request.getParameter("text");
-        String value = request.getParameter("value");
-        if(text != null && text!="") {
-            List<MaintainRecord> maintainRecords = null;
-            MaintainRecord maintainRecord = new MaintainRecord();
-            Checkin checkin = new Checkin();
-            if(text.equals("车主/电话/汽车公司/车牌号")){ // 当多种模糊搜索条件时
-                checkin.setUserPhone(value);
-                checkin.setCarPlate(value);
-                checkin.setUserName(value);
-                checkin.setCompanyId(value);
-            }else if(text.equals("车主")){
-                checkin.setUserName(value);
-            }else if(text.equals("汽车公司")){
-                checkin.setCompanyId(value);
-            }else if(text.equals("车牌号")){
-                checkin.setCarPlate(value);
-            }else if(text.equals("电话")){
-                checkin.setUserPhone(value);
+    public Pager4EasyUI<MaintainRecord> blurredQuery(HttpSession session, HttpServletRequest request, @Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
+        if(SessionUtil.isLogin(session)) {
+            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师";
+            if(RoleUtil.checkRoles(roles)) {
+                logger.info("维修保养记录模糊查询");
+                Pager pager = new Pager();
+                pager.setPageNo(Integer.valueOf(pageNumber));
+                pager.setPageSize(Integer.valueOf(pageSize));
+                String text = request.getParameter("text");
+                String value = request.getParameter("value");
+                if(text != null && text!="") {
+                    List<MaintainRecord> maintainRecords = null;
+                    MaintainRecord maintainRecord = new MaintainRecord();
+                    Checkin checkin = new Checkin();
+                    if(text.equals("车主/电话/汽车公司/车牌号")){ // 当多种模糊搜索条件时
+                        checkin.setUserPhone(value);
+                        checkin.setCarPlate(value);
+                        checkin.setUserName(value);
+                        checkin.setCompanyId(value);
+                    }else if(text.equals("车主")){
+                        checkin.setUserName(value);
+                    }else if(text.equals("汽车公司")){
+                        checkin.setCompanyId(value);
+                    }else if(text.equals("车牌号")){
+                        checkin.setCarPlate(value);
+                    }else if(text.equals("电话")){
+                        checkin.setUserPhone(value);
+                    }
+                    maintainRecord.setCheckin(checkin);
+                    maintainRecords = maintainRecordService.blurredQuery(pager, maintainRecord);
+                    pager.setTotalRecords(maintainRecordService.countByBlurred(maintainRecord,(User)session.getAttribute("user")));
+                    return new Pager4EasyUI<MaintainRecord>(pager.getTotalRecords(), maintainRecords);
+                }else{
+                    pager.setTotalRecords(maintainRecordService.count((User)session.getAttribute("user")));
+                    List<MaintainRecord> maintainRecords = maintainRecordService.queryByPager(pager);
+                    return new Pager4EasyUI<MaintainRecord>(pager.getTotalRecords(), maintainRecords);
+                }
+            }else{
+                logger.info("此用户无拥有维修保养明细模糊查询的角色");
+                return null;
             }
-            maintainRecord.setCheckin(checkin);
-            maintainRecords = maintainRecordService.blurredQuery(pager, maintainRecord);
-            pager.setTotalRecords(maintainRecordService.countByBlurred(maintainRecord));
-            return new Pager4EasyUI<MaintainRecord>(pager.getTotalRecords(), maintainRecords);
         }else{
-            pager.setTotalRecords(maintainRecordService.count());
-            List<MaintainRecord> maintainRecords = maintainRecordService.queryByPager(pager);
-            return new Pager4EasyUI<MaintainRecord>(pager.getTotalRecords(), maintainRecords);
+            logger.info("请先登录");
+            return null;
         }
     }
 
@@ -197,7 +266,7 @@ public class MaintainDetailController {
     @ResponseBody
     @RequestMapping(value = "queryByCondition")
     public List<MaintainRecordBean> queryByCondition(String start, String end, String type){
-        logger.info("根据年月日周季去查询所有的工单");
+        logger.info("根据年月日周季去查询所有的维修明细得出哪个维修项目做的用户最多");
         List<MaintainRecordBean> list = null;
         List<MaintainRecord> timeList = null;
         List<MaintainRecord> maintainList = null;

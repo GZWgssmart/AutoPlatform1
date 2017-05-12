@@ -54,18 +54,18 @@ public class CheckinController {
     @RequestMapping(value="queryByPager", method = RequestMethod.GET)
     public Pager4EasyUI<Checkin> queryByPager(HttpSession session, @Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
         if(SessionUtil.isLogin(session)) {
-            String roles = "系统超级管理员,系统普通管理员,汽修公司管理员,汽修公司接待员";
+            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员";
             if(RoleUtil.checkRoles(roles)) {
                 logger.info("分页查询所有登记记录");
                     Pager pager = new Pager();
                     pager.setPageNo(Integer.valueOf(pageNumber));
                     pager.setPageSize(Integer.valueOf(pageSize));
-                    pager.setTotalRecords(checkinService.count());
+                    pager.setTotalRecords(checkinService.count((User)session.getAttribute("user")));
                     pager.setUser((User)session.getAttribute("user"));
                     List<Checkin> checkins = checkinService.queryByPager(pager);
                     return new Pager4EasyUI<Checkin>(pager.getTotalRecords(), checkins);
             }else{
-                logger.info("此用户无拥有此方法角色");
+                logger.info("此用户无拥有可用登记记录分页查询的角色");
                 return null;
             }
         }else{
@@ -82,13 +82,19 @@ public class CheckinController {
     @RequestMapping(value="queryByPagerDisable", method = RequestMethod.GET)
     public Pager4EasyUI<Checkin> queryByPagerDisable(HttpSession session, @Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
         if(SessionUtil.isLogin(session)) {
+            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员";
+            if(RoleUtil.checkRoles(roles)) {
                 logger.info("分页查询所有被禁用登记记录");
                 Pager pager = new Pager();
                 pager.setPageNo(Integer.valueOf(pageNumber));
                 pager.setPageSize(Integer.valueOf(pageSize));
-                pager.setTotalRecords(checkinService.countByDisable());
+                pager.setTotalRecords(checkinService.countByDisable((User)session.getAttribute("user")));
                 List<Checkin> checkins = checkinService.queryByPagerDisable(pager);
                 return new Pager4EasyUI<Checkin>(pager.getTotalRecords(), checkins);
+            }else{
+                logger.info("此用户无拥有禁用登记记录分页查询的角色");
+                return null;
+            }
         }else{
             logger.info("请先登录");
             return null;
@@ -99,20 +105,27 @@ public class CheckinController {
     @RequestMapping(value = "add", method = RequestMethod.POST)
     public ControllerResult addCheckin(HttpSession session, Checkin checkin) {
         if(SessionUtil.isLogin(session)) {
-            logger.info("添加登记记录");
-            if(checkin != null) {
-                if(checkin.getAppointmentId()!= null && checkin.getAppointmentId() != ""){
+            String roles = "公司超级管理员,公司普通管理员,汽车公司接待员";
+            if(RoleUtil.checkRoles(roles)) {
+                User user = (User)session.getAttribute("user");
+                logger.info("添加登记记录");
+                if(checkin != null) {
+                    if(checkin.getAppointmentId()!= null && checkin.getAppointmentId() != ""){
 
+                    }
+                    checkin.setCheckinId(UUIDUtil.uuid());
+                    checkin.setCompanyId(user.getCompanyId());
+                    checkinService.insert(checkin);
+                    MaintainRecord maintainRecode = new MaintainRecord();
+                    maintainRecode.setCheckinId(checkin.getCheckinId());
+                    maintainRecordService.insert(maintainRecode);
+                    return ControllerResult.getSuccessResult("添加成功");
+                }else{
+                    return ControllerResult.getFailResult("添加失败");
                 }
-                checkin.setCheckinId(UUIDUtil.uuid());
-                checkin.setCompanyId("c515f5d623e011e7a97af832e40312b3");
-                checkinService.insert(checkin);
-                MaintainRecord maintainRecode = new MaintainRecord();
-                maintainRecode.setCheckinId(checkin.getCheckinId());
-                maintainRecordService.insert(maintainRecode);
-                return ControllerResult.getSuccessResult("添加成功");
             }else{
-                return ControllerResult.getFailResult("添加失败");
+                logger.info("此用户无拥有添加登记记录的角色");
+                return ControllerResult.getNotRoleResult("权限不足");
             }
         }else{
             logger.info("请先登录");
@@ -124,10 +137,16 @@ public class CheckinController {
     @RequestMapping(value = "edit", method = RequestMethod.POST)
     public ControllerResult editCheckin(HttpSession session, Checkin checkin) {
         if(SessionUtil.isLogin(session)) {
-            logger.info("修改登记记录");
-            checkin.setCompanyId("c515f5d623e011e7a97af832e40312b3");
-            checkinService.update(checkin);
-            return ControllerResult.getSuccessResult("修改成功");
+            String roles = "公司超级管理员,公司普通管理员,汽车公司接待员";
+            if(RoleUtil.checkRoles(roles)) {
+                logger.info("修改登记记录");
+                User user = (User)session.getAttribute("user");
+                checkinService.update(checkin);
+                return ControllerResult.getSuccessResult("修改成功");
+            }else{
+                logger.info("此用户无拥有修改登记记录的角色");
+                return ControllerResult.getNotRoleResult("权限不足");
+            }
         }else{
             logger.info("请先登录");
             return ControllerResult.getNotLoginResult("登录信息无效，请重新登录");
@@ -141,18 +160,24 @@ public class CheckinController {
     @RequestMapping(value = "statusOperate", method = RequestMethod.POST)
     public ControllerResult inactive(HttpSession session, String id, String status) {
         if(SessionUtil.isLogin(session)) {
-            if (id != null && !id.equals("") && status != null && !status.equals("")) {
-                if (status.equals("N")) {
-                    checkinService.active(id);
-                    logger.info("激活成功");
-                    return ControllerResult.getSuccessResult("激活成功");
+            String roles = "公司超级管理员,公司普通管理员,汽车公司接待员";
+            if(RoleUtil.checkRoles(roles)) {
+                if (id != null && !id.equals("") && status != null && !status.equals("")) {
+                    if (status.equals("N")) {
+                        checkinService.active(id);
+                        logger.info("激活成功");
+                        return ControllerResult.getSuccessResult("激活成功");
+                    } else {
+                        checkinService.inactive(id);
+                        logger.info("禁用成功");
+                        return ControllerResult.getSuccessResult("禁用成功");
+                    }
                 } else {
-                    checkinService.inactive(id);
-                    logger.info("禁用成功");
-                    return ControllerResult.getSuccessResult("禁用成功");
+                    return ControllerResult.getFailResult("操作失败");
                 }
-            } else {
-                return ControllerResult.getFailResult("操作失败");
+            }else{
+                logger.info("此用户无拥有更改登记记录状态的角色");
+                return ControllerResult.getNotRoleResult("权限不足");
             }
         }else{
             logger.info("请先登录");
@@ -168,37 +193,43 @@ public class CheckinController {
     @RequestMapping(value="blurredQuery", method = RequestMethod.GET)
     public Pager4EasyUI<Checkin> blurredQuery(HttpSession session, HttpServletRequest request, @Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
         if(SessionUtil.isLogin(session)) {
-            logger.info("登记记录模糊查询");
-            Pager pager = new Pager();
-            pager.setPageNo(Integer.valueOf(pageNumber));
-            pager.setPageSize(Integer.valueOf(pageSize));
-            String text = request.getParameter("text");
-            String value = request.getParameter("value");
-            if(text != null && text!="" && value != null && value != "") {
-                List<Checkin> checkins = null;
-                Checkin checkin = new Checkin();
-                if(text.equals("车主/电话/汽车公司/车牌号")){ // 当多种模糊搜索条件时
-                    checkin.setUserName(value);
-                    checkin.setCompanyId(value);
-                    checkin.setCarPlate(value);
-                    checkin.setUserPhone(value);
-                }else if(text.equals("车主")){
-                    checkin.setUserName(value);
-                }else if(text.equals("汽车公司")){
-                    checkin.setCompanyId(value);
-                }else if(text.equals("车牌号")){
-                    checkin.setCarPlate(value);
-                }else if(text.equals("电话")){
-                    checkin.setUserPhone(value);
+            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员";
+            if(RoleUtil.checkRoles(roles)) {
+                logger.info("登记记录模糊查询");
+                Pager pager = new Pager();
+                pager.setPageNo(Integer.valueOf(pageNumber));
+                pager.setPageSize(Integer.valueOf(pageSize));
+                String text = request.getParameter("text");
+                String value = request.getParameter("value");
+                if(text != null && text!="" && value != null && value != "") {
+                    List<Checkin> checkins = null;
+                    Checkin checkin = new Checkin();
+                    if(text.equals("车主/电话/汽车公司/车牌号")){ // 当多种模糊搜索条件时
+                        checkin.setUserName(value);
+                        checkin.setCompanyId(value);
+                        checkin.setCarPlate(value);
+                        checkin.setUserPhone(value);
+                    }else if(text.equals("车主")){
+                        checkin.setUserName(value);
+                    }else if(text.equals("汽车公司")){
+                        checkin.setCompanyId(value);
+                    }else if(text.equals("车牌号")){
+                        checkin.setCarPlate(value);
+                    }else if(text.equals("电话")){
+                        checkin.setUserPhone(value);
+                    }
+                    checkins = checkinService.blurredQuery(pager, checkin);
+                    pager.setTotalRecords(checkinService.countByBlurred(checkin,(User)session.getAttribute("user")));
+                    System.out.print(checkins);
+                    return new Pager4EasyUI<Checkin>(pager.getTotalRecords(), checkins);
+                }else{ // 当在模糊查询输入框中输入的值为空时, 使它查询全部
+                    pager.setTotalRecords(checkinService.count((User)session.getAttribute("user")));
+                    List<Checkin> checkins = checkinService.queryByPager(pager);
+                    return new Pager4EasyUI<Checkin>(pager.getTotalRecords(), checkins);
                 }
-                checkins = checkinService.blurredQuery(pager, checkin);
-                pager.setTotalRecords(checkinService.countByBlurred(checkin));
-                System.out.print(checkins);
-                return new Pager4EasyUI<Checkin>(pager.getTotalRecords(), checkins);
-            }else{ // 当在模糊查询输入框中输入的值为空时, 使它查询全部
-                pager.setTotalRecords(checkinService.count());
-                List<Checkin> checkins = checkinService.queryByPager(pager);
-                return new Pager4EasyUI<Checkin>(pager.getTotalRecords(), checkins);
+            }else{
+                logger.info("此用户无拥有查看登记记录模糊查询方法的角色");
+                return null;
             }
         }else{
             logger.info("请先登录");
