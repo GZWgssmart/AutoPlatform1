@@ -6,8 +6,8 @@ import java.util.List;
  * Created by WangGenshen on 19/5/16.
  */
 public class Pager4EasyUI<T> {
-    private int pageSize;//7
-    private int pageNo; //9
+    private int pageSize;
+    private int pageNo;
     private int beginIndex;
 
     private int total;
@@ -60,4 +60,5 @@ public class Pager4EasyUI<T> {
     public void setRows(List<T> rows) {
         this.rows = rows;
     }
+
 }

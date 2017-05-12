@@ -60,7 +60,7 @@
         <div class="modal-content" >
                 <form class="form-horizontal"  role="form" id="addForm" method="post">
                 <div class="modal-header" style="overflow:auto;">
-                    <p>添加供应商类型信息</p>
+                    <h4>添加供应商类型信息</h4>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">供应商类型名称：</label>
@@ -101,7 +101,7 @@
             <form  class="form-horizontal"  id="editForm" method="post">
                 <input type="hidden" name="supplyTypeId" define="supplyType.supplyTypeId"/>
                 <div class="modal-header" style="overflow:auto;">
-                    <p>修改供应商类型信息</p>
+                    <h4>修改供应商类型信息</h4>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">供应商类型：</label>

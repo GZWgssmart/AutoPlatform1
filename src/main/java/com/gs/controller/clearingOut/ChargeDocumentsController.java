@@ -3,6 +3,7 @@ package com.gs.controller.clearingOut;
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.ChargeBill;
 import com.gs.bean.Checkin;
+import com.gs.bean.MaintainRecord;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
@@ -19,7 +20,6 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -124,15 +124,17 @@ public class ChargeDocumentsController {
      */
     @ResponseBody
     @RequestMapping(value="blurredQuery", method = RequestMethod.GET)
-    public Pager4EasyUI<Checkin> blurredQuery(HttpServletRequest request, @Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
+    public Pager4EasyUI<ChargeBill> blurredQuery(HttpServletRequest request, @Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
         logger.info("登记记录模糊查询");
+        Pager pager = new Pager();
+        pager.setPageNo(Integer.valueOf(pageNumber));
+        pager.setPageSize(Integer.valueOf(pageSize));
         String text = request.getParameter("text");
         String value = request.getParameter("value");
         if(text != null && text!="") {
-            Pager pager = new Pager();
-            pager.setPageNo(Integer.valueOf(pageNumber));
-            pager.setPageSize(Integer.valueOf(pageSize));
-            List<Checkin> checkins = null;
+            List<ChargeBill> chargeBills = null;
+            ChargeBill chargeBill = new ChargeBill();
+            MaintainRecord maintainRecord = new MaintainRecord();
             Checkin checkin = new Checkin();
             if(text.equals("车主/电话/汽车公司/车牌号")){ // 当多种模糊搜索条件时
                 checkin.setUserName(value);
@@ -148,17 +150,20 @@ public class ChargeDocumentsController {
             }else if(text.equals("电话")){
                 checkin.setUserPhone(value);
             }
-            checkins = checkinService.blurredQuery(pager, checkin);
-            pager.setTotalRecords(checkinService.countByBlurred(checkin));
-            System.out.print(checkins);
-            return new Pager4EasyUI<Checkin>(pager.getTotalRecords(), checkins);
+            maintainRecord.setCheckin(checkin);
+            chargeBill.setMaintainRecord(maintainRecord);
+            chargeBills = chargeBillService.blurredQuery(pager, chargeBill);
+            pager.setTotalRecords(chargeBillService.countByBlurred(chargeBill));
+            return new Pager4EasyUI<ChargeBill>(pager.getTotalRecords(), chargeBills);
         }else{
-            return null;
+            pager.setTotalRecords(chargeBillService.count());
+            List<ChargeBill> chargeBills = chargeBillService.queryByPager(pager);
+            return new Pager4EasyUI<ChargeBill>(pager.getTotalRecords(), chargeBills);
         }
     }
 
     @RequestMapping(value="exportExcel", method = RequestMethod.GET)
-    public ModelAndView exportExcel(HttpServletRequest request, HttpServletResponse response) {
+    public void exportExcel(HttpServletRequest request, HttpServletResponse response) {
         logger.info("收费单据导出");
         try {
             ChargeBill chargeBill = new ChargeBill();
@@ -197,7 +202,6 @@ public class ChargeDocumentsController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
     }
 
     /**

@@ -29,4 +29,13 @@ public class ErrorController {
         logger.info("500错误, 服务器内部错误");
         return "error/serverError";
     }
+
+    /**
+     * 无角色
+     */
+    @RequestMapping(value = "notRole", method = RequestMethod.GET)
+    public String notRole() {
+        logger.info("不拥有角色");
+        return "error/notRole";
+    }
 }

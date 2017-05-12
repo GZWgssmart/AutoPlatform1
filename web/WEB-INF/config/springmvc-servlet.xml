@@ -51,4 +51,27 @@
         </property>
     </bean>
 
+    <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+        <property name="exceptionMappings">
+            <props>
+                <!-- 登录 -->
+                <prop key="org.apache.shiro.authz.UnauthenticatedException">
+                    redirect:/user/redirectLogin
+                </prop>
+                <!-- 授权 -->
+                <prop key="org.apache.shiro.authz.UnauthorizedException">
+                    redirect:/error/serverError
+                </prop>
+            </props>
+        </property>
+        <property name="defaultErrorView" value="error/genericView"/>
+    </bean>
+
+    <!-- shiro开启注解 -->
+    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" depends-on="lifecycleBeanPostProcessor">
+        <property name="proxyTargetClass" value="true"></property>
+    </bean>
+    <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+        <property name="securityManager" ref="securityManager"></property>
+    </bean>
 </beans>

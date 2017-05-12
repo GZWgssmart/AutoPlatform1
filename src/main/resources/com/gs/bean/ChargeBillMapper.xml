@@ -157,6 +157,14 @@
         ]]>
   </insert>
 
+  <update id="update" parameterType="chargeBill">
+    <![CDATA[
+			update t_charge_bill set chargeBillId = #{chargeBillId}, maintainRecordId = #{maintainRecordId}, chargeBillMoney = #{chargeBillMoney}, paymentMethod = #{paymentMethod},
+				actualPayment = #{actualPayment}, chargeTime = #{chargeTime}, chargeCreatedTime = #{chargeCreatedTime}, chargeBillDes = #{chargeBillDes}, chargeBillStatus = #{chargeBillStatus}
+				where chargeBillId = #{chargeBillId}
+		]]>
+  </update>
+
   <!--冻结数据-->
   <update id="inactive" keyProperty="chargeBillId" parameterType="chargeBill">
     <![CDATA[
@@ -171,4 +179,88 @@
         ]]>
   </update>
 
+  <!-- 分页模糊查询 -->
+  <select id="blurredQuery" resultMap="chargeBillMap" >
+    <![CDATA[
+            select cg.*, ck.*, cc.colorId, cc.colorName, cp.plateId, cp.plateName,
+           cm.modelId, cm.modelName, cb.brandId, cb.brandName, company.companyId, company.companyName,
+           m.recordId, m.startTime, m.endTime, m.actualEndTime, m.recordCreatedTime,
+           m.pickupTime, m.recordDes from t_charge_bill cg
+           LEFT JOIN t_maintain_record m on m.recordId = cg.maintainRecordId
+		   LEFT JOIN t_checkin ck on ck.checkinId = m.checkinId
+           LEFT JOIN t_user u on u.userId =ck.userId
+           LEFT JOIN t_car_color cc on ck.colorId =cc.colorId
+           LEFT JOIN t_car_model cm on ck.modelId = cm.modelId
+           LEFT JOIN t_car_plate cp on ck.plateId = cp.plateId
+           LEFT JOIN t_company company on ck.companyId = company.companyId
+           LEFT JOIN t_car_brand cb on ck.brandId = cb.brandId
+           where 1=1 and
+      ]]>
+    <if test="chargeBill.maintainRecord.checkin.userName != '' and chargeBill.maintainRecord.checkin.userName != null">
+      ck.userName like '%${chargeBill.maintainRecord.checkin.userName}%'
+    </if>
+    <if test="chargeBill.maintainRecord.checkin.userName != '' and chargeBill.maintainRecord.checkin.userName != null and
+            chargeBill.maintainRecord.checkin.companyId != '' and chargeBill.maintainRecord.checkin.companyId != null">
+      or
+    </if>
+    <if test="chargeBill.maintainRecord.checkin.companyId != '' and chargeBill.maintainRecord.checkin.companyId != null">
+      company.companyName like '%${chargeBill.maintainRecord.checkin.companyId}%'
+    </if>
+    <if test="chargeBill.maintainRecord.checkin.companyId != '' and chargeBill.maintainRecord.checkin.companyId != null and
+            chargeBill.maintainRecord.checkin.carPlate != '' and chargeBill.maintainRecord.checkin.carPlate != null">
+      or
+    </if>
+    <if test="chargeBill.maintainRecord.checkin.carPlate != '' and chargeBill.maintainRecord.checkin.carPlate != null">
+      ck.carPlate like '%${chargeBill.maintainRecord.checkin.carPlate}%'
+    </if>
+    <if test="chargeBill.maintainRecord.checkin.carPlate != '' and chargeBill.maintainRecord.checkin.carPlate != null and
+            chargeBill.maintainRecord.checkin.userPhone != '' and chargeBill.maintainRecord.checkin.userPhone != null">
+      or
+    </if>
+    <if test="chargeBill.maintainRecord.checkin.userPhone != '' and chargeBill.maintainRecord.checkin.userPhone != null">
+      ck.userPhone like '%${chargeBill.maintainRecord.checkin.userPhone}%'
+    </if>
+    order by ck.checkinCreatedTime Desc
+    limit #{pager.beginIndex}, #{pager.pageSize}
+  </select>
+
+  <!-- 分页模糊查询个数 -->
+  <select id="countByBlurred" resultType="int" >
+    <![CDATA[
+      select count(chargeBillId) from t_charge_bill cg
+           LEFT JOIN t_maintain_record m on m.recordId = cg.maintainRecordId
+		   LEFT JOIN t_checkin ck on ck.checkinId = m.checkinId
+           LEFT JOIN t_user u on u.userId =ck.userId
+           LEFT JOIN t_car_color cc on ck.colorId =cc.colorId
+           LEFT JOIN t_car_model cm on ck.modelId = cm.modelId
+           LEFT JOIN t_car_plate cp on ck.plateId = cp.plateId
+           LEFT JOIN t_company company on ck.companyId = company.companyId
+           LEFT JOIN t_car_brand cb on ck.brandId = cb.brandId
+      where 1=1 and
+    ]]>
+    <if test="chargeBill.maintainRecord.checkin.userName != '' and chargeBill.maintainRecord.checkin.userName != null">
+      ck.userName like '%${chargeBill.maintainRecord.checkin.userName}%'
+    </if>
+    <if test="chargeBill.maintainRecord.checkin.userName != '' and chargeBill.maintainRecord.checkin.userName != null and
+            chargeBill.maintainRecord.checkin.companyId != '' and chargeBill.maintainRecord.checkin.companyId != null">
+      or
+    </if>
+    <if test="chargeBill.maintainRecord.checkin.companyId != '' and chargeBill.maintainRecord.checkin.companyId != null">
+      company.companyName like '%${chargeBill.maintainRecord.checkin.companyId}%'
+    </if>
+    <if test="chargeBill.maintainRecord.checkin.companyId != '' and chargeBill.maintainRecord.checkin.companyId != null and
+            chargeBill.maintainRecord.checkin.carPlate != '' and chargeBill.maintainRecord.checkin.carPlate != null">
+      or
+    </if>
+    <if test="chargeBill.maintainRecord.checkin.carPlate != '' and chargeBill.maintainRecord.checkin.carPlate != null">
+      ck.carPlate like '%${chargeBill.maintainRecord.checkin.carPlate}%'
+    </if>
+    <if test="chargeBill.maintainRecord.checkin.carPlate != '' and chargeBill.maintainRecord.checkin.carPlate != null and
+            chargeBill.maintainRecord.checkin.userPhone != '' and chargeBill.maintainRecord.checkin.userPhone != null">
+      or
+    </if>
+    <if test="chargeBill.maintainRecord.checkin.userPhone != '' and chargeBill.maintainRecord.checkin.userPhone != null">
+      ck.userPhone like '%${chargeBill.maintainRecord.checkin.userPhone}%'
+    </if>
+  </select>
 </mapper>

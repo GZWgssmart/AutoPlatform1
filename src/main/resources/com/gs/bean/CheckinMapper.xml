@@ -87,7 +87,7 @@
 			update t_checkin set userId = #{userId}, appointmentId = #{appointmentId}, userName = #{userName}, userPhone = #{userPhone},
 				brandId = #{brandId}, colorId = #{colorId}, modelId = #{modelId}, plateId = #{plateId}, carPlate = #{carPlate},
 				arriveTime = #{arriveTime}, carMileage = #{carMileage}, carThings = #{carThings}, intactDegrees = #{intactDegrees}, userRequests = #{userRequests},
-				maintainOrFix = #{maintainOrFix}, checkinCreatedTime = now(), companyId = #{companyId}, checkinStatus = 'Y', ifClearCar = #{ifClearCar}, nowOil = #{nowOil} where checkinId = #{checkinId}
+				maintainOrFix = #{maintainOrFix}, checkinCreatedTime = #{checkinCreatedTime}, companyId = #{companyId}, checkinStatus = #{checkinStatus}, ifClearCar = #{ifClearCar}, nowOil = #{nowOil} where checkinId = #{checkinId}
 		]]>
   </update>
   <!-- 分页查询禁用 -->

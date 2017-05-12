@@ -21,12 +21,22 @@ function showDisable(){
     initTable('table', '/charge/queryByPagerDisable');
 }
 
+// 模糊查询
+function blurredQuery(){
+    var button = $("#ulButton");// 获取模糊查询按钮
+    var text = button.text();// 获取模糊查询按钮文本
+    var vaule = $("#ulInput").val();// 获取模糊查询输入框文本
+    initTable('table', '/charge/blurredQuery?text='+text+'&value='+vaule);
+}
+
 function showEdit(){
+    initDateTimePicker('editForm', 'chargeTime'); // 初始化时间框
     var row =  $('table').bootstrapTable('getSelections');
     if(row.length >0) {
-        $("#edit").modal('show'); // 显示弹窗
-        var ceshi = row[0];
-        $("#editForm").fill(ceshi);
+        $("#editWindow").modal('show'); // 显示弹窗
+        var chargeBill = row[0];
+        $("#editForm").fill(chargeBill);
+        $('#addDatetimepicker').val(formatterDate(chargeBill.chargeTime));
         validator('editForm'); // 初始化验证
     }else{
         swal({
@@ -61,32 +71,73 @@ function validator(formId) {
             validating: 'glyphicon glyphicon-refresh'
         },
         fields: {
-            maintainItemName: {
-                message: '维修保养项目验证失败',
+            paymentMethod: {
+                message: '付款方式验证失败',
                 validators: {
                     notEmpty: {
-                        message: '维修保养项目不能为空'
+                        message: '付款方式不能为空'
                     }
                 }
             },
-            maintainDiscount: {
-                message: '维修保养项目折扣验证失败',
+            chargeBillMoney: {
+                message: '总金额验证失败',
                 validators: {
                     notEmpty: {
-                        message: '维修保养项目折扣不能为空'
+                        message: '总金额不能为空'
+                    }
+                }
+            },
+            actualPayment: {
+                message: '实际付款验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '实际付款不能为空'
+                    }
+                }
+            },chargeTime: {
+                message: '收费时间验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '收费时间不能为空'
+                    }
+                }
+            },chargeBillDes: {
+                message: '收费单据描述验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '收费单据描述不能为空'
                     }
                 }
             }
         }
     })
         .on('success.form.bv', function (e) {
-            if (formId == "addForm") {
-                formSubmit("/maintainDetail/add", formId, "addWindow");
-
-            } else if (formId == "editForm") {
-                formSubmit("/maintainDetail/edit", formId, "editWindow");
-
+            if (formId == "editForm") {
+                formSubmit("/charge/edit", formId, "editWindow");
             }
         })
+}
 
+function formSubmit(url, formId, winId){
+    $.post(url,
+        $("#" + formId).serialize(),
+        function (data) {
+            if (data.result == "success") {
+                $('#' + winId).modal('hide');
+                swal({
+                    title:"",
+                    text: data.message,
+                    confirmButtonText:"确定", // 提示按钮上的文本
+                    type:"success"})// 提示窗口, 修改成功
+                $('#table').bootstrapTable('refresh');
+                $("#" + formId).data('bootstrapValidator').destroy(); // 销毁此form表单
+                $('#' + formId).data('bootstrapValidator', null);// 此form表单设置为空
+            } else if (data.result == "fail") {
+                swal({title:"",
+                    text:data.message,
+                    confirmButtonText:"确认",
+                    type:"error"})
+                $("#"+formId).removeAttr("disabled");
+            }
+        }, "json");
 }

@@ -35,21 +35,4 @@ public class SupplierController {
         return "supplier/supplierInFormation";
     }
 
-    /**
-     * 下单统计
-     */
-    @RequestMapping(value = "orderStatistics", method = RequestMethod.GET)
-    public String orderStatistics() {
-        logger.info("下单统计");
-        return "supplier/orderStatistics";
-    }
-
-    /**
-     * 支付统计
-     */
-    @RequestMapping(value = "paymentStatistics", method = RequestMethod.GET)
-    public String paymentStatistics() {
-        logger.info("支付统计");
-        return "supplier/paymentStatistics";
-    }
 }

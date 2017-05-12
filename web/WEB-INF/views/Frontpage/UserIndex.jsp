@@ -57,7 +57,7 @@
 			<dt><i class="Hui-iconfont">&#xe62c;</i> 账号管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
-					<li><a data-href="accountinfo" data-title="账号信息" href="javaScirpt:;">账号信息</a></li>
+					<li><a data-href="accountinfo" data-title="账号信息" href="javaScript:;">账号信息</a></li>
 					<li><a data-href="editpwd" data-title="修改密码" href="javaScirpt:;">修改密码</a></li>
 				</ul>
 		</dd>
@@ -122,7 +122,7 @@
 </div>
 <!--_footer 作为公共模版分离出去-->
 <script type="text/javascript" src="/static/h-ui/js/jquery.min.js"></script>
-<script type="text/javascript" src="/static/h-ui/js/layer.js"></script>
+<%--<script type="text/javascript" src="/static/h-ui/js/layer.js"></script>--%>
 <script type="text/javascript" src="/static/h-ui/js/H-ui.min.js"></script>
 <script type="text/javascript" src="/static/h-ui/js/H-ui.admin.js"></script>
 <!--/_footer 作为公共模版分离出去-->

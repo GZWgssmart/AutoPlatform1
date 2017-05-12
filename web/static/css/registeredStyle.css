@@ -95,3 +95,7 @@ li{
 .caveat{
     display:none;
 }
+.surre:hover{
+    color: #01AAED;
+    text-decoration: none;
+}

@@ -1,29 +1,45 @@
 $(function () {
-    initTable('table', '/checkin/queryByPager'); // 初始化表格
+    $.post("/user/isLogin", function (data) {
+        if(data.result == 'success'){
+            initTable('table', '/checkin/queryByPager'); // 初始化表格
 
-    initSelect2("carColor", "请选择颜色", "/carColor/queryAllCarColor"); // 初始化select2, 第一个参数是class的名字, 第二个参数是select2的提示语, 第三个参数是select2的查询url
-    initSelect2("carBrand", "请选择品牌", "/carBrand/queryAllCarBrand");
-    initSelect2("carPlate", "请选择车牌", "/carPlate/queryAllCarPlate");
+            initSelect2("carColor", "请选择颜色", "/carColor/queryAllCarColor"); // 初始化select2, 第一个参数是class的名字, 第二个参数是select2的提示语, 第三个参数是select2的查询url
+            initSelect2("carBrand", "请选择品牌", "/carBrand/queryAllCarBrand");
+            initSelect2("carPlate", "请选择车牌", "/carPlate/queryAllCarPlate");
 
-    $("#app").bootstrapSwitch({
-        onText:"是",
-        offText:"否",
-        onColor:"success",
-        offColor:"danger",
-        size:"small",
-        onSwitchChange:function(event,state){
-            if(state==true){
-                app = true;
-                initTableNotTollbar("appTable", "/appointment/queryByPager");
-                $("#appWindow").modal('show');
-            }else if(state==false){
-                app = false;
-            }
+            $("#app").bootstrapSwitch({
+                onText:"是",
+                offText:"否",
+                onColor:"success",
+                offColor:"danger",
+                size:"small",
+                onSwitchChange:function(event,state){
+                    if(state==true){
+                        app = true;
+                        initTableNotTollbar("appTable", "/appointment/queryByPager");
+                        $("#appWindow").modal('show');
+                    }else if(state==false){
+                        app = false;
+                    }
+                }
+            })
+            $("#appWindow").on("hide.bs.modal", function () {
+                $("#addWindow").modal('show')
+                $('#app').bootstrapSwitch('state', false);
+            });
+        }else if(data.result == 'notLogin'){
+            swal({title:"",
+                    text:data.message,
+                    confirmButtonText:"确认",
+                    type:"error"}
+                ,function(isConfirm){
+                    if(isConfirm){
+                        top.location = "/user/loginPage";
+                    }else{
+                        top.location = "/user/loginPage";
+                    }
+                })
         }
-    })
-    $("#appWindow").on("hide.bs.modal", function () {
-        $("#addWindow").modal('show')
-        $('#app').bootstrapSwitch('state', false);
     });
 });
 
@@ -64,19 +80,67 @@ function statusFormatter(value, row, index) {
 
 // 查看全部可用
 function showAvailable(){
-    initTable('table', '/checkin/queryByPager');
+    $.post("/user/isLogin", function (data) {
+                if(data.result == 'success'){
+                    initTable('table', '/checkin/queryByPager');
+                }else if(data.result == 'notLogin'){
+                    swal({title:"",
+                            text:data.message,
+                            confirmButtonText:"确认",
+                            type:"error"}
+                        ,function(isConfirm){
+                            if(isConfirm){
+                                top.location = "/user/loginPage";
+                            }else{
+                                top.location = "/user/loginPage";
+                            }
+                        })
+                }
+            });
 }
 // 查看全部禁用
 function showDisable(){
-    initTable('table', '/checkin/queryByPagerDisable');
+    $.post("/user/isLogin", function (data) {
+        if(data.result == 'success'){
+            initTable('table', '/checkin/queryByPagerDisable');
+        }else if(data.result == 'notLogin'){
+            swal({title:"",
+                    text:data.message,
+                    confirmButtonText:"确认",
+                    type:"error"}
+                ,function(isConfirm){
+                    if(isConfirm){
+                        top.location = "/user/loginPage";
+                    }else{
+                        top.location = "/user/loginPage";
+                    }
+                })
+        }
+    });
 }
 
 // 模糊查询
 function blurredQuery(){
-    var button = $("#ulButton");// 获取模糊查询按钮
-    var text = button.text();// 获取模糊查询按钮文本
-    var vaule = $("#ulInput").val();// 获取模糊查询输入框文本
-    initTable('table', '/checkin/blurredQuery?text='+text+'&value='+vaule);
+    $.post("/user/isLogin", function (data) {
+        if(data.result == 'success'){
+            var button = $("#ulButton");// 获取模糊查询按钮
+            var text = button.text();// 获取模糊查询按钮文本
+            var vaule = $("#ulInput").val();// 获取模糊查询输入框文本
+            initTable('table', '/checkin/blurredQuery?text='+text+'&value='+vaule);
+        }else if(data.result == 'notLogin'){
+            swal({title:"",
+                    text:data.message,
+                    confirmButtonText:"确认",
+                    type:"error"}
+                ,function(isConfirm){
+                    if(isConfirm){
+                        top.location = "/user/loginPage";
+                    }else{
+                        top.location = "/user/loginPage";
+                    }
+                })
+        }
+    });
 }
 
 // 关闭预约
@@ -362,12 +426,33 @@ function formSubmit(url, formId, winId){
                 }
                 $("#" + formId).data('bootstrapValidator').destroy(); // 销毁此form表单
                 $('#' + formId).data('bootstrapValidator', null);// 此form表单设置为空
-            } else if (data.result == "fail") {
+            } else if (data.result == "fail" ) {
                 swal({title:"",
-                    text:"添加失败",
+                    text:data.message,
                     confirmButtonText:"确认",
                     type:"error"})
-                $("#"+formId).removeAttr("disabled");
+                if(formId == 'addForm') {
+                    $("#addButton").removeAttr("disabled");
+                }else if(formId == 'editForm'){
+                    $("#editButton").removeAttr("disabled");
+                }
+            }else if (data.result == "notLogin") {
+                swal({title:"",
+                    text:data.message,
+                    confirmButtonText:"确认",
+                    type:"error"}
+                    ,function(isConfirm){
+                        if(isConfirm){
+                            top.location = "/user/loginPage";
+                        }else{
+                            top.location = "/user/loginPage";
+                        }
+                    })
+                if(formId == 'addForm') {
+                    $("#addButton").removeAttr("disabled");
+                }else if(formId == 'editForm'){
+                    $("#editButton").removeAttr("disabled");
+                }
             }
         }, "json");
 }

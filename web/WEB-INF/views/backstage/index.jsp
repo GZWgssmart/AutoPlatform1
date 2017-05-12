@@ -20,6 +20,7 @@
     <link href="/static/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
     <link href="/static/css/font-awesome.min.css?v=4.4.0" rel="stylesheet">
     <link href="/static/css/animate.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/sweetalert.css">
     <link href="/static/css/style.min.css?v=4.1.0" rel="stylesheet">
 </head>
 
@@ -50,7 +51,7 @@
                                 <li><a class="J_menuItem" href="mailbox.html">信箱</a>
                                 </li>
                                 <li class="divider"></li>
-                                <li><a href="login.html">安全退出</a>
+                                <li><a href="/user/logout">安全退出</a>
                                 </li>
                             </ul>
                         </div>
@@ -131,10 +132,6 @@
                             <li><a class="J_menuItem" href="/supplier/supplierType">供应商类型管理</a>
                             </li>
                             <li><a class="J_menuItem" href="/supplier/supplierInformation">供应商管理</a>
-                            </li>
-                            <li><a class="J_menuItem" href="/supplier/orderStatistics">下单统计</a>
-                            </li>
-                            <li><a class="J_menuItem" href="/supplier/paymentStatistics">支付统计</a>
                             </li>
                         </ul>
                     </li>
@@ -237,16 +234,13 @@
                             </li>
                             <li><a class="J_menuItem" href="/statistics/maintaintype">消费统计</a>
                             </li>
-                            <li><a class="J_menuItem" href="/statistics/maintain">维修保养统计</a>
+                            <li><a class="J_menuItem" href="/statistics/vindicate">维修保养统计</a>
                             </li>
                             <li><a class="J_menuItem" href="/statistics/workord">员工工单统计</a>
                             </li>
-
-                            <li><a class="J_menuItem" href="/statistics/usematerials">物料使用统计</a>
+                            <li><a class="J_menuItem" href="/statistics/usematerials">配件使用情况统计</a>
                             </li>
-                            <li><a class="J_menuItem" href="/statistics/maintaintype">维修类型统计</a>
-                            </li>
-                            <li><a class="J_menuItem" href="/statistics/stock">库存统计</a>
+                            <li><a class="J_menuItem" href="/statistics/maintaintype">维修项目统计</a>
                             </li>
                             <li><a class="J_menuItem" href="/statistics/finance">财务统计</a>
                             </li>
@@ -795,15 +789,33 @@
     <script src="/static/js/plugins/layer/layer.min.js"></script>
     <script src="/static/js/hplus.min.js?v=4.1.0"></script>
     <script src="/static/js/contabs.min.js"></script>
+    <script src="/static/js/sweetalert/sweetalert.min.js"></script>
     <script src="/static/js/plugins/pace/pace.min.js"></script>
     <script>
         $(function() {
-            function bodyScroll(event){
-                event.preventDefault();
-            }
-            document.body.addEventListener('touchmove',bodyScroll(event),false);
-            document.body.removeEventListener('touchmove',bodyScroll(event),false);
+            $.post("/user/isLogin", function (data) {
+                if(data.result == 'success'){
+                    function bodyScroll(event){
+                        event.preventDefault();
+                    }
+                    document.body.addEventListener('touchmove',bodyScroll(event),false);
+                    document.body.removeEventListener('touchmove',bodyScroll(event),false);
+                }else if(data.result == 'notLogin'){
+                    swal({title:"",
+                            text:data.message,
+                            confirmButtonText:"确认",
+                            type:"error"}
+                        ,function(isConfirm){
+                            if(isConfirm){
+                                top.location = "/user/loginPage";
+                            }else{
+                                top.location = "/user/loginPage";
+                            }
+                        })
+                }
+            });
         });
+
         function doNothing(){
             window.event.returnValue=false;
             return false;

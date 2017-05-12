@@ -40,26 +40,13 @@
         </property>
     </bean>
 
-    <!--&lt;!&ndash; 配置权限管理器 &ndash;&gt;  -->
-    <!--<bean id="jdbcRealm" class="org.apache.shiro.realm.jdbc.JdbcRealm">-->
-    	<!--<property name="dataSource" ref="dataSource"></property>-->
-    	<!--&lt;!&ndash; 根据用户邮箱查找用户密码 &ndash;&gt;-->
-    	<!--<property name="authenticationQuery" value="SELECT userPwd FROM t_user WHERE userEmail = ?"></property>-->
-    	<!--&lt;!&ndash; 根据用户的邮箱查找用户的角色名称 &ndash;&gt;-->
-    	<!--<property name="userRolesQuery" value="SELECT roleName FROM t_role WHERE roleId in (select roleId from t_user_role where userId = (select userId from t_user where userEmail = ?))" />-->
-    	<!--&lt;!&ndash; 根据用户的邮箱查找用户的权限 &ndash;&gt;-->
-    	<!--<property name="permissionsQuery" value="select permissionName from t_permission where permissionId in (select permissionId from t_role_permission where roleId in (select roleId from t_user_role where userId = (select userId from t_user where userEmail = ?)))" />-->
-    <!--</bean>-->
-
     <!--shiro核心过滤器-->
-    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">   
-        <!-- 权限管理器 -->   
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <!-- 权限管理器 -->
         <property name="securityManager" ref="securityManager"/>   
         <!-- 登录地址 -->   
         <property name="loginUrl" value="/loginPage"/>
-        <!-- 错误页面 -->  
-        <property name="unauthorizedUrl" value="/error/serverError"/>
-        <!-- 权限配置 -->  
+        <!-- 权限配置 -->
         <property name="filterChainDefinitions">    
             <value>  
                 /login = anon
@@ -70,8 +57,7 @@
                 /static/uploads/**=anon
             </value>    
         </property>    
-    </bean>  
-
+    </bean>
     <!--bean最后生命周期结束后的处理程序-->
     <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />
 </beans>  

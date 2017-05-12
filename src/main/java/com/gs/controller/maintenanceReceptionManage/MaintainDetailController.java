@@ -2,9 +2,13 @@ package com.gs.controller.maintenanceReceptionManage;
 
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.*;
+import com.gs.bean.echarts.MaintainRecordBean;
+import com.gs.bean.echarts.QuarterUtil;
 import com.gs.common.bean.ControllerResult;
+import com.gs.common.bean.Echarts;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
+import com.gs.common.util.DateFormatUtil;
 import com.gs.service.*;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
@@ -146,12 +150,12 @@ public class MaintainDetailController {
     @RequestMapping(value="blurredQuery", method = RequestMethod.GET)
     public Pager4EasyUI<MaintainRecord> blurredQuery(HttpServletRequest request, @Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
         logger.info("维修保养记录模糊查询");
+        Pager pager = new Pager();
+        pager.setPageNo(Integer.valueOf(pageNumber));
+        pager.setPageSize(Integer.valueOf(pageSize));
         String text = request.getParameter("text");
         String value = request.getParameter("value");
         if(text != null && text!="") {
-            Pager pager = new Pager();
-            pager.setPageNo(Integer.valueOf(pageNumber));
-            pager.setPageSize(Integer.valueOf(pageSize));
             List<MaintainRecord> maintainRecords = null;
             MaintainRecord maintainRecord = new MaintainRecord();
             Checkin checkin = new Checkin();
@@ -160,25 +164,23 @@ public class MaintainDetailController {
                 checkin.setCarPlate(value);
                 checkin.setUserName(value);
                 checkin.setCompanyId(value);
-                maintainRecord.setCheckin(checkin);
             }else if(text.equals("车主")){
                 checkin.setUserName(value);
-                maintainRecord.setCheckin(checkin);
             }else if(text.equals("汽车公司")){
                 checkin.setCompanyId(value);
-                maintainRecord.setCheckin(checkin);
             }else if(text.equals("车牌号")){
                 checkin.setCarPlate(value);
-                maintainRecord.setCheckin(checkin);
             }else if(text.equals("电话")){
                 checkin.setUserPhone(value);
-                maintainRecord.setCheckin(checkin);
             }
+            maintainRecord.setCheckin(checkin);
             maintainRecords = maintainRecordService.blurredQuery(pager, maintainRecord);
             pager.setTotalRecords(maintainRecordService.countByBlurred(maintainRecord));
             return new Pager4EasyUI<MaintainRecord>(pager.getTotalRecords(), maintainRecords);
         }else{
-            return null;
+            pager.setTotalRecords(maintainRecordService.count());
+            List<MaintainRecord> maintainRecords = maintainRecordService.queryByPager(pager);
+            return new Pager4EasyUI<MaintainRecord>(pager.getTotalRecords(), maintainRecords);
         }
     }
 
@@ -190,5 +192,173 @@ public class MaintainDetailController {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         dateFormat.setLenient(false);
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "queryByCondition")
+    public List<MaintainRecordBean> queryByCondition(String start, String end, String type){
+        logger.info("根据年月日周季去查询所有的工单");
+        List<MaintainRecordBean> list = null;
+        List<MaintainRecord> timeList = null;
+        List<MaintainRecord> maintainList = null;
+        List<MaintainRecord> preserveList = null;
+        list = new ArrayList<MaintainRecordBean>();
+        if (type != null && !type.equals("")) {
+            if (type.equals("year")) {
+                timeList = maintainRecordService.queryByCondition(start, end,"810375d6-33a4-11e7-bbfe-b025aa1dfac1","0","year");
+                maintainList=maintainRecordService.queryByCondition(start, end,"810375d6-33a4-11e7-bbfe-b025aa1dfac1","1","year");
+                preserveList=maintainRecordService.queryByCondition(start, end,"810375d6-33a4-11e7-bbfe-b025aa1dfac1","2","year");
+                for (int p = 0; p < timeList.size(); p++) {
+                    MaintainRecordBean io = new MaintainRecordBean();
+                    String ag = DateFormatUtil.YearFormater(timeList.get(p).getRecordCreatedTime());
+                    io.setDate(ag);
+                    for (int j = 0; j < maintainList.size(); j++) {
+                        String outTime = DateFormatUtil.YearFormater(maintainList.get(j).getRecordCreatedTime());
+                        if (ag.equals(outTime)) {
+                            io.setMaintainCount(maintainList.get(j).getCount());
+                            break;
+                        } else {
+                            io.setMaintainCount(0);
+                        }
+                    }
+                    for (int k = 0; k < preserveList.size(); k++) {
+                        String inTime = DateFormatUtil.YearFormater(preserveList.get(k).getRecordCreatedTime());
+                        if (ag.equals(inTime)) {
+                            io.setPreserveCount(preserveList.get(k).getCount());
+                            break;
+                        } else {
+                            io.setPreserveCount(0);
+                        }
+                    }
+                    list.add(io);
+                }
+
+            } else if (type.equals("quarter")) {
+                timeList = maintainRecordService.queryByCondition(start, end,"810375d6-33a4-11e7-bbfe-b025aa1dfac1","0","year");
+                maintainList=maintainRecordService.queryByCondition(start, end,"810375d6-33a4-11e7-bbfe-b025aa1dfac1","1","year");
+                preserveList=maintainRecordService.queryByCondition(start, end,"810375d6-33a4-11e7-bbfe-b025aa1dfac1","2","year");
+                for (int p = 0; p < timeList.size(); p++) {
+                    MaintainRecordBean io = new MaintainRecordBean();
+                    String ag = DateFormatUtil.MonthFormater(timeList.get(p).getRecordCreatedTime());
+                    QuarterUtil.quarter(ag);
+                    io.setDate(ag);
+                    for (int j = 0; j < maintainList.size(); j++) {
+                        String outTime = DateFormatUtil.MonthFormater(maintainList.get(j).getRecordCreatedTime());
+                        QuarterUtil.quarter(outTime);
+                        if (ag.equals(outTime)) {
+                            io.setMaintainCount(maintainList.get(j).getCount());
+                            break;
+                        } else {
+                            io.setMaintainCount(0);
+                        }
+                    }
+                    for (int k = 0; k < preserveList.size(); k++) {
+                        String inTime = DateFormatUtil.MonthFormater(preserveList.get(k).getRecordCreatedTime());
+                        QuarterUtil.quarter(inTime);
+                        if (ag.equals(inTime)) {
+                            io.setPreserveCount(preserveList.get(k).getCount());
+                            break;
+                        } else {
+                            io.setPreserveCount(0);
+                        }
+                    }
+                    list.add(io);
+                }
+            } else if (type.equals("month")) {
+                timeList = maintainRecordService.queryByCondition(start, end,"810375d6-33a4-11e7-bbfe-b025aa1dfac1","0","month");
+                maintainList=maintainRecordService.queryByCondition(start, end,"810375d6-33a4-11e7-bbfe-b025aa1dfac1","1","month");
+                preserveList=maintainRecordService.queryByCondition(start, end,"810375d6-33a4-11e7-bbfe-b025aa1dfac1","2","month");
+                for (int p = 0; p < timeList.size(); p++) {
+                    MaintainRecordBean io = new MaintainRecordBean();
+                    String ag = DateFormatUtil.MonthFormater(timeList.get(p).getRecordCreatedTime());
+                    io.setDate(ag);
+                    for (int j = 0; j < maintainList.size(); j++) {
+                        String outTime = DateFormatUtil.MonthFormater(maintainList.get(j).getRecordCreatedTime());
+                        if (ag.equals(outTime)) {
+                            io.setMaintainCount(maintainList.get(j).getCount());
+                            break;
+                        } else {
+                            io.setMaintainCount(0);
+                        }
+                    }
+                    for (int k = 0; k < preserveList.size(); k++) {
+                        String inTime = DateFormatUtil.MonthFormater(preserveList.get(k).getRecordCreatedTime());
+                        if (ag.equals(inTime)) {
+                            io.setPreserveCount(preserveList.get(k).getCount());
+                            break;
+                        } else {
+                            io.setPreserveCount(0);
+                        }
+                    }
+                    list.add(io);
+                }
+            } else if (type.equals("week")) {
+                timeList = maintainRecordService.queryByCondition(start, end,"810375d6-33a4-11e7-bbfe-b025aa1dfac1","0","week");
+                maintainList=maintainRecordService.queryByCondition(start, end,"810375d6-33a4-11e7-bbfe-b025aa1dfac1","1","week");
+                preserveList=maintainRecordService.queryByCondition(start, end,"810375d6-33a4-11e7-bbfe-b025aa1dfac1","2","week");
+                for (int p = 0; p < timeList.size(); p++) {
+                    MaintainRecordBean io = new MaintainRecordBean();
+                    String ag = DateFormatUtil.WEEK(timeList.get(p).getRecordCreatedTime());
+                    String year = DateFormatUtil.YearFormater(timeList.get(p).getRecordCreatedTime());
+                    String time = String.valueOf(Echarts.getWeek(ag));
+                    String yearTime = time + year;
+                    io.setDate(year + "第" + time + "周");
+                    for (int j = 0; j < maintainList.size(); j++) {
+                        String outTime = DateFormatUtil.WEEK(maintainList.get(j).getRecordCreatedTime());
+                        String outYear = DateFormatUtil.YearFormater(maintainList.get(j).getRecordCreatedTime());
+                        String out = String.valueOf(Echarts.getWeek(outTime));
+                        String yearOut = out + outYear;
+                        if (yearTime.equals(yearOut)) {
+                            io.setMaintainCount(maintainList.get(j).getCount());
+                            break;
+                        } else {
+                            io.setMaintainCount(0);
+                        }
+                    }
+                    for (int k = 0; k < preserveList.size(); k++) {
+                        String inTime = DateFormatUtil.WEEK(preserveList.get(k).getRecordCreatedTime());
+                        String inYear = DateFormatUtil.YearFormater(preserveList.get(k).getRecordCreatedTime());
+                        String in = String.valueOf(Echarts.getWeek(inTime));
+                        String yearIn = in + inYear;
+                        if (yearTime.equals(yearIn)) {
+                            io.setPreserveCount(preserveList.get(k).getCount());
+                            break;
+                        } else {
+                            io.setPreserveCount(0);
+                        }
+                    }
+                    list.add(io);
+                }
+            } else if (type.equals("day")) {
+                timeList = maintainRecordService.queryByCondition(start, end,"810375d6-33a4-11e7-bbfe-b025aa1dfac1","0","day");
+                maintainList=maintainRecordService.queryByCondition(start, end,"810375d6-33a4-11e7-bbfe-b025aa1dfac1","1","day");
+                preserveList=maintainRecordService.queryByCondition(start, end,"810375d6-33a4-11e7-bbfe-b025aa1dfac1","2","day");
+                for (int p = 0; p < timeList.size(); p++) {
+                    MaintainRecordBean io = new MaintainRecordBean();
+                    String ag = DateFormatUtil.DayFormater(timeList.get(p).getRecordCreatedTime());
+                    io.setDate(ag);
+                    for (int j = 0; j < maintainList.size(); j++) {
+                        String outTime = DateFormatUtil.DayFormater(maintainList.get(j).getRecordCreatedTime());
+                        if (ag.equals(outTime)) {
+                            io.setMaintainCount(maintainList.get(j).getCount());
+                            break;
+                        } else {
+                            io.setMaintainCount(0);
+                        }
+                    }
+                    for (int k = 0; k < preserveList.size(); k++) {
+                        String inTime = DateFormatUtil.DayFormater(preserveList.get(k).getRecordCreatedTime());
+                        if (ag.equals(inTime)) {
+                            io.setPreserveCount(preserveList.get(k).getCount());
+                            break;
+                        } else {
+                            io.setPreserveCount(0);
+                        }
+                    }
+                    list.add(io);
+                }
+            }
+        }
+        return list;
     }
 }

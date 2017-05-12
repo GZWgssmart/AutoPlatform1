@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.gs.dao.CompanyDAO" >
   <resultMap id="companyMap" type="company" >
-    <id column="company_Id" property="companyId" jdbcType="VARCHAR" />
+    <id column="companyId" property="companyId" jdbcType="VARCHAR" />
     <result column="companyName" property="companyName" jdbcType="VARCHAR" />
     <result column="companyAddress" property="companyAddress" jdbcType="VARCHAR" />
     <result column="companyTel" property="companyTel" jdbcType="VARCHAR" />
