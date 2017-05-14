@@ -2,6 +2,7 @@ package com.gs.service.impl;
 
 import com.gs.bean.Checkin;
 import com.gs.bean.Permission;
+import com.gs.bean.User;
 import com.gs.common.bean.Pager;
 import com.gs.dao.PermissionDAO;
 import com.gs.service.PermissionService;
@@ -34,6 +35,12 @@ public class PermissionServiceImpl implements PermissionService {
 	public int batchDelete(List<Permission> list) { return permissionDAO.batchDelete(list); }
 	public int update(Permission permission) { return permissionDAO.update(permission); }
 	public int batchUpdate(List<Permission> list) { return permissionDAO.batchUpdate(list); }
+
+	@Override
+	public List<Permission> queryAll(User user) {
+		return queryAll(user);
+	}
+
 	public List<Permission> queryAll() { return permissionDAO.queryAll(); }
 
 	@Override
@@ -68,7 +75,7 @@ public class PermissionServiceImpl implements PermissionService {
 	public Permission query(Permission permission) { return permissionDAO.query(permission); }
 	public Permission queryById(String id) { return permissionDAO.queryById(id); }
 	public List<Permission> queryByPager(Pager pager) { return permissionDAO.queryByPager(pager); }
-	public int count() { return permissionDAO.count(); }
+	public int count(User user) { return permissionDAO.count(user); }
 	public int inactive(String id) { return permissionDAO.inactive(id); }
 	public int active(String id) { return permissionDAO.active(id); }
 
@@ -76,12 +83,17 @@ public class PermissionServiceImpl implements PermissionService {
 		return permissionDAO.queryByPagerDisable(pager);
 	}
 
-	public int countByDisable() {
-		return permissionDAO.countByDisable();
+	public int countByDisable(User user) {
+		return permissionDAO.countByDisable(user);
 	}
 
 	public List<Permission> blurredQuery(Pager pager, Permission permission) {
 		return null;
+	}
+
+	@Override
+	public int countByBlurred(Permission permission, User user) {
+		return 0;
 	}
 
 	public int countByBlurred(Permission permission) {
