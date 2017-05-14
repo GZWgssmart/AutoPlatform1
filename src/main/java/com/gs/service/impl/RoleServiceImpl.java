@@ -3,6 +3,7 @@ package com.gs.service.impl;
 import com.gs.bean.Checkin;
 import com.gs.bean.Permission;
 import com.gs.bean.Role;
+import com.gs.bean.User;
 import com.gs.dao.RoleDAO;
 import com.gs.service.RoleService;
 import org.springframework.stereotype.Service;
@@ -32,7 +33,7 @@ public class RoleServiceImpl implements RoleService {
 	public int batchDelete(List<Role> list) { return roleDAO.batchDelete(list); }
 	public int update(Role role) { return roleDAO.update(role); }
 	public int batchUpdate(List<Role> list) { return roleDAO.batchUpdate(list); }
-	public List<Role> queryAll() { return roleDAO.queryAll(); }
+	public List<Role> queryAll(User user) { return roleDAO.queryAll(user); }
 
 	@Override
 	public List<Role> queryAll(String status) {
@@ -59,7 +60,7 @@ public class RoleServiceImpl implements RoleService {
 	public Role query(Role role) { return roleDAO.query(role); }
 	public Role queryById(String id) { return roleDAO.queryById(id); }
 	public List<Role> queryByPager(Pager pager) { return roleDAO.queryByPager(pager); }
-	public int count() { return roleDAO.count(); }
+	public int count(User user) { return roleDAO.count(user); }
 
 	public int inactive(String id) { return roleDAO.inactive(id); }
 	public int active(String id) { return roleDAO.active(id); }
@@ -68,12 +69,17 @@ public class RoleServiceImpl implements RoleService {
 		return roleDAO.queryByPagerDisable(pager);
 	}
 
-	public int countByDisable() {
-		return roleDAO.countByDisable();
+	public int countByDisable(User user) {
+		return roleDAO.countByDisable(user);
 	}
 
 	public List<Role> blurredQuery(Pager pager, Role role) {
 		return null;
+	}
+
+	@Override
+	public int countByBlurred(Role role, User user) {
+		return 0;
 	}
 
 	public int countByBlurred(Role role) {
