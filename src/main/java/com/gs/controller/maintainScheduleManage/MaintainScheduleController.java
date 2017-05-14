@@ -2,6 +2,7 @@ package com.gs.controller.maintainScheduleManage;
 
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.MaintainSchedule;
+import com.gs.bean.User;
 import com.gs.common.bean.ComboBox4EasyUI;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
@@ -50,7 +51,7 @@ public class MaintainScheduleController {
             String roles="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,车主,汽车公司接待员";
             if(RoleUtil.checkRoles(roles)) {
                 logger.info("查询全部维修保养进度管理");
-                List<MaintainSchedule> maintainSchedules = maintainScheduleService.queryAll();
+                List<MaintainSchedule> maintainSchedules = maintainScheduleService.queryAll((User)session.getAttribute("user"));
                 List<ComboBox4EasyUI> comboxs = new ArrayList<ComboBox4EasyUI>();
                 for(MaintainSchedule m : maintainSchedules){
                     ComboBox4EasyUI comboBox4EasyUI = new ComboBox4EasyUI();
@@ -71,7 +72,6 @@ public class MaintainScheduleController {
     /**
      * 分页查询进度管理
      * @param pageNumber
-     * @param PageSize
      * @return
      */
     @ResponseBody
@@ -83,7 +83,7 @@ public class MaintainScheduleController {
                 Pager pager = new Pager();
                 pager.setPageNo(Integer.valueOf(pageNumber));
                 pager.setPageSize(Integer.valueOf(pageSize));
-                pager.setTotalRecords(maintainScheduleService.count());
+                pager.setTotalRecords(maintainScheduleService.count((User)session.getAttribute("user")));
                 logger.info("分页查询维修保养进度管理成功");
                 List<MaintainSchedule> maintainSchedules = maintainScheduleService.queryByPager(pager);
                 return new Pager4EasyUI<MaintainSchedule>(pager.getTotalRecords(), maintainSchedules);
