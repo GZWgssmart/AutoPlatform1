@@ -2,6 +2,7 @@ package com.gs.service.impl;
 
 import com.gs.bean.Checkin;
 import com.gs.bean.MaterialReturn;
+import com.gs.bean.User;
 import com.gs.dao.MaterialReturnDAO;
 import com.gs.service.MaterialReturnService;
 import org.springframework.stereotype.Service;
@@ -31,18 +32,18 @@ public class MaterialReturnServiceImpl implements MaterialReturnService {
 	public int batchDelete(List<MaterialReturn> list) { return materialReturnDAO.batchDelete(list); }
 	public int update(MaterialReturn materialReturn) { return materialReturnDAO.update(materialReturn); }
 	public int batchUpdate(List<MaterialReturn> list) { return materialReturnDAO.batchUpdate(list); }
-	public List<MaterialReturn> queryAll() { return materialReturnDAO.queryAll(); }
+	public List<MaterialReturn> queryAll(User user) { return materialReturnDAO.queryAll(user); }
 
 	@Override
 	public List<MaterialReturn> queryAll(String status) {
-		return materialReturnDAO.queryAll();
+		return materialReturnDAO.queryAll(status);
 	}
 
 	public List<MaterialReturn> queryByStatus(String status) { return materialReturnDAO.queryAll(status); }
 	public MaterialReturn query(MaterialReturn materialReturn) { return materialReturnDAO.query(materialReturn); }
 	public MaterialReturn queryById(String id) { return materialReturnDAO.queryById(id); }
 	public List<MaterialReturn> queryByPager(Pager pager) { return materialReturnDAO.queryByPager(pager); }
-	public int count() { return materialReturnDAO.count(); }
+	public int count(User user ) { return materialReturnDAO.count(user ); }
 	public int inactive(String id) { return materialReturnDAO.inactive(id); }
 	public int active(String id) { return materialReturnDAO.active(id); }
 
@@ -50,12 +51,17 @@ public class MaterialReturnServiceImpl implements MaterialReturnService {
 		return materialReturnDAO.queryByPagerDisable(pager);
 	}
 
-	public int countByDisable() {
-		return materialReturnDAO.countByDisable();
+	public int countByDisable(User user) {
+		return materialReturnDAO.countByDisable(user) ;
 	}
 
 	public List<MaterialReturn> blurredQuery(Pager pager, MaterialReturn materialReturn) {
 		return null;
+	}
+
+	@Override
+	public int countByBlurred(MaterialReturn materialReturn, User user) {
+		return 0;
 	}
 
 	public int countByBlurred(MaterialReturn materialReturn) {
