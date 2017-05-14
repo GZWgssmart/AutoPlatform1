@@ -113,14 +113,14 @@
     <select id="count" resultType="int" parameterType="com.gs.bean.User">
       select count(recordId) from t_maintain_record mr, t_checkin ck where recordStatus = 'Y'
       <if test="companyId != '' and companyId != null">
-         and ck.companyId = #{user.companyId}
+         and ck.companyId = #{companyId}
       </if>
   </select>
 
     <select id="countByDisable" resultType="int" parameterType="com.gs.bean.User">
     select count(recordId) from t_maintain_record mr, t_checkin ck where recordStatus = 'N'
         <if test="companyId != '' and companyId != null">
-            and mr.companyId = #{user.companyId}
+            and mr.companyId = #{companyId}
         </if>
   </select>
 
@@ -128,7 +128,7 @@
     select m.*,ck.checkinId as checkin_id,ck.userName as user_name
     from t_maintain_record m, t_checkin ck where m.checkinId = ck.checkinId
         <if test="companyId != '' and companyId != null">
-            and ck.companyId = #{user.companyId}
+            and ck.companyId = #{companyId}
         </if>
   </select>
 

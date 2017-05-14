@@ -79,9 +79,11 @@
                 <th data-width="90" data-field="checkinStatus" data-formatter="showStatusFormatter">
                     记录状态
                 </th>
+            <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司接待员">
                 <th data-width="100" data-field="checkinStatus" data-formatter="statusFormatter">
                     操作
                 </th>
+            </shiro:hasAnyRoles>
             </tr>
             </thead>
         </table>

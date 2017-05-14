@@ -55,33 +55,11 @@ function formatterDiscountMoney(value, row, index){
 
 // 激活或禁用
 function statusFormatter(value, row, index) {
-    var roles = "公司超级管理员,公司普通管理员,汽修公司接待员";
-    $.post("/user/isLogin/"+roles, function (data) {
-        if(data.result == 'success'){
             if(value == 'Y') {
                 return "&nbsp;&nbsp;<button type='button' class='btn btn-danger' onclick='inactive(\""+'/maintainRecord/statusOperate?id='+row.maintainRecordId+'&status=Y'+"\")'>禁用</a>";
             } else {
                 return "&nbsp;&nbsp;<button type='button' class='btn btn-success' onclick='active(\""+'/maintainRecord/statusOperate?id='+ row.maintainRecordId+'&status=N'+ "\")'>激活</a>";
             }
-        }else if(data.result == 'notLogin'){
-            swal({title:"",
-                    text:data.message,
-                    confirmButtonText:"确认",
-                    type:"error"}
-                ,function(isConfirm){
-                    if(isConfirm){
-                        top.location = "/user/loginPage";
-                    }else{
-                        top.location = "/user/loginPage";
-                    }
-                })
-        }else if(data.result == 'notRole'){
-            swal({title:"",
-                text:data.message,
-                confirmButtonText:"确认",
-                type:"error"})
-        }
-    });
 }
 
 // 显示所有项目window

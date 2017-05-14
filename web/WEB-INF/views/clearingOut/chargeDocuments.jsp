@@ -43,7 +43,9 @@
                 <th data-width="180" data-field="chargeCreatedTime" data-formatter="formatterDate">收费单据创建时间</th>
                 <th data-width="130" data-field="chargeBillDes">收费单据描述</th>
                 <th data-width="130" data-field="chargeBillStatus" data-formatter="showStatusFormatter">收费单据状态</th>
+            <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司接待员">
                 <th data-width="90" data-field="chargeBillStatus" data-formatter="statusFormatter">操作</th>
+            </shiro:hasAnyRoles>
             </tr>
             </thead>
         </table>
