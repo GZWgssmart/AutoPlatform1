@@ -1,6 +1,7 @@
 package com.gs.controller;
 
 import com.gs.bean.Company;
+import com.gs.bean.User;
 import com.gs.service.CompanyService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,6 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -31,8 +33,8 @@ public class FrontpageController {
 
     /*主页面*/
     @RequestMapping(value ="home",method = RequestMethod.GET)
-    public ModelAndView Home(HttpServletRequest request){
-        List<Company> company = companyService.queryAll();
+    public ModelAndView Home(HttpServletRequest request, HttpSession session){
+        List<Company> company = companyService.queryAll((User)session.getAttribute("user"));
         request.setAttribute("company", company);
         ModelAndView mav = new ModelAndView("Frontpage/Frontindex");
         return mav;
@@ -40,8 +42,8 @@ public class FrontpageController {
 
     /*商家列表页面*/
     @RequestMapping(value ="factorypage",method = RequestMethod.GET)
-    public ModelAndView Homes(HttpServletRequest request){
-        List<Company> company = companyService.queryAll();
+    public ModelAndView Homes(HttpServletRequest request, HttpSession session){
+        List<Company> company = companyService.queryAll((User)session.getAttribute("user"));
         request.setAttribute("company", company);
         ModelAndView mav = new ModelAndView("Frontpage/Factorypage");
         return mav;

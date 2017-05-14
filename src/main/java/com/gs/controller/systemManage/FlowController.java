@@ -173,99 +173,123 @@ public class FlowController {
          *  2. 如果没有,则禁用
          */
         // 第一步
-
-        int runProInstdefTaskLen = runtimeService.createExecutionQuery().processDefinitionKey(flowKey).list().size();
-        if(runProInstdefTaskLen  <=  0) {
-            List<Deployment> deps = repositoryService.createDeploymentQuery().processDefinitionKey(flowKey).list();
-            for(Deployment dep : deps) {
-                try {
-                    repositoryService.deleteDeployment(dep.getId());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    return ControllerResult.getFailResult("禁用失败");
+        if(SessionUtil.isLogin(session)) {
+            int runProInstdefTaskLen = runtimeService.createExecutionQuery().processDefinitionKey(flowKey).list().size();
+            if(runProInstdefTaskLen  <=  0) {
+                List<Deployment> deps = repositoryService.createDeploymentQuery().processDefinitionKey(flowKey).list();
+                for(Deployment dep : deps) {
+                    try {
+                        repositoryService.deleteDeployment(dep.getId());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        return ControllerResult.getFailResult("禁用失败");
+                    }
                 }
+            } else {
+                return ControllerResult.getFailResult("禁用失败,目前还有"+ runProInstdefTaskLen  +"个流程实例正在运行中");
             }
+            return ControllerResult.getSuccessResult("禁用成功");
         } else {
-            return ControllerResult.getFailResult("禁用失败,目前还有"+ runProInstdefTaskLen  +"个流程实例正在运行中");
+            logger.info("请先登录");
+            return null;
         }
-        return ControllerResult.getSuccessResult("禁用成功");
     }
 
 
     /* 用于其它的,但与流程有关的 */
     @ResponseBody
     @RequestMapping("queryAcquisition")
-    public Pager4EasyUI queryAcquisitionByPager(@RequestParam("pageNumber")int pageNo, @RequestParam("pageSize")int pageSize) {
-        Pager pager = new Pager();
-        pager.setPageNo(pageNo);
-        pager.setPageSize(pageSize);
-        final String companyId = "11"; //假设当前登录角色为公司11的库管
-        final String roleId = "1";
-        final String userId = "2";      //当前用户为2;
-        final String materialFlowKey = "material";
-        int total = materialUseService.countUseFlowing(materialFlowKey,companyId,roleId);
-        List<MaterialURTemp> prox = materialUseService.queryUseFlowingbyPager(materialFlowKey,companyId,roleId,pager);
-        setMaterProVars2Map(prox);
-        Pager4EasyUI pager4EasyUI = new Pager4EasyUI();
-        pager4EasyUI.setTotal(total);
-        pager4EasyUI.setRows(prox);
-        return pager4EasyUI;
+    public Pager4EasyUI queryAcquisitionByPager(@RequestParam("pageNumber")int pageNo, @RequestParam("pageSize")int pageSize, HttpSession session) {
+        if(SessionUtil.isLogin(session)) {
+            Pager pager = new Pager();
+            pager.setPageNo(pageNo);
+            pager.setPageSize(pageSize);
+            final String companyId = "11"; //假设当前登录角色为公司11的库管
+            final String roleId = "1";
+            final String userId = "2";      //当前用户为2;
+            final String materialFlowKey = "material";
+            int total = materialUseService.countUseFlowing(materialFlowKey,companyId,roleId);
+            List<MaterialURTemp> prox = materialUseService.queryUseFlowingbyPager(materialFlowKey,companyId,roleId,pager);
+            setMaterProVars2Map(prox);
+            Pager4EasyUI pager4EasyUI = new Pager4EasyUI();
+            pager4EasyUI.setTotal(total);
+            pager4EasyUI.setRows(prox);
+            return pager4EasyUI;
+        } else {
+            logger.info("请先登录");
+            return null;
+        }
     }
 
     @ResponseBody
     @RequestMapping("queryReturned")
-    public Pager4EasyUI queryReturnedByPager(@RequestParam("pageNumber")int pageNo, @RequestParam("pageSize")int pageSize) {
-        Pager pager = new Pager();
-        pager.setPageNo(pageNo);
-        pager.setPageSize(pageSize);
-        final String companyId = "11"; //假设当前登录角色为公司11的库管
-        final String roleId = "1";
-        final String userId = "2";      //当前用户为2;
-        final String materialFlowKey = "material";
-        int total = materialUseService.countReturnFlowing(materialFlowKey,companyId,roleId);
-        List<MaterialURTemp> prox = materialUseService.queryReturnFlowingbyPager(materialFlowKey,companyId,roleId,pager);
-        setMaterProVars2Map(prox);
-        Pager4EasyUI pager4EasyUI = new Pager4EasyUI();
-        pager4EasyUI.setTotal(total);
-        pager4EasyUI.setRows(prox);
-        return pager4EasyUI;
+    public Pager4EasyUI queryReturnedByPager(@RequestParam("pageNumber")int pageNo, @RequestParam("pageSize")int pageSize, HttpSession session) {
+        if(SessionUtil.isLogin(session)) {
+            Pager pager = new Pager();
+            pager.setPageNo(pageNo);
+            pager.setPageSize(pageSize);
+            final String companyId = "11"; //假设当前登录角色为公司11的库管
+            final String roleId = "1";
+            final String userId = "2";      //当前用户为2;
+            final String materialFlowKey = "material";
+            int total = materialUseService.countReturnFlowing(materialFlowKey,companyId,roleId);
+            List<MaterialURTemp> prox = materialUseService.queryReturnFlowingbyPager(materialFlowKey,companyId,roleId,pager);
+            setMaterProVars2Map(prox);
+            Pager4EasyUI pager4EasyUI = new Pager4EasyUI();
+            pager4EasyUI.setTotal(total);
+            pager4EasyUI.setRows(prox);
+            return pager4EasyUI;
+        } else {
+            logger.info("请先登录");
+            return null;
+        }
     }
 
     @ResponseBody
     @RequestMapping("queryAccManagerHistory")
-    public Pager4EasyUI queryAccManagerHistoryByPager(@RequestParam("pageNumber")int pageNo, @RequestParam("pageSize")int pageSize) {
-        Pager pager = new Pager();
-        pager.setPageNo(pageNo);
-        pager.setPageSize(pageSize);
-        final String companyId = "11"; //假设当前登录角色为公司11的库管
-        final String userId = "2";      //当前用户为2;
-        final String materialFlowKey = "material";
-        final String taskKey = "usertask2";
-        int total = materialUseService.countHistoryFlowing(companyId,materialFlowKey);
-        List<MaterialURTemp> prox = materialUseService.queryHistoryFlowingbyPager(companyId, materialFlowKey, taskKey, pager);
-        setHisMaterProVars2Map(prox);
-        Pager4EasyUI pager4EasyUI = new Pager4EasyUI();
-        pager4EasyUI.setTotal(total);
-        pager4EasyUI.setRows(prox);
-        return pager4EasyUI;
+    public Pager4EasyUI queryAccManagerHistoryByPager(@RequestParam("pageNumber")int pageNo, @RequestParam("pageSize")int pageSize, HttpSession session) {
+        if(SessionUtil.isLogin(session)) {
+            Pager pager = new Pager();
+            pager.setPageNo(pageNo);
+            pager.setPageSize(pageSize);
+            final String companyId = "11"; //假设当前登录角色为公司11的库管
+            final String userId = "2";      //当前用户为2;
+            final String materialFlowKey = "material";
+            final String taskKey = "usertask2";
+            int total = materialUseService.countHistoryFlowing(companyId,materialFlowKey);
+            List<MaterialURTemp> prox = materialUseService.queryHistoryFlowingbyPager(companyId, materialFlowKey, taskKey, pager);
+            setHisMaterProVars2Map(prox);
+            Pager4EasyUI pager4EasyUI = new Pager4EasyUI();
+            pager4EasyUI.setTotal(total);
+            pager4EasyUI.setRows(prox);
+            return pager4EasyUI;
+        } else {
+            logger.info("请先登录");
+            return null;
+        }
     }
 
     @ResponseBody
     @RequestMapping("queryUserFlowingHistory")
-    public Pager4EasyUI queryUserFlowingHistoryByPager(@RequestParam("pageNumber")int pageNo, @RequestParam("pageSize")int pageSize) {
-        Pager pager = new Pager();
-        pager.setPageNo(pageNo);
-        pager.setPageSize(pageSize);
-        final String userId = "1";      //当前用户为1;
-        final String materialFlowKey = "material";
-        final String reveiwTaskKey = "usertask2";
-        int total = materialUseService.countUserFlowing(materialFlowKey,userId);
-        List<MaterialURTemp> prox = materialUseService.queryUserFlowingByPager(materialFlowKey, userId, reveiwTaskKey, pager);
-        setHisMaterProVars2Map(prox);
-        Pager4EasyUI pager4EasyUI = new Pager4EasyUI();
-        pager4EasyUI.setTotal(total);
-        pager4EasyUI.setRows(prox);
-        return pager4EasyUI;
+    public Pager4EasyUI queryUserFlowingHistoryByPager(@RequestParam("pageNumber")int pageNo, @RequestParam("pageSize")int pageSize, HttpSession session) {
+        if(SessionUtil.isLogin(session)) {
+            Pager pager = new Pager();
+            pager.setPageNo(pageNo);
+            pager.setPageSize(pageSize);
+            final String userId = "1";      //当前用户为1;
+            final String materialFlowKey = "material";
+            final String reveiwTaskKey = "usertask2";
+            int total = materialUseService.countUserFlowing(materialFlowKey,userId);
+            List<MaterialURTemp> prox = materialUseService.queryUserFlowingByPager(materialFlowKey, userId, reveiwTaskKey, pager);
+            setHisMaterProVars2Map(prox);
+            Pager4EasyUI pager4EasyUI = new Pager4EasyUI();
+            pager4EasyUI.setTotal(total);
+            pager4EasyUI.setRows(prox);
+            return pager4EasyUI;
+        } else {
+            logger.info("请先登录");
+            return null;
+        }
     }
 
     private void setHisMaterProVars2Map(List<MaterialURTemp> prox) {
@@ -312,7 +336,7 @@ public class FlowController {
 
     @ResponseBody
     @RequestMapping("subForm")
-    public ControllerResult subForm(MaterialURTemp materialUse){
+    public ControllerResult subForm(MaterialURTemp materialUse, HttpSession session){
         /**
          * 流程示意: begin --> form --formSub? Y -->  审核 -isOK? Y-> END
          *                             |                    |
@@ -332,88 +356,99 @@ public class FlowController {
          *    要完成审核的候选组ID为 "1" 这里假设1为库管人员的角色ID
          *
          */
-        final String startUserId = "1";
-        final String startUserName = "张三";
-        final String startUserRoleName = "普通员工";
-        final String materialFlowKey = "material";
-        final String canGroupId = "1";
+        if(SessionUtil.isLogin(session)) {
+            final String startUserId = "1";
+            final String startUserName = "张三";
+            final String startUserRoleName = "普通员工";
+            final String materialFlowKey = "material";
+            final String canGroupId = "1";
 
-        int accCount = materialUse.getAccCount();
-        Map msgs = new HashMap();
-        msgs.put("startName", startUserName);
-        msgs.put("startUserRoleName", startUserRoleName);
-        msgs.put("accId", materialUse.getAccId());
-        msgs.put("accName", materialUse.getAccessories().getAccName());
-        msgs.put("accCount", materialUse.getAccCount());
-        msgs.put("recordId", materialUse.getMatainRecordId());
-        msgs.put("reqMsg", materialUse.getReqMsg());
-        msgs.put("formSub", true);
-        try {
-            // 第一步
-            Authentication.setAuthenticatedUserId(startUserId);
-            ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(materialFlowKey);
-            // 第二步
-            Task formTask = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
-            taskService.complete(formTask.getId(), msgs);
-            // 第三步
-            Task nextTask = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
-            taskService.addCandidateGroup(nextTask.getId(),canGroupId);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ControllerResult.getFailResult("申请失败,可能是因为领取/退回物料流程未部署,请联系管理员");
+            int accCount = materialUse.getAccCount();
+            Map msgs = new HashMap();
+            msgs.put("startName", startUserName);
+            msgs.put("startUserRoleName", startUserRoleName);
+            msgs.put("accId", materialUse.getAccId());
+            msgs.put("accName", materialUse.getAccessories().getAccName());
+            msgs.put("accCount", materialUse.getAccCount());
+            msgs.put("recordId", materialUse.getMatainRecordId());
+            msgs.put("reqMsg", materialUse.getReqMsg());
+            msgs.put("formSub", true);
+            try {
+                // 第一步
+                Authentication.setAuthenticatedUserId(startUserId);
+                ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(materialFlowKey);
+                // 第二步
+                Task formTask = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
+                taskService.complete(formTask.getId(), msgs);
+                // 第三步
+                Task nextTask = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
+                taskService.addCandidateGroup(nextTask.getId(),canGroupId);
+            } catch (Exception e) {
+                e.printStackTrace();
+                return ControllerResult.getFailResult("申请失败,可能是因为领取/退回物料流程未部署,请联系管理员");
+            }
+            return ControllerResult.getSuccessResult("申请成功");
+        } else {
+            logger.info("请先登录");
+            return null;
         }
-        return ControllerResult.getSuccessResult("申请成功");
     }
 
     @ResponseBody
     @RequestMapping("reSubForm")
-    public ControllerResult reSubForm(MaterialURTemp materialUse){
+    public ControllerResult reSubForm(MaterialURTemp materialUse, HttpSession session){
         /**
          * 1. 修改reqMsg变量    v
          * 2. respMsg变量删除   v
          * 3. 设置下一个任务的候选组
          */
-        final String startUserId = "1";
-        final String startUserName = "张三";
-        final String startUserRoleName = "普通员工";
-        final String materialFlowKey = "material";
-        final String canGroupId = "1";
+        if(SessionUtil.isLogin(session)) {
+            final String startUserId = "1";
+            final String startUserName = "张三";
+            final String startUserRoleName = "普通员工";
+            final String materialFlowKey = "material";
+            final String canGroupId = "1";
 
-        int accCount = materialUse.getAccCount();
-        Map msgs = new HashMap();
-        // 第一步
-        msgs.put("reqMsg", materialUse.getReqMsg());
-        msgs.put("formSub", true);
-        TaskQuery taskQuery = taskService.createTaskQuery();
-        try {
-            String processInstanceId = materialUse.getProcessInstanceId();
-            // 第二步
-            Task task = taskQuery.processInstanceId(processInstanceId).singleResult();
-            taskService.removeVariable(task.getId(), "respMsg");
-            taskService.complete(task.getId(), msgs);
-            // 第三步
-            Task nextTask = taskQuery.processInstanceId(processInstanceId).singleResult();
-            taskService.addCandidateGroup(nextTask.getId(), canGroupId);
+            int accCount = materialUse.getAccCount();
+            Map msgs = new HashMap();
+            // 第一步
+            msgs.put("reqMsg", materialUse.getReqMsg());
+            msgs.put("formSub", true);
+            TaskQuery taskQuery = taskService.createTaskQuery();
+            try {
+                String processInstanceId = materialUse.getProcessInstanceId();
+                // 第二步
+                Task task = taskQuery.processInstanceId(processInstanceId).singleResult();
+                taskService.removeVariable(task.getId(), "respMsg");
+                taskService.complete(task.getId(), msgs);
+                // 第三步
+                Task nextTask = taskQuery.processInstanceId(processInstanceId).singleResult();
+                taskService.addCandidateGroup(nextTask.getId(), canGroupId);
 
-//            // 第一步
-//            Authentication.setAuthenticatedUserId(startUserId);
-//            ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(materialFlowKey);
-//            // 第二步
-//            Task formTask = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
-//            taskService.complete(formTask.getId(), msgs);
-//            // 第三步
-//            Task nextTask = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
-//            taskService.addCandidateGroup(nextTask.getId(),canGroupId);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ControllerResult.getFailResult("申请失败,可能是因为领取/退回物料流程未部署,请联系管理员");
+    //            // 第一步
+    //            Authentication.setAuthenticatedUserId(startUserId);
+    //            ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(materialFlowKey);
+    //            // 第二步
+    //            Task formTask = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
+    //            taskService.complete(formTask.getId(), msgs);
+    //            // 第三步
+    //            Task nextTask = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
+    //            taskService.addCandidateGroup(nextTask.getId(),canGroupId);
+            } catch (Exception e) {
+                e.printStackTrace();
+                return ControllerResult.getFailResult("申请失败,可能是因为领取/退回物料流程未部署,请联系管理员");
+            }
+            return ControllerResult.getSuccessResult("申请成功");
+        } else {
+            logger.info("请先登录");
+            return null;
         }
-        return ControllerResult.getSuccessResult("申请成功");
     }
 
     @ResponseBody
     @RequestMapping("removeMaterialProInst")
-    public ControllerResult removeMaterialProInst(@RequestParam("processInstanceId") String proInstId ) {
+    public ControllerResult removeMaterialProInst(@RequestParam("processInstanceId") String proInstId, HttpSession session) {
+        if(SessionUtil.isLogin(session)) {
         final String curUserId = "1";
         final String subFormTaskName = "usertask1";
         final String reviewTaskName = "usertask2";
@@ -434,6 +469,10 @@ public class FlowController {
             }
         } else {
             return ControllerResult.getFailResult("您不是流程发起人,删除申请失败");
+        }
+        } else {
+            logger.info("请先登录");
+            return null;
         }
     }
 
@@ -470,21 +509,5 @@ public class FlowController {
 
 
 
-    /**
-     * 测试用的部署流程
-     */
-    @ResponseBody
-    @RequestMapping("testDeployMa")
-    public boolean testDeployMa() {
-        try {
-            DeploymentBuilder depBuil = repositoryService.createDeployment();
-            depBuil.addClasspathResource("com/gs/bpmn/materialFlow.bpmn");
-            depBuil.deploy();
-        } catch(Exception e) {
-            System.out.println("报错了");
-            return false;
-        }
-        return true;
-    }
 
 }
