@@ -64,7 +64,7 @@ public class MaintainRemindController {
     @RequestMapping(value = "queryByPager", method = RequestMethod.GET)
     public Pager4EasyUI<MaintainRemind> queryByPager(HttpSession session, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize, User user) {
         if (SessionUtil.isLogin(session)) {
-            String roles = "";
+            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员";
             if (RoleUtil.checkRoles(roles)) {
                 logger.info("分页查看维修保养提醒记录");
                 Pager pager = new Pager();
@@ -89,7 +89,7 @@ public class MaintainRemindController {
     @RequestMapping(value = "queryByPagerNull", method = RequestMethod.GET)
     public Pager4EasyUI<MaintainRemind> queryByPagerNull(HttpSession session, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
         if (SessionUtil.isLogin(session)) {
-            String roles = "";
+            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员";
             if (RoleUtil.checkRoles(roles)) {
                 logger.info("分页查看维修保养提醒记录");
                 Pager pager = new Pager();
@@ -112,28 +112,50 @@ public class MaintainRemindController {
 
     @ResponseBody
     @RequestMapping(value = "insert", method = RequestMethod.POST)
-    public ControllerResult insert(MaintainRemind maintainRemind, MessageSend messageSend) {
-        logger.info("维修保养提醒记录添加操作");
-        maintainRemindService.update(maintainRemind);
-        messageSend.setMessageId(maintainRemind.getRemindId());
-        messageSend.setUserId(maintainRemind.getUserId());
-        messageSend.setSendTime(maintainRemind.getRemindTime());
-        messageSend.setSendMsg(maintainRemind.getRemindMsg());
-        messageSend.setSendCreatedTime(new Date());
-        messageSendService.insertRemind(messageSend);
-        return ControllerResult.getSuccessResult("添加成功");
+    public ControllerResult insert(HttpSession session, MaintainRemind maintainRemind, MessageSend messageSend) {
+        if (SessionUtil.isLogin(session)) {
+            String roles = "公司超级管理员,公司普通管理员,汽车公司接待员";
+            if (RoleUtil.checkRoles(roles)) {
+                logger.info("维修保养提醒记录添加操作");
+                maintainRemindService.update(maintainRemind);
+                messageSend.setMessageId(maintainRemind.getRemindId());
+                messageSend.setUserId(maintainRemind.getUserId());
+                messageSend.setSendTime(maintainRemind.getRemindTime());
+                messageSend.setSendMsg(maintainRemind.getRemindMsg());
+                messageSend.setSendCreatedTime(new Date());
+                messageSendService.insertRemind(messageSend);
+                return ControllerResult.getSuccessResult("添加成功");
+            } else {
+                logger.info("此用户无拥有此方法");
+                return null;
+            }
+        } else {
+            logger.info("请先登录");
+            return null;
+        }
     }
 
     @ResponseBody
     @RequestMapping(value = "update", method = RequestMethod.POST)
-    public ControllerResult update(MaintainRemind maintainRemind, MessageSend messageSend) {
-        logger.info("维修保养提醒记录修改操作");
-        maintainRemindService.update(maintainRemind);
-        messageSend.setSendTime(maintainRemind.getRemindTime());
-        messageSend.setSendMsg(maintainRemind.getRemindMsg());
-        messageSend.setSendCreatedTime(maintainRemind.getRemindCreatedTime());
-        messageSendService.update(messageSend);
-        return ControllerResult.getSuccessResult("修改成功");
+    public ControllerResult update(HttpSession session, MaintainRemind maintainRemind, MessageSend messageSend) {
+        if (SessionUtil.isLogin(session)) {
+            String roles = "公司超级管理员,公司普通管理员,汽车公司接待员";
+            if (RoleUtil.checkRoles(roles)) {
+                logger.info("维修保养提醒记录修改操作");
+                maintainRemindService.update(maintainRemind);
+                messageSend.setSendTime(maintainRemind.getRemindTime());
+                messageSend.setSendMsg(maintainRemind.getRemindMsg());
+                messageSend.setSendCreatedTime(maintainRemind.getRemindCreatedTime());
+                messageSendService.update(messageSend);
+                return ControllerResult.getSuccessResult("修改成功");
+            } else {
+                logger.info("此用户无拥有此方法");
+                return null;
+            }
+        } else {
+            logger.info("请先登录");
+            return null;
+        }
     }
 
 

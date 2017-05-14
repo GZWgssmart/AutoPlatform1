@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%
     String path = request.getContextPath();
 %>
@@ -43,32 +44,39 @@
             </thead>
         </table>
         <div id="toolbar" class="btn-group">
-            <button id="btn_add" type="button" class="btn btn-default" onclick="showAdd();">
-                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
-            </button>
-            <button id="btn_application" type="button" class="btn btn-success" onclick="showReply();">回复车主</button>
+            <shiro:hasAnyRoles name="车主">
+                <button id="btn_add" type="button" class="btn btn-default" onclick="showAdd();">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
+                </button>
+            </shiro:hasAnyRoles>
+            <shiro:hasAnyRoles name="汽修公司管理员,汽修公司接待员">
+                <button id="btn_application" type="button" class="btn btn-success" onclick="showReply();">回复车主</button>
+            </shiro:hasAnyRoles>
             <%--<button id="btn_edit" type="button" class="btn btn-default" onclick="showEdit();">--%>
-                <%--<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改--%>
+            <%--<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改--%>
             <%--</button>--%>
-            <div class="input-group" style="width:350px;float:left;padding:0;margin:0 0 0 -1px;">
-                <div class="input-group-btn">
-                    <button type="button" id="ulButton" class="btn btn-default" style="border-radius:0px;"
-                            data-toggle="dropdown">投诉人<span class="caret"></span></button>
-                    <ul class="dropdown-menu pull-right">
-                        <li><a onclick="onclikLi(this)">投诉人</a></li>
-                        <li class="divider"></li>
-                        <li><a onclick="onclikLi(this)">投诉内容</a></li>
-                        <li class="divider"></li>
-                        <li><a onclick="onclikLi(this)">投诉回复人</a></li>
-                        <li class="divider"></li>
-                        <li><a onclick="onclikLi(this)">投诉回复内容</a></li>
-                    </ul>
-                </div><!-- /btn-group -->
-                <input id="ulInput" class="form-control" onkeypress="if(event.keyCode==13) {blurredQuery();}">
-                <a href="javascript:;" onclick="blurredQuery()"><span
-                        class="glyphicon glyphicon-search search-style"></span></a>
-                </input>
-            </div><!-- /input-group -->
+            <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,车主">
+                <div class="input-group" style="width:350px;float:left;padding:0;margin:0 0 0 -1px;">
+                    <div class="input-group-btn">
+                        <button type="button" id="ulButton" class="btn btn-default" style="border-radius:0px;"
+                                data-toggle="dropdown">投诉人<span class="caret"></span></button>
+                        <ul class="dropdown-menu pull-right">
+                            <li><a onclick="onclikLi(this)">投诉人</a></li>
+                            <li class="divider"></li>
+                            <li><a onclick="onclikLi(this)">投诉内容</a></li>
+                            <li class="divider"></li>
+                            <li><a onclick="onclikLi(this)">投诉回复人</a></li>
+                            <li class="divider"></li>
+                            <li><a onclick="onclikLi(this)">投诉回复内容</a></li>
+                        </ul>
+                    </div><!-- /btn-group -->
+                    <input id="ulInput" class="form-control" onkeypress="if(event.keyCode==13) {blurredQuery();}">
+                    <a href="javascript:;" onclick="blurredQuery()"><span
+                            class="glyphicon glyphicon-search search-style"></span></a>
+                    </input>
+                </div>
+                <!-- /input-group -->
+            </shiro:hasAnyRoles>
         </div>
     </div>
 </div>

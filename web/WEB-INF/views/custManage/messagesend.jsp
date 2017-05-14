@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%
     String path = request.getContextPath();
 %>
@@ -40,7 +41,9 @@
             </thead>
         </table>
         <div id="toolbar" class="btn-group">
-            <button type="button" class="btn btn-w-m btn-info" onclick="showAdd();">发送短信提醒</button>
+            <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司接待员">
+                <button type="button" class="btn btn-w-m btn-info" onclick="showAdd();">发送短信提醒</button>
+            </shiro:hasAnyRoles>
         </div>
     </div>
 </div>

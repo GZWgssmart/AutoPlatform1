@@ -54,7 +54,7 @@ public class TracklistController {
     @RequestMapping(value = "queryByPager", method = RequestMethod.GET)
     public Pager4EasyUI<TrackList> queryByPager(HttpSession session, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
         if (SessionUtil.isLogin(session)) {
-            String roles = "";
+            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,车主";
             if (RoleUtil.checkRoles(roles)) {
                 logger.info("分页查看跟踪回访记录");
                 Pager pager = new Pager();
@@ -78,64 +78,108 @@ public class TracklistController {
     @ResponseBody
     @RequestMapping(value = "queryName", method = RequestMethod.GET)
     public Pager4EasyUI<TrackList> queryName(HttpSession session, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize, TrackList trackList) {
-        logger.info("模糊查询跟踪回访记录");
-        String text = req.getParameter("text");
-        String value = req.getParameter("value");
-        if(text != null && text != "") {
-            Pager pager = new Pager();
-            pager.setPageNo(Integer.valueOf(pageNumber));
-            pager.setPageSize(Integer.valueOf(pageSize));
-            if(text.equals("回访人")) {
-                trackList.setUserId(value);
-            } else if (text.equals("本次服务评价")) {
-                trackList.setServiceEvaluate(Integer.valueOf(value));
-            } else if (text.equals("跟踪回访用户")) {
-                trackList.setTrackUser(value);
-            } else if (text.equals("回访问题")) {
-                trackList.setTrackContent(value);
+        if (SessionUtil.isLogin(session)) {
+            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,车主";
+            if (RoleUtil.checkRoles(roles)) {
+                logger.info("模糊查询跟踪回访记录");
+                String text = req.getParameter("text");
+                String value = req.getParameter("value");
+                if (text != null && text != "") {
+                    Pager pager = new Pager();
+                    pager.setPageNo(Integer.valueOf(pageNumber));
+                    pager.setPageSize(Integer.valueOf(pageSize));
+                    if (text.equals("回访人")) {
+                        trackList.setUserId(value);
+                    } else if (text.equals("本次服务评价")) {
+                        trackList.setServiceEvaluate(Integer.valueOf(value));
+                    } else if (text.equals("跟踪回访用户")) {
+                        trackList.setTrackUser(value);
+                    } else if (text.equals("回访问题")) {
+                        trackList.setTrackContent(value);
+                    }
+                    int count = trackListService.countName(trackList, (User) session.getAttribute("user"));
+                    pager.setTotalRecords(count);
+                    pager.setUser((User) session.getAttribute("user"));
+                    List<TrackList> queryList = trackListService.queryByPagerName(pager, trackList);
+                    return new Pager4EasyUI<TrackList>(pager.getTotalRecords(), queryList);
+                }
+                return null;
+            } else {
+                logger.info("此用户无拥有此方法");
+                return null;
             }
-            int count = trackListService.countName(trackList,(User)session.getAttribute("user"));
-            pager.setTotalRecords(count);
-            pager.setUser((User)session.getAttribute("user"));
-            List<TrackList> queryList = trackListService.queryByPagerName(pager,trackList);
-            return new Pager4EasyUI<TrackList>(pager.getTotalRecords(), queryList);
+        } else {
+            logger.info("请先登录");
+            return null;
         }
-        return null;
     }
 
     @ResponseBody
     @RequestMapping(value = "queryCombox", method = RequestMethod.GET)
     public List<ComboBox4EasyUI> queryCombox(HttpSession session) {
-        logger.info("查看用户");
-        List<User> users = userService.queryAll((User)session.getAttribute("user"));
-        List<ComboBox4EasyUI> combo = new ArrayList<ComboBox4EasyUI>();
-        for(User u : users) {
-            ComboBox4EasyUI co = new ComboBox4EasyUI();
-            co.setId(u.getUserId());
-            co.setText(u.getUserName());
-            String userId = req.getParameter("userId");
-            if(u.getUserId().equals(userId)) {
-                co.setSelected(true);
+        if (SessionUtil.isLogin(session)) {
+            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,车主";
+            if (RoleUtil.checkRoles(roles)) {
+                logger.info("查看用户");
+                List<User> users = userService.queryAll((User) session.getAttribute("user"));
+                List<ComboBox4EasyUI> combo = new ArrayList<ComboBox4EasyUI>();
+                for (User u : users) {
+                    ComboBox4EasyUI co = new ComboBox4EasyUI();
+                    co.setId(u.getUserId());
+                    co.setText(u.getUserName());
+                    String userId = req.getParameter("userId");
+                    if (u.getUserId().equals(userId)) {
+                        co.setSelected(true);
+                    }
+                    combo.add(co);
+                }
+                return combo;
+            } else {
+                logger.info("此用户无拥有此方法");
+                return null;
             }
-            combo.add(co);
+        } else {
+            logger.info("请先登录");
+            return null;
         }
-        return combo;
     }
 
     @ResponseBody
     @RequestMapping(value = "insert", method = RequestMethod.POST)
-    public ControllerResult insert(TrackList trackList) {
-        logger.info("跟踪回访记录添加操作");
-        trackListService.insert(trackList);
-        return ControllerResult.getSuccessResult("添加成功");
+    public ControllerResult insert(HttpSession session, TrackList trackList) {
+        if (SessionUtil.isLogin(session)) {
+            String roles = "公司超级管理员,公司普通管理员,汽车公司接待员";
+            if (RoleUtil.checkRoles(roles)) {
+                logger.info("跟踪回访记录添加操作");
+                trackListService.insert(trackList);
+                return ControllerResult.getSuccessResult("添加成功");
+            } else {
+                logger.info("此用户无拥有此方法");
+                return null;
+            }
+        } else {
+            logger.info("请先登录");
+            return null;
+        }
     }
 
     @ResponseBody
     @RequestMapping(value = "update", method = RequestMethod.POST)
-    public ControllerResult update(TrackList trackList) {
-        logger.info("跟踪回访记录修改操作");
-        trackListService.update(trackList);
-        return ControllerResult.getSuccessResult("修改成功");
+    public ControllerResult update(HttpSession session, TrackList trackList) {
+        if (SessionUtil.isLogin(session)) {
+            String roles = "公司超级管理员,公司普通管理员,汽车公司接待员";
+            if (RoleUtil.checkRoles(roles)) {
+                logger.info("跟踪回访记录修改操作");
+                trackListService.update(trackList);
+                return ControllerResult.getSuccessResult("修改成功");
+            } else {
+                logger.info("此用户无拥有此方法");
+                return null;
+            }
+        } else {
+            logger.info("请先登录");
+            return null;
+        }
     }
 
     /**

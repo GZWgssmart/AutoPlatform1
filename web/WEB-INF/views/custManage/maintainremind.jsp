@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%
     String path = request.getContextPath();
 %>
@@ -43,12 +44,14 @@
             </thead>
         </table>
         <div id="toolbar" class="btn-group">
-            <button type="button" class="btn btn-success" onclick="showRemindUser()">
-                查看需要维修保养提醒的车主
-            </button>
+            <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员">
+                <button type="button" class="btn btn-success" onclick="showRemindUser()">
+                    查看需要维修保养提醒的车主
+                </button>
+            </shiro:hasAnyRoles>
             <%--<button type="button" class="btn btn-w-m btn-info" onclick="showAdd();">保养提醒用户</button>--%>
             <%--<button id="btn_edit" type="button" class="btn btn-default" onclick="showEdit();">--%>
-                <%--<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改--%>
+            <%--<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改--%>
             <%--</button>--%>
         </div>
     </div>
@@ -232,7 +235,9 @@
                     </thead>
                 </table>
                 <div id="remindToolbar" class="btn-group">
-                    <button type="button" class="btn btn-w-m btn-info" onclick="showAddRemindUser();">保养提醒用户</button>
+                    <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司接待员">
+                        <button type="button" class="btn btn-w-m btn-info" onclick="showAddRemindUser();">保养提醒用户</button>
+                    </shiro:hasAnyRoles>
                 </div>
                 <div class="modal-footer" style="overflow:hidden;">
                     <button type="button" class="btn btn-default" onclick="closeRemindUserWin()">关闭

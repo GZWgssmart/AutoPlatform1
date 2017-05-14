@@ -1,6 +1,7 @@
 package com.gs.controller;
 
 import ch.qos.logback.classic.Logger;
+import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,7 @@ public class CustomerManageController {
     /**
      * 维修保养记录管理
      */
+    @RequiresAuthentication
     @RequestMapping(value = "maintainrecordIndex", method = RequestMethod.GET)
     public String maintainrecordIndex() {
         logger.info("跳转到维修保养记录管理");
@@ -26,6 +28,7 @@ public class CustomerManageController {
     /**
      * 维修保养明细管理
      */
+    @RequiresAuthentication
     @RequestMapping(value = "maintaindetailsIndex", method = RequestMethod.GET)
     public String maintaindetailsIndex() {
         logger.info("跳转到维修保养明细管理");
@@ -35,6 +38,7 @@ public class CustomerManageController {
     /**
      * 维修保养提醒
      */
+    @RequiresAuthentication
     @RequestMapping(value = "maintainremindIndex", method = RequestMethod.GET)
     public String maintainremindIndex() {
         logger.info("跳转到维修保养提醒");
@@ -44,6 +48,7 @@ public class CustomerManageController {
     /**
      * 短信群发提醒
      */
+    @RequiresAuthentication
     @RequestMapping(value = "messagesendIndex", method = RequestMethod.GET)
     public String messagesendIndex() {
         logger.info("跳转到短信群发提醒");
@@ -54,6 +59,7 @@ public class CustomerManageController {
     /**
      * 投诉管理
      */
+    @RequiresAuthentication
     @RequestMapping(value = "complaintIndex", method = RequestMethod.GET)
     public String complaintIndex() {
         logger.info("跳转到投诉管理");
@@ -63,6 +69,7 @@ public class CustomerManageController {
     /**
      * 跟踪回访管理
      */
+    @RequiresAuthentication
     @RequestMapping(value = "tracklistIndex", method = RequestMethod.GET)
     public String tracklistIndex() {
         logger.info("跳转到跟踪回访管理");

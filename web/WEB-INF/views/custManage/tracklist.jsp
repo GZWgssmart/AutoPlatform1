@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%
     String path = request.getContextPath();
 %>
@@ -41,31 +42,38 @@
             </thead>
         </table>
         <div id="toolbar" class="btn-group">
-            <button id="btn_add" type="button" class="btn btn-default" onclick="showAdd();">
-                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
-            </button>
-            <button id="btn_edit" type="button" class="btn btn-default" onclick="showEdit();">
-                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
-            </button>
-            <div class="input-group" style="width:350px;float:left;padding:0;margin:0 0 0 -1px;">
-                <div class="input-group-btn">
-                    <button type="button" id="ulButton" class="btn btn-default" style="border-radius:0px;"
-                            data-toggle="dropdown">回访人<span class="caret"></span></button>
-                    <ul class="dropdown-menu pull-right">
-                        <li><a onclick="onclikLi(this)">回访人</a></li>
-                        <li class="divider"></li>
-                        <li><a onclick="onclikLi(this)">回访问题</a></li>
-                        <li class="divider"></li>
-                        <li><a onclick="onclikLi(this)">本次服务评价</a></li>
-                        <li class="divider"></li>
-                        <li><a onclick="onclikLi(this)">跟踪回访用户</a></li>
-                    </ul>
-                </div><!-- /btn-group -->
-                <input id="ulInput" class="form-control" onkeypress="if(event.keyCode==13) {blurredQuery();}">
-                <a href="javascript:;" onclick="blurredQuery()"><span
-                        class="glyphicon glyphicon-search search-style"></span></a>
-                </input>
-            </div><!-- /input-group -->
+            <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司接待员">
+                <button id="btn_add" type="button" class="btn btn-default" onclick="showAdd();">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
+                </button>
+            </shiro:hasAnyRoles>
+            <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司接待员">
+                <button id="btn_edit" type="button" class="btn btn-default" onclick="showEdit();">
+                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
+                </button>
+            </shiro:hasAnyRoles>
+            <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,车主">
+                <div class="input-group" style="width:350px;float:left;padding:0;margin:0 0 0 -1px;">
+                    <div class="input-group-btn">
+                        <button type="button" id="ulButton" class="btn btn-default" style="border-radius:0px;"
+                                data-toggle="dropdown">回访人<span class="caret"></span></button>
+                        <ul class="dropdown-menu pull-right">
+                            <li><a onclick="onclikLi(this)">回访人</a></li>
+                            <li class="divider"></li>
+                            <li><a onclick="onclikLi(this)">回访问题</a></li>
+                            <li class="divider"></li>
+                            <li><a onclick="onclikLi(this)">本次服务评价</a></li>
+                            <li class="divider"></li>
+                            <li><a onclick="onclikLi(this)">跟踪回访用户</a></li>
+                        </ul>
+                    </div><!-- /btn-group -->
+                    <input id="ulInput" class="form-control" onkeypress="if(event.keyCode==13) {blurredQuery();}">
+                    <a href="javascript:;" onclick="blurredQuery()"><span
+                            class="glyphicon glyphicon-search search-style"></span></a>
+                    </input>
+                </div>
+                <!-- /input-group -->
+            </shiro:hasAnyRoles>
         </div>
     </div>
 </div>
@@ -97,14 +105,15 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">跟踪回访创建时间：</label>
                     <div class="col-sm-7">
-                        <input id="addTrackCreatedTime" name="trackCreatedTime" readonly class="layui-input" />
+                        <input id="addTrackCreatedTime" name="trackCreatedTime" readonly class="layui-input"/>
                         <%--onclick="layui.laydate({elem: this, min: laydate.now(), format: 'yyyy-MM-dd hh:mm:ss', max: '2099-06-16 23:59:59'})"--%>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">本次服务评价：</label>
                     <div class="col-sm-7">
-                        <input type="number" name="serviceEvaluate" min="1" max="10" placeholder="请输入本次服务评价（1-10分）" class="form-control"></input>
+                        <input type="number" name="serviceEvaluate" min="1" max="10" placeholder="请输入本次服务评价（1-10分）"
+                               class="form-control"></input>
                     </div>
                 </div>
                 <div class="form-group">
@@ -118,7 +127,8 @@
                 <div class="form-group">
                     <div class="col-sm-offset-8">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关 闭</button>
-                        <button id="addButton" class="btn btn-sm btn-success" type="button" onclick="addSubmit()">保 存</button>
+                        <button id="addButton" class="btn btn-sm btn-success" type="button" onclick="addSubmit()">保 存
+                        </button>
                     </div>
                 </div>
             </form>
@@ -132,7 +142,7 @@
     <div class="modal-dialog" style="width: 750px;height: auto;">
         <div class="modal-content">
             <form class="form-horizontal" id="editForm" method="post">
-                <input type="hidden" name="trackId" define="TrackList.trackId" />
+                <input type="hidden" name="trackId" define="TrackList.trackId"/>
                 <div class="modal-header" style="overflow:auto;">
                     <h4>请修改跟踪回访管理信息</h4>
                 </div>
@@ -141,9 +151,10 @@
                     <label class="col-sm-3 control-label">回访人：</label>
                     <div class="col-sm-7">
                         <%--<select id="editAdminName" name="userId" class="form-control js-data-example-ajax admin"--%>
-                                <%--style="width:100%">--%>
+                        <%--style="width:100%">--%>
                         <%--</select>--%>
-                        <input type="text" name="userId" readonly define="TrackList.userId" class="form-control" value="${sessionScope.user.userName}" >
+                        <input type="text" name="userId" readonly define="TrackList.userId" class="form-control"
+                               value="${sessionScope.user.userName}">
                     </div>
                 </div>
                 <div class="form-group">
@@ -157,13 +168,15 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">跟踪回访创建时间：</label>
                     <div class="col-sm-7">
-                        <input id="editTrackCreatedTime" name="trackCreatedTime" readonly define="TrackList.trackCreatedTime" class="layui-input">
+                        <input id="editTrackCreatedTime" name="trackCreatedTime" readonly
+                               define="TrackList.trackCreatedTime" class="layui-input">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">本次服务评价：</label>
                     <div class="col-sm-7">
-                        <input type="number" name="serviceEvaluate" min="1" max="10 " define="TrackList.serviceEvaluate" placeholder="请输入本次服务评价（1-10分）" class="form-control"></input>
+                        <input type="number" name="serviceEvaluate" min="1" max="10 " define="TrackList.serviceEvaluate"
+                               placeholder="请输入本次服务评价（1-10分）" class="form-control"></input>
                     </div>
                 </div>
                 <div class="form-group">
@@ -177,7 +190,9 @@
                 <div class="form-group">
                     <div class="col-sm-offset-8">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关 闭</button>
-                        <button id="editButton" class="btn btn-sm btn-success" type="button" onclick="editSubmit()">保 存</button>
+                        <button id="editButton" class="btn btn-sm btn-success" type="button" onclick="editSubmit()">保
+                            存
+                        </button>
                     </div>
                 </div>
             </form>
@@ -198,7 +213,7 @@
 <script src="/static/js/plugins/layui/layui.js" charset="utf-8"></script>
 <script src="/static/js/backstage/main.js"></script>
 <script>
-    layui.use('laydate', function(){
+    layui.use('laydate', function () {
         var laydate = layui.laydate;
 
         var addTrackCreatedTime = {

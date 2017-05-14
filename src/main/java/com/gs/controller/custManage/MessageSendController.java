@@ -54,7 +54,7 @@ public class MessageSendController {
     @RequestMapping(value = "queryByPager", method = RequestMethod.GET)
     public Pager4EasyUI<MessageSend> queryByPager(HttpSession session, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
         if (SessionUtil.isLogin(session)) {
-            String roles = "";
+            String roles = "公司超级管理员,公司普通管理员,汽车公司接待员";
             if (RoleUtil.checkRoles(roles)) {
                 logger.info("分页查看短信提醒记录");
                 Pager pager = new Pager();
@@ -77,38 +77,61 @@ public class MessageSendController {
 
     @ResponseBody
     @RequestMapping(value = "insert", method = RequestMethod.POST)
-    public ControllerResult batchInsert() {
-        logger.info("短信提醒记录添加操作");
-        List<MessageSend> list = new ArrayList<MessageSend>();
-        for(MessageSend ms : list) {
-            MessageSend m = new MessageSend();
-            m.setUserId(ms.getUserId());
-            m.setSendMsg(ms.getSendMsg());
-            m.setSendTime(ms.getSendTime());
-            m.setSendCreatedTime(ms.getSendCreatedTime());
-            list.add(m);
+    public ControllerResult batchInsert(HttpSession session) {
+        if (SessionUtil.isLogin(session)) {
+            String roles = "公司超级管理员,公司普通管理员,汽车公司接待员";
+            if (RoleUtil.checkRoles(roles)) {
+                logger.info("短信提醒记录添加操作");
+                List<MessageSend> list = new ArrayList<MessageSend>();
+                for (MessageSend ms : list) {
+                    MessageSend m = new MessageSend();
+                    m.setUserId(ms.getUserId());
+                    m.setSendMsg(ms.getSendMsg());
+                    m.setSendTime(ms.getSendTime());
+                    m.setSendCreatedTime(ms.getSendCreatedTime());
+                    list.add(m);
+                }
+                messageSendService.batchInsert(list);
+                return ControllerResult.getSuccessResult("添加成功");
+            } else {
+                logger.info("此用户无拥有此方法");
+                return null;
+            }
+        } else {
+            logger.info("请先登录");
+            return null;
         }
-        messageSendService.batchInsert(list);
-        return ControllerResult.getSuccessResult("添加成功");
+
     }
 
     @ResponseBody
     @RequestMapping(value = "queryCombox", method = RequestMethod.GET)
     public List<ComboBox4EasyUI> queryCombox(HttpSession session) {
-        logger.info("查看用户");
-        List<User> users = userService.queryAll((User)session.getAttribute("user"));
-        List<ComboBox4EasyUI> combo = new ArrayList<ComboBox4EasyUI>();
-        for(User user : users) {
-            ComboBox4EasyUI co = new ComboBox4EasyUI();
-            co.setId(user.getUserId());
-            co.setText(user.getUserName());
-            String userId = req.getParameter("userId");
-            if(user.getUserId().equals(userId)) {
-                co.setSelected(true);
+        if (SessionUtil.isLogin(session)) {
+            String roles = "公司超级管理员,公司普通管理员,汽车公司接待员";
+            if (RoleUtil.checkRoles(roles)) {
+                logger.info("查看用户");
+                List<User> users = userService.queryAll((User) session.getAttribute("user"));
+                List<ComboBox4EasyUI> combo = new ArrayList<ComboBox4EasyUI>();
+                for (User user : users) {
+                    ComboBox4EasyUI co = new ComboBox4EasyUI();
+                    co.setId(user.getUserId());
+                    co.setText(user.getUserName());
+                    String userId = req.getParameter("userId");
+                    if (user.getUserId().equals(userId)) {
+                        co.setSelected(true);
+                    }
+                    combo.add(co);
+                }
+                return combo;
+            } else {
+                logger.info("此用户无拥有此方法");
+                return null;
             }
-            combo.add(co);
+        } else {
+            logger.info("请先登录");
+            return null;
         }
-        return combo;
     }
 
     /**
