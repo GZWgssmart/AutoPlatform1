@@ -57,7 +57,7 @@
        LEFT JOIN t_car_brand cb on am.brandId = cb.brandId
        where am.appoitmentStatus = 'Y' order by am.appCreatedTime Desc
     ]]>
-    <if test="companyId != '' and companyId != null">
+    <if test="user.companyId != '' and user.companyId != null">
       and am.companyId = #{user.companyId}
     </if>
     limit #{beginIndex}, #{pageSize}
@@ -75,7 +75,7 @@
         LEFT JOIN t_car_brand cb on am.brandId = cb.brandId
         where am.appoitmentStatus = 'N' order by am.appCreatedTime Desc
      ]]>
-    <if test="companyId != '' and companyId != null">
+    <if test="user.companyId != '' and user.companyId != null">
       and am.companyId = #{user.companyId}
     </if>
       limit #{beginIndex}, #{pageSize}
