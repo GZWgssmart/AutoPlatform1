@@ -3,7 +3,6 @@ $(function () {
     $.post("/user/isLogin/"+roles, function (data) {
         if(data.result == 'success'){
             initTable('table', '/appointment/queryByPager'); // 初始化表格
-
             initSelect2("carBrand", "请选择品牌", "/carBrand/queryAllCarBrand");
             initSelect2("carColor", "请选择颜色", "/carColor/queryAllCarColor");
             initSelect2("carModel", "请选择车型", "/carModel/queryAllCarModel");
