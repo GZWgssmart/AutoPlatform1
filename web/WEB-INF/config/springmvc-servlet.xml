@@ -64,7 +64,6 @@
                 </prop>
             </props>
         </property>
-        <property name="defaultErrorView" value="error/genericView"/>
     </bean>
 
     <!-- shiro开启注解 -->
