@@ -2,7 +2,6 @@ package com.gs.controller.accessoriesManage;
 
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.*;
-import com.gs.common.RoleManage.AccManageRole;
 import com.gs.common.bean.ComboBox4EasyUI;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
