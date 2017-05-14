@@ -90,7 +90,7 @@
 <script src="/static/js/hplus.min.js?v=4.1.0"></script>
 <script src="/static/js/contabs.min.js"></script>
 <script src="/static/js/plugins/pace/pace.min.js"></script>
-<script src="/static/js/backstage/user/user.js"></script>
+<script src="/static/js/backstage/user/backstageLogin.js"></script>
 <script src="/static/js/bootstrap-validate/bootstrapValidator.js"></script>
 <script>
     $(function () {

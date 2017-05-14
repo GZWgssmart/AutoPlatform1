@@ -125,7 +125,7 @@
 <script src="/static/js/bootstrap.min.js"></script>
 <script src="/static/js/jquery.cxselect.min.js"></script>
 <script src="/static/js/wow.js"></script><script src="/static/js/sweetalert/sweetalert.min.js"></script>
-<script src="/static/js/backstage/user/user.js"></script>
+<script src="/static/js/backstage/user/frontLogin.js"></script>
 <script src="/static/js/bootstrap-validate/bootstrapValidator.js"></script>
 <script>
     function reg() {
