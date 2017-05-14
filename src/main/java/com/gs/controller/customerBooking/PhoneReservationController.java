@@ -222,7 +222,7 @@ public class PhoneReservationController {
                 } else {
                     pager.setTotalRecords(appointmentService.count((User)session.getAttribute("user")));
                     List<Appointment> appointments = appointmentService.queryByPager(pager);
-                    return new Pager4EasyUI<Appointment>(pager.getTotalRecords(), appointments);;
+                    return new Pager4EasyUI<Appointment>(pager.getTotalRecords(), appointments);
                 }
             }else {
                 logger.info("此用户无拥有此方法角色");
