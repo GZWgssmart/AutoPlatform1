@@ -14,28 +14,19 @@
         <![CDATA[
           select * from t_car_color cc where 1=1 and cc.colorStatus = 'Y'
         ]]>
-        <if test="companyId != '' and companyId !=null">
-            and cc.companyId = #{companyId}
-        </if>
     </select>
 
     <select id="queryByPager" resultMap="colorMap"  parameterType="com.gs.common.bean.Pager">
         <![CDATA[
           select * from t_car_color cc where cc.colorStatus = 'Y'
            ]]>
-        <if test="user.companyId != '' and user.companyId !=null">
-            and cc.companyId = #{user.companyId}
-        </if>
         limit #{beginIndex}, #{pageSize}
     </select>
 
     <select id="count" resultType="int" parameterType="com.gs.bean.User">
         <![CDATA[
-      select count(colorId) from t_car_color cc where where 1=1 and cc.colorStatus = 'Y'
+      select count(colorId) from t_car_color cc where 1=1 and cc.colorStatus = 'Y'
     ]]>
-        <if test="companyId != '' and companyId !=null">
-            and cc.companyId = #{companyId}
-        </if>
     </select>
 
     <insert id="insert" parameterType="carcolor">
@@ -55,9 +46,6 @@
         <![CDATA[
        select * from t_car_color cc where cc.colorStatus = 'N'
     ]]>
-        <if test="user.companyId != '' and user.companyId !=null">
-            and cc.companyId = #{user.companyId}
-        </if>
         limit #{beginIndex}, #{pageSize}
     </select>
     <!-- 分页查询禁用个数 -->
@@ -65,9 +53,6 @@
         <![CDATA[
       select count(colorId) from t_car_color cc where cc.colorStatus = 'N'
     ]]>
-        <if test="companyId != '' and companyId !=null">
-            and cc.companyId = #{companyId}
-        </if>
     </select>
 
     <!--冻结数据-->

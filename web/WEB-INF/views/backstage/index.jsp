@@ -1,5 +1,6 @@
-﻿<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+﻿<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,21 +26,21 @@
 </head>
 
 <body class="fixed-sidebar full-height-layout gray-bg" style="overflow:hidden">
-    <div id="wrapper" style="margin-bottom: 20px;">
+    <div id="wrapper" style="margin-bottom: 20px;display: none;">
         <!--左侧导航开始-->
         <nav class="navbar-default navbar-static-side" role="navigation">
             <div class="nav-close"><i class="fa fa-times-circle"></i>
             </div>
             <div class="sidebar-collapse">
                 <ul class="nav" id="side-menu">
-                    <li class="nav-header">
-                        <div class="dropdown profile-element">
-                            <span><img alt="image" class="img-circle" src="/static/img/profile_small.jpg" /></span>
+                    <li class="nav-header" style="padding-top: 20px;">
+                        <div class="dropdown profile-element" style="margin-left:30px;">
+                            <span><img alt="image" class="img-circle m-t-xs img-responsive" style="height:90px;width:90px;" src=${user.userIcon} /></span>
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                                 <span class="clear">
-                               <span class="block m-t-xs"><strong class="font-bold">Beaut-zihan</strong></span>
-                                <span class="text-muted text-xs block">超级管理员<b class="caret"></b></span>
-                                </span>
+                               <span class="block m-t-xs" style="margin-left:30px;"><strong class="font-bold">${user.userName}</strong></span>
+                                <%--<span class="text-muted text-xs block">超级管理员<b class="caret"></b></span>--%>
+                                <%--</span>--%>
                             </a>
                             <ul class="dropdown-menu animated fadeInRight m-t-xs">
                                 <li><a class="J_menuItem" href="/edit">修改头像</a>
@@ -56,24 +57,24 @@
                             </ul>
                         </div>
                     </li>
-                    <li>
-                        <a class="J_menuItem" href="/table/tableIndex">表格和select2</a>
-                    </li>
-                    <li>
-                        <a class="J_menuItem" href="/file/fileIndex">文件上传</a>
-                    </li>
-                    <li>
-                        <a class="J_menuItem" href="/summerNote/summerNote">summernote</a>
-                    </li>
-                    <li>
-                        <a class="J_menuItem" href="/vaildate/index">jqueryVaildate</a>
-                    </li>
-                    <li>
-                        <a class="J_menuItem" href="/error/notFound">404</a>
-                    </li>
-                    <li>
-                        <a class="J_menuItem" href="/error/serverError">500</a>
-                    </li>
+                    <%--<li>--%>
+                        <%--<a class="J_menuItem" href="/table/tableIndex">表格和select2</a>--%>
+                    <%--</li>--%>
+                    <%--<li>--%>
+                        <%--<a class="J_menuItem" href="/file/fileIndex">文件上传</a>--%>
+                    <%--</li>--%>
+                    <%--<li>--%>
+                        <%--<a class="J_menuItem" href="/summerNote/summerNote">summernote</a>--%>
+                    <%--</li>--%>
+                    <%--<li>--%>
+                        <%--<a class="J_menuItem" href="/vaildate/index">jqueryVaildate</a>--%>
+                    <%--</li>--%>
+                    <%--<li>--%>
+                        <%--<a class="J_menuItem" href="/error/notFound">404</a>--%>
+                    <%--</li>--%>
+                    <%--<li>--%>
+                        <%--<a class="J_menuItem" href="/error/serverError">500</a>--%>
+                    <%--</li>--%>
                     <li>
                         <a href="#">
                             <i class="fa fa-home"></i>
@@ -808,6 +809,7 @@
                             type:"error"}
                         ,function(isConfirm){
                             if(isConfirm){
+                                $("#wrapper").css("display","block");
                                 top.location = "/user/loginPage";
                             }else{
                                 top.location = "/user/loginPage";
@@ -835,7 +837,4 @@
         }
     </script>
 </body>
-
-
-<!-- Mirrored from www.zi-han.net/theme/hplus/ by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:17:11 GMT -->
 </html>

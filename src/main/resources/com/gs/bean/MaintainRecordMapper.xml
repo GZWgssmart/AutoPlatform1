@@ -101,8 +101,8 @@
 
     <select id="queryByPagerDisable" resultMap="MaintainRecordMap" parameterType="com.gs.common.bean.Pager">
      <![CDATA[
-         select m.*,c.checkinId as checkin_id,c.userName as user_name from t_maintain_record m,
-         t_checkin c where m.checkinId = c.checkinId and m.recordStatus = 'N'
+         select m.*,ck.checkinId as checkin_id,ck.userName as user_name from t_maintain_record m,
+         t_checkin ck where m.checkinId = ck.checkinId and m.recordStatus = 'N'
      ]]>
       <if test="user.companyId != '' and user.companyId != null">
           and ck.companyId = #{user.companyId}
@@ -120,7 +120,7 @@
     <select id="countByDisable" resultType="int" parameterType="com.gs.bean.User">
     select count(recordId) from t_maintain_record mr, t_checkin ck where recordStatus = 'N'
         <if test="companyId != '' and companyId != null">
-            and mr.companyId = #{companyId}
+            and ck.companyId = #{companyId}
         </if>
   </select>
 

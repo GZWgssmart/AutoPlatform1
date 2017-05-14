@@ -1,12 +1,16 @@
 package com.gs.controller;
 
 import ch.qos.logback.classic.Logger;
+import com.gs.bean.User;
+import com.gs.common.util.SessionUtil;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpSession;
 
 /**
  * Created by WangGenshen on 5/17/16.
@@ -21,8 +25,12 @@ public class IndexController {
      * 后台主页
      */
     @RequestMapping(value = "backstageIndex", method = RequestMethod.GET)
-    public String backstageHome() {
-        return "backstage/index";
+    public ModelAndView backstageHome(HttpSession session) {
+        ModelAndView mav = new ModelAndView("backstage/index");
+        if(SessionUtil.isLogin(session)) {
+            mav.addObject((User) session.getAttribute("user"));
+        }
+        return mav;
     }
 
     /**

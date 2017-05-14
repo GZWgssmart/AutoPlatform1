@@ -292,7 +292,7 @@
                     <input type="hidden" define="checkin.appointmentId" name="appointmentId"/>
                     <input type="hidden" define="checkin.checkinStatus" name="checkinStatus"/>
                     <input type="hidden" define="checkin.companyId" name="companyId"/>
-                    <input type="hidden" define="checkin.checkinCreatedTime" name="checkinCreatedTime"/>
+                    <input id="checkinCreatedTime" type="hidden" name="checkinCreatedTime"/>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">保养&nbsp;|&nbsp;维修：</label>
                         <div class="col-sm-7">

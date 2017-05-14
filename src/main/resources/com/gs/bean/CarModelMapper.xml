@@ -17,28 +17,18 @@
       <![CDATA[
            select m.*,b.brandName from t_car_model m,t_car_brand b where 1=1 and m.modelStaus = 'Y' m.brandId=b.brandId
         ]]>
-
-      <if test="companyId != '' and companyId !=null">
-          and m.companyId = #{companyId}
-      </if>
   </select>
 
     <select id="queryByBrandId" resultMap="carmodelMap" parameterType="com.gs.bean.User">
         <![CDATA[
            select m.*,b.brandId from t_car_model m,t_car_brand b where m.brandId=b.brandId and b.brandId = #{id}
         ]]>
-        <if test="companyId != '' and companyId !=null">
-            and m.companyId = #{companyId}
-        </if>
     </select>
 
     <select id="queryByPager" resultMap="carmodelMap"  parameterType="com.gs.common.bean.Pager">
         <![CDATA[
           select m.*,b.brandName from t_car_model m,t_car_brand b where m.brandId=b.brandId and m.modelStaus = 'Y'
            ]]>
-        <if test="user.companyId != '' and user.companyId !=null">
-            and m.companyId = #{user.companyId}
-        </if>
         limit #{beginIndex}, #{pageSize}
     </select>
 
@@ -46,9 +36,6 @@
         <![CDATA[
       select count(modelId) from t_car_model cm where cm.modelStaus = 'Y'
     ]]>
-        <if test="companyId != '' and companyId !=null">
-            and cm.companyId = #{companyId}
-        </if>
     </select>
 
   <insert id="insert" parameterType="carmodel">
@@ -69,9 +56,6 @@
         <![CDATA[
        select cm.*, cb.brandId,cb.brandName from t_car_model cm left join t_car_brand cb on cm.brandId = cb.brandId where cm.modelStaus = 'N'
     ]]>
-        <if test="user.companyId != '' and user.companyId !=null">
-            and cm.companyId = #{user.companyId}
-        </if>
         limit #{beginIndex}, #{pageSize}
     </select>
 
@@ -80,9 +64,6 @@
         <![CDATA[
       select count(modelId) from t_car_model cm where cm.modelStaus = 'N'
     ]]>
-        <if test="companyId != '' and companyId !=null">
-            and cm.companyId = #{companyId}
-        </if>
     </select>
 
 

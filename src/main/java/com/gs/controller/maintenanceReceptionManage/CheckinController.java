@@ -92,6 +92,7 @@ public class CheckinController {
                 Pager pager = new Pager();
                 pager.setPageNo(Integer.valueOf(pageNumber));
                 pager.setPageSize(Integer.valueOf(pageSize));
+                pager.setUser((User)session.getAttribute("user"));
                 pager.setTotalRecords(checkinService.countByDisable((User)session.getAttribute("user")));
                 List<Checkin> checkins = checkinService.queryByPagerDisable(pager);
                 return new Pager4EasyUI<Checkin>(pager.getTotalRecords(), checkins);
@@ -202,6 +203,7 @@ public class CheckinController {
                 Pager pager = new Pager();
                 pager.setPageNo(Integer.valueOf(pageNumber));
                 pager.setPageSize(Integer.valueOf(pageSize));
+                pager.setUser((User)session.getAttribute("user"));
                 String text = request.getParameter("text");
                 String value = request.getParameter("value");
                 if(text != null && text!="" && value != null && value != "") {
@@ -223,7 +225,6 @@ public class CheckinController {
                     }
                     checkins = checkinService.blurredQuery(pager, checkin);
                     pager.setTotalRecords(checkinService.countByBlurred(checkin,(User)session.getAttribute("user")));
-                    System.out.print(checkins);
                     return new Pager4EasyUI<Checkin>(pager.getTotalRecords(), checkins);
                 }else{ // 当在模糊查询输入框中输入的值为空时, 使它查询全部
                     pager.setTotalRecords(checkinService.count((User)session.getAttribute("user")));

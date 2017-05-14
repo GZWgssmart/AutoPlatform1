@@ -23,7 +23,7 @@
     select * from t_company tc where 1=1 and tc.companyStatus='Y'
     ]]>
     <if test="companyId != '' and companyId !=null">
-      and tc.companyId = #{user.companyId}
+      and tc.companyId = #{companyId}
     </if>
   </select>
 
@@ -44,7 +44,7 @@
       select count(companyId) from t_company tc where tc.companyStatus = 'Y'
     ]]>
     <if test="companyId !='' and companyId != null" >
-      and tc.companyId = #{user.companyId}
+      and tc.companyId = #{companyId}
     </if>
   </select>
 

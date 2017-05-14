@@ -89,26 +89,26 @@
         and c.chargeBillStatus = 'Y'
     ]]>
     <if test="user.companyId != '' and user.companyId != null">
-      and c.companyId = #{user.companyId}
+      and ck.companyId = #{user.companyId}
     </if>
     limit #{beginIndex}, #{pageSize}
   </select>
 
   <select id="count" resultType="int" parameterType="com.gs.bean.User">
     <![CDATA[
-      select count(*) from t_charge_bill c where c.chargeBillStatus = 'Y'
+      select count(*) from t_charge_bill c, t_maintain_record m, t_checkin ck where c.maintainRecordId = m.recordId and m.checkinId = ck.checkinId and c.chargeBillStatus = 'Y'
     ]]>
     <if test="companyId != '' and companyId != null">
-      and c.companyId = #{companyId}
+      and ck.companyId = #{companyId}
     </if>
   </select>
 
   <select id="countByDisable" resultType="int" parameterType="com.gs.bean.User">
     <![CDATA[
-        select count(*) from t_charge_bill c where c.chargeBillStatus = 'N'
+        select count(*) from t_charge_bill c, t_maintain_record m, t_checkin ck where c.maintainRecordId = m.recordId and m.checkinId = ck.checkinId and c.chargeBillStatus = 'N'
     ]]>
     <if test="companyId != '' and companyId != null">
-      and c.companyId = #{companyId}
+      and ck.companyId = #{companyId}
     </if>
   </select>
 
@@ -126,7 +126,7 @@
         and c.chargeBillStatus = 'N'
     ]]>
     <if test="user.companyId != '' and user.companyId != null">
-      and c.companyId = #{user.companyId}
+      and ck.companyId = #{user.companyId}
     </if>
     limit #{beginIndex}, #{pageSize}
   </select>

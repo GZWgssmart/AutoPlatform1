@@ -246,6 +246,7 @@ function showEdit(){
                 $('#editCarModel').html('<option value="' + checkin.model.modelId + '">' + checkin.model.modelName + '</option>').trigger("change");
                 $('#editCarPlate').html('<option value="' + checkin.plate.plateId + '">' + checkin.plate.plateName + '</option>').trigger("change");
                 $('#editDatetimepicker').val(formatterDate(checkin.arriveTime));
+                $('#checkinCreatedTime').val(formatterDate(checkin.checkinCreatedTime));
                 $("#editForm").fill(checkin);
                 validator('editForm');
             }else{

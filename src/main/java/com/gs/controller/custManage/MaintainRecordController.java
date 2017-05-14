@@ -48,6 +48,7 @@ public class MaintainRecordController {
                 Pager pager = new Pager();
                 pager.setPageNo(Integer.valueOf(pageNumber));
                 pager.setPageSize(Integer.valueOf(pageSize));
+                pager.setUser((User)session.getAttribute("user"));
                 int count = maintainRecordService.count((User)session.getAttribute("user"));
                 pager.setTotalRecords(count);
                 List<MaintainRecord> queryList = maintainRecordService.queryByPager(pager);
@@ -72,6 +73,7 @@ public class MaintainRecordController {
                 Pager pager = new Pager();
                 pager.setPageNo(Integer.valueOf(pageNumber));
                 pager.setPageSize(Integer.valueOf(pageSize));
+                pager.setUser((User)session.getAttribute("user"));
                 int count = maintainRecordService.countByDisable((User)session.getAttribute("user"));
                 pager.setTotalRecords(count);
                 List<MaintainRecord> queryList = maintainRecordService.queryByPagerDisable(pager);
