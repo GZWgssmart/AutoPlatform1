@@ -1,7 +1,7 @@
 $(function () {
     var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽修公司接待员";
-    $.post("user/isLogin/"+roles,function (data) {
-        if (data.result == "success"){
+    $.post("/user/isLogin/"+roles, function (data) {
+        if(data.result == 'success'){
             initTable('table', '/appointment/queryByPager'); // 初始化表格
 
             initSelect2("carBrand", "请选择品牌", "/carBrand/queryAllCarBrand");
@@ -18,7 +18,7 @@ $(function () {
                 onSwitchChange:function(event,state){
                     if(state==true){
                         app = true;
-                        initTableNotTollbar("appTable", "/userBasicManage/queryByPager");
+                        initTableNotTollbar("appTable", "/appointment/queryByPager");
                         $("#appWindow").modal('show');
                     }else if(state==false){
                         app = false;
@@ -29,7 +29,7 @@ $(function () {
                 $("#addWindow").modal('show')
                 $('#app').bootstrapSwitch('state', false);
             });
-        } else if(data.result == 'notLogin'){
+        }else if(data.result == 'notLogin'){
             swal({title:"",
                     text:data.message,
                     confirmButtonText:"确认",
@@ -48,8 +48,8 @@ $(function () {
                 type:"error"})
         }
     });
-
 });
+
 
 $("#addCarBrand").change(function(){
     var div = $("#addModelDiv");
@@ -76,7 +76,7 @@ function showStatusFormatter(value) {
     }
 
 }
-
+// 查看全部可用
 function showAvailable() {
     var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽修公司接待员";
     $.post("/user/isLogin/"+roles, function (data) {
@@ -103,6 +103,7 @@ function showAvailable() {
     });
 
 }
+// 查看全部禁用
 function showDisable() {
     $.post("/user/isLogin", function (data) {
         if(data.result == 'success'){
@@ -268,10 +269,32 @@ function showEdit(){
 }
 
 function showAdd(){
-    initDateTimePicker('addForm', 'arriveTime');
-    $("#addButton").removeAttr("disabled");
-    $("#addWindow").modal('show');
-    validator('addForm'); // 初始化验证
+    var roles = "公司超级管理员,公司普通管理员,汽修公司接待员";
+    $.post("/user/isLogin/"+roles, function (data) {
+        if(data.result == 'success'){
+            initDateTimePicker('addForm', 'arriveTime'); // 初始化时间框, 第一参数是form表单id, 第二参数是input的name
+            $("#addWindow").modal('show');
+            $("#addButton").removeAttr("disabled");
+            validator('addForm'); // 初始化验证
+        }else if(data.result == 'notLogin'){
+            swal({title:"",
+                    text:data.message,
+                    confirmButtonText:"确认",
+                    type:"error"}
+                ,function(isConfirm){
+                    if(isConfirm){
+                        top.location = "/user/loginPage";
+                    }else{
+                        top.location = "/user/loginPage";
+                    }
+                })
+        }else if(data.result == 'notRole'){
+            swal({title:"",
+                text:data.message,
+                confirmButtonText:"确认",
+                type:"error"})
+        }
+    });
 }
 
 function validator(formId) {
