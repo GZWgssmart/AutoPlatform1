@@ -109,6 +109,5 @@ and mf.maintainId = #{maintainId} and md.mdCreatedTime >= #{start} and md.mdCrea
     <if test="type =='day'">
       group by date(md.mdCreatedTime) ORDER BY md.mdCreatedTime ASC;
     </if>
-
   </select>
 </mapper>
