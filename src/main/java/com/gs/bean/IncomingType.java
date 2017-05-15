@@ -9,6 +9,19 @@ public class IncomingType {
 
     private String inTypeStatus;
 
+    /**
+     * 关联公司
+     */
+    private Company company;
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
+    }
+
     public String getInTypeId() {
         return inTypeId;
     }

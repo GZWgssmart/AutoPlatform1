@@ -46,7 +46,7 @@ public class OutGoingTypeController {
     @RequestMapping(value = "queryByPager", method = RequestMethod.GET)
     public Pager4EasyUI<OutgoingType> queryByPager(HttpSession session, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
         if (SessionUtil.isLogin(session)) {
-            String roles = "   系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员";
+            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员";
             if (RoleUtil.checkRoles(roles)) {
                 logger.info("支出类型分页查询");
                 Pager pager = new Pager();
@@ -71,7 +71,7 @@ public class OutGoingTypeController {
     @RequestMapping(value = "queryByPagerDisable", method = RequestMethod.GET)
     public Pager4EasyUI<OutgoingType> queryByPagerDisable(HttpSession session, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
         if (SessionUtil.isLogin(session)) {
-            String roles = "   系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员";
+            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员";
             if (RoleUtil.checkRoles(roles)) {
                 logger.info("禁用支出类型分页查询");
                 Pager pager = new Pager();
@@ -127,14 +127,11 @@ public class OutGoingTypeController {
     @RequestMapping(value = "add", method = RequestMethod.POST)
     public ControllerResult add(HttpSession session, OutgoingType outgoingType) {
         if (SessionUtil.isLogin(session)) {
-            String roles = "   系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员";
+            String roles = "公司超级管理员,公司普通管理员,汽车公司财务人员";
             if (RoleUtil.checkRoles(roles)) {
                 logger.info("添加支出类型");
-                outgoingType.setOutTypeId(UUIDUtil.uuid());
                 User user = (User) session.getAttribute("user");
                 outgoingType.setCompanyId(user.getCompanyId());
-                outgoingType.setCompanyId("1");
-                outgoingType.setOutTypeStatus("Y");
                 outgoingTypeService.insert(outgoingType);
                 return ControllerResult.getSuccessResult("添加成功");
             } else {
@@ -163,7 +160,7 @@ public class OutGoingTypeController {
     @RequestMapping(value = "update", method = RequestMethod.POST)
     public ControllerResult update(HttpSession session, OutgoingType outgoingType) {
         if (SessionUtil.isLogin(session)) {
-            String roles = "   系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员";
+            String roles = "公司超级管理员,公司普通管理员,汽车公司财务人员";
             if (RoleUtil.checkRoles(roles)) {
                 System.out.printf(outgoingType.getOutTypeId() + "," + outgoingType.getOutTypeName());
                 logger.info("修改支出类型");

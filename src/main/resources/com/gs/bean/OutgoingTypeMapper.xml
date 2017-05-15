@@ -59,7 +59,7 @@
 
   <insert id="insert" useGeneratedKeys="true" keyProperty="outTypeId" parameterType="outGoingType">
     <![CDATA[
-        insert into t_outgoing_type(outTypeId,companyId outTypeName, outTypeStatus) values(#{outTypeId},#{companyId}, #{outTypeName}, #{outTypeStatus})
+        insert into t_outgoing_type(outTypeId,companyId,outTypeName, outTypeStatus) values(uuid(), #{companyId}, #{outTypeName}, 'Y')
         ]]>
   </insert>
 

@@ -7,7 +7,23 @@ public class OutgoingType {
 
     private String outTypeStatus;
 
+
+
     private String companyId;
+
+
+    /**
+     * 关联公司
+     */
+    private Company company;
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
+    }
 
     public String getOutTypeId() {
         return outTypeId;

@@ -73,6 +73,7 @@ public class IncomingTypeController {
                 logger.info("禁用收入类型分页查询");
                 Pager pager = new Pager();
                 pager.setPageNo(Integer.valueOf(pageNumber));
+                pager.setPageSize(Integer.valueOf(pageSize));
                 pager.setUser((User) session.getAttribute("user"));
                 pager.setTotalRecords(incomingTypeService.countByDisable((User) session.getAttribute("user")));
                 List<IncomingType> incomingTypes = incomingTypeService.queryByPagerDisable(pager);
@@ -123,13 +124,11 @@ public class IncomingTypeController {
     @RequestMapping(value = "add",method = RequestMethod.POST)
     public ControllerResult add(HttpSession session, IncomingType incomingType) {
         if (SessionUtil.isLogin(session)) {
-            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员";
+            String roles = "公司超级管理员,公司普通管理员,汽车公司财务人员";
             if (RoleUtil.checkRoles(roles)) {
                 logger.info("添加收入类型");
-                incomingType.setInTypeId(UUIDUtil.uuid());
                 User user = (User)session.getAttribute("user");
                 incomingType.setCompanyId(user.getCompanyId());
-                incomingType.setInTypeStatus("Y");
                 incomingTypeService.insert(incomingType);
                 return ControllerResult.getSuccessResult("添加成功");
             } else {
@@ -164,7 +163,7 @@ public class IncomingTypeController {
     @RequestMapping(value = "update", method = RequestMethod.POST)
     public ControllerResult update(HttpSession session, IncomingType incomingType) {
         if (SessionUtil.isLogin(session)) {
-            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员";
+            String roles = "公司超级管理员,公司普通管理员,汽车公司财务人员";
             if (RoleUtil.checkRoles(roles)) {
                 logger.info("修改收入类型");
                 User user = (User)session.getAttribute("user");

@@ -12,12 +12,12 @@
         <result column="inOutStatus" property="inOutStatus" jdbcType="VARCHAR"/>
 
         <association property="incomingType" javaType="com.gs.bean.IncomingType">
-            <id column="inType_id" property="inTypeId"/>
+            <id column="inTypeId" property="inTypeId"/>
             <result column="inTypeName" property="inTypeName"/>
         </association>
 
         <association property="outgoingType" javaType="com.gs.bean.OutgoingType">
-            <id column="outType_id" property="outTypeId"/>
+            <id column="outTypeId" property="outTypeId"/>
             <result column="outTypeName" property="outTypeName"/>
         </association>
 
@@ -34,27 +34,26 @@
     <select id="count" resultType="int" parameterType="com.gs.bean.User">
     <![CDATA[
 
-      select count(*) from t_incoming_outgoing i, t_company c where c.companyId = i.companyId and  i.inOutStatus = 'Y'
+      select count(*) from t_incoming_outgoing io where 1 = 1 and  io.inOutStatus = 'Y'
 
         ]]>
         <if test="companyId != '' and companyId != null">
             and io.companyId = #{companyId}
         </if>
-        limit #{beginIndex}, #{pageSize}
   </select>
 
     <select id="queryByPager" resultMap="incomingOutgoingMap" parameterType="com.gs.common.bean.Pager">
         <![CDATA[
 
-      select io.*,i.inTypeId as inType_id, i.inTypeName,o.outTypeId as outType_id,o.outTypeName,u.userId ,u.userName from t_incoming_outgoing io
+      select io.*,i.inTypeId, i.inTypeName,o.outTypeId,o.outTypeName,u.userId ,u.userName from t_incoming_outgoing io
 				LEFT JOIN t_incoming_type i on io.inTypeId = i.inTypeId
 				LEFT JOIN t_outgoing_type o on io.outTypeId = o.outTypeId
 				LEFT JOIN  t_user u on io.inOutCreatedUser = u.userId
 				where  io.inOutStatus = 'Y'
-				order by io.inOutCreatedTime Desc
     ]]>
         <if test="user.companyId != '' and user.companyId != null">
             and io.companyId = #{user.companyId}
+            order by io.inOutCreatedTime Desc
         </if>
     limit #{beginIndex}, #{pageSize}
   </select>
@@ -98,7 +97,7 @@
     <select id="countByDisable" resultType="int" parameterType="com.gs.bean.User">
     <![CDATA[
 
-        select count(*) from t_incoming_outgoing io where  i.inOutStatus = 'N'
+        select count(*) from t_incoming_outgoing io where 1 =1 and  io.inOutStatus = 'N'
 
         ]]>
         <if test="companyId != '' and companyId != null">
@@ -114,10 +113,11 @@
 				LEFT JOIN t_outgoing_type o on io.outTypeId = o.outTypeId
 				LEFT JOIN  t_user u on io.inOutCreatedUser = u.userId
 				where  io.inOutStatus = 'N'
-				order by io.inOutCreatedTime Desc
+
     ]]>
         <if test="user.companyId != '' and user.companyId != null">
             and io.companyId = #{user.companyId}
+            order by io.inOutCreatedTime Desc
         </if>
     limit #{beginIndex}, #{pageSize}
   </select>
