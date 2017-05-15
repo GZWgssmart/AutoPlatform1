@@ -135,7 +135,7 @@
     <if test="pager.user.companyId != '' and pager.user.companyId !=null">
       and s.companyId = #{pager.user.companyId}
     </if>
-    and
+    and(
     <if test="supply.supplyName != '' and supply.supplyName != null">
       s.supplyName like '%${supply.supplyName}%'
     </if>
@@ -153,7 +153,7 @@
     <if test="supply.supplyTypeId != '' and supply.supplyTypeId != null">
       st.supplyTypeName like '%${supply.supplyTypeId}%'
     </if>
-    order by s.supplyCreatedTime Desc
+    )order by s.supplyCreatedTime Desc
     limit #{pager.beginIndex}, #{pager.pageSize}
   </select>
 
@@ -168,7 +168,7 @@
     <if test="user.companyId != '' and user.companyId !=null">
       and s.companyId = #{user.companyId}
     </if>
-    and
+    and(
     <if test="supply.supplyName != '' and supply.supplyName != null">
       s.supplyName like '%${supply.supplyName}%'
     </if>
@@ -185,7 +185,7 @@
     </if>
     <if test="supply.supplyTypeId != '' and supply.supplyTypeId != null">
       st.supplyTypeName like '%${supply.supplyTypeId}%'
-    </if>
+    </if>)
     </select>
 
 </mapper>
