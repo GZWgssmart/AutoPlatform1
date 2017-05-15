@@ -199,19 +199,19 @@ public class PhoneReservationController {
                 if(text != null && text!="" && value != null && value != "") {
                     List<Appointment> appointments = null;
                     Appointment appointment = new Appointment();
-                    if(text.equals("车主/电话/汽车公司/车牌号")){ // 当多种模糊搜索条件时
+                    if(text.equals("车主/电话/车牌/汽车公司")){ // 当多种模糊搜索条件时
                         appointment.setUserName(value);
                         appointment.setCompanyId(value);
-                        appointment.setCarPlate(value);
                         appointment.setUserPhone(value);
+                        appointment.setCarPlate(value);
                     }else if(text.equals("车主")){
                         appointment.setUserName(value);
                     }else if(text.equals("汽车公司")){
                         appointment.setCompanyId(value);
-                    }else if(text.equals("车牌号")){
-                        appointment.setCarPlate(value);
                     }else if(text.equals("电话")){
                         appointment.setUserPhone(value);
+                    }else if(text.equals("车牌")){
+                        appointment.setCarPlate(value);
                     }
                     appointments = appointmentService.blurredQuery(pager, appointment);
                     pager.setTotalRecords(appointmentService.countByBlurred(appointment,(User)session.getAttribute("user")));

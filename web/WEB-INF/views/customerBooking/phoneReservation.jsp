@@ -96,17 +96,17 @@
             </shiro:hasAnyRoles>
             <div class="input-group" style="width:450px;float:left;padding:0;margin:0 0 0 -1px;">
                 <div class="input-group-btn">
-                    <button type="button" id="ulButton" class="btn btn-default" style="border-radius:0px;" data-toggle="dropdown">车主姓名/车主电话/汽车公司<span class="caret"></span></button>
+                    <button type="button" id="ulButton" class="btn btn-default" style="border-radius:0px;" data-toggle="dropdown">车主/电话/车牌/汽车公司<span class="caret"></span></button>
                     <ul class="dropdown-menu pull-right">
-                        <li><a onclick="onclikLi(this)">车主姓名/车主电话/汽车公司</a></li>
+                        <li><a onclick="onclikLi(this)">车主/电话/车牌/汽车公司</a></li>
                         <li class="divider"></li>
-                        <li><a onclick="onclikLi(this)">车主姓名</a></li>
+                        <li><a onclick="onclikLi(this)">车主</a></li>
                         <li class="divider"></li>
-                        <li><a onclick="onclikLi(this)">车主电话</a></li>
+                        <li><a onclick="onclikLi(this)">电话</a></li>
                         <li class="divider"></li>
                         <li><a onclick="onclikLi(this)">汽车公司</a></li>
                         <li class="divider"></li>
-                        <li><a onclick="onclikLi(this)">汽车车牌号</a></li>
+                        <li><a onclick="onclikLi(this)">车牌</a></li>
                     </ul>
                 </div><!-- /btn-group -->
                 <input id="ulInput" class="form-control" onkeypress="if(event.keyCode==13) {blurredQuery();}">

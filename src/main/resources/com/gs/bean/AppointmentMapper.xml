@@ -86,7 +86,7 @@
       select count(appointmentId) from t_appointment am where am.appoitmentStatus = 'Y'
     ]]>
     <if test="companyId != '' and companyId != null">
-      and am.companyId = #{user.companyId}
+      and am.companyId = #{companyId}
     </if>
   </select>
 
@@ -95,7 +95,7 @@
       select count(appointmentId) from t_appointment am where am.appoitmentStatus = 'N'
     ]]>
     <if test="companyId != '' and companyId != null">
-      and am.companyId = #{user.companyId}
+      and am.companyId = #{companyId}
     </if>
   </select>
 
@@ -129,12 +129,12 @@
            LEFT JOIN t_car_plate cp on am.plateId = cp.plateId
            LEFT JOIN t_company company on am.companyId = company.companyId
            LEFT JOIN t_car_brand cb on am.brandId = cb.brandId
-           where 1=1 and
+           where 1=1
       ]]>
     <if test="pager.user.companyId != '' and pager.user.companyId != null">
-      and am.companyId = #{user.companyId}
+      and am.companyId = #{pager.user.companyId}
     </if>
-    AND
+    and
     <if test="appointment.userName != '' and appointment.userName != null">
       am.userName like '%${appointment.userName}%'
     </if>
@@ -162,6 +162,7 @@
     order by am.appCreatedTime Desc
     limit #{pager.beginIndex}, #{pager.pageSize}
   </select>
+
   <!-- 分页模糊查询个数 -->
   <select id="countByBlurred" resultType="int" >
     <![CDATA[
@@ -172,12 +173,12 @@
       LEFT JOIN t_car_plate cp on am.plateId = cp.plateId
       LEFT JOIN t_company company on am.companyId = company.companyId
       LEFT JOIN t_car_brand cb on am.brandId = cb.brandId
-      where 1=1 and
+      where 1=1
     ]]>
     <if test="user.companyId != '' and user.companyId != null">
       and am.companyId = #{user.companyId}
     </if>
-    AND
+    and
     <if test="appointment.userName != '' and appointment.userName != null">
       am.userName like '%${appointment.userName}%'
     </if>

@@ -19,7 +19,6 @@ import java.util.List;
 @Repository
 public interface AppointmentDAO extends BaseDAO<String, Appointment>{
 
-    public int countByBlurred(Appointment appointment, User user);
     /**
      * 模糊查询
      */
@@ -28,5 +27,5 @@ public interface AppointmentDAO extends BaseDAO<String, Appointment>{
     /**
      * 模糊查询的记录数
      */
-    public int countByBlurred(@Param("appointment")Appointment appointment);
+    public int countByBlurred(@Param("appointment")Appointment appointment, @Param("user") User user);
 }

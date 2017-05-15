@@ -172,7 +172,8 @@ function checkAppointment(combox) {
 
 // 模糊查询
 function blurredQuery(){
-    $.post("/user/isLogin", function (data) {
+    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽修公司接待员";
+    $.post("/user/isLogin/"+roles, function (data) {
         if(data.result == 'success'){
             var button = $("#ulButton");// 获取模糊查询按钮
             var text = button.text();// 获取模糊查询按钮文本
@@ -190,9 +191,13 @@ function blurredQuery(){
                         top.location = "/user/loginPage";
                     }
                 })
+        }else if(data.result == 'notRole'){
+            swal({title:"",
+                text:data.message,
+                confirmButtonText:"确认",
+                type:"error"})
         }
     });
-
 }
 
 // 关闭预约
