@@ -1,5 +1,5 @@
 $(function () {
-    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司人力资源管理部";
+    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师,汽车公司学徒,汽车公司销售人员,汽车公司财务人员,汽车公司采购人员,汽车公司库管人员,汽车公司人力资源管理部";
     $.post("/user/isLogin/"+roles, function (data) {
         if(data.result == 'success'){
             initTable('table', '/maintain/queryByPagerMaintain'); // 初始化表格
@@ -30,7 +30,7 @@ $(function () {
 
 // 查看全部可用
 function showAvailable(){
-    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司人力资源管理部";
+    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师,汽车公司学徒,汽车公司销售人员,汽车公司财务人员,汽车公司采购人员,汽车公司库管人员,汽车公司人力资源管理部";
     $.post("/user/isLogin/"+roles, function (data) {
         if(data.result == 'success'){
             initTable('table', '/maintain/queryByPagerMaintain');
@@ -57,7 +57,7 @@ function showAvailable(){
 }
 // 查看全部禁用
 function showDisable(){
-    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司人力资源管理部";
+    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师,汽车公司学徒,汽车公司销售人员,汽车公司财务人员,汽车公司采购人员,汽车公司库管人员,汽车公司人力资源管理部";
     $.post("/user/isLogin/"+roles, function (data) {
         if(data.result == 'success'){
             initTable('table', '/maintain/queryByPagerDisable');
@@ -84,7 +84,7 @@ function showDisable(){
 }
 
 function queryByTypeId(obj){
-    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司人力资源管理部";
+    var roles = "公司超级管理员,公司普通管理员";
     $.post("/user/isLogin/"+roles, function (data) {
         if(data.result == 'success'){
             initTableNotTollbar("table1", "/accInv/queryByIdAcc?id=" + obj.value);
@@ -111,7 +111,7 @@ function queryByTypeId(obj){
 }
 
 function queryByTypeId2(obj){
-    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司人力资源管理部";
+    var roles = "公司超级管理员,公司普通管理员";
     $.post("/user/isLogin/"+roles, function (data) {
         if(data.result == 'success'){
             initTableNotTollbar("table2", "/accInv/queryByIdAcc?id=" + obj.value);
@@ -139,7 +139,7 @@ function queryByTypeId2(obj){
 }
 
 function showEdit() {
-    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司人力资源管理部";
+    var roles = "公司超级管理员,公司普通管理员";
     $.post("/user/isLogin/"+roles, function (data) {
         if(data.result == 'success'){
             var row = $('#table').bootstrapTable('getSelections');
@@ -180,7 +180,7 @@ function showEdit() {
 }
 
 function showAdd() {
-    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司人力资源管理部";
+    var roles = "公司超级管理员,公司普通管理员";
     $.post("/user/isLogin/"+roles, function (data) {
         if(data.result == 'success'){
             $("#addWindow").modal('show');
@@ -333,7 +333,7 @@ function editSubmit() {
 }
 
 function showdetai() {
-    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司人力资源管理部";
+    var roles = "公司超级管理员,公司普通管理员";
     $.post("/user/isLogin/"+roles, function (data) {
         if(data.result == 'success'){
             var row =  $('#detailTable').bootstrapTable('getSelections');
@@ -456,7 +456,7 @@ $("#accForm").submit(function(){
 
 // 添加配件窗口
 function showAddacc(){
-    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司人力资源管理部";
+    var roles = "公司超级管理员,公司普通管理员";
     $.post("/user/isLogin/"+roles, function (data) {
         if(data.result == 'success'){
             var row =  $('#table').bootstrapTable('getSelections');
@@ -539,7 +539,7 @@ function closeEidtWindow(){
 
 // 在所有项目中点击确定
 function itemSubmit(){
-    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司人力资源管理部";
+    var roles = "公司超级管理员,公司普通管理员";
     $.post("/user/isLogin/"+roles, function (data) {
         if(data.result == 'success'){
             var row =  $('#table1').bootstrapTable('getSelections');
@@ -592,7 +592,7 @@ function itemSubmit(){
 
 // 在所有项目中点击确定
 function itemEditSubmit(){
-    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司人力资源管理部";
+    var roles = "公司超级管理员,公司普通管理员";
     $.post("/user/isLogin/"+roles, function (data) {
         if(data.result == 'success'){
             var row =  $('#table2').bootstrapTable('getSelections');
@@ -647,7 +647,7 @@ function itemEditSubmit(){
 // var maintainId = "";
 // 显示所有明细
 function showDetail(){
-    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司人力资源管理部";
+    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师,汽车公司学徒,汽车公司销售人员,汽车公司财务人员,汽车公司采购人员,汽车公司库管人员,汽车公司人力资源管理部";
     $.post("/user/isLogin/"+roles, function (data) {
         if(data.result == 'success'){
             var row =  $('#table').bootstrapTable('getSelections');
