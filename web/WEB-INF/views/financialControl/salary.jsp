@@ -10,6 +10,9 @@
     <link rel="stylesheet" href="/static/css/sweetalert.css">
     <link rel="stylesheet" href="/static/css/table/table.css">
     <link rel="stylesheet" href="/static/css/fileinput.css">
+    <link rel="stylesheet" href="/static/css/bootstrap-validate/bootstrapValidator.min.css">
+    <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/datetimepicker.less">
 
     <title>支出管理</title>
 </head>
@@ -225,7 +228,8 @@
     <div class="form-group">
     <label class="col-sm-3 control-label">工资发放时间：</label>
     <div class="col-sm-7">
-    <input type="date" define="salary.salaryTime" id="salaryTimeUpdate" value="" name="salaryTime" class="form-control">
+        <input type="text" name="salaryTime"
+               onclick="getDate('editDateTimePicker')" id="editDateTimePicker" class="form-control">
     </div>
     </div>
     <div class="modal-footer">
@@ -261,19 +265,26 @@
     </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 
-    <script src="/static/js/jquery.min.js"></script>
-    <script src="/static/js/bootstrap.min.js"></script>
-    <script src="/static/js/bootstrap-table/bootstrap-table.js"></script>
-    <script src="/static/js/bootstrap-table/bootstrap-table-zh-CN.js"></script>
-    <script src="/static/js/jquery.formFill.js"></script>
-    <script src="/static/js/select2/select2.js"></script>
-    <script src="/static/js/sweetalert/sweetalert.min.js"></script>
-    <script src="/static/js/contextmenu.js"></script>
-    <script src="/static/js/backstage/financialControlJS/salary.js"></script>
-    <script src="/static/js/bootstrap-select/bootstrap-select.js"></script>
-    <script src="/static/js/backstage/main.js"></script>
-    <script src="/static/js/bootstrap-validate/bootstrapValidator.js"></script>
-    <script src="/static/js/fileInput/fileinput.js"></script>
-    <script src="/static/js/fileInput/zh.js"></script>
+
+
+
+<script src="/static/js/jquery.min.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+<script src="/static/js/bootstrap-table/bootstrap-table.js"></script>
+<script src="/static/js/bootstrap-table/bootstrap-table-zh-CN.js"></script>
+<script src="/static/js/jquery.formFill.js"></script>
+<script src="/static/js/select2/select2.js"></script>
+<script src="/static/js/sweetalert/sweetalert.min.js"></script>
+<script src="/static/js/contextmenu.js"></script>
+<script src="/static/js/bootstrap-select/bootstrap-select.js"></script>
+<script src="/static/js/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.js"></script>
+<script src="/static/js/bootstrap-dateTimePicker/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+<script src="/static/js/backstage/main.js"></script>
+<script src="/static/js/bootstrap-switch/bootstrap-switch.js"></script>
+<script src="/static/js/bootstrap-validate/bootstrapValidator.js"></script>
+<script src="/static/js/backstage/financialControlJS/salary.js"></script>
+<script src="/static/js/fileInput/fileinput.js"></script>
+<script src="/static/js/fileInput/zh.js"></script>
+
     </body>
     </html>

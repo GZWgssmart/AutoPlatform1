@@ -94,8 +94,6 @@ public class SalaryController {
                 logger.info("添加工资信息");
                 User user = (User) session.getAttribute("user");
                 salary.setUser(user);
-                user.setUserId(user.getUserId());
-                System.out.println(salary + "aaaaaaaaaaaaaa");
                 salaryService.insert(salary);
                 return ControllerResult.getSuccessResult("添加成功");
             } else {

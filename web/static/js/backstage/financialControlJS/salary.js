@@ -100,6 +100,8 @@ function formatterDate(value) {
 
 
 
+
+
 function showEdit() {
     var roles = "公司超级管理员,公司普通管理员,汽车公司财务人员";
     $.post("/user/isLogin/"+roles, function (data) {
@@ -111,7 +113,7 @@ function showEdit() {
                 $("#edit").modal('show'); // 显示弹窗
                 var editDate = document.getElementById("salaryTimeUpdate");
                 var salary = row[0];
-                editDate.val = formatterDate(row[0].salaryTime);
+                $('#editDateTimePicker').val(formatterDate(salary.salaryTime));
                 $("#editForm").fill(salary);
                 validator("editForm");
 
@@ -142,6 +144,15 @@ function showEdit() {
         }
     });
 }
+
+
+$('#editDateTimePicker').datetimepicker({
+    minView: "month", //选择日期后，不会再跳转去选择时分秒
+    language: 'zh-CN',
+    format: 'yyyy-mm-dd',
+    todayBtn: 1,
+    autoclose: 1,
+});
 
 function showAdd() {
     var roles = "公司超级管理员,公司普通管理员,汽车公司财务人员";

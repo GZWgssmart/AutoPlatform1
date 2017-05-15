@@ -21,10 +21,10 @@
 
   <select id="count" resultType="int" parameterType="com.gs.bean.User">
     <![CDATA[
-       select count(*) from t_salary s where 1 =1
+       select count(*) from t_salary s,t_user u where s.userId = u.userId
     ]]>
     <if test="companyId != '' and companyId != null">
-      and user.companyId = #{companyId}
+      and u.companyId = #{companyId}
     </if>
   </select>
 
@@ -33,9 +33,18 @@
         select s.*, u.userId,u.userName from t_salary s, t_user u where 1 =1 and u.userId = s.userId
     ]]>
     <if test="user.companyId != '' and user.companyId != null">
-      and user.companyId = #{user.companyId}
+      and u.companyId = #{user.companyId}
     </if>
     limit #{beginIndex}, #{pageSize}
+  </select>
+
+  <select id="queryAll" resultMap="salaryMap" parameterType="com.gs.bean.User">
+    <![CDATA[
+        select *  from t_salary s, t_user u where s.userId = u.userId
+    ]]>
+    <if test="companyId != '' and companyId != null">
+      and u.companyId = #{companyId}
+    </if>
   </select>
 
   <select id="queryById" resultMap="salaryMap">
