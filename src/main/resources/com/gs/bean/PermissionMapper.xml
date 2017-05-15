@@ -34,6 +34,44 @@
   </select>
 
 
+  <!-- 分页模糊查询 -->
+  <select id="blurredQuery" resultMap="permissionMap">
+    <![CDATA[
+           SELECT * FROM t_permission p
+           LEFT JOIN t_module m  ON p.moduleId = m.moduleId
+           where 1=1
+           ]]>
+    <if test="permission.permissionZhname != '' and permission.permissionZhname != null">
+      and p.permissionZhname like '%${permission.permissionZhname}%'
+    </if>
+    <if test="permission.permissionDes != '' and permission.permissionDes != null">
+      or p.permissionDes like '%${permission.permissionDes}%'
+    </if>
+    <if test="permission.module.moduleName != '' and permission.module.moduleName != null">
+      or  m.moduleName like '%${permission.module.moduleName}%'
+    </if>
+    limit #{pager.beginIndex}, #{pager.pageSize}
+  </select>
+
+  <select id="countByBlurred" resultType="int">
+    <![CDATA[
+           SELECT count(p.permissionId) FROM t_permission p
+           LEFT JOIN t_module m  ON p.moduleId = m.moduleId
+           where 1=1
+           ]]>
+    <if test="permission.permissionZhname != '' and permission.permissionZhname != null">
+      and p.permissionZhname like '%${permission.permissionZhname}%'
+    </if>
+    <if test="permission.permissionDes != '' and permission.permissionDes != null">
+      or p.permissionDes like '%${permission.permissionDes}%'
+    </if>
+    <if test="permission.module.moduleName != '' and permission.module.moduleName != null">
+      or m.moduleName like '%${permission.module.moduleName}%'
+    </if>
+  </select>
+
+
+
   <insert id="insert" parameterType="permission">
     insert into t_permission values(uuid(), #{permissionName},#{permissionZhname},#{permissionDes},#{module.moduleId}, 'Y')
   </insert>

@@ -2,14 +2,13 @@ package com.gs.controller.systemManage;
 
 import ch.qos.logback.classic.Logger;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.gs.bean.Accessories;
-import com.gs.bean.MaterialReturn;
-import com.gs.bean.MaterialUse;
+import com.gs.bean.*;
 import com.gs.bean.view.MaterialURTemp;
 import com.gs.bean.view.VariableInstanceTemp;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
+import com.gs.common.util.RoleUtil;
 import com.gs.common.util.SessionUtil;
 import com.gs.common.util.UUIDUtil;
 import com.gs.controller.SystemManageController;
@@ -64,6 +63,9 @@ public class FlowController {
 
     @Resource
     private AccessoriesService accessoriesService;
+
+    @Resource
+    private RoleService roleService;
 
     @Resource
     private WorkInfoService workInfoService;
@@ -144,19 +146,27 @@ public class FlowController {
         }
     }
 
+    // baoliu
     @ResponseBody
     @RequestMapping("deployFile")
     public ControllerResult deployFile(@RequestParam("fileName")String fileName, HttpSession session) {
         if(SessionUtil.isLogin(session)) {
-            try {
-                DeploymentBuilder depBuil = repositoryService.createDeployment();
-                depBuil.addClasspathResource("com/gs/bpmn/"+ fileName);
-                depBuil.deploy();
-            } catch(Exception e) {
-                e.printStackTrace();
-                return ControllerResult.getFailResult("部署失败,请刷新页面");
+            String roles = "系统超级管理员,系统普通管理员";
+            if(RoleUtil.checkRoles(roles)) {
+                try {
+                    DeploymentBuilder depBuil = repositoryService.createDeployment();
+                    depBuil.addClasspathResource("com/gs/bpmn/"+ fileName);
+                    depBuil.deploy();
+                } catch(Exception e) {
+                    e.printStackTrace();
+                    return ControllerResult.getFailResult("部署失败,请刷新页面");
+                }
+                return ControllerResult.getSuccessResult("部署成功");
+
+            } else {
+                logger.info("此用户无拥有布署流程文件的角色");
+                return ControllerResult.getNotRoleResult("权限不足");
             }
-            return ControllerResult.getSuccessResult("部署成功");
         } else {
             logger.info("请先登录");
             return null;
@@ -164,7 +174,7 @@ public class FlowController {
 
     }
 
-
+// baoliu
     @ResponseBody
     @RequestMapping("removeProcessDeploy")
     public ControllerResult removeProcessDeploy(@RequestParam("flowKey")String flowKey, HttpSession session) {
@@ -174,21 +184,27 @@ public class FlowController {
          */
         // 第一步
         if(SessionUtil.isLogin(session)) {
-            int runProInstdefTaskLen = runtimeService.createExecutionQuery().processDefinitionKey(flowKey).list().size();
-            if(runProInstdefTaskLen  <=  0) {
-                List<Deployment> deps = repositoryService.createDeploymentQuery().processDefinitionKey(flowKey).list();
-                for(Deployment dep : deps) {
-                    try {
-                        repositoryService.deleteDeployment(dep.getId());
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        return ControllerResult.getFailResult("禁用失败");
+            String roles = "系统超级管理员,系统普通管理员";
+            if(RoleUtil.checkRoles(roles)) {
+                int runProInstdefTaskLen = runtimeService.createExecutionQuery().processDefinitionKey(flowKey).list().size();
+                if (runProInstdefTaskLen <= 0) {
+                    List<Deployment> deps = repositoryService.createDeploymentQuery().processDefinitionKey(flowKey).list();
+                    for (Deployment dep : deps) {
+                        try {
+                            repositoryService.deleteDeployment(dep.getId());
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            return ControllerResult.getFailResult("禁用失败");
+                        }
                     }
+                } else {
+                    return ControllerResult.getFailResult("禁用失败,目前还有" + runProInstdefTaskLen + "个流程实例正在运行中");
                 }
+                return ControllerResult.getSuccessResult("禁用成功");
             } else {
-                return ControllerResult.getFailResult("禁用失败,目前还有"+ runProInstdefTaskLen  +"个流程实例正在运行中");
+                logger.info("此用户无拥有禁用流程模版的角色");
+                return ControllerResult.getNotRoleResult("权限不足");
             }
-            return ControllerResult.getSuccessResult("禁用成功");
         } else {
             logger.info("请先登录");
             return null;
@@ -200,21 +216,24 @@ public class FlowController {
     @ResponseBody
     @RequestMapping("queryAcquisition")
     public Pager4EasyUI queryAcquisitionByPager(@RequestParam("pageNumber")int pageNo, @RequestParam("pageSize")int pageSize, HttpSession session) {
+        // TODO 库管的页面, 应该是查询申请领取物料的页面
         if(SessionUtil.isLogin(session)) {
-            Pager pager = new Pager();
-            pager.setPageNo(pageNo);
-            pager.setPageSize(pageSize);
-            final String companyId = "11"; //假设当前登录角色为公司11的库管
-            final String roleId = "1";
-            final String userId = "2";      //当前用户为2;
-            final String materialFlowKey = "material";
-            int total = materialUseService.countUseFlowing(materialFlowKey,companyId,roleId);
-            List<MaterialURTemp> prox = materialUseService.queryUseFlowingbyPager(materialFlowKey,companyId,roleId,pager);
-            setMaterProVars2Map(prox);
-            Pager4EasyUI pager4EasyUI = new Pager4EasyUI();
-            pager4EasyUI.setTotal(total);
-            pager4EasyUI.setRows(prox);
-            return pager4EasyUI;
+                Pager pager = new Pager();
+                pager.setPageNo(pageNo);
+                pager.setPageSize(pageSize);
+                User user = (User) session.getAttribute("user");
+                final String companyId = user.getCompanyId(); //假设当前登录角色为公司11的库管
+                final String curActId = "usertask2";
+                final String userId = user.getUserId();      //当前用户为2;
+                final String materialFlowKey = "material";
+
+                int total = materialUseService.countUseFlowing(materialFlowKey,companyId,curActId);
+                List<MaterialURTemp> prox = materialUseService.queryUseFlowingbyPager(materialFlowKey,companyId,curActId,pager);
+                setMaterProVars2Map(prox);
+                Pager4EasyUI pager4EasyUI = new Pager4EasyUI();
+                pager4EasyUI.setTotal(total);
+                pager4EasyUI.setRows(prox);
+                return pager4EasyUI;
         } else {
             logger.info("请先登录");
             return null;
@@ -224,16 +243,18 @@ public class FlowController {
     @ResponseBody
     @RequestMapping("queryReturned")
     public Pager4EasyUI queryReturnedByPager(@RequestParam("pageNumber")int pageNo, @RequestParam("pageSize")int pageSize, HttpSession session) {
+        // TODO 库管的页面, 应该是查询申请退料的页面
         if(SessionUtil.isLogin(session)) {
             Pager pager = new Pager();
+            User user = (User) session.getAttribute("user");
             pager.setPageNo(pageNo);
             pager.setPageSize(pageSize);
-            final String companyId = "11"; //假设当前登录角色为公司11的库管
-            final String roleId = "1";
-            final String userId = "2";      //当前用户为2;
+            final String userId = user.getUserId();      //当前用户为2;
+            final String companyId = user.getCompanyId(); //假设当前登录角色为公司11的库管
+            final String curActId = "usertask2";
             final String materialFlowKey = "material";
-            int total = materialUseService.countReturnFlowing(materialFlowKey,companyId,roleId);
-            List<MaterialURTemp> prox = materialUseService.queryReturnFlowingbyPager(materialFlowKey,companyId,roleId,pager);
+            int total = materialUseService.countReturnFlowing(materialFlowKey,companyId,curActId);
+            List<MaterialURTemp> prox = materialUseService.queryReturnFlowingbyPager(materialFlowKey,companyId,curActId,pager);
             setMaterProVars2Map(prox);
             Pager4EasyUI pager4EasyUI = new Pager4EasyUI();
             pager4EasyUI.setTotal(total);
@@ -248,12 +269,14 @@ public class FlowController {
     @ResponseBody
     @RequestMapping("queryAccManagerHistory")
     public Pager4EasyUI queryAccManagerHistoryByPager(@RequestParam("pageNumber")int pageNo, @RequestParam("pageSize")int pageSize, HttpSession session) {
+        // TODO 库管的页面,查询完成流程的物料申请页面
         if(SessionUtil.isLogin(session)) {
             Pager pager = new Pager();
+            User user = (User) session.getAttribute("user");
             pager.setPageNo(pageNo);
             pager.setPageSize(pageSize);
-            final String companyId = "11"; //假设当前登录角色为公司11的库管
-            final String userId = "2";      //当前用户为2;
+            final String userId = user.getUserId();      //当前用户为2;
+            final String companyId = user.getCompanyId(); //假设当前登录角色为公司11的库管
             final String materialFlowKey = "material";
             final String taskKey = "usertask2";
             int total = materialUseService.countHistoryFlowing(companyId,materialFlowKey);
@@ -270,13 +293,15 @@ public class FlowController {
     }
 
     @ResponseBody
-    @RequestMapping("queryUserFlowingHistory")
+    @RequestMapping("queryUserFlowing")
     public Pager4EasyUI queryUserFlowingHistoryByPager(@RequestParam("pageNumber")int pageNo, @RequestParam("pageSize")int pageSize, HttpSession session) {
+        // TODO 车修工自身的物料流程, 应该是进行中的
         if(SessionUtil.isLogin(session)) {
             Pager pager = new Pager();
+            User user = (User) session.getAttribute("user");
             pager.setPageNo(pageNo);
             pager.setPageSize(pageSize);
-            final String userId = "1";      //当前用户为1;
+            final String userId = user.getUserId();      //当前用户为1;
             final String materialFlowKey = "material";
             final String reveiwTaskKey = "usertask2";
             int total = materialUseService.countUserFlowing(materialFlowKey,userId);
@@ -356,38 +381,44 @@ public class FlowController {
          *    要完成审核的候选组ID为 "1" 这里假设1为库管人员的角色ID
          *
          */
+        // TODO 员工们领料的页面,有公司的可以登录
         if(SessionUtil.isLogin(session)) {
-            final String startUserId = "1";
-            final String startUserName = "张三";
-            final String startUserRoleName = "普通员工";
-            final String materialFlowKey = "material";
-            final String canGroupId = "1";
-
-            int accCount = materialUse.getAccCount();
-            Map msgs = new HashMap();
-            msgs.put("startName", startUserName);
-            msgs.put("startUserRoleName", startUserRoleName);
-            msgs.put("accId", materialUse.getAccId());
-            msgs.put("accName", materialUse.getAccessories().getAccName());
-            msgs.put("accCount", materialUse.getAccCount());
-            msgs.put("recordId", materialUse.getMatainRecordId());
-            msgs.put("reqMsg", materialUse.getReqMsg());
-            msgs.put("formSub", true);
-            try {
-                // 第一步
-                Authentication.setAuthenticatedUserId(startUserId);
-                ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(materialFlowKey);
-                // 第二步
-                Task formTask = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
-                taskService.complete(formTask.getId(), msgs);
-                // 第三步
-                Task nextTask = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
-                taskService.addCandidateGroup(nextTask.getId(),canGroupId);
-            } catch (Exception e) {
-                e.printStackTrace();
-                return ControllerResult.getFailResult("申请失败,可能是因为领取/退回物料流程未部署,请联系管理员");
+            String roles = "公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师,汽车公司学徒,汽车公司销售人员,汽车公司财务人员,汽车公司采购人员,汽车公司库管人员,汽车公司人力资源管理部";
+            if(RoleUtil.checkRoles(roles)) {
+                User user = (User) session.getAttribute("user");
+                Role managerRole = roleService.queryByName("汽车公司库管人员");
+                final String startUserId = user.getUserId();
+                final String startUserName = user.getUserName();
+                final String materialFlowKey = "material";
+                final String canGroupId = managerRole.getRoleId(); // 审核的员工的id
+                int accCount = materialUse.getAccCount();
+                Map msgs = new HashMap();
+                msgs.put("startName", startUserName);
+                msgs.put("accId", materialUse.getAccId());
+                msgs.put("accName", materialUse.getAccessories().getAccName());
+                msgs.put("accCount", materialUse.getAccCount());
+                msgs.put("recordId", materialUse.getMatainRecordId());
+                msgs.put("reqMsg", materialUse.getReqMsg());
+                msgs.put("formSub", true);
+                try {
+                    // 第一步
+                    Authentication.setAuthenticatedUserId(startUserId);
+                    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(materialFlowKey);
+                    // 第二步
+                    Task formTask = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
+                    taskService.complete(formTask.getId(), msgs);
+                    // 第三步
+                    Task nextTask = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
+                    taskService.addCandidateGroup(nextTask.getId(),canGroupId);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return ControllerResult.getFailResult("申请失败,可能是因为领取/退回物料流程未部署,请联系管理员");
+                }
+                return ControllerResult.getSuccessResult("申请成功");
+            } else {
+                logger.info("此用户无拥有领料的角色");
+                return ControllerResult.getNotRoleResult("权限不足");
             }
-            return ControllerResult.getSuccessResult("申请成功");
         } else {
             logger.info("请先登录");
             return null;
@@ -402,43 +433,50 @@ public class FlowController {
          * 2. respMsg变量删除   v
          * 3. 设置下一个任务的候选组
          */
+        // TODO 重新提交申请表单, 公司员工可以登录
+        User user = (User) session.getAttribute("user");
+        Role managerRole = roleService.queryByName("汽车公司库管人员");
         if(SessionUtil.isLogin(session)) {
-            final String startUserId = "1";
-            final String startUserName = "张三";
-            final String startUserRoleName = "普通员工";
-            final String materialFlowKey = "material";
-            final String canGroupId = "1";
+            String roles = "公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师,汽车公司学徒,汽车公司销售人员,汽车公司财务人员,汽车公司采购人员,汽车公司库管人员,汽车公司人力资源管理部";
+            if(RoleUtil.checkRoles(roles)) {
+                final String startUserId = user.getUserId();
+                final String materialFlowKey = "material";
+                final String canGroupId = managerRole.getRoleId(); // 库管的ID
 
-            int accCount = materialUse.getAccCount();
-            Map msgs = new HashMap();
-            // 第一步
-            msgs.put("reqMsg", materialUse.getReqMsg());
-            msgs.put("formSub", true);
-            TaskQuery taskQuery = taskService.createTaskQuery();
-            try {
-                String processInstanceId = materialUse.getProcessInstanceId();
-                // 第二步
-                Task task = taskQuery.processInstanceId(processInstanceId).singleResult();
-                taskService.removeVariable(task.getId(), "respMsg");
-                taskService.complete(task.getId(), msgs);
-                // 第三步
-                Task nextTask = taskQuery.processInstanceId(processInstanceId).singleResult();
-                taskService.addCandidateGroup(nextTask.getId(), canGroupId);
+                int accCount = materialUse.getAccCount();
+                Map msgs = new HashMap();
+                // 第一步
+                msgs.put("reqMsg", materialUse.getReqMsg());
+                msgs.put("formSub", true);
+                TaskQuery taskQuery = taskService.createTaskQuery();
+                try {
+                    String processInstanceId = materialUse.getProcessInstanceId();
+                    // 第二步
+                    Task task = taskQuery.processInstanceId(processInstanceId).singleResult();
+                    taskService.removeVariable(task.getId(), "respMsg");
+                    taskService.complete(task.getId(), msgs);
+                    // 第三步
+                    Task nextTask = taskQuery.processInstanceId(processInstanceId).singleResult();
+                    taskService.addCandidateGroup(nextTask.getId(), canGroupId);
 
-    //            // 第一步
-    //            Authentication.setAuthenticatedUserId(startUserId);
-    //            ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(materialFlowKey);
-    //            // 第二步
-    //            Task formTask = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
-    //            taskService.complete(formTask.getId(), msgs);
-    //            // 第三步
-    //            Task nextTask = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
-    //            taskService.addCandidateGroup(nextTask.getId(),canGroupId);
-            } catch (Exception e) {
-                e.printStackTrace();
-                return ControllerResult.getFailResult("申请失败,可能是因为领取/退回物料流程未部署,请联系管理员");
+        //            // 第一步
+        //            Authentication.setAuthenticatedUserId(startUserId);
+        //            ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(materialFlowKey);
+        //            // 第二步
+        //            Task formTask = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
+        //            taskService.complete(formTask.getId(), msgs);
+        //            // 第三步
+        //            Task nextTask = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
+        //            taskService.addCandidateGroup(nextTask.getId(),canGroupId);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return ControllerResult.getFailResult("申请失败,可能是因为领取/退回物料流程未部署,请联系管理员");
+                }
+                return ControllerResult.getSuccessResult("申请成功");
+            } else {
+                logger.info("此用户无拥有重新提交表单的角色");
+                return ControllerResult.getNotRoleResult("权限不足");
             }
-            return ControllerResult.getSuccessResult("申请成功");
         } else {
             logger.info("请先登录");
             return null;
@@ -448,28 +486,31 @@ public class FlowController {
     @ResponseBody
     @RequestMapping("removeMaterialProInst")
     public ControllerResult removeMaterialProInst(@RequestParam("processInstanceId") String proInstId, HttpSession session) {
-        if(SessionUtil.isLogin(session)) {
-        final String curUserId = "1";
-        final String subFormTaskName = "usertask1";
-        final String reviewTaskName = "usertask2";
-        HistoricProcessInstance hisproIns = historyService.createHistoricProcessInstanceQuery().processInstanceId(proInstId).singleResult();
-        if(curUserId.equals(hisproIns.getStartUserId())) {
-            try {
-                Task task = taskService.createTaskQuery().processInstanceId(proInstId).singleResult();
-                String curTaskName = task.getTaskDefinitionKey();
-                Map dontSubForm = new HashMap();
-                if(curTaskName.equals(subFormTaskName)){ dontSubForm.put("formSub", false); }
-                else if(curTaskName.equals(reviewTaskName)){ dontSubForm.put("isOK",true ); }
+        // TODO 员工自己删除流程实例
 
-                taskService.complete(task.getId(), dontSubForm);
-                return ControllerResult.getSuccessResult("删除申请成功");
-            } catch (Exception e) {
-                e.printStackTrace();
-                return ControllerResult.getFailResult("删除申请失败");
+        if(SessionUtil.isLogin(session)) {
+            User user = (User) session.getAttribute("user");
+            final String curUserId = user.getUserId();
+            final String subFormTaskName = "usertask1";
+            final String reviewTaskName = "usertask2";
+            HistoricProcessInstance hisproIns = historyService.createHistoricProcessInstanceQuery().processInstanceId(proInstId).singleResult();
+            if(curUserId.equals(hisproIns.getStartUserId())) {
+                try {
+                    Task task = taskService.createTaskQuery().processInstanceId(proInstId).singleResult();
+                    String curTaskName = task.getTaskDefinitionKey();
+                    Map dontSubForm = new HashMap();
+                    if(curTaskName.equals(subFormTaskName)){ dontSubForm.put("formSub", false); }
+                    else if(curTaskName.equals(reviewTaskName)){ dontSubForm.put("isOK",true ); }
+
+                    taskService.complete(task.getId(), dontSubForm);
+                    return ControllerResult.getSuccessResult("删除申请成功");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return ControllerResult.getFailResult("删除申请失败");
+                }
+            } else {
+                return ControllerResult.getFailResult("您不是流程发起人,删除申请失败");
             }
-        } else {
-            return ControllerResult.getFailResult("您不是流程发起人,删除申请失败");
-        }
         } else {
             logger.info("请先登录");
             return null;

@@ -35,6 +35,10 @@
       </where>
     </select>
 
+    <select id = "queryByName" resultType="role" parameterType="string">
+        select * from t_role rol where rol.roleName = #{roleName}
+    </select>
+
   <insert id="insert" parameterType="role">
     insert into t_role(roleId, roleName, roleDes, roleStatus)
 						values(uuid(),#{roleName}, #{roleDes}, 'Y');

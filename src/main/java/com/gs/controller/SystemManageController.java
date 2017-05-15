@@ -43,10 +43,7 @@ public class SystemManageController {
     @RequestMapping(value = "moduleManageIndex", method = RequestMethod.GET)
     public ModelAndView moduleManage(HttpSession session) {
         logger.info("跳转到模块管理页面");
-        User user = (User) session.getAttribute("user");
-        List<Role> rs = roleService.queryAll(user);
         ModelAndView mav = new ModelAndView("systemManage/moduleManage");
-        mav.addObject("roles", rs);
         return mav;
     }
 
@@ -66,11 +63,8 @@ public class SystemManageController {
     @RequiresAuthentication
     @RequestMapping(value = "perDistributionIndex", method = RequestMethod.GET)
     public ModelAndView perDistribution(HttpSession session) {
-        User user = (User) session.getAttribute("user");
         logger.info("跳转到权限分配页面");
-        List<Role> rs = roleService.queryAll(user);
         ModelAndView mav = new ModelAndView("systemManage/permissionsDistribution");
-        mav.addObject("roles", rs);
         return mav;
     }
 

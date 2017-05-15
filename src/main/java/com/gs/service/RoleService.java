@@ -22,4 +22,7 @@ public interface RoleService extends BaseService<String, Role>{
 
     public int updateStatus (Role role);
 
+    public Role queryByName(String roleName);
+
+
 }

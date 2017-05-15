@@ -55,6 +55,11 @@ public class RoleServiceImpl implements RoleService {
 		return roleDAO.updateStatus(role);
 	}
 
+	@Override
+	public Role queryByName(String roleName) {
+		return roleDAO.queryByName(roleName);
+	}
+
 
 	public List<Role> queryByStatus(String status) { return roleDAO.queryAll(status); }
 	public Role query(Role role) { return roleDAO.query(role); }

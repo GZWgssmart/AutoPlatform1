@@ -9,6 +9,7 @@ import com.gs.common.bean.ComboBox4EasyUI;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
+import com.gs.common.util.RoleUtil;
 import com.gs.common.util.SessionUtil;
 import com.gs.controller.SystemManageController;
 import com.gs.service.MaterialReturnService;
@@ -51,16 +52,18 @@ public class WorkingDispatchingController {
     @Resource
     private WorkInfoService workInfoService;
 
+    // 保留
     @ResponseBody
     @RequestMapping("noDispRecordByPager")
     public Pager4EasyUI records(@RequestParam("pageNumber")String pageNo, @RequestParam("pageSize")String pageSize, HttpSession session){
         if(SessionUtil.isLogin(session)) {
-            final  String companyId = "11";
+            // TODO 需要公司人员登录才能指派员工
+            User user = (User)session.getAttribute("user");
             Pager pager = new Pager();
             pager.setPageNo(str2int(pageNo));
             pager.setPageSize(str2int(pageSize));
-            int total = materialUseService.countNoUseRecord(companyId);
-            List<RecordBaseView> rbvs = materialUseService.queryNoUseRecord(companyId, pager);
+            int total = materialUseService.countNoUseRecord(user.getCompanyId());
+            List<RecordBaseView> rbvs = materialUseService.queryNoUseRecord(user.getCompanyId(), pager);
             Pager4EasyUI pager4EasyUI = new Pager4EasyUI(total, rbvs);
             return pager4EasyUI;
         } else {
@@ -69,16 +72,17 @@ public class WorkingDispatchingController {
         }
     }
 
+    // baoliu
     @ResponseBody
     @RequestMapping("dispRecordByPager")
     public Pager4EasyUI curRecords(@RequestParam("pageNumber")String pageNo, @RequestParam("pageSize")String pageSize, HttpSession session){
         if(SessionUtil.isLogin(session)) {
-            final  String companyId = "11";
+            User user = (User)session.getAttribute("user");
             Pager pager = new Pager();
             pager.setPageNo(str2int(pageNo));
             pager.setPageSize(str2int(pageSize));
-            int total = materialUseService.countNoUseRecord(companyId);
-            List<RecordBaseView> rbvs = materialUseService.queryHasUseRecord(companyId, pager);
+            int total = materialUseService.countNoUseRecord(user.getCompanyId());
+            List<RecordBaseView> rbvs = materialUseService.queryHasUseRecord(user.getCompanyId(), pager);
             Pager4EasyUI pager4EasyUI = new Pager4EasyUI(total, rbvs);
             return pager4EasyUI;
         } else {
@@ -102,16 +106,17 @@ public class WorkingDispatchingController {
         }
     }
 
+    // baoliu
     @ResponseBody
     @RequestMapping("userWorksByPager") // 用于页面显示员工工单,员工通过这个页面会点击查询该工单所需要的零件
     public Pager4EasyUI userWorks(@RequestParam("pageNumber")String pageNo, @RequestParam("pageSize")String pageSize, HttpSession session) {
         if(SessionUtil.isLogin(session)) {
-            final String tempUserid = "1";
+            User user = (User)session.getAttribute("user");
             Pager pager = new Pager();
             pager.setPageNo(str2int(pageNo));
             pager.setPageSize(str2int(pageSize));
-            List workInfos = materialUseService.userWorksStatusByPager(tempUserid, "Y",pager);
-            int total = materialUseService.countUserWorksStatus(tempUserid,"Y");
+            List workInfos = materialUseService.userWorksStatusByPager(user.getUserId(), "Y",pager);
+            int total = materialUseService.countUserWorksStatus(user.getUserId(),"Y");
             Pager4EasyUI pager4EasyUI = new Pager4EasyUI();
             pager4EasyUI.setRows(workInfos);
             pager4EasyUI.setTotal(total);
@@ -124,11 +129,13 @@ public class WorkingDispatchingController {
     }
 
 
+    // baoliu
     @ResponseBody
     @RequestMapping("recordDetails")
     public Pager4EasyUI recordDetails(@RequestParam("pageNumber")int pageNo, @RequestParam("pageSize")int pageSize,@RequestParam("recordId")String recordId, HttpSession session){
         if(SessionUtil.isLogin(session)) {
-            String companyId = "11";
+            User user = (User)session.getAttribute("user");
+            String companyId = user.getCompanyId();
             Pager pager = new Pager();
             pager.setPageNo(pageNo);
             pager.setPageSize(pageSize);
@@ -144,17 +151,19 @@ public class WorkingDispatchingController {
         }
     }
 
+    // baoliu
     @ResponseBody
-    @RequestMapping("emps") // 可能不会使用到
+    @RequestMapping("emps") // 用到了
     public List<ComboBox4EasyUI> emps(HttpSession session) {
+        // TODO 这里需要公司登录,管理员不行
         if(SessionUtil.isLogin(session)) {
-            final String companyId = "11";
-            List<User> users = materialUseService.companyEmps(companyId);
+            User user = (User)session.getAttribute("user");
+            List<User> users = materialUseService.companyEmps(user.getCompanyId());
             List<ComboBox4EasyUI> comboBoxs = new ArrayList<ComboBox4EasyUI>();
-            for(User user: users) {
+            for(User userTemp: users) {
                 ComboBox4EasyUI comboBox4EasyUI = new ComboBox4EasyUI();
-                comboBox4EasyUI.setId(user.getUserId());
-                comboBox4EasyUI.setText(user.getUserName());
+                comboBox4EasyUI.setId(userTemp.getUserId());
+                comboBox4EasyUI.setText(userTemp.getUserName());
                 comboBoxs.add(comboBox4EasyUI);
             }
             return comboBoxs;
@@ -166,28 +175,36 @@ public class WorkingDispatchingController {
 
 
 
+    //baoliu
     @ResponseBody
     @RequestMapping("insert")
     public ControllerResult insert(@RequestParam("recordId")String recordId, @RequestParam("userId")String userId, HttpSession session) {
+        // TODO 公司管理员可以
         if(SessionUtil.isLogin(session)) {
-            int result = 0;
-            String msg = "";
-            if(materialUseService.recordIsDisp(recordId)){
-                result = materialUseService.updWorkInfoUser(recordId, userId);
-                msg = "修改";
-            }else {
-                WorkInfo workInfo = new WorkInfo();
-                workInfo.setRecordId(recordId);
-                workInfo.setUserId(userId);
-                workInfo.setWorkCreatedTime(new Date());
-                workInfo.setWorkAssignTime(new Date());
-                result = materialUseService.insertWorkInfo(workInfo);
-                msg = "添加";
+            String roles = "公司超级管理员,公司普通管理员,汽车公司总技师,汽车公司技师";
+            if(RoleUtil.checkRoles(roles)) {
+                int result = 0;
+                String msg = "";
+                if (materialUseService.recordIsDisp(recordId)) {
+                    result = materialUseService.updWorkInfoUser(recordId, userId);
+                    msg = "修改";
+                } else {
+                    WorkInfo workInfo = new WorkInfo();
+                    workInfo.setRecordId(recordId);
+                    workInfo.setUserId(userId);
+                    workInfo.setWorkCreatedTime(new Date());
+                    workInfo.setWorkAssignTime(new Date());
+                    result = materialUseService.insertWorkInfo(workInfo);
+                    msg = "添加";
+                }
+                if (result < 1) {
+                    return ControllerResult.getFailResult(msg + "失败");
+                }
+                return ControllerResult.getSuccessResult(msg + "成功");
+            } else {
+                logger.info("此用户无拥有指派员工的角色");
+                return ControllerResult.getNotRoleResult("权限不足");
             }
-            if(result < 1) {
-                return ControllerResult.getFailResult(msg+"失败");
-            }
-            return ControllerResult.getSuccessResult(msg+"成功");
         } else {
             logger.info("请先登录");
             return null;

@@ -157,7 +157,7 @@
         left join act_ru_identitylink ruiden1 on ruiden1.TASK_ID_ = rutask.ID_
         left join act_hi_procinst hipro on ruexe1.PROC_INST_ID_ = hipro.PROC_INST_ID_
          where ruiden1.TYPE_ = 'candidate'
-            and ruiden1.GROUP_ID_ = #{roleId}
+            and ruexe1.ACT_ID_ = #{curActId}
             and ruexe1.PROC_INST_ID_ in (		/*		-- 最外层, 这层过滤出库管可以审核的流程*/
                 select ruexe.PROC_INST_ID_ from act_re_procdef reprodep		/*-- 第一层嵌套,这层查询出所属公司的申请流程*/
                     left join act_ru_execution ruexe on reprodep.ID_ = ruexe.PROC_DEF_ID_
@@ -292,7 +292,11 @@
         left join t_work_info workinfo on workinfo.recordId = record.recordId
         left join t_user euser on euser.userId = workinfo.userId
         </if>
-	where com.companyId = #{companyId} and  record.recordStatus='Y' and record.recordId
+	where record.recordStatus='Y'
+        <if test="companyId != null">
+            and com.companyId = #{companyId}
+        </if>
+        and record.recordId
         <choose>
             <when test="hasEmp!=''">in</when>
             <otherwise>not in</otherwise>
@@ -305,8 +309,13 @@
        select count(record.recordId)
         from t_checkin checkin
         left JOIN t_maintain_record record on checkin.checkinId = record.checkinId
-        where checkin.companyId =#{companyId} and record.recordStatus='Y' and record.recordId not in(
-                  select workinfo.recordId from t_work_info workinfo)
+        where
+        record.recordStatus='Y'
+        <if test="companyId != null ">
+            and checkin.companyId = #{companyId}
+        </if>
+          and record.recordId not in
+            (select workinfo.recordId from t_work_info workinfo)
     </select>
 
     <select id="recordAccByPager">

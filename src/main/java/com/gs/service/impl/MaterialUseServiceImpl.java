@@ -91,32 +91,32 @@ public class MaterialUseServiceImpl implements MaterialUseService {
 	}
 
 	@Override
-	public List<MaterialURTemp> queryUseFlowingbyPager(String flowName, String companyId, String roleId,Pager pager) {
+	public List<MaterialURTemp> queryUseFlowingbyPager(String flowName, String companyId, String curActId,Pager pager) {
 		Map paramMap = new HashMap();
 		paramMap.put("flowName",flowName);
 		paramMap.put("companyId",companyId);
-		paramMap.put("roleId",roleId);
+		paramMap.put("curActId",curActId);
 		paramMap.put("isUse",true);
 		paramMap.put("pager",pager);
 		return  materialUseDAO.queryMaterialFlowingbyPager(paramMap);
 	}
 
 	@Override
-	public int countUseFlowing(String flowName, String companyId,String roleId) {
+	public int countUseFlowing(String flowName, String companyId,String curActId) {
 		Map paramMap = new HashMap();
 		paramMap.put("flowName",flowName);
 		paramMap.put("companyId",companyId);
-		paramMap.put("roleId",roleId);
+		paramMap.put("curActId",curActId);
 		paramMap.put("isUse",true);
 		return materialUseDAO.countMaterialFlowing(paramMap);
 	}
 
 	@Override
-	public List<MaterialURTemp> queryReturnFlowingbyPager(String flowName, String companyId, String roleId, Pager pager) {
+	public List<MaterialURTemp> queryReturnFlowingbyPager(String flowName, String companyId, String curActId, Pager pager) {
 		Map paramMap = new HashMap();
 		paramMap.put("flowName",flowName);
 		paramMap.put("companyId",companyId);
-		paramMap.put("roleId",roleId);
+		paramMap.put("curActId",curActId);
 		paramMap.put("isUse",false);
 		paramMap.put("pager",pager);
 		return materialUseDAO.queryMaterialFlowingbyPager(paramMap);

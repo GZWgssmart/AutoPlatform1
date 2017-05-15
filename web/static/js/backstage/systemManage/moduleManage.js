@@ -1,8 +1,31 @@
 var initObj = {};
 $(function() {
-    initModules();
-    init();
-    windowScrollListener();
+    var roles = "系统超级管理员,系统普通管理员";
+    $.post("/user/isLogin/"+roles, function (data) {
+        if(data.result == 'success') {
+            initModules();
+            init();
+            windowScrollListener();
+            canDragSetting();
+        } else if(data.result == 'notLogin'){
+            swal({title:"",
+                    text:data.message,
+                    confirmButtonText:"确认",
+                    type:"error"}
+                ,function(isConfirm){
+                    if(isConfirm){
+                        top.location = "/user/loginPage";
+                    }else{
+                        top.location = "/user/loginPage";
+                    }
+                })
+        } else if(data.result == 'notRole'){
+            swal({title:"",
+                text:data.message,
+                confirmButtonText:"确认",
+                type:"error"})
+        }
+    })
 });
 
 function init(){
@@ -25,6 +48,7 @@ function init(){
         canDragSetting();
     });
 }
+
 function setPageModulePanel(modules){
     var len = modules.length;
     var modulePanels = $("#modulePanels");
@@ -32,10 +56,127 @@ function setPageModulePanel(modules){
         modulePanels.append(getModulePanel(modules[i]));
     }
 }
+function getLeftNaveOneHtml(module) {
+    var liHtmlTest = [];
+    liHtmlTest.push('<li hrett="'+ module.moduleId +'">')
+    liHtmlTest.push(module.moduleName);
+    liHtmlTest.push("</li>");
+    return liHtmlTest.join("");
+}
+
+// 右边面板的
 function setNoInModulePanelModulePanel(permissions) {
-    var ul = $("#otherModule").children("ul")[0]
+    var ul = $("#otherModule").children("ul")[0];
     $(ul).append(getNoModulePermissionsHtmlTest(permissions));
 }
+function getModulePanel(module){
+    var outtest = [];
+    outtest.push('<div class="panel modulePanel" ></div>');
+    var headingtest = [];
+    headingtest.push('<div class="panel-heading" data-id="'+ module.moduleId+ '" >');
+    headingtest.push('<div><span>'+ module.moduleName + '</span>');
+    headingtest.push('<small><span style="margin-right:3px; margin-left:10px">简介:</span>');
+    if(module.moduleDes)        headingtest.push('<span>' + module.moduleDes +'</span></small>');
+    else        headingtest.push('<span>暂无简介</span></small>');
+    headingtest.push('</div>');
+    headingtest.push('<div style="float:right">');
+    headingtest.push('<span  class="glyphicon glyphicon-edit" onclick="showEdit(\''+ module.moduleId +'\')"></span>');
+    headingtest.push('<span  class="glyphicon glyphicon-remove" onclick="delModule(this)"></span>');
+    headingtest.push('</div>');
+    headingtest.push('<p class="clearfix"></p>');
+    headingtest.push('</div>');
+    var bodytest = [];
+    bodytest.push('<div class="panel-body" style="padding-top:0">');
+    bodytest.push('<ul class="connectedSortable">');
+    bodytest.push(getHasModulePermissionsHtmlTest(module.permissions).join(""));
+    bodytest.push('</ul>');
+    var outEl = $(outtest.join(""));
+    var headingEl = $(headingtest.join(""));
+    var bodyEl = $(bodytest.join(""));
+    outEl.append(headingEl);
+    outEl.append(bodyEl);
+    return outEl;
+}
+
+function getHasModulePermissionsHtmlTest(permissions){
+    return getPermissionsHtmlTest(permissions, "col-md-12","");
+}
+function getNoModulePermissionsHtmlTest(permissions){
+    return getPermissionsHtmlTest(permissions,"col-md-12","" );
+}
+function getPermissionsHtmlTest(permissions, clazz, style){
+    var permissionsHtmlTest = [];
+    if(permissions!=undefined && permissions!=null && permissions!="") {
+        var len = permissions.length;
+        for(var i =0;i<len; i++ ) {
+            var permission = permissions[i];
+            permissionsHtmlTest .push('<li class="'+ clazz +'" style="'+style+'"   data-id = "'+permission.permissionId+'">'+ permission.permissionZhname +'</li>');
+        }
+    }
+    return permissionsHtmlTest;
+}
+
+
+// 右边面板相关的
+function appendModulePanel(module) {
+    var modulePanels = $("#modulePanels");
+    var panel = getModulePanel(module);
+    modulePanels.append(panel);
+}
+
+function updateModule(moduleId, moduleName) {
+    var oldModule = getModule(moduleId);
+    oldModule.moduleName = moduleName;
+}
+function getModulePanelByModuleId(moduelId) {
+    var modulePanels = $("#modulePanels").children(".modulePanel");
+
+    for(var i =0, len = modulePanels.length; i<len; i++ ){
+        var modulePanel = modulePanels[i];
+        var panelHeading = $(modulePanel).children(".panel-heading");
+        if($(panelHeading).attr("data-id")==moduelId) {
+            return modulePanel;
+        }
+    }
+    return null;
+}
+function updBodyModulePanel(module) {
+    var modulePanel = getModulePanelByModuleId(module.moduleId);
+    updateModuelPanelTitle(modulePanel,module.moduleName);
+    updateModulePanelDes(modulePanel, module.moduleDes);
+    updateModule(module.moduleId, module.moduleName);
+}
+function updateModuelPanelTitle(modulePanel, newTitle) {
+    var heading = $(modulePanel).children(".panel-heading")
+    var titleDiv = $(heading[0]).children("div")
+    var span = $(titleDiv[0]).children("span")
+    $(span).text(newTitle);
+}
+function updateModulePanelDes(modulePanel, newDes) {
+    var heading = $(modulePanel).children(".panel-heading")
+    var titleDiv = $(heading[0]).children("div");
+    var span= $(titleDiv[0]).find("small span")[1];
+    $(span).text(newDes);
+}
+// 右边事件相关
+function canDragSetting() {
+    $( ".connectedSortable" ).sortable({
+        connectWith: ".connectedSortable",
+        stop:stopFun
+    }).disableSelection();
+}
+function stopFun( event, ui ) {
+    var dragEl = ui.item[0];
+    var moduleEl = $(dragEl).parents()[2];
+    var moduleTitle = $(moduleEl).children(".panel-heading")[0];
+    var moduleId = $(moduleTitle).attr("data-Id");
+    var permissionId = $(dragEl).attr("data-Id");
+    updModulePer(moduleId, permissionId);
+}
+
+
+
+// 左边条相关
 function initLeftNav(modules) {
     var ulEl = $($("#navbar").children("ul"));
     var lisHtmlTest = [];
@@ -45,6 +186,115 @@ function initLeftNav(modules) {
     ulEl.append(lisHtmlTest.join(""));
     navLiLietener();
 }
+function deleteLeftNav(moduleId) {
+    var ulEl = $($("#navbar").children("ul"));
+    var lis = ulEl.find("li");
+    $.each(lis,function (index, el) {
+        if($(el).attr("hrett") == moduleId) {
+            el.remove();
+            return ;
+        }
+    })
+}
+function appendLeftNav(module) {
+    var ulEl = $($("#navbar").children("ul"));
+    ulEl.append(getLeftNaveOneHtml(module));
+    navLiLietener();
+}
+function updateLeftNavTitle(module) {
+    var ulEl = $($("#navbar").children("ul"));
+    var lis = ulEl.find("li");
+    $.each(lis,function (index, el) {
+        if($(el).attr("hrett") == module.moduleId) {
+            $(el).text(module.moduleName);
+            return ;
+        }
+    })
+}
+
+// 左边事件
+function navLiLietener() {
+    var lis = $("#navbar").find("li");
+    lis.on("click",function (e) {
+        var moduleId = $(this).attr("hrett");
+        var modulePanel = getModulePanelByModuleId(moduleId);
+        window.scrollTo(0,$(modulePanel)[0].offsetTop+108);
+    })
+}
+function windowScrollListener() {
+    var $windowtemp = $(window)
+    $windowtemp.on("scroll",function (){
+        scrollNavListener($windowtemp);
+    })
+}
+function scrollNavListener($window) {
+    var nav = $("#navbar");
+    if($window[0].scrollY >= 108) {
+        nav.css("top","10px");
+    } else {
+        var souHeight = 108;
+        var height = souHeight- $window[0].scrollY+8;
+        nav.css("top",height+ "px");
+    }
+}
+
+
+function initModules() {
+    initObj.modules =  $.ajax({url:"/module/queryAll",async:false});
+}
+function getModules() {
+    return initObj.modules.responseJSON;
+}
+function addModule(module){
+    initObj.modules.responseJSON.push(module);
+}
+function getModule(moduleId) {
+    var modules = getModules();
+    var len = modules.length;
+    for(var i =0; i<len; i++) {
+        var module = modules[i];
+        if(module.moduleId == moduleId) {
+            return module;
+        }
+    }
+    return null;
+}
+function setPermissions(permissionData,checkId){
+    var permissions = [];
+    var plen = permissionData.length;
+    for(var p = 0; p<plen; p++){
+        var per = permissionData[p];
+        if(per!=null){
+            if(per.permissionStatus === 'Y'){
+                if(per.moduleId === checkId) {
+                    permissions.push(per);
+                    per = null;
+                }
+            }
+        }
+    }
+    return permissions;
+}
+function getNotInModulePers(pers, molCol){
+    var len = pers.length;
+    var notInpers = [];
+    for(var i = 0; i< len; i++) {
+        if(!pers[i][molCol]){
+            notInpers.push(pers[i]);
+        }
+    }
+    return notInpers;
+}
+function getlis2PermissionIds(lis) {
+    var len = lis.length;
+    var permissionIds = [];
+    for(var i=0; i<len ; i++ ) {
+        var li = lis[i];
+        permissionIds.push($(li).attr("data-id"))
+    }
+    return permissionIds.join(",");
+}
+
 
 function showAdd(){
     validator('addForm');
@@ -89,60 +339,6 @@ function closeModal(){
     $("#addForm").data('bootstrapValidator').resetForm(true);
     $("#addForm").data('bootstrapValidator').destroy(); // 销毁此form表单
     $("#addForm").data('bootstrapValidator', null);// 此form表单设置为空
-}
-
-
-function getModulePanel(module){
-    var outtest = [];
-    outtest.push('<div class="panel modulePanel" ></div>');
-    var headingtest = [];
-    headingtest.push('<div class="panel-heading" data-id="'+ module.moduleId+ '" >');
-    headingtest.push('<div><span>'+ module.moduleName + '</span>');
-    headingtest.push('<small><span style="margin-right:3px; margin-left:10px">简介:</span>');
-    headingtest.push('<span>' + module.moduleDes +'</span></small>');
-    headingtest.push('</div>');
-    headingtest.push('<div style="float:right">');
-    headingtest.push('<span  class="glyphicon glyphicon-edit" onclick="showEdit(\''+ module.moduleId +'\')"></span>');
-    headingtest.push('<span  class="glyphicon glyphicon-remove" onclick="delModule(this)"></span>');
-    headingtest.push('</div>');
-    headingtest.push('<p class="clearfix"></p>');
-    headingtest.push('</div>');
-    var bodytest = [];
-    bodytest.push('<div class="panel-body" style="padding-top:0">');
-    bodytest.push('<ul class="connectedSortable">');
-    bodytest.push(getHasModulePermissionsHtmlTest(module.permissions).join(""));
-    bodytest.push('</ul>');
-    var outEl = $(outtest.join(""));
-    var headingEl = $(headingtest.join(""));
-    var bodyEl = $(bodytest.join(""));
-    outEl.append(headingEl);
-    outEl.append(bodyEl);
-    return outEl;
-}
-function getPermissionsHtmlTest(permissions, clazz, style){
-    var permissionsHtmlTest = [];
-    if(permissions!=undefined && permissions!=null && permissions!="") {
-        var len = permissions.length;
-        for(var i =0;i<len; i++ ) {
-            var permission = permissions[i];
-            permissionsHtmlTest .push('<li class="'+ clazz +'" style="'+style+'"   data-id = "'+permission.permissionId+'">'+ permission.permissionName +'</li>');
-        }
-    }
-    return permissionsHtmlTest;
-}
-function getLeftNaveOneHtml(module) {
-    var liHtmlTest = [];
-    liHtmlTest.push('<li hrett="'+ module.moduleId +'">')
-    liHtmlTest.push(module.moduleName);
-    liHtmlTest.push("</li>");
-    return liHtmlTest.join("");
-}
-
-function getHasModulePermissionsHtmlTest(permissions){
-    return getPermissionsHtmlTest(permissions, "col-md-12","");
-}
-function getNoModulePermissionsHtmlTest(permissions){
-    return getPermissionsHtmlTest(permissions,"col-md-12","" );
 }
 
 function validator(formId) {
@@ -224,7 +420,7 @@ function formSubmit(url, modalId ,formId, flag) {
                                 module.moduleName = $(input).val();
                             }
                         }
-                            module.moduleDes = textarea.val();
+                        module.moduleDes = textarea.val();
                         updBodyModulePanel(module);
                         updateLeftNavTitle(module);
                     }
@@ -297,170 +493,3 @@ function updModulePer(moduleId, permissionId){
         }
     )
 }
-
-function appendModulePanel(module) {
-    var modulePanels = $("#modulePanels");
-    var panel = getModulePanel(module);
-    modulePanels.append(panel);
-    canDragSetting();
-}
-
-
-function deleteLeftNav(moduleId) {
-    var ulEl = $($("#navbar").children("ul"));
-    var lis = ulEl.find("li");
-    $.each(lis,function (index, el) {
-        if($(el).attr("hrett") == moduleId) {
-            el.remove();
-            return ;
-        }
-    })
-}
-function appendLeftNav(module) {
-    var ulEl = $($("#navbar").children("ul"));
-    ulEl.append(getLeftNaveOneHtml(module));
-    navLiLietener();
-}
-function updateLeftNavTitle(module) {
-    var ulEl = $($("#navbar").children("ul"));
-    var lis = ulEl.find("li");
-    $.each(lis,function (index, el) {
-        if($(el).attr("hrett") == module.moduleId) {
-            $(el).text(module.moduleName);
-            return ;
-        }
-    })
-}
-
-function updateModule(moduleId, moduleName) {
-    var oldModule = getModule(moduleId);
-    oldModule.moduleName = moduleName;
-}
-function getModulePanelByModuleId(moduelId) {
-    var modulePanels = $("#modulePanels").children(".modulePanel");
-
-    for(var i =0, len = modulePanels.length; i<len; i++ ){
-        var modulePanel = modulePanels[i];
-        var panelHeading = $(modulePanel).children(".panel-heading");
-        if($(panelHeading).attr("data-id")==moduelId) {
-            return modulePanel;
-        }
-    }
-    return null;
-}
-function updBodyModulePanel(module) {
-    var modulePanel = getModulePanelByModuleId(module.moduleId);
-    updateModuelPanelTitle(modulePanel,module.moduleName);
-    updateModulePanelDes(modulePanel, module.moduleDes);
-    updateModule(module.moduleId, module.moduleName);
-}
-function updateModuelPanelTitle(modulePanel, newTitle) {
-    var heading = $(modulePanel).children(".panel-heading")
-    var titleDiv = $(heading[0]).children("div")
-    var span = $(titleDiv[0]).children("span")
-    $(span).text(newTitle);
-}
-function updateModulePanelDes(modulePanel, newDes) {
-    var heading = $(modulePanel).children(".panel-heading")
-    var titleDiv = $(heading[0]).children("div");
-    var span= $(titleDiv[0]).find("small span")[1];
-    $(span).text(newDes);
-}
-
-function canDragSetting() {
-    $( ".connectedSortable" ).sortable({
-        connectWith: ".connectedSortable",
-        stop:stopFun
-    }).disableSelection();
-}
-function navLiLietener() {
-    var lis = $("#navbar").find("li");
-    lis.on("click",function (e) {
-        var moduleId = $(this).attr("hrett");
-        var modulePanel = getModulePanelByModuleId(moduleId);
-        window.scrollTo(0,$(modulePanel)[0].offsetTop+108);
-    })
-}
-function windowScrollListener() {
-    var $windowtemp = $(window)
-    $windowtemp.on("scroll",function (){
-
-        scrollNavListener($windowtemp);
-    })
-}
-function scrollNavListener($window) {
-    var nav = $("#navbar");
-    if($window[0].scrollY >= 108) {
-        nav.css("top","10px");
-    } else {
-        var souHeight = 108;
-        var height = souHeight- $window[0].scrollY+8;
-        nav.css("top",height+ "px");
-    }
-}
-
-function stopFun( event, ui ) {
-    var dragEl = ui.item[0];
-    var moduleEl = $(dragEl).parents()[2];
-    var moduleTitle = $(moduleEl).children(".panel-heading")[0];
-    var moduleId = $(moduleTitle).attr("data-Id");
-    var permissionId = $(dragEl).attr("data-Id");
-    updModulePer(moduleId, permissionId);
-}
-
-function initModules() {
-    initObj.modules =  $.ajax({url:"/module/queryAll",async:false});
-}
-function getModules() {
-    return initObj.modules.responseJSON;
-}
-function addModule(module){
-    initObj.modules.responseJSON.push(module);
-}
-function getModule(moduleId) {
-    var modules = getModules();
-    var len = modules.length;
-    for(var i =0; i<len; i++) {
-        var module = modules[i];
-        if(module.moduleId == moduleId) {
-            return module;
-        }
-    }
-    return null;
-}
-function setPermissions(permissionData,checkId){
-    var permissions = [];
-    var plen = permissionData.length;
-    for(var p = 0; p<plen; p++){
-        var per = permissionData[p];
-        if(per!=null){
-            if(per.permissionStatus === 'Y'){
-                if(per.moduleId === checkId) {
-                    permissions.push(per);
-                    per = null;
-                }
-            }
-        }
-    }
-    return permissions;
-}
-function getNotInModulePers(pers, molCol){
-    var len = pers.length;
-    var notInpers = [];
-    for(var i = 0; i< len; i++) {
-        if(!pers[i][molCol]){
-            notInpers.push(pers[i]);
-        }
-    }
-    return notInpers;
-}
-function getlis2PermissionIds(lis) {
-    var len = lis.length;
-    var permissionIds = [];
-    for(var i=0; i<len ; i++ ) {
-        var li = lis[i];
-        permissionIds.push($(li).attr("data-id"))
-    }
-    return permissionIds.join(",");
-}
-

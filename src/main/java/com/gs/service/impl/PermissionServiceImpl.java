@@ -88,15 +88,12 @@ public class PermissionServiceImpl implements PermissionService {
 	}
 
 	public List<Permission> blurredQuery(Pager pager, Permission permission) {
-		return null;
+		return permissionDAO.blurredQuery(pager, permission);
 	}
 
 	@Override
 	public int countByBlurred(Permission permission, User user) {
-		return 0;
+		return permissionDAO.countByBlurred(permission, user);
 	}
 
-	public int countByBlurred(Permission permission) {
-		return 0;
-	}
 }

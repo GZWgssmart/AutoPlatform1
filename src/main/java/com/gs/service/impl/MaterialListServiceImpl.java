@@ -75,10 +75,6 @@ public class MaterialListServiceImpl implements MaterialListService {
 		return 0;
 	}
 
-	public int countByBlurred(MaterialList materialList) {
-		return 0;
-	}
-
 	@Override
 	public List<MaterialView> queryByPager(String userId, Pager pager) {
 		return materialListDAO.queryByPager(userId,pager);

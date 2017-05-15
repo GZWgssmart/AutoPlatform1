@@ -1,6 +1,8 @@
 package com.gs.dao;
 
 import com.gs.bean.Permission;
+import com.gs.bean.User;
+import com.gs.common.bean.Pager;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -24,4 +26,15 @@ public interface PermissionDAO extends BaseDAO<String, Permission>{
     public int count(Map paramsMap);
 
     public int updateStatus(Map paramsMap);
+
+
+     /**
+     * 模糊查询
+     */
+    public List<Permission> blurredQuery(@Param("pager")Pager pager, @Param("permission")Permission checkin);
+
+    /**
+     * 模糊查询的记录数
+     */
+    public int countByBlurred(@Param("permission")Permission permission, @Param("user") User user);
 }

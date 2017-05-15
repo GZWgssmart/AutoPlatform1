@@ -9,6 +9,7 @@ import com.gs.bean.view.MaterialURTemp;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
+import com.gs.common.util.RoleUtil;
 import com.gs.common.util.SessionUtil;
 import com.gs.common.util.UUIDUtil;
 import com.gs.controller.SystemManageController;
@@ -83,15 +84,16 @@ public class MaterialsController {
     @ResponseBody       //可能用不到了
     @RequestMapping("queryUserMaterialsByPager")
     public Pager4EasyUI materialsByPager(@RequestParam("pageNumber") int pageNumber, @RequestParam("pageSize") int pageSize, HttpSession session){
+        // TODO 公司员工
         if(SessionUtil.isLogin(session)) {
-            final  String userId = "1";
+            User user = (User)session.getAttribute("user");
             Pager pager = new Pager();
             Pager4EasyUI pager4EasyUI = new Pager4EasyUI();
             pager.setPageNo(pageNumber);
             pager.setPageSize(pageSize);
-            int total = materialListService.count(userId);
+            int total = materialListService.count(user.getUserId());
             pager4EasyUI.setTotal(total);
-            List list = materialListService.queryByPager(userId,pager);
+            List list = materialListService.queryByPager(user.getUserId(),pager);
             pager4EasyUI.setRows(list);
             return pager4EasyUI;
         } else {
@@ -100,19 +102,21 @@ public class MaterialsController {
         }
     }
 
+    // baoliu
     @ResponseBody
     @RequestMapping("history")
     public Pager4EasyUI historyByPager(@RequestParam("pageNumber") int pageNumber, @RequestParam("pageSize") int pageSize, HttpSession session){
+        // TODO 公司员工
         if(SessionUtil.isLogin(session)) {
-            final String tempUserId = "1";
+            User user = (User)session.getAttribute("user");
             Pager4EasyUI pager4EasyUI = new Pager4EasyUI();
             Pager pager = new Pager();
             //当前以用户1号查询,后期需要判断是否拥有查询所有领用记录才可以使用
-            int total = materialUseService.countUserHist(tempUserId);
+            int total = materialUseService.countUserHist(user.getUserId());
             pager.setPageNo(pageNumber);
             pager.setPageSize(pageSize);
             pager4EasyUI.setTotal(total);
-            List rows = materialUseService.userHistByPager(pager,tempUserId);
+            List rows = materialUseService.userHistByPager(pager,user.getUserId());
             pager4EasyUI.setRows(rows);
             return pager4EasyUI;
         } else {
@@ -121,9 +125,11 @@ public class MaterialsController {
         }
     }
 
+    // baoliu
     @ResponseBody
     @RequestMapping("recordAccsByPager")
     public Pager4EasyUI recordAccsByPager(@RequestParam("pageNumber") int pageNumber, @RequestParam("pageSize") int pageSize,@RequestParam("recordId")String recordId, HttpSession session){
+        // TODO 所有登录公司员工
         if(SessionUtil.isLogin(session)) {
             Pager pager = new Pager();
             pager.setPageNo(pageNumber);
@@ -153,31 +159,38 @@ public class MaterialsController {
     }
 
 
+// baoliu
     @ResponseBody
     @RequestMapping("doReview")
     public ControllerResult doReview(MaterialURTemp materialUse, HttpServletRequest req, HttpSession session){ // 审核退料与领料申请
+        // TODO 库管
         if(SessionUtil.isLogin(session)) {
-            User user = (User) session.getAttribute("user");
-            TaskQuery taskQuery = taskService.createTaskQuery();
-            final String curUserID = user.getUserId();
+            String roles = "公司超级管理员,公司普通管理员,汽车公司库管人员";
+            if(RoleUtil.checkRoles(roles)) {
+                User user = (User) session.getAttribute("user");
+                TaskQuery taskQuery = taskService.createTaskQuery();
 
-            String proInsId = materialUse.getProcessInstanceId();
-            Task task = taskQuery.processInstanceId(proInsId).singleResult();
+                String proInsId = materialUse.getProcessInstanceId();
+                Task task = taskQuery.processInstanceId(proInsId).singleResult();
 
 
-            boolean isOK = Boolean.parseBoolean(req.getParameter("isOK"));
-            String respMsg = materialUse.getRespMsg();
+                boolean isOK = Boolean.parseBoolean(req.getParameter("isOK"));
+                String respMsg = materialUse.getRespMsg();
 
-            Map map = new HashMap();
-            map.put("isOK", isOK);
-            map.put("respMsg", respMsg);
-            String resultPre = "拒绝";
-            if (isOK) {
-                resultPre = "同意";
+                Map map = new HashMap();
+                map.put("isOK", isOK);
+                map.put("respMsg", respMsg);
+                String resultPre = "拒绝";
+                if (isOK) {
+                    resultPre = "同意";
 
+                }
+                taskService.setAssignee(task.getId(), user.getUserId());
+                return nextTask(proInsId, task.getId(), map, resultPre);
+            } else {
+                logger.info("此用户无拥有审核领/退料的角色");
+                return ControllerResult.getNotRoleResult("权限不足");
             }
-            taskService.setAssignee(task.getId(), curUserID);
-            return nextTask(proInsId, task.getId(), map, resultPre);
         } else {
             logger.info("请先登录");
             return null;
@@ -194,12 +207,12 @@ public class MaterialsController {
         try {
             taskService.complete(taskId, map);
             if(addMaterialUseAReturnTable(varMap,startUserId)) {
-                return ControllerResult.getSuccessResult(otherMsg + "成功");
+                return ControllerResult.getSuccessResult("审核完成");
             }
         } catch(Exception e) {
             e.printStackTrace();
         }
-        return ControllerResult.getSuccessResult(otherMsg + "失败");
+        return ControllerResult.getSuccessResult("审核失败");
     }
 
 
@@ -207,7 +220,7 @@ public class MaterialsController {
      * 原本用于上方,需要用到,这是领料申请成功后所做的事
      * @return
      */
-    public boolean addMaterialUseAReturnTable(Map varMap, String startUserId ) {
+    private boolean addMaterialUseAReturnTable(Map varMap, String startUserId ) {
         String recordId = varMap.get("recordId").toString();
         String accId = varMap.get("accId").toString();
         int accCount = Integer.parseInt(varMap.get("accCount").toString());
@@ -238,10 +251,11 @@ public class MaterialsController {
     }
 
 
-
+// baoliu
     @ResponseBody
     @RequestMapping("insert")
     public ControllerResult insertMaterials(MaterialList materialList, HttpSession session){
+        // TODO 未知, 可能学徒都可以
         if(SessionUtil.isLogin(session)) {
             int resultCount = materialListService.insert(materialList);
             return isSuc(resultCount,"添加成功","添加失败");

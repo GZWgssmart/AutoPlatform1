@@ -25,4 +25,6 @@ public interface RoleDAO extends BaseDAO<String, Role>{
 
     public int updateStatus (Role role);
 
+    public Role queryByName(String roleName);
+
 }

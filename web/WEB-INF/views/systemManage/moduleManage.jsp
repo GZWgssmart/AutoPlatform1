@@ -197,7 +197,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <div class="modal-header" style="overflow:auto;">
-                    <h3>添加模块</h3>
+                    <h3>修改模块</h3>
                 </div>
                 <input style="display:none"/>
             </div>
@@ -236,7 +236,6 @@
 <script src="/static/js/bootstrap-table/bootstrap-table.js"></script>
 <script src="/static/js/bootstrap-table/bootstrap-table-zh-CN.js"></script>
 <script src="/static/js/jquery.formFill.js"></script>
-<script src="/static/js/select2/select2.js"></script>
 <script src="/static/js/sweetalert/sweetalert.min.js"></script>
 <script src="/static/js/contextmenu.js"></script>
 <script src="/static/js/bootstrap-validate/bootstrapValidator.js"></script>
