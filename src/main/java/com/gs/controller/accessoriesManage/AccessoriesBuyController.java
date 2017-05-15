@@ -293,7 +293,7 @@ public class AccessoriesBuyController {
 
     @ResponseBody
     @RequestMapping(value = "queryByCondition")
-    public List<AccessoriesBuy> queryByCondition(HttpSession session,String start, String end, String type) {
+    public List<AccessoriesBuy> queryByCondition(HttpSession session,String start, String end, String type, String companyId) {
         if(SessionUtil.isLogin(session)){
             String roles="公司超级管理员,公司普通管理员,汽车公司采购人员,汽车公司销售人员,汽车公司库管人员,系统超级管理员,系统普通管理员";
             if(RoleUtil.checkRoles(roles)){
@@ -301,7 +301,11 @@ public class AccessoriesBuyController {
                 User user = (User) session.getAttribute("user");
                 if (type != null && !type.equals("")) {
                     if (type.equals("year")) {
-                        list = accessoriesBuyService.queryByCondition(start, end, user.getCompanyId(), "year");
+                        if (companyId != null) {
+                            list = accessoriesBuyService.queryByCondition(start, end, companyId, "year");
+                        } else {
+                            list = accessoriesBuyService.queryByCondition(start, end, user.getCompanyId(), "year");
+                        }
                     } else if (type.equals("quarter")) {
                         list = accessoriesBuyService.queryByCondition(start, end, user.getCompanyId(), "quarter");
                     } else if (type.equals("month")) {
