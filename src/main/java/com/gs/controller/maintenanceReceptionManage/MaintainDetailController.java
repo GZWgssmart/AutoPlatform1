@@ -156,15 +156,21 @@ public class MaintainDetailController {
      * 用户确认, 此时生成所有物料清单, 两个参数一个为维修保养记录id, 一个为所有项目ids
      */
     @ResponseBody
-    @RequestMapping(value = "userConfirm/{recordId}/{ids}", method = RequestMethod.POST)
-    public ControllerResult userConfirm(HttpSession session, @PathVariable("recordId") String recordId,@PathVariable("ids") String ids) {
+    @RequestMapping(value = "userConfirm/{recordId}/{ids}/{tableDataLength}", method = RequestMethod.POST)
+    public ControllerResult userConfirm(HttpSession session, @PathVariable("recordId") String recordId,@PathVariable("ids") String ids,@PathVariable("tableDataLength") String tableDataLength) {
         if(SessionUtil.isLogin(session)) {
             String roles = "公司超级管理员,公司普通管理员,汽车公司接待员,车主";
             if(RoleUtil.checkRoles(roles)) {
                 logger.info("用户确认明细清单, 这时生成所有物料清单和工单");
-                if(recordId != null && recordId != "" && ids!= null && ids != "") {
+                if(recordId != null && recordId != "" && ids!= null && ids != "" && tableDataLength!=null && tableDataLength!="") {
                     List<MaintainFixAcc> maintainFixAccs = maintainFixAccService.queryByRecord(ids);
-                    if(maintainFixAccs != null) {
+                    int length = 0;
+                    try {
+                        length = Integer.valueOf(tableDataLength);
+                    }catch (NumberFormatException e){
+                        logger.info("明细个数转换异常");
+                    }
+                    if(maintainFixAccs.size() > length) {
                             List<MaterialList> materialLists = new ArrayList<MaterialList>();
                             for (MaintainFixAcc m : maintainFixAccs) {
                                 MaterialList materialList = new MaterialList();
@@ -182,11 +188,12 @@ public class MaintainDetailController {
                             // 修改维修保养记录中的开始时间
                             MaintainRecord maintainRecord = maintainRecordService.queryById(recordId);
                             maintainRecord.setStartTime(new Date());
-                            maintainRecord.setCurrentStatus("用户已签字");
+                            maintainRecord.setCurrentStatus("维修保养中");
+                            maintainRecord.setIfConfirm("Y");
                             maintainRecordService.update(maintainRecord);
                             return ControllerResult.getSuccessResult("确定成功");
                     }else{
-                        return ControllerResult.getFailResult("确定失败, 此维修保养记录中的所有明细中的维修项目并没有配件");
+                        return ControllerResult.getFailResult("确定失败, 此维修保养记录所属明细的维修项目并没有配件");
                     }
                 }else{
                     return ControllerResult.getFailResult("确定失败");

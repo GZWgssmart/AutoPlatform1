@@ -115,11 +115,20 @@ function showAddDetail(){
         if(data.result == 'success'){
             var row =  $('#table').bootstrapTable('getSelections');
             if(row.length >0) {
-                $("#addButton").removeAttr("disabled");
-                var maintainDetail = row[0];
-                $("#addForm").fill(maintainDetail);
-                $("#addWindow").modal('show');
-                validator('addForm'); // 初始化验证
+                if(row[0].ifConfirm != 'Y') {
+                    $("#addButton").removeAttr("disabled");
+                    var maintainDetail = row[0];
+                    $("#addForm").fill(maintainDetail);
+                    $("#addWindow").modal('show');
+                    validator('addForm'); // 初始化验证
+                }else{
+                    swal({
+                        title:"",
+                        text: "此维修保养记录用户已签字, 不可再生成维修保养明细", // 主要文本
+                        confirmButtonColor: "#DD6B55", // 提示按钮的颜色
+                        confirmButtonText:"确定", // 提示按钮上的文本
+                        type:"warning"}) // 提示类型
+                }
             }else{
                 swal({
                     title:"",
@@ -189,12 +198,15 @@ function showDetail(){
             if(row.length >0) {
                 recordId = row[0].recordId;
                 $("#detailWindow").modal('show');
-                if(row[0].currentStatus == '用户已签字'){
+                if(row[0].ifConfirm == 'Y'){
                     // 把用户已签字盖章显示
-                    initDetailNotToolbarTable('detailTable', '/maintainDetail/queryByDetailPager/'+row[0].recordId+'');
+                    $("#ifConfirm").css("display","block");
+                    $("#detailToolbar").css("display","none");
                 }else{
-                    initDetailTable('detailTable', '/maintainDetail/queryByDetailPager/'+row[0].recordId+'');
+                    $("#ifConfirm").css("display","none");
+                    $("#detailToolbar").css("display","block");
                 }
+                initDetailTable('detailTable', '/maintainDetail/queryByDetailPager/'+row[0].recordId+'');
             }else{
                 swal({
                     title:"",
@@ -342,6 +354,7 @@ function userConfirm(){
     $.post("/user/isLogin/"+roles, function (data) {
         if(data.result == 'success'){
             tableData = $("#detailTable").bootstrapTable('getData');//获取表格的所有内容行
+            var tableDataLength = tableData.length;
             var ids = "";// 设置一个字符串
                 $.each(tableData, function(index, value, item) {
                     if(ids == ""){// 假如这个字符串刚开始设置,
@@ -350,7 +363,7 @@ function userConfirm(){
                         ids += ",'" + tableData[index].maintainItemId+"'"// 否则就加上逗号把rows里所有的id都赋给ids
                     }
                 });
-            $.post("/maintainDetail/userConfirm/"+recordId+"/"+ids,function (data) {
+            $.post("/maintainDetail/userConfirm/"+recordId+"/"+ids+"/"+tableDataLength,function (data) {
                 if (data.result == "success") {
                     swal({
                         title: "",
@@ -360,7 +373,7 @@ function userConfirm(){
                     })
                 }else if (data.result == "fail") {
                     swal({title:"",
-                        text:"确认失败",
+                        text:data.message,
                         confirmButtonText:"确认",
                         type:"error"})
                 }
@@ -569,6 +582,7 @@ function initDetailTable(tableId, url) {
     });
 }
     function initDetailNotToolbarTable(tableId, url) {
+    alert('..')
         //先销毁表格
         $('#' + tableId).bootstrapTable('destroy');
         //初始化表格,动态从服务器加载数据

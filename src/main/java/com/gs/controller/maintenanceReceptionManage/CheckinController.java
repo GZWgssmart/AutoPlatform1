@@ -120,9 +120,11 @@ public class CheckinController {
                     checkin.setCheckinId(UUIDUtil.uuid());
                     checkin.setCompanyId(user.getCompanyId());
                     checkinService.insert(checkin);
-                    MaintainRecord maintainRecode = new MaintainRecord();
-                    maintainRecode.setCheckinId(checkin.getCheckinId());
-                    maintainRecordService.insert(maintainRecode);
+                    MaintainRecord maintainRecord = new MaintainRecord();
+                    maintainRecord.setCheckinId(checkin.getCheckinId());
+                    maintainRecord.setCurrentStatus("已登记");
+                    maintainRecord.setIfConfirm("N");
+                    maintainRecordService.insert(maintainRecord);
                     return ControllerResult.getSuccessResult("添加成功");
                 }else{
                     return ControllerResult.getFailResult("添加失败");

@@ -83,12 +83,12 @@
         </table>
         <div id="toolbar" class="btn-group">
             <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员">
-                        <button id="btn_available" type="button" class="btn btn-default" onclick="showAvailable();">
+                        <button id="btn_available" type="button" class="btn btn-success" onclick="showAvailable();">
                             <span class="glyphicon glyphicon-search" aria-hidden="true"></span>可用保养记录
                         </button>
             </shiro:hasAnyRoles>
             <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员">
-                        <button id="btn_disable" type="button" class="btn btn-default" onclick="showDisable();">
+                        <button id="btn_disable" type="button" class="btn btn-danger" onclick="showDisable();">
                             <span class="glyphicon glyphicon-search" aria-hidden="true"></span>禁用保养记录
                         </button>
             </shiro:hasAnyRoles>
@@ -259,6 +259,7 @@
     <div class="modal-dialog" style="width: 90%">
         <div class="modal-content">
             <div class="modal-body">
+                <div id="ifConfirm" style="background: url('/static/img/userCornfirm.png')-50px -50px no-repeat;position: absolute;z-index:999;width: 250px;height: 250px;background-size:250px;display: none"></div>
                 <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
                 <h3 class="m-t-none m-b">此维修保养记录下的所有明细</h3>
                 <table class="table table-hover" id="detailTable">

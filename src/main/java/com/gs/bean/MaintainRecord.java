@@ -26,6 +26,8 @@ public class MaintainRecord {
 
     private String currentStatus; // 维修保养当前状态
 
+    private String ifConfirm; // 用户是否签字
+
     private Checkin checkin; // 登记记录
 
     private int count;
@@ -42,6 +44,14 @@ public class MaintainRecord {
     private Double total; // 总计价钱
     private Date todayTime; // 日期
     private Double discountMoney; // 总共折扣后价钱
+
+    public String getIfConfirm() {
+        return ifConfirm;
+    }
+
+    public void setIfConfirm(String ifConfirm) {
+        this.ifConfirm = ifConfirm;
+    }
 
     public String getCurrentStatus() {
         return currentStatus;

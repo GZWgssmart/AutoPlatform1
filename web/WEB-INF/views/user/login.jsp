@@ -46,28 +46,25 @@
                 <form class="form-horizontal" id="loginForm">
                     <div class="form-group">
                         <label class="col-sm-3 control-label">帐号：</label>
-
                         <div class="col-sm-8">
-                            <input type="text" name="userEmail" placeholder="邮箱/手机号/用户名" class="form-control">
+                            <input type="text" name="userEmail" placeholder="邮箱/手机号/用户名" class="form-control" onkeypress="if(event.keyCode==13) {loginSubmit();}">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">密码：</label>
 
                         <div class="col-sm-8">
-                            <input type="password" name="userPwd" placeholder="密码" class="form-control">
+                            <input type="password" name="userPwd" placeholder="密码" class="form-control" onkeypress="if(event.keyCode==13) {loginSubmit();}">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">验证码：</label>
-
                         <div class="col-sm-8">
-                            <input style="width: 64%;float: right;" type="text" name="checkCode" placeholder="验证码" class="form-control">
+                            <input style="width: 64%;float: right;" type="text" name="checkCode" placeholder="验证码" class="form-control" onkeypress="if(event.keyCode==13) {loginSubmit();}">
                             <a href="javascript:;"><img style=" margin:0px 0 0 0; vertical-align:middle; height:35px;"
                                                         src="<%=path %>/captcha"
                                                         onclick="this.src='<%=path %>/captcha?time=Math.random();'"></a>
                         </div>
-
                     </div>
                     <div class="form-group">
                         <div class="col-sm-offset-3 col-sm-8">

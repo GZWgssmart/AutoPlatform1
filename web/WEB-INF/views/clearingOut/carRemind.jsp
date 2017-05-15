@@ -83,12 +83,12 @@
         </table>
         <div id="toolbar" class="btn-group">
             <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员">
-                        <button id="btn_available" type="button" class="btn btn-default" onclick="showNoRemind();">
+                        <button id="btn_available" type="button" class="btn btn-danger" onclick="showNoRemind();">
                             <span class="glyphicon glyphicon-search" aria-hidden="true"></span>未提醒维修保养记录
                         </button>
             </shiro:hasAnyRoles>
             <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员">
-                        <button id="btn_disable" type="button" class="btn btn-default" onclick="showYesRemind();">
+                        <button id="btn_disable" type="button" class="btn btn-success" onclick="showYesRemind();">
                             <span class="glyphicon glyphicon-search" aria-hidden="true"></span>已提醒维修保养记录
                         </button>
             </shiro:hasAnyRoles>
