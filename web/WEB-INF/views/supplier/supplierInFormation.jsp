@@ -49,10 +49,12 @@
                 <th data-field="company.companyName">
                     供应商所属公司
                 </th>
-                <th data-field="supplyStatus" data-formatter="statusFormatter">
-                    记录状态
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                </th>
+                <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员">
+                    <th data-field="supplyStatus" data-formatter="statusFormatter">
+                        记录状态
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    </th>
+                </shiro:hasAnyRoles>
             </tr>
             </thead>
         </table>
@@ -106,14 +108,14 @@
 <!-- 添加弹窗 -->
 
 <div id="addWindow" class="modal fade" style="overflow-y:scroll" data-backdrop="static" >
-    <div class="modal-dialog">
+    <div class="modal-dialog" style="width:90%">
         <div class="modal-content" >
-            <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
+            <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal" style="padding:10px"></span>
             <form role="form" class="form-horizontal" id="addForm">
                 <div class="modal-header" style="overflow:auto;">
                     <h4>添加供应商信息</h4>
                 </div>
-                <div style="margin-left: auto;width:90%;margin-left:auto;margin-right:auto">
+                <div>
                     <div>
                         <div class="form-group col-md-6 pull-left" >
                             <label class="col-md-4 control-label">供应商名称：</label>
@@ -213,7 +215,7 @@
 <div id="editWindow" class="modal fade" style="overflow-y:scroll" data-backdrop="static" >
     <div class="modal-dialog"  style="width:90%">
         <div class="modal-content">
-            <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
+            <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal" style="padding:10px"></span>
             <form role="form" class="form-horizontal" id="editForm">
                 <input type="hidden" name="supplyId" define="supply.supplyId"/>
                 <input type="hidden"name="supplyStatus" define="supply.supplyStatus">

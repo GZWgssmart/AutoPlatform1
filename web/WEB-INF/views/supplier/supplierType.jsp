@@ -24,7 +24,9 @@
                 <th data-field="supplyTypeName">供应商类型名称</th>
                 <th data-field="company.companyName">供应商类型所属公司</th>
                 <th data-field="supplyTypeDes">供应商类型描述内容</th>
-                <th data-width="12%" data-field="supplyTypeStatus" data-formatter="statusFormatter">记录状态</th>
+                <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员">
+                    <th data-width="12%" data-field="supplyTypeStatus" data-formatter="statusFormatter">记录状态</th>
+                </shiro:hasAnyRoles>
             </tr>
             </thead>
         </table>
@@ -58,7 +60,7 @@
 <div id="addWindow" class="modal fade" style="overflow-y:scroll" data-backdrop="static" >
     <div class="modal-dialog">
         <div class="modal-content" >
-                <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
+                <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal" style="padding:10px"></span>
                 <form class="form-horizontal"  role="form" id="addForm" method="post">
                 <div class="modal-header" style="overflow:auto;">
                     <h4>添加供应商类型信息</h4>
@@ -99,7 +101,7 @@
 <div id="editWindow" class="modal fade" style="overflow-y:scroll" data-backdrop="static">
     <div class="modal-dialog">
         <div class="modal-content">
-            <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
+            <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal" style="padding:10px"></span>
             <form  class="form-horizontal"  id="editForm" method="post">
                 <input type="hidden" name="supplyTypeId" define="supplyType.supplyTypeId"/>
                 <div class="modal-header" style="overflow:auto;">

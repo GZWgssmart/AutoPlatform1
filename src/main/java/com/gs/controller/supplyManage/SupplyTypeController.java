@@ -129,10 +129,10 @@ public class SupplyTypeController {
         if(SessionUtil.isLogin(session)) {
             String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员";
             if(RoleUtil.checkRoles(roles)) {
+                User user = (User)session.getAttribute("user");
                 logger.info("添加供应商类型记录");
                 if (supplyType != null && !supplyType.equals("")) {
                     System.out.println(supplyType.toString());
-                    User user = (User)session.getAttribute("user");
                     supplyType.setCompanyId(user.getCompanyId());
                     supplyTypeService.insert(supplyType);
                     logger.info("添加供应商类型记录成功");
@@ -165,7 +165,6 @@ public class SupplyTypeController {
             if(RoleUtil.checkRoles(roles)) {
                 if (supplyType != null && !supplyType.equals("")) {
                     User user = (User)session.getAttribute("user");
-                    supplyType.setCompanyId(user.getCompanyId());
                     supplyTypeService.update(supplyType);
                     logger.info("修改供应商类型记录成功");
                     return ControllerResult.getSuccessResult("修改供应商类型记录成功");

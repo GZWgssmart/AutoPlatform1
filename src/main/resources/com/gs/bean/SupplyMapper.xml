@@ -43,11 +43,12 @@
         select s.*, st.supplyTypeId, st.supplyTypeName, co.companyId, co.companyName from auto_platform.t_supply s
         LEFT JOIN t_supply_type st on s.supplyTypeId = st.supplyTypeId
         LEFT JOIN t_company co on s.companyId = co.companyId
-        where s.supplyStatus = 'Y' order by s.supplyCreatedTime Desc
+        where s.supplyStatus = 'Y'
     ]]>
     <if test="user.companyId != '' and user.companyId !=null">
       and s.companyId = #{user.companyId}
     </if>
+    order by s.supplyCreatedTime Desc
     limit #{beginIndex}, #{pageSize}
   </select>
 
@@ -56,11 +57,12 @@
          select s.*, st.supplyTypeId, st.supplyTypeName, co.companyId, co.companyName from auto_platform.t_supply s
         LEFT JOIN t_supply_type st on s.supplyTypeId = st.supplyTypeId
         LEFT JOIN t_company co on s.companyId = co.companyId
-        where s.supplyStatus = 'N' order by s.supplyCreatedTime Desc
+        where s.supplyStatus = 'N'
     ]]>
     <if test="user.companyId != '' and user.companyId !=null">
       and s.companyId = #{user.companyId}
     </if>
+    order by s.supplyCreatedTime Desc
     limit #{beginIndex}, #{pageSize}
   </select>
 

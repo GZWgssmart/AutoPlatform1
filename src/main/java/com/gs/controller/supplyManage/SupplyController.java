@@ -137,9 +137,9 @@ public class SupplyController {
         if(SessionUtil.isLogin(session)) {
             String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员";
             if (RoleUtil.checkRoles(roles)) {
+                User user = (User)session.getAttribute("user");
                 logger.info("添加供应商记录");
                 if (supply != null && !supply.equals("")) {
-                    User user = (User)session.getAttribute("user");
                     supply.setCompanyId(user.getCompanyId());
                     supplyService.insert(supply);
                     logger.info("添加供应商记录成功");
@@ -172,7 +172,6 @@ public class SupplyController {
                 logger.info("修改供应商记录");
                 if (supply != null && !supply.equals("")) {
                     User user = (User)session.getAttribute("user");
-                    supply.setCompanyId(user.getCompanyId());
                     supplyService.update(supply);
                     logger.info("修改供应商记录成功");
                     return ControllerResult.getSuccessResult("修改供应商记录成功");
@@ -237,6 +236,7 @@ public class SupplyController {
                 Pager pager = new Pager();
                 pager.setPageNo(Integer.valueOf(pageNumber));
                 pager.setPageSize(Integer.valueOf(pageSize));
+                pager.setUser((User)session.getAttribute("user"));
                 String text = request.getParameter("text");
                 String value = request.getParameter("value");
                 if(text != null && text!="" && value != null && value != "") {
@@ -254,12 +254,10 @@ public class SupplyController {
                         supply.setCompanyId(value);
                     }
                     supplys = supplyService.blurredQuery(pager,supply);
-                    pager.setUser((User)session.getAttribute("user"));
                     pager.setTotalRecords(supplyService.countByBlurred(supply,(User)session.getAttribute("user")));
                     System.out.print(supplys);
                     return new Pager4EasyUI<Supply>(pager.getTotalRecords(), supplys);
                 }else{ // 当在模糊查询输入框中输入的值为空时, 使它查询全部
-                    pager.setUser((User)session.getAttribute("user"));
                     pager.setTotalRecords(supplyService.count((User)session.getAttribute("user")));
                     List<Supply> supplys = supplyService.queryByPager(pager);
                     return new Pager4EasyUI<Supply>(pager.getTotalRecords(), supplys);
