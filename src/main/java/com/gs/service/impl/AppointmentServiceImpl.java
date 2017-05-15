@@ -65,4 +65,19 @@ public class AppointmentServiceImpl implements AppointmentService {
 	public int batchInsert(List<Appointment> list) {
 		return 0;
 	}
+
+	@Override
+	public void updateCurrentById(String currentStatus, String appointmentId) {
+		appointmentDAO.updateCurrentById(currentStatus, appointmentId);
+	}
+
+	@Override
+	public List<Appointment> queryByCurrentStatus(Pager pager) {
+		return appointmentDAO.queryByCurrentStatus(pager);
+	}
+
+	@Override
+	public int countByCurrentStatus(User user) {
+		return appointmentDAO.countByCurrentStatus(user);
+	}
 }

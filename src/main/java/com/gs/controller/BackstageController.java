@@ -3,11 +3,9 @@ package com.gs.controller;
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.ChargeBill;
 import com.gs.bean.MaintainDetail;
+import com.gs.bean.MaintainFixAcc;
 import com.gs.bean.MaintainRecord;
-import com.gs.service.ChargeBillService;
-import com.gs.service.CompanyService;
-import com.gs.service.MaintainDetailService;
-import com.gs.service.MaintainRecordService;
+import com.gs.service.*;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,7 +35,9 @@ public class BackstageController {
     private MaintainRecordService maintainRecordService;
     @Resource
     private ChargeBillService chargeBillService;
-
+    // 项目配件service
+    @Resource
+    private MaintainFixAccService maintainFixAccService;
     /**
      * 后台主页
      */
@@ -50,8 +50,8 @@ public class BackstageController {
     /**
      * 维修保养记录打印页面
      */
-    @RequestMapping(value = "recordPrint/{maintainRecordId}", method = RequestMethod.GET)
-    public ModelAndView recordPrint(@PathVariable("maintainRecordId")String maintainRecordId) {
+    @RequestMapping(value = "recordPrint/{maintainRecordId}/{ids}", method = RequestMethod.GET)
+    public ModelAndView recordPrint(@PathVariable("maintainRecordId")String maintainRecordId,@PathVariable("ids")String ids) {
         logger.info("跳转到维修保养明细打印页面");
         ModelAndView mav = new ModelAndView("backstage/recordPrint");
         // 拿到选中的维修保养记录
@@ -74,8 +74,10 @@ public class BackstageController {
         }
         maintainRecord.setDiscountMoney(disCountMoney);
         maintainRecord.setTotal(money);
-        mav.addObject("maintainRecord", maintainRecord);
-        mav.addObject("maintainDetails", maintainDetails);
+        List<MaintainFixAcc> maintainFixAccs = maintainFixAccService.queryByRecord(ids);// 拿到所有项目配件
+        mav.addObject("maintainFixAccs", maintainFixAccs);// 项目配件
+        mav.addObject("maintainRecord", maintainRecord);// 维修保养记录
+        mav.addObject("maintainDetails", maintainDetails);// 维修保养明细
         return mav;
     }
 

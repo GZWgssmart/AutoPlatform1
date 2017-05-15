@@ -93,6 +93,34 @@ public class PhoneReservationController {
             return null;
         }
     }
+
+    /**
+     * 查询根据当前状态的预约记录
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value="queryByCurrentStatus", method = RequestMethod.GET)
+    public Pager4EasyUI<Appointment> queryByCurrentStatus(HttpSession session, @Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
+        if(SessionUtil.isLogin(session)) {
+            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员";
+            if(RoleUtil.checkRoles(roles)) {
+                logger.info("分页查询所有登记记录");
+                Pager pager = new Pager();
+                pager.setPageNo(Integer.valueOf(pageNumber));
+                pager.setPageSize(Integer.valueOf(pageSize));
+                pager.setTotalRecords(appointmentService.countByCurrentStatus((User)session.getAttribute("user")));
+                pager.setUser((User)session.getAttribute("user"));
+                List<Appointment> appointments = appointmentService.queryByCurrentStatus(pager);
+                return new Pager4EasyUI<Appointment>(pager.getTotalRecords(), appointments);
+            }else{
+                logger.info("此用户无拥有可用登记记录分页查询的角色");
+                return null;
+            }
+        }else{
+            logger.info("请先登录");
+            return null;
+        }
+    }
     /**
      *
      * 添加电话预约

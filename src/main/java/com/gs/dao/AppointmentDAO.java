@@ -1,7 +1,6 @@
 package com.gs.dao;
 
 import com.gs.bean.Appointment;
-import com.gs.bean.Checkin;
 import com.gs.bean.User;
 import com.gs.common.bean.Pager;
 import org.apache.ibatis.annotations.Param;
@@ -28,4 +27,16 @@ public interface AppointmentDAO extends BaseDAO<String, Appointment>{
      * 模糊查询的记录数
      */
     public int countByBlurred(@Param("appointment")Appointment appointment, @Param("user") User user);
+
+    /**
+     * 修改预约当前状态
+     */
+    public void updateCurrentById(@Param("currentStatus")String currentStatus,@Param("appointmentId")String appointmentId);
+
+    /**
+     * 根据当前状态查询预约记录
+     */
+    public List<Appointment> queryByCurrentStatus(Pager pager);
+
+    public int countByCurrentStatus(User user);
 }

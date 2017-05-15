@@ -66,15 +66,6 @@ $("#editCarBrand").change(function(){
     initSelect2("carModel", "请选择车型", "/carModel/queryByBrandId/"+select);
 });
 
-// 激活或禁用
-function showStatusFormatter(value) {
-    if(value == 'Y') {
-        return "是";
-    } else {
-        return "否";
-    }
-
-}
 // 查看全部可用
 function showAvailable() {
     var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽修公司接待员";

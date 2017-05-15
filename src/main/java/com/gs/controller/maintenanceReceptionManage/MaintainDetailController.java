@@ -25,6 +25,7 @@ import javax.servlet.http.HttpSession;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -164,13 +165,14 @@ public class MaintainDetailController {
                 logger.info("用户确认明细清单, 这时生成所有物料清单和工单");
                 if(recordId != null && recordId != "" && ids!= null && ids != "" && tableDataLength!=null && tableDataLength!="") {
                     List<MaintainFixAcc> maintainFixAccs = maintainFixAccService.queryByRecord(ids);
-                    int length = 0;
+                    int length = 0;// 明细中有多少行数据
                     try {
                         length = Integer.valueOf(tableDataLength);
                     }catch (NumberFormatException e){
                         logger.info("明细个数转换异常");
                     }
-                    if(maintainFixAccs.size() > length) {
+                    int maintainHour=0;// 工时
+                    if(maintainFixAccs.size() == length && maintainFixAccs.size() >0) {
                             List<MaterialList> materialLists = new ArrayList<MaterialList>();
                             for (MaintainFixAcc m : maintainFixAccs) {
                                 MaterialList materialList = new MaterialList();
@@ -178,6 +180,7 @@ public class MaintainDetailController {
                                 materialList.setAccId(m.getAccId());
                                 materialList.setMaterialCount(m.getAccCount());
                                 materialLists.add(materialList);
+                                maintainHour+=m.getMaintainFix().getMaintainHour();
                             }
                             materialListService.insertList(materialLists); // 生成物料清单
                             // 用户确认之后, 生成工单, 指派员工进行施工
@@ -187,7 +190,12 @@ public class MaintainDetailController {
                             // 修改维修保养记录
                             // 修改维修保养记录中的开始时间
                             MaintainRecord maintainRecord = maintainRecordService.queryById(recordId);
-                            maintainRecord.setStartTime(new Date());
+                            maintainRecord.setStartTime(new Date());// 增加维修保养开始时间
+                            Date date = new Date();
+                            Calendar now=Calendar.getInstance();
+                            now.setTime(date);
+                            now.add(Calendar.MINUTE,maintainHour*60);
+                            maintainRecord.setEndTime(now.getTime());// 增加维修保养预估结束时间
                             maintainRecord.setCurrentStatus("维修保养中");
                             maintainRecord.setIfConfirm("Y");
                             maintainRecordService.update(maintainRecord);

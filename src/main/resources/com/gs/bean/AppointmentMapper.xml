@@ -110,7 +110,7 @@
     ]]>
   </insert>
 
-  <insert id="update" parameterType="Appointment">
+  <update id="update" parameterType="Appointment">
     <![CDATA[
         UPDATE auto_platform.t_appointment SET userName = #{userName}, userPhone = #{userPhone},
         brandId = #{brandId}, colorId = #{colorId}, modelId = #{modelId}, plateId = #{plateId}, carPlate = #{carPlate},
@@ -118,7 +118,14 @@
          companyId = #{companyId}
          WHERE appointmentId = #{appointmentId}
     ]]>
-  </insert>
+  </update>
+
+  <update id="updateCurrentById">
+    <![CDATA[
+        UPDATE auto_platform.t_appointment SET currentStatus = #{currentStatus} WHERE appointmentId = #{appointmentId}
+    ]]>
+  </update>
+
   <!-- 分页模糊查询 -->
   <select id="blurredQuery" resultMap="appointmentMap" >
     <![CDATA[
@@ -222,5 +229,31 @@
         ]]>
   </update>
 
+  <select id="queryByCurrentStatus" resultMap="appointmentMap" parameterType="com.gs.common.bean.Pager">
+    <![CDATA[
+       select am.*, cc.colorId, cc.colorName, cp.plateId, cp.plateName,
+        cm.modelId, cm.modelName, company.companyId,
+        company.companyName, cb.brandId, cb.brandName from t_appointment am
+       LEFT JOIN t_car_color cc on am.colorId =cc.colorId
+       LEFT JOIN t_car_model cm on am.modelId = cm.modelId
+       LEFT JOIN t_car_plate cp on am.plateId = cp.plateId
+       LEFT JOIN t_company company on am.companyId = company.companyId
+       LEFT JOIN t_car_brand cb on am.brandId = cb.brandId
+       where am.appoitmentStatus = 'Y' and am.currentStatus= '已预约'
+    ]]>
+    <if test="user.companyId != '' and user.companyId != null">
+      and am.companyId = #{user.companyId}
+    </if>
+    order by am.appCreatedTime Desc
+    limit #{beginIndex}, #{pageSize}
+  </select>
 
+  <select id="countByCurrentStatus" resultType="int" parameterType="com.gs.bean.User">
+    <![CDATA[
+      select count(appointmentId) from t_appointment am where am.appoitmentStatus = 'Y' and am.currentStatus= '已预约'
+    ]]>
+    <if test="companyId != '' and companyId != null">
+      and am.companyId = #{companyId}
+    </if>
+  </select>
 </mapper>

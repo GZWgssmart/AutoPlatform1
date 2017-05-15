@@ -116,6 +116,7 @@ public class CheckinController {
                 logger.info("添加登记记录");
                 if(checkin != null) {
                     if(checkin.getAppointmentId()!= null && checkin.getAppointmentId() != ""){
+                        appointmentService.updateCurrentById("登记完",checkin.getAppointmentId());
                     }
                     checkin.setCheckinId(UUIDUtil.uuid());
                     checkin.setCompanyId(user.getCompanyId());
@@ -123,6 +124,7 @@ public class CheckinController {
                     MaintainRecord maintainRecord = new MaintainRecord();
                     maintainRecord.setCheckinId(checkin.getCheckinId());
                     maintainRecord.setCurrentStatus("已登记");
+                    maintainRecord.setRecordDes(checkin.getUserRequests());
                     maintainRecord.setIfConfirm("N");
                     maintainRecordService.insert(maintainRecord);
                     return ControllerResult.getSuccessResult("添加成功");

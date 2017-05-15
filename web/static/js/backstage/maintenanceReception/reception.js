@@ -17,7 +17,7 @@ $(function () {
                 onSwitchChange:function(event,state){
                     if(state==true){
                         app = true;
-                        initTableNotTollbar("appTable", "/appointment/queryByPager");
+                        initTableNotTollbar("appTable", "/appointment/queryByCurrentStatus");
                         $("#appWindow").modal('show');
                     }else if(state==false){
                         app = false;

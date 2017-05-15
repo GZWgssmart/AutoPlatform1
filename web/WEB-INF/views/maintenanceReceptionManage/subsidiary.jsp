@@ -44,6 +44,9 @@
                 <th data-width="90" data-field="checkin.carPlate">
                     车牌号码
                 </th>
+                <th data-width="100" data-field="checkin.maintainOrFix">
+                    保养&nbsp;|&nbsp;维修
+                </th>
                 <th data-width="90" data-field="checkin.ifClearCar" data-formatter="showYesOrNoFormatter">
                     是否洗车
                 </th>
@@ -53,23 +56,22 @@
                 <th data-width="150" data-field="checkin.intactDegrees">
                     汽车完好度描述
                 </th>
-                <th data-width="150" data-field="checkin.userRequests">
-                    用户要求描述
-                </th>
-                <th data-width="100" data-field="checkin.maintainOrFix">
-                    保养&nbsp;|&nbsp;维修
+                <th data-width="150" data-field="recordDes">
+                    维修保养记录描述
                 </th>
                 <th data-width="160" data-field="startTime" data-formatter="formatterDate">维修保养开始时间</th>
                 <th data-width="190" data-field="endTime" data-formatter="formatterDate">维修保养预估结束时间</th>
                 <th data-width="190" data-field="actualEndTime" data-formatter="formatterDate">维修保养实际结束时间</th>
                 <th data-width="190" data-field="recordCreatedTime" data-formatter="formatterDate">维修保养记录创建时间</th>
                 <th data-width="190" data-field="pickupTime" data-formatter="formatterDate">维修保养车主提车时间</th>
-                <th data-width="160" data-field="recordDes">维修保养记录描述</th>
                 <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员">
                     <th data-width="110" data-field="checkin.company.companyName">
                         汽车公司
                     </th>
                 </shiro:hasAnyRoles>
+                <th data-width="100" data-hide="all" data-field="currentStatus">
+                    当前状态
+                </th>
                 <th data-width="90" data-field="recordStatus" data-formatter="showStatusFormatter">
                     记录状态
                 </th>

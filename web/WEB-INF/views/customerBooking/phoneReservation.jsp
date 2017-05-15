@@ -61,6 +61,9 @@
                     汽修公司
                 </th>
                 </shiro:hasAnyRoles>
+                <th data-width="100" data-hide="all" data-field="currentStatus">
+                    当前状态
+                </th>
                 <th data-width="100" data-hide="all" data-field="appoitmentStatus" data-formatter="showStatusFormatter">
                     记录状态
                 </th>
@@ -195,9 +198,9 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">到店时间：</label>
+                            <label class="col-sm-3 control-label">预估到店时间：</label>
                             <div class="col-sm-7">     <!-- 当设置不可编辑后, 会修改颜色, 在min.css里搜索.form-control{background-color:#eee;opacity:1} -->
-                                <input id="addArriveTime" placeholder="请选择到店时间" onclick="getDate('addArriveTime')" readonly="true" type="text" name="arriveTime"
+                                <input id="addArriveTime" placeholder="请选择预估到店时间" onclick="getDate('addArriveTime')" readonly="true" type="text" name="arriveTime"
                                        class="form-control datetimepicker"/>
                             </div>
                         </div>
@@ -282,9 +285,9 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">到店时间：</label>
+                    <label class="col-sm-3 control-label">预估到店时间：</label>
                     <div class="col-sm-7">     <!-- 当设置不可编辑后, 会修改颜色, 在min.css里搜索.form-control{background-color:#eee;opacity:1} -->
-                        <input id="editArriveTime" placeholder="请选择到店时间" readonly="true" type="text" name="arriveTime" define="appointment.arriveTime"
+                        <input id="editArriveTime" placeholder="请选择预估到店时间" readonly="true" type="text" name="arriveTime" define="appointment.arriveTime"
                                class="form-control datetimepicker"/>
                     </div>
                 </div>

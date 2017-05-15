@@ -25,7 +25,7 @@
   </resultMap>
 
   <select id="queryByRecord" resultMap="maintainFixAccMap">
-    select * from t_maintain_fix_acc where maintainId in (${fixId})
+    select mfa.*,mf.*,a.* from t_maintain_fix_acc mfa,t_maintain_fix mf, t_accessories a where mfa.maintainId = mf.maintainId and mfa.accId = a.accId and mfa.maintainId in (${fixId})
   </select>
 
   <select id="queryByDetailsByPager" resultMap="maintainFixAccMap" parameterType="com.gs.common.bean.Pager">
