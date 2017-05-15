@@ -47,4 +47,11 @@ public interface UserService extends BaseService<String, User> {
 
     public int updIcon(String userId,String userIcon);
 
+    /**
+     * 根据roleName查询人员基本信息
+     * @param roleName
+     * @return
+     */
+    public User queryByRoleName(String roleName);
+
 }
