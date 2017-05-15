@@ -10,6 +10,15 @@ function showStatusFormatter(value) {
     }
 }
 
+function showYesOrNoFormatter(value) {
+    if(value == 'Y') {
+        return "是";
+    } else {
+        return "否";
+    }
+}
+
+
 // 初始化带有分秒的时间框
 function initDateTimePicker(formId, fieldName){
     $(".datetimepicker").datetimepicker({

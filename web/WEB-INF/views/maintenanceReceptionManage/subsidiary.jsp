@@ -44,7 +44,7 @@
                 <th data-width="90" data-field="checkin.carPlate">
                     车牌号码
                 </th>
-                <th data-width="90" data-field="checkin.ifClearCar" data-formatter="showStatusFormatter">
+                <th data-width="90" data-field="checkin.ifClearCar" data-formatter="showYesOrNoFormatter">
                     是否洗车
                 </th>
                 <th data-width="150" data-field="checkin.carThings">

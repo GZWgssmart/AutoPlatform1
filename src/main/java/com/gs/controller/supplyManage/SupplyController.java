@@ -135,7 +135,7 @@ public class SupplyController {
     @RequestMapping(value = "addSupply", method = RequestMethod.POST)
     public ControllerResult addSupply(HttpSession session,Supply supply) {
         if(SessionUtil.isLogin(session)) {
-            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员";
+            String roles = "公司超级管理员,公司普通管理员";
             if (RoleUtil.checkRoles(roles)) {
                 User user = (User)session.getAttribute("user");
                 logger.info("添加供应商记录");
@@ -167,7 +167,7 @@ public class SupplyController {
     @RequestMapping(value = "updateSupply", method = RequestMethod.POST)
     public ControllerResult updateSupply(HttpSession session,Supply supply) {
         if(SessionUtil.isLogin(session)) {
-            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员";
+            String roles = "公司超级管理员,公司普通管理员";
             if (RoleUtil.checkRoles(roles)) {
                 logger.info("修改供应商记录");
                 if (supply != null && !supply.equals("")) {
@@ -197,7 +197,7 @@ public class SupplyController {
     @RequestMapping(value = "statusOperate",method = RequestMethod.POST)
     public ControllerResult inactive(HttpSession session,String id,String status){
         if(SessionUtil.isLogin(session)) {
-            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员";
+            String roles = "公司超级管理员,公司普通管理员";
             if (RoleUtil.checkRoles(roles)) {
                 if (id != null && !id.equals("") && status != null && !status.equals("")) {
                     if (status.equals("N")) {

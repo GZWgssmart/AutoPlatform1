@@ -369,9 +369,8 @@
                         <a href="javascript:;" class="active J_menuTab" data-id="/backstage/home">首页</a>
                     </div>
                 </nav>
-                <button class="roll-nav roll-right J_tabRight" style="padding:0; margin:0;"><i class="fa fa-forward"></i>
+                <button class="roll-nav roll-right" style="padding:0; margin:0;"><i class="fa fa-forward"></i>
                 </button>
-                <a href="login.html" class="roll-nav roll-right J_tabExit"><i class="fa fa fa-sign-out"></i> 退出</a>
             </div>
             <div class="row J_mainContent" id="content-main" style="height:84%;">
                 <iframe id="j_iframe" class="J_iframe" name="iframe0" width="100%" height="100%" src="/backstage/home" frameborder="0" data-id="/backstage/home" seamless></iframe>

@@ -17,26 +17,28 @@
 
 <div class="container">
     <div class="panel-body" style="padding-bottom:0px;"  >
-        <table id="table">
+        <table id="table" style="table-layout: fixed">
             <thead>
             <tr>
                 <th data-radio="true"></th>
-                <th data-field="supplyTypeName">供应商类型名称</th>
-                <th data-field="company.companyName">供应商类型所属公司</th>
-                <th data-field="supplyTypeDes">供应商类型描述内容</th>
-                <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员">
-                    <th data-width="12%" data-field="supplyTypeStatus" data-formatter="statusFormatter">记录状态</th>
+                <th data-width="140" data-field="supplyTypeName">供应商类型名称</th>
+                <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员">
+                    <th data-width="180" data-field="company.companyName">供应商类型所属公司</th>
+                </shiro:hasAnyRoles>
+                <th data-width="180" data-field="supplyTypeDes">供应商类型描述内容</th>
+                <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员">
+                    <th data-width="100" data-field="supplyTypeStatus" data-formatter="statusFormatter">记录状态</th>
                 </shiro:hasAnyRoles>
             </tr>
             </thead>
         </table>
         <div id="toolbar" class="btn-group">
-            <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员">
+            <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员">
                 <button id="btn_add" type="button" class="btn btn-default" onclick="showAdd();">
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
                 </button>
             </shiro:hasAnyRoles>
-            <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员">
+            <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员">
                 <button id="btn_edit" type="button" class="btn btn-default" onclick="showEdit();">
                     <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
                 </button>
