@@ -185,44 +185,44 @@ public class PhoneReservationController {
      */
     @ResponseBody
     @RequestMapping(value="blurredQuery", method = RequestMethod.GET)
-    public Pager4EasyUI<Appointment> blurredQuery(HttpSession session,HttpServletRequest request, @Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
-        if (SessionUtil.isLogin(session)) {
-            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽修公司接待员";
-            if (RoleUtil.checkRoles(roles)) {
-                logger.info("预约记录模糊查询");
+    public Pager4EasyUI<Appointment> blurredQuery(HttpSession session, HttpServletRequest request, @Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
+        if(SessionUtil.isLogin(session)) {
+            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员";
+            if(RoleUtil.checkRoles(roles)) {
+                logger.info("登记记录模糊查询");
                 Pager pager = new Pager();
                 pager.setPageNo(Integer.valueOf(pageNumber));
                 pager.setPageSize(Integer.valueOf(pageSize));
                 pager.setUser((User)session.getAttribute("user"));
                 String text = request.getParameter("text");
                 String value = request.getParameter("value");
-                if (text != null && text != "" && value != null && value != "") {
+                if(text != null && text!="" && value != null && value != "") {
                     List<Appointment> appointments = null;
                     Appointment appointment = new Appointment();
-                    if (text.equals("车主姓名/车主电话/汽车公司/汽车车牌号")) { // 当多种模糊搜索条件时
+                    if(text.equals("车主/电话/汽车公司/车牌号")){ // 当多种模糊搜索条件时
                         appointment.setUserName(value);
                         appointment.setCompanyId(value);
                         appointment.setCarPlate(value);
                         appointment.setUserPhone(value);
-                    } else if (text.equals("车主姓名")) {
+                    }else if(text.equals("车主")){
                         appointment.setUserName(value);
-                    } else if (text.equals("汽车公司")) {
+                    }else if(text.equals("汽车公司")){
                         appointment.setCompanyId(value);
-                    } else if (text.equals("汽车车牌号")) {
+                    }else if(text.equals("车牌号")){
                         appointment.setCarPlate(value);
-                    } else if (text.equals("车主电话")) {
+                    }else if(text.equals("电话")){
                         appointment.setUserPhone(value);
                     }
                     appointments = appointmentService.blurredQuery(pager, appointment);
                     pager.setTotalRecords(appointmentService.countByBlurred(appointment,(User)session.getAttribute("user")));
                     return new Pager4EasyUI<Appointment>(pager.getTotalRecords(), appointments);
-                } else {
+                }else{ // 当在模糊查询输入框中输入的值为空时, 使它查询全部
                     pager.setTotalRecords(appointmentService.count((User)session.getAttribute("user")));
                     List<Appointment> appointments = appointmentService.queryByPager(pager);
                     return new Pager4EasyUI<Appointment>(pager.getTotalRecords(), appointments);
                 }
-            }else {
-                logger.info("此用户无拥有此方法角色");
+            }else{
+                logger.info("此用户无拥有查看登记记录模糊查询方法的角色");
                 return null;
             }
         }else{

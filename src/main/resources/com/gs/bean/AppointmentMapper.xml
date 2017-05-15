@@ -81,7 +81,7 @@
       limit #{beginIndex}, #{pageSize}
   </select>
 
-  <select id="count" resultType="int" >
+  <select id="count" resultType="int" parameterType="com.gs.bean.User">
     <![CDATA[
       select count(appointmentId) from t_appointment am where am.appoitmentStatus = 'Y'
     ]]>
@@ -90,7 +90,7 @@
     </if>
   </select>
 
-  <select id="countByDisable" resultType="int" >
+  <select id="countByDisable" resultType="int" parameterType="com.gs.bean.User">
     <![CDATA[
       select count(appointmentId) from t_appointment am where am.appoitmentStatus = 'N'
     ]]>

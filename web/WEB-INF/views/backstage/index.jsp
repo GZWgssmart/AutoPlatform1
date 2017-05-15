@@ -155,9 +155,6 @@
                             <li>
                                 <a class="J_menuItem" href="/customerBooking/phoneReservation">电话预约</a>
                             </li>
-                            <li>
-                                <a class="J_menuItem" href="/customerBooking/weChatReservation">微信预约</a>
-                            </li>
                         </ul>
                     </li>
                     <li>
