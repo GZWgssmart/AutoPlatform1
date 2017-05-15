@@ -10,9 +10,6 @@
     <meta http-equiv="Cache-Control" content="no-siteapp" />
     <title>汽车维修保养系统</title>
 
-    <meta name="keywords" content="H+后台主题,后台bootstrap框架,会员中心主题,后台HTML,响应式后台">
-    <meta name="description" content="H+是一个完全响应式，基于Bootstrap3最新版本开发的扁平化主题，她采用了主流的左右两栏式布局，使用了Html5+CSS3等现代技术">
-
     <!--[if lt IE 9]>
     <meta http-equiv="refresh" content="0;ie.html" />
     <![endif]-->
@@ -75,96 +72,98 @@
                     <%--<li>--%>
                         <%--<a class="J_menuItem" href="/error/serverError">500</a>--%>
                     <%--</li>--%>
-                    <li>
-                        <a href="#">
-                            <i class="fa fa-home"></i>
-                            <span class="nav-label">基础信息管理</span>
-                            <span class="fa arrow"></span>
-                        </a>
-                        <ul class="nav nav-second-level">
-                        <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员">
-                            <li>
-                                <a class="J_menuItem" href="/basicInfo/companyInfo" data-index="0">公司信息管理</a>
-                            </li>
-                        </shiro:hasAnyRoles>
-                        <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师,汽车公司学徒,汽车公司销售人员,汽车公司财务人员,汽车公司采购人员,汽车公司库管人员,汽车公司人力资源管理部">
-                            <li>
-                                <a class="J_menuItem" href="/basicInfo/carBrand">汽车品牌管理</a>
-                            </li>
-                            <li>
-                                <a class="J_menuItem" href="/basicInfo/carModel">车型管理</a>
-                            </li>
-                            <li>
-                                <a class="J_menuItem" href="/basicInfo/carColor">汽车颜色管理</a>
-                            </li>
-                            <li>
-                                <a class="J_menuItem" href="/basicInfo/carPlate" target="_blank">车牌管理</a>
-                            </li>
-                            <li>
-                                <a class="J_menuItem" href="/basicInfo/upkeepItem" target="_blank">保养项目管理</a>
-                            </li>
-                            <li>
-                                <a class="J_menuItem" href="/basicInfo/fixItem" target="_blank">维修项目管理</a>
-                            </li>
-                        </shiro:hasAnyRoles>
-                        </ul>
-                    </li>
-
-                    <li>
-                        <a href="#">
-                            <i class="fa fa-user"></i>
-                            <span class="nav-label">&nbsp;人员管理</span>
-                            <span class="fa arrow"></span>
-                        </a>
-                        <ul class="nav nav-second-level">
-                            <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司人力资源管理部">
+                    <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师,汽车公司学徒,汽车公司销售人员,汽车公司财务人员,汽车公司采购人员,汽车公司库管人员,汽车公司人力资源管理部">
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-home"></i>
+                                <span class="nav-label">基础信息管理</span>
+                                <span class="fa arrow"></span>
+                            </a>
+                            <ul class="nav nav-second-level">
+                            <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员">
                                 <li>
-                                    <a class="J_menuItem" href="/emp/empInformation">人员基本信息管理</a>
-                                </li>
-                            </shiro:hasAnyRoles>
-                            <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师,汽车公司学徒,汽车公司销售人员,汽车公司财务人员,汽车公司采购人员,汽车公司库管人员,汽车公司人力资源管理部">
-                                <li>
-                                    <a class="J_menuItem" href="/emp/empWages">工资管理</a>
+                                    <a class="J_menuItem" href="/basicInfo/companyInfo" data-index="0">公司信息管理</a>
                                 </li>
                             </shiro:hasAnyRoles>
                             <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师,汽车公司学徒,汽车公司销售人员,汽车公司财务人员,汽车公司采购人员,汽车公司库管人员,汽车公司人力资源管理部">
                                 <li>
-                                    <a class="J_menuItem" href="/emp/workInfo">工单查询</a>
-                                </li>
-                            </shiro:hasAnyRoles>
-                        </ul>
-                    </li>
-
-                    <li>
-                        <a href="#"><i class="fa fa-users"></i> <span class="nav-label">供应商管理</span><span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员">
-                                <li>
-                                    <a class="J_menuItem" href="/supplier/supplierType">供应商类型管理</a>
+                                    <a class="J_menuItem" href="/basicInfo/carBrand">汽车品牌管理</a>
                                 </li>
                                 <li>
-                                    <a class="J_menuItem" href="/supplier/supplierInformation">供应商管理</a>
+                                    <a class="J_menuItem" href="/basicInfo/carModel">车型管理</a>
+                                </li>
+                                <li>
+                                    <a class="J_menuItem" href="/basicInfo/carColor">汽车颜色管理</a>
+                                </li>
+                                <li>
+                                    <a class="J_menuItem" href="/basicInfo/carPlate" target="_blank">车牌管理</a>
+                                </li>
+                                <li>
+                                    <a class="J_menuItem" href="/basicInfo/upkeepItem" target="_blank">保养项目管理</a>
+                                </li>
+                                <li>
+                                    <a class="J_menuItem" href="/basicInfo/fixItem" target="_blank">维修项目管理</a>
                                 </li>
                             </shiro:hasAnyRoles>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa fa-cubes"></i> <span class="nav-label">配件管理</span><span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员">
-                                <li><a class="J_menuItem" href="/accessories/type">配件分类管理</a>
-                                </li>
-                            </shiro:hasAnyRoles>
-                            <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司采购人员">
-                                <li><a class="J_menuItem" href="/accessories/accessories">配件库存管理</a>
-                                </li>
-                                <li><a class="J_menuItem" href="/accessories/buy">配件采购管理</a>
-                                </li>
-                                <li><a class="J_menuItem" href="/accessories/sale">配件销售管理</a>
-                                </li>
-                            </shiro:hasAnyRoles>
-                        </ul>
-                    </li>
+                            </ul>
+                        </li>
+                    </shiro:hasAnyRoles>
+                    <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师,汽车公司学徒,汽车公司销售人员,汽车公司财务人员,汽车公司采购人员,汽车公司库管人员,汽车公司人力资源管理部">
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-user"></i>
+                                <span class="nav-label">&nbsp;人员管理</span>
+                                <span class="fa arrow"></span>
+                            </a>
+                            <ul class="nav nav-second-level">
+                                <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司人力资源管理部">
+                                    <li>
+                                        <a class="J_menuItem" href="/emp/empInformation">人员基本信息管理</a>
+                                    </li>
+                                </shiro:hasAnyRoles>
+                                <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师,汽车公司学徒,汽车公司销售人员,汽车公司财务人员,汽车公司采购人员,汽车公司库管人员,汽车公司人力资源管理部">
+                                    <li>
+                                        <a class="J_menuItem" href="/emp/empWages">工资管理</a>
+                                    </li>
+                                </shiro:hasAnyRoles>
+                                <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师,汽车公司学徒,汽车公司销售人员,汽车公司财务人员,汽车公司采购人员,汽车公司库管人员,汽车公司人力资源管理部">
+                                    <li>
+                                        <a class="J_menuItem" href="/emp/workInfo">工单查询</a>
+                                    </li>
+                                </shiro:hasAnyRoles>
+                            </ul>
+                        </li>
+                    </shiro:hasAnyRoles>
+                    <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员">
+                        <li>
+                            <a href="#"><i class="fa fa-users"></i> <span class="nav-label">供应商管理</span><span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                    <li>
+                                        <a class="J_menuItem" href="/supplier/supplierType">供应商类型管理</a>
+                                    </li>
+                                    <li>
+                                        <a class="J_menuItem" href="/supplier/supplierInformation">供应商管理</a>
+                                    </li>
+                            </ul>
+                        </li>
+                    </shiro:hasAnyRoles>
+                    <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司采购人员">
+                        <li>
+                            <a href="#"><i class="fa fa-cubes"></i> <span class="nav-label">配件管理</span><span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员">
+                                    <li><a class="J_menuItem" href="/accessories/type">配件分类管理</a>
+                                    </li>
+                                </shiro:hasAnyRoles>
+                                    <li><a class="J_menuItem" href="/accessories/accessories">配件库存管理</a>
+                                    </li>
+                                    <li><a class="J_menuItem" href="/accessories/buy">配件采购管理</a>
+                                    </li>
+                                    <li><a class="J_menuItem" href="/accessories/sale">配件销售管理</a>
+                                    </li>
+                            </ul>
+                        </li>
+                    </shiro:hasAnyRoles>
                     <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员">
                         <li>
                             <a href="#"><i class="fa fa-phone"></i> <span class="nav-label">&nbsp;维修保养预约</span><span class="fa arrow"></span></a>
@@ -176,28 +175,30 @@
                             </ul>
                         </li>
                     </shiro:hasAnyRoles>
+                    <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师">
                     <li>
                         <a href="#"><i class="fa fa-car"></i> <span class="nav-label">维修保养接待</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员">
                                 <li><a class="J_menuItem" href="/maintenanceReception/reception">接待登记管理</a></li>
                             </shiro:hasAnyRoles>
-                            <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师">
                                 <li><a class="J_menuItem" href="/maintenanceReception/subsidiary">维修保养明细管理</a></li>
-                            </shiro:hasAnyRoles>
                         </ul>
                     </li>
-                    <li>
-                        <a href="#"><i class="fa fa-ambulance"></i> <span class="nav-label">派工领料管理</span><span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
+                    </shiro:hasAnyRoles>
+                    <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司库管人员,汽车公司总技师">
+                        <li>
+                            <a href="#"><i class="fa fa-ambulance"></i> <span class="nav-label">派工领料管理</span><span class="fa arrow"></span></a>
+                                <ul class="nav nav-second-level">
                             <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司库管人员">
-                                <li><a class="J_menuItem" href="pickingControll/materialsIndex">物料清单</a></li>
-                            </shiro:hasAnyRoles>
-                            <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司总技师">
-                                <li><a class="J_menuItem" href="pickingControll/assignstaffIndex">指派员工</a></li>
-                            </shiro:hasAnyRoles>
-                        </ul>
-                    </li>
+                                    <li><a class="J_menuItem" href="pickingControll/materialsIndex">物料清单</a></li>
+                                </shiro:hasAnyRoles>
+                                <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司总技师">
+                                    <li><a class="J_menuItem" href="pickingControll/assignstaffIndex">指派员工</a></li>
+                                </shiro:hasAnyRoles>
+                            </ul>
+                        </li>
+                    </shiro:hasAnyRoles>
                     <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师">
                         <li>
                             <a href="#"><i class="fa fa-wrench"></i> <span class="nav-label">车辆维修保养</span><span class="fa arrow"></span></a>
