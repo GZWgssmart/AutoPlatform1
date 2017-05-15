@@ -54,6 +54,6 @@ public interface UserDAO extends BaseDAO<String, User>{
      * @param roleName
      * @return
      */
-    public User queryByRoleName(String roleName);
+    public List<User> queryByRoleName(String roleName);
 
 }

@@ -111,7 +111,7 @@ public class MessageSendController {
             String roles = "公司超级管理员,公司普通管理员,汽车公司接待员";
             if (RoleUtil.checkRoles(roles)) {
                 logger.info("查看用户");
-                List<User> users = userService.queryAll((User) session.getAttribute("user"));
+                List<User> users = userService.queryByRoleName("公司超级管理员");
                 List<ComboBox4EasyUI> combo = new ArrayList<ComboBox4EasyUI>();
                 for (User user : users) {
                     ComboBox4EasyUI co = new ComboBox4EasyUI();

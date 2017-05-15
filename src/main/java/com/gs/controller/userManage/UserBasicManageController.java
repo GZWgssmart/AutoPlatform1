@@ -323,7 +323,7 @@ public class UserBasicManageController {
 
     @ResponseBody
     @RequestMapping(value = "queryByRoleName", method = RequestMethod.POST)
-    public User queryByRoleName(@Param("roleName") String roleName) {
+    public List<User> queryByRoleName(@Param("roleName") String roleName) {
         logger.info("根据roleName查询该roleName的详细信息");
         return userService.queryByRoleName(roleName);
     }

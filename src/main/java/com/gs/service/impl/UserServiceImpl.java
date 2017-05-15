@@ -151,7 +151,7 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
-    public User queryByRoleName(String roleName) {
+    public List<User> queryByRoleName(String roleName) {
         return userDAO.queryByRoleName(roleName);
     }
 }

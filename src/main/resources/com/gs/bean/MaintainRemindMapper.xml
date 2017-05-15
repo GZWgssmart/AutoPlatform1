@@ -12,10 +12,10 @@
     <result column="companyId" property="companyId" jdbcType="VARCHAR" />
     <result column="remindCreatedTime" property="remindCreatedTime" jdbcType="TIMESTAMP" />
 
-    <!--<association property="user" javaType="com.gs.bean.User">-->
-      <!--<id column="user_id" property="userId"></id>-->
-      <!--<result column="user_name" property="userName"></result>-->
-    <!--</association>-->
+    <association property="user" javaType="com.gs.bean.User">
+      <id column="user_id" property="userId"></id>
+      <result column="user_name" property="userName"></result>
+    </association>
 
   </resultMap>
 

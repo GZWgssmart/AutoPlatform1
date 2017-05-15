@@ -52,6 +52,6 @@ public interface UserService extends BaseService<String, User> {
      * @param roleName
      * @return
      */
-    public User queryByRoleName(String roleName);
+    public List<User> queryByRoleName(String roleName);
 
 }
