@@ -67,7 +67,7 @@
                 <th data-width="100" data-hide="all" data-field="appoitmentStatus" data-formatter="showStatusFormatter">
                     记录状态
                 </th>
-                <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽修公司接待员">
+                <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽修公司接待员">
                     <th data-width="100" data-hide="all" data-field="appoitmentStatus" data-formatter="statusFormatter">
                         操作
                     </th>
@@ -100,14 +100,14 @@
                 <div class="input-group" style="width:350px;float:left;padding:0;margin:0 0 0 -1px;">
                     <div class="input-group-btn">
                         <button type="button" id="ulButton" class="btn btn-default" style="border-radius:0px;"
-                                data-toggle="dropdown">车主/电话<shiro:hasAnyRoles name="系统超级管理员,系统普通管理员">/汽车公司</shiro:hasAnyRoles>/车牌号<span class="caret"></span></button>
+                                data-toggle="dropdown">车主/电话<shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员">/汽车公司</shiro:hasAnyRoles>/车牌号<span class="caret"></span></button>
                         <ul class="dropdown-menu pull-right">
-                            <li><a onclick="onclikLi(this)">车主/电话<shiro:hasAnyRoles name="系统超级管理员,系统普通管理员">/汽车公司</shiro:hasAnyRoles>/车牌号</a></li>
+                            <li><a onclick="onclikLi(this)">车主/电话<shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员">/汽车公司</shiro:hasAnyRoles>/车牌号</a></li>
                             <li class="divider"></li>
                             <li><a onclick="onclikLi(this)">车主</a></li>
                             <li class="divider"></li>
                             <li><a onclick="onclikLi(this)">电话</a></li>
-                            <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员">
+                            <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员">
                                 <li class="divider"></li>
                                 <li><a onclick="onclikLi(this)">汽车公司</a></li>
                             </shiro:hasAnyRoles>

@@ -58,7 +58,7 @@ public class PhoneReservationController {
                  List<Appointment> appointments = appointmentService.queryByPager(pager);
                  return new Pager4EasyUI<Appointment>(pager.getTotalRecords(), appointments);
              }else {
-                 logger.info("此用户无拥有此方法角色");
+                 logger.info("此用户无拥有可用登记记录分页查询的角色");
                  return null;
              }
         } else {
@@ -85,7 +85,7 @@ public class PhoneReservationController {
                 List<Appointment> appointments = appointmentService.queryByPagerDisable(pager);
                 return new Pager4EasyUI<Appointment>(pager.getTotalRecords(), appointments);
             } else{
-                logger.info("此用户无拥有此方法角色");
+                logger.info("此用户无拥有禁用登记记录分页查询的角色");
                 return null;
             }
         }else {
@@ -114,7 +114,7 @@ public class PhoneReservationController {
                     return ControllerResult.getFailResult("添加电话预约失败");
                 }
             } else {
-                logger.info("此用户无拥有此方法角色");
+                logger.info("此用户无拥有添加电话预约记录的角色");
                 return null;
             }
         }else {
@@ -139,7 +139,7 @@ public class PhoneReservationController {
                 appointmentService.update(appointment);
                 return ControllerResult.getSuccessResult("修改电话预约成功");
             } else {
-                logger.info("此用户无拥有此方法角色");
+                logger.info("此用户无拥有修改电话预约记录的角色");
                 return null;
             }
         } else {
@@ -171,7 +171,7 @@ public class PhoneReservationController {
                     return ControllerResult.getFailResult("操作失败");
                 }
             }else {
-                logger.info("此用户无拥有此方法角色");
+                logger.info("此用户无拥有激活或禁用状态的角色");
                 return null;
             }
         }else{
@@ -200,17 +200,19 @@ public class PhoneReservationController {
                 if(text != null && text!="" && value != null && value != "") {
                     List<Appointment> appointments = null;
                     Appointment appointment = new Appointment();
-                    if(text.equals("车主/电话/车牌")){ // 当多种模糊搜索条件时
+                    if(text.equals("车主/电话/汽车公司/车牌号")){ // 当多种模糊搜索条件时
                         appointment.setUserName(value);
                         appointment.setCompanyId(value);
-                        appointment.setUserPhone(value);
                         appointment.setCarPlate(value);
+                        appointment.setUserPhone(value);
                     }else if(text.equals("车主")){
                         appointment.setUserName(value);
+                    }else if(text.equals("汽车公司")){
+                        appointment.setCompanyId(value);
+                    }else if(text.equals("车牌号")){
+                        appointment.setCarPlate(value);
                     }else if(text.equals("电话")){
                         appointment.setUserPhone(value);
-                    }else if(text.equals("车牌")){
-                        appointment.setCarPlate(value);
                     }
                     appointments = appointmentService.blurredQuery(pager, appointment);
                     pager.setTotalRecords(appointmentService.countByBlurred(appointment,(User)session.getAttribute("user")));
@@ -221,7 +223,7 @@ public class PhoneReservationController {
                     return new Pager4EasyUI<Appointment>(pager.getTotalRecords(), appointments);
                 }
             }else{
-                logger.info("此用户无拥有查看登记记录模糊查询方法的角色");
+                logger.info("此用户无拥有查看电话预约记录模糊查询方法的角色");
                 return null;
             }
         }else{
