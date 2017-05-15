@@ -145,7 +145,7 @@
            <if test="pager.user.companyId != '' and pager.user.companyId != null">
               and ck.companyId = #{pager.user.companyId}
             </if>
-            and
+            and(
             <if test="checkin.userName != '' and checkin.userName != null">
               ck.userName like '%${checkin.userName}%'
             </if>
@@ -156,7 +156,7 @@
             <if test="checkin.companyId != '' and checkin.companyId != null">
               company.companyName like '%${checkin.companyId}%'
             </if>
-            <if test="checkin.companyId != '' and checkin.companyId != null and
+            <if test="checkin.userName != '' and checkin.userName != null and
             checkin.carPlate != '' and checkin.carPlate != null">
               or
             </if>
@@ -170,7 +170,7 @@
             <if test="checkin.userPhone != '' and checkin.userPhone != null">
               ck.userPhone like '%${checkin.userPhone}%'
             </if>
-           order by ck.checkinCreatedTime Desc
+            ) order by ck.checkinCreatedTime Desc
            limit #{pager.beginIndex}, #{pager.pageSize}
   </select>
 
@@ -189,18 +189,18 @@
       <if test="user.companyId != '' and user.companyId != null">
               and ck.companyId = #{user.companyId}
       </if>
-      and
-      <if test="checkin.userName != '' and checkin.userName != null">
-        ck.userName like '%${checkin.userName}%'
+      and(
+      <if test="checkin.userName != '' and checkin.userName != null">ck.userName like '%${checkin.userName}%'
       </if>
       <if test="checkin.userName != '' and checkin.userName != null and
       checkin.companyId != '' and checkin.companyId != null">
         or
       </if>
       <if test="checkin.companyId != '' and checkin.companyId != null">
-        company.companyName like '%${checkin.companyId}%'
+          company
+          .companyName like '%${checkin.companyId}%'
       </if>
-      <if test="checkin.companyId != '' and checkin.companyId != null and
+      <if test="checkin.userName != '' and checkin.userName != null and
       checkin.carPlate != '' and checkin.carPlate != null">
         or
       </if>
@@ -213,7 +213,7 @@
       </if>
       <if test="checkin.userPhone != '' and checkin.userPhone != null">
         ck.userPhone like '%${checkin.userPhone}%'
-      </if>
+      </if>)
   </select>
 
   <!--冻结数据-->

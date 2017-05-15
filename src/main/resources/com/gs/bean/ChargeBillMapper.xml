@@ -214,7 +214,7 @@
     <if test="pager.user.companyId != '' and pager.user.companyId != null">
       and ck.companyId = #{pager.user.companyId}
     </if>
-    and
+    and(
     <if test="chargeBill.maintainRecord.checkin.userName != '' and chargeBill.maintainRecord.checkin.userName != null">
       ck.userName like '%${chargeBill.maintainRecord.checkin.userName}%'
     </if>
@@ -225,7 +225,7 @@
     <if test="chargeBill.maintainRecord.checkin.companyId != '' and chargeBill.maintainRecord.checkin.companyId != null">
       company.companyName like '%${chargeBill.maintainRecord.checkin.companyId}%'
     </if>
-    <if test="chargeBill.maintainRecord.checkin.companyId != '' and chargeBill.maintainRecord.checkin.companyId != null and
+    <if test="chargeBill.maintainRecord.checkin.userName != '' and chargeBill.maintainRecord.checkin.userName != null and
             chargeBill.maintainRecord.checkin.carPlate != '' and chargeBill.maintainRecord.checkin.carPlate != null">
       or
     </if>
@@ -239,7 +239,7 @@
     <if test="chargeBill.maintainRecord.checkin.userPhone != '' and chargeBill.maintainRecord.checkin.userPhone != null">
       ck.userPhone like '%${chargeBill.maintainRecord.checkin.userPhone}%'
     </if>
-    order by ck.checkinCreatedTime Desc
+    ) order by ck.checkinCreatedTime Desc
     limit #{pager.beginIndex}, #{pager.pageSize}
   </select>
 
@@ -260,7 +260,7 @@
     <if test="user.companyId != '' and user.companyId != null">
       and ck.companyId = #{user.companyId}
     </if>
-    and
+    and(
     <if test="chargeBill.maintainRecord.checkin.userName != '' and chargeBill.maintainRecord.checkin.userName != null">
       ck.userName like '%${chargeBill.maintainRecord.checkin.userName}%'
     </if>
@@ -271,7 +271,7 @@
     <if test="chargeBill.maintainRecord.checkin.companyId != '' and chargeBill.maintainRecord.checkin.companyId != null">
       company.companyName like '%${chargeBill.maintainRecord.checkin.companyId}%'
     </if>
-    <if test="chargeBill.maintainRecord.checkin.companyId != '' and chargeBill.maintainRecord.checkin.companyId != null and
+    <if test="chargeBill.maintainRecord.checkin.userName != '' and chargeBill.maintainRecord.checkin.userName != null and
             chargeBill.maintainRecord.checkin.carPlate != '' and chargeBill.maintainRecord.checkin.carPlate != null">
       or
     </if>
@@ -284,6 +284,6 @@
     </if>
     <if test="chargeBill.maintainRecord.checkin.userPhone != '' and chargeBill.maintainRecord.checkin.userPhone != null">
       ck.userPhone like '%${chargeBill.maintainRecord.checkin.userPhone}%'
-    </if>
+    </if>)
   </select>
 </mapper>

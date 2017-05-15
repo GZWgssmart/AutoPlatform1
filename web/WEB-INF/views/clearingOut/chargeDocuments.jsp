@@ -42,6 +42,11 @@
                 <th data-width="180" data-field="chargeTime" data-formatter="formatterDate">收费时间</th>
                 <th data-width="180" data-field="chargeCreatedTime" data-formatter="formatterDate">收费单据创建时间</th>
                 <th data-width="130" data-field="chargeBillDes">收费单据描述</th>
+                <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员">
+                    <th data-width="110" data-field="maintainRecord.checkin.company.companyName">
+                        汽车公司
+                    </th>
+                </shiro:hasAnyRoles>
                 <th data-width="130" data-field="chargeBillStatus" data-formatter="showStatusFormatter">收费单据状态</th>
             <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司接待员">
                 <th data-width="90" data-field="chargeBillStatus" data-formatter="statusFormatter">操作</th>
@@ -79,15 +84,17 @@
                         <div class="input-group" style="width:350px;float:left;padding:0;margin:0 0 0 -1px;">
                             <div class="input-group-btn">
                                 <button type="button" id="ulButton" class="btn btn-default" style="border-radius:0px;"
-                                        data-toggle="dropdown">车主/电话/汽车公司/车牌号<span class="caret"></span></button>
+                                        data-toggle="dropdown">车主/电话<shiro:hasAnyRoles name="系统超级管理员,系统普通管理员">/汽车公司</shiro:hasAnyRoles>/车牌号<span class="caret"></span></button>
                                 <ul class="dropdown-menu pull-right">
-                                    <li><a onclick="onclikLi(this)">车主/电话/汽车公司/车牌号</a></li>
+                                    <li><a onclick="onclikLi(this)">车主/电话<shiro:hasAnyRoles name="系统超级管理员,系统普通管理员">/汽车公司</shiro:hasAnyRoles>/车牌号</a></li>
                                     <li class="divider"></li>
                                     <li><a onclick="onclikLi(this)">车主</a></li>
                                     <li class="divider"></li>
                                     <li><a onclick="onclikLi(this)">电话</a></li>
-                                    <li class="divider"></li>
-                                    <li><a onclick="onclikLi(this)">汽车公司</a></li>
+                                    <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员">
+                                        <li class="divider"></li>
+                                        <li><a onclick="onclikLi(this)">汽车公司</a></li>
+                                    </shiro:hasAnyRoles>
                                     <li class="divider"></li>
                                     <li><a onclick="onclikLi(this)">车牌号</a></li>
                                 </ul>
@@ -115,7 +122,7 @@
                     <input type="hidden" define="chargeBill.chargeBillId" name="chargeBillId"/>
                     <input type="hidden" define="chargeBill.maintainRecordId" name="maintainRecordId"/>
                     <input type="hidden" define="chargeBill.chargeBillStatus" name="chargeBillStatus"/>
-                    <input type="hidden" define="chargeBill.chargeCreatedTime" name="chargeCreatedTime"/>
+                    <input id="chargeCreatedTime" type="hidden" name="chargeCreatedTime"/>
                     <div class="form-group">
                         <label class="col-sm-3 control-label" >付款方式：</label>
                         <div class="col-sm-7">

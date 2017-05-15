@@ -38,7 +38,7 @@
                             <span><img alt="image" class="img-circle m-t-xs img-responsive" style="height:90px;width:90px;" src=${user.userIcon} /></span>
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                                 <span class="clear">
-                               <span class="block m-t-xs" style="margin-left:30px;"><strong class="font-bold">${user.userName}</strong></span>
+                               <span class="block m-t-xs" style="margin-left:30px;"><strong class="font-bold">${user.userNickname}</strong></span>
                                 <%--<span class="text-muted text-xs block">超级管理员<b class="caret"></b></span>--%>
                                 <%--</span>--%>
                             </a>

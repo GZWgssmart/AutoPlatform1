@@ -141,20 +141,20 @@ public class CarRemindController {
                         checkin.setCarPlate(value);
                         checkin.setUserName(value);
                         checkin.setCompanyId(value);
-                        maintainRecord.setCheckin(checkin);
+                    }else if(text.equals("车主/电话/车牌号")){
+                        checkin.setUserName(value);
+                        checkin.setCarPlate(value);
+                        checkin.setUserPhone(value);
                     }else if(text.equals("车主")){
                         checkin.setUserName(value);
-                        maintainRecord.setCheckin(checkin);
                     }else if(text.equals("汽车公司")){
                         checkin.setCompanyId(value);
-                        maintainRecord.setCheckin(checkin);
                     }else if(text.equals("车牌号")){
                         checkin.setCarPlate(value);
-                        maintainRecord.setCheckin(checkin);
                     }else if(text.equals("电话")){
                         checkin.setUserPhone(value);
-                        maintainRecord.setCheckin(checkin);
                     }
+                    maintainRecord.setCheckin(checkin);
                     maintainRecords = maintainRecordService.blurredQueryByRemind(pager, maintainRecord);
                     pager.setTotalRecords(maintainRecordService.countByBlurredByRemind(maintainRecord));
                     pager.setUser((User)session.getAttribute("user"));

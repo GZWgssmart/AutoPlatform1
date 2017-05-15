@@ -128,6 +128,7 @@ function showEdit(){
                 var chargeBill = row[0];
                 $("#editForm").fill(chargeBill);
                 $('#addDatetimepicker').val(formatterDate(chargeBill.chargeTime));
+                $('#chargeCreatedTime').val(formatterDate(chargeBill.chargeCreatedTime))
                 validator('editForm'); // 初始化验证
             }else{
                 swal({
