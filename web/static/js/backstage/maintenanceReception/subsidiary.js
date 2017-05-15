@@ -1,5 +1,5 @@
 $(function () {
-    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽修公司接待员";
+    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师";
     $.post("/user/isLogin/"+roles, function (data) {
         if(data.result == 'success'){
             initTable('table', '/maintainRecord/queryByPager'); // 初始化表格
@@ -110,7 +110,7 @@ function closeItemWindow(){
 
 // 生成明细
 function showAddDetail(){
-    var roles = "公司超级管理员,公司普通管理员,汽修公司接待员";
+    var roles = "公司超级管理员,公司普通管理员,汽车公司接待员";
     $.post("/user/isLogin/"+roles, function (data) {
         if(data.result == 'success'){
             var row =  $('#table').bootstrapTable('getSelections');
@@ -151,7 +151,7 @@ function showAddDetail(){
 
 // 所有明细window中的打印按钮
 function showPrint(){
-    var roles = "公司超级管理员,公司普通管理员,汽修公司接待员";
+    var roles = "公司超级管理员,公司普通管理员,汽车公司接待员";
     $.post("/user/isLogin/"+roles, function (data) {
         if(data.result == 'success'){
             var row =  $('#table').bootstrapTable('getSelections'); // 选中的维修保养记录
@@ -182,7 +182,7 @@ var recordId = "";
 
 // 显示所有明细
 function showDetail(){
-    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽修公司接待员";
+    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师";
     $.post("/user/isLogin/"+roles, function (data) {
         if(data.result == 'success'){
             var row =  $('#table').bootstrapTable('getSelections');
@@ -226,7 +226,7 @@ function showDetail(){
 
 // 修改明细
 function showEditDetail(){
-    var roles = "公司超级管理员,公司普通管理员,汽修公司接待员";
+    var roles = "公司超级管理员,公司普通管理员,汽车公司接待员";
     $.post("/user/isLogin/"+roles, function (data) {
         if(data.result == 'success'){
             var row =  $('#detailTable').bootstrapTable('getSelections');
@@ -281,7 +281,7 @@ function closeWindow(){
 
 // 所有明细window的用户确认按钮
 function showUserDetail(){
-    var roles = "公司超级管理员,公司普通管理员,汽修公司接待员";
+    var roles = "公司超级管理员,公司普通管理员,汽车公司接待员";
     $.post("/user/isLogin/"+roles, function (data) {
         if(data.result == 'success'){
             tableData = $("#detailTable").bootstrapTable('getData');//获取表格的所有内容行
@@ -338,7 +338,7 @@ function showUserDetail(){
 
 // 点击确定确定用户已签字
 function userConfirm(){
-    var roles = "公司超级管理员,公司普通管理员,汽修公司接待员";
+    var roles = "公司超级管理员,公司普通管理员,汽车公司接待员";
     $.post("/user/isLogin/"+roles, function (data) {
         if(data.result == 'success'){
             tableData = $("#detailTable").bootstrapTable('getData');//获取表格的所有内容行
@@ -444,7 +444,7 @@ function editSubmit(){
 
 // 模糊查询
 function blurredQuery(){
-    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽修公司接待员";
+    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师";
     $.post("/user/isLogin/"+roles, function (data) {
         if(data.result == 'success'){
                 var button = $("#ulButton");// 获取模糊查询按钮

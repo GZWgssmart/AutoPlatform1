@@ -1,5 +1,5 @@
 $(function () {
-    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽修公司接待员";
+    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员";
     $.post("/user/isLogin/"+roles, function (data) {
         if(data.result == 'success'){
             initTable('table', '/charge/queryByPager'); // 初始化表格
@@ -35,7 +35,7 @@ function statusFormatter(value, row, index) {
 
 // 查看全部可用
 function showAvailable(){
-    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽修公司接待员";
+    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员";
     $.post("/user/isLogin/"+roles, function (data) {
         if(data.result == 'success'){
             initTable('table', '/charge/queryByPager');
@@ -62,7 +62,7 @@ function showAvailable(){
 
 // 查看全部禁用
 function showDisable(){
-    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽修公司接待员";
+    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员";
     $.post("/user/isLogin/"+roles, function (data) {
         if(data.result == 'success'){
             initTable('table', '/charge/queryByPagerDisable');
@@ -89,7 +89,7 @@ function showDisable(){
 
 // 模糊查询
 function blurredQuery(){
-    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽修公司接待员";
+    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员";
     $.post("/user/isLogin/"+roles, function (data) {
         if(data.result == 'success'){
             var button = $("#ulButton");// 获取模糊查询按钮
@@ -118,7 +118,7 @@ function blurredQuery(){
 }
 
 function showEdit(){
-    var roles = "公司超级管理员,公司普通管理员,汽修公司接待员";
+    var roles = "公司超级管理员,公司普通管理员,汽车公司接待员";
     $.post("/user/isLogin/"+roles, function (data) {
         if(data.result == 'success'){
             initDateTimePicker('editForm', 'chargeTime'); // 初始化时间框
@@ -161,7 +161,7 @@ function showEdit(){
 
 // 所有明细window中的打印按钮
 function showPrint(){
-    var roles = "公司超级管理员,公司普通管理员,汽修公司接待员";
+    var roles = "公司超级管理员,公司普通管理员,汽车公司接待员";
     $.post("/user/isLogin/"+roles, function (data) {
         if(data.result == 'success'){
                 var row =  $('#table').bootstrapTable('getSelections'); // 选中的维修保养记录

@@ -82,9 +82,12 @@
                             <span class="fa arrow"></span>
                         </a>
                         <ul class="nav nav-second-level">
+                        <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员">
                             <li>
                                 <a class="J_menuItem" href="/basicInfo/companyInfo" data-index="0">公司信息管理</a>
                             </li>
+                        </shiro:hasAnyRoles>
+                        <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师,汽车公司学徒,汽车公司销售人员,汽车公司财务人员,汽车公司采购人员,汽车公司库管人员,汽车公司人力资源管理部">
                             <li>
                                 <a class="J_menuItem" href="/basicInfo/carBrand">汽车品牌管理</a>
                             </li>
@@ -103,8 +106,8 @@
                             <li>
                                 <a class="J_menuItem" href="/basicInfo/fixItem" target="_blank">维修项目管理</a>
                             </li>
+                        </shiro:hasAnyRoles>
                         </ul>
-
                     </li>
 
                     <li>
@@ -114,151 +117,183 @@
                             <span class="fa arrow"></span>
                         </a>
                         <ul class="nav nav-second-level">
-                            <li>
-                                <a class="J_menuItem" href="/emp/empInformation">人员基本信息管理</a>
-                            </li>
-                            <li>
-                                <a class="J_menuItem" href="/emp/empWages">工资管理</a>
-                            </li>
-                            <li>
-                                <a class="J_menuItem" href="/emp/workInfo">工单查询</a>
-                            </li>
-
+                            <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司人力资源管理部">
+                                <li>
+                                    <a class="J_menuItem" href="/emp/empInformation">人员基本信息管理</a>
+                                </li>
+                            </shiro:hasAnyRoles>
+                            <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师,汽车公司学徒,汽车公司销售人员,汽车公司财务人员,汽车公司采购人员,汽车公司库管人员,汽车公司人力资源管理部">
+                                <li>
+                                    <a class="J_menuItem" href="/emp/empWages">工资管理</a>
+                                </li>
+                            </shiro:hasAnyRoles>
+                            <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师,汽车公司学徒,汽车公司销售人员,汽车公司财务人员,汽车公司采购人员,汽车公司库管人员,汽车公司人力资源管理部">
+                                <li>
+                                    <a class="J_menuItem" href="/emp/workInfo">工单查询</a>
+                                </li>
+                            </shiro:hasAnyRoles>
                         </ul>
                     </li>
 
                     <li>
                         <a href="#"><i class="fa fa-users"></i> <span class="nav-label">供应商管理</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
-                            <li><a class="J_menuItem" href="/supplier/supplierType">供应商类型管理</a>
-                            </li>
-                            <li><a class="J_menuItem" href="/supplier/supplierInformation">供应商管理</a>
-                            </li>
+                            <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员">
+                                <li>
+                                    <a class="J_menuItem" href="/supplier/supplierType">供应商类型管理</a>
+                                </li>
+                                <li>
+                                    <a class="J_menuItem" href="/supplier/supplierInformation">供应商管理</a>
+                                </li>
+                            </shiro:hasAnyRoles>
                         </ul>
                     </li>
                     <li>
                         <a href="#"><i class="fa fa-cubes"></i> <span class="nav-label">配件管理</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
-                            <li><a class="J_menuItem" href="/accessories/type">配件分类管理</a>
-                            </li>
-                            <li><a class="J_menuItem" href="/accessories/accessories">配件库存管理</a>
-                            </li>
-                            <li><a class="J_menuItem" href="/accessories/buy">配件采购管理</a>
-                            </li>
-                            <li><a class="J_menuItem" href="/accessories/sale">配件销售管理</a>
-                            </li>
+                            <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员">
+                                <li><a class="J_menuItem" href="/accessories/type">配件分类管理</a>
+                                </li>
+                            </shiro:hasAnyRoles>
+                            <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司采购人员">
+                                <li><a class="J_menuItem" href="/accessories/accessories">配件库存管理</a>
+                                </li>
+                                <li><a class="J_menuItem" href="/accessories/buy">配件采购管理</a>
+                                </li>
+                                <li><a class="J_menuItem" href="/accessories/sale">配件销售管理</a>
+                                </li>
+                            </shiro:hasAnyRoles>
                         </ul>
                     </li>
-                    <li>
-                        <a href="#"><i class="fa fa-phone"></i> <span class="nav-label">&nbsp;维修保养预约</span><span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            <li>
-                                <a class="J_menuItem" href="/customerBooking/phoneReservation">电话预约</a>
-                            </li>
-                        </ul>
-                    </li>
+                    <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员">
+                        <li>
+                            <a href="#"><i class="fa fa-phone"></i> <span class="nav-label">&nbsp;维修保养预约</span><span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a class="J_menuItem" href="/customerBooking/phoneReservation">电话预约</a>
+                                </li>
+
+                            </ul>
+                        </li>
+                    </shiro:hasAnyRoles>
                     <li>
                         <a href="#"><i class="fa fa-car"></i> <span class="nav-label">维修保养接待</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
-                            <li><a class="J_menuItem" href="/maintenanceReception/reception">接待登记管理</a></li>
-                            <li><a class="J_menuItem" href="/maintenanceReception/subsidiary">维修保养明细管理</a></li>
+                            <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员">
+                                <li><a class="J_menuItem" href="/maintenanceReception/reception">接待登记管理</a></li>
+                            </shiro:hasAnyRoles>
+                            <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师">
+                                <li><a class="J_menuItem" href="/maintenanceReception/subsidiary">维修保养明细管理</a></li>
+                            </shiro:hasAnyRoles>
                         </ul>
                     </li>
                     <li>
                         <a href="#"><i class="fa fa-ambulance"></i> <span class="nav-label">派工领料管理</span><span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            <li><a class="J_menuItem" href="pickingControll/materialsIndex">物料清单</a></li>
-                            <li><a class="J_menuItem" href="pickingControll/assignstaffIndex">指派员工</a></li>
+                            <ul class="nav nav-second-level">
+                            <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司库管人员">
+                                <li><a class="J_menuItem" href="pickingControll/materialsIndex">物料清单</a></li>
+                            </shiro:hasAnyRoles>
+                            <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司总技师">
+                                <li><a class="J_menuItem" href="pickingControll/assignstaffIndex">指派员工</a></li>
+                            </shiro:hasAnyRoles>
                         </ul>
                     </li>
-                    <li>
-                        <a href="#"><i class="fa fa-wrench"></i> <span class="nav-label">车辆维修保养</span><span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            <li><a class="J_menuItem" href="maintenanceController/maintenanceIndex">维修保养进度管理</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa fa-calculator"></i> <span class="nav-label">结算提车</span><span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            <li><a class="J_menuItem" href="/clearingOut/carRemindIndex">提车提醒</a>
-                            </li>
-                            <li><a class="J_menuItem" href="/clearingOut/chargeDocumentsIndex">收费单据管理</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa fa-user-plus"></i> <span class="nav-label">客户管理</span><span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            <li><a class="J_menuItem" href="/custManage/maintainrecordIndex">维修保养记录管理</a>
-                            </li>
-                            <%--<li><a class="J_menuItem" href="/custManage/maintaindetailsIndex">维修保养明细管理</a>--%>
-                            <%--</li>--%>
-                            <li><a class="J_menuItem" href="/custManage/maintainremindIndex">维修保养提醒</a>
-                            </li>
-                            <li><a class="J_menuItem" href="/custManage/messagesendIndex">短信群发提醒</a>
-                            </li>
-                            <li><a class="J_menuItem" href="/custManage/complaintIndex">投诉管理</a>
-                            </li>
-                            <li><a class="J_menuItem" href="/custManage/tracklistIndex">跟踪回访管理</a>
-                            </li>
-                            <li><a class="J_menuItem" href="/custManage/wechatpublicIndex">微信公众号查看</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa fa-cny"></i> <span class="nav-label">&nbsp;&nbsp;财务管理</span><span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            <li><a class="J_menuItem" href="/financialView/payOutType">支出类型管理</a>
-                            </li>
-                            <li><a class="J_menuItem" href="/financialView/incomeType">收入类型管理</a>
-                            </li>
-                            <li><a class="J_menuItem" href="/financialView/piRecording">收支记录管理</a>
-                            </li>
-                            <li><a class="J_menuItem" href="/financialView/salary">工资管理</a>
-                            </li>
-                            <li><a class="J_menuItem" href="/financialView/bill">对账单管理</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa fa-bar-chart"></i> <span class="nav-label">报表统计</span><span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            <li><a class="J_menuItem" href="/statistics/test">测试报表</a>
-                            </li>
-                            <li><a class="J_menuItem" href="/statistics/maintain">下单统计</a>
-                            </li>
-                            <li><a class="J_menuItem" href="/statistics/pay">支付统计</a>
-                            </li>
-                            <li><a class="J_menuItem" href="/statistics/maintaintype">消费统计</a>
-                            </li>
-                            <li><a class="J_menuItem" href="/statistics/vindicate">维修保养统计</a>
-                            </li>
-                            <li><a class="J_menuItem" href="/statistics/workord">员工工单统计</a>
-                            </li>
-                            <li><a class="J_menuItem" href="/statistics/usematerials">配件使用情况统计</a>
-                            </li>
-                            <li><a class="J_menuItem" href="/statistics/maintaintype">维修项目统计</a>
-                            </li>
-                            <li><a class="J_menuItem" href="/statistics/finance">财务统计</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa fa-gear"></i> <span class="nav-label">系统管理</span><span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            <li><a class="J_menuItem" href="/systemManage/roleManageIndex">角色管理</a>
-                            </li>
-                            <li><a class="J_menuItem" href="/systemManage/moduleManageIndex">模块管理</a>
-                            </li>
-                            <li><a class="J_menuItem" href="/systemManage/perManageIndex">权限管理</a>
-                            </li>
-                            <li><a class="J_menuItem" href="/systemManage/perDistributionIndex">权限分配</a>
-                            </li>
-                            <li><a class="J_menuItem" href="/systemManage/flowIndex">流程管理</a>
-                            </li>
-                        </ul>
-                    </li>
+                    <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师">
+                        <li>
+                            <a href="#"><i class="fa fa-wrench"></i> <span class="nav-label">车辆维修保养</span><span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li><a class="J_menuItem" href="maintenanceController/maintenanceIndex">维修保养进度管理</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </shiro:hasAnyRoles>
+                    <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员">
+                        <li>
+                            <a href="#"><i class="fa fa-calculator"></i> <span class="nav-label">结算提车</span><span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li><a class="J_menuItem" href="/clearingOut/carRemindIndex">提车提醒</a>
+                                </li>
+                                <li><a class="J_menuItem" href="/clearingOut/chargeDocumentsIndex">收费单据管理</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-user-plus"></i> <span class="nav-label">客户管理</span><span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li><a class="J_menuItem" href="/custManage/maintainrecordIndex">维修保养记录管理</a>
+                                </li>
+                                <li><a class="J_menuItem" href="/custManage/maintainremindIndex">维修保养提醒</a>
+                                </li>
+                                <li><a class="J_menuItem" href="/custManage/messagesendIndex">短信群发提醒</a>
+                                </li>
+                                <li><a class="J_menuItem" href="/custManage/complaintIndex">投诉管理</a>
+                                </li>
+                                <li><a class="J_menuItem" href="/custManage/tracklistIndex">跟踪回访管理</a>
+                                </li>
+                                <li><a class="J_menuItem" href="/custManage/wechatpublicIndex">微信公众号查看</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </shiro:hasAnyRoles>
+                    <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员">
+                        <li>
+                            <a href="#"><i class="fa fa-cny"></i> <span class="nav-label">&nbsp;&nbsp;财务管理</span><span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li><a class="J_menuItem" href="/financialView/payOutType">支出类型管理</a>
+                                </li>
+                                <li><a class="J_menuItem" href="/financialView/incomeType">收入类型管理</a>
+                                </li>
+                                <li><a class="J_menuItem" href="/financialView/piRecording">收支记录管理</a>
+                                </li>
+                                <li><a class="J_menuItem" href="/financialView/salary">工资管理</a>
+                                </li>
+                                <li><a class="J_menuItem" href="/financialView/bill">对账单管理</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </shiro:hasAnyRoles>
+                    <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员">
+                        <li>
+                            <a href="#"><i class="fa fa-bar-chart"></i> <span class="nav-label">报表统计</span><span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li><a class="J_menuItem" href="/statistics/test">测试报表</a>
+                                </li>
+                                <li><a class="J_menuItem" href="/statistics/maintain">下单统计</a>
+                                </li>
+                                <li><a class="J_menuItem" href="/statistics/pay">支付统计</a>
+                                </li>
+                                <li><a class="J_menuItem" href="/statistics/maintaintype">消费统计</a>
+                                </li>
+                                <li><a class="J_menuItem" href="/statistics/vindicate">维修保养统计</a>
+                                </li>
+                                <li><a class="J_menuItem" href="/statistics/workord">员工工单统计</a>
+                                </li>
+                                <li><a class="J_menuItem" href="/statistics/usematerials">配件使用情况统计</a>
+                                </li>
+                                <li><a class="J_menuItem" href="/statistics/maintaintype">维修项目统计</a>
+                                </li>
+                                <li><a class="J_menuItem" href="/statistics/finance">财务统计</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </shiro:hasAnyRoles>
+                    <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员">
+                        <li>
+                            <a href="#"><i class="fa fa-gear"></i> <span class="nav-label">系统管理</span><span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li><a class="J_menuItem" href="/systemManage/roleManageIndex">角色管理</a>
+                                </li>
+                                <li><a class="J_menuItem" href="/systemManage/moduleManageIndex">模块管理</a>
+                                </li>
+                                <li><a class="J_menuItem" href="/systemManage/perManageIndex">权限管理</a>
+                                </li>
+                                <li><a class="J_menuItem" href="/systemManage/perDistributionIndex">权限分配</a>
+                                </li>
+                                <li><a class="J_menuItem" href="/systemManage/flowIndex">流程管理</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </shiro:hasAnyRoles>
                 </ul>
             </div>
         </nav>

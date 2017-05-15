@@ -1,5 +1,5 @@
 $(function () {
-    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽修公司接待员";
+    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员";
     $.post("/user/isLogin/"+roles, function (data) {
         if(data.result == 'success'){
             initTable('table', '/maintainRecord/queryByPager'); // 初始化表格
@@ -35,7 +35,7 @@ function showStatusFormatter(value) {
 
 // 查看全部未提醒
 function showNoRemind(){
-    // var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽修公司接待员";
+    // var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员";
     // $.post("/user/isLogin/"+roles, function (data) {
     //     if(data.result == 'success'){
     //         //initTable('table', '/maintainRecord/queryByPager');
@@ -62,7 +62,7 @@ function showNoRemind(){
 
 // 查看全部已提醒
 function showYesRemind(){
-    // var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽修公司接待员";
+    // var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员";
     // $.post("/user/isLogin/"+roles, function (data) {
     //     if(data.result == 'success'){
                 //initTable('table', '/maintainRecord/queryByPagerDisable');
@@ -89,7 +89,7 @@ function showYesRemind(){
 
 // 模糊查询
 function blurredQuery(){
-    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽修公司接待员";
+    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员";
     $.post("/user/isLogin/"+roles, function (data) {
         if(data.result == 'success'){
                 var button = $("#ulButton");// 获取模糊查询按钮
@@ -119,7 +119,7 @@ function blurredQuery(){
 
 // 点击提醒
 function showBell(){
-    var roles = "公司超级管理员,公司普通管理员,汽修公司接待员";
+    var roles = "公司超级管理员,公司普通管理员,汽车公司接待员";
     $.post("/user/isLogin/"+roles, function (data) {
         if(data.result == 'success'){
             var row =  $('table').bootstrapTable('getSelections');
@@ -209,7 +209,7 @@ function showBell(){
 
 // 全部提醒
 function showBellAll(){
-    var roles = "公司超级管理员,公司普通管理员,汽修公司接待员";
+    var roles = "公司超级管理员,公司普通管理员,汽车公司接待员";
     $.post("/user/isLogin/"+roles, function (data) {
         if(data.result == 'success'){
             tableData = $("#table").bootstrapTable('getData');//获取表格的所有内容行
