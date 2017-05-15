@@ -32,39 +32,36 @@
                 </th>
                 <th data-width="100" data-field="supplyAddress">
                     供应商地址
-                 <%--   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--%>
                 </th>
                 <th data-width="130" data-field="supplyWeChat">
                     供应商微信号
                 </th>
                 <th data-width="180" data-field="supplyCreatedTime"data-formatter="formatterDateTime">
                     创建时间
-                  <%--  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--%>
                 </th>
                 <th data-width="100" data-field="supplyType.supplyTypeName">
                     供应商类型
                 </th>
-                <th data-width="170" data-field="company.companyName">
-                    供应商所属公司
-                </th>
+                <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员">
+                    <th data-width="170" data-field="company.companyName">
+                        供应商所属公司
+                    </th>
+                </shiro:hasAnyRoles>
                 <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员">
                     <th data-width="100" data-field="supplyStatus" data-formatter="statusFormatter">
                         记录状态
-                       <%-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--%>
                     </th>
                 </shiro:hasAnyRoles>
             </tr>
             </thead>
         </table>
         <div id="toolbar" class="btn-group">
-            <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员">
+            <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员">
                     <button id="btn_add" type="button" class="btn btn-default" onclick="showAdd();">
                         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
                     </button>
              </shiro:hasAnyRoles>
-            <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员">
+            <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员">
                 <button id="btn_edit" type="button" class="btn btn-default" onclick="showEdit();">
                     <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
                 </button>
