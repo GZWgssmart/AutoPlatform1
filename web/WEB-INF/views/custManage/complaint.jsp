@@ -49,7 +49,7 @@
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
                 </button>
             </shiro:hasAnyRoles>
-            <shiro:hasAnyRoles name="汽修公司管理员,汽修公司接待员">
+            <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司接待员">
                 <button id="btn_application" type="button" class="btn btn-success" onclick="showReply();">回复车主</button>
             </shiro:hasAnyRoles>
             <%--<button id="btn_edit" type="button" class="btn btn-default" onclick="showEdit();">--%>

@@ -12,10 +12,10 @@
     <result column="companyId" property="companyId" jdbcType="VARCHAR" />
     <result column="remindCreatedTime" property="remindCreatedTime" jdbcType="TIMESTAMP" />
 
-    <association property="user" javaType="com.gs.bean.User">
-      <id column="user_id" property="userId"></id>
-      <result column="user_name" property="userName"></result>
-    </association>
+    <!--<association property="user" javaType="com.gs.bean.User">-->
+      <!--<id column="user_id" property="userId"></id>-->
+      <!--<result column="user_name" property="userName"></result>-->
+    <!--</association>-->
 
   </resultMap>
 
@@ -32,7 +32,7 @@
   <select id="count" resultType="int" parameterType="com.gs.bean.User">
     select count(mr.remindId) from t_maintain_remind mr,t_user u where mr.userId = u.userId and remindMsg is not null
     <if test="companyId != null and companyId != ''">
-      and mr.companyId = #{user.companyId}
+      and mr.companyId = #{companyId}
     </if>
   </select>
 
@@ -53,7 +53,7 @@
   <select id="countNull" resultType="int" parameterType="com.gs.bean.User">
     select count(mr.remindId) from t_maintain_remind mr,t_user u where mr.userId = u.userId and remindMsg is null
     <if test="companyId != null and companyId != ''">
-      and mr.companyId = #{user.companyId}
+      and mr.companyId = #{companyId}
     </if>
   </select>
   <insert id="insert"  parameterType="maintainremind">

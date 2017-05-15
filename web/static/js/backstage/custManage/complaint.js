@@ -73,7 +73,7 @@ function formatterUserName(value, row, index) {
 
 //显示弹窗
 function showEdit() {
-    var roles = "汽修公司管理员,汽修公司接待员";
+    var roles = "公司超级管理员,公司普通管理员,汽车公司接待员";
     $.post("/user/isLogin/" + roles, function (data) {
         if (data.result == 'success') {
             var row = $('table').bootstrapTable('getSelections');
@@ -144,7 +144,7 @@ function showEdit() {
 }
 
 function showReply() {
-    var roles = "汽修公司管理员,汽修公司接待员";
+    var roles = "公司超级管理员,公司普通管理员,汽车公司接待员";
     $.post("/user/isLogin/" + roles, function (data) {
         if (data.result == 'success') {
             var row = $('table').bootstrapTable('getSelections');

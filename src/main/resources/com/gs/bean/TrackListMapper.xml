@@ -34,7 +34,7 @@
   <select id="count" resultType="int" parameterType="com.gs.bean.User" >
     select count(t.trackId) from t_track_list t where 1=1
     <if test="companyId != null and companyId != ''">
-      and t.companyId = #{user.companyId}
+      and t.companyId = #{companyId}
     </if>
   </select>
 
@@ -75,8 +75,8 @@
     LEFT JOIN t_user u ON t.userId = u.userId
     LEFT  JOIN t_user u2 ON t.trackUser = u2.userId
     where 1=1
-    <if test="user.companyId != null and user.companyId != ''">
-      and t.companyId = #{user.companyId}
+    <if test="companyId != null and companyId != ''">
+      and t.companyId = #{companyId}
     </if>
     <if test="trackList.userId != null and trackList.userId != ''">
       and u2.userName like concat('%',#{trackList.userId},'%')
