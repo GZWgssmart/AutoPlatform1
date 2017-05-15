@@ -55,12 +55,22 @@
        LEFT JOIN t_car_plate cp on am.plateId = cp.plateId
        LEFT JOIN t_company company on am.companyId = company.companyId
        LEFT JOIN t_car_brand cb on am.brandId = cb.brandId
-       where am.appoitmentStatus = 'Y' order by am.appCreatedTime Desc
+       where am.appoitmentStatus = 'Y'
     ]]>
     <if test="user.companyId != '' and user.companyId != null">
       and am.companyId = #{user.companyId}
     </if>
+    order by am.appCreatedTime Desc
     limit #{beginIndex}, #{pageSize}
+  </select>
+
+  <select id="count" resultType="int" parameterType="com.gs.bean.User">
+    <![CDATA[
+      select count(appointmentId) from t_appointment am where am.appoitmentStatus = 'Y'
+    ]]>
+    <if test="companyId != '' and companyId != null">
+      and am.companyId = #{companyId}
+    </if>
   </select>
 
   <select id="queryByPagerDisable" resultMap="appointmentMap" parameterType="com.gs.common.bean.Pager">
@@ -73,21 +83,13 @@
         LEFT JOIN t_car_plate cp on am.plateId = cp.plateId
         LEFT JOIN t_company company on am.companyId = company.companyId
         LEFT JOIN t_car_brand cb on am.brandId = cb.brandId
-        where am.appoitmentStatus = 'N' order by am.appCreatedTime Desc
+        where am.appoitmentStatus = 'N'
      ]]>
     <if test="user.companyId != '' and user.companyId != null">
       and am.companyId = #{user.companyId}
     </if>
-      limit #{beginIndex}, #{pageSize}
-  </select>
-
-  <select id="count" resultType="int" parameterType="com.gs.bean.User">
-    <![CDATA[
-      select count(appointmentId) from t_appointment am where am.appoitmentStatus = 'Y'
-    ]]>
-    <if test="companyId != '' and companyId != null">
-      and am.companyId = #{companyId}
-    </if>
+    order by am.appCreatedTime Desc
+    limit #{beginIndex}, #{pageSize}
   </select>
 
   <select id="countByDisable" resultType="int" parameterType="com.gs.bean.User">
