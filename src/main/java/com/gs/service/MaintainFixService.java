@@ -1,6 +1,7 @@
 package com.gs.service;
 
 import com.gs.bean.MaintainFix;
+import com.gs.bean.User;
 import com.gs.common.bean.Pager;
 import org.apache.ibatis.annotations.Param;
 
@@ -24,6 +25,8 @@ public interface MaintainFixService extends BaseService<String, MaintainFix>{
     public int countByDisable();
 
     public List<MaintainFix> queryByPagerMaintain(Pager pager);
+    //    分页查询保养项目总数
+    public int countMaintain(User user);
 
     public List<MaintainFix> queryByPagerAll(Pager pager);
 

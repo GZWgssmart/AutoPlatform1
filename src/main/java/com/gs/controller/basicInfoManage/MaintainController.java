@@ -85,7 +85,7 @@ public class MaintainController {
                 pager.setPageNo(Integer.valueOf(pageNumber));
                 pager.setPageSize(Integer.valueOf(pageSize));
                 pager.setUser((User) session.getAttribute("user"));
-                pager.setTotalRecords(maintainFixService.count((User) session.getAttribute("user")));
+                pager.setTotalRecords(maintainFixService.countMaintain((User) session.getAttribute("user")));
                 logger.info("分页查询保养项目信息");
                 List<MaintainFix> maintainFixes = maintainFixService.queryByPagerMaintain(pager);
                 return new Pager4EasyUI<MaintainFix>(pager.getTotalRecords(), maintainFixes);
