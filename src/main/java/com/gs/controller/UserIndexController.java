@@ -1,6 +1,7 @@
 package com.gs.controller;
 
 import ch.qos.logback.classic.Logger;
+import com.alibaba.fastjson.JSONObject;
 import com.gs.bean.User;
 import com.gs.common.Constants;
 import com.gs.common.bean.ControllerResult;
@@ -12,17 +13,21 @@ import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.omg.CORBA.Request;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 
 /**
  * Created by 不曾有黑夜 on 2017/5/9.
@@ -111,6 +116,7 @@ public class UserIndexController {
         return "Frontpage/Personalcenter/AccountSettings/EditInfomation";
     }
 
+    /*用户登录*/
     @ResponseBody
     @RequestMapping(value = "userlogin", method = RequestMethod.POST)
     public ControllerResult userLogin(User user1, HttpSession session, HttpServletRequest req, @Param("checkCode") String checkCode) {
@@ -122,7 +128,7 @@ public class UserIndexController {
                 if (subject.hasRole(Constants.role_owner)) {
                     logger.info("登录成功");
                     User user = userService.queryUser(user1.getUserEmail());
-                    session.setAttribute("user", user);
+                    session.setAttribute("frontUser", user);
                     return ControllerResult.getSuccessResult("登录成功");
                 }else {
                     logger.info("抱歉，你的账号角色并不授权。请联系管理员激活账号！");
@@ -143,4 +149,17 @@ public class UserIndexController {
             return ControllerResult.getFailResult("验证码输入错误，请输入正确的验证码！");
         }
     }
+
+    /*用户退出*/
+    @RequestMapping(value="outusers",method = RequestMethod.GET)
+    public String outUser(HttpServletRequest request){
+        HttpSession session = request.getSession();
+        session.getAttribute("frontUser");
+        if (session != null) {
+            session.removeAttribute("frontUser");
+            return "Frontpage/Frontindex";
+        }
+        return null;
+    }
+
 }

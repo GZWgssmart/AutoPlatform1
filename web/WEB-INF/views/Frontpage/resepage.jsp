@@ -5,6 +5,7 @@
   Time: 10:41
   To change this template use File | Settings | File Templates.
 --%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -19,14 +20,27 @@
     <div class="main">
         <%--导航栏--%>
         <div class="nav nav-first">
-            <div class="nav-left">
-                <ul class="nav-left-ul">
-                    <li>欢迎您，请登录</li>
-                    <a href="reg"><li>登录/注册</li></a>
-                    <a href="userpage" class="right-ul"><li>我的中心</li></a>
-                    <div class="clearfix"></div>
-                </ul>
-            </div>
+            <ul class="nav-left-ul">
+                <c:choose>
+                    <c:when test="${sessionScope.frontUser != null}">
+                        <c:if test="${sessionScope.frontUser.userName != null}">
+                            <li id="placelogin">欢迎您，${sessionScope.frontUser.userName}</li>
+                            <a href="userpage" class="right-ul"><li>我的中心</li></a>
+                            <a href="userpage"><li>退出</li></a>
+                        </c:if>
+                        <c:if test="${sessionScope.frontUser.userName == null}">
+                            <li id="placelogin">欢迎您，${sessionScope.frontUser.userPhone}</li>
+                            <a href="userpage" class="right-ul"><li>我的中心</li></a>
+                            <a href="outusers"><li>退出</li></a>
+                        </c:if>
+                    </c:when>
+
+                    <c:otherwise>
+                        <li id="placelogin">欢迎您，请登录</li>
+                        <a href="reg" id="loginreg"><li>登录/注册</li></a>
+                    </c:otherwise>
+                </c:choose>
+            </ul>
             <div class="clearfix"></div>
         </div>
         <div class="nav nav-two" id="navbar-two">
@@ -52,17 +66,35 @@
                         <div class="form-content">
                             <form name="form1" id="form1" method="post" action="" onsubmit="return verification()" >
                                 <div class="form-group">
-                                    <label>姓名：</label>
-                                    <input id="name" type="text" value="" class="form-control" onblur="verification()"  maxlength="15" placeholder="您的名字">
-                                    <span class="prompt" id="name-pro">请填写该字段</span>
-                                    <span class="prompt" id="name-pro2">长度必须大于等于两个字符，小于十个字符</span>
-                                    <span class="prompt" id="name-pro3">名字错误</span>
+                                    <c:if test="${sessionScope.frontUser != null}">
+                                        <label>姓名：</label>
+                                        <input id="name" type="text" value="${sessionScope.frontUser.userName}" class="form-control" onblur="verification()"  maxlength="15" placeholder="您的名字">
+                                        <span class="prompt" id="name-pro">请填写该字段</span>
+                                        <span class="prompt" id="name-pro2">长度必须大于等于两个字符，小于十个字符</span>
+                                        <span class="prompt" id="name-pro3">名字错误</span>
+                                    </c:if>
+
+                                    <c:if test="${sessionScope.frontUser == null}">
+                                        <label>姓名：</label>
+                                        <input id="name" type="text" value="" class="form-control" onblur="verification()"  maxlength="15" placeholder="您的名字">
+                                        <span class="prompt" id="name-pro">请填写该字段</span>
+                                        <span class="prompt" id="name-pro2">长度必须大于等于两个字符，小于十个字符</span>
+                                        <span class="prompt" id="name-pro3">名字错误</span>
+                                    </c:if>
                                 </div>
                                 <div class="form-group">
-                                    <label>电话：</label>
-                                    <input id="phone" type="text"  value="" class="form-control" onblur="verification()" maxlength="11" placeholder="手机号码">
-                                    <span class="prompt" id="phone-pro">请填写该字段</span>
-                                    <span class="prompt" id="phone-pro2">号码格式错误</span>
+                                    <c:if test="${sessionScope.frontUser != null}">
+                                        <label>电话：</label>
+                                        <input id="phone" type="text"  value="${sessionScope.frontUser.userPhone}" class="form-control" onblur="verification()" maxlength="11" placeholder="手机号码">
+                                        <span class="prompt" id="phone-pro">请填写该字段</span>
+                                        <span class="prompt" id="phone-pro2">号码格式错误</span>
+                                    </c:if>
+                                    <c:if test="${sessionScope.frontUser == null}">
+                                        <label>电话：</label>
+                                        <input id="phone" type="text"  value="" class="form-control" onblur="verification()" maxlength="11" placeholder="手机号码">
+                                        <span class="prompt" id="phone-pro">请填写该字段</span>
+                                        <span class="prompt" id="phone-pro2">号码格式错误</span>
+                                    </c:if>
                                 </div>
                                 <div class="form-group">
                                     <span style="float: left;"><label>预约时间：</label></span>
