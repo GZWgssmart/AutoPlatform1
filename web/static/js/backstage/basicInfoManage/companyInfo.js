@@ -388,9 +388,9 @@ function formSubmit(url, formId, winId){
                     $("input[type=reset]").trigger("click"); // 移除表单中填的值
                         $('#addForm').data('bootstrapValidator').resetForm(true); // 移除所有验证样式
                         $("#addButton").removeAttr("disabled"); // 移除不可点击
-                        $("#" + formId).data('bootstrapValidator').destroy(); // 销毁此form表单
-                        $('#' + formId).data('bootstrapValidator', null);// 此form表单设置为空
                 }
+                $("#" + formId).data('bootstrapValidator').destroy(); // 销毁此form表单
+                $('#' + formId).data('bootstrapValidator', null);// 此form表单设置为空
             } else if (data.result == "fail") {
                 swal({
                     title: "",

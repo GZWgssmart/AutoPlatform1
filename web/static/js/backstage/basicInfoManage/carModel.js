@@ -214,10 +214,10 @@ function formSubmit(url, formId, winId){
                     $("input[type=reset]").trigger("click");
                         $('#addForm').data('bootstrapValidator').resetForm(true);
                         $("#addButton").removeAttr("disabled");
-                        $("#" + formId).data('bootstrapValidator').destroy(); // 销毁此form表单
-                        $('#' + formId).data('bootstrapValidator', null);// 此form表单设置为空
                         $("#addCarBrand").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
                 }
+                $("#" + formId).data('bootstrapValidator').destroy(); // 销毁此form表单
+                $('#' + formId).data('bootstrapValidator', null);// 此form表单设置为空
             } else if (data.result == "fail") {
                 swal({
                     title: "",
