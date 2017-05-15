@@ -47,7 +47,7 @@
                         供应商所属公司
                     </th>
                 </shiro:hasAnyRoles>
-                <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员">
+                <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员">
                     <th data-width="100" data-field="supplyStatus" data-formatter="statusFormatter">
                         记录状态
                     </th>

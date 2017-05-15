@@ -26,7 +26,7 @@
                     <th data-width="180" data-field="company.companyName">供应商类型所属公司</th>
                 </shiro:hasAnyRoles>
                 <th data-width="180" data-field="supplyTypeDes">供应商类型描述内容</th>
-                <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员">
+                <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员">
                     <th data-width="100" data-field="supplyTypeStatus" data-formatter="statusFormatter">记录状态</th>
                 </shiro:hasAnyRoles>
             </tr>
