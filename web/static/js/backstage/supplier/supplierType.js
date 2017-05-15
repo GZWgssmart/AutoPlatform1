@@ -34,7 +34,7 @@ $(function () {
 
 
 function showEdit(){
-    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员";
+    var roles = "公司超级管理员,公司普通管理员";
     $.post("/user/isLogin/"+roles, function (data) {
         if (data.result == 'success') {
             var row = $('#table').bootstrapTable('getSelections');
@@ -80,7 +80,7 @@ function showEdit(){
 }
 
 function showAdd(){
-    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员";
+    var roles = "公司超级管理员,公司普通管理员";
     $.post("/user/isLogin/"+roles, function (data) {
         if (data.result == 'success') {
             $("#addWindow").modal('show');
