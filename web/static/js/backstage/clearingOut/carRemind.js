@@ -25,11 +25,11 @@ $(function () {
 });
 
 // 激活或禁用
-function showStatusFormatter(value) {
+function statusFormatter(value, row, index) {
     if(value == 'Y') {
-        return "是";
+        return "&nbsp;&nbsp;<button type='button' class='btn btn-danger' onclick='inactive(\""+'/maintainRecord/statusOperate?id='+row.maintainRecordId+'&status=Y'+"\")'>禁用</a>";
     } else {
-        return "否";
+        return "&nbsp;&nbsp;<button type='button' class='btn btn-success' onclick='active(\""+'/maintainRecord/statusOperate?id='+ row.maintainRecordId+'&status=N'+ "\")'>激活</a>";
     }
 }
 

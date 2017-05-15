@@ -144,4 +144,14 @@ public class UserServiceImpl implements UserService {
     public Set<String> queryRoles(String email) {
         return userDAO.queryRoles(email);
     }
+
+    /**
+     * 根据roleName查询人员基本信息
+     * @param roleName
+     * @return
+     */
+    @Override
+    public User queryByRoleName(String roleName) {
+        return userDAO.queryByRoleName(roleName);
+    }
 }

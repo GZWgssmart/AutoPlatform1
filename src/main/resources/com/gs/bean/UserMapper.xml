@@ -56,7 +56,8 @@
      <![CDATA[
        update t_user u set u.userName = #{userName}, u.userEmail = #{userEmail}, u.userPhone = #{userPhone},
             u.userIdentity = #{userIdentity}, u.userGender = #{userGender},u.userNickname=#{userNickname},
-           u.userBirthDay = #{userBirthday}, u.userDes = #{userDes}, u.userSalary = #{userSalary}
+           u.userBirthDay = #{userBirthday}, u.userDes = #{userDes}, u.userSalary = #{userSalary},
+           u.userLoginedTime = #{userLoginedTime}
         where u.userId = #{userId};
      ]]>
   </update>
@@ -190,6 +191,14 @@
     <![CDATA[
           SELECT *FROM auto_platform.t_user WHERE userStatus = 'Y' and userEmail=#{email} OR userPhone=#{email}
         ]]>
+  </select>
+
+  <!-- 根据角色名称查询人员基本信息 -->
+  <select id="queryByRoleName" resultMap="userBasicManageMap">
+    <![CDATA[
+      SELECT u.*,ur.userId,ur.roleId,r.roleName FROM t_user u, t_user_role ur, t_role r
+	    WHERE u.userId = ur.userId  AND ur.roleId = r.roleId  AND r.roleName IN (#{roleName})
+    ]]>
   </select>
 
   <!--根据用户输入的邮箱或者手机号判断成功时, 查询到此用户所有信息-->

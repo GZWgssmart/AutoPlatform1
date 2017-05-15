@@ -10,14 +10,11 @@
 
 </head>
 <style>
-    #tab1{
-        border: solid red  1px;
-        margin: 10px 15px;
-    }
-    .project{
-        margin-left:15px;
+    .company,.project,.proname,.startime,.endtime{
+        margin-left:25px;
         float: left;
     }
+
 </style>
 <script type="text/javascript" src="/static/js/jquery.min.js"></script>
 <script type="text/javascript" src="/static/js/echarts/echarts.js"></script>
@@ -47,67 +44,49 @@
         选项卡的内容定义
     -->
     <div class='tab-content'>
-        <div class="tab-pane active"  id='tab1'>
+        <div class="tab-pane active"  id='tab1' style="margin: 10px 15px;">
             <div class="form-inline">
+                <div class="company" id="companySelect" style="width: 300px;">
                     <label>公司:</label>
-                    <select id="ab" name="Recognition" class="form-control select2" >
-                        <option>aaa</option>
-                        <option>bbb</option>
-                    </select>
-                <div class="project">
-                    <label>项目类型</label>
-                    <select id="pro" name="Recognition" class="form-control select2">
-                        <option>aaa</option>
-                        <option>bbb</option>
+                    <select id="companyId" name="companyId" class="form-control select2 companyName" style="width: 80%;" >
+
                     </select>
                 </div>
+                <div class="project"  style="width: 150px;">
+                    <label>项目类型:</label>
+                    <select id="maintainTypeId" name="" class="form-control select2">
+                        <option>维修</option>
+                        <option>保养</option>
+                    </select>
+                </div>
+                <div class="proname" style="width: 200px;">
+                    <label>项目名字:</label>
+                    <select id="maintainId" name="maintainId" class="form-control select2 maintainName" style="width: 60%;" >
+
+                    </select>
+                </div>
+                <div class="startime">
+                    <label>
+                        开始时间:
+                    </label>
+                    <div class="input-group">
+                        <input type="text" class="form-control form_Year" id="startYearInput" name="addtime" placeholder="请选择开始时间">
+                        <span class="input-group-addon" id="startYear"><span class="glyphicon glyphicon-time"
+                                                                             aria-hidden="true"></span></span>
+                    </div>
+                </div>
+                <div class="endtime">
+                    <label>结束时间：</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control form_Year" id="endYearInput" name="addtime"  placeholder="请选择结束时间">
+                        <span class="input-group-addon" id="endYear"><span class="glyphicon glyphicon-time"
+                                                                         aria-hidden="true"></span></span>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
             </div>
         </div>
 
-      <%--  <div class='tab-pane active' id='tab1'>
-            <div class="left col-xs-5 col-md-5 text-right">
-                <div class="form-group">
-                    <label class="control-label col-md-4">公司</label>
-                    <div class="col-xs-5 col-md-5">
-                        <select id="ab" name="Recognition" class="form-control select2" placeholder="请输入公司">
-                            <option>aaa</option>
-                            <option>bbb</option>
-                        </select>
-                    </div>
-                    <div class="col-xs-5">
-                        <select id="a" name="Recognition" class="form-control select2" placeholder="认可程度...">
-                            <option>aaa</option>
-                            <option>bbb</option>
-                        </select>
-                    </div>
-
-                </div>
-
-            </div>
-            <div class="right col-xs-2 text-left">
-                <div class="input-group" id="startYearInputId">
-                    <label>开始时间:</label>
-                    <input type="text" class="form-control form_Year" id="startYearInput" name="addtime"
-                           placeholder="请选择开始时间">
-                    <span class="input-group-addon" id="startYear"><span class="glyphicon glyphicon-time"
-                                                                         aria-hidden="true"></span></span>
-                </div>
-            </div>
-            <div class="left col-xs-2 text-right">
-                <label>结束时间:</label>
-            </div>
-            <div class="right col-xs-2 text-left" id="endYearInputId">
-                <div class="input-group">
-                    <input type="text" class="form-control form_Year" id="endYearInput" name="addtime"
-                           placeholder="请选择结束时间">
-                    <span class="input-group-addon" id="endYear"><span class="glyphicon glyphicon-time"
-                                                                       aria-hidden="true"></span></span>
-                </div>
-            </div>
-            <button id="yearBtnId" type="button" class="btn btn-default" onclick="selectYears();">
-                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>查询
-            </button>
-        </div>--%>
         <div class='tab-pane' id='tab2'>
             <div class="left col-xs-2 text-right">
                 <label>开始时间:</label>
@@ -235,9 +214,10 @@
 <!-- 显示Echarts图表 -->
 <script src="/static/js/backstage/statistics/myEcharts.js"></script>
 <script type="text/javascript" src="/static/js/backstage/statistics/maintainType.js"></script>
-
+<script src="/static/js/jquery.min.js"></script>
 <script src="/static/js/contextmenu.js"></script>
 <script src="/static/js/select2/select2.js"></script>
+<script src="/static/js/backstage/main.js"></script>
 
 </div>
 

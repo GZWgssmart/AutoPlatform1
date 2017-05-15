@@ -78,7 +78,7 @@ public class UserBasicManageController {
     @RequestMapping(value = "addUser", method = RequestMethod.POST)
     public Map addUser(User user, HttpServletRequest request, HttpSession session) {
         if(SessionUtil.isLogin(session)) {
-            String roles = "公司超级管理员, 公司普通管理员, 汽车公司人力资源管理部, 系统超级管理员,系统普通管理员";
+            String roles = "公司超级管理员,公司普通管理员,汽车公司人力资源管理部,系统超级管理员,系统普通管理员";
             if (RoleUtil.checkRoles(roles)) {
                 logger.info("添加人员");
                 Map map = new HashMap();
@@ -158,7 +158,7 @@ public class UserBasicManageController {
     @RequestMapping(value = "updateUser", method =RequestMethod.POST)
     public Map updateUser(User user,HttpServletRequest request, HttpSession session) {
         if(SessionUtil.isLogin(session)) {
-            String roles = "公司超级管理员, 公司普通管理员, 汽车公司人力资源管理部, 系统超级管理员,系统普通管理员";
+            String roles = "公司超级管理员,公司普通管理员,汽车公司人力资源管理部,系统超级管理员,系统普通管理员";
             if (RoleUtil.checkRoles(roles)) {
                 Map map = new HashMap();
                 String province = request.getParameter("editProvince");
@@ -187,7 +187,7 @@ public class UserBasicManageController {
     @RequestMapping(value = "updateStatus", method = RequestMethod.POST)
     public ControllerResult updateStatus(String id, String status, HttpSession session) {
         if(SessionUtil.isLogin(session)) {
-            String roles = "公司超级管理员, 公司普通管理员, 汽车公司人力资源管理部, 系统超级管理员,系统普通管理员";
+            String roles = "公司超级管理员,公司普通管理员,汽车公司人力资源管理部,系统超级管理员,系统普通管理员";
             if (RoleUtil.checkRoles(roles)) {
                 if (status.equals("Y")) {
                     userService.inactive(id);
@@ -216,7 +216,7 @@ public class UserBasicManageController {
     @RequestMapping(value="queryByPagerAll", method = RequestMethod.GET)
     public Pager4EasyUI queryByPagerAll(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize,HttpSession session) {
         if(SessionUtil.isLogin(session)) {
-            String roles = "公司超级管理员, 公司普通管理员, 汽车公司人力资源管理部, 系统超级管理员,系统普通管理员";
+            String roles = "公司超级管理员,公司普通管理员,汽车公司人力资源管理部,系统超级管理员,系统普通管理员";
             if (RoleUtil.checkRoles(roles)) {
                 Pager pager = new Pager();
                 pager.setPageNo(Integer.valueOf(pageNumber));
@@ -243,7 +243,7 @@ public class UserBasicManageController {
     @RequestMapping(value="queryByPager", method = RequestMethod.GET)
     public Pager4EasyUI queryByPager(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize, HttpSession session) {
         if(SessionUtil.isLogin(session)) {
-            String roles = "公司超级管理员, 公司普通管理员, 汽车公司人力资源管理部, 系统超级管理员,系统普通管理员";
+            String roles = "公司超级管理员,公司普通管理员,汽车公司人力资源管理部,系统超级管理员,系统普通管理员";
             if (RoleUtil.checkRoles(roles)) {
                 Pager pager = new Pager();
                 pager.setPageNo(Integer.valueOf(pageNumber));
@@ -270,7 +270,7 @@ public class UserBasicManageController {
     @RequestMapping(value="queryByPagerDisable", method = RequestMethod.GET)
     public Pager4EasyUI queryByPagerDisable(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize, HttpSession session) {
         if(SessionUtil.isLogin(session)) {
-            String roles = "公司超级管理员, 公司普通管理员, 汽车公司人力资源管理部, 系统超级管理员,系统普通管理员";
+            String roles = "公司超级管理员,公司普通管理员,汽车公司人力资源管理部,系统超级管理员,系统普通管理员";
             if (RoleUtil.checkRoles(roles)) {
                 Pager pager = new Pager();
                 pager.setPageNo(Integer.valueOf(pageNumber));
@@ -319,6 +319,13 @@ public class UserBasicManageController {
     public User queryById(@Param("userId") String userId) {
         logger.info("根据id查询该id的详细信息");
         return userService.queryById(userId);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "queryByRoleName", method = RequestMethod.POST)
+    public User queryByRoleName(@Param("roleName") String roleName) {
+        logger.info("根据roleName查询该roleName的详细信息");
+        return userService.queryByRoleName(roleName);
     }
 
 }

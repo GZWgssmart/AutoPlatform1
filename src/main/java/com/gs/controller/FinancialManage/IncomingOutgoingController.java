@@ -172,7 +172,7 @@ public class IncomingOutgoingController {
 
     @ResponseBody
     @RequestMapping(value = "queryByCondition")
-    public List<IncomingOutInFo> queryByCondition(HttpSession session, String start, String end, String type) {
+    public List<IncomingOutInFo> queryByCondition(HttpSession session, String start, String end, String type, String companyId) {
         logger.info("按年月日周季查询财务报表");
         List<IncomingOutInFo> list = null;
         List<IncomingOutgoing> timeList = null;
@@ -185,9 +185,16 @@ public class IncomingOutgoingController {
             if (RoleUtil.checkRoles(roles)) {
                 if (type != null && !type.equals("")) {
                     if (type.equals("year")) {
-                        timeList = incomingOutgoingService.queryByCondition(start, end, "0", user.getCompanyId(), "year");
-                        outList = incomingOutgoingService.queryByCondition(start, end, "1", user.getCompanyId(), "year");
-                        inList = incomingOutgoingService.queryByCondition(start, end, "2", user.getCompanyId(), "year");
+                        if (companyId != null) {
+                            timeList = incomingOutgoingService.queryByCondition(start, end, "0", companyId, "year");
+                            outList = incomingOutgoingService.queryByCondition(start, end, "1", companyId, "year");
+                            inList = incomingOutgoingService.queryByCondition(start, end, "2", companyId, "year");
+                        } else {
+                            timeList = incomingOutgoingService.queryByCondition(start, end, "0", user.getCompanyId(), "year");
+                            outList = incomingOutgoingService.queryByCondition(start, end, "1", user.getCompanyId(), "year");
+                            inList = incomingOutgoingService.queryByCondition(start, end, "2", user.getCompanyId(), "year");
+                        }
+
                         for (int p = 0; p < timeList.size(); p++) {
                             IncomingOutInFo io = new IncomingOutInFo();
                             String ag = DateFormatUtil.YearFormater(timeList.get(p).getInOutCreatedTime());
@@ -213,9 +220,15 @@ public class IncomingOutgoingController {
                             list.add(io);
                         }
                     } else if (type.equals("quarter")) {
-                        timeList = incomingOutgoingService.queryByCondition(start, end, "0", user.getCompanyId(), "quarter");
-                        outList = incomingOutgoingService.queryByCondition(start, end, "1", user.getCompanyId(), "quarter");
-                        inList = incomingOutgoingService.queryByCondition(start, end, "2", user.getCompanyId(), "quarter");
+                        if (companyId != null) {
+                            timeList = incomingOutgoingService.queryByCondition(start, end, "0", companyId, "quarter");
+                            outList = incomingOutgoingService.queryByCondition(start, end, "1", companyId, "quarter");
+                            inList = incomingOutgoingService.queryByCondition(start, end, "2", companyId, "quarter");
+                        } else {
+                            timeList = incomingOutgoingService.queryByCondition(start, end, "0", user.getCompanyId(), "quarter");
+                            outList = incomingOutgoingService.queryByCondition(start, end, "1", user.getCompanyId(), "quarter");
+                            inList = incomingOutgoingService.queryByCondition(start, end, "2", user.getCompanyId(), "quarter");
+                        }
                         for (int p = 0; p < timeList.size(); p++) {
                             IncomingOutInFo io = new IncomingOutInFo();
                             String ag = DateFormatUtil.MonthFormater(timeList.get(p).getInOutCreatedTime());
@@ -247,13 +260,19 @@ public class IncomingOutgoingController {
                             list.add(io);
                         }
                     } else if (type.equals("month")) {
-                        timeList = incomingOutgoingService.queryByCondition(start, end, "0", user.getCompanyId(), "month");
-                        outList = incomingOutgoingService.queryByCondition(start, end, "1", user.getCompanyId(), "month");
-                        inList = incomingOutgoingService.queryByCondition(start, end, "2", user.getCompanyId(), "month");
+                        if (companyId != null) {
+                            timeList = incomingOutgoingService.queryByCondition(start, end, "0", companyId, "month");
+                            outList = incomingOutgoingService.queryByCondition(start, end, "1", companyId, "month");
+                            inList = incomingOutgoingService.queryByCondition(start, end, "2", companyId, "month");
+                        } else {
+                            timeList = incomingOutgoingService.queryByCondition(start, end, "0", user.getCompanyId(), "month");
+                            outList = incomingOutgoingService.queryByCondition(start, end, "1", user.getCompanyId(), "month");
+                            inList = incomingOutgoingService.queryByCondition(start, end, "2", user.getCompanyId(), "month");
+                        }
                         for (int p = 0; p < timeList.size(); p++) {
                             IncomingOutInFo io = new IncomingOutInFo();
                             String ag = DateFormatUtil.MonthFormater(timeList.get(p).getInOutCreatedTime());
-
+                            io.setDate(ag);
                             for (int j = 0; j < outList.size(); j++) {
                                 String outTime = DateFormatUtil.MonthFormater(outList.get(j).getInOutCreatedTime());
                                 if (ag.equals(outTime)) {
@@ -278,9 +297,15 @@ public class IncomingOutgoingController {
                     } else if (type.equals("week"))
 
                     {
-                        timeList = incomingOutgoingService.queryByCondition(start, end, "0", user.getCompanyId(), "week");
-                        outList = incomingOutgoingService.queryByCondition(start, end, "1", user.getCompanyId(), "week");
-                        inList = incomingOutgoingService.queryByCondition(start, end, "2", user.getCompanyId(), "week");
+                        if (companyId != null) {
+                            timeList = incomingOutgoingService.queryByCondition(start, end, "0", companyId, "week");
+                            outList = incomingOutgoingService.queryByCondition(start, end, "1", companyId, "week");
+                            inList = incomingOutgoingService.queryByCondition(start, end, "2", companyId, "week");
+                        } else {
+                            timeList = incomingOutgoingService.queryByCondition(start, end, "0", user.getCompanyId(), "week");
+                            outList = incomingOutgoingService.queryByCondition(start, end, "1", user.getCompanyId(), "week");
+                            inList = incomingOutgoingService.queryByCondition(start, end, "2", user.getCompanyId(), "week");
+                        }
                         for (int p = 0; p < timeList.size(); p++) {
                             IncomingOutInFo io = new IncomingOutInFo();
                             String ag = DateFormatUtil.WEEK(timeList.get(p).getInOutCreatedTime());
@@ -318,9 +343,15 @@ public class IncomingOutgoingController {
                     } else if (type.equals("day"))
 
                     {
-                        timeList = incomingOutgoingService.queryByCondition(start, end, "0", user.getCompanyId(), "day");
-                        outList = incomingOutgoingService.queryByCondition(start, end, "1", user.getCompanyId(), "day");
-                        inList = incomingOutgoingService.queryByCondition(start, end, "2", user.getCompanyId(), "day");
+                        if (companyId != null) {
+                            timeList = incomingOutgoingService.queryByCondition(start, end, "0", companyId, "day");
+                            outList = incomingOutgoingService.queryByCondition(start, end, "1", companyId, "day");
+                            inList = incomingOutgoingService.queryByCondition(start, end, "2", companyId, "day");
+                        } else {
+                            timeList = incomingOutgoingService.queryByCondition(start, end, "0", user.getCompanyId(), "day");
+                            outList = incomingOutgoingService.queryByCondition(start, end, "1", user.getCompanyId(), "day");
+                            inList = incomingOutgoingService.queryByCondition(start, end, "2", user.getCompanyId(), "day");
+                        }
                         for (int p = 0; p < timeList.size(); p++) {
                             IncomingOutInFo io = new IncomingOutInFo();
                             String ag = DateFormatUtil.DayFormater(timeList.get(p).getInOutCreatedTime());

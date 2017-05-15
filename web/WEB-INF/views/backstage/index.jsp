@@ -432,12 +432,12 @@
 
                 <div class="tab-content">
                     <div id="tab-1" class="tab-pane active">
-                        <div class="sidebar-title">
-                            <h3> <i class="fa fa-comments-o"></i> 主题设置</h3>
-                            <small><i class="fa fa-tim"></i> 你可以从这里选择和预览主题的布局和样式，这些设置会被保存在本地，下次打开的时候会直接应用这些设置。</small>
-                        </div>
+                        <%--<div class="sidebar-title">--%>
+                            <%--<h3> <i class="fa fa-comments-o"></i> 主题设置</h3>--%>
+                            <%--<small><i class="fa fa-tim"></i> 你可以从这里选择和预览主题的布局和样式，这些设置会被保存在本地，下次打开的时候会直接应用这些设置。</small>--%>
+                        <%--</div>--%>
                         <div class="skin-setttings">
-                            <div class="title">主题设置</div>
+                            <%--<div class="title">主题设置</div>--%>
                             <div class="setings-item">
                                 <span>收起左侧菜单</span>
                                 <div class="switch">

@@ -1,5 +1,5 @@
 var contentPath = ''
-var roles = "公司超级管理员, 公司普通管理员，汽车公司人力资源管理部, 系统超级管理员，系统普通管理员";
+var roles = "公司超级管理员,公司普通管理员,汽车公司人力资源管理部,系统超级管理员,系统普通管理员";
 
 $(".js-example-basic-multiple").select2({
     allowClear: true

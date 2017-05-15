@@ -49,4 +49,11 @@ public interface UserDAO extends BaseDAO<String, User>{
      */
     public User queryUser(String email);
 
+    /**
+     * 根据roleName查询人员基本信息
+     * @param roleName
+     * @return
+     */
+    public User queryByRoleName(String roleName);
+
 }

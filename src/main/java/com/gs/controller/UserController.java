@@ -75,9 +75,8 @@ public class UserController {
                         || subject.hasRole(Constants.role_companyHR)) {
                     logger.info("登录成功");
                     User user = userService.queryUser(user1.getUserEmail());
-                    user.setUserLoginedTime(new Date());
-                    userService.update(user);
                     session.setAttribute("user", user);
+                    session.setAttribute("userLoginedTime", new Date());
                     return ControllerResult.getSuccessResult("登录成功");
                 }else {
                     logger.info("抱歉，你的账号角色并不授权。请联系管理员激活账号！");
@@ -103,8 +102,11 @@ public class UserController {
      * 退出登录
      */
     @RequestMapping(value="logout",method=RequestMethod.GET)
-    public String logout() {
+    public String logout(HttpSession session) {
         Subject currentUser = SecurityUtils.getSubject();
+        User user = (User)session.getAttribute("user");
+        user.setUserLoginedTime((Date)session.getAttribute("userLoginedTime"));
+        userService.update(user);
         currentUser.logout();
         return "user/login";
     }
