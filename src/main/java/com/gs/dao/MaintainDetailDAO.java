@@ -30,4 +30,5 @@ public interface MaintainDetailDAO extends BaseDAO<String, MaintainDetail>{
      * @return
      */
     public List<MaintainDetail> queryByCondition(@Param("start") String start, @Param("end") String end, @Param("companyId")String companyId, @Param("maintainId")String maintainId, @Param("type")String type);
+
 }

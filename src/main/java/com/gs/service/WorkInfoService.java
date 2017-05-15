@@ -14,7 +14,7 @@ import java.util.List;
 */
 public interface WorkInfoService extends BaseService<String, WorkInfo>{
 
-    public List<WorkInfo> queryByCondition(String start, String end,String userId,String maintainOrFix, String type);
+    public List<WorkInfo> queryByCondition(String start, String end,String companyId,String maintainOrFix, String type);
 
     public List<WorkInfo> queryByPagerschelude(Pager pager);
 

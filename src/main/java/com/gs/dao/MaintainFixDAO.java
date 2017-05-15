@@ -1,5 +1,6 @@
 package com.gs.dao;
 
+import com.gs.bean.MaintainDetail;
 import com.gs.bean.MaintainFix;
 import com.gs.bean.User;
 import com.gs.common.bean.Pager;
@@ -39,5 +40,8 @@ public interface MaintainFixDAO extends BaseDAO<String, MaintainFix>{
     public List<MaintainFix> queryByPagerDisableService(Pager pager);
 
     public int countByDisableService();
+
+    /*<!--根据汽修公司， 汽修项目，查询项目名字（id）-->*/
+    public List<MaintainFix> queryByMaintainName(@Param("companyId")String companyId, @Param("maintainOrFix")String maintainOrFix);
 
 }

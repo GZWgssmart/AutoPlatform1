@@ -255,7 +255,7 @@ public class OrderManageController {
 
     @ResponseBody
     @RequestMapping(value = "queryByCondition")
-    public List<WorkInFoBean> queryByCondition(HttpSession session, String start, String end, String type){
+    public List<WorkInFoBean> queryByCondition(HttpSession session, String start, String end, String type, String companyId){
         logger.info("根据年月日周季去查询所有的工单");
         List<WorkInFoBean> list = null;
         List<WorkInfo> timeList = null;
@@ -268,9 +268,15 @@ public class OrderManageController {
             if(RoleUtil.checkRoles(roles)) {
                 if (type != null && !type.equals("")) {
                     if (type.equals("year")) {
-                        timeList = workInfoService.queryByCondition(start, end,user.getUserId(),"0","year");
-                        maintainList=workInfoService.queryByCondition(start, end,user.getUserId(),"1","year");
-                        preserveList=workInfoService.queryByCondition(start, end,user.getUserId(),"2","year");
+                        if (companyId != null) {
+                            timeList = workInfoService.queryByCondition(start, end,companyId,"0","year");
+                            maintainList=workInfoService.queryByCondition(start, end,companyId,"1","year");
+                            preserveList=workInfoService.queryByCondition(start, end,companyId,"2","year");
+                        } else {
+                            timeList = workInfoService.queryByCondition(start, end,user.getCompanyId(),"0","year");
+                            maintainList=workInfoService.queryByCondition(start, end,user.getCompanyId(),"1","year");
+                            preserveList=workInfoService.queryByCondition(start, end,user.getCompanyId(),"2","year");
+                        }
                         for (int p = 0; p < timeList.size(); p++) {
                             WorkInFoBean io = new WorkInFoBean();
                             String ag = DateFormatUtil.YearFormater(timeList.get(p).getWorkCreatedTime());
@@ -297,9 +303,15 @@ public class OrderManageController {
                         }
 
                     } else if (type.equals("quarter")) {
-                        timeList = workInfoService.queryByCondition(start, end,user.getUserId(),"0","quarter");
-                        maintainList=workInfoService.queryByCondition(start, end,user.getUserId(),"1","quarter");
-                        preserveList=workInfoService.queryByCondition(start, end,user.getUserId(),"2","quarter");
+                        if (companyId != null) {
+                            timeList = workInfoService.queryByCondition(start, end,companyId,"0","quarter");
+                            maintainList=workInfoService.queryByCondition(start, end,companyId,"1","quarter");
+                            preserveList=workInfoService.queryByCondition(start, end,companyId,"2","quarter");
+                        } else {
+                            timeList = workInfoService.queryByCondition(start, end,user.getCompanyId(),"0","quarter");
+                            maintainList=workInfoService.queryByCondition(start, end,user.getCompanyId(),"1","quarter");
+                            preserveList=workInfoService.queryByCondition(start, end,user.getCompanyId(),"2","quarter");
+                        }
                         for (int p = 0; p < timeList.size(); p++) {
                             WorkInFoBean io = new WorkInFoBean();
                             String ag = DateFormatUtil.MonthFormater(timeList.get(p).getWorkCreatedTime());
@@ -328,9 +340,15 @@ public class OrderManageController {
                             list.add(io);
                         }
                     } else if (type.equals("month")) {
-                        timeList = workInfoService.queryByCondition(start, end,user.getUserId(),"0","month");
-                        maintainList=workInfoService.queryByCondition(start, end,user.getUserId(),"1","month");
-                        preserveList=workInfoService.queryByCondition(start, end,user.getUserId(),"2","month");
+                        if (companyId != null) {
+                            timeList = workInfoService.queryByCondition(start, end,companyId,"0","month");
+                            maintainList=workInfoService.queryByCondition(start, end,companyId,"1","month");
+                            preserveList=workInfoService.queryByCondition(start, end,companyId,"2","month");
+                        } else {
+                            timeList = workInfoService.queryByCondition(start, end,user.getCompanyId(),"0","month");
+                            maintainList=workInfoService.queryByCondition(start, end,user.getCompanyId(),"1","month");
+                            preserveList=workInfoService.queryByCondition(start, end,user.getCompanyId(),"2","month");
+                        }
                         for (int p = 0; p < timeList.size(); p++) {
                             WorkInFoBean io = new WorkInFoBean();
                             String ag = DateFormatUtil.MonthFormater(timeList.get(p).getWorkCreatedTime());
@@ -356,9 +374,15 @@ public class OrderManageController {
                             list.add(io);
                         }
                     } else if (type.equals("week")) {
-                        timeList = workInfoService.queryByCondition(start, end,user.getUserId(),"0","day");
-                        maintainList=workInfoService.queryByCondition(start, end,user.getUserId(),"1","day");
-                        preserveList=workInfoService.queryByCondition(start, end,user.getUserId(),"2","day");
+                        if (companyId != null) {
+                            timeList = workInfoService.queryByCondition(start, end,companyId,"0","week");
+                            maintainList=workInfoService.queryByCondition(start, end,companyId,"1","week");
+                            preserveList=workInfoService.queryByCondition(start, end,companyId,"2","week");
+                        } else {
+                            timeList = workInfoService.queryByCondition(start, end,user.getCompanyId(),"0","week");
+                            maintainList=workInfoService.queryByCondition(start, end,user.getCompanyId(),"1","week");
+                            preserveList=workInfoService.queryByCondition(start, end,user.getCompanyId(),"2","week");
+                        }
                         for (int p = 0; p < timeList.size(); p++) {
                             WorkInFoBean io = new WorkInFoBean();
                             String ag = DateFormatUtil.WEEK(timeList.get(p).getWorkCreatedTime());
@@ -393,9 +417,15 @@ public class OrderManageController {
                             list.add(io);
                         }
                     } else if (type.equals("day")) {
-                        timeList = workInfoService.queryByCondition(start, end,user.getUserId(),"0","day");
-                        maintainList=workInfoService.queryByCondition(start, end,user.getUserId(),"1","day");
-                        preserveList=workInfoService.queryByCondition(start, end,user.getUserId(),"2","day");
+                        if (companyId != null) {
+                            timeList = workInfoService.queryByCondition(start, end,companyId,"0","day");
+                            maintainList=workInfoService.queryByCondition(start, end,companyId,"1","day");
+                            preserveList=workInfoService.queryByCondition(start, end,companyId,"2","day");
+                        } else {
+                            timeList = workInfoService.queryByCondition(start, end,user.getCompanyId(),"0","day");
+                            maintainList=workInfoService.queryByCondition(start, end,user.getCompanyId(),"1","day");
+                            preserveList=workInfoService.queryByCondition(start, end,user.getCompanyId(),"2","day");
+                        }
                         for (int p = 0; p < timeList.size(); p++) {
                             WorkInFoBean io = new WorkInFoBean();
                             String ag = DateFormatUtil.DayFormater(timeList.get(p).getWorkCreatedTime());

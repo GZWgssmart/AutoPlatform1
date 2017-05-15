@@ -22,4 +22,6 @@ public interface MaintainFixAccDAO extends BaseDAO<String, MaintainFixAcc>{
     public List<MaintainFixAcc> queryByDetailsByPager(@Param("pager") Pager pager, @Param("maintainId") String maintainId);
     public int countByDetails(@Param("maintainId") String maintainId);
 
+
+
 }

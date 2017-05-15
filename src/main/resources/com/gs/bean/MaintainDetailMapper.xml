@@ -86,6 +86,8 @@
 		]]>
   </update>
 
+
+
   <!--维修项目统计报表-->
   <!--员工工单报表-->
   <select id="queryByCondition" resultMap="maintainDetailMap">
@@ -110,4 +112,6 @@ and mf.maintainId = #{maintainId} and md.mdCreatedTime >= #{start} and md.mdCrea
       group by date(md.mdCreatedTime) ORDER BY md.mdCreatedTime ASC;
     </if>
   </select>
+
+
 </mapper>

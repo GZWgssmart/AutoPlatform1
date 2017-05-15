@@ -2,6 +2,7 @@ package com.gs.service;
 
 import com.gs.bean.MaintainDetail;
 import com.gs.common.bean.Pager;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -18,4 +19,6 @@ public interface MaintainDetailService extends BaseService<String, MaintainDetai
     public List<MaintainDetail> queryByRecordId(String maintainRecordId);
 
     public List<MaintainDetail> queryByCondition(String start, String end, String companyId, String maintainId,String type);
+
+
 }
