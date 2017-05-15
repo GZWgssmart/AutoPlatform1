@@ -23,21 +23,24 @@
 <%@include file="../backstage/contextmenu.jsp" %>
 <div class="container">
     <div class="panel-body" style="padding-bottom:0px;">
-        <table id="table">
-            <thead>
-            <tr>
-                <th data-radio="true" data-field="status"></th>
-                <th data-field="company.companyName">所属公司</th>
-                <th data-field="accTypeName">配件分类名称</th>
-                <th data-field="accTypeDes">配件分类描述</th>
-                <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,系统超级管理员,系统普通管理员">
-                    <th data-width="100" data-field="accTypeStatus" data-formatter="statusFormatter">
-                        操作
-                    </th>
-                </shiro:hasAnyRoles>
-            </tr>
-            </thead>
-        </table>
+        <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,系统超级管理员,系统普通管理员">
+            <table id="table">
+                <thead>
+                <tr>
+                    <th data-radio="true" data-field="status"></th>
+                    <th data-field="company.companyName">所属公司</th>
+                    <th data-field="accTypeName">配件分类名称</th>
+                    <th data-field="accTypeDes">配件分类描述</th>
+                    <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,系统超级管理员,系统普通管理员">
+                        <th data-width="100" data-field="accTypeStatus" data-formatter="statusFormatter">
+                            操作
+                        </th>
+                    </shiro:hasAnyRoles>
+                </tr>
+                </thead>
+            </table>
+        </shiro:hasAnyRoles>
+
         <div id="toolbar" class="btn-group">
             <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,系统超级管理员,系统普通管理员">
                 <button id="btn_available" type="button" class="btn btn-success" onclick="showAvailable();">

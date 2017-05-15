@@ -25,27 +25,29 @@
 <%@include file="../backstage/contextmenu.jsp" %>
 <div class="container ">
     <div class="panel-body" style="padding-bottom:0px;">
-        <table id="table">
-            <thead>
-            <tr>
-                <th data-radio="true" data-field="status"></th>
-                <th data-field="company.companyName">所属公司</th>
-                <th data-field="accessories.accName">配件名称</th>
-                <th data-field="accSaledTime" data-formatter="formatterDate">配件销售时间</th>
-                <th data-field="accSaleCount">配件销售数量</th>
-                <th data-field="accSalePrice">配件销售单价</th>
-                <th data-field="accSaleTotal">配件销售总价</th>
-                <th data-field="accSaleDiscount">配件销售折扣</th>
-                <th data-field="accSaleMoney">配件销售最终价</th>
-                <th data-field="accSaleCreatedTime" data-formatter="formatterDateTime">销售记录创建时间</th>
-                <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司销售人员,系统超级管理员,系统普通管理员">
-                    <th data-width="100" data-field="accSaleStatus" data-formatter="statusFormatter">
-                        操作
-                    </th>
-                </shiro:hasAnyRoles>
-            </tr>
-            </thead>
-        </table>
+        <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司销售人员,系统超级管理员,系统普通管理员">
+            <table id="table">
+                <thead>
+                <tr>
+                    <th data-radio="true" data-field="status"></th>
+                    <th data-field="company.companyName">所属公司</th>
+                    <th data-field="accessories.accName">配件名称</th>
+                    <th data-field="accSaledTime" data-formatter="formatterDate">配件销售时间</th>
+                    <th data-field="accSaleCount">配件销售数量</th>
+                    <th data-field="accSalePrice">配件销售单价</th>
+                    <th data-field="accSaleTotal">配件销售总价</th>
+                    <th data-field="accSaleDiscount">配件销售折扣</th>
+                    <th data-field="accSaleMoney">配件销售最终价</th>
+                    <th data-field="accSaleCreatedTime" data-formatter="formatterDateTime">销售记录创建时间</th>
+                    <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司销售人员,系统超级管理员,系统普通管理员">
+                        <th data-width="100" data-field="accSaleStatus" data-formatter="statusFormatter">
+                            操作
+                        </th>
+                    </shiro:hasAnyRoles>
+                </tr>
+                </thead>
+            </table>
+        </shiro:hasAnyRoles>
         <div id="toolbar" class="btn-group">
             <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司销售人员,系统超级管理员,系统普通管理员">
                 <button id="btn_available" type="button" class="btn btn-success" onclick="showAvailable();">

@@ -8,24 +8,23 @@ $(function () {
             initSelect2("company", "请选择所属公司", "/company/queryAllCompany");
             initSelect2("accType", "请选择配件分类", "/accType/queryAllAccType");
             initSelect2("supply", "请选择供应商", "/supply/queryAllSupply");
-        } else if (data.result == "notLogin") {
-            swal({
-                text: data.message,
-                confirmButtonText: "确认", // 提示按钮上的文本
-                type: "error"
-            }, function (isConfirm) {
-                if (isConfirm) {
-                    top.location = "/user/loginPage";
-                } else {
-                    top.location = "/user/loginPage";
-                }
-            })
-        } else if (data.result == "notRole") {
-            swal({
-                text: data.message,
-                confirmButtonText: "确认", // 提示按钮上的文本
-                type: "error"
-            })
+        } else if(data.result == 'notLogin'){
+            swal({title:"",
+                    text:data.message,
+                    confirmButtonText:"确认",
+                    type:"error"}
+                ,function(isConfirm){
+                    if(isConfirm){
+                        top.location = "/user/loginPage";
+                    }else{
+                        top.location = "/user/loginPage";
+                    }
+                })
+        }else if(data.result == 'notRole'){
+            swal({title:"",
+                text:data.message,
+                confirmButtonText:"确认",
+                type:"error"})
         }
     })
 });

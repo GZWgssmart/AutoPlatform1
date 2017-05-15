@@ -25,31 +25,33 @@
 <%@include file="../backstage/contextmenu.jsp" %>
 <div class="container ">
     <div class="panel-body" style="padding-bottom:0px;">
-        <table id="table">
-            <thead>
-            <tr>
-                <th data-radio="true" data-field="status"></th>
-                <th data-field="company.companyName">所属公司名称</th>
-                <th data-field="accessoriesType.accTypeName">配件所属类别</th>
-                <th data-field="supply.supplyName">所属供应商</th>
-                <th data-field="accName">配件名称</th>
-                <th data-field="accCommodityCode">配件商品条码</th>
-                <th data-field="accDes">配件描述</th>
-                <th data-field="accPrice">配件价格</th>
-                <th data-field="accSalePrice">配件售价</th>
-                <th data-field="accTotal">配件数量</th>
-                <th data-field="accIdle">配件可用数量</th>
-                <th data-field="accUsedTime" data-formatter="formatterDateTime">最近一次领料时间</th>
-                <th data-field="accBuyedTime" data-formatter="formatterDateTime">最近一次购买时间</th>
-                <th data-field="accCreatedTime" data-formatter="formatterDateTime">配件创建时间</th>
-                <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司采购人员,系统超级管理员,系统普通管理员">
-                    <th data-width="100" data-field="accStatus" data-formatter="statusFormatter">
-                        操作
-                    </th>
-                </shiro:hasAnyRoles>
-            </tr>
-            </thead>
-        </table>
+        <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司采购人员,系统超级管理员,系统普通管理员">
+            <table id="table">
+                <thead>
+                <tr>
+                    <th data-radio="true" data-field="status"></th>
+                    <th data-field="company.companyName">所属公司名称</th>
+                    <th data-field="accessoriesType.accTypeName">配件所属类别</th>
+                    <th data-field="supply.supplyName">所属供应商</th>
+                    <th data-field="accName">配件名称</th>
+                    <th data-field="accCommodityCode">配件商品条码</th>
+                    <th data-field="accDes">配件描述</th>
+                    <th data-field="accPrice">配件价格</th>
+                    <th data-field="accSalePrice">配件售价</th>
+                    <th data-field="accTotal">配件数量</th>
+                    <th data-field="accIdle">配件可用数量</th>
+                    <th data-field="accUsedTime" data-formatter="formatterDateTime">最近一次领料时间</th>
+                    <th data-field="accBuyedTime" data-formatter="formatterDateTime">最近一次购买时间</th>
+                    <th data-field="accCreatedTime" data-formatter="formatterDateTime">配件创建时间</th>
+                    <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司采购人员,系统超级管理员,系统普通管理员">
+                        <th data-width="100" data-field="accStatus" data-formatter="statusFormatter">
+                            操作
+                        </th>
+                    </shiro:hasAnyRoles>
+                </tr>
+                </thead>
+            </table>
+        </shiro:hasAnyRoles>
         <div id="toolbar" class="btn-group">
             <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司采购人员,系统超级管理员,系统普通管理员">
                 <button id="btn_available" type="button" class="btn btn-success" onclick="showAvailable();">
