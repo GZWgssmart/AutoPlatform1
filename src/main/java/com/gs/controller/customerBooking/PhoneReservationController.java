@@ -191,12 +191,12 @@ public class PhoneReservationController {
             if (RoleUtil.checkRoles(roles)) {
                 logger.info("预约记录模糊查询");
                 Pager pager = new Pager();
+                pager.setPageNo(Integer.valueOf(pageNumber));
+                pager.setPageSize(Integer.valueOf(pageSize));
+                pager.setUser((User)session.getAttribute("user"));
                 String text = request.getParameter("text");
                 String value = request.getParameter("value");
-                if (text != null && text != "") {
-
-                    pager.setPageNo(Integer.valueOf(pageNumber));
-                    pager.setPageSize(Integer.valueOf(pageSize));
+                if (text != null && text != "" && value != null && value != "") {
                     List<Appointment> appointments = null;
                     Appointment appointment = new Appointment();
                     if (text.equals("车主姓名/车主电话/汽车公司/汽车车牌号")) { // 当多种模糊搜索条件时
@@ -215,7 +215,6 @@ public class PhoneReservationController {
                     }
                     appointments = appointmentService.blurredQuery(pager, appointment);
                     pager.setTotalRecords(appointmentService.countByBlurred(appointment,(User)session.getAttribute("user")));
-                    System.out.print(appointments);
                     return new Pager4EasyUI<Appointment>(pager.getTotalRecords(), appointments);
                 } else {
                     pager.setTotalRecords(appointmentService.count((User)session.getAttribute("user")));
