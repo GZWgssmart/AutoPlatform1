@@ -131,7 +131,7 @@
     <![CDATA[
       select count(*) from t_user u where u.userStatus = 'Y'
     ]]>
-    <if test="user.companyId != null and user.companyId != ''">
+    <if test="companyId != null and companyId != ''">
       and c.companyId = #{companyId}
     </if>
   </select>
