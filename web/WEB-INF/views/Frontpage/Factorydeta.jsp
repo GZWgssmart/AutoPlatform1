@@ -21,10 +21,25 @@
         <div class="nav nav-first">
             <div class="nav-left">
                 <ul class="nav-left-ul">
-                    <li>欢迎您，请登录</li>
-                    <a href="reg"><li>登录/注册</li></a>
-                    <a href="userpage" class="right-ul"><li>我的中心</li></a>
-                    <div class="clearfix"></div>
+                    <c:choose>
+                        <c:when test="${sessionScope.frontUser != null}">
+                            <c:if test="${sessionScope.frontUser.userName != null}">
+                                <li id="placelogin">欢迎您，${sessionScope.frontUser.userName}</li>
+                                <a href="userpage" class="right-ul"><li>我的中心</li></a>
+                                <a href="userpage"><li>退出</li></a>
+                            </c:if>
+                            <c:if test="${sessionScope.frontUser.userName == null}">
+                                <li id="placelogin">欢迎您，${sessionScope.frontUser.userPhone}</li>
+                                <a href="userpage" class="right-ul"><li>我的中心</li></a>
+                                <a href="outusers"><li>退出</li></a>
+                            </c:if>
+                        </c:when>
+
+                        <c:otherwise>
+                            <li id="placelogin">欢迎您，请登录</li>
+                            <a href="reg" id="loginreg"><li>登录/注册</li></a>
+                        </c:otherwise>
+                    </c:choose>
                 </ul>
             </div>
             <div class="clearfix"></div>

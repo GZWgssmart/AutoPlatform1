@@ -1,6 +1,7 @@
 package com.gs.dao;
 
 import com.gs.bean.MaintainFix;
+import com.gs.bean.User;
 import com.gs.common.bean.Pager;
 import org.activiti.engine.impl.Page;
 import org.apache.ibatis.annotations.Param;
@@ -27,7 +28,11 @@ public interface MaintainFixDAO extends BaseDAO<String, MaintainFix>{
      */
     public int countByDisable();
 
+
+//    分页查询保养项目
     public List<MaintainFix> queryByPagerMaintain(Pager pager);
+//    分页查询保养项目总数
+    public int countMaintain(User user);
 
     public List<MaintainFix> queryByPagerAll(Pager pager);
 

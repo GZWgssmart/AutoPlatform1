@@ -1,8 +1,12 @@
 package com.gs.controller;
 
 import com.gs.bean.Company;
+import com.gs.bean.MaintainDetail;
+import com.gs.bean.MaintainRecord;
 import com.gs.bean.User;
 import com.gs.service.CompanyService;
+import com.gs.service.MaintainDetailService;
+import com.gs.service.MaintainRecordService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,6 +29,10 @@ public class FrontpageController {
     @Resource
     private CompanyService companyService;
 
+    // 明细service
+    @Resource
+    private MaintainDetailService maintainDetailService;
+
     /*下载页面*/
     @RequestMapping(value ="platformIntro",method = RequestMethod.GET)
     public String Goplatform(){
@@ -35,7 +43,9 @@ public class FrontpageController {
     @RequestMapping(value ="home",method = RequestMethod.GET)
     public ModelAndView Home(HttpServletRequest request, HttpSession session){
         List<Company> company = companyService.queryAll((User)session.getAttribute("user"));
+        List<MaintainDetail> maintainDetails = maintainDetailService.queryAll((User)session.getAttribute("user"));
         request.setAttribute("company", company);
+        request.setAttribute("maintainDetails",maintainDetails);
         ModelAndView mav = new ModelAndView("Frontpage/Frontindex");
         return mav;
     }
@@ -44,7 +54,7 @@ public class FrontpageController {
     @RequestMapping(value ="factorypage",method = RequestMethod.GET)
     public ModelAndView Homes(HttpServletRequest request, HttpSession session){
         List<Company> company = companyService.queryAll((User)session.getAttribute("user"));
-        request.setAttribute("company", company);
+        request.setAttribute("companypage", company);
         ModelAndView mav = new ModelAndView("Frontpage/Factorypage");
         return mav;
     }

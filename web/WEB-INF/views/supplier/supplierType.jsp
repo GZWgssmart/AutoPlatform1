@@ -21,7 +21,7 @@
             <thead>
             <tr>
                 <th data-radio="true"></th>
-                <th data-width="140" data-field="supplyTypeName">供应商类型名称</th>
+                <th data-width="110" data-field="supplyTypeName">供应商类型名称</th>
                 <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员">
                     <th data-width="180" data-field="company.companyName">供应商类型所属公司</th>
                 </shiro:hasAnyRoles>

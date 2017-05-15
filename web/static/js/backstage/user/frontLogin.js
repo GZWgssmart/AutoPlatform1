@@ -24,6 +24,7 @@ function regSubmit() {
     }
 }
 
+/*用户注册*/
 function validator2(formId) {
     $('#' + formId).bootstrapValidator({
         feedbackIcons: {
@@ -121,7 +122,7 @@ function validator(formId) {
         if (formId == "loginForm") {
             $.post("/userlogin",$("#loginForm").serialize(),function (data) {
                 if(data.result=="success"){
-                    window.location.href="/backstageIndex";
+                    window.location.href="/userpage";
                 }else if(data.result=="fail"){
                     swal({
                         title: "",

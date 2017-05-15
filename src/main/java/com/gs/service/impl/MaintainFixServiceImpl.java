@@ -42,6 +42,11 @@ public class MaintainFixServiceImpl implements MaintainFixService {
 		return maintainFixDAO.queryByPagerMaintain(pager);
 	}
 
+	@Override
+	public int countMaintain(User user) {
+		return maintainFixDAO.countMaintain(user);
+	}
+
 	public int insert(MaintainFix maintainFix) { return maintainFixDAO.insert(maintainFix); }
 	public int batchInsert(List<MaintainFix> list) { return maintainFixDAO.batchInsert(list); }
 	public int delete(MaintainFix maintainFix) { return maintainFixDAO.delete(maintainFix); }

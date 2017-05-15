@@ -25,10 +25,25 @@
         <div class="nav nav-first">
             <div class="nav-left">
                 <ul class="nav-left-ul">
-                    <li>欢迎您，请登录</li>
-                    <a href="reg"><li>登录/注册</li></a>
-                    <a href="userpage" class="right-ul"><li>我的中心</li></a>
-                    <div class="clearfix"></div>
+                    <c:choose>
+                        <c:when test="${sessionScope.frontUser != null}">
+                            <c:if test="${sessionScope.frontUser.userName != null}">
+                                <li id="placelogin">欢迎您，${sessionScope.frontUser.userName}</li>
+                                <a href="userpage" class="right-ul"><li>我的中心</li></a>
+                                <a href="userpage"><li>退出</li></a>
+                            </c:if>
+                            <c:if test="${sessionScope.frontUser.userName == null}">
+                                <li id="placelogin">欢迎您，${sessionScope.frontUser.userPhone}</li>
+                                <a href="userpage" class="right-ul"><li>我的中心</li></a>
+                                <a href="outusers"><li>退出</li></a>
+                            </c:if>
+                        </c:when>
+
+                        <c:otherwise>
+                            <li id="placelogin">欢迎您，请登录</li>
+                            <a href="reg" id="loginreg"><li>登录/注册</li></a>
+                        </c:otherwise>
+                    </c:choose>
                 </ul>
             </div>
             <div class="clearfix"></div>
@@ -222,7 +237,7 @@
                         <h3><a href="factorypage" style="text-decoration: none;">热门商家</a></h3>
                         <div class="clearfix"></div>
                     </div>
-
+                <c:if test="${requestScope.company } != null">
                     <c:forEach items="${requestScope.company}" var="c">
                     <div class="factory">
                         <div class="f-img">
@@ -265,6 +280,10 @@
                         </div>
                     </div>
                     </c:forEach>
+                </c:if>
+                <c:if test="${requestScope.company} == null">
+                    <h2 style="text-align: center;">暂无商家</h2>
+                </c:if>
                 </div>
             </div>
             <%--最近成交--%>
@@ -286,30 +305,17 @@
                     </div>
                     <div class="acc-content">
                         <ul style="margin: 0;padding: 0;">
-                            <li>
-                                <span style="width:20%;margin-left:19px;padding-right: 15px;">前档玻璃外压条</span>
-                                <span style="width:33%;padding-right: 15px;">丰田 Alphard(进口) 3.5 手自一体 豪华版 2011款</span>
-                                <span style="width: 20%;">579.00</span>
-                                <span style="width: 16%;">2017-04-24</span>
-                            </li>
-                            <li>
-                                <span style="width:20%;margin-left:19px;padding-right: 15px;">前档玻璃外压条</span>
-                                <span style="width:33%;padding-right: 15px;">丰田 Alphard(进口) 3.5 手自一体 豪华版 2011款</span>
-                                <span style="width: 20%;">579.00</span>
-                                <span style="width: 16%;">2017-04-24</span>
-                            </li>
-                            <li>
-                                <span style="width:20%;margin-left:19px;padding-right: 15px;">前档玻璃外压条</span>
-                                <span style="width:33%;padding-right: 15px;">坎坎坷坷扩扩所所所安慰道丰田 Alphard(进口) 3.5 手自一体 豪华版 2011款</span>
-                                <span style="width: 20%;">579.00</span>
-                                <span style="width: 16%;">2017-04-24</span>
-                            </li>
-                            <li>
-                                <span style="width:20%;margin-left:19px;padding-right: 15px;">前档玻璃外压条</span>
-                                <span style="width:33%;padding-right: 15px;">丰田 Alphard(进口) 3.5 手自一体 豪华版 2011款</span>
-                                <span style="width: 20%;">579.00</span>
-                                <span style="width: 16%;">2017-04-24</span>
-                            </li>
+                            <c:if test="${requestScope.maintainDetails} != null">
+                                <c:forEach items="${requestScope.maintainDetails}" var="m">
+                                    <li>
+                                        <span style="width:20%;margin-left:19px;padding-right: 15px;">${m.maintainItemId}</span>
+                                        <span style="width:33%;padding-right: 15px;">丰田 Alphard(进口) 3.5 手自一体 豪华版 2011款</span>
+                                        <span style="width: 20%;">579.00</span>
+                                        <span style="width: 16%;">2017-04-24</span>
+                                    </li>
+                                </c:forEach>
+                            </c:if>
+
                         </ul>
                     </div>
                 </div>
@@ -514,6 +520,24 @@
                 }
             });
         });
+
+        $(document).ready(function () {
+            $.ajax({
+                url:"/logined",
+                datatype:"json",
+                type:"post",
+                cache:false,
+                success:function(json){
+                    if(json.status == "0"){
+                        var loginreg = $("#loginreg");
+                        loginreg.css("display","none");
+                    }else{
+                        alert(json.status);
+                        alert("你没登录！");
+                    }
+                }
+            });
+        })
     });
 </script>
 

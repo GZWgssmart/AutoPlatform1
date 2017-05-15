@@ -51,7 +51,7 @@ public class MaintainController {
     @RequestMapping(value="queryByPagerService", method = RequestMethod.GET)
     public Pager4EasyUI queryByPagerService(HttpSession session, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
         if (SessionUtil.isLogin(session)) {
-            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司人力资源管理部";
+            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师,汽车公司学徒,汽车公司销售人员,汽车公司财务人员,汽车公司采购人员,汽车公司库管人员,汽车公司人力资源管理部";
             if (RoleUtil.checkRoles(roles)) {
                 Pager pager = new Pager();
                 pager.setPageNo(Integer.valueOf(pageNumber));
@@ -79,13 +79,13 @@ public class MaintainController {
     @RequestMapping(value="queryByPagerMaintain", method = RequestMethod.GET)
     public Pager4EasyUI queryByPagerMaintain(HttpSession session,@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
         if (SessionUtil.isLogin(session)) {
-            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司人力资源管理部";
+            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师,汽车公司学徒,汽车公司销售人员,汽车公司财务人员,汽车公司采购人员,汽车公司库管人员,汽车公司人力资源管理部";
             if (RoleUtil.checkRoles(roles)) {
                 Pager pager = new Pager();
                 pager.setPageNo(Integer.valueOf(pageNumber));
                 pager.setPageSize(Integer.valueOf(pageSize));
                 pager.setUser((User) session.getAttribute("user"));
-                pager.setTotalRecords(maintainFixService.count((User) session.getAttribute("user")));
+                pager.setTotalRecords(maintainFixService.countMaintain((User) session.getAttribute("user")));
                 logger.info("分页查询保养项目信息");
                 List<MaintainFix> maintainFixes = maintainFixService.queryByPagerMaintain(pager);
                 return new Pager4EasyUI<MaintainFix>(pager.getTotalRecords(), maintainFixes);
@@ -107,7 +107,7 @@ public class MaintainController {
     @RequestMapping(value = "queryByPagerAll",method = RequestMethod.GET)
     public Pager4EasyUI queryByPagerAll(HttpSession session,@Param("pageNumber") String pageNumber,@Param("pageSize") String pageSize) {
         if (SessionUtil.isLogin(session)) {
-            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司人力资源管理部";
+            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师,汽车公司学徒,汽车公司销售人员,汽车公司财务人员,汽车公司采购人员,汽车公司库管人员,汽车公司人力资源管理部";
             if (RoleUtil.checkRoles(roles)) {
                 Pager pager = new Pager();
                 pager.setPageNo(Integer.valueOf(pageNumber));
@@ -133,7 +133,7 @@ public class MaintainController {
     @RequestMapping(value = "queryByDetailsByPager", method = RequestMethod.GET)
     public Pager4EasyUI queryByDetailsByPager(HttpSession session,@Param("maintainId") String maintainId, @Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize){
         if (SessionUtil.isLogin(session)) {
-            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司人力资源管理部";
+            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师,汽车公司学徒,汽车公司销售人员,汽车公司财务人员,汽车公司采购人员,汽车公司库管人员,汽车公司人力资源管理部";
             if (RoleUtil.checkRoles(roles)) {
                 logger.info("分页查询此记录下所有明细");
                 Pager pager = new Pager();
@@ -161,7 +161,7 @@ public class MaintainController {
     @RequestMapping(value = "queryAllItem", method = RequestMethod.GET)
     public List<ComboBox4EasyUI> queryAll(HttpSession session){
         if (SessionUtil.isLogin(session)) {
-            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司人力资源管理部";
+            String roles = "公司超级管理员,公司普通管理员,汽车公司总技师,汽车公司技师,汽车公司接待员";
             if (RoleUtil.checkRoles(roles)) {
                 logger.info("查询所有保养项目");
                 List<MaintainFix> MaintainFixs = maintainFixService.queryAll((User) session.getAttribute("user"));
@@ -188,7 +188,7 @@ public class MaintainController {
     @RequestMapping(value = "addService",method = RequestMethod.POST)
     public ControllerResult addService(HttpSession session,MaintainFix maintainFix){
         if (SessionUtil.isLogin(session)) {
-            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司人力资源管理部";
+            String roles = "公司超级管理员,公司普通管理员";
             if (RoleUtil.checkRoles(roles)) {
                 if(maintainFix != null && !maintainFix.equals("")){
                     logger.info("添加维修项目");
@@ -213,7 +213,7 @@ public class MaintainController {
     @RequestMapping(value = "accadd",method =  RequestMethod.POST)
     public ControllerResult accadd(HttpSession session,MaintainFixAcc maintainFixAcc){
         if (SessionUtil.isLogin(session)) {
-            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司人力资源管理部";
+            String roles = "公司超级管理员,公司普通管理员";
             if (RoleUtil.checkRoles(roles)) {
                 if(maintainFixAcc != null && !maintainFixAcc.equals("")){
                     logger.info("添加配件成功");
@@ -237,7 +237,7 @@ public class MaintainController {
     @RequestMapping(value = "accedit",method =  RequestMethod.POST)
     public ControllerResult accedit(HttpSession session,MaintainFixAcc maintainFixAcc){
         if (SessionUtil.isLogin(session)) {
-            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司人力资源管理部";
+            String roles = "公司超级管理员,公司普通管理员";
             if (RoleUtil.checkRoles(roles)) {
                 if(maintainFixAcc != null && !maintainFixAcc.equals("")){
                     logger.info("修改配件成功");
@@ -261,7 +261,7 @@ public class MaintainController {
     @RequestMapping(value = "addMaintain",method = RequestMethod.POST)
     public ControllerResult InsertMaintain(HttpSession session,MaintainFix maintainFix){
         if (SessionUtil.isLogin(session)) {
-            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司人力资源管理部";
+            String roles = "公司超级管理员,公司普通管理员";
             if (RoleUtil.checkRoles(roles)) {
                 if(maintainFix != null && !maintainFix.equals("")){
                     logger.info("添加保养项目");
@@ -291,7 +291,7 @@ public class MaintainController {
     @RequestMapping(value = "update", method = RequestMethod.POST)
     public ControllerResult updateAccBuy(HttpSession session,MaintainFix maintainFix) {
         if (SessionUtil.isLogin(session)) {
-            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司人力资源管理部";
+            String roles = "公司超级管理员,公司普通管理员";
             if (RoleUtil.checkRoles(roles)) {
                 if (maintainFix != null && !maintainFix.equals("")) {
                     maintainFixService.update(maintainFix);
@@ -326,7 +326,7 @@ public class MaintainController {
     @RequestMapping(value="queryByPagerDisable", method = RequestMethod.GET)
     public Pager4EasyUI<MaintainFix> queryByPagerDisable(HttpSession session,@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
         if (SessionUtil.isLogin(session)) {
-            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司人力资源管理部";
+            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师,汽车公司学徒,汽车公司销售人员,汽车公司财务人员,汽车公司采购人员,汽车公司库管人员,汽车公司人力资源管理部";
             if (RoleUtil.checkRoles(roles)) {
                 logger.info("分页查询所有被禁用的保养项目");
                 Pager pager = new Pager();
@@ -354,7 +354,7 @@ public class MaintainController {
     @RequestMapping(value="queryByPagerDisableService", method = RequestMethod.GET)
     public Pager4EasyUI<MaintainFix> queryByPagerDisableService(HttpSession session,@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
         if (SessionUtil.isLogin(session)) {
-            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司人力资源管理部";
+            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师,汽车公司学徒,汽车公司销售人员,汽车公司财务人员,汽车公司采购人员,汽车公司库管人员,汽车公司人力资源管理部";
             if (RoleUtil.checkRoles(roles)) {
                 logger.info("分页查询所有被禁用的维修项目");
                 Pager pager = new Pager();
@@ -381,7 +381,7 @@ public class MaintainController {
     @RequestMapping(value = "statusOperate", method = RequestMethod.POST)
     public ControllerResult inactive(HttpSession session,String id, String status) {
         if (SessionUtil.isLogin(session)) {
-            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司人力资源管理部";
+            String roles = "公司超级管理员,公司普通管理员";
             if (RoleUtil.checkRoles(roles)) {
                 if (id != null && !id.equals("") && status != null && !status.equals("")) {
                     if (status.equals("N")) {

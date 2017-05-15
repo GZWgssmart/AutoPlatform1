@@ -26,10 +26,25 @@
         <div class="nav nav-first">
             <div class="nav-left">
                 <ul class="nav-left-ul">
-                    <li>欢迎您，请登录</li>
-                    <a href="reg"><li>登录/注册</li></a>
-                    <a href="userpage" class="right-ul"><li>我的中心</li></a>
-                    <div class="clearfix"></div>
+                    <c:choose>
+                        <c:when test="${sessionScope.frontUser != null}">
+                            <c:if test="${sessionScope.frontUser.userName != null}">
+                                <li id="placelogin">欢迎您，${sessionScope.frontUser.userName}</li>
+                                <a href="userpage" class="right-ul"><li>我的中心</li></a>
+                                <a href="userpage"><li>退出</li></a>
+                            </c:if>
+                            <c:if test="${sessionScope.frontUser.userName == null}">
+                                <li id="placelogin">欢迎您，${sessionScope.frontUser.userPhone}</li>
+                                <a href="userpage" class="right-ul"><li>我的中心</li></a>
+                                <a href="outusers"><li>退出</li></a>
+                            </c:if>
+                        </c:when>
+
+                        <c:otherwise>
+                            <li id="placelogin">欢迎您，请登录</li>
+                            <a href="reg" id="loginreg"><li>登录/注册</li></a>
+                        </c:otherwise>
+                    </c:choose>
                 </ul>
             </div>
             <div class="clearfix"></div>
@@ -77,53 +92,54 @@
                         <div class="clearfix"></div>
                     </div>
                 <c:choose>
-                    <c:when test="${requestScope.company} == null">
+                    <c:when test="${requestScope.companypage} == null">
                         <h1>暂无数据</h1>
                     </c:when>
-                    <c:when test="${requestScope.company} != null">
-                    <c:forEach items="${requestScope.company}" var="c">
-                        <div class="factory">
-                            <div class="f-img">
-                                <a href="factorydeta">
-                                    <img src=""/>
-                                </a>
-                            </div>
-                            <div class="f-des">
-                                <div class="company-name">
-                                    <span class="cns">
-                                        <a class="cns-a" href="javaScript:;" title="${c.companyName}">
-                                            <i class="glyphicon glyphicon-bookmark"></i> ${c.companyName}
-                                        </a>
-                                        <div style="float: right;margin-right: 15px">
-                                            <img src="/static/img/Frontpage/xun-lv.png"/>
-                                            <img src="/static/img/Frontpage/xun-lv.png"/>
-                                        </div>
-                                        <div class="clearfix"></div>
-                                    </span>
+                    <c:when test="${requestScope.companypage} != null">
+                        <c:forEach items="${requestScope.companypage}" var="c">
+                            <div class="factory">
+                                <div class="f-img">
+                                    <a href="factorydeta">
+                                        <img src=""/>
+                                    </a>
                                 </div>
-                                <div class="company-des">
-                                    <span class="com-des" title="${c.companyDes}">
-                                        <i class="glyphicon glyphicon-edit"></i> ${c.companyDes}
-                                    </span>
-                                </div>
-                                <div class="company-address">
-                                    <span class="com-address" title="${c.companyAddress}">
-                                        <i class="glyphicon glyphicon-map-marker"></i> ${c.companyAddress}
-                                    </span>
-                                </div>
-                                <div class="com-icon">
-                                    <div class="icon-t">
-                                        <i class="ms glyphicon glyphicon-thumbs-up" title="五星好评"></i>
-                                        <i class="hp glyphicon glyphicon-hourglass" title="闪电发货"></i>
-                                        <span class="tuij" title="五星店铺">
-                                            <i class="glyphicon glyphicon-star" style="width: 14px;height: 16px;"></i> 推荐
+                                <div class="f-des">
+                                    <div class="company-name">
+                                        <span class="cns">
+                                            <a class="cns-a" href="javaScript:;" title="${c.companyName}">
+                                                <i class="glyphicon glyphicon-bookmark"></i> ${c.companyName}
+                                            </a>
+                                            <div style="float: right;margin-right: 15px">
+                                                <img src="/static/img/Frontpage/xun-lv.png"/>
+                                                <img src="/static/img/Frontpage/xun-lv.png"/>
+                                            </div>
+                                            <div class="clearfix"></div>
                                         </span>
+                                    </div>
+                                    <div class="company-des">
+                                        <span class="com-des" title="${c.companyDes}">
+                                            <i class="glyphicon glyphicon-edit"></i> ${c.companyDes}
+                                        </span>
+                                    </div>
+                                    <div class="company-address">
+                                        <span class="com-address" title="${c.companyAddress}">
+                                            <i class="glyphicon glyphicon-map-marker"></i> ${c.companyAddress}
+                                        </span>
+                                    </div>
+                                    <div class="com-icon">
+                                        <div class="icon-t">
+                                            <i class="ms glyphicon glyphicon-thumbs-up" title="五星好评"></i>
+                                            <i class="hp glyphicon glyphicon-hourglass" title="闪电发货"></i>
+                                            <span class="tuij" title="五星店铺">
+                                                <i class="glyphicon glyphicon-star" style="width: 14px;height: 16px;"></i> 推荐
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </c:forEach>
+                        </c:forEach>
                     </c:when>
+
                 </c:choose>
                 </div>
             </div>

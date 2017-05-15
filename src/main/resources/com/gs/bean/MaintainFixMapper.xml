@@ -29,7 +29,7 @@
   <!--查询所有维修保养项目-->
   <select id="queryAll" resultMap="MaintainFixMap" parameterType="com.gs.bean.User">
     <![CDATA[
-            select * from auto_platform.t_maintain_fix fix where mf.maintainStatus = 'Y'
+            select * from auto_platform.t_maintain_fix fix where fix.maintainStatus = 'Y'
         ]]>
     <if test="companyId != '' and companyId !=null">
       and fix.companyId = #{companyId}
@@ -39,7 +39,7 @@
   <!--分页查询所有维修保养项目-->
   <select id="queryByPagerAll" resultType="list" resultMap="MaintainFixMap" parameterType="com.gs.common.bean.Pager">
      <![CDATA[
-          select * from auto_platform.t_maintain_fix fix
+          select * from auto_platform.t_maintain_fix fix where fix.maintainStatus = 'Y'
     ]]>
     <if test="user.companyId != '' and user.companyId !=null">
       and fix.companyId = #{user.companyId}
@@ -58,6 +58,15 @@
     limit #{beginIndex}, #{pageSize}
   </select>
 
+  <select id="count" resultType="int" parameterType="com.gs.bean.User">
+    <![CDATA[
+			select count(maintainStatus) from t_maintain_fix mf  where mf.maintainOrFix = '维修'and mf.maintainStatus = 'Y'
+		]]>
+    <if test="companyId != '' and companyId !=null">
+      and mf.companyId = #{companyId}
+    </if>
+  </select>
+
   <!--分页查询保养项目-->
   <select id="queryByPagerMaintain" resultType="list" resultMap="MaintainFixMap" parameterType="com.gs.common.bean.Pager">
     <![CDATA[
@@ -69,10 +78,10 @@
     limit #{beginIndex}, #{pageSize}
   </select>
 
-  <select id="count" resultType="int" parameterType="com.gs.bean.User">
+  <select id="countMaintain" resultType="int" parameterType="com.gs.bean.User">
     <![CDATA[
-			select count(maintainStatus) from t_maintain_fix mf  where mf.maintainStatus = 'Y'
-		]]>
+      select count(maintainStatus) from t_maintain_fix mf  where mf.maintainOrFix = '保养'and mf.maintainStatus = 'Y'
+    ]]>
     <if test="companyId != '' and companyId !=null">
       and mf.companyId = #{companyId}
     </if>
