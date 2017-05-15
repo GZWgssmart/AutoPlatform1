@@ -1,5 +1,5 @@
 var contentPath = ''
-var roles = "系统超级管理员,系统普通管理员,汽修公司管理员,汽修公司接待员";
+var roles = "公司超级管理员, 公司普通管理员，汽车公司人力资源管理部, 系统超级管理员，系统普通管理员";
 
 $(function () {
     $.post(contentPath + "/user/isLogin/" + roles, function (data) {

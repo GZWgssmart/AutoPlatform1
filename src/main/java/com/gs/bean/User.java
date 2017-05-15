@@ -11,7 +11,7 @@ public class User {
 
     private String userPwd;
 
-    private String userNickName;
+    private String userNickname;
 
     private String userIdentity;
 
@@ -80,12 +80,12 @@ public class User {
         this.userPwd = userPwd;
     }
 
-    public String getUserNickName() {
-        return userNickName;
+    public String getUserNickname() {
+        return userNickname;
     }
 
-    public void setUserNickName(String userNickName) {
-        this.userNickName = userNickName;
+    public void setUserNickname(String userNickname) {
+        this.userNickname = userNickname;
     }
 
     public String getUserIdentity() {
@@ -237,7 +237,7 @@ public class User {
                 ", userEmail='" + userEmail + '\'' +
                 ", userPhone='" + userPhone + '\'' +
                 ", userPwd='" + userPwd + '\'' +
-                ", userNickName='" + userNickName + '\'' +
+                ", userNickname='" + userNickname + '\'' +
                 ", userIdentity='" + userIdentity + '\'' +
                 ", userName='" + userName + '\'' +
                 ", userGender='" + userGender + '\'' +

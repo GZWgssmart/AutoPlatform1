@@ -6,7 +6,7 @@
     <result column="userEmail" jdbcType="VARCHAR" property="userEmail" />
     <result column="userPhone" jdbcType="VARCHAR" property="userPhone" />
     <result column="userPwd" jdbcType="VARCHAR" property="userPwd" />
-    <result column="userNickName" jdbcType="VARCHAR" property="userNickName" />
+    <result column="userNickname" jdbcType="VARCHAR" property="userNickname" />
     <result column="userIdentity" jdbcType="VARCHAR" property="userIdentity" />
     <result column="userName" jdbcType="VARCHAR" property="userName" />
     <result column="userGender" jdbcType="VARCHAR" property="userGender" />
@@ -55,7 +55,7 @@
   <update id="update" parameterType="user">
      <![CDATA[
        update t_user u set u.userName = #{userName}, u.userEmail = #{userEmail}, u.userPhone = #{userPhone},
-            u.userIdentity = #{userIdentity}, u.userGender = #{userGender},u.userNickName=#{userNickName},
+            u.userIdentity = #{userIdentity}, u.userGender = #{userGender},u.userNickname=#{userNickname},
            u.userBirthDay = #{userBirthday}, u.userDes = #{userDes}, u.userSalary = #{userSalary}
         where u.userId = #{userId};
      ]]>
@@ -145,9 +145,9 @@
         left join t_company c on u.companyId = c.companyId
       where 1 = 1
     ]]>
-    <if test="user.companyId != null and user.companyId != ''">
-      and c.companyId = #{user.companyId}
-    </if>
+    <!--<if test="user.companyId != null and user.companyId != ''">-->
+      <!--and c.companyId = #{user.companyId}-->
+    <!--</if>-->
   </select>
 
   <!-- 根据id查询员工的基本信息 -->

@@ -304,7 +304,7 @@
                     <div class="form-group col-md-6 pull-left">
                         <label class="col-md-4 control-label">昵称：</label>
                         <div class="col-md-8">
-                            <input type="text" name="userNickName" define="emp.userNickName" class="form-control">
+                            <input type="text" name="userNickname" define="emp.userNickname" class="form-control">
                         </div>
                     </div>
                     <p class="clearfix"></p>
@@ -407,7 +407,7 @@
                         </div>
                         <div class="form-group pull-left">
                             <label class=" control-label">昵称：</label>
-                            <input type="text" define="emp.userNickName" class="form-control" disabled="true" style="margin-left: 30px;">
+                            <input type="text" define="emp.userNickname" class="form-control" disabled="true" style="margin-left: 30px;">
                         </div>
                         <p class="clearfix"></p>
                         <div class="form-group pull-left">
