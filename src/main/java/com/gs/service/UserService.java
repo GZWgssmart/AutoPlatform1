@@ -16,7 +16,7 @@ import java.util.Set;
 public interface UserService extends BaseService<String, User> {
 
     //  分页查询全部，不分状态
-    public List<User> queryByPagerAll(Pager pr, User user);
+    public List<User> queryByPagerAll(Pager pr);
 
     //  分页查询被禁用的记录
     public List<User> queryByPagerDisable(Pager pager);

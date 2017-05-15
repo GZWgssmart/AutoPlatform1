@@ -90,8 +90,8 @@ public class UserServiceImpl implements UserService {
 
     //  分页查询全部，不分状态
     @Override
-    public List<User> queryByPagerAll(Pager pager, User user) {
-        return userDAO.queryByPagerAll(pager, user);
+    public List<User> queryByPagerAll(Pager pager) {
+        return userDAO.queryByPagerAll(pager);
     }
 
     @Override

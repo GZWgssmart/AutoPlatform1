@@ -92,7 +92,9 @@
         where 1 = 1
     ]]>
     <if test="user.companyId != null and user.companyId != ''">
-        and c.companyId = #{user.companyId}
+        and u.companyId = #{user.companyId}
+        and ur.roleId !='7ff4f1c5-3205-11e7-bc72-507b9d765567'
+        and ur.roleId != '80095901-3205-11e7-bc72-507b9d765567'
     </if>
      limit #{beginIndex}, #{pageSize};
   </select>
@@ -107,7 +109,7 @@
         where u.userStatus = 'Y'
     ]]>
     <if test="user.companyId != null and user.companyId != ''">
-      and c.companyId = #{user.companyId}
+      and u.companyId = #{user.companyId}
     </if>
      limit #{beginIndex}, #{pageSize};
   </select>
@@ -122,7 +124,7 @@
         where u.userStatus = 'N'
     ]]>
     <if test="user.companyId != null and user.companyId != ''">
-      and c.companyId = #{user.companyId}
+      and u.companyId = #{user.companyId}
     </if>
     limit #{beginIndex}, #{pageSize};
   </select>
@@ -132,17 +134,17 @@
       select count(*) from t_user u where u.userStatus = 'Y'
     ]]>
     <if test="companyId != null and companyId != ''">
-      and c.companyId = #{companyId}
+      and u.companyId = #{companyId}
     </if>
   </select>
 
-  <!-- 查询所有员工的基本信息 -->
+  <!-- 下拉列表 -->
   <select id="queryAll" resultMap="userBasicManageMap" parameterType="com.gs.bean.User">
     <![CDATA[
-      select * from t_user where 1 = 1
+      select * from t_user u where 1 = 1 and u.userStatus = 'Y'
     ]]>
     <if test="companyId != null and companyId != ''">
-      and c.companyId = #{user.companyId}
+      and u.companyId = #{user.companyId}
     </if>
   </select>
 
@@ -156,7 +158,7 @@
        where u.userId = #{userId}
     ]]>
     <if test="user.companyId != null and user.companyId != ''">
-      and c.companyId = #{user.companyId}
+      and u.companyId = #{user.companyId}
     </if>
   </select>
 

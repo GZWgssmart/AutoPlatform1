@@ -1,6 +1,10 @@
 var contentPath = ''
 var roles = "公司超级管理员, 公司普通管理员，汽车公司人力资源管理部, 系统超级管理员，系统普通管理员";
 
+$(".js-example-basic-multiple").select2({
+    allowClear: true
+});
+
 $(function () {
     $.post(contentPath + "/user/isLogin/" + roles, function (data) {
         if (data.result == "success") {
@@ -81,6 +85,7 @@ function showAdd(){
             $("#addWindow").modal('show');
             $("#addButton").removeAttr("disabled");
             $("#addUserRole").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
+            $("#addUserCompany").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
             validator('addForm'); // 初始化验证
         } else if (data.result == "notLogin") {
             swal({
@@ -187,6 +192,14 @@ function validator(formId) {
                     }
                 }
             },
+            companyId: {
+                message: '公司验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '公司不能为空'
+                    }
+                }
+            },
             userPwd: {
                 message: '密码验证失败',
                 validators: {
@@ -209,13 +222,13 @@ function validator(formId) {
             }
         }
     })
-    .on('success.form.bv', function (e) {
-        if (formId == "addForm") {
-            formSubmit("/userBasicManage/addUser", formId, "addWindow");
-        } else if (formId == "editForm") {
-            formSubmit("/userBasicManage/updateUser", formId, "editWindow");
-        }
-    })
+        .on('success.form.bv', function (e) {
+            if (formId == "addForm") {
+                formSubmit("/userBasicManage/addUser", formId, "addWindow");
+            } else if (formId == "editForm") {
+                formSubmit("/userBasicManage/updateUser", formId, "editWindow");
+            }
+        })
 }
 
 function formSubmit(url, formId, winId) {
@@ -295,6 +308,7 @@ function iconUpldSuc(data, winId, formId) {
         $("#addButton").removeAttr("disabled"); // 移除不可点击
         $("input[type=reset]").trigger("click"); // 移除表单中填的值
         $("#addUserRole").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
+        $("#addUserCompany").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
     } else if (controllerResult.result == "fail") {
         swal({title:"",
             text:"操作失败",
@@ -306,34 +320,12 @@ function iconUpldSuc(data, winId, formId) {
 
 
 function addSubmit() {
-    $.post(contentPath + "/user/isLogin/" + roles, function (data) {
-        if (data.result == "success") {
-            $("#addForm").data('bootstrapValidator').validate();
-            if ($("#addForm").data('bootstrapValidator').isValid()) {
-                $("#addButton").attr("disabled","disabled");
-            } else {
-                $("#addButton").removeAttr("disabled");
-            }
-        } else if (data.result == "notLogin") {
-            swal({
-                text: data.message,
-                confirmButtonText: "确认", // 提示按钮上的文本
-                type: "error"
-            }, function (isConfirm) {
-                if (isConfirm) {
-                    top.location = "/user/loginPage";
-                } else {
-                    top.location = "/user/loginPage";
-                }
-            })
-        } else if (data.result == "notRole") {
-            swal({
-                text: data.message,
-                confirmButtonText: "确认", // 提示按钮上的文本
-                type: "error"
-            })
-        }
-    })
+    $("#addForm").data('bootstrapValidator').validate();
+    if ($("#addForm").data('bootstrapValidator').isValid()) {
+        $("#addButton").attr("disabled","disabled");
+    } else {
+        $("#addButton").removeAttr("disabled");
+    }
 }
 
 function showEdit(){
@@ -407,64 +399,6 @@ function editSubmit() {
         $("#editButton").attr("disabled","disabled");
     } else {
         $("#editButton").removeAttr("disabled");
-    }
-}
-
-// 格式化地址
-function formatterAddress(val) {
-    var address = val.split('-');
-    $("#editProvince").val(address[0]);
-    $("#editCity").val(address[1]);
-    $("#editArea").val(address[2]);
-}
-
-//格式化不带时分秒的时间值。
-function formatterDate(value) {
-    if (value == undefined || value == null || value == '') {
-        return "";
-    } else {
-        var date = new Date(value);
-        var year = date.getFullYear().toString();
-        var month = (date.getMonth() + 1);
-        var day = date.getDate().toString();
-        if (month < 10) {
-            month = "0" + month;
-        }
-        if (day < 10) {
-            day = "0" + day;
-        }
-        return year + "-" + month + "-" + day
-    }
-}
-
-//格式化带时分秒的时间值。
-function formatterDateTime(value) {
-    if (value == undefined || value == null || value == '') {
-        return "";
-    } else {
-        var date = new Date(value);
-        var year = date.getFullYear().toString();
-        var month = (date.getMonth() + 1);
-        var day = date.getDate().toString();
-        var hour = date.getHours().toString();
-        var minutes = date.getMinutes().toString();
-        var seconds = date.getSeconds().toString();
-        if (month < 10) {
-            month = "0" + month;
-        }
-        if (day < 10) {
-            day = "0" + day;
-        }
-        if (hour < 10) {
-            hour = "0" + hour;
-        }
-        if (minutes < 10) {
-            minutes = "0" + minutes;
-        }
-        if (seconds < 10) {
-            seconds = "0" + seconds;
-        }
-        return year + "-" + month + "-" + day + " " + hour + ":" + minutes + ":" + seconds;
     }
 }
 
@@ -548,11 +482,11 @@ function showDetail() {
         var formatterCreateTime = formatterDateTime(createdTime);
         $("#detailCreatedTime").val(formatterCreateTime);
 
-        var loginTime = emp.userLoginTime;  /* 登录时间 */
+        var loginTime = emp.userLoginedTime;  /* 登录时间 */
+        var formatterLoginTime = formatterDateTime(loginTime);
         if(formatterLoginTime == null || formatterLoginTime == '') {
             $("#detailLoginTime").val("未登录过");
         } else {
-            var formatterLoginTime = formatterDateTime(loginTime);
             $("#detailLoginTime").val(formatterLoginTime);
         }
 
@@ -568,3 +502,179 @@ function showDetail() {
         console.log(emp);
     }
 }
+
+//  查询不可用的
+function searchDisableStatus() {
+    $.post(contentPath + "/user/isLogin/" + roles, function (data) {
+        if (data.result == "success") {
+            initTable('table', '/userBasicManage/queryByPagerDisable');
+        } else if (data.result == "notLogin") {
+            swal({
+                text: data.message,
+                confirmButtonText: "确认", // 提示按钮上的文本
+                type: "error"
+            }, function (isConfirm) {
+                if (isConfirm) {
+                    top.location = "/user/loginPage";
+                } else {
+                    top.location = "/user/loginPage";
+                }
+            })
+        } else if (data.result = "notRole") {
+            swal({
+                text: data.message,
+                confirmButtonText: "确认", // 提示按钮上的文本
+                type: "error"
+            })
+        }
+    })
+}
+
+//  查询可用的
+function searchRapidStatus() {
+    $.post(contentPath + "/user/isLogin/" + roles, function (data) {
+        if (data.result == "success") {
+            initTable('table', '/userBasicManage/queryByPager');
+        } else if (data.result == "notLogin") {
+            swal({
+                text: data.message,
+                confirmButtonText: "确认", // 提示按钮上的文本
+                type: "error"
+            }, function (isConfirm) {
+                if (isConfirm) {
+                    top.location = "/user/loginPage";
+                } else {
+                    top.location = "/user/loginPage";
+                }
+            })
+        } else if (data.result = "notRole") {
+            swal({
+                text: data.message,
+                confirmButtonText: "确认", // 提示按钮上的文本
+                type: "error"
+            })
+        }
+    })
+}
+
+
+//    格式化角色
+function formatterRole(value, row, index) {
+    if(row.role != null && row.role!=""){
+        var roles = null;
+        $.each(row.role, function(index, value, item) {
+            if(roles == "" ||roles == null){
+                roles = row.role.roleName;
+            } else if(roles != row.role.roleName) {
+                roles += "," + row.role.roleName;
+            }
+        });
+        return roles;
+    }else{
+        return "-"
+    }
+}
+
+//   格式化性别
+function formatterGender(val) {
+    if (val == 'N') {
+        return "未选择";
+    } else if (val == 'M') {
+        return "男"
+    } else if (val == 'F') {
+        return "女"
+    }
+}
+
+// 格式化地址
+function formatterAddress(val) {
+    var address = val.split('-');
+    $("#editProvince").val(address[0]);
+    $("#editCity").val(address[1]);
+    $("#editArea").val(address[2]);
+}
+
+//格式化不带时分秒的时间值。
+function formatterDate(value) {
+    if (value == undefined || value == null || value == '') {
+        return "";
+    } else {
+        var date = new Date(value);
+        var year = date.getFullYear().toString();
+        var month = (date.getMonth() + 1);
+        var day = date.getDate().toString();
+        if (month < 10) {
+            month = "0" + month;
+        }
+        if (day < 10) {
+            day = "0" + day;
+        }
+        return year + "-" + month + "-" + day
+    }
+}
+
+//格式化带时分秒的时间值。
+function formatterDateTime(value) {
+    if (value == undefined || value == null || value == '') {
+        return "";
+    } else {
+        var date = new Date(value);
+        var year = date.getFullYear().toString();
+        var month = (date.getMonth() + 1);
+        var day = date.getDate().toString();
+        var hour = date.getHours().toString();
+        var minutes = date.getMinutes().toString();
+        var seconds = date.getSeconds().toString();
+        if (month < 10) {
+            month = "0" + month;
+        }
+        if (day < 10) {
+            day = "0" + day;
+        }
+        if (hour < 10) {
+            hour = "0" + hour;
+        }
+        if (minutes < 10) {
+            minutes = "0" + minutes;
+        }
+        if (seconds < 10) {
+            seconds = "0" + seconds;
+        }
+        return year + "-" + month + "-" + day + " " + hour + ":" + minutes + ":" + seconds;
+    }
+}
+
+// 激活或禁用
+function formatterStatus(value, row, index) {
+    if (value == 'Y') {
+        if(row.role.roleName == '车主') {
+            return "&nbsp;<button type='button' class='btn btn-danger' " +
+                "onclick='inactive(\"" + '/userBasicManage/updateStatus?id=' + row.userId + '&status=Y' + "\")'>禁用</button>&nbsp;&nbsp;"
+                + "<a onclick='showDetail()' class='btn btn-info btn-sm'><span class='glyphicon glyphicon-fullscreen'></span>详细信息</a>";
+        }
+        return "&nbsp;<button type='button' class='btn btn-danger' " +
+            "onclick='inactive(\"" + '/userBasicManage/updateStatus?id=' + row.userId + '&status=Y' + "\")'>辞退</button>&nbsp;&nbsp;"
+            + "<a onclick='showDetail()' class='btn btn-info btn-sm'><span class='glyphicon glyphicon-fullscreen'></span>详细信息</a>";
+    } else {
+        if(row.role.roleName == '车主') {
+            return "&nbsp;<button type='button' class='btn btn-success' " +
+                "onclick='active(\"" + '/userBasicManage/updateStatus?id=' + row.userId + '&status=N' + "\")'>激活</button>&nbsp;&nbsp;"
+                + "<a onclick='showDetail()' class='btn btn-info btn-sm'><span class='glyphicon glyphicon-fullscreen'></span>详细信息</a>";
+        }
+    }
+}
+
+function companyFormatter(el,row,index){
+    if(el!=null) {
+        return el.companyName;
+    }
+    return "暂无"
+}
+
+//  修改时，点击地址的文本框后，文本框隐藏，地址下拉选择显示
+var address = $("#address");
+address.click(function () {
+    address.css('display', 'none');
+    $('#userAddress').css('display', 'block');
+})
+

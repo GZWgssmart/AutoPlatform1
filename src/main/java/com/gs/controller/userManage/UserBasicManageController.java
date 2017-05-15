@@ -224,7 +224,7 @@ public class UserBasicManageController {
                 pager.setUser((User) session.getAttribute("user"));
                 pager.setTotalRecords(userService.count((User) session.getAttribute("user")));
                 logger.info("分页查询人员基本信息成功");
-                List<User> users = userService.queryByPagerAll(pager, (User) session.getAttribute("user"));
+                List<User> users = userService.queryByPagerAll(pager);
                 return new Pager4EasyUI<User>(pager.getTotalRecords(), users);
             } else {
                 logger.info("此用户没有该操作所属的角色");
