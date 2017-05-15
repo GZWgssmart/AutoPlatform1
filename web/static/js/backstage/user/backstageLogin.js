@@ -14,15 +14,6 @@ function loginSubmit() {
 }
 
 
-function regSubmit() {
-    $("#regform").data('bootstrapValidator').validate();
-    if ($("#regform").data('bootstrapValidator').isValid()) {
-        $("#regform").attr("disabled", "disabled");
-    } else {
-        $("#regform").removeAttr("disabled");
-    }
-}
-
 function validator(formId) {
     $('#' + formId).bootstrapValidator({
         feedbackIcons: {
@@ -61,7 +52,7 @@ function validator(formId) {
             $.post("/user/login",$("#loginForm").serialize(),function (data) {
                 if(data.result=="success"){
                     window.location.href="/backstageIndex";
-                }else if(data.result=="fail"){
+                }else{
                     swal({
                         title: "",
                         text: data.message,

@@ -97,13 +97,14 @@ public class CarRemindController {
                         mail.setMultinart(multipart); // 把此邮件对象添加进邮箱
                         File file = new File(Methods.getRootPath(req) + "WEB-INF/config/mail.properties");
                         MailConfig.sendMail(file, mail);
+                        maintainRecordService.updateCurrentStatus("待结算",ids);
                         // 当提醒成功之后, 应该修改状态, 提醒完毕, 页面不再显示此记录
                         return ControllerResult.getSuccessResult("提醒成功");
                     }else{
                         return ControllerResult.getSuccessResult("提醒成功");
                     }
                 }else{
-                    return ControllerResult.getFailResult("提醒失败");
+                    return ControllerResult.getFailResult("此维修保养记录车主不是本店用户, 无车主邮箱");
                 }
             }else{
                 logger.info("此用户无拥有提车提醒功能的角色");
@@ -156,7 +157,7 @@ public class CarRemindController {
                     }
                     maintainRecord.setCheckin(checkin);
                     maintainRecords = maintainRecordService.blurredQueryByRemind(pager, maintainRecord);
-                    pager.setTotalRecords(maintainRecordService.countByBlurredByRemind(maintainRecord));
+                    pager.setTotalRecords(maintainRecordService.countByBlurredByRemind(maintainRecord, (User)session.getAttribute("user")));
                     pager.setUser((User)session.getAttribute("user"));
                     return new Pager4EasyUI<MaintainRecord>(pager.getTotalRecords(), maintainRecords);
                 }else{

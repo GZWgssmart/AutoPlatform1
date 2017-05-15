@@ -65,8 +65,8 @@ public class MaintainRecordServiceImpl implements MaintainRecordService {
 		return maintainRecordDAO.blurredQueryByRemind(pager, maintainRecord);
 	}
 
-	public int countByBlurredByRemind(MaintainRecord maintainRecord) {
-		return maintainRecordDAO.countByBlurredByRemind(maintainRecord);
+	public int countByBlurredByRemind(MaintainRecord maintainRecord, User user) {
+		return maintainRecordDAO.countByBlurredByRemind(maintainRecord, user);
 	}
 
 	@Override
@@ -75,7 +75,32 @@ public class MaintainRecordServiceImpl implements MaintainRecordService {
 	}
 
 	@Override
-	public void updateCurrentStatus(String recordId) {
-		maintainRecordDAO.updateCurrentStatus(recordId);
+	public void updateCurrentStatus(String currentStatus, String recordId) {
+		maintainRecordDAO.updateCurrentStatus(currentStatus, recordId);
+	}
+
+	/**
+	 * 提车提醒维修保养记录查询
+	 */
+	@Override
+	public List<MaintainRecord> queryByPagerRemindNo(Pager pager) {
+		return maintainRecordDAO.queryByPagerRemindNo(pager);
+	}
+
+	@Override
+	public int countByRemindNo(User user) {
+		return maintainRecordDAO.countByRemindNo(user);
+	}
+	/**
+	 * 提车提醒已提醒维修保养记录查询
+	 */
+	@Override
+	public int countByRemindYes(User user) {
+		return maintainRecordDAO.countByRemindYes(user);
+	}
+
+	@Override
+	public List<MaintainRecord> queryByPagerRemindYes(Pager pager) {
+		return maintainRecordDAO.queryByPagerRemindYes(pager);
 	}
 }

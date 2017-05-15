@@ -153,7 +153,7 @@
     </update>
 
     <update id="updateCurrentStatus">
-        update t_maintain_record set currentStatus='用户已签字' where recordId = #{recordId}
+        update t_maintain_record set currentStatus=#{currentStatus} where recordId in (${recordId})
     </update>
 
     <!-- 分页模糊查询 -->
@@ -256,7 +256,7 @@
             where 1=1 and m.checkinId = ck.checkinId and ck.brandId = cb.brandId
             and ck.colorId = cc.colorId and ck.modelId = cm.modelId
             and ck.plateId = cp.plateId and ck.companyId = company.companyId
-            and m.recordStatus = 'Y'
+            and m.recordStatus = 'Y' and m.currentStatus = '待提醒'
       ]]>
         <if test="pager.user.companyId != '' and pager.user.companyId != null">
             and ck.companyId = #{pager.user.companyId}
@@ -298,10 +298,10 @@
             where 1=1 and m.checkinId = ck.checkinId and ck.brandId = cb.brandId
             and ck.colorId = cc.colorId and ck.modelId = cm.modelId
             and ck.plateId = cp.plateId and ck.companyId = company.companyId
-            and m.recordStatus = 'Y'
+            and m.recordStatus = 'Y' and m.currentStatus = '待提醒'
       ]]>
-        <if test="pager.user.companyId != '' and pager.user.companyId != null">
-            and ck.companyId = #{pager.user.companyId}
+        <if test="user.companyId != '' and user.companyId != null">
+            and ck.companyId = #{user.companyId}
         </if>
         and(
         <if test="maintainRecord.checkin.userName != '' and maintainRecord.checkin.userName != null">
@@ -330,6 +330,63 @@
         </if>)
     </select>
 
+    <!--  提车提醒未提醒维修保养记录查询 -->
+    <select id="queryByPagerRemindNo" resultMap="MaintainRecordMap" parameterType="com.gs.common.bean.Pager">
+        <![CDATA[
+            select m.*, ck.*, cc.colorId, cc.colorName, cp.plateId, cp.plateName,
+            cm.modelId, cm.modelName, company.companyId,
+            company.companyName,company.companyAddress,
+            company.companyAddress, company.companyTel,
+            company.companyLogo, cb.brandId, cb.brandName
+            from t_maintain_record m, t_checkin ck, t_car_brand cb,
+             t_car_color cc, t_car_model cm, t_car_plate cp, t_company company
+              where m.checkinId = ck.checkinId and ck.brandId = cb.brandId
+              and ck.colorId = cc.colorId and ck.modelId = cm.modelId
+             and ck.plateId = cp.plateId and ck.companyId = company.companyId
+             and m.recordStatus = 'Y' and m.currentStatus = '待提醒'
+         ]]>
+        <if test="user.companyId != '' and user.companyId != null">
+            and ck.companyId = #{user.companyId}
+        </if>
+        order by m.recordCreatedTime Desc
+        limit #{beginIndex}, #{pageSize}
+    </select>
+
+    <select id="countByRemindNo" resultType="int" parameterType="com.gs.bean.User">
+        select count(recordId) from t_maintain_record mr, t_checkin ck where recordStatus = 'Y' and mr.currentStatus = '待提醒'
+        <if test="companyId != '' and companyId != null">
+            and ck.companyId = #{companyId}
+        </if>
+    </select>
+
+    <!--  提车提醒已提醒维修保养记录查询 -->
+    <select id="queryByPagerRemindYes" resultMap="MaintainRecordMap" parameterType="com.gs.common.bean.Pager">
+        <![CDATA[
+            select m.*, ck.*, cc.colorId, cc.colorName, cp.plateId, cp.plateName,
+            cm.modelId, cm.modelName, company.companyId,
+            company.companyName,company.companyAddress,
+            company.companyAddress, company.companyTel,
+            company.companyLogo, cb.brandId, cb.brandName
+            from t_maintain_record m, t_checkin ck, t_car_brand cb,
+             t_car_color cc, t_car_model cm, t_car_plate cp, t_company company
+              where m.checkinId = ck.checkinId and ck.brandId = cb.brandId
+              and ck.colorId = cc.colorId and ck.modelId = cm.modelId
+             and ck.plateId = cp.plateId and ck.companyId = company.companyId
+             and m.recordStatus = 'Y' and m.currentStatus = '待结算'
+         ]]>
+        <if test="user.companyId != '' and user.companyId != null">
+            and ck.companyId = #{user.companyId}
+        </if>
+        order by m.recordCreatedTime Desc
+        limit #{beginIndex}, #{pageSize}
+    </select>
+
+    <select id="countByRemindYes" resultType="int" parameterType="com.gs.bean.User">
+        select count(recordId) from t_maintain_record mr, t_checkin ck where recordStatus = 'Y' and mr.currentStatus = '待结算'
+        <if test="companyId != '' and companyId != null">
+            and ck.companyId = #{companyId}
+        </if>
+    </select>
 
     <!--维修记录的报表显示-->
 

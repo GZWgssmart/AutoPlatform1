@@ -1,6 +1,7 @@
 package com.gs.service;
 
 import com.gs.bean.MaintainRecord;
+import com.gs.bean.User;
 import com.gs.common.bean.Pager;
 
 import java.util.List;
@@ -21,7 +22,14 @@ public interface MaintainRecordService extends BaseService<String, MaintainRecor
     /**
      * 此模糊查询的记录数为提车提醒的
      */
-    public int countByBlurredByRemind(MaintainRecord maintainRecord);
+    public int countByBlurredByRemind(MaintainRecord maintainRecord, User user);
+
+    /**
+     * 提车提醒未提醒维修保养记录查询
+     */
+    public List<MaintainRecord> queryByPagerRemindNo(Pager pager);
+
+    public int countByRemindNo(User user);
 
     /**
      *  维修记录报表
@@ -31,5 +39,12 @@ public interface MaintainRecordService extends BaseService<String, MaintainRecor
     /**
      * 修改维修保养记录当前状态
      */
-    public void updateCurrentStatus(String recordId);
+    public void updateCurrentStatus(String currentStatus, String recordId);
+
+    /**
+     * 提车提醒已提醒维修保养记录查询
+     */
+    public int countByRemindYes(User user);
+
+    public List<MaintainRecord> queryByPagerRemindYes(Pager pager);
 }

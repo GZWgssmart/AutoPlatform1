@@ -70,6 +70,9 @@
                         汽车公司
                     </th>
                 </shiro:hasAnyRoles>
+                <th data-width="100" data-hide="all" data-field="currentStatus">
+                    当前状态
+                </th>
                 <th data-width="90" data-field="recordStatus" data-formatter="showStatusFormatter">
                     记录状态
                 </th>

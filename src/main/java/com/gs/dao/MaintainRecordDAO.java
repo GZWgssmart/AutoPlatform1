@@ -34,7 +34,7 @@ public interface MaintainRecordDAO extends BaseDAO<String, MaintainRecord>{
     /**
      * 模糊查询的记录数
      */
-    public int countByBlurredByRemind(@Param("maintainRecord")MaintainRecord maintainRecord);
+    public int countByBlurredByRemind(@Param("maintainRecord")MaintainRecord maintainRecord, @Param("user")User user);
 
     /**
      *  维修记录报表
@@ -44,6 +44,19 @@ public interface MaintainRecordDAO extends BaseDAO<String, MaintainRecord>{
     /**
      * 修改维修保养记录当前状态
      */
-    public void updateCurrentStatus(String recordId);
+    public void updateCurrentStatus(@Param("currentStatus")String currentStatus, @Param("recordId")String recordId);
 
+    /**
+     * 提车提醒未提醒维修保养记录查询
+     */
+    public List<MaintainRecord> queryByPagerRemindNo(Pager pager);
+
+    public int countByRemindNo(User user);
+
+    /**
+     * 提车提醒已提醒维修保养记录查询
+     */
+    public int countByRemindYes(User user);
+
+    public List<MaintainRecord> queryByPagerRemindYes(Pager pager);
 }

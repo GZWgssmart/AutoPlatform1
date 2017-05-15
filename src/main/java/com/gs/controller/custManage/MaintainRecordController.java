@@ -63,6 +63,62 @@ public class MaintainRecordController {
         }
     }
 
+    /**
+     * 提车提醒分页查询未提醒维修保养记录
+     */
+    @ResponseBody
+    @RequestMapping("queryByPagerRemindNo")
+    public Pager4EasyUI<MaintainRecord> queryByPagerRemindNo(HttpSession session, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
+        if(SessionUtil.isLogin(session)) {
+            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员";
+            if(RoleUtil.checkRoles(roles)) {
+                logger.info("提车提醒分布查看维修保养记录");
+                Pager pager = new Pager();
+                pager.setPageNo(Integer.valueOf(pageNumber));
+                pager.setPageSize(Integer.valueOf(pageSize));
+                pager.setUser((User)session.getAttribute("user"));
+                int count = maintainRecordService.countByRemindNo((User)session.getAttribute("user"));
+                pager.setTotalRecords(count);
+                List<MaintainRecord> queryList = maintainRecordService.queryByPagerRemindNo(pager);
+                return new Pager4EasyUI<MaintainRecord>(pager.getTotalRecords(), queryList);
+            }else{
+                logger.info("此用户无拥有可用维修保养分页查询的角色");
+                return null;
+            }
+        }else{
+            logger.info("请先登录");
+            return null;
+        }
+    }
+
+    /**
+     * 提车提醒分页查询已提醒维修保养记录
+     */
+    @ResponseBody
+    @RequestMapping("queryByPagerRemindYes")
+    public Pager4EasyUI<MaintainRecord> queryByPagerRemindYes(HttpSession session, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
+        if(SessionUtil.isLogin(session)) {
+            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员";
+            if(RoleUtil.checkRoles(roles)) {
+                logger.info("提车提醒分布查看维修保养记录");
+                Pager pager = new Pager();
+                pager.setPageNo(Integer.valueOf(pageNumber));
+                pager.setPageSize(Integer.valueOf(pageSize));
+                pager.setUser((User)session.getAttribute("user"));
+                int count = maintainRecordService.countByRemindYes((User)session.getAttribute("user"));
+                pager.setTotalRecords(count);
+                List<MaintainRecord> queryList = maintainRecordService.queryByPagerRemindYes(pager);
+                return new Pager4EasyUI<MaintainRecord>(pager.getTotalRecords(), queryList);
+            }else{
+                logger.info("此用户无拥有可用维修保养分页查询的角色");
+                return null;
+            }
+        }else{
+            logger.info("请先登录");
+            return null;
+        }
+    }
+
     @ResponseBody
     @RequestMapping("queryByPagerDisable")
     public Pager4EasyUI<MaintainRecord> queryByPagerDisable(HttpSession session, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
