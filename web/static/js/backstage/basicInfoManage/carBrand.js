@@ -110,15 +110,15 @@ function validator(formId) {
         },
         fields: {
             brandName: {
-                message: '汽车品牌验证失败',
+                message: '汽车品牌名称验证失败',
                 validators: {
                     notEmpty: {
-                        message: '汽车品牌不能为空'
+                        message: '汽车品牌名称不能为空'
                     },
                     stringLength: {
                         min: 1,
                         max: 6,
-                        message: '汽车品牌长度必须在1到6位之间'
+                        message: '汽车品牌名称长度必须在1到6位之间'
                     }
                 }
             },

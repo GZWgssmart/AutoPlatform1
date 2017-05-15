@@ -26,7 +26,7 @@
         <table id="table">
             <thead>
                 <tr>
-                    <th data-checkbox="true"></th>
+                    <th data-radio="true"></th>
                     <th data-field="colorName">颜色名称</th>
                     <th data-field="colorRgb">颜色的RBG值</th>
                     <th data-field="colorHex">颜色的16进制值</th>
@@ -87,7 +87,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">颜色的RGB值：</label>
                     <div class="col-sm-7">
-                        <input id="addrgbColor" name="colorRgb" type="text" placeholder="请选择颜色的RGB值" value="" class="form-control">
+                        <input id="addrgbColor" name="colorRgb" type="text" placeholder="请输入颜色的RGB值" value="" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
@@ -140,7 +140,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">颜色的RGB值：</label>
                     <div class="col-sm-7">
-                        <input id="editrgbColor" name="colorRgb" define="carColor.colorRgb" type="text" placeholder="请选择颜色的RGB值" value="" class="form-control">
+                        <input id="editrgbColor" name="colorRgb" define="carColor.colorRgb" type="text" placeholder="请输入颜色的RGB值" value="" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">

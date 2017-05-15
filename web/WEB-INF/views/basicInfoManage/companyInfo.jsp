@@ -23,12 +23,12 @@
         <table id="table">
             <thead>
                 <tr>
-                    <th data-checkbox="true"></th>
+                    <th data-radio="true"></th>
                     <th data-field="companyName">公司名称</th>
                     <th data-field="companyAddress">公司地址</th>
                     <th data-field="companyTel">联系电话</th>
                     <th data-field="companyPricipal">负责人</th>
-                    <th data-field="companyWebsite">公司官网URL</th>
+                    <th data-field="companyWebsite">公司官网网址</th>
                     <th data-field="companyLogo">公司LOGO</th>
                     <th data-field="companyOpendate" data-formatter="formatterDate">公司成立时间</th>
                     <th data-field="companySize">公司规模</th>
@@ -70,7 +70,7 @@
         <div class="modal-content">
             <form class="form-horizontal" role="form" id="addForm">
                 <div class="modal-header" style="overflow:auto;">
-                    <h4>请填写你的公司信息</h4>
+                    <h4>请填写公司信息</h4>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">公司名称：</label>
@@ -99,9 +99,9 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">公司官网URL：</label>
+                    <label class="col-sm-3 control-label">公司官网网址：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="companyWebsite" placeholder="请输入公司官网URL" class="form-control">
+                        <input type="text" name="companyWebsite" placeholder="请输入公司官网网址" class="form-control">
                     </div>
                 </div>
 
@@ -115,7 +115,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">公司成立时间：</label>
                     <div class="col-sm-7">     <!-- 当设置不可编辑后, 会修改颜色, 在min.css里搜索.form-control{background-color:#eee;opacity:1} -->
-                        <input id="addDateTimePicker" placeholder="请输入公司成立时间" onclick="getDate('addDateTimePicker')" readonly="true" type="text" name="companyOpendate"
+                        <input id="addDateTimePicker" placeholder="请选择公司成立时间" onclick="getDate('addDateTimePicker')" readonly="true" type="text" name="companyOpendate"
                                class="form-control datetimepicker"/>
                     </div>
                 </div>
@@ -173,7 +173,7 @@
                 <input type="hidden"name="companyId" define="company.companyId">
                 <input type="hidden"name="companyStatus" define="company.companyStatus">
                 <div class="modal-header" style="overflow:auto;">
-                    <p>请修改你的公司信息</p>
+                    <p>请修改公司信息</p>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">公司名称：</label>
@@ -203,9 +203,9 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">公司官网URL：</label>
+                    <label class="col-sm-3 control-label">公司官网网址：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="companyWebsite" define="companyInfo.companyWebsite" placeholder="请输入公司官网URL"
+                        <input type="text" name="companyWebsite" define="companyInfo.companyWebsite" placeholder="请输入公司官网网址"
                                class="form-control">
                     </div>
                 </div>

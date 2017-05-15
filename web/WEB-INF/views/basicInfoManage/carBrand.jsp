@@ -23,8 +23,8 @@
         <table id="table">
             <thead>
                 <tr>
-                    <th data-checkbox="true"></th>
-                    <th data-field="brandName">汽车品牌</th>
+                    <th data-radio="true"></th>
+                    <th data-field="brandName">汽车品牌名称</th>
                     <th data-field="brandDes">汽车品牌描述</th>
                     <th data-field="brandStatus" data-formatter="statusFormatter">汽车品牌状态</th>
                 </tr>
@@ -65,7 +65,7 @@
                 </div>
                 <br/>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">汽车品牌：</label>
+                    <label class="col-sm-3 control-label">汽车品牌名称：</label>
                     <div class="col-sm-7">
                         <input type="text" name="brandName" placeholder="请输入汽车品牌的名字" class="form-control">
                     </div>

@@ -25,7 +25,7 @@
         <table id="table">
             <thead>
                 <tr>
-                    <th data-checkbox="true"></th>
+                    <th data-radio="true"></th>
                     <th data-field="plateName">车牌名称</th>
                     <th data-field="plateDes">车牌描述</th>
                     <th data-field="plateStatus" data-formatter="statusFormatter">车牌状态</th>
@@ -73,7 +73,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">车型描述：</label>
+                    <label class="col-sm-3 control-label">车牌描述：</label>
                     <div class="col-sm-7">
                         <textarea type="text" name="plateDes" placeholder="请输入关于该车牌的描述" style="height: 100px;"
                                   class="form-control"></textarea>
@@ -110,7 +110,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">车型描述：</label>
+                    <label class="col-sm-3 control-label">车牌描述：</label>
                     <div class="col-sm-7">
                         <textarea type="text" name="plateDes" define="carPlate.plateDes" placeholder="请输入关于该车牌的描述" style="height: 100px;"
                                   class="form-control"></textarea>

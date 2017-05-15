@@ -225,6 +225,39 @@ function validator(formId) {
                     },
                 }
             },
+
+            companyWebsite: {
+                message: '公司官网网址验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '公司官网网址不能为空'
+                    }
+                }
+            },
+            companySize: {
+                message: '公司规模验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '公司规模不能为空'
+                    }
+                }
+            },
+            companyLongitude: {
+                message: '公司经度验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '公司经度不能为空'
+                    }
+                }
+            },
+            companyLatitude: {
+                message: '公司纬度验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '公司纬度不能为空'
+                    }
+                }
+            },
             companyOpendate: {
                 message: '公司成立时间验证失败',
                 validators: {
@@ -233,12 +266,11 @@ function validator(formId) {
                     }
                 }
             },
-
-            companyLogo:{
-                message: '公司LOGO验证失败',
+            companyDes:{
+                message: '公司描述验证失败',
                 validators: {
                     notEmpty: {
-                        message: '公司LOGO不能为空'
+                        message: '公司描述不能为空'
                     }
                 }
             }
