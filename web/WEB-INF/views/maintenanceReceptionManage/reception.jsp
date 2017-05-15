@@ -55,7 +55,7 @@
                 <th data-width="120" data-field="nowOil">
                     汽车当前油量
                 </th>
-                <th data-width="90" data-field="ifClearCar" data-formatter="showStatusFormatter">
+                <th data-width="90" data-field="ifClearCar" data-formatter="showYesOrNoFormatter">
                     是否洗车
                 </th>
                 <th data-width="150" data-field="carThings">
@@ -441,7 +441,7 @@
                 <table class="table table-hover" id="appTable" style="table-layout: fixed">
                     <thead>
                     <tr>
-                        <th data-checkbox="true"></th>
+                        <th data-radio="true"></th>
                         <th data-width="90" data-field="userName">
                             车主姓名
                         </th>

@@ -67,15 +67,6 @@ $("#editCarBrand").change(function(){
 });
 
 // 激活或禁用
-function showStatusFormatter(value) {
-    if(value == 'Y') {
-        return "可用";
-    } else {
-        return "禁用";
-    }
-}
-
-// 激活或禁用
 function statusFormatter(value, row, index) {
             if(value == 'Y') {
                 return "&nbsp;&nbsp;<button type='button' class='btn btn-danger' onclick='inactive(\""+'/checkin/statusOperate?id='+row.checkinId+'&status=Y'+"\")'>禁用</a>";
