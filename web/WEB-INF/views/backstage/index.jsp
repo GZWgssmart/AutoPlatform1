@@ -26,7 +26,7 @@
 </head>
 
 <body class="fixed-sidebar full-height-layout gray-bg" style="overflow:hidden">
-    <div id="wrapper" style="margin-bottom: 20px;display: none;">
+    <div id="wrapper" style="margin-bottom: 20px;">
         <!--左侧导航开始-->
         <nav class="navbar-default navbar-static-side" role="navigation">
             <div class="nav-close"><i class="fa fa-times-circle"></i>
@@ -809,7 +809,6 @@
                             type:"error"}
                         ,function(isConfirm){
                             if(isConfirm){
-                                $("#wrapper").css("display","block");
                                 top.location = "/user/loginPage";
                             }else{
                                 top.location = "/user/loginPage";
