@@ -174,11 +174,12 @@
            LEFT JOIN auto_platform.t_accessories ac on abu.accId=ac.accId
            LEFT JOIN auto_platform.t_accessories_type atp on atp.accTypeId=abu.accTypeId
            LEFT JOIN auto_platform.t_supply sp on sp.supplyId=abu.supplyId
-           where 1=1 AND
+           where 1=1
         ]]>
         <if test="pager.user.companyId != '' and pager.user.companyId !=null">
             and abu.companyId = #{pager.user.companyId}
         </if>
+        and(
         <if test="accBuy.companyId != '' and accBuy.companyId != null">
             cp.companyName like '%${accBuy.companyId}%'
         </if>
@@ -189,7 +190,7 @@
         <if test="accBuy.accId!='' and accBuy.accId!= null">
             ac.accName LIKE '%${accBuy.accId}%'
         </if>
-        ORDER by abu.accBuyCreatedTime DESC
+        ) ORDER by abu.accBuyCreatedTime DESC
         limit #{pager.beginIndex}, #{pager.pageSize}
     </select>
 
@@ -201,11 +202,12 @@
            LEFT JOIN auto_platform.t_accessories ac on abu.accId=ac.accId
            LEFT JOIN auto_platform.t_accessories_type atp on atp.accTypeId=abu.accTypeId
            LEFT JOIN auto_platform.t_supply sp on sp.supplyId=abu.supplyId
-           where 1=1 AND
+           where 1=1
         ]]>
         <if test="user.companyId != '' and user.companyId !=null">
             and abu.companyId = #{user.companyId}
         </if>
+        and(
         <if test="accBuy.companyId != '' and accBuy.companyId != null">
             cp.companyName like '%${accBuy.companyId}%'
         </if>
@@ -215,7 +217,7 @@
         </if>
         <if test="accBuy.accId!='' and accBuy.accId!= null">
             ac.accName LIKE '%${accBuy.accId}%'
-        </if>
+        </if>)
     </select>
     <!--下单报表统计-->
 

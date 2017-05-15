@@ -34,7 +34,5 @@ public interface AccessoriesSaleDAO extends BaseDAO<String, AccessoriesSale>{
     /**
      * 模糊查询的记录数
      */
-    public int countByBlurred(@Param("accSale")AccessoriesSale accessoriesSale);
-
-    public int countByBlurred(AccessoriesSale accessoriesSale, User user);
+    public int countByBlurred(@Param("accessoriesSale") AccessoriesSale accessoriesSale, @Param("user") User user);
 }

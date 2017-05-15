@@ -118,11 +118,12 @@
         <![CDATA[
            select atp.*,cp.companyId,cp.companyName from auto_platform.t_accessories_type atp
            LEFT JOIN auto_platform.t_company cp on atp.companyId=cp.companyId
-           where 1=1 AND
+           where 1=1
         ]]>
         <if test="pager.user.companyId != '' and pager.user.companyId !=null">
             and atp.companyId = #{pager.user.companyId}
         </if>
+        and(
         <if test="accType.companyId != '' and accType.companyId != null">
             cp.companyName like '%${accType.companyId}%'
         </if>
@@ -132,20 +133,21 @@
         </if>
         <if test="accType.accTypeName!='' and accType.accTypeName!= null">
             atp.accTypeName LIKE '%${accType.accTypeName}%'
-        </if>
+        </if>)
         limit #{pager.beginIndex}, #{pager.pageSize}
     </select>
 
     <!-- 分页模糊查询个数 -->
-    <select id="countByBlurred" resultType="int" >
+    <select id="countByBlurred" resultType="int" parameterType="com.gs.bean.User">
         <![CDATA[
            select count(accTypeId) FROM auto_platform.t_accessories_type atp
            LEFT JOIN auto_platform.t_company cp on cp.companyId=atp.companyId
-           where 1=1 AND
+           where 1=1
         ]]>
-        <if test="user.companyId != '' and user.companyId !=null">
-            and atp.companyId = #{user.companyId}
+        <if test="companyId != '' and companyId !=null">
+            and atp.companyId = #{companyId}
         </if>
+        and(
         <if test="accType.companyId != '' and accType.companyId != null">
             cp.companyName like '%${accType.companyId}%'
         </if>
@@ -155,7 +157,7 @@
         </if>
         <if test="accType.accTypeName!='' and accType.accTypeName!=null">
             atp.accTypeName LIKE '%${accType.accTypeName}%'
-        </if>
+        </if>)
     </select>
 
 </mapper>

@@ -140,11 +140,12 @@
      select asa.*,cp.companyId,cp.companyName,ac.accId,ac.accName from auto_platform.t_accessories_sale asa
      LEFT JOIN auto_platform.t_company cp on asa.companyId=cp.companyId
      LEFT JOIN auto_platform.t_accessories ac on asa.accId=ac.accId
-     where 1=1 AND
+     where 1=1
     ]]>
     <if test="pager.user.companyId != '' and pager.user.companyId !=null">
       and asa.companyId = #{pager.user.companyId}
     </if>
+    and (
     <if test="accSale.companyId != '' and accSale.companyId != null">
       cp.companyName like '%${accSale.companyId}%'
     </if>
@@ -155,7 +156,7 @@
     <if test="accSale.accId!='' and accSale.accId!= null">
       ac.accName LIKE '%${accSale.accId}%'
     </if>
-    ORDER by asa.accSaleCreatedTime DESC
+    )ORDER by asa.accSaleCreatedTime DESC
     limit #{pager.beginIndex}, #{pager.pageSize}
   </select>
 
@@ -165,11 +166,12 @@
      select count(accSaleId) FROM auto_platform.t_accessories_sale asa
      LEFT JOIN auto_platform.t_company cp on cp.companyId=asa.companyId
      LEFT JOIN auto_platform.t_accessories ac on ac.accId=asa.accId
-     where 1=1 AND
+     where 1=1
     ]]>
     <if test="user.companyId != '' and user.companyId !=null">
       and asa.companyId = #{user.companyId}
     </if>
+    and (
     <if test="accSale.companyId != '' and accSale.companyId != null">
       cp.companyName like '%${accSale.companyId}%'
     </if>
@@ -179,6 +181,6 @@
     </if>
     <if test="accSale.accId!='' and accSale.accId!= null">
       ac.accName LIKE '%${accSale.accId}%'
-    </if>
+    </if>)
   </select>
 </mapper>

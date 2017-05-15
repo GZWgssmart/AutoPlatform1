@@ -269,13 +269,13 @@ public class AccessoriesInventoryController {
             String roles="公司超级管理员,公司普通管理员,汽车公司采购人员,系统超级管理员,系统普通管理员";
             if(RoleUtil.checkRoles(roles)){
                 logger.info("配件库存模糊查询");
+                Pager pager = new Pager();
+                pager.setPageNo(Integer.valueOf(pageNumber));
+                pager.setPageSize(Integer.valueOf(pageSize));
+                pager.setUser((User)session.getAttribute("user"));
                 String text = request.getParameter("text");
                 String value = request.getParameter("value");
                 if (text != null && !text.equals("") && value != null && !value.equals("")) {
-                    Pager pager = new Pager();
-                    pager.setUser((User) session.getAttribute("user"));
-                    pager.setPageNo(Integer.parseInt(pageNumber));
-                    pager.setPageSize(Integer.parseInt(pageSize));
                     List<Accessories> accessoriesList = null;
                     Accessories accessories = new Accessories();
                     if (text.equals("汽车公司/配件名称/供应商/配件类型")) {
@@ -296,7 +296,9 @@ public class AccessoriesInventoryController {
                     pager.setTotalRecords(accessoriesService.countByBlurred(accessories,(User) session.getAttribute("user")));
                     return new Pager4EasyUI<Accessories>(pager.getTotalRecords(), accessoriesList);
                 } else {
-                    return null;
+                    pager.setTotalRecords(accessoriesService.count((User)session.getAttribute("user")));
+                    List<Accessories> accessoriesList = accessoriesService.queryByPager(pager);
+                    return new Pager4EasyUI<Accessories>(pager.getTotalRecords(), accessoriesList);
                 }
             }else{
                 logger.info("此用户无拥有此方法角色");

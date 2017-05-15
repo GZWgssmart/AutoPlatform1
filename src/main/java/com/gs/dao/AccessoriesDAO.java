@@ -33,5 +33,5 @@ public interface AccessoriesDAO extends BaseDAO<String, Accessories>{
 
     public Accessories queryByName(@Param("accName") String accName);
 
-    public int countByBlurred(Accessories accessories, User user);
+    public int countByBlurred(@Param("accessories") Accessories accessories, @Param("user") User user);
 }

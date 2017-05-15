@@ -9,6 +9,7 @@ import com.gs.common.bean.Pager4EasyUI;
 import com.gs.common.util.RoleUtil;
 import com.gs.common.util.SessionUtil;
 import com.gs.common.util.UUIDUtil;
+import com.gs.controller.pickingManage.PickingController;
 import com.gs.service.AccessoriesBuyService;
 import com.gs.service.AccessoriesService;
 import org.apache.ibatis.annotations.Param;
@@ -111,6 +112,7 @@ public class AccessoriesBuyController {
                     if (accessoriesBuy.getAccId() != null && !accessoriesBuy.getAccId().equals("")) {
                         accessoriesBuy.setAccBuyDiscount(1.0);
                         accessoriesBuyService.insert(accessoriesBuy);
+
                         accessoriesService.updateCount(accessoriesBuy.getAccBuyCount(), accessoriesBuy.getAccId());
                         return ControllerResult.getSuccessResult("更新数量成功");
                     } else {
@@ -251,18 +253,19 @@ public class AccessoriesBuyController {
             String roles="公司超级管理员,公司普通管理员,汽车公司采购人员,系统超级管理员,系统普通管理员";
             if(RoleUtil.checkRoles(roles)){
                 logger.info("配件采购记录模糊查询");
+                Pager pager = new Pager();
+                pager.setPageNo(Integer.valueOf(pageNumber));
+                pager.setPageSize(Integer.valueOf(pageSize));
+                pager.setUser((User)session.getAttribute("user"));
                 String text = request.getParameter("text");
                 String value = request.getParameter("value");
                 if (text != null && !text.equals("") && value != null && !value.equals("")) {
-                    Pager pager = new Pager();
-                    pager.setUser((User) session.getAttribute("user"));
-                    pager.setPageNo(Integer.parseInt(pageNumber));
-                    pager.setPageSize(Integer.parseInt(pageSize));
                     List<AccessoriesBuy> accessoriesBuys = null;
                     AccessoriesBuy accessoriesBuy = new AccessoriesBuy();
                     if (text.equals("汽车公司/配件名称")) {
                         accessoriesBuy.setCompanyId(value);
                         accessoriesBuy.setAccId(value);
+
                     } else if (text.equals("汽车公司")) {
                         accessoriesBuy.setCompanyId(value);
                     } else if (text.equals("配件名称")) {

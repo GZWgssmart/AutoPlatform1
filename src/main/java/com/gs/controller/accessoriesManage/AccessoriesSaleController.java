@@ -231,13 +231,13 @@ public class AccessoriesSaleController {
             String roles="公司超级管理员,公司普通管理员,汽车公司销售人员,系统超级管理员,系统普通管理员";
             if (RoleUtil.checkRoles(roles)) {
                 logger.info("配件销售记录模糊查询");
+                Pager pager = new Pager();
+                pager.setPageNo(Integer.valueOf(pageNumber));
+                pager.setPageSize(Integer.valueOf(pageSize));
+                pager.setUser((User)session.getAttribute("user"));
                 String text = request.getParameter("text");
                 String value = request.getParameter("value");
                 if (text != null && !text.equals("") && value != null && !value.equals("")) {
-                    Pager pager = new Pager();
-                    pager.setUser((User) session.getAttribute("user"));
-                    pager.setPageNo(Integer.parseInt(pageNumber));
-                    pager.setPageSize(Integer.parseInt(pageSize));
                     List<AccessoriesSale> accessoriesSales = null;
                     AccessoriesSale accessoriesSale = new AccessoriesSale();
                     if (text.equals("汽车公司/配件名称")) {
