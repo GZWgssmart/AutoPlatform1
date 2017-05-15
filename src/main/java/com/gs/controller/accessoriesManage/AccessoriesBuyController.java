@@ -131,7 +131,7 @@ public class AccessoriesBuyController {
                                 acc.setAccTotal(accessoriesBuy.getAccBuyCount());
                                 acc.setAccPrice(accessoriesBuy.getAccBuyPrice());
                                 acc.setAccBuyedTime(accessoriesBuy.getAccBuyTime());
-                                acc.setAccCommodityCode("");
+                                acc.setAccCommodityCode("123456");
                                 acc.setAccSalePrice(accessoriesBuy.getAccBuyPrice());
                                 acc.setAccIdle(accessoriesBuy.getAccBuyCount());
                                 acc.setSupplyId(accessoriesBuy.getSupplyId());
