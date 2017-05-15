@@ -29,9 +29,9 @@
             <thead>
             <tr>
                 <th data-radio="true" data-field="status"></th>
-                <th data-field="company.companyName" data-formatter="formatterNull">所属公司名称</th>
-                <th data-field="accessoriesType.accTypeName" data-formatter="formatterNull">配件所属类别</th>
-                <th data-field="supply.supplyName" data-formatter="formatterNull">所属供应商</th>
+                <th data-field="company.companyName">所属公司名称</th>
+                <th data-field="accessoriesType.accTypeName">配件所属类别</th>
+                <th data-field="supply.supplyName">所属供应商</th>
                 <th data-field="accName">配件名称</th>
                 <th data-field="accCommodityCode">配件商品条码</th>
                 <th data-field="accDes">配件描述</th>
@@ -42,27 +42,31 @@
                 <th data-field="accUsedTime" data-formatter="formatterDateTime">最近一次领料时间</th>
                 <th data-field="accBuyedTime" data-formatter="formatterDateTime">最近一次购买时间</th>
                 <th data-field="accCreatedTime" data-formatter="formatterDateTime">配件创建时间</th>
-                <th data-field="accStatus" data-formatter="statusFormatter">配件状态</th>
+                <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司采购人员,系统超级管理员,系统普通管理员">
+                    <th data-width="100" data-field="accStatus" data-formatter="statusFormatter">
+                        操作
+                    </th>
+                </shiro:hasAnyRoles>
             </tr>
             </thead>
         </table>
         <div id="toolbar" class="btn-group">
-            <shiro:hasAnyRoles name="汽修公司管理员,汽修公司采购员,系统管理员">
+            <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司采购人员,系统超级管理员,系统普通管理员">
                 <button id="btn_available" type="button" class="btn btn-success" onclick="showAvailable();">
                     <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询激活类型
                 </button>
             </shiro:hasAnyRoles>
-            <shiro:hasAnyRoles name="汽修公司管理员,汽修公司采购员,系统管理员">
+            <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司采购人员,系统超级管理员,系统普通管理员">
                 <button id="btn_disable" type="button" class="btn btn-danger" onclick="showDisable();">
                     <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询禁用类型
                 </button>
             </shiro:hasAnyRoles>
-            <shiro:hasAnyRoles name="汽修公司管理员,汽修公司采购员">
+            <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司采购人员">
                 <button id="btn_edit" type="button" class="btn btn-default" onclick="showEdit();">
                     <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
                 </button>
             </shiro:hasAnyRoles>
-            <shiro:hasAnyRoles name="汽修公司管理员,汽修公司采购员,系统管理员">
+            <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司采购人员,系统超级管理员,系统普通管理员">
                 <div class="input-group" style="width:350px;float:left;padding:0;margin:0 0 0 -1px;">
                     <div class="input-group-btn">
                         <button type="button" id="ulButton" class="btn btn-default" style="border-radius:0px;"

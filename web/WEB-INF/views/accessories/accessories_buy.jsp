@@ -41,32 +41,36 @@
                 <th data-field="accBuyMoney">购买最终价</th>
                 <th data-field="accBuyTime" data-formatter="formatterDate">购买时间</th>
                 <th data-field="accBuyCreatedTime" data-formatter="formatterDateTime">购买记录创建时间</th>
-                <th data-field="accBuyStatus" data-formatter="statusFormatter">购买记录状态</th>
+                <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司采购人员,系统超级管理员,系统普通管理员">
+                    <th data-width="100" data-field="accBuyStatus" data-formatter="statusFormatter">
+                        操作
+                    </th>
+                </shiro:hasAnyRoles>
             </tr>
             </thead>
         </table>
         <div id="toolbar" class="btn-group">
-            <shiro:hasAnyRoles name="汽修公司管理员,汽修公司采购员,系统管理员">
+            <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司采购人员,系统超级管理员,系统普通管理员">
                 <button id="btn_available" type="button" class="btn btn-success" onclick="showAvailable();">
                     <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询激活类型
                 </button>
             </shiro:hasAnyRoles>
-            <shiro:hasAnyRoles name="汽修公司管理员,汽修公司采购员,系统管理员">
+            <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司采购人员,系统超级管理员,系统普通管理员">
                 <button id="btn_disable" type="button" class="btn btn-danger" onclick="showDisable();">
                     <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询禁用类型
                 </button>
             </shiro:hasAnyRoles>
-            <shiro:hasAnyRoles name="汽修公司管理员,汽修公司采购员">
+            <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司采购人员">
                 <button id="btn_add" type="button" class="btn btn-default" onclick="showAdd();">
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
                 </button>
             </shiro:hasAnyRoles>
-            <shiro:hasAnyRoles name="汽修公司管理员，汽修公司采购员">
+            <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司采购人员">
                 <button id="btn_edit" type="button" class="btn btn-default" onclick="showEdit();">
                     <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
                 </button>
             </shiro:hasAnyRoles>
-            <shiro:hasAnyRoles name="汽修公司管理员,汽修公司采购员,系统管理员">
+            <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司采购人员,系统超级管理员,系统普通管理员">
                 <div class="input-group" style="width:350px;float:left;padding:0;margin:0 0 0 -1px;">
                     <div class="input-group-btn">
                         <button type="button" id="ulButton" class="btn btn-default" style="border-radius:0px;"

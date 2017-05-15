@@ -30,10 +30,10 @@
 -->
   <select id="queryAll" resultMap="AccessoriesSaleMap">
     <![CDATA[
-            select * from auto_platform.t_accessories_sale ase WHERE
+            select * FROM auto_platform.t_accessories_sale ac where 1=1 and ac.accSaleStatus = 'Y'
         ]]>
     <if test="companyId != '' and companyId !=null">
-      ase.companyId = #{user.companyId}
+      and ac.companyId = #{user.companyId}
     </if>
   </select>
 
