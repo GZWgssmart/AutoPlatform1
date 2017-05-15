@@ -134,7 +134,7 @@
     <if test="pager.user.companyId != '' and pager.user.companyId != null">
       and am.companyId = #{pager.user.companyId}
     </if>
-    and
+    and(
     <if test="appointment.userName != '' and appointment.userName != null">
       am.userName like '%${appointment.userName}%'
     </if>
@@ -159,7 +159,7 @@
     <if test="appointment.userPhone != '' and appointment.userPhone != null">
       am.userPhone like '%${appointment.userPhone}%'
     </if>
-    order by am.appCreatedTime Desc
+    )order by am.appCreatedTime Desc
     limit #{pager.beginIndex}, #{pager.pageSize}
   </select>
 
@@ -178,7 +178,7 @@
     <if test="user.companyId != '' and user.companyId != null">
       and am.companyId = #{user.companyId}
     </if>
-    and
+    and(
     <if test="appointment.userName != '' and appointment.userName != null">
       am.userName like '%${appointment.userName}%'
     </if>
@@ -202,7 +202,7 @@
     </if>
     <if test="appointment.userPhone != '' and appointment.userPhone != null">
       am.userPhone like '%${appointment.userPhone}%'
-    </if>
+    </if>)
 
   </select>
 

@@ -56,9 +56,11 @@
                 <th data-width="180" data-hide="all" data-field="appCreatedTime" data-formatter="formatterDate">
                     登记时间
                 </th>
+                <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员">
                 <th data-width="100" data-hide="all" data-field="company.companyName">
                     汽修公司
                 </th>
+                </shiro:hasAnyRoles>
                 <th data-width="100" data-hide="all" data-field="currentStatus">
                     已预约&nbsp;|&nbsp;未预约
                 </th>
@@ -94,25 +96,31 @@
                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
             </button>
             </shiro:hasAnyRoles>
-            <div class="input-group" style="width:450px;float:left;padding:0;margin:0 0 0 -1px;">
-                <div class="input-group-btn">
-                    <button type="button" id="ulButton" class="btn btn-default" style="border-radius:0px;" data-toggle="dropdown">车主/电话/车牌/汽车公司<span class="caret"></span></button>
-                    <ul class="dropdown-menu pull-right">
-                        <li><a onclick="onclikLi(this)">车主/电话/车牌/汽车公司</a></li>
-                        <li class="divider"></li>
-                        <li><a onclick="onclikLi(this)">车主</a></li>
-                        <li class="divider"></li>
-                        <li><a onclick="onclikLi(this)">电话</a></li>
-                        <li class="divider"></li>
-                        <li><a onclick="onclikLi(this)">汽车公司</a></li>
-                        <li class="divider"></li>
-                        <li><a onclick="onclikLi(this)">车牌</a></li>
-                    </ul>
-                </div><!-- /btn-group -->
-                <input id="ulInput" class="form-control" onkeypress="if(event.keyCode==13) {blurredQuery();}">
-                <a href="javaScript:;" onclick="blurredQuery()"><span class="glyphicon glyphicon-search search-style"></span></a>
-                </input>
-            </div><!-- /input-group -->
+            <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员">
+                <div class="input-group" style="width:350px;float:left;padding:0;margin:0 0 0 -1px;">
+                    <div class="input-group-btn">
+                        <button type="button" id="ulButton" class="btn btn-default" style="border-radius:0px;"
+                                data-toggle="dropdown">车主/电话<shiro:hasAnyRoles name="系统超级管理员,系统普通管理员">/汽车公司</shiro:hasAnyRoles>/车牌号<span class="caret"></span></button>
+                        <ul class="dropdown-menu pull-right">
+                            <li><a onclick="onclikLi(this)">车主/电话<shiro:hasAnyRoles name="系统超级管理员,系统普通管理员">/汽车公司</shiro:hasAnyRoles>/车牌号</a></li>
+                            <li class="divider"></li>
+                            <li><a onclick="onclikLi(this)">车主</a></li>
+                            <li class="divider"></li>
+                            <li><a onclick="onclikLi(this)">电话</a></li>
+                            <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员">
+                                <li class="divider"></li>
+                                <li><a onclick="onclikLi(this)">汽车公司</a></li>
+                            </shiro:hasAnyRoles>
+                            <li class="divider"></li>
+                            <li><a onclick="onclikLi(this)">车牌号</a></li>
+                        </ul>
+                    </div><!-- /btn-group -->
+                    <input id="ulInput" class="form-control" onkeypress="if(event.keyCode==13) {blurredQuery();}">
+                    <a href="javaScript:;" onclick="blurredQuery()"><span
+                            class="glyphicon glyphicon-search search-style"></span></a>
+                    </input>
+                </div><!-- /input-group -->
+            </shiro:hasAnyRoles>
         </div>
     </div>
 </div>
