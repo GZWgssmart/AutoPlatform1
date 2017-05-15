@@ -107,7 +107,8 @@ public class PhoneReservationController {
                 User user = (User)session.getAttribute("user");
                 logger.info("添加电话预约");
                 if (appointment != null) {
-                    appointment.setCompanyId("c515f5d623e011e7a97af832e40312b3");
+                    appointment.setCompanyId(user.getCompanyId());
+                    appointment.setCurrentStatus("已预约");
                     appointmentService.insert(appointment);
                     return ControllerResult.getSuccessResult("添加电话预约成功");
                 } else {
@@ -135,7 +136,7 @@ public class PhoneReservationController {
             if (RoleUtil.checkRoles(roles)) {
                 logger.info("修改电话预约");
                 User user = (User)session.getAttribute("user");
-                appointment.setCompanyId("c515f5d623e011e7a97af832e40312b3");
+                appointment.setCurrentStatus("已预约");
                 appointmentService.update(appointment);
                 return ControllerResult.getSuccessResult("修改电话预约成功");
             } else {
@@ -203,6 +204,10 @@ public class PhoneReservationController {
                     if(text.equals("车主/电话/汽车公司/车牌号")){ // 当多种模糊搜索条件时
                         appointment.setUserName(value);
                         appointment.setCompanyId(value);
+                        appointment.setCarPlate(value);
+                        appointment.setUserPhone(value);
+                    }else if(text.equals("车主/电话/车牌号")){
+                        appointment.setUserName(value);
                         appointment.setCarPlate(value);
                         appointment.setUserPhone(value);
                     }else if(text.equals("车主")){

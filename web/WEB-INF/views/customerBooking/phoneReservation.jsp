@@ -61,9 +61,6 @@
                     汽修公司
                 </th>
                 </shiro:hasAnyRoles>
-                <th data-width="100" data-hide="all" data-field="currentStatus">
-                    已预约&nbsp;|&nbsp;未预约
-                </th>
                 <th data-width="100" data-hide="all" data-field="appoitmentStatus" data-formatter="showStatusFormatter">
                     记录状态
                 </th>
@@ -100,14 +97,14 @@
                 <div class="input-group" style="width:350px;float:left;padding:0;margin:0 0 0 -1px;">
                     <div class="input-group-btn">
                         <button type="button" id="ulButton" class="btn btn-default" style="border-radius:0px;"
-                                data-toggle="dropdown">车主/电话<shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员">/汽车公司</shiro:hasAnyRoles>/车牌号<span class="caret"></span></button>
+                                data-toggle="dropdown">车主/电话<shiro:hasAnyRoles name="系统超级管理员,系统普通管理员">/汽车公司</shiro:hasAnyRoles>/车牌号<span class="caret"></span></button>
                         <ul class="dropdown-menu pull-right">
-                            <li><a onclick="onclikLi(this)">车主/电话<shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员">/汽车公司</shiro:hasAnyRoles>/车牌号</a></li>
+                            <li><a onclick="onclikLi(this)">车主/电话<shiro:hasAnyRoles name="系统超级管理员,系统普通管理员">/汽车公司</shiro:hasAnyRoles>/车牌号</a></li>
                             <li class="divider"></li>
                             <li><a onclick="onclikLi(this)">车主</a></li>
                             <li class="divider"></li>
                             <li><a onclick="onclikLi(this)">电话</a></li>
-                            <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员">
+                            <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员">
                                 <li class="divider"></li>
                                 <li><a onclick="onclikLi(this)">汽车公司</a></li>
                             </shiro:hasAnyRoles>
@@ -132,13 +129,23 @@
             <div class="modal-body">
                 <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
                     <form role="form" class="form-horizontal" id="addForm">
+                        <input id="addUserId" type="hidden" name="userId"/>
                         <div class="modal-header" style="overflow:auto;">
                             <h4>添加电话预约信息</h4>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">是否为本店会员：</label>
+                            <label class="col-sm-3 control-label">是否为本店用户：</label>
                             <div class="col-sm-7">
                                 <input id="app" type="checkbox" onchange="appOnChange()"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">保养&nbsp;|&nbsp;维修：</label>
+                            <div class="col-sm-7">
+                                <select  class="js-example-tags form-control" name="maintainOrFix">
+                                    <option value="保养">保养</option>
+                                    <option value="维修">维修</option>
+                                </select>
                             </div>
                         </div>
                         <div class="form-group">
@@ -168,13 +175,6 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">到店时间：</label>
-                            <div class="col-sm-7">     <!-- 当设置不可编辑后, 会修改颜色, 在min.css里搜索.form-control{background-color:#eee;opacity:1} -->
-                                <input id="addArriveTime" placeholder="请选择到店时间" onclick="getDate('addArriveTime')" readonly="true" type="text" name="arriveTime"
-                                       class="form-control datetimepicker"/>
-                            </div>
-                        </div>
-                        <div class="form-group">
                             <label class="col-sm-3 control-label">汽车颜色：</label>
                             <div class="col-sm-7">
                                 <select  class="js-example-tags carColor" name="colorId" style="width:100%">
@@ -195,28 +195,16 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">已预约&nbsp;|&nbsp;未预约：</label>
-                            <div class="col-sm-7">
-                                <select  class="js-example-tags form-control" name="currentStatus">
-                                    <option value="已预约">已预约</option>
-                                    <option value="未预约">未预约</option>
-                                </select>
+                            <label class="col-sm-3 control-label">到店时间：</label>
+                            <div class="col-sm-7">     <!-- 当设置不可编辑后, 会修改颜色, 在min.css里搜索.form-control{background-color:#eee;opacity:1} -->
+                                <input id="addArriveTime" placeholder="请选择到店时间" onclick="getDate('addArriveTime')" readonly="true" type="text" name="arriveTime"
+                                       class="form-control datetimepicker"/>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">保养&nbsp;|&nbsp;维修：</label>
-                            <div class="col-sm-7">
-                                <select  class="js-example-tags form-control" name="maintainOrFix">
-                                    <option value="保养">保养</option>
-                                    <option value="维修">维修</option>
-                                </select>
-                            </div>
-                        </div>
-
                         <div class="form-group">
                             <div class="col-sm-offset-8">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                                <button class="btn btn-sm btn-success" id="addButton" onclick="addSubmit();" type="button">保 存</button>
+                                <button class="btn btn-sm btn-success" id="addButton" onclick="addSubmit();" type="button">添加</button>
                                 <input type="reset" name="reset" style="display: none;"/>
                             </div>
                         </div>
@@ -236,6 +224,16 @@
                 </div>
                 <input type="hidden" define="appointment.userId" name="userId" />
                 <input type="hidden" define="appointment.appointmentId" name="appointmentId"/>
+                <input type="hidden" define="appointment.companyId" name="companyId"/>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">保养&nbsp;|&nbsp;维修：</label>
+                    <div class="col-sm-7">
+                        <select  define="appointment.maintainOrFix" class="js-example-tags form-control" name="maintainOrFix">
+                            <option value="保养">保养</option>
+                            <option value="维修">维修</option>
+                        </select>
+                    </div>
+                </div>
                 <div class="form-group ">
                     <label class="col-sm-3 control-label">车主姓名：</label>
                     <div class="col-sm-7">
@@ -291,27 +289,9 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">保养&nbsp;|&nbsp;维修：</label>
-                    <div class="col-sm-7">
-                        <select  define="appointment.maintainOrFix" class="js-example-tags form-control" name="maintainOrFix">
-                            <option value="保养">保养</option>
-                            <option value="维修">维修</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">已预约&nbsp;|&nbsp;未预约：</label>
-                    <div class="col-sm-7">
-                        <select  define="appointment.currentStatus" class="js-example-tags form-control" name="currentStatus">
-                            <option value="已预约">已预约</option>
-                            <option value="未预约">未预约</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
                     <div class="col-sm-offset-8">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button class="btn btn-sm btn-success" onclick="editSubmit();" type="button">添加</button>
+                        <button class="btn btn-sm btn-success" onclick="editSubmit();" type="button">保存</button>
                     </div>
                 </div>
             </form>
@@ -329,7 +309,10 @@
                         <table class="table table-hover" id="appTable">
                             <thead>
                             <tr>
-                                <th data-checkbox="true"></th>
+                                <th data-radio="true"></th>
+                                <th data-field="userName">
+                                    用户姓名
+                                </th>
                                 <th data-field="userEmail">
                                     用户邮箱
                                 </th>
@@ -339,14 +322,8 @@
                                 <th data-field="userIdentity">
                                     用户身份证
                                 </th>
-                                <th data-field="userPwd">
-                                    用户密码
-                                </th>
                                 <th data-field="userNickname">
                                     用户昵称
-                                </th>
-                                <th data-field="userName">
-                                    用户姓名
                                 </th>
                                 <th data-field="userGender">
                                     用户性别

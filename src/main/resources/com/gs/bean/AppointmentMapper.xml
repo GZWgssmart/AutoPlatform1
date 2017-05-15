@@ -147,7 +147,7 @@
     <if test="appointment.companyId != '' and appointment.companyId != null">
       company.companyName like '%${appointment.companyId}%'
     </if>
-    <if test="appointment.companyId != '' and appointment.companyId != null and
+    <if test="appointment.userName != '' and appointment.userName != null and
             appointment.carPlate != '' and appointment.carPlate != null">
       or
     </if>
@@ -191,7 +191,7 @@
     <if test="appointment.companyId != '' and appointment.companyId != null">
       company.companyName like '%${appointment.companyId}%'
     </if>
-    <if test="appointment.companyId != '' and appointment.companyId != null and
+    <if test="appointment.userName != '' and appointment.userName != null and
     appointment.carPlate != '' and appointment.carPlate != null">
       or
     </if>

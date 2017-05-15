@@ -227,6 +227,7 @@ function checkApp() {
 }
 
 function setData(user) {
+    $("#addUserId").val(user.userId);
     $("#addUserName").val(user.userName);
     $("#addUserPhone").val(user.userPhone);
     validator('editForm'); // 初始化验证
@@ -481,8 +482,6 @@ function formSubmit(url, formId, winId){
                     $("#addCarModel").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
                     $("#addCarColor").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
                     $("#addCarPlate").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
-                    $("#" + formId).data('bootstrapValidator').destroy(); // 销毁此form表单
-                    $('#' + formId).data('bootstrapValidator', null);// 此form表单设置为空
                 }
                 $("#" + formId).data('bootstrapValidator').destroy(); // 销毁此form表单
                 $('#' + formId).data('bootstrapValidator', null);// 此form表单设置为空
