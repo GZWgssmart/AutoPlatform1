@@ -13,16 +13,17 @@
     <link rel="stylesheet" href="/static/css/bootstrap-validate/bootstrapValidator.min.css">
     <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.css">
     <link rel="stylesheet/less" href="/static/css/bootstrap-dateTimePicker/datetimepicker.less">
-
     <title>维修保养预约电话管理</title>
 </head>
 <body>
+
 <%@include file="../backstage/contextmenu.jsp"%>
+
 <div class="container">
     <div class="panel-body" style="padding-bottom:0px;"  >
         <!--show-refredata-single-sesh, show-toggle的样式可以在bootstrap-table.js的948行修改-->
         <!-- table里的所有属性在bootstrap-table.js的240行-->
-        <table id="table">
+        <table id="table"style="table-layout: fixed">
             <thead>
             <tr>
                 <th data-radio="true"></th>
@@ -50,25 +51,25 @@
                 <th data-width="100" data-field="carPlate">
                     车牌号码
                 </th>
-                <th data-width="100" data-hide="all" data-field="maintainOrFix">
+                <th data-width="100" data-field="maintainOrFix">
                     保养&nbsp;|&nbsp;维修
                 </th>
-                <th data-width="180" data-hide="all" data-field="appCreatedTime" data-formatter="formatterDate">
+                <th data-width="180" data-field="appCreatedTime" data-formatter="formatterDate">
                     登记时间
                 </th>
                 <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员">
-                <th data-width="100" data-hide="all" data-field="company.companyName">
+                <th data-width="100"  data-field="company.companyName">
                     汽修公司
                 </th>
                 </shiro:hasAnyRoles>
-                <th data-width="100" data-hide="all" data-field="currentStatus">
+                <th data-width="100" data-field="currentStatus">
                     当前状态
                 </th>
-                <th data-width="100" data-hide="all" data-field="appoitmentStatus" data-formatter="showStatusFormatter">
+                <th data-width="100" data-field="appoitmentStatus" data-formatter="showStatusFormatter">
                     记录状态
                 </th>
                 <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽修公司接待员">
-                    <th data-width="100" data-hide="all" data-field="appoitmentStatus" data-formatter="statusFormatter">
+                    <th data-width="100" data-field="appoitmentStatus" data-formatter="statusFormatter">
                         操作
                     </th>
                 </shiro:hasAnyRoles>
@@ -133,6 +134,7 @@
                 <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
                     <form role="form" class="form-horizontal" id="addForm">
                         <input id="addUserId" type="hidden" name="userId"/>
+                        <input id="addAppointmentId" type="hidden" name="appointmentId"/>
                         <div class="modal-header" style="overflow:auto;">
                             <h4>添加电话预约信息</h4>
                         </div>
@@ -204,12 +206,13 @@
                                        class="form-control datetimepicker"/>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <div class="col-sm-offset-8">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                                <button class="btn btn-sm btn-success" id="addButton" onclick="addSubmit();" type="button">添加</button>
-                                <input type="reset" name="reset" style="display: none;"/>
-                            </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default"
+                                    data-dismiss="modal">关闭
+                            </button>
+                            <button id="addButton" type="button" onclick="addSubmit()" class="btn btn-success">添加
+                            </button>
+                            <input type="reset" name="reset" style="display: none;"/>
                         </div>
                 </form>
             </div>
