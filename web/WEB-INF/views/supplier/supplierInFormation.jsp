@@ -56,6 +56,16 @@
             </thead>
         </table>
         <div id="toolbar" class="btn-group">
+            <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员">
+                <button id="searchDisable" type="button" class="btn btn-danger" onclick="searchDisableStatus();">
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>禁用供应商
+                </button>
+            </shiro:hasAnyRoles>
+            <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员">
+                <button id="searchRapid" type="button" class="btn btn-success" onclick="searchRapidStatus();">
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>激活供应商
+                </button>
+            </shiro:hasAnyRoles>
             <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员">
                     <button id="btn_add" type="button" class="btn btn-default" onclick="showAdd();">
                         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
@@ -66,16 +76,7 @@
                     <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
                 </button>
             </shiro:hasAnyRoles>
-            <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员">
-                <button id="searchDisable" type="button" class="btn btn-danger" onclick="searchDisableStatus();">
-                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询禁用类型
-                </button>
-            </shiro:hasAnyRoles>
-            <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员">
-                <button id="searchRapid" type="button" class="btn btn-success" onclick="searchRapidStatus();">
-                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询激活类型
-                </button>
-            </shiro:hasAnyRoles>
+
             <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员">
                 <div class="input-group" style="width:300px;float:left;padding:0;margin:0 0 0 -1px;">
                     <div class="input-group-btn">
