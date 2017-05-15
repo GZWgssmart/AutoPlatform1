@@ -89,11 +89,13 @@ public class SalaryController {
     @RequestMapping(value = "add", method = RequestMethod.POST)
     public ControllerResult add(HttpSession session,Salary salary) {
         if (SessionUtil.isLogin(session)) {
-            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员";
+            String roles = "公司超级管理员,公司普通管理员,汽车公司财务人员";
             if (RoleUtil.checkRoles(roles)) {
                 logger.info("添加工资信息");
                 User user = (User) session.getAttribute("user");
-                salary.setCompanyId(user.getCompanyId());
+                salary.setUser(user);
+                user.setUserId(user.getUserId());
+                System.out.println(salary + "aaaaaaaaaaaaaa");
                 salaryService.insert(salary);
                 return ControllerResult.getSuccessResult("添加成功");
             } else {
@@ -122,11 +124,11 @@ public class SalaryController {
     @RequestMapping(value = "update", method = RequestMethod.POST)
     public ControllerResult update(HttpSession session, Salary salary) {
         if (SessionUtil.isLogin(session)) {
-            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员";
+            String roles = "公司超级管理员,公司普通管理员,汽车公司财务人员";
             if (RoleUtil.checkRoles(roles)) {
                 logger.info("修改工资信息");
                 User user = (User) session.getAttribute("user");
-                salary.setCompanyId(user.getCompanyId());
+                salary.setUser(user);
                 salaryService.update(salary);
                 return ControllerResult.getSuccessResult("修改成功");
             } else {

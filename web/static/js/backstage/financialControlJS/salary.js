@@ -1,11 +1,14 @@
 /**
  * 初始化表格
  */
+/**
+ * 初始化表格
+ */
 $(function () {
     var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员";
     $.post("/user/isLogin/"+roles, function (data) {
         if(data.result == 'success'){
-            initTable("table", "/salary/queryByPager/"+roles); // 初始化表格
+            initTable("table", "/salary/queryByPager"); // 初始化表格
         }else if(data.result == 'notLogin'){
             swal({title:"",
                     text:data.message,
@@ -25,6 +28,7 @@ $(function () {
                 type:"error"})
         }
     });
+
 });
 
 
@@ -97,7 +101,7 @@ function formatterDate(value) {
 
 
 function showEdit() {
-    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员";
+    var roles = "公司超级管理员,公司普通管理员,汽车公司财务人员";
     $.post("/user/isLogin/"+roles, function (data) {
         if(data.result == 'success'){
             $("#editButton").removeAttr("disabled");
@@ -140,7 +144,7 @@ function showEdit() {
 }
 
 function showAdd() {
-    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员";
+    var roles = "公司超级管理员,公司普通管理员,汽车公司财务人员";
     $.post("/user/isLogin/"+roles, function (data) {
         if(data.result == 'success'){
             $("input[type=reset]").trigger("click");

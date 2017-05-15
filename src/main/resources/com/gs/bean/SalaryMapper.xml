@@ -13,7 +13,7 @@
 
 
     <association property="user" javaType="com.gs.bean.User">
-      <id column="user_id" property="userId"/>
+      <id column="userId" property="userId"/>
       <result column="userName" property="userName"/>
     </association>
 
@@ -23,17 +23,17 @@
     <![CDATA[
        select count(*) from t_salary s where 1 =1
     ]]>
-    <if test="user.companyId != '' and user.companyId != null">
-      and s.companyId = #{companyId}
+    <if test="companyId != '' and companyId != null">
+      and user.companyId = #{companyId}
     </if>
   </select>
 
   <select id="queryByPager" resultMap="salaryMap" parameterType="com.gs.common.bean.Pager">
     <![CDATA[
-        select s.*, u.userId as user_id, u.userName from t_salary s, t_user u where 1 =1 and u.userId = s.userId
+        select s.*, u.userId,u.userName from t_salary s, t_user u where 1 =1 and u.userId = s.userId
     ]]>
     <if test="user.companyId != '' and user.companyId != null">
-      and s.companyId = #{user.companyId}
+      and user.companyId = #{user.companyId}
     </if>
     limit #{beginIndex}, #{pageSize}
   </select>

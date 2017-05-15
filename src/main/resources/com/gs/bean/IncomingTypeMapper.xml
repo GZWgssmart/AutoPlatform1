@@ -13,11 +13,12 @@
 
 
 
+
   </resultMap>
 
   <select id="count" resultType="int" parameterType="com.gs.bean.User">
     <![CDATA[
-      select count(*) from t_incoming_type i where i.inTypeStatus = 'Y'
+      select count(*) from t_incoming_type i where 1 =1 and i.inTypeStatus = 'Y'
     ]]>
     <if test="companyId != '' and companyId != null">
       and i.companyId = #{companyId}
@@ -26,7 +27,7 @@
 
   <select id="queryByPager" resultMap="incomingTypeMap" parameterType="com.gs.common.bean.Pager">
     <![CDATA[
-        select i.* from t_incoming_type i c where c.companyId = #{companyId} and i.inTypeStatus = 'Y'
+        select i.* from t_incoming_type i  where 1 =1 and i.inTypeStatus = 'Y'
     ]]>
     <if test="user.companyId != '' and user.companyId != null">
       and i.companyId = #{user.companyId}
@@ -36,7 +37,7 @@
 
   <select id="countByDisable" resultType="int" parameterType="com.gs.bean.User" >
     <![CDATA[
- select count(*) from t_incoming_type i,t_company c where i.companyId = c.companyId  and c.companyId = #{companyId} and i.inTypeStatus = 'N'
+ select count(*) from t_incoming_type i where 1 =1 and i.inTypeStatus = 'N'
     ]]>
     <if test="companyId != '' and companyId != null">
       and i.companyId = #{companyId}
@@ -45,7 +46,7 @@
 
   <select id="queryByPagerDisable" resultMap="incomingTypeMap" parameterType="com.gs.common.bean.Pager">
     <![CDATA[
-      select i.*, c.companyId from t_incoming_type i,t_company c where i.companyId = c.companyId and c.companyId = #{companyId} and i.inTypeStatus = 'N'
+        select i.* from t_incoming_type i  where 1 =1 and i.inTypeStatus = 'N'
     ]]>
     <if test="user.companyId != '' and user.companyId != null">
       and i.companyId = #{user.companyId}
@@ -55,7 +56,7 @@
 
   <select id="queryById" resultMap="incomingTypeMap">
     <![CDATA[
-        select *  from t_incoming_type where inTypeName = #{inTypeName};
+        select *  from t_incoming_type where  inTypeName = #{inTypeName};
     ]]>
 
   </select>
@@ -68,7 +69,7 @@
 
   <insert id="insert" useGeneratedKeys="true" keyProperty="inTypeId" parameterType="incomingType">
     <![CDATA[
-        insert into t_incoming_type(inTypeId, companyid inTypeName, inTypeStatus) values(#{inTypeId},#{companyId},#{inTypeName}, #{inTypeStatus})
+        insert into t_incoming_type(inTypeId, companyid, inTypeName, inTypeStatus) values(uuid(),#{companyId},#{inTypeName}, 'Y')
         ]]>
   </insert>
 

@@ -127,7 +127,7 @@ public class IncomingOutgoingController {
     @RequestMapping(value = "add", method = RequestMethod.POST)
     public ControllerResult add(HttpSession session, IncomingOutgoing incomingOutgoing) {
         if (SessionUtil.isLogin(session)) {
-            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员";
+            String roles = "公司超级管理员,公司普通管理员,汽车公司财务人员";
             if (RoleUtil.checkRoles(roles)) {
                 logger.info("添加收支记录");
                 incomingOutgoing.setCompanyId("1");
@@ -151,7 +151,7 @@ public class IncomingOutgoingController {
     @RequestMapping(value = "update", method = RequestMethod.POST)
     public ControllerResult update(HttpSession session, IncomingOutgoing incomingOutgoing) {
         if (SessionUtil.isLogin(session)) {
-            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员";
+            String roles = "公司超级管理员,公司普通管理员,汽车公司财务人员";
             if (RoleUtil.checkRoles(roles)) {
                 logger.info("修改收支记录");
                 User user = (User) session.getAttribute("user");

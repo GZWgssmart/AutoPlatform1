@@ -5,8 +5,6 @@ import java.util.Date;
 public class Salary {
     private String salaryId;
 
-    private String companyId;
-
     private String userId;
 
     private Double prizeSalary;
@@ -38,14 +36,6 @@ public class Salary {
 
     public void setSalaryId(String salaryId) {
         this.salaryId = salaryId;
-    }
-
-    public String getCompanyId() {
-        return companyId;
-    }
-
-    public void setCompanyId(String companyId) {
-        this.companyId = companyId;
     }
 
     public String getUserId() {
