@@ -104,34 +104,10 @@ function showAvailable() {
 }
 // 查看全部禁用
 function showDisable() {
-    $.post("/user/isLogin", function (data) {
-        if(data.result == 'success'){
-            initTable('table', '/appointment/queryByPagerDisable'); // 初始化表格
-        }else if(data.result == 'notLogin'){
-            swal({title:"",
-                    text:data.message,
-                    confirmButtonText:"确认",
-                    type:"error"}
-                ,function(isConfirm){
-                    if(isConfirm){
-                        top.location = "/user/loginPage";
-                    }else{
-                        top.location = "/user/loginPage";
-                    }
-                })
-        }
-    });
-
-}
-function statusFormatter(value, row, index) {
-    var roles = "公司超级管理员,公司普通管理员汽修公司接待员";
+    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽修公司接待员";
     $.post("/user/isLogin/"+roles, function (data) {
         if(data.result == 'success'){
-            if(value == 'Y') {
-                return "&nbsp;&nbsp;<button type='button' class='btn btn-danger' onclick='inactive(\""+'/appointment/statusOperate?appointmentId='+row.appointmentId+'&appoitmentStatus=Y'+"\")'>禁用</a>";
-            } else {
-                return "&nbsp;&nbsp;<button type='button' class='btn btn-success' onclick='active(\""+'/appointment/statusOperate?appointmentId='+ row.appointmentId+'&appoitmentStatus=N'+ "\")'>激活</a>";
-            }
+            initTable('table', '/appointment/queryByPagerDisable');
         }else if(data.result == 'notLogin'){
             swal({title:"",
                     text:data.message,
@@ -151,6 +127,14 @@ function statusFormatter(value, row, index) {
                 type:"error"})
         }
     });
+
+}
+function statusFormatter(value, row, index) {
+            if(value == 'Y') {
+                return "&nbsp;&nbsp;<button type='button' class='btn btn-danger' onclick='inactive(\""+'/appointment/statusOperate?appointmentId='+row.appointmentId+'&appoitmentStatus=Y'+"\")'>禁用</a>";
+            } else {
+                return "&nbsp;&nbsp;<button type='button' class='btn btn-success' onclick='active(\""+'/appointment/statusOperate?appointmentId='+ row.appointmentId+'&appoitmentStatus=N'+ "\")'>激活</a>";
+            }
 }
 
 /** 判断是否选中 */

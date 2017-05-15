@@ -81,6 +81,7 @@ public class PhoneReservationController {
                 pager.setPageNo(Integer.valueOf(pageNumber));
                 pager.setPageSize(Integer.valueOf(pageSize));
                 pager.setTotalRecords(appointmentService.countByDisable((User) session.getAttribute("user")));
+                pager.setUser((User)session.getAttribute("user"));
                 List<Appointment> appointments = appointmentService.queryByPagerDisable(pager);
                 return new Pager4EasyUI<Appointment>(pager.getTotalRecords(), appointments);
             } else{
