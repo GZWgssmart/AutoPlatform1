@@ -165,6 +165,7 @@ public class SupplyTypeController {
             if(RoleUtil.checkRoles(roles)) {
                 if (supplyType != null && !supplyType.equals("")) {
                     User user = (User)session.getAttribute("user");
+                    supplyType.setCompanyId(user.getCompanyId());
                     supplyTypeService.update(supplyType);
                     logger.info("修改供应商类型记录成功");
                     return ControllerResult.getSuccessResult("修改供应商类型记录成功");

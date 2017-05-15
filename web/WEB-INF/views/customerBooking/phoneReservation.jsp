@@ -62,9 +62,14 @@
                 <th data-width="100" data-hide="all" data-field="currentStatus">
                     已预约&nbsp;|&nbsp;未预约
                 </th>
-                <th data-width="100" data-hide="all" data-field="appoitmentStatus" data-formatter="statusFormatter">
+                <th data-width="100" data-hide="all" data-field="appoitmentStatus" data-formatter="showStatusFormatter">
                     记录状态
                 </th>
+                <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽修公司接待员">
+                    <th data-width="100" data-hide="all" data-field="appoitmentStatus" data-formatter="statusFormatter">
+                        操作
+                    </th>
+                </shiro:hasAnyRoles>
             </tr>
             </thead>
         </table>
@@ -199,6 +204,7 @@
                                 </select>
                             </div>
                         </div>
+
                         <div class="form-group">
                             <div class="col-sm-offset-8">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>

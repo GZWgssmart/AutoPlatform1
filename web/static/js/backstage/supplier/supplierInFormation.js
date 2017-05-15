@@ -323,8 +323,6 @@ function formSubmit(url, formId, winId) {
                     $("input[type=reset]").trigger("click"); // 移除表单中填的值
                     $('#addForm').data('bootstrapValidator').resetForm(true); // 移除所有验证样式
                     $("#addButton").removeAttr("disabled"); // 移除不可点击
-                    $("#" + formId).data('bootstrapValidator').destroy(); // 销毁此form表单
-                    $('#' + formId).data('bootstrapValidator', null);// 此form表单设置为空
                     // 设置select2的值为空
                     $("#addSupplyType").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
                     $("#addCompanyName").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
@@ -358,11 +356,6 @@ function formSubmit(url, formId, winId) {
                 }else if(formId == 'editForm'){
                     $("#editButton").removeAttr("disabled");
                 }
-            }else if(data.result == 'notRole'){
-                swal({title:"",
-                    text:data.message,
-                    confirmButtonText:"确认",
-                    type:"error"})
             }
         }, "json");
 }

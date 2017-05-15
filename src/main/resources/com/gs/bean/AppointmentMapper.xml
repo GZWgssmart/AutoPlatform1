@@ -81,7 +81,7 @@
       limit #{beginIndex}, #{pageSize}
   </select>
 
-  <select id="count" resultType="int" >
+  <select id="count" resultType="int" parameterType="com.gs.bean.User">
     <![CDATA[
       select count(appointmentId) from t_appointment am where am.appoitmentStatus = 'Y'
     ]]>
@@ -90,7 +90,7 @@
     </if>
   </select>
 
-  <select id="countByDisable" resultType="int" >
+  <select id="countByDisable" resultType="int" parameterType="com.gs.bean.User">
     <![CDATA[
       select count(appointmentId) from t_appointment am where am.appoitmentStatus = 'N'
     ]]>
@@ -131,6 +131,10 @@
            LEFT JOIN t_car_brand cb on am.brandId = cb.brandId
            where 1=1 and
       ]]>
+    <if test="pager.user.companyId != '' and pager.user.companyId != null">
+      and am.companyId = #{user.companyId}
+    </if>
+    AND
     <if test="appointment.userName != '' and appointment.userName != null">
       am.userName like '%${appointment.userName}%'
     </if>
@@ -155,9 +159,6 @@
     <if test="appointment.userPhone != '' and appointment.userPhone != null">
       am.userPhone like '%${appointment.userPhone}%'
     </if>
-    <if test="pager.user.companyId != '' and pager.user.companyId != null">
-      and am.companyId = #{user.companyId}
-    </if>
     order by am.appCreatedTime Desc
     limit #{pager.beginIndex}, #{pager.pageSize}
   </select>
@@ -173,6 +174,10 @@
       LEFT JOIN t_car_brand cb on am.brandId = cb.brandId
       where 1=1 and
     ]]>
+    <if test="user.companyId != '' and user.companyId != null">
+      and am.companyId = #{user.companyId}
+    </if>
+    AND
     <if test="appointment.userName != '' and appointment.userName != null">
       am.userName like '%${appointment.userName}%'
     </if>
@@ -197,9 +202,7 @@
     <if test="appointment.userPhone != '' and appointment.userPhone != null">
       am.userPhone like '%${appointment.userPhone}%'
     </if>
-    <if test="companyId != '' and companyId != null">
-      and am.companyId = #{user.companyId}
-    </if>
+
   </select>
 
   <!--冻结数据-->

@@ -95,7 +95,7 @@ function blurredQuery(){
                 var button = $("#ulButton");// 获取模糊查询按钮
                 var text = button.text();// 获取模糊查询按钮文本
                 var vaule = $("#ulInput").val();// 获取模糊查询输入框文本
-                initTable('table', '/maintainDetail/blurredQuery?text='+text+'&value='+vaule);
+                initTable('table', '/carRemind/blurredQuery?text='+text+'&value='+vaule);
         }else if(data.result == 'notLogin'){
             swal({title:"",
                     text:data.message,

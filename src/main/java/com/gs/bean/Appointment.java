@@ -5,6 +5,7 @@ import java.util.Date;
 public class Appointment {
     private String appointmentId;
 
+
     private String userId;
 
     private String userName;
@@ -38,6 +39,7 @@ public class Appointment {
     private CarModel model; // 汽车车型
     private CarPlate plate; // 汽车车牌
     private Company company; // 汽修公司
+    private User user;
 
     public String getAppointmentId() {
         return appointmentId;

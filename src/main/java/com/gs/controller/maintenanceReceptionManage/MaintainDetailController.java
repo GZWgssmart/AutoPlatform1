@@ -227,6 +227,10 @@ public class MaintainDetailController {
                         checkin.setCarPlate(value);
                         checkin.setUserName(value);
                         checkin.setCompanyId(value);
+                    }else if(text.equals("车主/电话/车牌号")){
+                        checkin.setUserName(value);
+                        checkin.setCarPlate(value);
+                        checkin.setUserPhone(value);
                     }else if(text.equals("车主")){
                         checkin.setUserName(value);
                     }else if(text.equals("汽车公司")){

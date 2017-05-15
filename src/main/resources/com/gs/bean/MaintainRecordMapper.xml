@@ -171,7 +171,7 @@
         <if test="pager.user.companyId != '' and pager.user.companyId != null">
             and ck.companyId = #{pager.user.companyId}
         </if>
-        and
+        and(
         <if test="maintainRecord.checkin.userName != '' and maintainRecord.checkin.userName != null">
             ck.userName like '%${maintainRecord.checkin.userName}%'
         </if>
@@ -182,7 +182,7 @@
         <if test="maintainRecord.checkin.companyId != '' and maintainRecord.checkin.companyId != null">
             company.companyName like '%${maintainRecord.checkin.companyId}%'
         </if>
-        <if test="maintainRecord.checkin.companyId != '' and maintainRecord.checkin.companyId != null and
+        <if test="maintainRecord.checkin.userName != '' and maintainRecord.checkin.userName != null and
             maintainRecord.checkin.carPlate != '' and maintainRecord.checkin.carPlate != null">
             or
         </if>
@@ -196,7 +196,7 @@
         <if test="maintainRecord.checkin.userPhone != '' and maintainRecord.checkin.userPhone != null">
             ck.userPhone like '%${maintainRecord.checkin.userPhone}%'
         </if>
-        order by m.recordCreatedTime Desc
+        ) order by m.recordCreatedTime Desc
         limit #{pager.beginIndex}, #{pager.pageSize}
     </select>
 
@@ -213,7 +213,7 @@
         <if test="user.companyId != '' and user.companyId != null">
             and ck.companyId = #{user.companyId}
         </if>
-        and
+        and(
         <if test="maintainRecord.checkin.userName != '' and maintainRecord.checkin.userName != null">
             ck.userName like '%${maintainRecord.checkin.userName}%'
         </if>
@@ -224,7 +224,7 @@
         <if test="maintainRecord.checkin.companyId != '' and maintainRecord.checkin.companyId != null">
             company.companyName like '%${maintainRecord.checkin.companyId}%'
         </if>
-        <if test="maintainRecord.checkin.companyId != '' and maintainRecord.checkin.companyId != null and
+        <if test="maintainRecord.checkin.userName != '' and maintainRecord.checkin.userName != null and
             maintainRecord.checkin.carPlate != '' and maintainRecord.checkin.carPlate != null">
             or
         </if>
@@ -237,7 +237,7 @@
         </if>
         <if test="maintainRecord.checkin.userPhone != '' and maintainRecord.checkin.userPhone != null">
             ck.userPhone like '%${maintainRecord.checkin.userPhone}%'
-        </if>
+        </if>)
     </select>
 
     <!-- 分页模糊查询, 此模糊查询为提车提醒的-->
@@ -253,8 +253,12 @@
             where 1=1 and m.checkinId = ck.checkinId and ck.brandId = cb.brandId
             and ck.colorId = cc.colorId and ck.modelId = cm.modelId
             and ck.plateId = cp.plateId and ck.companyId = company.companyId
-            and m.recordStatus = 'Y' and
+            and m.recordStatus = 'Y'
       ]]>
+        <if test="pager.user.companyId != '' and pager.user.companyId != null">
+            and ck.companyId = #{pager.user.companyId}
+        </if>
+        and(
         <if test="maintainRecord.checkin.userName != '' and maintainRecord.checkin.userName != null">
             ck.userName like '%${maintainRecord.checkin.userName}%'
         </if>
@@ -265,7 +269,7 @@
         <if test="maintainRecord.checkin.companyId != '' and maintainRecord.checkin.companyId != null">
             company.companyName like '%${maintainRecord.checkin.companyId}%'
         </if>
-        <if test="maintainRecord.checkin.companyId != '' and maintainRecord.checkin.companyId != null and
+        <if test="maintainRecord.checkin.userName != '' and maintainRecord.checkin.userName != null and
             maintainRecord.checkin.carPlate != '' and maintainRecord.checkin.carPlate != null">
             or
         </if>
@@ -279,7 +283,7 @@
         <if test="maintainRecord.checkin.userPhone != '' and maintainRecord.checkin.userPhone != null">
             ck.userPhone like '%${maintainRecord.checkin.userPhone}%'
         </if>
-        order by m.recordCreatedTime Desc
+        ) order by m.recordCreatedTime Desc
         limit #{pager.beginIndex}, #{pager.pageSize}
     </select>
 
@@ -291,8 +295,12 @@
             where 1=1 and m.checkinId = ck.checkinId and ck.brandId = cb.brandId
             and ck.colorId = cc.colorId and ck.modelId = cm.modelId
             and ck.plateId = cp.plateId and ck.companyId = company.companyId
-            and m.recordStatus = 'Y' and
+            and m.recordStatus = 'Y'
       ]]>
+        <if test="pager.user.companyId != '' and pager.user.companyId != null">
+            and ck.companyId = #{pager.user.companyId}
+        </if>
+        and(
         <if test="maintainRecord.checkin.userName != '' and maintainRecord.checkin.userName != null">
             ck.userName like '%${maintainRecord.checkin.userName}%'
         </if>
@@ -303,7 +311,7 @@
         <if test="maintainRecord.checkin.companyId != '' and maintainRecord.checkin.companyId != null">
             company.companyName like '%${maintainRecord.checkin.companyId}%'
         </if>
-        <if test="maintainRecord.checkin.companyId != '' and maintainRecord.checkin.companyId != null and
+        <if test="maintainRecord.checkin.userName != '' and maintainRecord.checkin.userName != null and
             maintainRecord.checkin.carPlate != '' and maintainRecord.checkin.carPlate != null">
             or
         </if>
@@ -316,7 +324,7 @@
         </if>
         <if test="maintainRecord.checkin.userPhone != '' and maintainRecord.checkin.userPhone != null">
             ck.userPhone like '%${maintainRecord.checkin.userPhone}%'
-        </if>
+        </if>)
     </select>
 
 

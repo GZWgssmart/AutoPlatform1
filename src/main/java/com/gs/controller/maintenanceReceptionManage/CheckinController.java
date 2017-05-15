@@ -214,6 +214,10 @@ public class CheckinController {
                         checkin.setCompanyId(value);
                         checkin.setCarPlate(value);
                         checkin.setUserPhone(value);
+                    }else if(text.equals("车主/电话/车牌号")){
+                        checkin.setUserName(value);
+                        checkin.setCarPlate(value);
+                        checkin.setUserPhone(value);
                     }else if(text.equals("车主")){
                         checkin.setUserName(value);
                     }else if(text.equals("汽车公司")){
