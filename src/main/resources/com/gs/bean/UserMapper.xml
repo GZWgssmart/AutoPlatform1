@@ -137,17 +137,13 @@
   </select>
 
   <!-- 查询所有员工的基本信息 -->
-  <select id="queryAll" resultMap="userBasicManageMap">
+  <select id="queryAll" resultMap="userBasicManageMap" parameterType="com.gs.bean.User">
     <![CDATA[
-      select u.*, r.*, c.companyId, c.companyName from t_user u
-        left join t_user_role ur on u.userId = ur.userId
-        left join t_role r on r.roleId = ur.roleId
-        left join t_company c on u.companyId = c.companyId
-      where 1 = 1
+      select * from t_user where 1 = 1
     ]]>
-    <!--<if test="user.companyId != null and user.companyId != ''">-->
-      <!--and c.companyId = #{user.companyId}-->
-    <!--</if>-->
+    <if test="companyId != null and companyId != ''">
+      and c.companyId = #{user.companyId}
+    </if>
   </select>
 
   <!-- 根据id查询员工的基本信息 -->

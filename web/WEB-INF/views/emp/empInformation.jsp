@@ -111,9 +111,13 @@
                         <div class="form-group">
                             <label class="col-md-3 control-label">用户头像：</label>
                             <div class="col-md-9" style="margin-left: 30px;">
-                                <div class="input-group">   <%-- FileInput边框和组件组在一起 --%>
-                                    <div class="input-group-btn"></div> <%-- 用来显示选中的图片 --%>
-                                    <input id="file" name="userIconTemp" type="file" class="form-control file-loading"/>
+                                <div class="container kv-main">
+                                <div class="ibox-title">
+                                    <div class="input-group">   <%-- FileInput边框和组件组在一起 --%>
+                                        <div class="input-group-btn"></div> <%-- 用来显示选中的图片 --%>
+                                        <input id="file" name="userIconTemp" type="file" class="form-control" multiple class="file-loading"/>
+                                    </div>
+                                </div>
                                 </div>
                             </div>
                         </div>
@@ -478,9 +482,85 @@
 </body>
 <script>
 
+    var contentPath = ''
+    var roles = "公司超级管理员, 公司普通管理员，汽车公司人力资源管理部, 系统超级管理员，系统普通管理员";
+
     $(".js-example-basic-multiple").select2({
         allowClear: true
     });
+
+    $(function () {
+        $.post(contentPath + "/user/isLogin/" + roles, function (data) {
+            if (data.result == "success") {
+                initTable('table', '/userBasicManage/queryByPagerAll'); // 初始化表格
+
+                // 初始化select2, 第一个参数是class的名字, 第二个参数是select2的提示语, 第三个参数是select2的查询url
+                initSelect2("userRole", "请选择角色", "/role/role2CheckBox");
+                initSelect2("userCompany", "请选择所属公司", "/company/queryAllCompany");
+
+                //0.初始化fileinput
+                var oFileInput = new FileInput();
+                oFileInput.Init("file", "/userBasicManage/addFile");
+            } else if (data.result == "notLogin") {
+                swal({
+                    text: data.message,
+                    confirmButtonText: "确认", // 提示按钮上的文本
+                    type: "error"
+                }, function (isConfirm) {
+                    if (isConfirm) {
+                        top.location = "/user/loginPage";
+                    } else {
+                        top.location = "/user/loginPage";
+                    }
+                })
+            } else if (data.result == "notRole") {
+                swal({
+                    text: data.message,
+                    confirmButtonText: "确认", // 提示按钮上的文本
+                    type: "error"
+                })
+            }
+        })
+    });
+
+    //初始化fileinput
+    var FileInput = function () {
+        var oFile = new Object();
+        //初始化fileinput控件（第一次初始化）
+        oFile.Init = function (ctrlName, uploadUrl) {
+            var control = $('#' + ctrlName);
+            //初始化上传控件的样式
+            control.fileinput({
+                language: 'zh', //设置语言
+                uploadUrl: uploadUrl, //上传的地址
+                allowedFileExtensions: ['jpg', 'gif', 'png'],//接收的文件后缀
+                showUpload: true, //是否显示上传按钮
+                showCaption: false,//是否显示标题
+                browseClass: "btn btn-primary", //按钮样式
+                dropZoneEnabled: true,//是否显示拖拽区域
+                minImageWidth: 50, //图片的最小宽度
+                minImageHeight: 50,//图片的最小高度
+//                maxImageWidth: 350,//图片的最大宽度
+//                maxImageHeight: 350,//图片的最大高度
+                maxFileSize: 0,//单位为kb，如果为0表示不限制文件大小
+                maxFileCount: 1, //表示允许同时上传的最大文件个数
+                enctype: 'multipart/form-data',
+                validateInitialCount: true,
+                previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
+                msgFilesTooMany: "选择上传的文件数量({n}) 超过允许的最大数值{m}！",
+            }).on("fileuploaded", function (event, data) {
+                // data 为controller返回的json
+                var resp= data.response;
+                if (resp.controllerResult.result == 'success') {
+                    $("#file").val(resp.imgPath)
+                    alert('处理成功');
+                } else {
+                    alert("上传失败")
+                }
+            });
+        }
+        return oFile;
+    };
 
 //    格式化角色
     function formatterRole(value, row, index) {
@@ -529,9 +609,6 @@
             }
         }
     }
-
-    var contentPath = ''
-    var roles = "公司超级管理员, 公司普通管理员，汽车公司人力资源管理部, 系统超级管理员，系统普通管理员";
 
 //  查询不可用的
     function searchDisableStatus() {
