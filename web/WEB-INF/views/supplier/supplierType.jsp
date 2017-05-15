@@ -17,15 +17,15 @@
 
 <div class="container">
     <div class="panel-body" style="padding-bottom:0px;"  >
-        <table id="table">
+        <table id="table" style="table-layout: fixed">
             <thead>
             <tr>
                 <th data-radio="true"></th>
-                <th data-field="supplyTypeName">供应商类型名称</th>
-                <th data-field="company.companyName">供应商类型所属公司</th>
-                <th data-field="supplyTypeDes">供应商类型描述内容</th>
+                <th data-width="140" data-field="supplyTypeName">供应商类型名称</th>
+                <th data-width="180" data-field="company.companyName">供应商类型所属公司</th>
+                <th data-width="180" data-field="supplyTypeDes">供应商类型描述内容</th>
                 <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员">
-                    <th data-width="12%" data-field="supplyTypeStatus" data-formatter="statusFormatter">记录状态</th>
+                    <th data-width="100" data-field="supplyTypeStatus" data-formatter="statusFormatter">记录状态</th>
                 </shiro:hasAnyRoles>
             </tr>
             </thead>

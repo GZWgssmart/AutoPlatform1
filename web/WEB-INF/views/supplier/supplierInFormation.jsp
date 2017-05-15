@@ -17,42 +17,42 @@
 
 <div class="container">
     <div class="panel-body" style="padding-bottom:0px;"  >
-        <table id="table">
+        <table id="table" style="table-layout: fixed">
             <thead>
             <tr>
                 <th data-radio="true"></th>
-                <th data-field="supplyName">
+                <th data-width="100" data-field="supplyName">
                     供应商名称
                 </th>
-                <th data-field="supplyTel">
+                <th data-width="150" data-field="supplyTel">
                     供应商联系电话
                 </th>
-                <th data-field="supplyPricipal">
+                <th data-width="130" data-field="supplyPricipal">
                     供应商负责人
                 </th>
-                <th data-field="supplyAddress">
+                <th data-width="100" data-field="supplyAddress">
                     供应商地址
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                 <%--   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--%>
                 </th>
-                <th data-field="supplyWeChat">
+                <th data-width="130" data-field="supplyWeChat">
                     供应商微信号
                 </th>
-                <th data-field="supplyCreatedTime"data-formatter="formatterDateTime">
+                <th data-width="180" data-field="supplyCreatedTime"data-formatter="formatterDateTime">
                     创建时间
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  <%--  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--%>
                 </th>
-                <th data-field="supplyType.supplyTypeName">
+                <th data-width="100" data-field="supplyType.supplyTypeName">
                     供应商类型
                 </th>
-                <th data-field="company.companyName">
+                <th data-width="170" data-field="company.companyName">
                     供应商所属公司
                 </th>
                 <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员">
-                    <th data-field="supplyStatus" data-formatter="statusFormatter">
+                    <th data-width="100" data-field="supplyStatus" data-formatter="statusFormatter">
                         记录状态
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                       <%-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--%>
                     </th>
                 </shiro:hasAnyRoles>
             </tr>
