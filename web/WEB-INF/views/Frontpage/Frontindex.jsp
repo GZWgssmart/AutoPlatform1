@@ -237,7 +237,7 @@
                         <h3><a href="factorypage" style="text-decoration: none;">热门商家</a></h3>
                         <div class="clearfix"></div>
                     </div>
-                <c:if test="${requestScope.company } != null">
+                <c:if test="${requestScope.company != null}">
                     <c:forEach items="${requestScope.company}" var="c">
                     <div class="factory">
                         <div class="f-img">
@@ -281,7 +281,7 @@
                     </div>
                     </c:forEach>
                 </c:if>
-                <c:if test="${requestScope.company} == null">
+                <c:if test="${requestScope.company == null}">
                     <h2 style="text-align: center;">暂无商家</h2>
                 </c:if>
                 </div>
@@ -305,17 +305,12 @@
                     </div>
                     <div class="acc-content">
                         <ul style="margin: 0;padding: 0;">
-                            <c:if test="${requestScope.maintainDetails} != null">
-                                <c:forEach items="${requestScope.maintainDetails}" var="m">
-                                    <li>
-                                        <span style="width:20%;margin-left:19px;padding-right: 15px;">${m.maintainItemId}</span>
-                                        <span style="width:33%;padding-right: 15px;">丰田 Alphard(进口) 3.5 手自一体 豪华版 2011款</span>
-                                        <span style="width: 20%;">579.00</span>
-                                        <span style="width: 16%;">2017-04-24</span>
-                                    </li>
-                                </c:forEach>
-                            </c:if>
-
+                            <li>
+                                <span style="width:20%;margin-left:19px;padding-right: 15px;">w3rwefsef</span>
+                                <span style="width:33%;padding-right: 15px;">丰田 Alphard(进口) 3.5 手自一体 豪华版 2011款</span>
+                                <span style="width: 20%;">579.00</span>
+                                <span style="width: 16%;">2017-04-24</span>
+                            </li>
                         </ul>
                     </div>
                 </div>

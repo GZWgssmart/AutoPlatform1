@@ -102,6 +102,12 @@
         window.event.returnValue = false;
         return false;
     }
+
+    $(document).keydown(function () {
+        if(event.keyCode == 13){
+            document.getElementById("loginButton").click();
+        }
+    });
 </script>
 </body>
 </html>

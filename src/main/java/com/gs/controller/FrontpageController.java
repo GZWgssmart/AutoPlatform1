@@ -43,9 +43,7 @@ public class FrontpageController {
     @RequestMapping(value ="home",method = RequestMethod.GET)
     public ModelAndView Home(HttpServletRequest request, HttpSession session){
         List<Company> company = companyService.queryAll((User)session.getAttribute("user"));
-        List<MaintainDetail> maintainDetails = maintainDetailService.queryAll((User)session.getAttribute("user"));
         request.setAttribute("company", company);
-        request.setAttribute("maintainDetails",maintainDetails);
         ModelAndView mav = new ModelAndView("Frontpage/Frontindex");
         return mav;
     }
