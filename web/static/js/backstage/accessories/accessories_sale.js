@@ -1,5 +1,5 @@
 var contentPath = '';
-var roles = "系统超级管理员,系统普通管理员,汽修公司管理员,汽修公司接待员";
+var roles = "公司超级管理员,公司普通管理员,汽车公司销售人员,系统超级管理员,系统普通管理员";
 //初始化表格
 $(function () {
     $.post(contentPath + "/user/isLogin/" + roles, function (data) {
@@ -198,34 +198,11 @@ function formatterStatus(value) {
 
 // 激活或禁用
 function statusFormatter(value, row, index) {
-    $.post(contentPath + "/user/isLogin/" + roles, function (data) {
-        if (data.result == "success") {
-            if(value == 'Y') {
-                return "&nbsp;&nbsp;<button type='button' class='btn btn-danger' onclick='inactive(\""+'/accSale/statusOperate?accSaleId='+row.accSaleId+'&accSaleStatus=Y'+"\")'>禁用</a>";
-            } else {
-                return "&nbsp;&nbsp;<button type='button' class='btn btn-success' onclick='active(\""+'/accSale/statusOperate?accSaleId='+ row.accSaleId+'&accSaleStatus=N'+ "\")'>激活</a>";
-            }
-        } else if (data.result == "notLogin") {
-            swal({
-                text: data.message,
-                confirmButtonText: "确认", // 提示按钮上的文本
-                type: "error"
-            }, function (isConfirm) {
-                if (isConfirm) {
-                    top.location = "/user/loginPage";
-                } else {
-                    top.location = "/user/loginPage";
-                }
-            })
-        } else if (data.result = "notRole") {
-            swal({
-                text: data.message,
-                confirmButtonText: "确认", // 提示按钮上的文本
-                type: "error"
-            })
-        }
-    })
-
+    if(value == 'Y') {
+        return "&nbsp;&nbsp;<button type='button' class='btn btn-danger' onclick='inactive(\""+'/accSale/statusOperate?accSaleId='+row.accSaleId+'&accSaleStatus=Y'+"\")'>禁用</a>";
+    } else {
+        return "&nbsp;&nbsp;<button type='button' class='btn btn-success' onclick='active(\""+'/accSale/statusOperate?accSaleId='+ row.accSaleId+'&accSaleStatus=N'+ "\")'>激活</a>";
+    }
 }
 
 //格式化带时分秒的时间值。

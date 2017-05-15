@@ -18,11 +18,11 @@
         查询所有配件分类信息
     -->
     <select id="queryAll" resultMap="AccessoriesTypeMap">
-      <![CDATA[
-        SELECT *FROM auto_platform.t_accessories_type atp WHERE
+        <![CDATA[
+            select * FROM auto_platform.t_accessories_type ac where 1=1 and ac.accTypeStatus = 'Y'
         ]]>
         <if test="companyId != '' and companyId !=null">
-            atp.companyId = #{user.companyId}
+            and ac.companyId = #{user.companyId}
         </if>
     </select>
 

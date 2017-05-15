@@ -50,7 +50,7 @@ public class AccessoriesInventoryController {
     @RequestMapping(value = "queryAll", method = RequestMethod.GET)
     public List<Accessories> queryAll(HttpSession session) {
         if(SessionUtil.isLogin(session)){
-            String roles="汽修公司管理员,汽修公司采购员,系统管理员";
+            String roles="公司超级管理员,公司普通管理员,汽车公司采购人员,系统超级管理员,系统普通管理员";
             if(RoleUtil.checkRoles(roles)){
                 List<Accessories> accessoriesList = accessoriesService.queryAll((User) session.getAttribute("user"));
                 if (accessoriesList != null && !accessoriesList.equals("")) {
@@ -74,7 +74,7 @@ public class AccessoriesInventoryController {
     @RequestMapping(value = "queryAllAccInv",method = RequestMethod.GET)
     public List<ComboBox4EasyUI> queryAllAccInv(HttpSession session){
         if(SessionUtil.isLogin(session)){
-            String roles="汽修公司管理员,汽修公司采购员,系统管理员";
+            String roles="公司超级管理员,公司普通管理员,汽车公司采购人员,系统超级管理员,系统普通管理员";
             if(RoleUtil.checkRoles(roles)){
                 logger.info("查询所有配件信息");
                 List<Accessories> accessories = accessoriesService.queryAll((User) session.getAttribute("user"));
@@ -100,12 +100,13 @@ public class AccessoriesInventoryController {
     @RequestMapping(value = "queryByIdAcc", method = RequestMethod.GET)
     public Pager4EasyUI<Accessories> queryByIdAccPager(HttpSession session,@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize,@Param("id")String id) {
         if(SessionUtil.isLogin(session)){
-            String roles="汽修公司管理员,汽修公司采购员,系统管理员";
+            String roles="公司超级管理员,公司普通管理员,汽车公司采购人员,系统超级管理员,系统普通管理员";
             if(RoleUtil.checkRoles(roles)){
                 Pager pager = new Pager();
                 logger.info("分页查询所有配件");
                 pager.setPageNo(Integer.valueOf(pageNumber));
                 pager.setPageSize(Integer.valueOf(pageSize));
+                pager.setUser((User) session.getAttribute("user"));
                 pager.setTotalRecords(accessoriesService.count((User) session.getAttribute("user")));
                 List<Accessories> accessoriesList = accessoriesService.queryByIdPager(id,pager);
                 return new Pager4EasyUI<Accessories>(pager.getTotalRecords(), accessoriesList);
@@ -127,11 +128,12 @@ public class AccessoriesInventoryController {
     @RequestMapping(value="queryByPage", method = RequestMethod.GET)
     public Pager4EasyUI queryByPager(HttpSession session,@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
         if(SessionUtil.isLogin(session)){
-            String roles="汽修公司管理员,汽修公司采购员,系统管理员";
+            String roles="公司超级管理员,公司普通管理员,汽车公司采购人员,系统超级管理员,系统普通管理员";
             if(RoleUtil.checkRoles(roles)){
                 Pager pager = new Pager();
                 pager.setPageNo(Integer.valueOf(pageNumber));
                 pager.setPageSize(Integer.valueOf(pageSize));
+                pager.setUser((User) session.getAttribute("user"));
                 pager.setTotalRecords(accessoriesService.count((User) session.getAttribute("user")));
                 logger.info("分页查询配件库存信息成功");
                 List<Accessories> accessories = accessoriesService.queryByPager(pager);
@@ -154,7 +156,7 @@ public class AccessoriesInventoryController {
     @RequestMapping(value = "addAccInv", method = RequestMethod.POST)
     public ControllerResult addAccInv(HttpSession session,Accessories accessories) {
         if(SessionUtil.isLogin(session)){
-            String roles="汽修公司管理员,汽修公司采购员";
+            String roles="公司超级管理员,公司普通管理员,汽车公司采购人员";
             if(RoleUtil.checkRoles(roles)){
                 if(accessories!=null&&!accessories.equals("")){
                     accessoriesService.insert(accessories);
@@ -181,7 +183,7 @@ public class AccessoriesInventoryController {
     @RequestMapping(value = "updateAccInv", method = RequestMethod.POST)
     public ControllerResult updateAccInv(HttpSession session,Accessories accessories) {
         if(SessionUtil.isLogin(session)){
-            String roles="汽修公司管理员,汽修公司采购员";
+            String roles="公司超级管理员,公司普通管理员,汽车公司采购人员";
             if(RoleUtil.checkRoles(roles)){
                 if(accessories!=null&&!accessories.equals("")){
                     accessoriesService.update(accessories);
@@ -208,12 +210,13 @@ public class AccessoriesInventoryController {
     @RequestMapping(value="queryByPagerDisable", method = RequestMethod.GET)
     public Pager4EasyUI<Accessories> queryByPagerDisable(HttpSession session,@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
         if(SessionUtil.isLogin(session)){
-            String roles="汽修公司管理员,汽修公司采购员,系统管理员";
+            String roles="公司超级管理员,公司普通管理员,汽车公司采购人员,系统超级管理员,系统普通管理员";
             if(RoleUtil.checkRoles(roles)){
                 logger.info("分页查询所有被禁用登记记录");
                 Pager pager = new Pager();
                 pager.setPageNo(Integer.valueOf(pageNumber));
                 pager.setPageSize(Integer.valueOf(pageSize));
+                pager.setUser((User) session.getAttribute("user"));
                 pager.setTotalRecords(accessoriesService.countByDisable((User) session.getAttribute("user")));
                 List<Accessories> accessories = accessoriesService.queryByPagerDisable(pager);
                 return new Pager4EasyUI<Accessories>(pager.getTotalRecords(), accessories);
@@ -234,7 +237,7 @@ public class AccessoriesInventoryController {
     @RequestMapping(value = "statusOperate", method = RequestMethod.POST)
     public ControllerResult inactive(HttpSession session,String accId, String accStatus) {
         if(SessionUtil.isLogin(session)){
-            String roles="汽修公司管理员,汽修公司采购员";
+            String roles="公司超级管理员,公司普通管理员,汽车公司采购人员";
             if(RoleUtil.checkRoles(roles)){
                 if (accId != null && !accId.equals("") && accStatus != null && !accStatus.equals("")) {
                     if (accStatus.equals("N")) {
@@ -263,13 +266,14 @@ public class AccessoriesInventoryController {
     @RequestMapping(value = "blurredQuery", method = RequestMethod.GET)
     public Pager4EasyUI<Accessories> blurredQuery(HttpSession session,HttpServletRequest request, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
         if(SessionUtil.isLogin(session)){
-            String roles="汽修公司管理员,汽修公司采购员,系统管理员";
+            String roles="公司超级管理员,公司普通管理员,汽车公司采购人员,系统超级管理员,系统普通管理员";
             if(RoleUtil.checkRoles(roles)){
                 logger.info("配件库存模糊查询");
                 String text = request.getParameter("text");
                 String value = request.getParameter("value");
                 if (text != null && !text.equals("") && value != null && !value.equals("")) {
                     Pager pager = new Pager();
+                    pager.setUser((User) session.getAttribute("user"));
                     pager.setPageNo(Integer.parseInt(pageNumber));
                     pager.setPageSize(Integer.parseInt(pageSize));
                     List<Accessories> accessoriesList = null;
