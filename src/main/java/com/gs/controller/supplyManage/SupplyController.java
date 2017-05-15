@@ -172,6 +172,7 @@ public class SupplyController {
                 logger.info("修改供应商记录");
                 if (supply != null && !supply.equals("")) {
                     User user = (User)session.getAttribute("user");
+                    supply.setCompanyId(user.getCompanyId());
                     supplyService.update(supply);
                     logger.info("修改供应商记录成功");
                     return ControllerResult.getSuccessResult("修改供应商记录成功");

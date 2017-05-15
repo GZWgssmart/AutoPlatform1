@@ -130,11 +130,12 @@
         select s.*, st.supplyTypeId, st.supplyTypeName, co.companyId, co.companyName  from auto_platform.t_supply s
         LEFT JOIN t_supply_type st on s.supplyTypeId = st.supplyTypeId
         LEFT JOIN t_company co on s.companyId = co.companyId
-        where 1=1 and
+        where 1=1
       ]]>
     <if test="pager.user.companyId != '' and pager.user.companyId !=null">
       and s.companyId = #{pager.user.companyId}
     </if>
+    and
     <if test="supply.supplyName != '' and supply.supplyName != null">
       s.supplyName like '%${supply.supplyName}%'
     </if>
@@ -162,11 +163,12 @@
       select count(supplyId) from auto_platform.t_supply s
       LEFT JOIN t_supply_type st on s.supplyTypeId = st.supplyTypeId
       LEFT JOIN t_company co on s.companyId = co.companyId
-      where 1=1 and
+      where 1=1
     ]]>
     <if test="user.companyId != '' and user.companyId !=null">
       and s.companyId = #{user.companyId}
     </if>
+    and
     <if test="supply.supplyName != '' and supply.supplyName != null">
       s.supplyName like '%${supply.supplyName}%'
     </if>

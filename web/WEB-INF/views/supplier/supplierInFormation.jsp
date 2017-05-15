@@ -83,7 +83,7 @@
                 <div class="input-group" style="width:300px;float:left;padding:0;margin:0 0 0 -1px;">
                     <div class="input-group-btn">
                         <button type="button" id="ulButton" class="btn btn-default" style="border-radius:0px;" data-toggle="dropdown">
-                            供应商/供应商类型/所属公司
+                            供应商/供应商类型/<shiro:hasAnyRoles name="系统超级管理员,系统普通管理员">所属公司</shiro:hasAnyRoles>
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu pull-right">
@@ -91,8 +91,10 @@
                             <li class="divider"></li>
                             <li><a onclick="onclikLi(this)">供应商类型</a></li>
                             <li class="divider"></li>
-                            <li><a onclick="onclikLi(this)">所属公司</a></li>
-                            <li class="divider"></li>
+                            <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员">
+                                 <li><a onclick="onclikLi(this)">所属公司</a></li>
+                                 <li class="divider"></li>
+                            </shiro:hasAnyRoles>
                             <li><a onclick="onclikLi(this)"></a></li>
                         </ul>
                     </div><!-- /btn-group -->
