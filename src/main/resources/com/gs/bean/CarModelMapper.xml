@@ -27,7 +27,9 @@
 
     <select id="queryByPager" resultMap="carmodelMap"  parameterType="com.gs.common.bean.Pager">
         <![CDATA[
-          select m.*,b.brandName from t_car_model m,t_car_brand b where m.brandId=b.brandId and m.modelStaus = 'Y'
+          select cm.*, cb.brandId, cb.brandName from auto_platform.t_car_model cm
+          left join t_car_brand cb on cm.brandId = cb.brandId
+          where cm.modelStaus = 'Y'
            ]]>
         limit #{beginIndex}, #{pageSize}
     </select>
@@ -80,5 +82,16 @@
         update t_car_model set modelStaus = 'Y' where modelId = #{modelId}
         ]]>
     </update>
+
+    <select id="blurredQuery" resultMap="carmodelMap" >
+        <![CDATA[
+            select cm.*, cb.brandId, cb.brandName from auto_platform.t_car_model cm
+            left join t_car_brand cb on cm.brandId = cb.brandId
+            where 1=1
+       ]]>
+        <if test="carmodel.modelName != '' and carmodel.modelName != null">
+            cm.modelName like '%${carmodel.modelName}%'
+        </if>
+    </select>
 
 </mapper>

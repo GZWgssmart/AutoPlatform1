@@ -51,8 +51,8 @@
   <!--添加公司-->
   <insert id="insert"  parameterType="company">
     <![CDATA[
-			INSERT into t_company(companyId, companyName, companyAddress, companyTel,companyPricipal,companyWebsite,companyOpendate,companySize,companyLongitude,companyLatitude,companyDes,companyStatus)
-			values(uuid(), #{companyName}, #{companyAddress}, #{companyTel}, #{companyPricipal}, #{companyWebsite}, #{companyOpendate}, #{companySize}, #{companyLongitude}, #{companyLatitude}, #{companyDes},'Y')
+			INSERT into t_company(companyId, companyName, companyAddress, companyTel,companyPricipal,companyWebsite,companyLogo,companyOpendate,companySize,companyLongitude,companyLatitude,companyDes,companyStatus)
+			values(#{companyId}, #{companyName}, #{companyAddress}, #{companyTel}, #{companyPricipal}, #{companyWebsite}, #{companyLogo}, #{companyOpendate}, #{companySize}, #{companyLongitude}, #{companyLatitude}, #{companyDes},'Y')
      ]]>
   </insert>
 
@@ -84,6 +84,7 @@
     </if>
   </select>
 
+
   <!--冻结数据-->
   <update id="inactive" keyProperty="companyId" parameterType="company">
     <![CDATA[
@@ -96,5 +97,13 @@
     <![CDATA[
         update t_company set companyStatus = 'Y' where companyId = #{companyId}
         ]]>
+  </update>
+
+
+  <!-- 同上 -->
+  <update id="updLogo" >
+    <![CDATA[
+      update  t_company set companyLogo=#{companyLogo} where companyId = #{companyId}
+    ]]>
   </update>
 </mapper>

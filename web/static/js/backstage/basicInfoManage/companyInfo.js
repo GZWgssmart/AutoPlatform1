@@ -1,8 +1,12 @@
+var roles = "系统超级管理员,系统普通管理员";
 $(function () {
     var roles = "系统超级管理员,系统普通管理员";
     $.post("/user/isLogin/"+roles, function (data) {
         if(data.result == 'success'){
             initTable('table', '/company/queryByPagerCompany'); // 初始化表格
+            //0.初始化fileinput
+            var oFileInput = new FileInput();
+            oFileInput.Init("file", "/company/addFile");
         }else if(data.result == 'notLogin'){
             swal({title:"",
                     text:data.message,
@@ -24,24 +28,47 @@ $(function () {
     });
 });
 
+//初始化fileinput
+var FileInput = function () {
+    var oFile = new Object();
+    //初始化fileinput控件（第一次初始化）
+    oFile.Init = function (ctrlName, uploadUrl) {
+        var control = $('#' + ctrlName);
+        //初始化上传控件的样式
+        control.fileinput({
+            language: 'zh', //设置语言
+            uploadUrl: uploadUrl, //上传的地址
+            allowedFileExtensions: ['jpg', 'gif', 'png'],//接收的文件后缀
+            showUpload: true, //是否显示上传按钮
+            showCaption: false,//是否显示标题
+            browseClass: "btn btn-primary", //按钮样式
+            dropZoneEnabled: true,//是否显示拖拽区域
+            minImageWidth: 50, //图片的最小宽度
+            minImageHeight: 50,//图片的最小高度
+//                maxImageWidth: 350,//图片的最大宽度
+//                maxImageHeight: 350,//图片的最大高度
+            maxFileSize: 0,//单位为kb，如果为0表示不限制文件大小
+            maxFileCount: 1, //表示允许同时上传的最大文件个数
+            enctype: 'multipart/form-data',
+            validateInitialCount: true,
+            previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
+            msgFilesTooMany: "选择上传的文件数量({n}) 超过允许的最大数值{m}！",
+        }).on("fileuploaded", function (event, data) {
+            // data 为controller返回的json
+            var resp= data.response;
+            if (resp.controllerResult.result == 'success') {
+                $("#file").val(resp.imgPath)
+                alert('处理成功');
+            } else {
+                alert("上传失败")
+            }
+        });
+    }
+    return oFile;
+};
+
 //显示弹窗
 function showEdit() {
-    // var row = $('#table').bootstrapTable('getSelections');
-    // if (row.length > 0) {
-    //     $("#editWindow").modal('show'); // 显示弹窗
-    //     $("#editButton").removeAttr("disabled");
-    //     var ceshi = row[0];
-    //     $('#editDatetimepicker').val(formatterDate(ceshi.companyOpendate));
-    //     $("#editForm").fill(ceshi);
-    //     validator("editForm")
-    // } else {
-    //     swal({
-    //         title:"",
-    //         text: "请选择要修改的公司信息", // 主要文本
-    //         confirmButtonColor: "#DD6B55", // 提示按钮的颜色
-    //         confirmButtonText:"确定", // 提示按钮上的文本
-    //         type:"warning"}) // 提示类型
-    // }
     initDatePicker('editForm', 'companyOpendate'); // 初始化时间框
     var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员";
     $.post("/user/isLogin/"+roles, function (data) {
@@ -289,32 +316,40 @@ function validator(formId) {
 
 }
 
+function formatterImg(value, row, index){
+    if(row.companyLogo !=null){
+        return [
+            '<img style="width:100px;height:40px;" src="/'+ value +'">'
+        ]
+    }
+}
 
-//初始化文件上传控件
-$(function () {
 
-    $("#add_companyLogo").fileinput({
-        language: 'zh', //设置语言
-        showCaption: true, //是否显示文件的标题
-        showPreview: true, //是否显示文件的预览图
-        showRemove: true, //是否显示删除/清空按钮
-        showUpload: true, //是否显示文件上传按钮
-        showCancel: true, //是否显示取消文件上传按钮
-        uploadAsync: true,
-        minFileCount: 1,
-        maxFileCount: 6,
-//        validateInitialCount: true,
-        enctype: 'multipart/form-data',
-        uploadUrl: '<%=path %>/company/editFile', //上传的地址
-//      maxFileSize: 5000,
-//      browseClass: "btn btn-primary", //按钮样式
-//        allowedPreviewTypes: ['image'], //可以配置哪些文件类型被允许显示为预览,用默认较好
-//        allowedFileTypes: ['image'],
-//        browseClass: "btn btn-primary", //按钮样式
-//        previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
-        allowedFileExtensions: ['jpg', 'png', 'gif']
-    });
-});
+// //初始化文件上传控件
+// $(function () {
+//
+//     $("#add_companyLogo").fileinput({
+//         language: 'zh', //设置语言
+//         showCaption: true, //是否显示文件的标题
+//         showPreview: true, //是否显示文件的预览图
+//         showRemove: true, //是否显示删除/清空按钮
+//         showUpload: true, //是否显示文件上传按钮
+//         showCancel: true, //是否显示取消文件上传按钮
+//         uploadAsync: true,
+//         minFileCount: 1,
+//         maxFileCount: 6,
+// //        validateInitialCount: true,
+//         enctype: 'multipart/form-data',
+//         uploadUrl: '<%=path %>/company/editFile', //上传的地址
+// //      maxFileSize: 5000,
+// //      browseClass: "btn btn-primary", //按钮样式
+// //        allowedPreviewTypes: ['image'], //可以配置哪些文件类型被允许显示为预览,用默认较好
+// //        allowedFileTypes: ['image'],
+// //        browseClass: "btn btn-primary", //按钮样式
+// //        previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
+//         allowedFileExtensions: ['jpg', 'png', 'gif']
+//     });
+// });
 
 // $(function () {
 //     //0.初始化fileinput
@@ -322,41 +357,41 @@ $(function () {
 //     oFileInput.Init("edit_companyLogo", "/company/editFile");
 // });
 
-//初始化fileinput
-var FileInput = function () {
-    var oFile = new Object();
-    //初始化fileinput控件（第一次初始化）
-    oFile.Init = function (ctrlName, uploadUrl) {
-        var control = $('#' + ctrlName);
-        //初始化上传控件的样式
-        control.fileinput({
-            language: 'zh', //设置语言
-            uploadUrl: uploadUrl, //上传的地址
-            allowedFileExtensions: ['jpg', 'gif', 'png'],//接收的文件后缀
-            showUpload: true, //是否显示上传按钮
-            showCaption: false,//是否显示标题
-            browseClass: "btn btn-primary", //按钮样式
-            dropZoneEnabled: true,//是否显示拖拽区域
-            //minImageWidth: 50, //图片的最小宽度
-            //minImageHeight: 50,//图片的最小高度
-            //maxImageWidth: 1000,//图片的最大宽度
-            //maxImageHeight: 1000,//图片的最大高度
-            //maxFileSize: 0,//单位为kb，如果为0表示不限制文件大小
-            //minFileCount: 0,
-            maxFileCount: 10, //表示允许同时上传的最大文件个数
-            enctype: 'multipart/form-data',
-            validateInitialCount: true,
-            previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
-            msgFilesTooMany: "选择上传的文件数量({n}) 超过允许的最大数值{m}！",
-        }).on("fileuploaded", function (event, data) {
-            // data 为controller返回的json
-            if (data.response.result == 'success') {
-                alert('处理成功');
-            }
-        });
-    }
-    return oFile;
-};
+// //初始化fileinput
+// var FileInput = function () {
+//     var oFile = new Object();
+//     //初始化fileinput控件（第一次初始化）
+//     oFile.Init = function (ctrlName, uploadUrl) {
+//         var control = $('#' + ctrlName);
+//         //初始化上传控件的样式
+//         control.fileinput({
+//             language: 'zh', //设置语言
+//             uploadUrl: uploadUrl, //上传的地址
+//             allowedFileExtensions: ['jpg', 'gif', 'png'],//接收的文件后缀
+//             showUpload: true, //是否显示上传按钮
+//             showCaption: false,//是否显示标题
+//             browseClass: "btn btn-primary", //按钮样式
+//             dropZoneEnabled: true,//是否显示拖拽区域
+//             //minImageWidth: 50, //图片的最小宽度
+//             //minImageHeight: 50,//图片的最小高度
+//             //maxImageWidth: 1000,//图片的最大宽度
+//             //maxImageHeight: 1000,//图片的最大高度
+//             //maxFileSize: 0,//单位为kb，如果为0表示不限制文件大小
+//             //minFileCount: 0,
+//             maxFileCount: 10, //表示允许同时上传的最大文件个数
+//             enctype: 'multipart/form-data',
+//             validateInitialCount: true,
+//             previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
+//             msgFilesTooMany: "选择上传的文件数量({n}) 超过允许的最大数值{m}！",
+//         }).on("fileuploaded", function (event, data) {
+//             // data 为controller返回的json
+//             if (data.response.result == 'success') {
+//                 alert('处理成功');
+//             }
+//         });
+//     }
+//     return oFile;
+// };
 
 function addSubmit(){
     $("#addForm").data('bootstrapValidator').validate();
@@ -376,91 +411,92 @@ function editSubmit(){
     }
 }
 
-function formSubmit(url, formId, winId){
-    // $.post(url,
-    //     $("#" + formId).serialize(),
-    //     function (data) {
-    //         if (data.result == "success") {
-    //             $('#' + winId).modal('hide');
-    //             swal({
-    //                 title:"",
-    //                 text: data.message,
-    //                 confirmButtonText:"确定", // 提示按钮上的文本
-    //                 type:"success"})// 提示窗口, 修改成功
-    //             $('#table').bootstrapTable('refresh');
-    //             if(formId == 'addForm'){
-    //                 $("input[type=reset]").trigger("click"); // 移除表单中填的值
-    //                 $('#addForm').data('bootstrapValidator').resetForm(true); // 移除所有验证样式
-    //                 $("#addButton").removeAttr("disabled"); // 移除不可点击
-    //                 $("#" + formId).data('bootstrapValidator').destroy(); // 销毁此form表单
-    //                 $('#' + formId).data('bootstrapValidator', null);// 此form表单设置为空
-    //             }
-    //         } else if (data.result == "fail") {
-    //             swal({title:"",
-    //                 text:"添加失败",
-    //                 confirmButtonText:"确认",
-    //                 type:"error"})
-    //             $("#"+formId).removeAttr("disabled");
-    //         }
-    //     }, "json");
+function formSubmit(url, formId, winId) {
+    $.post("/user/isLogin/"+roles, function (data) {
+        if (data.result == "success") {
+            $.post(url, $("#"+formId).serialize(),
+                function (data) {
+                    if (data.controllerResult.result == "success") {
 
-    $.post(url,
-        $("#" + formId).serialize(),
-        function (data) {
-            if (data.result == "success") {
-                $('#' + winId).modal('hide');
-                swal({
-                    title: "",
-                    text: data.message,
-                    confirmButtonText: "确定", // 提示按钮上的文本
-                    type: "success"
-                })// 提示窗口, 修改成功
-                $('#table').bootstrapTable('refresh');
-                if (formId == 'addForm') {
-                    $("input[type=reset]").trigger("click"); // 移除表单中填的值
-                        $('#addForm').data('bootstrapValidator').resetForm(true); // 移除所有验证样式
-                        $("#addButton").removeAttr("disabled"); // 移除不可点击
-                }
-                $("#" + formId).data('bootstrapValidator').destroy(); // 销毁此form表单
-                $('#' + formId).data('bootstrapValidator', null);// 此form表单设置为空
-            } else if (data.result == "fail") {
-                swal({
-                    title: "",
-                    text: "添加失败",
-                    confirmButtonText: "确认",
-                    type: "error"
-                })
-                if(formId == 'addForm') {
-                    $("#addButton").removeAttr("disabled");
-                }else if(formId == 'editForm'){
-                    $("#editButton").removeAttr("disabled");
-                }
-            }else if (data.result == "notLogin") {
-                swal({title:"",
-                        text:data.message,
-                        confirmButtonText:"确认",
-                        type:"error"}
-                    ,function(isConfirm){
-                        if(isConfirm){
-                            top.location = "/user/loginPage";
-                        }else{
-                            top.location = "/user/loginPage";
+                        if(data.company) {
+                            console.log(data);
+                            var fileData = document.getElementById("file").files[0];
+                            var formData = new FormData();
+                            formData.append("companyLogo", fileData);
+                            formData.append("companyId", data.company.companyId);
+                            $.ajax({
+                                url: "/company/afterUpdIcon",
+                                type: "POST",
+                                data: formData,
+                                processData: false,
+                                contentType: false,
+                                success: function (data1) {
+                                    endSuc(data1, winId, formId);
+                                }
+                            })
+                        } else{
+                            endSuc(data, winId, formId);
                         }
-                    })
-                if(formId == 'addForm') {
-                    $("#addButton").removeAttr("disabled");
-                }else if(formId == 'editForm'){
-                    $("#editButton").removeAttr("disabled");
+                    } else if (data.result == "fail") {
+                        swal({title:"",
+                            text:"操作失败",
+                            confirmButtonText:"确认",
+                            type:"error"})
+                        $("#"+formId).removeAttr("disabled");
+                    }
+                }, "json"
+            );
+        } else if (data.result == "notLogin") {
+            swal({
+                text: data.message,
+                confirmButtonText: "确认", // 提示按钮上的文本
+                type: "error"
+            }, function (isConfirm) {
+                if (isConfirm) {
+                    top.location = "/user/loginPage";
+                } else {
+                    top.location = "/user/loginPage";
                 }
-            }else if(data.result == 'notRole'){
-                swal({title:"",
-                    text:data.message,
-                    confirmButtonText:"确认",
-                    type:"error"})
-            }
-        }, "json");
+            })
+        } else if (data.result = "notRole") {
+            swal({
+                text: data.message,
+                confirmButtonText: "确认", // 提示按钮上的文本
+                type: "error"
+            })
+        }
+    })
 }
 
+function endSuc(data, winId, formId) {
+    var controllerResult= data.controllerResult;
+    if (controllerResult.result == "success") {
+        swal({
+            title: "",
+            text: controllerResult.message,
+            confirmButtonText: "确认",
+            type: "error"
+        })
+        $('#' + winId).modal('hide');
+        $('#table').bootstrapTable('refresh');
+        if (formId == 'addForm') {
+            $("input[type=reset]").trigger("click"); // 移除表单中填的值
+            $('#addForm').data('bootstrapValidator').resetForm(true); // 移除所有验证样式
+            $("#addButton").removeAttr("disabled"); // 移除不可点击
+            $("#" + formId).data('bootstrapValidator').destroy(); // 销毁此form表单
+            $('#' + formId).data('bootstrapValidator', null);// 此form表单设置为空
+        } else if (controllerResult.result == "fail") {
+            swal({
+                title: "",
+                text: "操作失败",
+                confirmButtonText: "确认",
+                type: "error"
+            })
+            $("#" + formId).removeAttr("disabled");
+        }
+    }
+
+}
 
 // 查看全部可用
 function showAvailable(){
@@ -514,3 +550,67 @@ function showDisable(){
         }
     });
 }
+
+
+// function formSubmit(url, formId, winId){
+//     $.post(url,
+//         $("#" + formId).serialize(),
+//         function (data) {
+//             if (data.result == "success") {
+//                 swal({
+//                     title: "",
+//                     text: data.message,
+//                     confirmButtonText: "确定", // 提示按钮上的文本
+//                     type: "success"
+//                 })// 提示窗口, 修改成功
+//                 if(data.company) {
+//                     var fileData = document.getElementById("file").files[0];
+//                     var formData = new FormData();
+//                     formData.append("userIcon", fileData);
+//                     formData.append("userId", data.user.userId);
+//                     $.ajax({
+//                         url: "/company/afterUpdIcon",
+//                         type: "POST",
+//                         data: formData,
+//                         processData: false,
+//                         contentType: false,
+//                         success: function (data1) {
+//                             endSuc(data1, winId, formId);
+//                         }
+//                     })
+//                 } else{
+//                     endSuc(data, winId, formId);
+//                 }
+//             } else if (data.result == "fail") {
+//
+//                 if(formId == 'addForm') {
+//                     $("#addButton").removeAttr("disabled");
+//                 }else if(formId == 'editForm'){
+//                     $("#editButton").removeAttr("disabled");
+//                 }
+//             }else if (data.result == "notLogin") {
+//                 swal({title:"",
+//                         text:data.message,
+//                         confirmButtonText:"确认",
+//                         type:"error"}
+//                     ,function(isConfirm){
+//                         if(isConfirm){
+//                             top.location = "/user/loginPage";
+//                         }else{
+//                             top.location = "/user/loginPage";
+//                         }
+//                     })
+//                 if(formId == 'addForm') {
+//                     $("#addButton").removeAttr("disabled");
+//                 }else if(formId == 'editForm'){
+//                     $("#editButton").removeAttr("disabled");
+//                 }
+//             }else if(data.result == 'notRole'){
+//                 swal({title:"",
+//                     text:data.message,
+//                     confirmButtonText:"确认",
+//                     type:"error"})
+//             }
+//         }, "json");
+// }
+//

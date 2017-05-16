@@ -64,4 +64,8 @@ public class CompanyServiceImpl implements CompanyService {
 		return companyDAO.countByDisable(user);
 	}
 
+	@Override
+	public int updLogo(String userId, String companyLogo) {
+		return companyDAO.updLogo(userId,companyLogo);
+	}
 }
