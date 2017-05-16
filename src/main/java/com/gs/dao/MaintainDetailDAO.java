@@ -30,5 +30,10 @@ public interface MaintainDetailDAO extends BaseDAO<String, MaintainDetail>{
      * @return
      */
     public List<MaintainDetail> queryByCondition(@Param("start") String start, @Param("end") String end, @Param("companyId")String companyId, @Param("maintainId")String maintainId, @Param("type")String type);
+    /**
+     * 车主根据维修保养记录查询所有明细
+     */
+    public int countByOwner(@Param("recordId")String recordId, @Param("userId")String userId);
 
+    public List<MaintainDetail> queryByOwner(@Param("pager")Pager pager, @Param("recordId")String recordId, @Param("userId")String userId);
 }

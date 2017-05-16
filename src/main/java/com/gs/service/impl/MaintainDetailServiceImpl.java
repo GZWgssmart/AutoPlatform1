@@ -82,4 +82,13 @@ public class MaintainDetailServiceImpl implements MaintainDetailService {
 		return maintainDetailDAO.queryByCondition(start, end, companyId, maintainId, type);
 	}
 
+	@Override
+	public int countByOwner(String recordId, String userId) {
+		return maintainDetailDAO.countByOwner(recordId, userId);
+	}
+
+	@Override
+	public List<MaintainDetail> queryByOwner(Pager pager, String recordId, String userId) {
+		return maintainDetailDAO.queryByOwner(pager, recordId, userId);
+	}
 }

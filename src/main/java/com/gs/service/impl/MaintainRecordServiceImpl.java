@@ -113,4 +113,17 @@ public class MaintainRecordServiceImpl implements MaintainRecordService {
 	public int countSix(String actualEndTime) {
 		return maintainRecordDAO.countSix(actualEndTime);
 	}
+
+	/**
+	 * 根据用户id查询此车主所有预约记录
+	 */
+	@Override
+	public int countByOwner(String userId) {
+		return maintainRecordDAO.countByOwner(userId);
+	}
+
+	@Override
+	public List<MaintainRecord> queryByOwner(Pager pager, String userId) {
+		return maintainRecordDAO.queryByOwner(pager, userId);
+	}
 }

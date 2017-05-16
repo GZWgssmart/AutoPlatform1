@@ -226,7 +226,7 @@ function showEdit(){
     var roles = "公司超级管理员,公司普通管理员,汽车公司接待员";
     $.post("/user/isLogin/"+roles, function (data) {
         if(data.result == 'success'){
-            initDateTimePicker('editForm', 'arriveTime'); // 初始化时间框
+            initDateTimePicker('editForm', 'arriveTime', 'editDatetimepicker'); // 初始化时间框
             var row =  $('#table').bootstrapTable('getSelections');
             if(row.length >0) {
                 $("#editWindow").modal('show'); // 显示弹窗
@@ -273,7 +273,7 @@ function showAdd(){
     var roles = "公司超级管理员,公司普通管理员,汽车公司接待员";
     $.post("/user/isLogin/"+roles, function (data) {
         if(data.result == 'success'){
-            initDateTimePicker('addForm', 'arriveTime'); // 初始化时间框, 第一参数是form表单id, 第二参数是input的name
+            initDateTimePicker('addForm', 'arriveTime', 'addDatetimepicker'); // 初始化时间框, 第一参数是form表单id, 第二参数是input的name, 第三个参数为input的id
             $("#addWindow").modal('show');
             $("#addButton").removeAttr("disabled");
             validator('addForm'); // 初始化验证
@@ -476,7 +476,7 @@ function formSubmit(url, formId, winId){
                 $('#table').bootstrapTable('refresh');
                 if(formId == 'addForm'){
                     $("input[type=reset]").trigger("click"); // 移除表单中填的值
-                    $('#addForm').data('bootstrapValidator').resetForm(true); // 移除所有验证样式
+                    //$('#addForm').data('bootstrapValidator').resetForm(true); // 移除所有验证样式
                     $("#addButton").removeAttr("disabled"); // 移除不可点击
                     // 设置select2的值为空
                     $("#addCarBrand").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");

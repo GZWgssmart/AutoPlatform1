@@ -139,11 +139,11 @@
     </div>
 </div>
 
-<div id="addWindow" class="modal fade" style="overflow-y:scroll" data-backdrop="static">
+<div id="addWindow" class="modal fade" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static" keyboard:false>
     <div class="modal-dialog" style="width: 60%;">
         <div class="modal-content">
             <div class="modal-body">
-                <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
+                <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('addWindow', 'addForm')"></span>
                 <form role="form" class="form-horizontal" id="addForm">
                     <input id="addUserId" type="hidden" name="userId"/>
                     <input id="addAppointmentId" type="hidden" name="appointmentId"/>
@@ -269,7 +269,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default"
-                                data-dismiss="modal">关闭
+                                onclick="closeModals('addWindow', 'addForm')">关闭
                         </button>
                         <button id="addButton" type="button" onclick="addSubmit()" class="btn btn-success">添加
                         </button>
@@ -282,11 +282,11 @@
 </div>
 
 <!-- 修改弹窗 -->
-<div class="modal fade" id="editWindow" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static">
+<div class="modal fade" id="editWindow" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static" keyboard:false>
     <div class="modal-dialog" style="width: 60%;">
         <div class="modal-content">
             <div class="modal-body">
-                <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
+                <span class="glyphicon glyphicon-remove closeModal"  onclick="closeModals('editWindow', 'editForm')"></span>
                 <form role="form" class="form-horizontal" id="editForm">
                     <div class="modal-header" style="overflow:auto;">
                         <h4>修改登记记录信息</h4>
@@ -420,7 +420,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default"
-                                data-dismiss="modal">关闭
+                                onclick="closeModals('edutWindow', 'editForm')">关闭
                         </button>
                         <button id="editButton" type="button" onclick="editSubmit()" class="btn btn-success">保存
                         </button>

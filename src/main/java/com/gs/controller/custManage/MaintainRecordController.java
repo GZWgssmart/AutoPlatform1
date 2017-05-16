@@ -219,33 +219,33 @@ public class MaintainRecordController {
         }
     }
 
-//
-//    /**
-//     * 根据用户id查询此车主所有预约记录
-//     */
-//    @ResponseBody
-//    @RequestMapping(value="queryByOwner", method = RequestMethod.GET)
-//    public Pager4EasyUI<MaintainRecord> queryByOwner(HttpSession session, @Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
-//        if(SessionUtil.isOwnerLogin(session)) {
-//            String roles = "车主";
-//            if(RoleUtil.checkRoles(roles)) {
-//                logger.info("根据用户id查询此车主所有预约记录");
-//                User user = (User)session.getAttribute("frontUser");
-//                Pager pager = new Pager();
-//                pager.setPageNo(Integer.valueOf(pageNumber));
-//                pager.setPageSize(Integer.valueOf(pageSize));
-//                pager.setTotalRecords(maintainRecordService.countByOwner(user.getUserId()));
-//                List<MaintainRecord> appointments = maintainRecordService.queryByOwner(pager, user.getUserId());
-//                return new Pager4EasyUI<MaintainRecord>(pager.getTotalRecords(), appointments);
-//            }else{
-//                logger.info("此用户无拥有可用登记记录分页查询的角色");
-//                return null;
-//            }
-//        }else{
-//            logger.info("请先登录");
-//            return null;
-//        }
-//    }
+    /**
+     * 根据用户id查询此车主所有预约记录
+     */
+    @ResponseBody
+    @RequestMapping(value="queryByOwner", method = RequestMethod.GET)
+    public Pager4EasyUI<MaintainRecord> queryByOwner(HttpSession session, @Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
+        if(SessionUtil.isOwnerLogin(session)) {
+            String roles = "车主";
+            if(RoleUtil.checkRoles(roles)) {
+                logger.info("根据用户id查询此车主所有预约记录");
+                User user = (User)session.getAttribute("frontUser");
+                Pager pager = new Pager();
+                pager.setPageNo(Integer.valueOf(pageNumber));
+                pager.setPageSize(Integer.valueOf(pageSize));
+                pager.setTotalRecords(maintainRecordService.countByOwner(user.getUserId()));
+                List<MaintainRecord> appointments = maintainRecordService.queryByOwner(pager, user.getUserId());
+                return new Pager4EasyUI<MaintainRecord>(pager.getTotalRecords(), appointments);
+            }else{
+                logger.info("此用户无拥有可用登记记录分页查询的角色");
+                return null;
+            }
+        }else{
+            logger.info("请先登录");
+            return null;
+        }
+    }
+
     /**
      * 时间格式化
      */

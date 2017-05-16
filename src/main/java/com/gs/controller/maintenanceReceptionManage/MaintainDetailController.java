@@ -173,7 +173,36 @@ public class MaintainDetailController {
                 doubles.add(disCountMoney);
                 return doubles;
             }else{
-                logger.info("此用户无拥有结算出厂的角色");
+                logger.info("此用户无拥查询所有明细的角色");
+                return null;
+            }
+        }else{
+            logger.info("请先登录");
+            return null;
+        }
+    }
+
+    /**
+     * 车主根据维修保养记录查询此记录下所有明细
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value="queryByOwner/{recordId}", method = RequestMethod.GET)
+    public Pager4EasyUI<MaintainDetail> queryByOwner(HttpSession session, @PathVariable("recordId") String recordId, @Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
+        if(SessionUtil.isLogin(session)) {
+            String roles = "车主";
+            if(RoleUtil.checkRoles(roles)) {
+                logger.info("分页查询此记录下所有明细");
+                User user = (User)session.getAttribute("frontUser");
+                Pager pager = new Pager();
+                pager.setPageNo(Integer.valueOf(pageNumber));
+                pager.setPageSize(Integer.valueOf(pageSize));
+                pager.setTotalRecords(maintainDetailService.countByOwner(recordId,user.getUserId()));
+                List<MaintainDetail> maintainDetails = maintainDetailService.queryByOwner(pager, recordId, user.getUserId());
+                System.out.print(maintainDetails);
+                return new Pager4EasyUI<MaintainDetail>(pager.getTotalRecords(), maintainDetails);
+            }else{
+                logger.info("此用户无拥有根据维修保养记录查询此记录下的维修保养明细分页查询的角色");
                 return null;
             }
         }else{

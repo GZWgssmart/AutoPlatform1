@@ -20,8 +20,8 @@ function showYesOrNoFormatter(value) {
 
 
 // 初始化带有分秒的时间框
-function initDateTimePicker(formId, fieldName){
-    $(".datetimepicker").datetimepicker({
+function initDateTimePicker(formId, fieldName, fieldId){
+    $("#"+fieldId).datetimepicker({
         language: 'zh-CN',
         format: 'yyyy-mm-dd hh:ii',
         initialDate: new Date(),
@@ -244,3 +244,8 @@ function active(url) {
         },"json");
 }
 
+function closeModals(winId, formId){
+    $("#"+winId).modal('hide');
+    $("#" + formId).data('bootstrapValidator').destroy(); // 销毁此form表单
+    $('#' + formId).data('bootstrapValidator', null);// 此form表单设置为空
+}

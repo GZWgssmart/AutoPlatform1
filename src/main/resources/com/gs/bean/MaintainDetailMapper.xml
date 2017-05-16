@@ -56,6 +56,12 @@
     limit #{pager.beginIndex}, #{pager.pageSize}
   </select>
 
+  <select id="countByDetail" resultType="int">
+    <![CDATA[
+      select count(maintainDetailId) from t_maintain_detail where maintainRecordId = #{maintainRecordId}
+    ]]>
+  </select>
+
   <select id="queryByRecordId" resultMap="maintainDetailMap">
     <![CDATA[
        select md.*, mf.maintainId, mf.maintainName, mf.maintainHour,
@@ -63,12 +69,6 @@
        LEFT JOIN t_maintain_fix mf on md.maintainItemId = mf.maintainId
        where md.maintainRecordId = #{maintainRecordId}
        order by md.mdCreatedTime Desc
-    ]]>
-  </select>
-
-  <select id="countByDetail" resultType="int">
-    <![CDATA[
-      select count(maintainDetailId) from t_maintain_detail where maintainRecordId = #{maintainRecordId}
     ]]>
   </select>
 
@@ -86,9 +86,24 @@
 		]]>
   </update>
 
+  <select id="queryByOwner" resultMap="maintainDetailMap">
+    <![CDATA[
+       select md.*, mf.maintainId, mf.maintainName, mf.maintainHour,
+       mf.maintainMoney, mf.maintainOrFix, mf.maintainDes from t_maintain_detail md, t_maintain_fix mf, t_maintain_record mr, t_checkin ck
+       where md.maintainItemId = mf.maintainId and
+	   md.maintainRecordId=mr.recordId and mr.checkinId = ck.checkinId and md.maintainRecordId = #{recordId}
+	   and ck.userId =#{userId} order by md.mdCreatedTime Desc
+    ]]>
+    limit #{pager.beginIndex}, #{pager.pageSize}
+  </select>
 
-
-
-
+  <select id="countByOwner" resultType="int">
+    <![CDATA[
+      select count(maintainDetailId) from t_maintain_detail,
+       t_maintain_record mr, t_checkin ck where
+        md.maintainRecordId=mr.recordId and mr.checkinId = ck.checkinId
+        and md.maintainRecordId = #{recordId} and ck.userId =#{userId}
+    ]]>
+  </select>
 
 </mapper>
