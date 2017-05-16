@@ -30,23 +30,28 @@
                             <c:if test="${sessionScope.frontUser.userName != null}">
                                 <li id="placelogin">欢迎您，${sessionScope.frontUser.userName}</li>
                                 <a href="userpage" class="right-ul"><li>我的中心</li></a>
-                                <a href="userpage"><li>退出</li></a>
+                                <a href="outusers"><li>退出</li></a>
+                                <div class="clearfix"></div>
                             </c:if>
                             <c:if test="${sessionScope.frontUser.userName == null}">
                                 <li id="placelogin">欢迎您，${sessionScope.frontUser.userPhone}</li>
                                 <a href="userpage" class="right-ul"><li>我的中心</li></a>
                                 <a href="outusers"><li>退出</li></a>
+                                <div class="clearfix"></div>
                             </c:if>
                         </c:when>
 
                         <c:otherwise>
                             <li id="placelogin">欢迎您，请登录</li>
                             <a href="reg" id="loginreg"><li>登录/注册</li></a>
+                            <a href="javaScript:;" class="right-ul"><li>我的中心</li></a>
+                            <div class="clearfix"></div>
                         </c:otherwise>
                     </c:choose>
                 </ul>
+                <div class="clearfix"></div>
             </div>
-            <div class="clearfix"></div>
+
         </div>
         <div class="nav nav-two" id="navbar-two">
             <ul class="nav-two-ul">
@@ -516,23 +521,6 @@
             });
         });
 
-        $(document).ready(function () {
-            $.ajax({
-                url:"/logined",
-                datatype:"json",
-                type:"post",
-                cache:false,
-                success:function(json){
-                    if(json.status == "0"){
-                        var loginreg = $("#loginreg");
-                        loginreg.css("display","none");
-                    }else{
-                        alert(json.status);
-                        alert("你没登录！");
-                    }
-                }
-            });
-        })
     });
 </script>
 

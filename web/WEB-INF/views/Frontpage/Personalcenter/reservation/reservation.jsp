@@ -97,7 +97,7 @@
         var row = $('table').bootstrapTable('getSelections');
         if (row.length > 0) {
             /*显示窗口*/
-            alert("好棒棒哦！");
+
         } else {
             swal({
                 "title": "",
