@@ -672,7 +672,6 @@ function formSubmit(url, modalId ,formId, flag) {
 function formModalclose(modalId, formId, btnId) {
     $("#"+modalId).modal('hide');
     $("#"+ btnId).removeAttr("disabled");
-    $("#" + formId).data('bootstrapValidator').resetForm(true);
     $("#" + formId).data('bootstrapValidator').destroy(); // 销毁此form表单
     $('#' + formId).data('bootstrapValidator', null);// 此form表单设置为空
     $("input[type=reset]").trigger("click");

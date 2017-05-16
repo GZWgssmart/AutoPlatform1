@@ -512,7 +512,6 @@ function  resub(e, value, row, index) {
 function  closeModal(modalId,formId) {
     $("#"+ modalId).modal("hide");
     $('#'+ formId + " input[type=reset]").trigger("click"); // 移除表单中填的值
-    $('#'+ formId).data('bootstrapValidator').resetForm(true); // 移除所有验证
     $("#" + formId).data('bootstrapValidator').destroy(); // 销毁此form表单
     $('#' + formId).data('bootstrapValidator', null);// 此form表单设置为空
 }

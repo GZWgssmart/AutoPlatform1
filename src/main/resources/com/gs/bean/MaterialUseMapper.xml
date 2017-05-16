@@ -321,7 +321,7 @@
 
   <!-- 其它的 不与这个表相关的-->
     <select id="queryCurRecordsByPager" resultMap="baseRecordView">
-  	<!--select record.recordCreatedTime,
+  	select record.recordCreatedTime,
 				(select sum(fix.maintainHour) from t_maintain_detail detail
 					Left JOIN t_maintain_fix fix 	on detail.maintainItemId = fix.maintainId
 					where detail.maintainRecordId = record.recordId) as 'needHours',
@@ -349,10 +349,10 @@
             <otherwise>not in</otherwise>
         </choose>
          (select workinfo.recordId from t_work_info workinfo	) order by  record.recordCreatedTime desc
-	 limit #{pager.beginIndex}, #{pager.pageSize}-->
+	 limit #{pager.beginIndex}, #{pager.pageSize}
 
 
-        select record.recordCreatedTime,
+       <!-- select record.recordCreatedTime,
         (select sum(fix.maintainHour) from t_maintain_detail detail
         Left JOIN t_maintain_fix fix 	on detail.maintainItemId = fix.maintainId
         where detail.maintainRecordId = record.recordId) as 'needHours',
@@ -381,7 +381,7 @@
         </choose>
         and com.companyId = "11"
         order by  record.recordCreatedTime desc
-        limit #{pager.beginIndex}, #{pager.pageSize}
+        limit #{pager.beginIndex}, #{pager.pageSize}-->
   </select>
 
     <select id="countNoUseRecord" resultType="int">

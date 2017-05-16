@@ -465,7 +465,6 @@ function closeModal(){
     $("#edit").modal("hide");
     $("#subButton").removeAttr("disabled");
     $("#editForm input[type=reset]").trigger("click"); // 移除表单中填的值
-    $("#editForm").data('bootstrapValidator').resetForm(true);
     $("#editForm").data('bootstrapValidator').destroy(); // 销毁此form表单
     $("#editForm").data('bootstrapValidator', null);// 此form表单设置为空
 }
