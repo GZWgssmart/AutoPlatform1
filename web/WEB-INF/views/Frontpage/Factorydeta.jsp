@@ -5,6 +5,7 @@
   Time: 15:19
   To change this template use File | Settings | File Templates.
 --%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -26,18 +27,22 @@
                             <c:if test="${sessionScope.frontUser.userName != null}">
                                 <li id="placelogin">欢迎您，${sessionScope.frontUser.userName}</li>
                                 <a href="userpage" class="right-ul"><li>我的中心</li></a>
-                                <a href="userpage"><li>退出</li></a>
+                                <a href="outusers"><li>退出</li></a>
+                                <div class="clearfix"></div>
                             </c:if>
                             <c:if test="${sessionScope.frontUser.userName == null}">
                                 <li id="placelogin">欢迎您，${sessionScope.frontUser.userPhone}</li>
                                 <a href="userpage" class="right-ul"><li>我的中心</li></a>
                                 <a href="outusers"><li>退出</li></a>
+                                <div class="clearfix"></div>
                             </c:if>
                         </c:when>
 
                         <c:otherwise>
                             <li id="placelogin">欢迎您，请登录</li>
                             <a href="reg" id="loginreg"><li>登录/注册</li></a>
+                            <a href="javaScript:;" class="right-ul"><li>我的中心</li></a>
+                            <div class="clearfix"></div>
                         </c:otherwise>
                     </c:choose>
                 </ul>

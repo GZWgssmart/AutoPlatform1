@@ -35,47 +35,56 @@
     .content{
         padding:0 50px;
     }
-
+    .select{
+        margin: 10px 0;
+        display: block;
+    }
 </style>
 <body>
     <div class="main">
         <div class="form-box well" id="form-box2">
-            <form class=" info-form" id="form2" action="" method="get">
+            <form class=" info-form" id="form2" method="get">
+                <input type="hidden" name="userId" value="${sessionScope.frontUser.userId}">
                 <div class="content">
                     <div class="info">
                         <label>名称：</label>
-                        <input class="form-control" type="text" value="张三">
+                        <input class="form-control" name="userName" type="text" value="${sessionScope.frontUser.userName}">
                     </div>
 
                     <div class="info">
                         <label>电话：</label>
-                        <input class="form-control" type="text" value="15770944049">
+                        <input class="form-control" name="userPhone" type="text" value="${sessionScope.frontUser.userPhone}">
                     </div>
                     <div class="info">
                         <label>邮箱：</label>
-                        <input class="form-control" type="text" value="qweasdzxc102@qq.com">
+                        <input class="form-control" name="userEmail" type="text" value="${sessionScope.frontUser.userEmail}">
                     </div>
                     <div class="info">
                         <label>地址：</label>
-                        <fieldset id="city_china" >
-                            <select class="province" disabled="disabled" name="province"></select>
-                            <select class="city" disabled="disabled" name="city"></select>
-                            <select class="area" disabled="disabled" name="area"></select>
+                        <fieldset id="city_china">
+                            <select class="province select" disabled="disabled" name="province" >
+                            </select>
+                            <select class="city select" disabled="disabled" name="city"></select>
+                            <select class="area select" disabled="disabled" name="area"></select>
                         </fieldset>
                     </div>
                     <div class="info">
                         <label>性别：</label>
-                        <select style="width: 30%" >
-                            <option value="男">
-                                男
-                            </option>
-                            <option value="女">
-                                女
-                            </option>
+                        <select style="width: 30%" name="userGender">
+                            <c:if test="${sessionScope.frontUser.userGender == '男'}">
+                                <option value="男">
+                                    男
+                                </option>
+                            </c:if>
+                            <c:if test="${sessionScope.frontUser.userGender == '女'}">
+                                <option value="女">
+                                    女
+                                </option>
+                            </c:if>
                         </select>
                     </div>
                     <div class="info">
-                        <a class="btn btn-danger btn-block" href="/accountinfo">确认</a>
+                        <a class="btn btn-danger btn-block" onclick="edit()">确认</a>
                     </div>
                 </div>
             </form>
@@ -89,6 +98,17 @@
     $('#city_china').cxSelect({
         selects: ['province', 'city', 'area']
     });
+
+    function edit() {
+        $.post("/editinfomation",$("#form2").serialize(),function (data) {
+            if(data.result=="success"){
+                window.location.href=window.location.href;
+                window.location.reload;
+            }else{
+                alert("更新失败");
+            }
+        })
+    }
 
 
 </script>

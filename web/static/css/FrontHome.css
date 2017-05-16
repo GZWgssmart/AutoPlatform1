@@ -2,7 +2,7 @@ body,html{
     margin: 0;
     padding: 0;
     min-width: 1350px;
-    font-family:Microsoft YaHei,Arial,simsun, Helvetica, sans-serif;
+    font-family: 'microsoft Yahei','Open Sans', sans-serif;
     overflow-x: hidden;
 }
 li{
@@ -21,6 +21,7 @@ li{
 }
 .nav-first ul{
     margin: 5px 0 ;
+    padding:0 15px;
 }
 
 .nav-first ul li {

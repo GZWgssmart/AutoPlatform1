@@ -27,18 +27,22 @@
                             <c:if test="${sessionScope.frontUser.userName != null}">
                                 <li id="placelogin">欢迎您，${sessionScope.frontUser.userName}</li>
                                 <a href="userpage" class="right-ul"><li>我的中心</li></a>
-                                <a href="userpage"><li>退出</li></a>
+                                <a href="home" id="loginreg"><li>返回首页</li></a>
+                                <div class="clearfix"></div>
                             </c:if>
                             <c:if test="${sessionScope.frontUser.userName == null}">
                                 <li id="placelogin">欢迎您，${sessionScope.frontUser.userPhone}</li>
                                 <a href="userpage" class="right-ul"><li>我的中心</li></a>
-                                <a href="outusers"><li>退出</li></a>
+                                <a href="home" id="loginreg"><li>返回首页</li></a>
+                                <div class="clearfix"></div>
                             </c:if>
                         </c:when>
 
                         <c:otherwise>
                             <li id="placelogin">欢迎您，请登录</li>
-                            <a href="reg" id="loginreg"><li>登录/注册</li></a>
+                            <a href="home" id="loginreg"><li>返回首页</li></a>
+                            <a href="javaScript:;" class="right-ul"><li>我的中心</li></a>
+                            <div class="clearfix"></div>
                         </c:otherwise>
                     </c:choose>
                 </ul>
@@ -46,7 +50,7 @@
             <div class="clearfix"></div>
         </div>
 
-        <div class="login-content">
+        <div class="login-content" id="background-img">
 
             <div class="content wow fadeInLeft animated" id="login" onkeydown="keydown()">
                 <div class="form-box">
@@ -127,9 +131,9 @@
                 </div>
         </div>
         <%--底部模块--%>
-        <div class="t-bottom">
-            <span style="font-size: 19px;">© 2011-2016 赣州宏图预科班 版权所有 ｜ 赣ICP备11018683-3</span>
-        </div>
+        <%--<div class="t-bottom">--%>
+            <%--<span style="font-size: 19px;">© 2011-2016 赣州宏图预科班 版权所有 ｜ 赣ICP备11018683-3</span>--%>
+        <%--</div>--%>
     </div>
 <script src="/static/js/jquery.min.js"></script>
 <script src="/static/js/bootstrap.min.js"></script>
@@ -137,54 +141,6 @@
 <script src="/static/js/wow.js"></script><script src="/static/js/sweetalert/sweetalert.min.js"></script>
 <script src="/static/js/backstage/user/frontLogin.js"></script>
 <script src="/static/js/bootstrap-validate/bootstrapValidator.js"></script>
-<script>
-    function reg() {
-        var login =$("#login");
-        var reg = $("#reg");
-        if(login.css("display") == "block"){
-            login.css("display","none");
-            reg.css("display","block");
-            $(".form-content form input").each(function () {
-                $(this).val('');
-            });
-            validator2("regform");
-            document.title = "注册";
-        }else if(reg.css("display") == "block"){
-            reg.css("display","none");
-            login.css("display","block");
-            $(".form-content form input").each(function () {
-                $(this).val('');
-            });
-            validator("loginForm");
-            document.title = "账号登录";
-        };
-
-    };
-    /*回车登录*/
-    function keydown(){
-        if(event.keyCode == 13){
-            document.getElementById("loginButton").click();
-        }
-    }
-    function keydownres(){
-        if(event.keyCode == 13){
-            document.getElementById("resbtn").click();
-        }
-    }
-
-
-    $(function () {
-        function bodyScroll(event) {
-            event.preventDefault();
-        }
-
-        document.body.addEventListener('touchmove', bodyScroll(event), false);
-        document.body.removeEventListener('touchmove', bodyScroll(event), false);
-    });
-    function doNothing() {
-        window.event.returnValue = false;
-        return false;
-    }
-</script>
+<script src="/static/js/registeredgen.js"></script>
 </body>
 </html>

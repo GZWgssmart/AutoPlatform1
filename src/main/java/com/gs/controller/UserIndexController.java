@@ -29,6 +29,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
+
 /**
  * Created by 不曾有黑夜 on 2017/5/9.
  * 用户个人中心页面
@@ -57,12 +59,22 @@ public class UserIndexController {
     public String accountinfo(){
         return "Frontpage/Personalcenter/AccountSettings/accountinformation";
     }
+    /*修改信息确认*/
+    @RequestMapping(value = "editinfo",method = RequestMethod.GET)
+    public String editinfocon(){
 
-    /*修改密码页面*/
+        return "Frontpage/Personalcenter/AccountSettings/accountinformation";
+    }
+
+
+
+    /*跳转修改密码页面*/
     @RequestMapping(value = "editpwd",method = RequestMethod.GET)
     public String editpwd(){
         return "Frontpage/Personalcenter/AccountSettings/editpwd";
     }
+
+    /*修改密码*/
 
     /*我的预约*/
     @RequestMapping(value = "myrese",method = RequestMethod.GET)
@@ -110,15 +122,37 @@ public class UserIndexController {
         return "Frontpage/Personalcenter/Consumptionstatistics/mycomment";
     }
 
+
+    /*跳转页面*/
+    @RequestMapping(value="showeditpage",method = RequestMethod.GET)
+    public String showedotpage(){
+       return "Frontpage/Personalcenter/AccountSettings/EditInfomation";
+    }
+
     /*修改账号信息*/
-    @RequestMapping(value ="editinfomation",method=RequestMethod.GET)
-    public String editinfo(){
-        return "Frontpage/Personalcenter/AccountSettings/EditInfomation";
+    @ResponseBody
+    @RequestMapping(value="editinfomation", method= RequestMethod.POST)
+    public ControllerResult editinfomation(User user,HttpSession session,@Param("province")String province,@Param("city")String city,@Param("area")String area){
+        if(user!=null&&!user.equals("")){
+            if(province!=null&&city!=null || area!=null){
+                user.setUserAddress(province+"-"+city+"-"+area);
+                userService.update(user);
+            }else{
+                userService.update(user);
+            }
+            User u=userService.queryInfoById(user.getUserId());
+            session.setAttribute("frontUser",u);
+            return ControllerResult.getSuccessResult("修改成功");
+        }else{
+            return ControllerResult.getFailResult("修改失败");
+        }
+
+
     }
 
     /*用户登录*/
     @ResponseBody
-    @RequestMapping(value = "userlogin", method = RequestMethod.POST)
+    @RequestMapping(value = "userlogin", method = POST)
     public ControllerResult userLogin(User user1, HttpSession session, HttpServletRequest req, @Param("checkCode") String checkCode) {
         String codeSession = (String) session.getAttribute("checkCode");
         if (checkCode != null && checkCode.equals(codeSession)) {

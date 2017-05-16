@@ -165,7 +165,7 @@
     <if test="user.companyId != null and user.companyId != ''">
       and u.companyId = #{user.companyId}
     </if>
-  </select>
+   </select>
 
   <!-- 根据id查询员工的基本信息 -->
   <select id="queryInfoById" resultMap="userBasicManageMap" parameterType="String">

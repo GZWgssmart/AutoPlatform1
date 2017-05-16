@@ -41,30 +41,30 @@
 <body>
     <div class="main">
         <div class="form-box well" id="form-box1" >
-            <form class="form-inline info-form" id="form" method="get">
+            <form class="form-inline info-form" id="form" method="post">
                 <div class="info">
                     <label>名称：</label>
-                    <p>张三</p>
+                    <p>${sessionScope.frontUser.userName}</p>
                 </div>
 
                 <div class="info">
                     <label>电话：</label>
-                    <p>15770944049</p>
+                    <p>${sessionScope.frontUser.userPhone}</p>
                 </div>
                 <div class="info">
                     <label>邮箱：</label>
-                    <p>qweasdzxc102@qq.com</p>
+                    <p>${sessionScope.frontUser.userEmail}</p>
                 </div>
                 <div class="info">
                     <label>地址：</label>
-                    <p>江西赣州</p>
+                    <p>${sessionScope.frontUser.userAddress}</p>
                 </div>
                 <div class="info">
                     <label>性别：</label>
-                    <p>男</p>
+                    <p>${sessionScope.frontUser.userGender}</p>
                 </div>
                 <div class="info">
-                    <a class="btn btn-info btn-block" href="/editinfomation">修改</a>
+                    <a class="btn btn-info btn-block" href="/showeditpage">修改</a>
                 </div>
             </form>
         </div>
