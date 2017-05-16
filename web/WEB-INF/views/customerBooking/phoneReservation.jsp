@@ -134,7 +134,7 @@
                 <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
                     <form role="form" class="form-horizontal" id="addForm">
                         <input id="addUserId" type="hidden" name="userId"/>
-                        <input id="addAppointmentId" type="hidden" name="appointmentId"/>
+
                         <div class="modal-header" style="overflow:auto;">
                             <h4>添加电话预约信息</h4>
                         </div>
@@ -182,14 +182,14 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">汽车颜色：</label>
                             <div class="col-sm-7">
-                                <select  class="js-example-tags carColor" name="colorId" style="width:100%">
+                                <select  id="addCarColor" class="js-example-tags carColor" name="colorId" style="width:100%">
                                 </select>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">汽车车牌：</label>
                             <div class="col-sm-7">
-                                <select  class="js-example-tags carPlate" name="plateId" style="width:100%">
+                                <select  id="addCarPlate" class="js-example-tags carPlate" name="plateId" style="width:100%">
                                 </select>
                             </div>
                         </div>

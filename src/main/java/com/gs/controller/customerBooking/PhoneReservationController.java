@@ -129,7 +129,7 @@ public class PhoneReservationController {
     @ResponseBody
     @RequestMapping(value = "add",method = RequestMethod.POST)
     public ControllerResult add(Appointment appointment,HttpSession session){
-        if (SessionUtil.isLogin(session)){
+        if(SessionUtil.isLogin(session)){
             String roles = "公司超级管理员,公司普通管理员,汽修公司接待员";
             if (RoleUtil.checkRoles(roles)) {
                 User user = (User)session.getAttribute("user");
@@ -144,7 +144,7 @@ public class PhoneReservationController {
                 }
             } else {
                 logger.info("此用户无拥有添加电话预约记录的角色");
-                return null;
+                return ControllerResult.getNotRoleResult("权限不足");
             }
         }else {
             logger.info("请先登录");

@@ -5,7 +5,6 @@ $(function () {
             initTable('table', '/appointment/queryByPager'); // 初始化表格
             initSelect2("carBrand", "请选择品牌", "/carBrand/queryAllCarBrand");
             initSelect2("carColor", "请选择颜色", "/carColor/queryAllCarColor");
-            initSelect2("carModel", "请选择车型", "/carModel/queryAllCarModel");
             initSelect2("carPlate", "请选择车牌", "/carPlate/queryAllCarPlate");
 
             $("#app").bootstrapSwitch({
@@ -221,7 +220,6 @@ function setData(user) {
     $("#addUserId").val(user.userId);
     $("#addUserName").val(user.userName);
     $("#addUserPhone").val(user.userPhone);
-    validator('editForm'); // 初始化验证
    /**$("#addUserName").val(appointment.userName);
     $("#addUserPhone").val(appointment.userPhone);
     $("#addUserId").val(appointment.userId);
@@ -371,19 +369,11 @@ function validator(formId) {
                     },
                 }
             },
-            carMileage: {
-                message: '汽车当前行驶里程验证失败',
-                validators: {
-                    notEmpty: {
-                        message: '汽车当前行驶里程不能为空'
-                    }
-                }
-            },
             plateId: {
-                message: '汽车车牌号验证失败',
+                message: '汽车车牌验证失败',
                 validators: {
                     notEmpty: {
-                        message: '车牌号不能为空'
+                        message: '车牌不能为空'
                     }
                 }
             },
@@ -392,14 +382,6 @@ function validator(formId) {
                 validators: {
                     notEmpty: {
                         message: '汽车到店时间不能为空'
-                    }
-                }
-            },
-            maintainOrFix: {
-                message: '维修|保养验证失败',
-                validators: {
-                    notEmpty: {
-                        message: '维修|保养不能为空'
                     }
                 }
             },
@@ -466,7 +448,6 @@ function formSubmit(url, formId, winId){
                 $('#table').bootstrapTable('refresh');
                 if(formId == 'addForm'){
                     $("input[type=reset]").trigger("click"); // 移除表单中填的值
-                    $('#addForm').data('bootstrapValidator').resetForm(true); // 移除所有验证样式
                     $("#addButton").removeAttr("disabled"); // 移除不可点击
                     // 设置select2的值为空
                     $("#addCarBrand").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
