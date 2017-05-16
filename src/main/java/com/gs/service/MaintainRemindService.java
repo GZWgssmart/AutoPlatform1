@@ -19,4 +19,6 @@ public interface MaintainRemindService extends BaseService<String, MaintainRemin
     public List<MaintainRemind> queryByPagerNull(@Param("pager") Pager pager);
 
     public int countNull(@Param("user") User user);
+
+    public void insertBatch(List<MaintainRemind> maintainReminds);
 }
