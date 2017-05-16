@@ -172,9 +172,6 @@
     <![CDATA[
       select u.* from t_user u where u.userId = #{userId}
     ]]>
-    <if test="user.companyId != null and user.companyId != ''">
-      and u.companyId = #{user.companyId}
-    </if>
   </select>
 
   <select id="queryRoles" parameterType="String" resultType="String">
