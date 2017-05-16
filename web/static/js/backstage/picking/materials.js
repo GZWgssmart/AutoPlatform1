@@ -346,13 +346,19 @@ function countFormatter(ele, row, index) {
 }
 function userRequestsFormatter(ele ,row, index) {
     var reqView = "";
-    if(ele.length>10) {
-        reqView = ele.slice(0,10)+ "...";
+    if(ele) {
+        if(ele.length>10) {
+            reqView = ele.slice(0,10)+ "...";
+        } else {
+            reqView = ele;
+        }
     } else {
-        reqView = ele;
+        reqView = "<p style='color:#aaa'> 暂无留言</p>"
+        ele = "暂无留言"
     }
-    var reqHtml = "<p title='"+ ele +"'> "+ reqView +" </p>"
-
+    var reqHtml = "<span title='"+ ele +"'> "+ reqView +" </span>"
+    console.log(reqHtml)
+    return reqHtml;
 }
 
 
