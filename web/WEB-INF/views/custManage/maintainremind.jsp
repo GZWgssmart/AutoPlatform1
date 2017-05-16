@@ -222,7 +222,7 @@
                     <thead>
                     <tr>
                         <th data-checkbox="true"></th>
-                        <th data-field="user.userName">
+                        <th data-field="checkin.userId">
                             用户名称
                         </th>
                         <th data-field="actualEndTime" data-formatter="formatterDate">

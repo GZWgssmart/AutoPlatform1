@@ -98,7 +98,18 @@ public class MaintainRemindController {
                 int count = maintainRecordService.countSix(getInsertDateTime());
                 pager.setTotalRecords(count);
                 pager.setUser((User) session.getAttribute("user"));
-                List<MaintainRecord> queryList = maintainRecordService.queryByPagerSix(getInsertDateTime());
+                List<MaintainRecord> queryList = maintainRecordService.queryByPagerSix(pager,getInsertDateTime());
+//                if(queryList != null) {
+//                    List<MaintainRemind> maintainReminds = new ArrayList<MaintainRemind>();
+//                    for(MaintainRecord mrs : queryList) {
+//                        MaintainRemind mrs1 = new MaintainRemind();
+//                        mrs1.setUserId(mrs.getCheckin().getUserId());
+//                        mrs1.setLastMaintainTime(mrs.getActualEndTime());
+//                        mrs1.setLastMaintainMileage(mrs.getCheckin().getCarMileage());
+//                        maintainReminds.add(mrs1);
+//                    }
+//                    maintainRemindService.insertBatch(maintainReminds);
+//                }
                 return new Pager4EasyUI<MaintainRecord>(pager.getTotalRecords(), queryList);
             } else {
                 logger.info("此用户无拥有此方法");
@@ -135,25 +146,25 @@ public class MaintainRemindController {
         }
     }
 
-    @ResponseBody
-    @RequestMapping(value = "insertRemind", method = RequestMethod.POST)
-    public ControllerResult insertDate(HttpSession session, MaintainRemind maintainRemind, MessageSend messageSend) {
-        logger.info("维修保养提醒记录添加操作");
-        List<MaintainRecord> maintainRecords = maintainRecordService.queryByPagerSix(getInsertDateTime());
-        if(maintainRecords != null) {
-            List<MaintainRemind> maintainReminds = new ArrayList<MaintainRemind>();
-            for(MaintainRecord mrs : maintainRecords) {
-                MaintainRemind mrs1 = new MaintainRemind();
-                mrs1.setUserId(mrs.getCheckin().getUserId());
-                mrs1.setLastMaintainTime(mrs.getActualEndTime());
-                mrs1.setLastMaintainMileage(mrs.getCheckin().getCarMileage());
-                maintainReminds.add(mrs1);
-            }
-            maintainRemindService.insertBatch(maintainReminds);
-            return ControllerResult.getSuccessResult("添加成功");
-        }
-        return null;
-    }
+//    @ResponseBody
+//    @RequestMapping(value = "insertRemind", method = RequestMethod.POST)
+//    public ControllerResult insertDate(HttpSession session, MaintainRemind maintainRemind, MessageSend messageSend) {
+//        logger.info("维修保养提醒记录添加操作");
+//        List<MaintainRecord> maintainRecords = maintainRecordService.queryByPagerSix(pager, getInsertDateTime());
+//        if(maintainRecords != null) {
+//            List<MaintainRemind> maintainReminds = new ArrayList<MaintainRemind>();
+//            for(MaintainRecord mrs : maintainRecords) {
+//                MaintainRemind mrs1 = new MaintainRemind();
+//                mrs1.setUserId(mrs.getCheckin().getUserId());
+//                mrs1.setLastMaintainTime(mrs.getActualEndTime());
+//                mrs1.setLastMaintainMileage(mrs.getCheckin().getCarMileage());
+//                maintainReminds.add(mrs1);
+//            }
+//            maintainRemindService.insertBatch(maintainReminds);
+//            return ControllerResult.getSuccessResult("添加成功");
+//        }
+//        return null;
+//    }
 
     public String getInsertDateTime() {
         Calendar c = Calendar.getInstance();//获得一个日历的实例

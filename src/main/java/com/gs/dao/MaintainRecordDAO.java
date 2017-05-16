@@ -60,7 +60,7 @@ public interface MaintainRecordDAO extends BaseDAO<String, MaintainRecord>{
 
     public List<MaintainRecord> queryByPagerRemindYes(Pager pager);
 
-    public List<MaintainRecord> queryByPagerSix(@Param("actualEndTime") String actualEndTime);
+    public List<MaintainRecord> queryByPagerSix(@Param("pager")Pager pager, @Param("actualEndTime") String actualEndTime);
 
     public int countSix(@Param("actualEndTime") String actualEndTime);
 }
