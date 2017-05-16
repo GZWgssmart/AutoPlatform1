@@ -112,13 +112,15 @@
                     <h4>请填写库存信息</h4>
                 </div>
                 <br/>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">汽车公司：</label>
-                    <div class="col-sm-7">
-                        <select id="addCompany" class="js-example-tags company" name="companyId" style="width:100%">
-                        </select>
+                <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">汽车公司：</label>
+                        <div class="col-sm-7">
+                            <select id="addCompany" class="js-example-tags company" name="companyId" style="width:100%">
+                            </select>
+                        </div>
                     </div>
-                </div>
+                </shiro:hasAnyRoles>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">供应商：</label>
                     <div class="col-sm-7">
@@ -194,17 +196,19 @@
             <form class="form-horizontal" role="form" id="editForm" method="post">
                 <div class="modal-header" style="overflow:auto;">
                     <input type="hidden" name="accId" define="Accessories.accId"/>
-                    <h4>请填写库存信息</h4>
+                    <h4>请修改库存信息</h4>
                 </div>
                 <br/>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">汽车公司：</label>
-                    <div class="col-sm-7">
-                        <select id="editCompany" class="js-example-tags company" define="Accessories.companyId"
-                                name="companyId" style="width:100%">
-                        </select>
+                <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">汽车公司：</label>
+                        <div class="col-sm-7">
+                            <select id="editCompany" class="js-example-tags company" define="Accessories.companyId"
+                                    name="companyId" style="width:100%">
+                            </select>
+                        </div>
                     </div>
-                </div>
+                </shiro:hasAnyRoles>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">供应商：</label>
                     <div class="col-sm-7">
