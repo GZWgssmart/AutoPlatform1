@@ -455,7 +455,6 @@ function formSubmit(url, formId, winId){
                     $("#addCarColor").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
                     $("#addCarPlate").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
                 }
-                $("#" + formId).data('bootstrapValidator').destroy(); // 销毁此form表单
                 $('#' + formId).data('bootstrapValidator', null);// 此form表单设置为空
             } else if (data.result == "fail" ) {
                 swal({title:"",
