@@ -94,7 +94,7 @@
                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>辞退
             </button>
             <button id="searchDisable" type="button" class="btn btn-danger" onclick="searchDisableStatus();">
-                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询已禁用/辞退的记录
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询不可用的记录
             </button>
             <button id="searchRapid" type="button" class="btn btn-success" onclick="searchRapidStatus();">
                 <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询可用记录
@@ -104,11 +104,11 @@
 </div>
 
 <!-- 添加弹窗 aria-hidden="true" 默认隐藏 data-backdrop="static" 点击模态窗底层不会关闭模态窗 -->
-<div class="modal fade" id="addWindow" aria-hidden="true" data-backdrop="static">
+<div class="modal fade" id="addWindow" aria-hidden="true" data-backdrop="static" keyboard:false>
     <div class="modal-dialog" style="width:900px;">
         <div class="modal-content">
             <div class="modal-body">
-                <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
+                <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('addWindow', 'addForm')"></span>
                 <div class="modal-header" style="overflow:auto;">
                     <h3>添加人员信息</h3>
                 </div>
@@ -227,7 +227,7 @@
                     <p class="clearfix"></p>
                     <div class="modal-footer">
                         <span id="addError"></span>
-                        <button type="button" class="btn btn-default" data-dismiss="modal"> 关闭</button>
+                        <button type="button" class="btn btn-default" onclick="closeModals('addWindow','addForm')">关闭</button>
                         <button id="addButton" onClick="addSubmit();" type="button" class="btn btn-sm btn-success">保存
                         </button>
                     </div>
@@ -238,223 +238,227 @@
 </div><!-- /.modal -->
 
 <!-- 修改弹窗 -->
-<div class="modal fade" id="editWindow" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static">
+<div class="modal fade" id="editWindow" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static" keyboard:false>
     <div class="modal-dialog">
-        <div class="modal-content" style="width:900px; margin-left:-200px;">
-            <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
-            <form role="form" class="form-horizontal" id="editForm" method="post">
+        <div class="modal-content" style="width:900px; margin-left:-150px;">
+            <div class="modal-body">
+                <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('editWindow', 'editForm')"></span>
                 <div class="modal-header" style="overflow:auto;">
                     <h3>修改人员信息</h3>
                 </div>
-                <input type="hidden" define="emp.userId" name="userId" class="form-control"/>
-                <div>
-                    <div class="form-group col-md-6 pull-left">
-                        <label class="col-md-4 control-label">姓名：</label>
-                        <div class="col-md-8">
-                            <input type="text" name="userName" define="emp.userName" class="form-control">
+                <form role="form" class="form-horizontal" id="editForm" method="post">
+                    <input type="hidden" define="emp.userId" name="userId" class="form-control"/>
+                    <div>
+                        <div class="form-group col-md-6 pull-left">
+                            <label class="col-md-4 control-label">姓名：</label>
+                            <div class="col-md-8">
+                                <input type="text" name="userName" define="emp.userName" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6 pull-left">
+                            <label class="col-md-4 control-label">Email：</label>
+                            <div class="col-md-8">
+                                <input type="text" name="userEmail" define="emp.userEmail" class="form-control">
+                            </div>
+                        </div>
+                        <p class="clearfix"></p>
+                    </div>
+                    <div>
+                        <div class="form-group col-md-6 pull-left">
+                            <label class="col-md-4 control-label">手机号码：</label>
+                            <div class="col-md-8">
+                                <input type="number" name="userPhone" define="emp.userPhone" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6 pull-left">
+                            <label class="col-md-4 control-label">身份证：</label>
+                            <div class="col-md-8">
+                                <input type="number" name="userIdentity" define="emp.userIdentity" class="form-control">
+                            </div>
+                        </div>
+                        <p class="clearfix"></p>
+                    </div>
+                    <div>
+                        <div class="form-group col-md-6 pull-left">
+                            <label class="col-md-4 control-label">角色：</label>
+                            <div class="col-md-8">
+                                <select id="editUserRole" name="roleId" define="emp.role.roleId"
+                                    class="js-example-basic-multiple userRole" multiple="multiple"
+                                    style="width: 100%;"></select>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6 pull-left">
+                            <label class="col-md-4 control-label">用户描述：</label>
+                            <div class="col-md-8">
+                                <input type="text" name="userDes" define="emp.userDes" class="form-control">
+                            </div>
+                        </div>
+                        <p class="clearfix"></p>
+                    </div>
+                    <div>
+                        <div class="form-group col-md-6 pull-left">
+                            <label class="col-md-4 control-label">性别：</label>
+                            <div class="col-md-8">
+                                <select name="userGender" define="emp.userGender" class="form-control" style="width: 50%;">
+                                    <option value='N'>未选择</option>
+                                    <option value='M'>男</option>
+                                    <option value='F'>女</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6 pull-left">
+                            <label class="col-md-4 control-label">生日：</label>
+                            <div class="col-md-8">
+                                <input id="editDatetimepicker" readonly="true" type="date" define="emp.userBirthday"
+                                   name="userBirthdayTemp" class="form-control datetimepicker">
+                            </div>
+                        </div>
+                        <p class="clearfix"></p>
+                    </div>
+                    <div>
+                        <div class="form-group col-md-6 pull-left">
+                            <label class="col-md-4 control-label">底薪：</label>
+                            <div class="col-md-8">
+                                <input type="number" define="emp.userSalary" name="userSalary" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6 pull-left">
+                            <label class="col-md-4 control-label">昵称：</label>
+                            <div class="col-md-8">
+                                <input type="text" name="userNickname" define="emp.userNickname" class="form-control">
+                            </div>
+                        </div>
+                        <p class="clearfix"></p>
+                    </div>
+                    <div>
+                        <div class="form-group col-md-12 pull-right">
+                            <label class="col-md-2 control-label" style="top: 9px;right:5px">地址：</label>
+                            <div class="col-md-9" id="address" style="margin-top: 10px;display: block;">
+                                <input type="text" define="emp.userAddress" class="form-control">
+                            </div>
+                            <div class="col-md-9" id="userAddress" style="display: none;">
+                                <fieldset id="editCity_china">
+                                    <div class="pull-left">
+                                        省份：<select class="province" disabled="disabled" id="editProvince" name="editProvince"></select>
+                                    </div>
+                                    <div class="pull-left">
+                                        &nbsp;&nbsp;&nbsp;城市：<select class="city" disabled="disabled"
+                                            id="editCity" name="editCity"></select>
+                                    </div>
+                                    <div class="pull-left">
+                                        &nbsp;&nbsp;&nbsp;地区：<select class="area" disabled="disabled"
+                                            id="editArea" name="editArea"></select>
+                                    </div>
+                                </fieldset>
+                            </div>
                         </div>
                     </div>
-                    <div class="form-group col-md-6 pull-left">
-                        <label class="col-md-4 control-label">Email：</label>
-                        <div class="col-md-8">
-                            <input type="text" name="userEmail" define="emp.userEmail" class="form-control">
-                        </div>
+                    <div class="modal-footer">
+                        <span id="editError"></span>
+                        <button type="button" class="btn btn-default" onclick="closeModals('editWindow', 'editForm')">关闭</button>
+                        <button id="editButton" onclick="editSubmit();" type="submit" class="btn btn-primary btn-sm">
+                            保存
+                        </button>
                     </div>
-                    <p class="clearfix"></p>
-                </div>
-                <div>
-                    <div class="form-group col-md-6 pull-left">
-                        <label class="col-md-4 control-label">手机号码：</label>
-                        <div class="col-md-8">
-                            <input type="number" name="userPhone" define="emp.userPhone" class="form-control">
-                        </div>
-                    </div>
-                    <div class="form-group col-md-6 pull-left">
-                        <label class="col-md-4 control-label">身份证：</label>
-                        <div class="col-md-8">
-                            <input type="number" name="userIdentity" define="emp.userIdentity" class="form-control">
-                        </div>
-                    </div>
-                    <p class="clearfix"></p>
-                </div>
-                <div>
-                    <div class="form-group col-md-6 pull-left">
-                        <label class="col-md-4 control-label">角色：</label>
-                        <div class="col-md-8">
-                            <select id="editUserRole" name="roleId" define="emp.role.roleId"
-                                class="js-example-basic-multiple userRole" multiple="multiple"
-                                style="width: 100%;"></select>
-                        </div>
-                    </div>
-                    <div class="form-group col-md-6 pull-left">
-                        <label class="col-md-4 control-label">用户描述：</label>
-                        <div class="col-md-8">
-                            <input type="text" name="userDes" define="emp.userDes" class="form-control">
-                        </div>
-                    </div>
-                    <p class="clearfix"></p>
-                </div>
-                <div>
-                    <div class="form-group col-md-6 pull-left">
-                        <label class="col-md-4 control-label">性别：</label>
-                        <div class="col-md-8">
-                            <select name="userGender" define="emp.userGender" class="form-control" style="width: 50%;">
-                                <option value='N'>未选择</option>
-                                <option value='M'>男</option>
-                                <option value='F'>女</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group col-md-6 pull-left">
-                        <label class="col-md-4 control-label">生日：</label>
-                        <div class="col-md-8">
-                            <input id="editDatetimepicker" readonly="true" type="date" define="emp.userBirthday"
-                               name="userBirthdayTemp" class="form-control datetimepicker">
-                        </div>
-                    </div>
-                    <p class="clearfix"></p>
-                </div>
-                <div>
-                    <div class="form-group col-md-6 pull-left">
-                        <label class="col-md-4 control-label">底薪：</label>
-                        <div class="col-md-8">
-                            <input type="number" define="emp.userSalary" name="userSalary" class="form-control">
-                        </div>
-                    </div>
-                    <div class="form-group col-md-6 pull-left">
-                        <label class="col-md-4 control-label">昵称：</label>
-                        <div class="col-md-8">
-                            <input type="text" name="userNickname" define="emp.userNickname" class="form-control">
-                        </div>
-                    </div>
-                    <p class="clearfix"></p>
-                </div>
-                <div>
-                    <div class="form-group col-md-12 pull-right">
-                        <label class="col-md-2 control-label" style="top: 9px;right:5px">地址：</label>
-                        <div class="col-md-9" id="address" style="margin-top: 10px;display: block;">
-                            <input type="text" define="emp.userAddress" class="form-control">
-                        </div>
-                        <div class="col-md-9" id="userAddress" style="display: none;">
-                            <fieldset id="editCity_china">
-                                <div class="pull-left">
-                                    省份：<select class="province" disabled="disabled" id="editProvince" name="editProvince"></select>
-                                </div>
-                                <div class="pull-left">
-                                    &nbsp;&nbsp;&nbsp;城市：<select class="city" disabled="disabled"
-                                        id="editCity" name="editCity"></select>
-                                </div>
-                                <div class="pull-left">
-                                    &nbsp;&nbsp;&nbsp;地区：<select class="area" disabled="disabled"
-                                        id="editArea" name="editArea"></select>
-                                </div>
-                            </fieldset>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <span id="editError"></span>
-                    <button type="button" class="btn btn-default" data-dismiss="modal"> 关闭</button>
-                    <button id="editButton" onclick="editSubmit();" type="submit" class="btn btn-primary btn-sm">
-                        保存
-                    </button>
-                </div>
-            </form>
+                </form>
+            </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
 <!-- 详细信息弹窗 -->
-<div class="modal fade" id="detailWindow" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static">
+<div class="modal fade" id="detailWindow" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static" keyboard:false>
     <div class="modal-dialog">
         <div class="modal-content" style="width:850px; margin-left:-121px;">
-            <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
-            <div class="modal-header">
-                <h3>详细信息</h3>
-            </div>
-            <form role="form" class="form-horizontal" id="detailForm" method="post">
-                <div class="row">
-                    <div class="form-right col-md-7">
-                        <div class="form-group">
-                            <img id="detailUserIcon" src="" class="img-circle" style="width:180px;height:180px;">
-                        </div>
-                        <div class="form-group pull-left">
-                            <label class=" control-label">姓名：</label>
-                            <input type="text" name="userName" define="emp.userName" class="form-control"
-                               style="margin-left: 30px;" disabled="true"> <%-- &lt;%&ndash;&lt;%&ndash;此果文字会变成灰色，不可编辑。&ndash;%&gt;&ndash;%&gt;--%>
-                        </div>
-                        <div class="form-group pull-left">
-                            <label class="control-label">Email：</label>
-                            <input style="margin-left: 20px;" type="text" define="emp.userEmail" class="form-control" disabled="true">
-                        </div>
-                        <div class="form-group pull-left">
-                            <label class="control-label">手机号码：</label>
-                            <input type="number" define="emp.userPhone" class="form-control" disabled="true">
-                        </div>
-                        <div class="form-group pull-left">
-                            <label class="control-label">身份证：</label>
-                            <input style="margin-left: 10px;" type="number" class="form-control"
-                               define="emp.userIdentity" disabled="true">
-                        </div>
-                        <div class="form-group pull-left">
-                            <label class="control-label">创建时间：</label>
-                            <input id="detailCreatedTime" type="text" class="form-control" disabled="true">
-                        </div>
-                    </div>
-                    <div class="form-left col-md-5">
-                        <div class="form-group pull-left">
-                            <label class="control-label">角色：</label>
-                            <input define="emp.role.roleName" class="form-control" type="text" disabled="true"
-                               style="margin-left: 30px;">
-                        </div>
-                        <div class="form-group pull-left">
-                            <label class=control-label">用户描述：</label>
-                            <input type="text" disabled="true" define="emp.userDes" class="form-control">
-                        </div>
-                        <div class="form-group pull-left">
-                            <label class="control-label">性别：</label>
-                            <input id="detailGender" type="text" class="form-control"
-                                 disabled="true" style="margin-left: 30px;">
-                        </div>
-                        <div class="form-group pull-left">
-                            <label class="control-label">生日：</label>
-                            <input id="detailBirthday" type="date" define="emp.userBirthday"
-                               class="form-control" disabled="true" style="margin-left: 30px;">
-                        </div>
-                        <div class="form-group pull-left">
-                            <label class="control-label">底薪：</label>
-                            <input type="number" define="emp.userSalary" name="userSalary" class="form-control"
-                               style="margin-left: 30px;" disabled="true">
-                        </div>
-                        <div class="form-group pull-left">
-                            <label class=" control-label">昵称：</label>
-                            <input type="text" define="emp.userNickname" class="form-control" disabled="true" style="margin-left: 30px;">
-                        </div>
-                        <div class="form-group pull-left">
-                            <label class="control-label">所属公司：</label>
-                            <input define="emp.companyId" class="form-control" disabled="true">
-                        </div>
-                        <div class="form-group pull-left">
-                            <label class="control-label" >地址：</label>
-                            <input type="text" define="emp.userAddress" class="form-control" disabled="true" style="margin-left: 20px;">
-                        </div>
-                        <div class="form-group pull-left">
-                            <label class="control-label">上一次登录时间：</label>
-                            <input id="detailLoginTime" type="text" class="form-control" disabled="true">
-                        </div>
-                        <p class="clearfix"></p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal"> 关闭 </button>
-                    </div>
+            <div class="modal-body">
+                <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('detailWindow', 'detailForm')"></span>
+                <div class="modal-header">
+                    <h3>详细信息</h3>
                 </div>
-            </form>
+                <form role="form" class="form-horizontal" id="detailForm" method="post">
+                    <div class="row">
+                        <div class="form-right col-md-7">
+                            <div class="form-group">
+                                <img id="detailUserIcon" src="" class="img-circle" style="width:180px;height:180px;">
+                            </div>
+                            <div class="form-group pull-left">
+                                <label class=" control-label">姓名：</label>
+                                <input type="text" name="userName" define="emp.userName" class="form-control"
+                                   style="margin-left: 30px;" disabled="true"> <%-- &lt;%&ndash;&lt;%&ndash;此果文字会变成灰色，不可编辑。&ndash;%&gt;&ndash;%&gt;--%>
+                            </div>
+                            <div class="form-group pull-left">
+                                <label class="control-label">Email：</label>
+                                <input style="margin-left: 20px;" type="text" define="emp.userEmail" class="form-control" disabled="true">
+                            </div>
+                            <div class="form-group pull-left">
+                                <label class="control-label">手机号码：</label>
+                                <input type="number" define="emp.userPhone" class="form-control" disabled="true">
+                            </div>
+                            <div class="form-group pull-left">
+                                <label class="control-label">身份证：</label>
+                                <input style="margin-left: 10px;" type="number" class="form-control"
+                                   define="emp.userIdentity" disabled="true">
+                            </div>
+                            <div class="form-group pull-left">
+                                <label class="control-label">创建时间：</label>
+                                <input id="detailCreatedTime" type="text" class="form-control" disabled="true">
+                            </div>
+                        </div>
+                        <div class="form-left col-md-5">
+                            <div class="form-group pull-left">
+                                <label class="control-label">角色：</label>
+                                <input define="emp.role.roleName" class="form-control" type="text" disabled="true"
+                                   style="margin-left: 30px;">
+                            </div>
+                            <div class="form-group pull-left">
+                                <label class=control-label">用户描述：</label>
+                                <input type="text" disabled="true" define="emp.userDes" class="form-control">
+                            </div>
+                            <div class="form-group pull-left">
+                                <label class="control-label">性别：</label>
+                                <input id="detailGender" type="text" class="form-control"
+                                     disabled="true" style="margin-left: 30px;">
+                            </div>
+                            <div class="form-group pull-left">
+                                <label class="control-label">生日：</label>
+                                <input id="detailBirthday" type="date" define="emp.userBirthday"
+                                   class="form-control" disabled="true" style="margin-left: 30px;">
+                            </div>
+                            <div class="form-group pull-left">
+                                <label class="control-label">底薪：</label>
+                                <input type="number" define="emp.userSalary" name="userSalary" class="form-control"
+                                   style="margin-left: 30px;" disabled="true">
+                            </div>
+                            <div class="form-group pull-left">
+                                <label class=" control-label">昵称：</label>
+                                <input type="text" define="emp.userNickname" class="form-control" disabled="true" style="margin-left: 30px;">
+                            </div>
+                            <div class="form-group pull-left">
+                                <label class="control-label">所属公司：</label>
+                                <input define="emp.companyId" class="form-control" disabled="true">
+                            </div>
+                            <div class="form-group pull-left">
+                                <label class="control-label" >地址：</label>
+                                <input type="text" define="emp.userAddress" class="form-control" disabled="true" style="margin-left: 20px;">
+                            </div>
+                            <div class="form-group pull-left">
+                                <label class="control-label">上一次登录时间：</label>
+                                <input id="detailLoginTime" type="text" class="form-control" disabled="true">
+                            </div>
+                            <p class="clearfix"></p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" onclick="closeModals('detailWindow','detailForm')">关闭</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
 <!-- 删除弹窗 -->
-<div class="modal fade" id="del" aria-hidden="true" data-backdrop="static">
+<div class="modal fade" id="del" aria-hidden="true" data-backdrop="static" keyboard:false>
     <div class="modal-dialog">
         <form action="/table/edit" method="post">
             <div class="modal-content">
@@ -495,8 +499,6 @@
 <%-- 文件上传 --%>
 <script src="/static/js/fileInput/fileinput.js"></script>
 <script src="/static/js/fileInput/zh.js"></script>
-
-
 
 </body>
 <script>

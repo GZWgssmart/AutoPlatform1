@@ -136,7 +136,25 @@
 
   <select id="count" resultType="int" parameterType="user">
     <![CDATA[
+      select count(*) from t_user u where 1 = 1
+    ]]>
+    <if test="companyId != null and companyId != ''">
+      and u.companyId = #{companyId}
+    </if>
+  </select>
+
+  <select id="countOK" resultType="int" parameterType="user">
+    <![CDATA[
       select count(*) from t_user u where u.userStatus = 'Y'
+    ]]>
+    <if test="companyId != null and companyId != ''">
+      and u.companyId = #{companyId}
+    </if>
+  </select>
+
+  <select id="countNO" resultType="int" parameterType="user">
+    <![CDATA[
+      select count(*) from t_user u where u.userStatus = 'N'
     ]]>
     <if test="companyId != null and companyId != ''">
       and u.companyId = #{companyId}

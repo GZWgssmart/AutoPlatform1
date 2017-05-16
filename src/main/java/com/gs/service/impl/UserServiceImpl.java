@@ -167,4 +167,20 @@ public class UserServiceImpl implements UserService {
     public void updatePwd(User user) {
         userDAO.updatePwd(user);
     }
+
+    /**
+     * 计数可用的
+     * @return
+     */
+    public int countOK(User user) {
+        return userDAO.countOK(user);
+    }
+
+    /**
+     * 计数不可用的
+     * @return
+     */
+    public int countNO(User user) {
+        return userDAO.countNO(user);
+    }
 }
