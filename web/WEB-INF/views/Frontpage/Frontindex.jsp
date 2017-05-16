@@ -247,7 +247,7 @@
                     <div class="factory">
                         <div class="f-img">
                             <a href="factorypage">
-                                <img src=""/>
+                                <img src="${c.companyLogo}"/>
                             </a>
                         </div>
                         <div class="f-des">

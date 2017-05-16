@@ -23,4 +23,11 @@ public interface AppointmentService extends BaseService<String, Appointment>{
     public List<Appointment> queryByCurrentStatus(Pager pager);
 
     public int countByCurrentStatus(User user);
+
+    /**
+     * 根据用户id查询此车主所有预约记录
+     */
+    public int countByOwner(String userId);
+
+    public List<Appointment> queryByOwner(Pager pager, String userId);
 }

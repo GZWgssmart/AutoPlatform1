@@ -104,7 +104,7 @@
                             <div class="factory">
                                 <div class="f-img">
                                     <a href="factorydeta">
-                                        <img src=""/>
+                                        <img src="${c.companyLogo}"/>
                                     </a>
                                 </div>
                                 <div class="f-des">

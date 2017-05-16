@@ -3,6 +3,7 @@ package com.gs.controller;
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.User;
 import com.gs.common.bean.ControllerResult;
+import com.gs.common.util.EncryptUtil;
 import com.gs.common.util.SessionUtil;
 import com.gs.service.UserService;
 import org.apache.ibatis.annotations.Param;
@@ -61,13 +62,14 @@ public class UserIndexController {
         return "Frontpage/Personalcenter/AccountSettings/editpwd";
     }
 
-    /*修改密码*/
 
     /*我的预约*/
     @RequestMapping(value = "myrese", method = RequestMethod.GET)
     public String myrese() {
         return "Frontpage/Personalcenter/reservation/reservation";
     }
+
+
 
     /*维修保养记录*/
     @RequestMapping(value = "userrese", method = RequestMethod.GET)

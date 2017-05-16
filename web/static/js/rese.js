@@ -83,7 +83,6 @@ function verification(){
     datepro.removeClass("show")
     date.style.borderColor="#ccc";
     time.style.borderColor="#ccc";
-    alert("预约成功");
     return true;
 };
 

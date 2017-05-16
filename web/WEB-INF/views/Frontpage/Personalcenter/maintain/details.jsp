@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>维修保养记录管理</title>
+    <title>维修保养记录</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/css/bootstrap.min.css">
@@ -21,12 +21,6 @@
             <thead>
             <tr>
                 <th data-radio="true" data-field="status"></th>
-                <th data-width="90" data-field="checkin.userName">
-                    车主姓名
-                </th>
-                <th data-width="120" data-field="checkin.userPhone">
-                    车主电话
-                </th>
                 <th data-width="90" data-field="checkin.brand.brandName">
                     汽车品牌
                 </th>
@@ -89,22 +83,9 @@
 <script src="/static/js/sweetalert/sweetalert.min.js"></script>
 <script src="/static/js/contextmenu.js"></script>
 <script src="/static/js/bootstrap-validate/bootstrapValidator.js"></script>
-<script src="/static/js/backstage/maintenanceReception/subsidiary.js"></script>
+<script src="/static/js/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.js"></script>
+<script src="/static/js/bootstrap-dateTimePicker/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
 <script src="/static/js/backstage/main.js"></script>
-<script>
-    function showInfo() {
-        var row = $('table').bootstrapTable('getSelections');
-        if (row.length > 0) {
-            /*显示窗口*/
-            alert("好棒棒哦！");
-        } else {
-            swal({
-                "title": "",
-                "text": "请先选择一条数据",
-                "type": "warning"
-            })
-        }
-    }
-</script>
+<script src="/static/js/backstage/basicInfoManage/maintenance.js"></script>
 </body>
 </html>

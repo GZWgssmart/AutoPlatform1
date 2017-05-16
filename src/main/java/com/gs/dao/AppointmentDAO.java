@@ -39,4 +39,11 @@ public interface AppointmentDAO extends BaseDAO<String, Appointment>{
     public List<Appointment> queryByCurrentStatus(Pager pager);
 
     public int countByCurrentStatus(User user);
+
+    /**
+     * 根据用户id查询此车主所有预约记录
+     */
+    public int countByOwner(String userId);
+
+    public List<Appointment> queryByOwner(@Param("pager")Pager pager, @Param("userId")String userId);
 }

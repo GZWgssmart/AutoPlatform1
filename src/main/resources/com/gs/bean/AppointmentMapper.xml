@@ -256,4 +256,26 @@
       and am.companyId = #{companyId}
     </if>
   </select>
+
+  <select id="queryByOwner" resultMap="appointmentMap">
+    <![CDATA[
+       select am.*, cc.colorId, cc.colorName, cp.plateId, cp.plateName,
+        cm.modelId, cm.modelName, company.companyId,
+        company.companyName, cb.brandId, cb.brandName from t_appointment am
+       LEFT JOIN t_car_color cc on am.colorId =cc.colorId
+       LEFT JOIN t_car_model cm on am.modelId = cm.modelId
+       LEFT JOIN t_car_plate cp on am.plateId = cp.plateId
+       LEFT JOIN t_company company on am.companyId = company.companyId
+       LEFT JOIN t_car_brand cb on am.brandId = cb.brandId
+       where am.appoitmentStatus = 'Y' and am.userId = #{userId}
+    ]]>
+    order by am.appCreatedTime Desc
+    limit #{pager.beginIndex}, #{pager.pageSize}
+  </select>
+
+  <select id="countByOwner" resultType="int" parameterType="com.gs.bean.User">
+    <![CDATA[
+      select count(appointmentId) from t_appointment am where am.appoitmentStatus = 'Y' and am.userId = #{userId}
+    ]]>
+  </select>
 </mapper>

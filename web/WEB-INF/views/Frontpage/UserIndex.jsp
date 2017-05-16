@@ -65,9 +65,9 @@
 			<dd>
 				<ul>
 					<li><a data-href="myrese" data-title="查看预约" href="javascript:void(0)">查看预约</a></li>
-			</ul>
-		</dd>
-	</dl>
+				</ul>
+			</dd>
+		</dl>
 		<dl id="menu-product">
 			<dt><i class="Hui-iconfont">&#xe637;</i> 维修保养<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
@@ -84,9 +84,8 @@
 			<dt><i class="Hui-iconfont">&#xe70c;</i> 消费统计<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
-					<li><a data-href="conrecord" data-title="消费记录" href="javascript:void(0)">消费记录</a></li>
 					<li><a data-href="cdocument" data-title="收费单据" href="javascript:void(0)">收费单据</a></li>
-					<li><a data-href="mycomment" data-title="我的评价" href="javascript:void(0)">我的评价</a></li>
+					<li><a data-href="mycomment" data-title="跟踪回访" href="javascript:void(0)">跟踪回访</a></li>
 			</ul>
 		</dd>
 	</dl>

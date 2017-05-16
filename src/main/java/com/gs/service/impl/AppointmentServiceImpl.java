@@ -80,4 +80,14 @@ public class AppointmentServiceImpl implements AppointmentService {
 	public int countByCurrentStatus(User user) {
 		return appointmentDAO.countByCurrentStatus(user);
 	}
+
+	@Override
+	public int countByOwner(String userId) {
+		return appointmentDAO.countByOwner(userId);
+	}
+
+	@Override
+	public List<Appointment> queryByOwner(Pager pager,String userId) {
+		return appointmentDAO.queryByOwner(pager,userId);
+	}
 }
