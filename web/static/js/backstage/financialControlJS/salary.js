@@ -234,12 +234,6 @@ function checkEdit() {
     );
 }
 
-function addWinClose() {
-    $("#add").modal('hide'); // 关闭指定的窗口
-
-}
-
-
 /**
  * 前台验证
  * @param formId

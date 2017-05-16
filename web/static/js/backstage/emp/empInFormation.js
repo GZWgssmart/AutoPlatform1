@@ -302,7 +302,6 @@ function iconUpldSuc(data, winId, formId) {
 
         $('#' + winId).modal('hide');
         $('#table').bootstrapTable('refresh');
-        $('#' + formId).data('bootstrapValidator').resetForm(true);// 此form表单设置为空
         $("#" + formId).data('bootstrapValidator').destroy(); // 销毁此form表单
         $('#' + formId).data('bootstrapValidator', null);// 此form表单设置为空
 
@@ -422,7 +421,7 @@ function showReturn(){
                         if (isConfirm) {
                             swal({
                                 title: "提示",
-                                text: "禁用成功",
+                                text: "操作成功",
                                 type: "success",
                                 confirmButtonText: "确认",
                             }, function () {
@@ -557,7 +556,6 @@ function searchRapidStatus() {
         }
     })
 }
-
 
 //    格式化角色
 function formatterRole(value, row, index) {

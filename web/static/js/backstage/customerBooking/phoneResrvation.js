@@ -21,7 +21,9 @@ $(function () {
                     }else if(state==false){
                         app = false;
                     }
+
                 }
+
             })
             $("#appWindow").on("hide.bs.modal", function () {
                 $("#addWindow").modal('show')
@@ -242,7 +244,7 @@ function clearAddForm() {
 }
 
 function showEdit(){
-    initDateTimePicker('editForm', 'arriveTime');
+    initDateTimePicker('editForm', 'arriveTime','editArriveTime');
     var row =  $('#table').bootstrapTable('getSelections');
     //alert(row)
     if(row.length >0) {
@@ -270,7 +272,7 @@ function showAdd(){
     var roles = "公司超级管理员,公司普通管理员,汽修公司接待员";
     $.post("/user/isLogin/"+roles, function (data) {
         if(data.result == 'success'){
-            initDateTimePicker('addForm', 'arriveTime'); // 初始化时间框, 第一参数是form表单id, 第二参数是input的name
+            initDateTimePicker('addForm', 'arriveTime','addArriveTime'); // 初始化时间框, 第一参数是form表单id, 第二参数是input的name
             $("#addWindow").modal('show');
             $("#addButton").removeAttr("disabled");
             validator('addForm'); // 初始化验证

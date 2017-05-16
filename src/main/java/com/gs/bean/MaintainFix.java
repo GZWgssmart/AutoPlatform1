@@ -1,5 +1,7 @@
 package com.gs.bean;
 
+import java.util.Date;
+
 /**
  * 维修保养项目表
  */
@@ -21,6 +23,29 @@ public class MaintainFix {
     private String maintainStatus;//维修保养项目状态
 
     private String companyId;
+
+    /**
+     * 统计维修项目的记录
+     */
+    private int count;
+
+    private Date mdCreatedTime;
+
+    public Date getMdCreatedTime() {
+        return mdCreatedTime;
+    }
+
+    public void setMdCreatedTime(Date mdCreatedTime) {
+        this.mdCreatedTime = mdCreatedTime;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
 
     public String getCompanyId() {
         return companyId;

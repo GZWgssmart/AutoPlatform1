@@ -407,8 +407,8 @@ public class MaintainController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "queryByPayCondition")
-    public List<MaintainFix> queryByPayCondition(HttpSession session, String start, String end, String type, String companyId, String maintainId, String maintainOrFix) {
+    @RequestMapping(value = "queryByCondition")
+    public List<MaintainFix> queryByCondition(HttpSession session, String start, String end, String type, String companyId, String maintainId, String maintainOrFix) {
         if(SessionUtil.isLogin(session)){
             String roles="公司超级管理员,公司普通管理员,汽车公司采购人员,汽修公司销售员,汽修公司库管人员,系统超级管理员,系统普通管理员";
             if(RoleUtil.checkRoles(roles)){
@@ -458,15 +458,27 @@ public class MaintainController {
         }
     }
 
-    /**
-     * 根据汽修公司， 汽修项目，查询项目名字（id）
-     * @return
-     */
     @ResponseBody
     @RequestMapping(value = "queryByMaintainName/{companyId}/{maintainOrFix}",method = RequestMethod.GET)
     public List<ComboBox4EasyUI> queryAll(@PathVariable("companyId") String companyId, @PathVariable("maintainOrFix")String maintainOrFix){
-        logger.info("查询所有公司信息");
+        logger.info("根据汽修公司， 汽修项目，查询项目名字");
         List<MaintainFix> maintainDetails = maintainFixService.queryByMaintainName(companyId,maintainOrFix);
+        List<ComboBox4EasyUI> comboxs = new ArrayList<ComboBox4EasyUI>();
+        for (MaintainFix m : maintainDetails) {
+            ComboBox4EasyUI comboBox4EasyUI = new ComboBox4EasyUI();
+            comboBox4EasyUI.setId(m.getMaintainId());
+            comboBox4EasyUI.setText(m.getMaintainName());
+            comboxs.add(comboBox4EasyUI);
+        }
+        return comboxs;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "mySelectMaintainName/{maintainOrFix}",method = RequestMethod.GET)
+    public List<ComboBox4EasyUI> mySelectMaintainName(HttpSession session, @PathVariable("maintainOrFix")String maintainOrFix){
+        logger.info("根据汽修公司， 汽修项目，查询项目名字");
+        User user = (User) session.getAttribute("user");
+        List<MaintainFix> maintainDetails = maintainFixService.queryByMaintainName(user.getCompanyId(),maintainOrFix);
         List<ComboBox4EasyUI> comboxs = new ArrayList<ComboBox4EasyUI>();
         for (MaintainFix m : maintainDetails) {
             ComboBox4EasyUI comboBox4EasyUI = new ComboBox4EasyUI();

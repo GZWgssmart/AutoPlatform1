@@ -4,6 +4,9 @@
   <resultMap id="MaintainFixMap" type="com.gs.bean.MaintainFix" >
     <id column="maintainId" property="maintainId" jdbcType="VARCHAR" />
     <result column="maintainName" property="maintainName" jdbcType="VARCHAR" />
+    <result column="count" property="count"/>
+
+    <result column="mdCreatedTime" property="mdCreatedTime"/>
     <result column="maintainHour" property="maintainHour" jdbcType="DOUBLE" />
     <result column="maintainMoney" property="maintainMoney" jdbcType="DOUBLE" />
     <result column="maintainManHourFee" property="maintainManHourFee" jdbcType="DOUBLE" />
@@ -172,7 +175,7 @@
   <!--维修项目统计报表-->
   <select id="queryByCondition" resultMap="MaintainFixMap">
     <![CDATA[
- select count(md.maintainDetailId), md.mdCreatedTime  from t_maintain_detail md, t_maintain_fix mf, t_company c where md.maintainItemId = mf.maintainId and
+ select count(md.maintainDetailId) as count, md.mdCreatedTime as mdCreatedTime  from t_maintain_detail md, t_maintain_fix mf, t_company c where md.maintainItemId = mf.maintainId and
     c.companyId = mf.companyId and mf.maintainStatus = 'Y'  and c.companyId = #{companyId} and mf.maintainOrFix = #{maintainOrFix} and mf.maintainId = #{maintainId}
         ]]>
     <if test="type =='year'">

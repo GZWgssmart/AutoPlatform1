@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="/static/css/select2.min.css">
     <link rel="stylesheet" href="/static/css/sweetalert.css">
     <link rel="stylesheet" href="/static/css/table/table.css">
+    <link rel="stylesheet/less" href="/static/css/bootstrap-dateTimePicker/datetimepicker.less">
 </head>
 <style>
     .coldStatus {
@@ -85,7 +86,7 @@
      </div>
  </div>
 <!-- 修改弹窗 -->
-<div class="modal fade" id="edit" aria-hidden="true" data-backdrop="static">
+<div class="modal fade" id="edit" aria-hidden="true" data-backdrop="static" keyboard="false">
     <div class="modal-dialog">
         <div class="modal-content">
             <span  class="close"   onclick = "closeModal()">&times;</span>

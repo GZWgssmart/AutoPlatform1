@@ -31,7 +31,10 @@
                     <th data-field="colorRgb">颜色的RBG值</th>
                     <th data-field="colorHex">颜色的16进制值</th>
                     <th data-field="colorDes">颜色描述</th>
-                    <th data-field="colorStatus" data-formatter="statusFormatter">颜色状态</th>
+                    <th data-field="colorStatus" data-formatter="showStatusFormatter">颜色状态</th>
+                    <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员">
+                        <th data-field="colorStatus" data-formatter="statusFormatter">操作</th>
+                    </shiro:hasAnyRoles>
                 </tr>
             </thead>
         </table>
@@ -61,9 +64,10 @@
 </div>
 
 <%--添加窗口--%>
-<div id="addWindow" class="modal fade" style="overflow-y:scroll" data-backdrop="static">
+<div id="addWindow" class="modal fade" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static" keyboard:false>
     <div class="modal-dialog">
         <div class="modal-content">
+            <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('addWindow', 'addForm')"></span>
             <form role="form" class="form-horizontal" id="addForm">
                 <div class="modal-header" style="overflow:auto;">
                     <h4>请填写汽车颜色的相关信息</h4>
@@ -111,9 +115,10 @@
 </div><!-- /.modal -->
 
 <%--修改窗口--%>
-<div class="modal fade" id="editWindow" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static">
+<div class="modal fade" id="editWindow" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static" keyboard:false>
     <div class="modal-dialog">
         <div class="modal-content">
+            <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('editWindow', 'editForm')"></span>
             <form form role="form" class="form-horizontal" id="editForm">
                 <input type="hidden" name="colorId" define="carColor.colorId">
                 <input type="hidden" name="colorStatus" define="carColor.colorStatus">

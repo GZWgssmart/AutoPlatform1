@@ -266,7 +266,7 @@
     </select>
 
     <select id = "queryUserFlowingByPager" resultMap="mterialFlowView" parameterType="hashMap" >
-        select
+        <!--select
         tuser.userName,
         hipro.PROC_INST_ID_,
         hitask.id_  as "taskId",
@@ -281,13 +281,30 @@
         left join t_company comp on tuser.companyId = comp.companyId
         where hipro.END_TIME_ is null
         and repro.KEY_ = #{flowName}
-        and hitask.TASK_DEF_KEY_ = #{reviewTaskName}
         <if test="user.companyId != '' and user.companyId != null" >
             and comp.companyId = #{user.companyId}
             <if test="user.userId != '' and user.userId != null" >
                 and hipro.START_USER_ID_ = #{user.userId}
             </if>
         </if>
+        limit #{pager.beginIndex}, #{pager.pageSize}-->
+
+        select
+            tuser.userName,
+            hipro.PROC_INST_ID_,
+            hitask.id_  as "taskId",
+            hitask.START_TIME_ as "taskSTART_TIME_",
+            hitask.END_TIME_ as "taskEND_TIME_"
+            from act_hi_procinst hipro
+        left join act_re_procdef repro on hipro.PROC_DEF_ID_ = repro.ID_
+        left join act_hi_taskinst hitask on hipro.PROC_INST_ID_ = hitask.PROC_INST_ID_
+        left join t_user tuser on tuser.userId = hipro.START_USER_ID_
+        left join t_company comp on tuser.companyId = comp.companyId
+        where hipro.END_TIME_ is null
+            and hitask.END_TIME_ is null
+            and hipro.START_USER_ID_ = #{user.userId}
+            and repro.KEY_ = #{flowName}
+            and comp.companyId = #{user.companyId}
         limit #{pager.beginIndex}, #{pager.pageSize}
     </select>
 
@@ -304,7 +321,7 @@
 
   <!-- 其它的 不与这个表相关的-->
     <select id="queryCurRecordsByPager" resultMap="baseRecordView">
-  	<!--select record.recordCreatedTime,
+  	select record.recordCreatedTime,
 				(select sum(fix.maintainHour) from t_maintain_detail detail
 					Left JOIN t_maintain_fix fix 	on detail.maintainItemId = fix.maintainId
 					where detail.maintainRecordId = record.recordId) as 'needHours',
@@ -332,10 +349,10 @@
             <otherwise>not in</otherwise>
         </choose>
          (select workinfo.recordId from t_work_info workinfo	) order by  record.recordCreatedTime desc
-	 limit #{pager.beginIndex}, #{pager.pageSize}-->
+	 limit #{pager.beginIndex}, #{pager.pageSize}
 
 
-        select record.recordCreatedTime,
+       <!-- select record.recordCreatedTime,
         (select sum(fix.maintainHour) from t_maintain_detail detail
         Left JOIN t_maintain_fix fix 	on detail.maintainItemId = fix.maintainId
         where detail.maintainRecordId = record.recordId) as 'needHours',
@@ -364,7 +381,7 @@
         </choose>
         and com.companyId = "11"
         order by  record.recordCreatedTime desc
-        limit #{pager.beginIndex}, #{pager.pageSize}
+        limit #{pager.beginIndex}, #{pager.pageSize}-->
   </select>
 
     <select id="countNoUseRecord" resultType="int">

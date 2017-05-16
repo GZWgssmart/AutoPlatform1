@@ -357,7 +357,6 @@ function userRequestsFormatter(ele ,row, index) {
         ele = "暂无留言"
     }
     var reqHtml = "<span title='"+ ele +"'> "+ reqView +" </span>"
-    console.log(reqHtml)
     return reqHtml;
 }
 
@@ -421,7 +420,10 @@ function accInfoFormat(element, row, index){
 
     if(min >= row.materialCount ){
         htmltest.push("<div style='position: relative;top:-10px;right:-10px;height:60px' class='materialsSuc' ></div>");
-    }else {
+
+    }else if ((min+rAu.use) >= row.materialCount) {
+        htmltest.push("<span class='bgFont'><p>请耐心等待</p><p>审核完成</p></span>");
+    } else{
         htmltest.push("<button type='button' class='btn btn-success' onclick='showDel(this);' style='height:60px;top:10px;position:inherit; width:100%;'>领料/退料</button>");
     }
     htmltest.push("</div>");
@@ -510,7 +512,6 @@ function  resub(e, value, row, index) {
 function  closeModal(modalId,formId) {
     $("#"+ modalId).modal("hide");
     $('#'+ formId + " input[type=reset]").trigger("click"); // 移除表单中填的值
-    $('#'+ formId).data('bootstrapValidator').resetForm(true); // 移除所有验证
     $("#" + formId).data('bootstrapValidator').destroy(); // 销毁此form表单
     $('#' + formId).data('bootstrapValidator', null);// 此form表单设置为空
 }

@@ -134,7 +134,6 @@
                 <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
                     <form role="form" class="form-horizontal" id="addForm">
                         <input id="addUserId" type="hidden" name="userId"/>
-
                         <div class="modal-header" style="overflow:auto;">
                             <h4>添加电话预约信息</h4>
                         </div>
@@ -210,7 +209,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default"
-                                    data-dismiss="modal">关闭
+                                    onclick="closeModals('addWindow', 'addForm')">关闭
                             </button>
                             <button id="addButton" type="button" onclick="addSubmit()" class="btn btn-success">添加
                             </button>
@@ -223,10 +222,11 @@
 </div>
 
 <!-- 修改弹窗 -->
-<div class="modal fade" id="editWindow" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static">
-    <div class="modal-dialog">
+<div class="modal fade" id="editWindow" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static"keyboard:false>
+    <div class="modal-dialog"style="width: 60%;">
         <div class="modal-content">
-            <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
+            <div class="modal-body">
+            <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('editWindow', 'editForm')"></span>
             <form role="form" class="form-horizontal" id="editForm">
                 <div class="modal-header" style="overflow:auto;">
                     <h4>修改电话预约信息</h4>
@@ -299,13 +299,15 @@
                                class="form-control datetimepicker"/>
                     </div>
                 </div>
-                <div class="form-group">
-                    <div class="col-sm-offset-8">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button class="btn btn-sm btn-success" onclick="editSubmit();" type="button">保存</button>
-                    </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default"
+                            onclick="closeModals('editWindow', 'editForm')">关闭
+                    </button>
+                    <button id="editButton" type="button" onclick="editSubmit()" class="btn btn-success">保存
+                    </button>
                 </div>
             </form>
+            </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
@@ -401,7 +403,6 @@
 <script src="/static/js/jquery.formFill.js"></script>
 <script src="/static/js/select2/select2.js"></script>
 <script src="/static/js/sweetalert/sweetalert.min.js"></script>
-<script src="/static/js/contextmenu.js"></script>
 <script src="/static/js/bootstrap-select/bootstrap-select.js"></script>
 <script src="/static/js/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.js"></script>
 <script src="/static/js/bootstrap-dateTimePicker/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>

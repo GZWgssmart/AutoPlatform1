@@ -53,6 +53,15 @@ public class Checkin {
     private CarModel model; // 汽车车型
     private CarPlate plate; // 汽车车牌
     private Company company; // 汽修公司
+    private User user;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public String getCheckinId() {
         return checkinId;

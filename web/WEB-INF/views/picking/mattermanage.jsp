@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="/static/css/bootstrap-table.css">
     <link rel="stylesheet" href="/static/css/sweetalert.css">
     <link rel="stylesheet" href="/static/css/table/table.css">
-
+    <link rel="stylesheet/less" href="/static/css/bootstrap-dateTimePicker/datetimepicker.less">
     <style>
         .close {
             right:20px;
@@ -75,7 +75,7 @@
     </div>
 </div>
 
-    <div class="modal fade" id="reviewModal" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static">
+    <div class="modal fade" id="reviewModal" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static" keyboard="false">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">

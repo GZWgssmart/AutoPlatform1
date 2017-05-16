@@ -460,10 +460,10 @@ function bean4DnyTreeData(modules,rolePermissions){
             otherPernodes.push(pernode);
         }
     }
-    if(pernodes.length > 0) {
-        otherMolnode.permissions = otherPernodes;
-        molnodes.push(otherMolnode);
-    }
+        if(otherPernodes.length > 0) {
+            otherMolnode.permissions = otherPernodes;
+            molnodes.push(otherMolnode);
+        }
     return molnodes;
 }
 function bean4StaTreeData(permissions, modules, rolePermissions){
@@ -499,10 +499,8 @@ function bean4StaTreeData(permissions, modules, rolePermissions){
             molnodes.push(molnode);
         }
     }
-    if(pernodes.length >0) {
-        var otherMolnode = getModuleByAlonePers(permissions, rolePermissions);
-        molnodes.push(otherMolnode);
-    }
+    var otherMolnode = getModuleByAlonePers(permissions, rolePermissions);
+    molnodes.push(otherMolnode);
     return molnodes;
 }
     // 没有在模块中的权限,在树中创建另一个伪模块
@@ -672,7 +670,6 @@ function formSubmit(url, modalId ,formId, flag) {
 function formModalclose(modalId, formId, btnId) {
     $("#"+modalId).modal('hide');
     $("#"+ btnId).removeAttr("disabled");
-    $("#" + formId).data('bootstrapValidator').resetForm(true);
     $("#" + formId).data('bootstrapValidator').destroy(); // 销毁此form表单
     $('#' + formId).data('bootstrapValidator', null);// 此form表单设置为空
     $("input[type=reset]").trigger("click");

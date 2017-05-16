@@ -49,9 +49,10 @@
 </div>
 
 <!-- 添加弹窗 -->
-<div class="modal fade" id="addWindow" aria-hidden="true" style="overflow:auto; ">
+<div class="modal fade" id="addWindow" aria-hidden="true" data-backdrop="static" keyboard:false style="overflow:auto; ">
     <div class="modal-dialog" style="width: 720px;height: auto;">
         <div class="modal-content" style="overflow:hidden;">
+            <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('addWindow', 'addForm')"></span>
             <form class="form-horizontal" id="addForm" method="post">
                 <div class="modal-header" style="overflow:auto;">
                     <h4>请填写短信发送提醒信息</h4>
@@ -87,8 +88,11 @@
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-8">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="button" class="btn btn-default"
+                                onclick="closeModals('addWindow', 'addForm')">关闭
+                        </button>
                         <button id="addButton" class="btn btn-sm btn-success" type="button" onclick="addSubmit()">保 存</button>
+                        <input type="reset" name="reset" style="display: none;"/>
                     </div>
                 </div>
             </form>

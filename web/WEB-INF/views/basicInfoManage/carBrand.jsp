@@ -26,7 +26,10 @@
                     <th data-radio="true"></th>
                     <th data-field="brandName">汽车品牌名称</th>
                     <th data-field="brandDes">汽车品牌描述</th>
-                    <th data-field="brandStatus" data-formatter="statusFormatter">汽车品牌状态</th>
+                    <th data-field="brandStatus" data-formatter="showStatusFormatter">汽车品牌状态</th>
+                    <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员">
+                        <th data-field="brandStatus" data-formatter="statusFormatter">操作</th>
+                    </shiro:hasAnyRoles>
                 </tr>
             </thead>
         </table>
@@ -56,9 +59,11 @@
 </div>
 
 <!-- 添加弹窗 -->
-<div id="addWindow" class="modal fade" style="overflow-y:scroll" data-backdrop="static">
+<div id="addWindow" class="modal fade" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static" keyboard:false>
+
     <div class="modal-dialog">
         <div class="modal-content">
+            <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('addWindow', 'addForm')"></span>
             <form role="form" class="form-horizontal" id="addForm">
                 <div class="modal-header" style="overflow:auto;">
                     <h4>请填写汽车品牌的相关信息</h4>
@@ -94,6 +99,7 @@
 <div class="modal fade" id="editWindow" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog">
         <div class="modal-content">
+            <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('editWindow', 'editForm')"></span>
             <form form role="form" class="form-horizontal" id="editForm">
                 <input type="hidden"name="brandId" define="carBrand.brandId">
                 <input type="hidden"name="brandStatus" define="carBrand.brandStatus">

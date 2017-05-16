@@ -196,9 +196,9 @@ function formSubmit(url, formId, winId) {
                 })// 提示窗口, 修改成功
                 $('#table').bootstrapTable('refresh');
                 if (formId == 'addForm') {
-                    $("input[type=reset]").trigger("click"); // 移除表单中填的值
+                  /*  $("input[type=reset]").trigger("click"); // 移除表单中填的值
                     $('#addForm').data('bootstrapValidator').resetForm(true); // 移除所有验证样式
-                    $("#addButton").removeAttr("disabled"); // 移除不可点击
+                    $("#addButton").removeAttr("disabled"); // 移除不可点击*/
                     // 设置select2的值为空
                     $("#addCompanyName").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
                 }

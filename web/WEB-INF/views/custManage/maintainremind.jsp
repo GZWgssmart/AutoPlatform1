@@ -58,11 +58,12 @@
 </div>
 
 <!-- 添加弹窗 -->
-<div class="modal fade" id="addWindow" aria-hidden="true" style="overflow:auto; ">
+<div class="modal fade" id="addWindow" aria-hidden="true" data-backdrop="static" keyboard:false style="overflow:auto; ">
     <div class="modal-dialog" style="width: 790px;height: auto;">
         <div class="modal-content" style="overflow:hidden;">
+            <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('addWindow', 'addForm')"></span>
             <form class="form-horizontal" id="addForm" method="post">
-                <input id="addRemindId" type="text" name="remindId">
+                <%--<input id="addRemindId" type="text" name="remindId">--%>
                 <input id="addLastMaintainTime" type="text" name="lastMaintainTime" >
                 <input id="addLastMaintainMileage" type="text" name="lastMaintainMileage" >
                 <input id="addUserId" type="text" name="userId">
@@ -109,8 +110,11 @@
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-8">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="button" class="btn btn-default"
+                                onclick="closeModals('addWindow', 'addForm')">关闭
+                        </button>
                         <button id="addButton" class="btn btn-sm btn-success" type="button" onclick="addSubmit()">保 存</button>
+                        <input type="reset" name="reset" style="display: none;"/>
                     </div>
                 </div>
             </form>
@@ -120,9 +124,10 @@
 
 
 <!-- 修改弹窗 -->
-<div class="modal fade" id="editWindow" aria-hidden="true">
+<div class="modal fade" id="editWindow" aria-hidden="true" data-backdrop="static" keyboard:false>
     <div class="modal-dialog" style="width: 790px;height: auto;">
         <div class="modal-content">
+            <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('editWindow', 'editForm')"></span>
             <form class="form-horizontal" id="editForm" method="post">
                 <input type="hidden" name="remindId" define="MaintainRemind.remindId">
                 <input id="editLastMaintainTime" type="hidden" name="lastMaintainTime" define="MaintainRemind.lastMaintainTime">
@@ -168,7 +173,9 @@
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-8">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="button" class="btn btn-default"
+                                onclick="closeModals('editWindow', 'editForm')">关闭
+                        </button>
                         <button id="editButton" class="btn btn-sm btn-success" type="button" onclick="editSubmit()">保 存</button>
                     </div>
                 </div>
@@ -222,7 +229,7 @@
                     <thead>
                     <tr>
                         <th data-checkbox="true"></th>
-                        <th data-field="checkin.userId">
+                        <th data-field="checkin.user.userName">
                             用户名称
                         </th>
                         <th data-field="actualEndTime" data-formatter="formatterDate">

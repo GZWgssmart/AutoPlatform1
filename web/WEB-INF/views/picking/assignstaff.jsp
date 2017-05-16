@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="/static/css/sweetalert.css">
     <link rel="stylesheet" href="/static/css/table/table.css">
     <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.css">
-    <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/datetimepicker.less">
+    <link rel="stylesheet/less" href="/static/css/bootstrap-dateTimePicker/datetimepicker.less">
 </head>
 <style>
     .sd{
@@ -92,9 +92,10 @@
 
 <!-- 指派员工弹窗 -->
 <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司总技师">
-    <div class="modal fade" id="appointModal" aria-hidden="true" style="overflow:auto; ">
+    <div class="modal fade" id="appointModal" aria-hidden="true" data-backdrop="static" keyboard="false" style="overflow:auto; ">
     <div class="modal-dialog">
         <div class="modal-content">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             <form class="form-horizontal" id="appointForm" method="post">
                 <input type="text" name="recordId" define="record.recordId" style="display:none"/>
                 <span  class="close"   data-dismiss="modal">&times;</span>
@@ -123,7 +124,7 @@
 </shiro:hasAnyRoles>
 
 <!-- 维修保养明细弹窗 -->
-<div class="modal fade" id="accsInfo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="accsInfo" tabindex="-1" role="dialog"  aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" keyboard="false">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header" style="margin-right:0;width:95%;">

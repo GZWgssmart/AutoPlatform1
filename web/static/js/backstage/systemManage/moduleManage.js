@@ -336,7 +336,6 @@ function showEdit(moduleId) {
 function closeModal(){
     $("#addModal").modal("hide");
     $("input[type=reset]").trigger("click");
-    $("#addForm").data('bootstrapValidator').resetForm(true);
     $("#addForm").data('bootstrapValidator').destroy(); // 销毁此form表单
     $("#addForm").data('bootstrapValidator', null);// 此form表单设置为空
 }

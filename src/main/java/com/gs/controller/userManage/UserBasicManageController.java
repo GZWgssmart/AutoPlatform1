@@ -193,7 +193,7 @@ public class UserBasicManageController {
                 if (status.equals("Y")) {
                     userService.inactive(id);
                     logger.info("修改状态成功，已禁用");
-                    return ControllerResult.getSuccessResult("修改状态成功，已禁用");
+                    return ControllerResult.getSuccessResult("修改状态成功");
                 } else if (status.equals("N")) {
                     userService.active(id);
                     logger.info("修改状态成功，已激活");
@@ -250,7 +250,7 @@ public class UserBasicManageController {
                 pager.setPageNo(Integer.valueOf(pageNumber));
                 pager.setPageSize(Integer.valueOf(pageSize));
                 pager.setUser((User) session.getAttribute("user"));
-                pager.setTotalRecords(userService.count((User) session.getAttribute("user")));
+                pager.setTotalRecords(userService.countOK((User) session.getAttribute("user")));
                 logger.info("分页查询分页查询状态为可用的人员基本信息成功");
                 List<User> users = userService.queryByPager(pager);
                 return new Pager4EasyUI<User>(pager.getTotalRecords(), users);
@@ -277,7 +277,7 @@ public class UserBasicManageController {
                 pager.setPageNo(Integer.valueOf(pageNumber));
                 pager.setPageSize(Integer.valueOf(pageSize));
                 pager.setUser((User) session.getAttribute("user"));
-                pager.setTotalRecords(userService.count((User) session.getAttribute("user")));
+                pager.setTotalRecords(userService.countNO((User) session.getAttribute("user")));
                 logger.info("分页查询分页查询状态为不可用的人员基本信息成功");
                 List<User> users = userService.queryByPagerDisable(pager);
                 return new Pager4EasyUI<User>(pager.getTotalRecords(), users);

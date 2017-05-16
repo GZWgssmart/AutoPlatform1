@@ -77,7 +77,7 @@
   <!-- 分页查询禁用个数 -->
   <select id="countByDisable" resultType="int" parameterType="com.gs.bean.User">
     <![CDATA[
-      select count(companyId) from t_company tc where tc.companyStatus = 'N'
+      select count(tc.companyId) from t_company tc where tc.companyStatus = 'N'
     ]]>
     <if test="companyId != '' and companyId !=null">
       and tc.companyId = #{companyId}

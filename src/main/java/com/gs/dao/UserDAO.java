@@ -65,4 +65,16 @@ public interface UserDAO extends BaseDAO<String, User>{
 
     public void updatePwd(User user);
 
+    /**
+     * 计数可用的
+     * @return
+     */
+    public int countOK(User user);
+
+    /**
+     * 计数不可用的
+     * @return
+     */
+    public int countNO(User user);
+
 }

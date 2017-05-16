@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="/static/css/systemManage/bootstrap.vertical-tabs.css">
     <link rel="stylesheet" href="/static/css/systemManage/icon.css">
     <link rel="stylesheet" href="/static/css/systemManage/gijgo.css">
+    <link rel="stylesheet/less" href="/static/css/bootstrap-dateTimePicker/datetimepicker.less">
     <style>
         .gj-checkbox-md input[type="checkbox"]:checked + span::after {
             top: 0px;
@@ -106,7 +107,7 @@
 </div>
 
 <!-- 添加弹窗 -->
-<div class="modal fade" id="addModal" aria-hidden="true" data-backdrop="static">
+<div class="modal fade" id="addModal" aria-hidden="true" data-backdrop="static"  keyboard="false">
     <div class="modal-dialog">
         <div class="modal-content">
             <form class="form-horizontal" role="form" id="addForm" >
@@ -143,7 +144,7 @@
 </div><!-- /.modal -->
 
 <!-- 修改角色权限弹窗 -->
-<div class="modal fade" id="editPermission" aria-hidden="true" data-backdrop="static">
+<div class="modal fade" id="editPermission" aria-hidden="true" data-backdrop="static"  keyboard="false">
     <div class="modal-dialog">
         <div class="modal-content">
             <span  class="close"   data-dismiss="modal">&times;</span>

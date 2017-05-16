@@ -344,7 +344,6 @@ public class FlowController {
     private void setHisMaterProVars2Map(List<MaterialURTemp> prox) {
         HistoricVariableInstanceQuery query = historyService.createHistoricVariableInstanceQuery();
         for(MaterialURTemp temp : prox) {
-            String taskId = temp.getTaskId();
             List<HistoricVariableInstance> vars = query.processInstanceId(temp.getProcessInstanceId()).list();
             Map map = new HashMap();
             /*Map map1 = new HashMap();
@@ -465,6 +464,7 @@ public class FlowController {
             if(RoleUtil.checkRoles(roles)) {
                 final String startUserId = user.getUserId();
                 final String materialFlowKey = "material";
+                final String subFormTaskKey = "usertask1";
                 final String canGroupId = managerRole.getRoleId(); // 库管的ID
 
                 int accCount = materialUse.getAccCount();
@@ -477,21 +477,15 @@ public class FlowController {
                     String processInstanceId = materialUse.getProcessInstanceId();
                     // 第二步
                     Task task = taskQuery.processInstanceId(processInstanceId).singleResult();
-                    taskService.removeVariable(task.getId(), "respMsg");
-                    taskService.complete(task.getId(), msgs);
-                    // 第三步
-                    Task nextTask = taskQuery.processInstanceId(processInstanceId).singleResult();
-                    taskService.addCandidateGroup(nextTask.getId(), canGroupId);
-
-        //            // 第一步
-        //            Authentication.setAuthenticatedUserId(startUserId);
-        //            ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(materialFlowKey);
-        //            // 第二步
-        //            Task formTask = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
-        //            taskService.complete(formTask.getId(), msgs);
-        //            // 第三步
-        //            Task nextTask = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
-        //            taskService.addCandidateGroup(nextTask.getId(),canGroupId);
+                    if(task.getTaskDefinitionKey().equals(subFormTaskKey)) {
+                        taskService.removeVariable(task.getId(), "respMsg");
+                        taskService.complete(task.getId(), msgs);
+                        // 第三步
+                        Task nextTask = taskQuery.processInstanceId(processInstanceId).singleResult();
+                        taskService.addCandidateGroup(nextTask.getId(), canGroupId);
+                    } else {
+                        return ControllerResult.getFailResult("慢了一步,该申请已经被审核完了");
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                     return ControllerResult.getFailResult("申请失败,可能是因为领取/退回物料流程未部署,请联系管理员");
@@ -511,7 +505,6 @@ public class FlowController {
     @RequestMapping("removeMaterialProInst")
     public ControllerResult removeMaterialProInst(@RequestParam("processInstanceId") String proInstId, HttpSession session) {
         // TODO 员工自己删除流程实例
-
         if(SessionUtil.isLogin(session)) {
             User user = (User) session.getAttribute("user");
             final String curUserId = user.getUserId();
@@ -521,13 +514,16 @@ public class FlowController {
             if(curUserId.equals(hisproIns.getStartUserId())) {
                 try {
                     Task task = taskService.createTaskQuery().processInstanceId(proInstId).singleResult();
-                    String curTaskName = task.getTaskDefinitionKey();
-                    Map dontSubForm = new HashMap();
-                    if(curTaskName.equals(subFormTaskName)){ dontSubForm.put("formSub", false); }
-                    else if(curTaskName.equals(reviewTaskName)){ dontSubForm.put("isOK",true ); }
-
-                    taskService.complete(task.getId(), dontSubForm);
-                    return ControllerResult.getSuccessResult("删除申请成功");
+                    if(task != null) {
+                        String curTaskName = task.getTaskDefinitionKey();
+                        Map dontSubForm = new HashMap();
+                        if(curTaskName.equals(subFormTaskName)){ dontSubForm.put("formSub", false); }
+                        else if(curTaskName.equals(reviewTaskName)){ dontSubForm.put("isOK",true ); }
+                        taskService.complete(task.getId(), dontSubForm);
+                        return ControllerResult.getSuccessResult("删除申请成功");
+                    } else {
+                        return ControllerResult.getFailResult("删除失败,该申请已经被审核了");
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                     return ControllerResult.getFailResult("删除申请失败");

@@ -393,7 +393,7 @@ function formSubmit(url, formId, winId){
                 $('#table').bootstrapTable('refresh');
                 if(formId == 'addForm'){
                     $("input[type=reset]").trigger("click"); // 移除表单中填的值
-                    $('#addForm').data('bootstrapValidator').resetForm(true); // 移除所有验证样式
+                    // $('#addForm').data('bootstrapValidator').resetForm(true); // 移除所有验证样式
                     $("#addButton").removeAttr("disabled"); // 移除不可点击
                     $("#addCompany").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
                 } else if(formId == 'accForm'){
@@ -535,6 +535,10 @@ function closeWindow(){
 function closeEidtWindow(){
     $("#accEidtAllWindow").modal('hide');
     $("#accEditWindow").modal('show');
+}
+
+function closedetailWindow() {
+    $("#detailWindow").modal('hide');
 }
 
 // 在所有项目中点击确定

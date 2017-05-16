@@ -36,7 +36,12 @@
                     <th data-field="companyLongitude">公司经度</th>
                     <th data-field="companyLatitude">公司纬度</th>
                     <th data-field="companyDes">公司描述</th>
-                    <th data-field="companyStatus" data-formatter="statusFormatter">公司状态</th>
+                    <th data-field="companyStatus" data-formatter="showStatusFormatter">公司状态</th>
+                    <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员">
+                        <th data-field="companyStatus" data-formatter="statusFormatter">
+                            操作
+                        </th>
+                    </shiro:hasAnyRoles>
                 </tr>
             </thead>
         </table>
@@ -66,9 +71,10 @@
 </div>
 
 <!-- 添加弹窗 -->
-<div class="modal fade"  id="addWindow" style="overflow-y:scroll" data-backdrop="static" >
+<div class="modal fade"  id="addWindow" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static" keyboard:false>
     <div class="modal-dialog">
         <div class="modal-content">
+            <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('addWindow', 'addForm')"></span>
             <form class="form-horizontal" role="form" id="addForm">
                 <div class="modal-header" style="overflow:auto;">
                     <h4>请填写公司信息</h4>
@@ -166,9 +172,10 @@
 
 
 <!-- 修改弹窗 -->
-<div class="modal fade" id="editWindow" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static">
+<div class="modal fade" id="editWindow" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static" keyboard:false>
     <div class="modal-dialog">
         <div class="modal-content">
+            <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('editWindow', 'editForm')"></span>
             <form class="form-horizontal" role="form" id="editForm" method="post" enctype="multipart/form-data">
                 <input type="hidden"name="companyId" define="company.companyId">
                 <input type="hidden"name="companyStatus" define="company.companyStatus">

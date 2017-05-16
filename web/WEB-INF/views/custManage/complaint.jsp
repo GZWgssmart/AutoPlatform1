@@ -82,9 +82,10 @@
 </div>
 
 <!-- 添加弹窗 -->
-<div class="modal fade" id="addWindow" aria-hidden="true" style="overflow:auto; ">
+<div class="modal fade" id="addWindow" aria-hidden="true" data-backdrop="static" keyboard:false style="overflow:auto; ">
     <div class="modal-dialog" style="width: 780px;height: auto;">
         <div class="modal-content" style="overflow:hidden;">
+            <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('addWindow', 'addForm')"></span>
             <form class="form-horizontal" role="form" id="addForm" method="post">
                 <div class="modal-header" style="overflow:auto;">
                     <h4>请填写投诉信息</h4>
@@ -115,6 +116,7 @@
                     <div class="col-sm-offset-8">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                         <button id="addButton" class="btn btn-sm btn-success" type="button" onclick="addSubmit()">保 存</button>
+                        <input type="reset" name="reset" style="display: none;"/>
                     </div>
                 </div>
             </form>
@@ -123,9 +125,10 @@
 </div><!-- /.modal -->
 
 <!-- 回复弹窗 -->
-<div class="modal fade" id="addReplyWindow" aria-hidden="true" style="overflow:auto; ">
+<div class="modal fade" id="addReplyWindow" aria-hidden="true" data-backdrop="static" keyboard:false style="overflow:auto; ">
     <div class="modal-dialog" style="width: 780px;height: auto;">
         <div class="modal-content" style="overflow:hidden;">
+            <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('addReplyWindow', 'addReplyForm')"></span>
             <form class="form-horizontal" role="form" id="addReplyForm" method="post">
                 <input type="hidden" name="complaintId" define="Complaint.complaintId" />
                 <%--<input type="hidden" name="userId" define="Complaint.user.userId" />--%>
@@ -159,8 +162,11 @@
 
                 <div class="form-group">
                     <div class="col-sm-offset-8">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="button" class="btn btn-default"
+                                onclick="closeModals('addWindow', 'addForm')">关闭
+                        </button>
                         <button id="replyButton" class="btn btn-sm btn-success" type="button" onclick="addReplySubmit()">保 存</button>
+                        <input type="reset" name="reset" style="display: none;"/>
                     </div>
                 </div>
             </form>
@@ -170,9 +176,10 @@
 
 
 <!-- 修改弹窗 -->
-<div class="modal fade" id="editWindow" aria-hidden="true">
+<div class="modal fade" id="editWindow" aria-hidden="true" data-backdrop="static" keyboard:false>
     <div class="modal-dialog" style="width: 780px;height: auto;">
         <div class="modal-content">
+            <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('editWindow', 'editForm')"></span>
             <form class="form-horizontal" id="editForm" method="post">
                 <input type="text" name="complaintId" define="Complaint.complaintId" />
                 <%--<input type="text" name="userId" define="Complaint.user.userId" />--%>
@@ -204,7 +211,9 @@
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-8">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="button" class="btn btn-default"
+                                onclick="closeModals('editWindow', 'editForm')">关闭
+                        </button>
                         <button id="editButton" class="btn btn-sm btn-success" type="button" onclick="editSubmit()">保 存</button>
                     </div>
                 </div>
