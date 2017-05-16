@@ -44,4 +44,6 @@ public interface MaintainFixDAO extends BaseDAO<String, MaintainFix>{
     /*<!--根据汽修公司， 汽修项目，查询项目名字（id）-->*/
     public List<MaintainFix> queryByMaintainName(@Param("companyId")String companyId, @Param("maintainOrFix")String maintainOrFix);
 
+    public List<MaintainFix> queryByCondition(@Param("start")String start, @Param("end") String end,@Param("maintainId")String maintainId,
+                                              @Param("companyId")String companyId, @Param("maintainOrFix")String maintainOrFix, @Param("type")String type);
 }

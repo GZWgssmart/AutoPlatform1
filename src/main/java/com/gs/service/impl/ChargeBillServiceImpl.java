@@ -102,4 +102,9 @@ public class ChargeBillServiceImpl implements ChargeBillService {
     public int countByBlurred(ChargeBill chargeBill,User user) {
         return chargeBillDAO.countByBlurred(chargeBill, user);
     }
+
+    @Override
+    public List<ChargeBill> queryByCondition(String start, String end, String companyId, String maintainOrFix, String type) {
+        return chargeBillDAO.queryByCondition(start, end, companyId, maintainOrFix, type);
+    }
 }

@@ -37,4 +37,16 @@ public interface MaintainFixService extends BaseService<String, MaintainFix>{
 
     /*<!--根据汽修公司， 汽修项目，查询项目名字（id）-->*/
     public List<MaintainFix> queryByMaintainName(String companyId, String maintainOrFix);
+
+    /**
+     * 维修项目报表
+     * @param start
+     * @param end
+     * @param maintainId
+     * @param companyId
+     * @param maintainOrFix
+     * @return
+     */
+    public List<MaintainFix> queryByCondition(String start, String end,String maintainId,
+                                      String companyId, String maintainOrFix, String type);
 }

@@ -29,6 +29,13 @@ public class StatisticsController {
     }
 
     @RequiresAuthentication
+    @RequestMapping("consume")
+    public ModelAndView consumePage(){
+        ModelAndView mav = new ModelAndView("statistics/consume");
+        return mav;
+    }
+
+    @RequiresAuthentication
     @RequestMapping("maintain")
     public ModelAndView maintainPage(){
         ModelAndView mav = new ModelAndView("statistics/maintain");

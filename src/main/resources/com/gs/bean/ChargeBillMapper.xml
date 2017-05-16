@@ -286,4 +286,38 @@
       ck.userPhone like '%${chargeBill.maintainRecord.checkin.userPhone}%'
     </if>)
   </select>
+
+  <!--员工工单报表-->
+  <select id="queryByCondition" resultMap="chargeBillMap">
+    <![CDATA[
+  select sum(cb.actualPayment) as actualPayment, cb.chargeCreatedTime from t_charge_bill cb, t_company c, t_maintain_record mr, t_checkin ck where cb.maintainRecordId = mr.recordId
+and ck.checkinId = mr.checkinId and ck.companyId = c.companyId and cb.chargeBillStatus = 'Y' and c.companyId = #{companyId} and
+cb.chargeCreatedTime >= #{start} and cb.chargeCreatedTime <= #{end}
+        ]]>
+    <if test="maintainOrFix ==0">
+    </if>
+    <if test="maintainOrFix ==1">
+      and ck.maintainOrFix = '保养'
+    </if>
+    <if test="maintainOrFix ==2">
+      and ck.maintainOrFix = '维修'
+    </if>
+    <if test="type =='year'">
+      group by date_format(cb.chargeCreatedTime, '%Y') ORDER BY cb.chargeCreatedTime ASC;
+    </if>
+    <if test="type =='quarter'">
+      group by concat(date_format(cb.chargeCreatedTime, '%Y'),FLOOR((date_format(cb.chargeCreatedTime, '%m')+2)/3)) ORDER BY cb.chargeCreatedTime ASC;
+    </if>
+    <if test="type =='month'">
+      group by date_format(cb.chargeCreatedTime, '%y-%m') ORDER BY cb.chargeCreatedTime ASC;
+    </if>
+    <if test="type =='week'">
+      group by date_format(cb.chargeCreatedTime, '%y-%m') ORDER BY cb.chargeCreatedTime ASC;
+    </if>
+    <if test="type =='day'">
+      group by date(workCreatedTime) ORDER BY cb.chargeCreatedTime ASC;
+    </if>
+
+  </select>
+
 </mapper>

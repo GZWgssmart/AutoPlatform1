@@ -1,10 +1,7 @@
 package com.gs.controller.basicInfoManage;
 
 import ch.qos.logback.classic.Logger;
-import com.gs.bean.MaintainDetail;
-import com.gs.bean.MaintainFix;
-import com.gs.bean.MaintainFixAcc;
-import com.gs.bean.User;
+import com.gs.bean.*;
 import com.gs.common.bean.ComboBox4EasyUI;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
@@ -408,13 +405,65 @@ public class MaintainController {
 
     }
 
+    @ResponseBody
+    @RequestMapping(value = "queryByPayCondition")
+    public List<MaintainFix> queryByPayCondition(HttpSession session, String start, String end, String type, String companyId, String maintainId, String maintainOrFix) {
+        if(SessionUtil.isLogin(session)){
+            String roles="公司超级管理员,公司普通管理员,汽车公司采购人员,汽修公司销售员,汽修公司库管人员,系统超级管理员,系统普通管理员";
+            if(RoleUtil.checkRoles(roles)){
+                List<MaintainFix> list = null;
+                User user = (User) session.getAttribute("user");
+                if (type != null && !type.equals("")) {
+                    if (type.equals("year")) {
+                        if (companyId != null) {
+                            list = maintainFixService.queryByCondition(start, end, maintainId, companyId, maintainOrFix,"year");
+                        } else {
+                            list = maintainFixService.queryByCondition(start, end, maintainId, user.getCompanyId(), maintainOrFix,"year");
+                        }
+                    } else if (type.equals("quarter")) {
+                        if (companyId != null) {
+                            list = maintainFixService.queryByCondition(start, end, maintainId, companyId, maintainOrFix,"quarter");
+                        } else {
+                            list = maintainFixService.queryByCondition(start, end, maintainId, user.getCompanyId(), maintainOrFix,"quarter");
+                        }
+                    } else if (type.equals("month")) {
+                        if (companyId != null) {
+                            list = maintainFixService.queryByCondition(start, end, maintainId, companyId, maintainOrFix,"month");
+                        } else {
+                            list = maintainFixService.queryByCondition(start, end, maintainId, user.getCompanyId(), maintainOrFix,"month");
+                        }
+                    } else if (type.equals("week")) {
+                        if (companyId != null) {
+                            list = maintainFixService.queryByCondition(start, end, maintainId, companyId, maintainOrFix,"week");
+                        } else {
+                            list = maintainFixService.queryByCondition(start, end, maintainId, user.getCompanyId(), maintainOrFix,"week");
+                        }
+                    } else if (type.equals("day")) {
+                        if (companyId != null) {
+                            list = maintainFixService.queryByCondition(start, end, maintainId, companyId, maintainOrFix,"day");
+                        } else {
+                            list = maintainFixService.queryByCondition(start, end, maintainId, user.getCompanyId(), maintainOrFix,"day");
+                        }
+                    }
+                }
+                return list;
+            }else{
+                logger.info("此用户无法拥有维修项目统计角色");
+                return null;
+            }
+        }else{
+            logger.info("请先登陆");
+            return null;
+        }
+    }
+
     /**
      * 根据汽修公司， 汽修项目，查询项目名字（id）
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "queryByMaintainName",method = RequestMethod.GET)
-    public List<ComboBox4EasyUI> queryAll(String companyId, String maintainOrFix){
+    @RequestMapping(value = "queryByMaintainName/{companyId}/{maintainOrFix}",method = RequestMethod.GET)
+    public List<ComboBox4EasyUI> queryAll(@PathVariable("companyId") String companyId, @PathVariable("maintainOrFix")String maintainOrFix){
         logger.info("查询所有公司信息");
         List<MaintainFix> maintainDetails = maintainFixService.queryByMaintainName(companyId,maintainOrFix);
         List<ComboBox4EasyUI> comboxs = new ArrayList<ComboBox4EasyUI>();
