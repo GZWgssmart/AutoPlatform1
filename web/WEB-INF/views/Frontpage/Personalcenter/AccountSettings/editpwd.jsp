@@ -45,26 +45,38 @@
 <body>
     <div class="main">
         <div class="edit-box">
-            <form class="form-inline well" action="" method="get">
+            <form class="form-inline well" id="pwdForm" method="post">
                 <div class="form-box">
                     <div class="editpwd">
                         <label>旧密码：</label>
-                        <input class="form-control gotoleft" type="password" placeholder="输入您的旧密码">
+                        <input class="form-control gotoleft" name="oldPwd" type="password" placeholder="输入您的旧密码">
                     </div>
                     <div class="editpwd">
                         <label>新密码：</label>
-                        <input class="form-control gotoleft" type="password" placeholder="输入您的新密码">
+                        <input class="form-control gotoleft" name="newPwd" type="password" placeholder="输入您的新密码">
                     </div>
                     <div class="editpwd">
                         <label>再次输入：</label>
-                        <input class="form-control"  type="password" placeholder="再次输入您的新密码">
+                        <input class="form-control" name="conPwd" type="password" placeholder="再次输入您的新密码">
                     </div>
                     <div class="editpwd">
-                        <button class="btn btn-success btn-block" type="submit" >确认</button>
+                        <button class="btn btn-success btn-block" type="button" onclick="editPwd()">确认</button>
                     </div>
                 </div>
             </form>
         </div>
     </div>
 </body>
+<script src="/static/js/jquery.min.js"></script>
+<script>
+    function editPwd() {
+        $.post("/updatePwd",$("#pwdForm").serialize(),function (data) {
+            if(data.result=="success"){
+                alert(data.message);
+            }else{
+                alert(data.message)
+            }
+        })
+    }
+</script>
 </html>

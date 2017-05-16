@@ -48,106 +48,138 @@ public class UserIndexController {
     private UserService userService;
 
     /*欢迎页面*/
-    @RequestMapping(value = "welcome",method = RequestMethod.GET)
-    public String welcome(){
+    @RequestMapping(value = "welcome", method = RequestMethod.GET)
+    public String welcome() {
         return "Frontpage/Personalcenter/AccountSettings/welcome";
     }
 
 
     /*账号信息页面*/
-    @RequestMapping(value = "accountinfo",method = RequestMethod.GET)
-    public String accountinfo(){
+    @RequestMapping(value = "accountinfo", method = RequestMethod.GET)
+    public String accountinfo() {
         return "Frontpage/Personalcenter/AccountSettings/accountinformation";
     }
+
     /*修改信息确认*/
-    @RequestMapping(value = "editinfo",method = RequestMethod.GET)
-    public String editinfocon(){
+    @RequestMapping(value = "editinfo", method = RequestMethod.GET)
+    public String editinfocon() {
 
         return "Frontpage/Personalcenter/AccountSettings/accountinformation";
     }
-
 
 
     /*跳转修改密码页面*/
-    @RequestMapping(value = "editpwd",method = RequestMethod.GET)
-    public String editpwd(){
+    @RequestMapping(value = "editpwd", method = RequestMethod.GET)
+    public String editpwd() {
         return "Frontpage/Personalcenter/AccountSettings/editpwd";
     }
 
     /*修改密码*/
 
     /*我的预约*/
-    @RequestMapping(value = "myrese",method = RequestMethod.GET)
-    public String myrese(){
+    @RequestMapping(value = "myrese", method = RequestMethod.GET)
+    public String myrese() {
         return "Frontpage/Personalcenter/reservation/reservation";
     }
 
     /*维修保养记录*/
-    @RequestMapping(value = "userrese",method = RequestMethod.GET)
-    public String userrese(){
+    @RequestMapping(value = "userrese", method = RequestMethod.GET)
+    public String userrese() {
         return "Frontpage/Personalcenter/maintain/reserecording";
     }
 
     /*维修保养提醒*/
-    @RequestMapping(value = "prompt",method = RequestMethod.GET)
-    public String prompt(){
+    @RequestMapping(value = "prompt", method = RequestMethod.GET)
+    public String prompt() {
         return "Frontpage/Personalcenter/maintain/prompt";
     }
 
     /*维修保养进度*/
-    @RequestMapping(value = "schedule",method = RequestMethod.GET)
-    public String schedule(){
+    @RequestMapping(value = "schedule", method = RequestMethod.GET)
+    public String schedule() {
         return "Frontpage/Personalcenter/maintain/schedule";
     }
+
     /*维修保养明细*/
-    @RequestMapping(value ="details",method = RequestMethod.GET)
-    public String details(){
+    @RequestMapping(value = "details", method = RequestMethod.GET)
+    public String details() {
         return "Frontpage/Personalcenter/maintain/details";
     }
+
     /*消费记录*/
-    @RequestMapping(value = "conrecord",method = RequestMethod.GET)
-    public String conrecord(){
+    @RequestMapping(value = "conrecord", method = RequestMethod.GET)
+    public String conrecord() {
         return "Frontpage/Personalcenter/Consumptionstatistics/Consumptionrecord";
     }
 
     /*收费单据*/
-    @RequestMapping(value = "cdocument",method = RequestMethod.GET)
-    public String cdocument(){
+    @RequestMapping(value = "cdocument", method = RequestMethod.GET)
+    public String cdocument() {
         return "Frontpage/Personalcenter/Consumptionstatistics/Chargedocuments";
     }
 
     /*我的评价*/
-    @RequestMapping(value="mycomment",method = RequestMethod.GET)
-    public String myComment(){
+    @RequestMapping(value = "mycomment", method = RequestMethod.GET)
+    public String myComment() {
         return "Frontpage/Personalcenter/Consumptionstatistics/mycomment";
     }
 
 
     /*跳转页面*/
-    @RequestMapping(value="showeditpage",method = RequestMethod.GET)
-    public String showedotpage(){
-       return "Frontpage/Personalcenter/AccountSettings/EditInfomation";
+    @RequestMapping(value = "showeditpage", method = RequestMethod.GET)
+    public String showedotpage() {
+        return "Frontpage/Personalcenter/AccountSettings/EditInfomation";
     }
 
     /*修改账号信息*/
     @ResponseBody
-    @RequestMapping(value="editinfomation", method= RequestMethod.POST)
-    public ControllerResult editinfomation(User user,HttpSession session,@Param("province")String province,@Param("city")String city,@Param("area")String area){
-        if(user!=null&&!user.equals("")){
-            if(province!=null&&city!=null || area!=null){
-                user.setUserAddress(province+"-"+city+"-"+area);
+    @RequestMapping(value = "editinfomation", method = RequestMethod.POST)
+    public ControllerResult editinfomation(User user, HttpSession session, @Param("province") String province, @Param("city") String city, @Param("area") String area) {
+        if (user != null && !user.equals("")) {
+            if (province != null && city != null || area != null) {
+                user.setUserAddress(province + "-" + city + "-" + area);
                 userService.update(user);
-            }else{
+            } else {
                 userService.update(user);
             }
-            User u=userService.queryInfoById(user.getUserId());
-            session.setAttribute("frontUser",u);
+            User u = userService.queryInfoById(user.getUserId());
+            session.setAttribute("frontUser", u);
             return ControllerResult.getSuccessResult("修改成功");
-        }else{
+        } else {
             return ControllerResult.getFailResult("修改失败");
         }
+    }
 
-
+    /**
+     * @param oldPwd 旧密码
+     * @param newPwd 新密码
+     * @param conPwd 确认密码
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "updatePwd", method = RequestMethod.POST)
+    public ControllerResult updatePwd(@Param("oldPwd") String oldPwd, @Param("newPwd")
+            String newPwd, @Param("conPwd") String conPwd,HttpSession session) {
+        User user=(User) session.getAttribute("frontUser");
+        if(user!=null&&!user.equals("")){
+            if(user.getUserPwd().equals(EncryptUtil.md5Encrypt(oldPwd))){
+                if(newPwd!=null&&newPwd.equals(conPwd)){
+                    user.setUserPwd(EncryptUtil.md5Encrypt(conPwd));
+                    userService.updatePwd(user);
+                    logger.info("用户更新密码成功");
+                    return ControllerResult.getSuccessResult("更新密码成功");
+                }else{
+                    logger.info("两次密码输入不一致");
+                    return ControllerResult.getFailResult("两次密码输入一致，请重新输入！");
+                }
+            }else{
+                logger.info("旧密码输入有误！");
+                return ControllerResult.getFailResult("更新密码失败，您的旧密码输入有误");
+            }
+        }else{
+            logger.info("用户还未登陆");
+            return ControllerResult.getFailResult("请登录");
+        }
     }
 
     /*用户登录*/
@@ -164,7 +196,7 @@ public class UserIndexController {
                     User user = userService.queryUser(user1.getUserEmail());
                     session.setAttribute("frontUser", user);
                     return ControllerResult.getSuccessResult("登录成功");
-                }else {
+                } else {
                     logger.info("抱歉，你的账号角色并不授权。请联系管理员激活账号！");
                     return ControllerResult.getFailResult("抱歉，你的账号角色并不授权。请联系管理员激活账号！");
                 }
@@ -185,8 +217,8 @@ public class UserIndexController {
     }
 
     /*用户退出*/
-    @RequestMapping(value="outusers",method = RequestMethod.GET)
-    public String outUser(HttpServletRequest request){
+    @RequestMapping(value = "outusers", method = RequestMethod.GET)
+    public String outUser(HttpServletRequest request) {
         HttpSession session = request.getSession();
         session.getAttribute("frontUser");
         if (session != null) {
