@@ -4,6 +4,7 @@ import ch.qos.logback.classic.Logger;
 import com.gs.bean.User;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.util.EncryptUtil;
+import com.gs.common.util.RoleUtil;
 import com.gs.common.util.SessionUtil;
 import com.gs.service.UserService;
 import org.apache.ibatis.annotations.Param;
@@ -11,6 +12,7 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -156,10 +158,10 @@ public class UserIndexController {
                     user.setUserPwd(EncryptUtil.md5Encrypt(conPwd));
                     userService.updatePwd(user);
                     logger.info("用户更新密码成功");
-                    return ControllerResult.getSuccessResult("更新密码成功");
+                    return ControllerResult.getSuccessResult("修改密码成功");
                 }else{
                     logger.info("两次密码输入不一致");
-                    return ControllerResult.getFailResult("两次密码输入一致，请重新输入！");
+                    return ControllerResult.getFailResult("两次密码输入不一致，请重新输入！");
                 }
             }else{
                 logger.info("旧密码输入有误！");
@@ -182,6 +184,25 @@ public class UserIndexController {
         }
         currentUser.logout();
         return "Frontpage/Frontindex";
+    }
+
+    /**
+     * 验证是否登录
+     */
+    @RequestMapping(value="isLogin/{roles}",method=RequestMethod.POST)
+    @ResponseBody
+    public ControllerResult isLogin(@PathVariable("roles") String roles, HttpSession session) {
+        if(SessionUtil.isOwnerLogin(session)) {
+            if(RoleUtil.checkRoles(roles)){
+                return ControllerResult.getSuccessResult("拥有角色");
+            }else{
+                logger.info("无进入方法角色");
+                return ControllerResult.getNotRoleResult("权限不足");
+            }
+        }else{
+            logger.info("请先登录");
+            return ControllerResult.getNotLoginResult("登录信息无效，请重新登录");
+        }
     }
 
 }

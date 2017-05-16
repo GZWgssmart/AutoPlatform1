@@ -2,18 +2,18 @@
 <%@taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <html>
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/static/css/bootstrap-table.css">
-    <link rel="stylesheet" href="/static/css/select2.min.css">
-    <link rel="stylesheet" href="/static/css/sweetalert.css">
-    <link rel="stylesheet" href="/static/css/table/table.css">
-    <link rel="stylesheet" href="/static/css/bootstrap-switch/bootstrap-switch.min.css">
-    <link rel="stylesheet" href="/static/css/bootstrap-validate/bootstrapValidator.min.css">
-    <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.css">
-    <link rel="stylesheet/less" href="/static/css/bootstrap-dateTimePicker/datetimepicker.less">
-        <title>维修保养预约电话管理</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="/static/css/bootstrap.min.css">
+<link rel="stylesheet" href="/static/css/bootstrap-table.css">
+<link rel="stylesheet" href="/static/css/select2.min.css">
+<link rel="stylesheet" href="/static/css/sweetalert.css">
+<link rel="stylesheet" href="/static/css/table/table.css">
+<link rel="stylesheet" href="/static/css/bootstrap-switch/bootstrap-switch.min.css">
+<link rel="stylesheet" href="/static/css/bootstrap-validate/bootstrapValidator.min.css">
+<link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.css">
+<link rel="stylesheet/less" href="/static/css/bootstrap-dateTimePicker/datetimepicker.less">
+    <title>维修保养预约</title>
 </head>
 <body>
 
@@ -84,7 +84,7 @@
 <script src="/static/js/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.js"></script>
 <script src="/static/js/bootstrap-dateTimePicker/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
 <script src="/static/js/backstage/main.js"></script>
-<script src="/static/js/backstage/basicInfoManage/maintenance.js"></script>
+<%--<script src="/static/js/backstage/basicInfoManage/maintenance.js"></script>--%>
 <script>
     /*初始化表格*/
     $(function(){
