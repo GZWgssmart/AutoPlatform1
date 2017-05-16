@@ -30,9 +30,11 @@
                 <thead>
                 <tr>
                     <th data-radio="true" data-field="status"></th>
-                    <th data-field="company.companyName">所属公司名称</th>
-                    <th data-field="accessoriesType.accTypeName">配件所属类别</th>
-                    <th data-field="supply.supplyName">所属供应商</th>
+                    <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员">
+                        <th data-field="company.companyName">汽车公司</th>
+                    </shiro:hasAnyRoles>
+                    <th data-field="accessoriesType.accTypeName">配件类别</th>
+                    <th data-field="supply.supplyName">供应商</th>
                     <th data-field="accName">配件名称</th>
                     <th data-field="accCommodityCode">配件商品条码</th>
                     <th data-field="accDes">配件描述</th>
@@ -43,7 +45,10 @@
                     <th data-field="accUsedTime" data-formatter="formatterDateTime">最近一次领料时间</th>
                     <th data-field="accBuyedTime" data-formatter="formatterDateTime">最近一次购买时间</th>
                     <th data-field="accCreatedTime" data-formatter="formatterDateTime">配件创建时间</th>
-                    <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司采购人员,系统超级管理员,系统普通管理员">
+                    <th data-field="accStatus" data-formatter="showStatusFormatter">
+                        记录状态
+                    </th>
+                    <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司采购人员">
                         <th data-width="100" data-field="accStatus" data-formatter="statusFormatter">
                             操作
                         </th>
@@ -76,8 +81,10 @@
                         <ul class="dropdown-menu pull-right">
                             <li><a onclick="onclikLi(this)">汽车公司/配件名称/供应商/配件类型</a></li>
                             <li class="divider"></li>
-                            <li><a onclick="onclikLi(this)">汽车公司</a></li>
-                            <li class="divider"></li>
+                            <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员">
+                                <li><a onclick="onclikLi(this)">汽车公司</a></li>
+                                <li class="divider"></li>
+                            </shiro:hasAnyRoles>
                             <li><a onclick="onclikLi(this)">配件名称</a></li>
                             <li class="divider"></li>
                             <li><a onclick="onclikLi(this)">供应商</a></li>

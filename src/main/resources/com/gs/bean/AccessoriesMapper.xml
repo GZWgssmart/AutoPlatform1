@@ -209,29 +209,29 @@
       and ac.companyId = #{user.companyId}
     </if>
     and (
-    <if test="accInv.companyId != '' and accInv.companyId != null">
-      cp.companyName like '%${accInv.companyId}%'
+    <if test="accessories.companyId != '' and accessories.companyId != null">
+      cp.companyName like '%${accessories.companyId}%'
     </if>
-    <if test="accInv.companyId != '' and accInv.companyId != null and
-            accInv.accName != '' and accInv.accName != null">
+    <if test="accessories.companyId != '' and accessories.companyId != null and
+            accessories.accName != '' and accessories.accName != null">
       OR
     </if>
-    <if test="accInv.accName!='' and accInv.accName!= null">
-      ac.accName LIKE '%${accInv.accId}%'
+    <if test="accessories.accName!='' and accessories.accName!= null">
+      ac.accName LIKE '%${accessories.accId}%'
     </if>
-    <if test="accInv.accName!='' and accInv.accName!= null and
-            accInv.supplyId!='' and accInv.supplyId!=null">
+    <if test="accessories.accName!='' and accessories.accName!= null and
+            accessories.supplyId!='' and accessories.supplyId!=null">
       OR
     </if>
-    <if test="accInv.supplyId!='' and accInv.supplyId!=null">
-      sp.supplyName LIKE '%${accInv.supplyId}%'
+    <if test="accessories.supplyId!='' and accessories.supplyId!=null">
+      sp.supplyName LIKE '%${accessories.supplyId}%'
     </if>
-    <if test="accInv.supplyId!='' and accInv.supplyId!= null and
-            accInv.accTypeId!='' and accInv.accTypeId!=null">
+    <if test="accessories.supplyId!='' and accessories.supplyId!= null and
+            accessories.accTypeId!='' and accessories.accTypeId!=null">
       OR
     </if>
-    <if test="accInv.accTypeId!='' and accInv.accTypeId!=null">
-      atp.accTypeName LIKE '%${accInv.accTypeId}%'
+    <if test="accessories.accTypeId!='' and accessories.accTypeId!=null">
+      atp.accTypeName LIKE '%${accessories.accTypeId}%'
     </if>)
   </select>
 
