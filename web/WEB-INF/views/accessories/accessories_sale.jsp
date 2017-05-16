@@ -158,7 +158,7 @@
                         <label class="col-sm-3 control-label">配件销售折扣：</label>
                         <div class="col-sm-7">
                             <input type="number" min="0.0" step="0.1" max="1" value="1" id="addSaleDiscount"
-                                   name="accSaleDiscount" placeholder="请输入配件销售折扣" class="form-control">
+                                   name="accSaleDiscount" onchange="Addcalculate();" placeholder="请输入配件销售折扣" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
@@ -248,7 +248,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">配件销售折扣：</label>
                         <div class="col-sm-7">
-                            <input type="number" id="editSaleDiscount" name="accSaleDiscount"
+                            <input type="number" id="editSaleDiscount" name="accSaleDiscount" onchange="Editcalculate()"
                                    define="AccessoriesSale.accSaleDiscount"
                                    placeholder="请输入配件销售折扣" class="form-control">
                         </div>

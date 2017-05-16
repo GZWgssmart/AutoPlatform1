@@ -353,6 +353,14 @@ function validator(formId) {
             validating: 'glyphicon glyphicon-refresh'
         },
         fields: {
+            inTypeId:{
+                message: '收入类型不能为空',
+                validators: {
+                    notEmpty: {
+                        message: '收入类型不能为空'
+                    }
+                }
+            },
             companyId: {
                 message: '所属公司不能为空',
                 validators: {
@@ -430,7 +438,7 @@ function Addcalculate() {
         //把计算后的值，填入购买总价中。
         addBuyTotal.value = totalPrice;
         if (buyDiscount != null && buyDiscount != "") {
-            addBuyMoney.value = totalPrice * buyDiscount;
+            addBuyMoney.value = Math.ceil(totalPrice * buyDiscount);
         } else {
             addBuyMoney.value = totalPrice;
         }
@@ -454,7 +462,7 @@ function Editcalculate() {
         //把计算后的值，填入购买总价中。
         addBuyTotal.value = totalPrice;
         if (buyDiscount != null && buyDiscount != "") {
-            addBuyMoney.value = totalPrice * buyDiscount;
+            addBuyMoney.value = Math.ceil(totalPrice * buyDiscount);
         } else {
             addBuyMoney.value = totalPrice;
         }
