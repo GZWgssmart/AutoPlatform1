@@ -395,9 +395,9 @@ function formatterDateTime(value) {
 // 激活或禁用
 function showStatusFormatter(value) {
     if(value == 'Y') {
-        return "是";
+        return "可用";
     } else {
-        return "否";
+        return "不可用";
     }
 }
 
