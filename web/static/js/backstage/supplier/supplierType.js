@@ -235,14 +235,6 @@ function formSubmit(url, formId, winId) {
         }, "json");
 }
 
-// 激活或禁用
-function showStatusFormatter(value) {
-    if(value == 'Y') {
-        return "可用";
-    } else {
-        return "不可用";
-    }
-}
 
 
 // 激活或禁用
