@@ -94,19 +94,20 @@ function blurredQuery() {
             var vaule = $("#ulInput").val();// 获取模糊查询输入框文本
             initTable('table', '/accType/blurredQuery?text=' + text + '&value=' + vaule);
         } else if (data.result == "notLogin") {
-            swal({
-                text: data.message,
-                confirmButtonText: "确认", // 提示按钮上的文本
-                type: "error"
-            }, function (isConfirm) {
-                if (isConfirm) {
-                    top.location = "/user/loginPage";
-                } else {
-                    top.location = "/user/loginPage";
-                }
-            })
+            swal({title:"",
+                    text:data.message,
+                    confirmButtonText:"确认",
+                    type:"error"}
+                ,function(isConfirm){
+                    if(isConfirm){
+                        top.location = "/user/loginPage";
+                    }else{
+                        top.location = "/user/loginPage";
+                    }
+                })
         } else if (data.result = "notRole") {
             swal({
+                title:"",
                 text: data.message,
                 confirmButtonText: "确认", // 提示按钮上的文本
                 type: "error"

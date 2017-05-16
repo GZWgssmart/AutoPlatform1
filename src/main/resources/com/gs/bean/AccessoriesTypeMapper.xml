@@ -138,25 +138,25 @@
     </select>
 
     <!-- 分页模糊查询个数 -->
-    <select id="countByBlurred" resultType="int" parameterType="com.gs.bean.User">
+    <select id="countByBlurred" resultType="int">
         <![CDATA[
            select count(accTypeId) FROM auto_platform.t_accessories_type atp
            LEFT JOIN auto_platform.t_company cp on cp.companyId=atp.companyId
            where 1=1
         ]]>
-        <if test="companyId != '' and companyId !=null">
-            and atp.companyId = #{companyId}
+        <if test="user.companyId != '' and user.companyId !=null">
+            and atp.companyId = #{user.companyId}
         </if>
         and(
-        <if test="accType.companyId != '' and accType.companyId != null">
-            cp.companyName like '%${accType.companyId}%'
+        <if test="accessoriesType.companyId != '' and accessoriesType.companyId != null">
+            cp.companyName LIKE '%${accessoriesType.companyId}%'
         </if>
-        <if test="accType.accTypeName != '' and accType.accTypeName != null and
-            accType.companyId != '' and accType.companyId != null">
+        <if test="accessoriesType.accTypeName != '' and accessoriesType.accTypeName != null and
+            accessoriesType.companyId != '' and accessoriesType.companyId != null">
             OR
         </if>
-        <if test="accType.accTypeName!='' and accType.accTypeName!=null">
-            atp.accTypeName LIKE '%${accType.accTypeName}%'
+        <if test="accessoriesType.accTypeName!='' and accessoriesType.accTypeName!=null">
+            atp.accTypeName LIKE '%${accessoriesType.accTypeName}%'
         </if>)
     </select>
 

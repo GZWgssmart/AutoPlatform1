@@ -234,25 +234,25 @@ public class AccessoriesTypeController {
             String roles = "公司超级管理员,公司普通管理员,系统超级管理员,系统普通管理员";
             if (RoleUtil.checkRoles(roles)) {
                 logger.info("配件分类模糊查询");
+                Pager pager = new Pager();
+                pager.setUser((User) session.getAttribute("user"));
+                pager.setPageNo(Integer.parseInt(pageNumber));
+                pager.setPageSize(Integer.parseInt(pageSize));
                 String text = request.getParameter("text");
                 String value = request.getParameter("value");
                 if (text != null && !text.equals("") && value != null && !value.equals("")) {
-                    Pager pager = new Pager();
-                    pager.setUser((User) session.getAttribute("user"));
-                    pager.setPageNo(Integer.parseInt(pageNumber));
-                    pager.setPageSize(Integer.parseInt(pageSize));
                     List<AccessoriesType> accessoriesTypes = null;
-                    AccessoriesType accessoriesType = new AccessoriesType();
+                    AccessoriesType accType = new AccessoriesType();
                     if (text.equals("汽车公司/配件分类名称")) {
-                        accessoriesType.setCompanyId(value);
-                        accessoriesType.setAccTypeName(value);
+                        accType.setCompanyId(value);
+                        accType.setAccTypeName(value);
                     } else if (text.equals("汽车公司")) {
-                        accessoriesType.setCompanyId(value);
+                        accType.setCompanyId(value);
                     } else if (text.equals("配件分类名称")) {
-                        accessoriesType.setAccTypeName(value);
+                        accType.setAccTypeName(value);
                     }
-                    accessoriesTypes = accessoriesTypeService.blurredQuery(pager, accessoriesType);
-                    pager.setTotalRecords(accessoriesTypeService.countByBlurred(accessoriesType, (User) session.getAttribute("user")));
+                    accessoriesTypes = accessoriesTypeService.blurredQuery(pager, accType);
+                    pager.setTotalRecords(accessoriesTypeService.countByBlurred(accType, (User) session.getAttribute("user")));
                     return new Pager4EasyUI<AccessoriesType>(pager.getTotalRecords(), accessoriesTypes);
                 } else {
                     return null;

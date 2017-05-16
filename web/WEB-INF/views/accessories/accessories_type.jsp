@@ -28,10 +28,13 @@
                 <thead>
                 <tr>
                     <th data-radio="true" data-field="status"></th>
-                    <th data-field="company.companyName">所属公司</th>
+                    <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员">
+                        <th data-field="company.companyName">汽车公司</th>
+                    </shiro:hasAnyRoles>
                     <th data-field="accTypeName">配件分类名称</th>
                     <th data-field="accTypeDes">配件分类描述</th>
-                    <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,系统超级管理员,系统普通管理员">
+                    <th data-field="accTypeStatus" data-formatter="showStatusFormatter">配件分类状态</th>
+                    <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员">
                         <th data-width="100" data-field="accTypeStatus" data-formatter="statusFormatter">
                             操作
                         </th>
@@ -65,20 +68,25 @@
             <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,系统超级管理员,系统普通管理员">
                 <div class="input-group" style="width:350px;float:left;padding:0;margin:0 0 0 -1px;">
                     <div class="input-group-btn">
-                        <button type="button" id="ulButton" class="btn btn-default" style="border-radius:0px;" data-toggle="dropdown">所属公司/配件分类名称<span class="caret"></span></button>
+                        <button type="button" id="ulButton" class="btn btn-default" style="border-radius:0px;"
+                                data-toggle="dropdown">汽车公司/配件分类名称<span class="caret"></span></button>
                         <ul class="dropdown-menu pull-right">
-                            <li><a onclick="onclikLi(this)">所属公司/配件分类名称</a></li>
+                            <li><a onclick="onclikLi(this)">汽车公司/配件分类名称</a></li>
                             <li class="divider"></li>
-                            <li><a onclick="onclikLi(this)">所属公司</a></li>
-                            <li class="divider"></li>
+                            <shiro:hasAnyRoles name="">
+                                <li><a onclick="onclikLi(this)">汽车公司</a></li>
+                                <li class="divider"></li>
+                            </shiro:hasAnyRoles>
                             <li><a onclick="onclikLi(this)">配件分类名称</a></li>
                             <li class="divider"></li>
                         </ul>
                     </div><!-- /btn-group -->
                     <input id="ulInput" class="form-control" onkeypress="if(event.keyCode==13) {blurredQuery();}">
-                    <a href="javaScript:;" onclick="blurredQuery()"><span class="glyphicon glyphicon-search search-style"></span></a>
+                    <a href="javaScript:;" onclick="blurredQuery()"><span
+                            class="glyphicon glyphicon-search search-style"></span></a>
                     </input>
-                </div><!-- /input-group -->
+                </div>
+                <!-- /input-group -->
             </shiro:hasAnyRoles>
         </div>
     </div>
@@ -136,20 +144,23 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">所属公司：</label>
                     <div class="col-sm-7">
-                        <select id="editCompany" class="js-example-tags company" define="AccessoriesType.companyId" name="companyId" style="width:100%">
+                        <select id="editCompany" class="js-example-tags company" define="AccessoriesType.companyId"
+                                name="companyId" style="width:100%">
                         </select>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">配件分类名称：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="accTypeName" define="AccessoriesType.accTypeName" placeholder="请输入配件分类名称" class="form-control">
+                        <input type="text" name="accTypeName" define="AccessoriesType.accTypeName"
+                               placeholder="请输入配件分类名称" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">配件分类描述：</label>
                     <div class="col-sm-7">
-                        <textarea type="text" name="accTypeDes" define="AccessoriesType.accTypeDes" placeholder="请输入相关内容" style="height: 100px;"
+                        <textarea type="text" name="accTypeDes" define="AccessoriesType.accTypeDes"
+                                  placeholder="请输入相关内容" style="height: 100px;"
                                   class="form-control"></textarea>
                     </div>
                 </div>
