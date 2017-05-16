@@ -2,6 +2,9 @@ package com.gs.dao;
 
 import com.gs.bean.Salary;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
 /**
 *由CSWangBin技术支持
 *
@@ -12,4 +15,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SalaryDAO extends BaseDAO<String, Salary>{
 
+    // 批量添加，导入时要用
+    public void addInsert(List<Salary> salarys);
 }

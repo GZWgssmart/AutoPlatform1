@@ -65,4 +65,16 @@
         ]]>
   </update>
 
+  <insert id="addInsert">
+    <selectKey resultType="int" keyProperty="salaryId" order="AFTER">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_salary
+    values
+    <foreach collection="list" item="item" index="index" separator="," >
+      (uuid(),#{item.userId},#{item.prizeSalary},#{item.minusSalay},
+      #{item.totalSalary},#{item.salaryDes},#{item.salaryTime},now())
+    </foreach>
+  </insert>
+
 </mapper>

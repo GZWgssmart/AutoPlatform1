@@ -10,6 +10,8 @@ import javax.annotation.Resource;
 import java.util.List;
 
 import com.gs.common.bean.Pager;
+import org.springframework.transaction.annotation.Transactional;
+
 /**
 *由CSWangBin技术支持
 *
@@ -67,5 +69,15 @@ public class SalaryServiceImpl implements SalaryService {
 
 	public int countByBlurred(Salary salary) {
 		return 0;
+	}
+
+	@Transactional
+	public boolean addInsert(List<Salary> salaries) {
+		boolean flag = false;
+		if (salaries != null) {
+			salaryDAO.addInsert(salaries);
+			flag = true;
+		}
+		return flag;
 	}
 }

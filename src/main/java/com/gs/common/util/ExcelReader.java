@@ -1,87 +1,100 @@
 package com.gs.common.util;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.text.SimpleDateFormat;
-import java.util.*;
-
-import com.gs.bean.Salary;
-import com.gs.common.Methods;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.ss.usermodel.Cell;
-import org.springframework.http.HttpRequest;
+import org.apache.poi.xssf.usermodel.XSSFCell;
 
-import javax.servlet.http.HttpServletRequest;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * 操作Excel表格的功能类
  */
 public class ExcelReader {
-    public static Map<String,Salary> readExcelFile(String fileName){
-        //创建对Excel工作薄文件的引用
+    public static final String OFFICE_EXCEL_2003_POSTFIX = "xls";
+    public static final String OFFICE_EXCEL_2010_POSTFIX = "xlsx";
+    public static final String EMPTY = "";
+    public static final String POINT = ".";
+    public static SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 
-        List<Salary> salaries = new ArrayList<Salary>();
-        HashMap<String, Salary> map=new HashMap<String, Salary>();
-        try {
-
-            InputStream is = new FileInputStream(fileName);
-            HSSFWorkbook hssfWorkbook = new HSSFWorkbook(is);
-
-            // 循环工作表Sheet
-            for (int numSheet = 0; numSheet < hssfWorkbook.getNumberOfSheets(); numSheet++) {
-                HSSFSheet hssfSheet = hssfWorkbook.getSheetAt(numSheet);
-                if (hssfSheet == null) {
-                    continue;
-                }
-
-                // 循环行Row
-                for (int rowNum = 1; rowNum <= hssfSheet.getLastRowNum(); rowNum++) {
-                    Salary salary = new Salary();
-                    HSSFRow hssfRow = hssfSheet.getRow(rowNum);
-                    if (hssfRow == null) {
-                        continue;
-                    }
-                    salary.setSalaryId(String.valueOf(hssfRow.getCell(0).getStringCellValue()));
-                    salary.setUserId(String.valueOf(hssfRow.getCell(1).getStringCellValue()));
-                    hssfRow.getCell(3).setCellType(Cell.CELL_TYPE_STRING);
-                    salary.setPrizeSalary(Double.valueOf(hssfRow.getCell(3).getNumericCellValue()));
-                    hssfRow.getCell(4).setCellType(Cell.CELL_TYPE_STRING);
-                    salary.setMinusSalay(Double.valueOf(hssfRow.getCell(4).getNumericCellValue()));
-                    hssfRow.getCell(5).setCellType(Cell.CELL_TYPE_STRING);
-                    salary.setTotalSalary(Double.valueOf(hssfRow.getCell(5).getNumericCellValue()));
-                    salary.setSalaryDes(String.valueOf(hssfRow.getCell(6).getStringCellValue()));
-                    hssfRow.getCell(7).setCellType(Cell.CELL_TYPE_STRING);
-                    salary.setSalaryTime((hssfRow.getCell(7).getDateCellValue()));
-                    hssfRow.getCell(8).setCellType(Cell.CELL_TYPE_STRING);
-                    salary.setSalaryCreatedTime((hssfRow.getCell(8).getDateCellValue()));
-
-                    salaries.add(salary);
-
-
-                }
-
-            }
-
-            for(Salary salary : salaries) {
-                System.out.printf(salary + "aaaaaaaaaaaaaaaaa");
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-
-        }finally{
-
-
+    /**
+     * 获得path的后缀名
+     *
+     * @param path
+     * @return
+     */
+    public static String getPostfix(String path) {
+        if (path == null || EMPTY.equals(path.trim())) {
+            return EMPTY;
         }
-
-
-        return map;
+        if (path.contains(POINT)) {
+            return path.substring(path.lastIndexOf(POINT) + 1, path.length());
+        }
+        return EMPTY;
     }
+
+    /**
+     * 单元格格式
+     *
+     * @param hssfCell
+     * @return
+     */
+    @SuppressWarnings({"static-access", "deprecation"})
+    public static String getHValue(HSSFCell hssfCell) {
+        if (hssfCell.getCellType() == hssfCell.CELL_TYPE_BOOLEAN) {
+            return String.valueOf(hssfCell.getBooleanCellValue());
+        } else if (hssfCell.getCellType() == hssfCell.CELL_TYPE_NUMERIC) {
+            String cellValue = "";
+            if (HSSFDateUtil.isCellDateFormatted(hssfCell)) {
+                Date date = HSSFDateUtil.getJavaDate(hssfCell.getNumericCellValue());
+                cellValue = sdf.format(date);
+            } else {
+                DecimalFormat df = new DecimalFormat("#.##");
+                cellValue = df.format(hssfCell.getNumericCellValue());
+                String strArr = cellValue.substring(cellValue.lastIndexOf(POINT) + 1, cellValue.length());
+                if (strArr.equals("00")) {
+                    cellValue = cellValue.substring(0, cellValue.lastIndexOf(POINT));
+                }
+            }
+            return cellValue;
+        } else {
+            return String.valueOf(hssfCell.getStringCellValue());
+        }
+    }
+
+    /**
+     * 单元格格式
+     *
+     * @param xssfCell
+     * @return
+     */
+    public static String getXValue(XSSFCell xssfCell) {
+        if (xssfCell.getCellType() == Cell.CELL_TYPE_BOOLEAN) {
+            return String.valueOf(xssfCell.getBooleanCellValue());
+        } else if (xssfCell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
+            String cellValue = "";
+            if (XSSFDateUtil.isCellDateFormatted(xssfCell)) {
+                Date date = XSSFDateUtil.getJavaDate(xssfCell.getNumericCellValue());
+                cellValue = sdf.format(date);
+            } else {
+                DecimalFormat df = new DecimalFormat("#.##");
+                cellValue = df.format(xssfCell.getNumericCellValue());
+                String strArr = cellValue.substring(cellValue.lastIndexOf(POINT) + 1, cellValue.length());
+                if (strArr.equals("00")) {
+                    cellValue = cellValue.substring(0, cellValue.lastIndexOf(POINT));
+                }
+            }
+            return cellValue;
+        } else {
+            return String.valueOf(xssfCell.getStringCellValue());
+        }
+    }
+
+    /**
+     * 自定义xssf日期工具类
+     *
+     * @author lp
+     */
 }

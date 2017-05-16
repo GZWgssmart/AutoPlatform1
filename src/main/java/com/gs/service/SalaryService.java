@@ -2,6 +2,8 @@ package com.gs.service;
 
 import com.gs.bean.Salary;
 
+import java.util.List;
+
 /**
 *由CSWangBin技术支持
 *
@@ -10,5 +12,6 @@ import com.gs.bean.Salary;
 *@des 
 */
 public interface SalaryService extends BaseService<String, Salary>{
-
+    // 批量添加，导入时要用
+    public boolean addInsert(List<Salary> salarys);
 }

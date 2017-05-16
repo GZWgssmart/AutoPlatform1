@@ -39,7 +39,7 @@ function importData() {
 $(function () {
     //0.初始化fileinput
     var oFileInput = new FileInput();
-    oFileInput.Init("txt_file", "/salary/addFile");
+    oFileInput.Init("txt_file", "/salary/readExcel");
 });
 
 //初始化fileinput
@@ -71,7 +71,8 @@ var FileInput = function () {
         }).on("fileuploaded", function(event, data) {
             // data 为controller返回的json
             if(data.response.result =='success'){
-                alert('处理成功');
+                initTable("table", "/salary/queryByPager"); // 初始化表格
+                $("#import").modal('hide');
             }
         });
     }
