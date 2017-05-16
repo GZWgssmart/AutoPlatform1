@@ -64,6 +64,7 @@
         </association>
     </resultMap>
 
+    <!-- 查询所有可用维修保养记录 -->
     <select id="queryByPager" resultMap="MaintainRecordMap" parameterType="com.gs.common.bean.Pager">
         <![CDATA[
             select m.*, ck.*, cc.colorId, cc.colorName, cp.plateId, cp.plateName,
@@ -84,7 +85,16 @@
         order by m.recordCreatedTime Desc
         limit #{beginIndex}, #{pageSize}
   </select>
+    <!-- 查询所有可用维修保养记录个数 -->
+    <select id="count" resultType="int" parameterType="com.gs.bean.User">
+        select count(recordId) from t_maintain_record mr, t_checkin ck
+        where mr.checkinId = ck.checkinId and recordStatus = 'Y'
+        <if test="companyId != '' and companyId != null">
+            and ck.companyId = #{companyId}
+        </if>
+    </select>
 
+    <!-- 根据id查询维修保养记录 -->
     <select id="queryById" resultMap="MaintainRecordMap">
     <![CDATA[
         select m.*, ck.*, cc.colorId, cc.colorName, cp.plateId, cp.plateName,
@@ -101,10 +111,20 @@
     ]]>
   </select>
 
+    <!-- 查询所有禁用维修保养记录 -->
     <select id="queryByPagerDisable" resultMap="MaintainRecordMap" parameterType="com.gs.common.bean.Pager">
      <![CDATA[
-         select m.*,ck.checkinId as checkin_id,ck.userName as user_name from t_maintain_record m,
-         t_checkin ck where m.checkinId = ck.checkinId and m.recordStatus = 'N'
+         select m.*, ck.*, cc.colorId, cc.colorName, cp.plateId, cp.plateName,
+            cm.modelId, cm.modelName, company.companyId,
+            company.companyName,company.companyAddress,
+            company.companyAddress, company.companyTel,
+            company.companyLogo, cb.brandId, cb.brandName
+            from t_maintain_record m, t_checkin ck, t_car_brand cb,
+             t_car_color cc, t_car_model cm, t_car_plate cp, t_company company
+              where m.checkinId = ck.checkinId and ck.brandId = cb.brandId
+              and ck.colorId = cc.colorId and ck.modelId = cm.modelId
+             and ck.plateId = cp.plateId and ck.companyId = company.companyId
+             and m.recordStatus = 'N'
      ]]>
       <if test="user.companyId != '' and user.companyId != null">
           and ck.companyId = #{user.companyId}
@@ -112,15 +132,7 @@
       order by m.recordCreatedTime Desc
       limit #{beginIndex}, #{pageSize}
   </select>
-
-    <select id="count" resultType="int" parameterType="com.gs.bean.User">
-      select count(recordId) from t_maintain_record mr, t_checkin ck
-      where mr.checkinId = ck.checkinId and recordStatus = 'Y'
-      <if test="companyId != '' and companyId != null">
-         and ck.companyId = #{companyId}
-      </if>
-  </select>
-
+    <!-- 查询所有禁用维修保养记录个数 -->
     <select id="countByDisable" resultType="int" parameterType="com.gs.bean.User">
     select count(recordId) from t_maintain_record mr, t_checkin ck where
         mr.checkinId = ck.checkinId and recordStatus = 'N'
@@ -129,6 +141,7 @@
         </if>
   </select>
 
+    <!-- 查询所有维修保养记录 -->
     <select id="queryAll" resultMap="MaintainRecordMap" parameterType="com.gs.bean.User">
     select m.*,ck.checkinId as checkin_id,ck.userName as user_name
     from t_maintain_record m, t_checkin ck where m.checkinId = ck.checkinId
@@ -136,29 +149,29 @@
             and ck.companyId = #{companyId}
         </if>
   </select>
-
+    <!-- 冻结维修保养记录 -->
     <update id="inactive" parameterType="string">
     update t_maintain_record set recordStatus = 'N' where recordId = #{recordId}
   </update>
-
+    <!-- 激活维修保养记录 -->
     <update id="active" parameterType="string">
     update t_maintain_record set recordStatus = 'Y' where recordId = #{recordId}
   </update>
-
+    <!--添加维修保养记录 -->
     <insert id="insert" parameterType="MaintainRecord">
     insert into t_maintain_record(recordId,checkinId,startTime,endTime,actualEndTime,recordCreatedTime,pickupTime,recordDes,recordStatus,currentStatus,ifConfirm)
     values(uuid(),#{checkinId},#{startTime},#{endTime},#{actualEndTime},now(),#{pickupTime},#{recordDes},'Y',#{currentStatus},#{ifConfirm});
   </insert>
-
+    <!-- 修改维修保养记录 -->
     <update id="update" parameterType="MaintainRecord">
       update t_maintain_record set startTime=#{startTime},endTime=#{endTime},actualEndTime=#{actualEndTime},recordCreatedTime=#{recordCreatedTime},pickupTime=#{pickupTime},recordDes=#{recordDes}, currentStatus=#{currentStatus}, ifConfirm=#{ifConfirm} where recordId = #{recordId}
     </update>
-
+    <!-- 修改维修保养记录当前状态 -->
     <update id="updateCurrentStatus">
         update t_maintain_record set currentStatus=#{currentStatus} where recordId in (${recordId})
     </update>
 
-    <!-- 分页模糊查询 -->
+    <!-- 维修保养记录分页模糊查询 -->
     <select id="blurredQuery" resultMap="MaintainRecordMap">
         <![CDATA[
             select  m.*, ck.*, cc.colorId, cc.colorName, cp.plateId, cp.plateName,
@@ -205,7 +218,7 @@
         limit #{pager.beginIndex}, #{pager.pageSize}
     </select>
 
-    <!-- 分页模糊查询个数 -->
+    <!-- 维修保养记录分页模糊查询个数 -->
     <select id="countByBlurred" resultType="int">
         <![CDATA[
              select  count(m.recordId) from t_maintain_record m, t_checkin ck, t_car_brand cb,

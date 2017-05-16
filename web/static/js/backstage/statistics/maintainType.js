@@ -28,10 +28,6 @@ $(function () {
 
 $("#companyId").change(function () {
     alert("aaaaaaaaaaaaaaaaaaa")
-    var companyId = $("#companyId").val()
-    var maintainId = $("#maintainTypeId").val()
-
-    console.log(companyId + maintainId)
 });
 
 

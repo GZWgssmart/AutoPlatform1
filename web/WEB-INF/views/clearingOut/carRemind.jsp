@@ -165,7 +165,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">实际付款金额：</label>
                         <div class="col-sm-7">
-                            <input type="number" name="actualPayment" step="1" min="1"
+                            <input type="number" name="actualPayment" min="1"
                                    placeholder="请输入实际付款金额" class="form-control" style="width:100%"/>
                         </div>
                     </div>

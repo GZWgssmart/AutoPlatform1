@@ -1,16 +1,15 @@
 package com.gs.controller.FinancialManage;
 
+import com.gs.bean.IncomingOutgoing;
 import com.gs.bean.OutgoingType;
 import com.gs.bean.Salary;
 import com.gs.bean.User;
+import com.gs.common.Constants;
 import com.gs.common.Methods;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
-import com.gs.common.util.ExcelExport;
-import com.gs.common.util.ExcelReader;
-import com.gs.common.util.RoleUtil;
-import com.gs.common.util.SessionUtil;
+import com.gs.common.util.*;
 import com.gs.service.SalaryService;
 import org.apache.commons.io.FileUtils;
 import org.apache.ibatis.annotations.Param;
@@ -29,8 +28,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -163,8 +164,17 @@ public class SalaryController {
                         objs[4] = salary1.getMinusSalay();
                         objs[5] = salary1.getTotalSalary();
                         objs[6] = salary1.getSalaryDes();
-                        objs[7] = salary1.getSalaryTime();
-                        objs[8] = salary1.getSalaryCreatedTime();
+                        if (salary1.getSalaryTime() != null) {
+                            objs[7] = java.sql.Timestamp.valueOf(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(salary1.getSalaryTime()));
+                        } else {
+                            objs[7] = null;
+                        }
+
+                        if (salary1.getSalaryCreatedTime() != null) {
+                            objs[8] =java.sql.Timestamp.valueOf(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(salary1.getSalaryCreatedTime()));
+                        } else {
+                            objs[8] = null;
+                        }
                         dataList.add(objs);
                     }
                     ExcelExport ex = new ExcelExport(title, rowsName, dataList, response);
@@ -188,25 +198,66 @@ public class SalaryController {
 
 
     @ResponseBody
-    @RequestMapping(value = "addFile", method = RequestMethod.POST)
-    public ControllerResult addFile(@RequestParam("txt_file") MultipartFile file, HttpServletRequest request) {
-        try {
-            String fileName = file.getOriginalFilename();
-            String prefix = fileName.substring(fileName.lastIndexOf(".") + 1);
-            String newFileName = System.currentTimeMillis() + "." + prefix;
-            String filePath = Methods.getRootPath(request) + Methods.createNewFolder() + "\\" + newFileName;
-            InputStream in = file.getInputStream(); // 获取文件输入流
-            if (fileName != null && !fileName.equals("")) {
-                FileUtils.copyInputStreamToFile(in, new File(filePath));
+    @RequestMapping(value="readExcel",method=RequestMethod.POST)
+    public ControllerResult readExcel(HttpSession session, MultipartFile txt_file) throws IOException {
+        if (SessionUtil.isLogin(session)) {
+            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员";
+            if (RoleUtil.checkRoles(roles)) {
+                logger.info("导入工资");
+                String name = txt_file.getOriginalFilename();
+                long size = txt_file.getSize();
+                if (name == null || ExcelReader.EMPTY.equals(name) && size == 0) {
+                    return ControllerResult.getFailResult("导入工资失败");
+                }
+                //读取Excel数据到List中
+                List<ArrayList<String>> list = null;
+                try {
+                    list = new ExcelRead().readExcel(txt_file);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                Salary salary = null;
+                User sessionUser = (User) session.getAttribute("user");
+                //list中存的就是excel中的数据，可以根据excel中每一列的值转换成你所需要的值（从0开始），如：
+                List<Salary> salaries = new ArrayList<Salary>();
+                List<IncomingOutgoing> incomingOutgoings = new ArrayList<IncomingOutgoing>();
+
+                for (ArrayList<String> arr : list) {
+                    salary = new Salary();
+                    try {
+                        salary.setUserId(arr.get(1));
+                        salary.setPrizeSalary(Double.valueOf(arr.get(3)));
+                        salary.setMinusSalay(Double.valueOf(arr.get(4)));
+                        salary.setTotalSalary(Double.valueOf(arr.get(5)));
+                        salary.setSalaryDes(arr.get(6));
+                        salary.setSalaryTime(dateFormat(arr.get(7)));
+                    } catch (NullPointerException e) {
+                        return ControllerResult.getFailResult("导入工资失败");
+                    }
+                    salaries.add(salary);
+                }
+                if (salaryService.addInsert(salaries)) {
+                  /*  incomingOutgoingService.addInsert(incomingOutgoings);*/
+                    return ControllerResult.getSuccessResult("导入工资成功");
+                } else {
+                    return ControllerResult.getFailResult("导入工资失败,没有该权限");
+                }
             }
-            ExcelReader.readExcelFile(filePath);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ControllerResult.getFailResult("上传失败");
+            return ControllerResult.getFailResult("导入失败");
+        } else {
+            logger.info("Session已失效，请重新登入");
+            return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
         }
-        return ControllerResult.getSuccessResult("上传成功");
     }
 
-
+    public Date dateFormat(String str){
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        try {
+            return sdf.parse(str);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
 }

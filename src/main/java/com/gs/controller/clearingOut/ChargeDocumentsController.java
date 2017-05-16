@@ -297,7 +297,11 @@ public class ChargeDocumentsController {
                         objs[11] = c.getChargeBillMoney();
                         objs[12] = c.getActualPayment();
                         objs[13] = c.getChargeTime();
-                        objs[14] = java.sql.Timestamp.valueOf(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(c.getChargeCreatedTime()));
+                        if(c.getChargeCreatedTime() != null) {
+                            objs[14] = java.sql.Timestamp.valueOf(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(c.getChargeCreatedTime()));
+                        }else{
+                            objs[14] = null;
+                        }
                         objs[15] = c.getChargeBillDes();
                         objs[16] = "可用";
                         dataList.add(objs);

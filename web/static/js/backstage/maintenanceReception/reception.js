@@ -307,28 +307,28 @@ function validator(formId) {
         },
         fields: {
             userName: {
-                message: '用户名验证失败',
+                message: '车主姓名验证失败',
                 validators: {
                     notEmpty: {
-                        message: '用户名不能为空'
+                        message: '车主姓名不能为空'
                     },
                     stringLength: {
                         min: 1,
                         max: 6,
-                        message: '用户名长度必须在1到6位之间'
+                        message: '车主姓名长度必须在1到6位之间'
                     }
                 }
             },
             userPhone: {
-                message: '用户名验证失败',
+                message: '车主手机验证失败',
                 validators: {
                     notEmpty: {
-                        message: '用户手机号码不能为空'
+                        message: '车主电话不能为空'
                     },
                     stringLength: {
                         min: 11,
                         max: 11,
-                        message: '手机号码必须为11位'
+                        message: '车主电话必须为11位'
                     },
                     regexp: {
                         regexp: /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/,

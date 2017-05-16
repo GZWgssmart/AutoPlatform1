@@ -140,7 +140,7 @@
 </div>
 
 <div id="addWindow" class="modal fade" style="overflow-y:scroll" data-backdrop="static">
-    <div class="modal-dialog">
+    <div class="modal-dialog" style="width: 60%;">
         <div class="modal-content">
             <div class="modal-body">
                 <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
@@ -220,7 +220,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">车牌号码：</label>
                         <div class="col-sm-7">
-                            <input id="addPlate" name="carPlate" placeholder="请输入车牌号码" class="form-control"/>
+                            <input id="addPlate" type="number" name="carPlate" placeholder="请输入车牌号码" class="form-control"/>
                         </div>
                     </div>
                     <div class="form-group">
@@ -283,7 +283,7 @@
 
 <!-- 修改弹窗 -->
 <div class="modal fade" id="editWindow" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static">
-    <div class="modal-dialog">
+    <div class="modal-dialog" style="width: 60%;">
         <div class="modal-content">
             <div class="modal-body">
                 <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
@@ -366,7 +366,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">车牌号码：</label>
                         <div class="col-sm-7">
-                            <input id="editPlate" type="text" name="carPlate" placeholder="车牌号码"
+                            <input id="editPlate" type="number" name="carPlate" placeholder="车牌号码"
                                    define="checkin.carPlate"
                                    class="form-control"/>
                         </div>
