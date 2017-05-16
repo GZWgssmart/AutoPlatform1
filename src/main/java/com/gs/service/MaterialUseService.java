@@ -24,21 +24,21 @@ public interface MaterialUseService extends BaseService<String, MaterialUse>{
     public int countHist();
     public int countUserHist(String userId);
 
-    public List<MaterialURTemp> queryUseFlowingbyPager(String flowName, String companyId, String roleId , Pager pager);
+    public List<MaterialURTemp> queryUseFlowingbyPager(String flowName, User user, String roleId , Pager pager);
 
-    public int countUseFlowing(String flowName,String companyId, String roleId);
+    public int countUseFlowing(String flowName,User user, String roleId);
 
-    public List<MaterialURTemp> queryReturnFlowingbyPager(String flowName, String companyId, String roleId , Pager pager);
+    public List<MaterialURTemp> queryReturnFlowingbyPager(String flowName, User user, String roleId , Pager pager);
 
-    public int countReturnFlowing(String flowName,String companyId, String roleId);
+    public int countReturnFlowing(String flowName,User user, String roleId);
 
-    public List queryHistoryFlowingbyPager(String companyId,String  flowName,String taskKey, Pager pager);
+    public List queryHistoryFlowingbyPager(User user, String flowName, String taskKey, Pager pager);
 
-    public int countHistoryFlowing(String companyId, String flowName);
+    public int countHistoryFlowing(User user, String flowName);
 
-    public List queryUserFlowingByPager(String flowName, String userId, String reviewTaskName, Pager pager);
+    public List queryUserFlowingByPager(String flowName, User user, String reviewTaskName, Pager pager);
 
-    public int countUserFlowing(String flowName, String userId);
+    public int countUserFlowing(String flowName, User user);
 
     /**
      *
@@ -51,14 +51,15 @@ public interface MaterialUseService extends BaseService<String, MaterialUse>{
     public List<User> companyEmps(String companyId);
     public int insertWorkInfo(WorkInfo workInfo);
 
-    public List<WorkView> userWorksByPager(String userId, Pager pager);
-    public List<WorkView> userWorksStatusByPager(String userId,String status,Pager pager);
-    public int countUserWorks(String userId);
-    public int countUserWorksStatus(String userId, String status);
+    public List<WorkView> userWorksByPager(User user, Pager pager);
+    public List<WorkView> userWorksStatusByPager(User user,String status,Pager pager);
+    public int countUserWorks(User user);
+    public int countUserWorksStatus(User user, String status);
     public boolean recordIsDisp(String recordId);
     public List<DetailTemp> queryDetailsByRecordId(String recordId, String companyId, Pager pager);
     public int countDetailsByRecordId(String recordId,String companyId);
     public int updWorkInfoUser(String recordId, String userId);
 
     public Accessories accQueryById(String accId);
+    public List accQueryAll(User user);
 }

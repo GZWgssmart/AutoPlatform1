@@ -158,8 +158,7 @@ function showDel(t){
         materials.accCountView = -parseInt(accCount);
     }
     validator("materialsForm");
-    console.log("showDel");
-    initSelect2("materialsCombobox", "请选择零件", "/accInv/queryAllAccInv"); // 初始化select2, 第一个参数是class的名字, 第二个参数是select2的提示语, 第三个参数是select2的查询url
+    initSelect2("materialsCombobox", "请选择零件", "/materials/queryAllAccInv"); // 初始化select2, 第一个参数是class的名字, 第二个参数是select2的提示语, 第三个参数是select2的查询url
     $("#subButton1").removeAttr("disabled");
     $("#materialsForm").fill(materials);
     $("#formTag").val("add");
@@ -167,15 +166,16 @@ function showDel(t){
 
 }
 function showAppend(){
-    console.log("showAppend");
     validator("appendMaterialsForm");
-    initSelect2("materialsCombobox", "请选择零件", "/accInv/queryAllAccInv"); // 初始化select2, 第一个参数是class的名字, 第二个参数是select2的提示语, 第三个参数是select2的查询url
+    initSelect2("materialsCombobox", "请选择零件", "/materials/queryAllAccInv"); // 初始化select2, 第一个参数是class的名字, 第二个参数是select2的提示语, 第三个参数是select2的查询url
+    var recordIdEl = $("#appendMaterialsForm").find("input[name=maintainRecordId]");
+    var recordId = $("#seachRecordId").val();
+    $(recordIdEl).val(recordId);
     $("#subButton2").removeAttr("disabled");
     $("#appendModal").modal("show");
     $("#accsInfo").modal('hide'); // 关闭指定的窗口
 }
 function showWorkInfoDetail(recordId){
-    console.log("showWorkInforDetail");
     initTableNotTollbar('workInfoAccDetailTable',"/materials/recordAccsByPager?recordId="+recordId);
     $("#accsInfo").modal("show");
     $("#seachRecordId").val(recordId);
@@ -221,7 +221,6 @@ function abcd(tableId, url) {
 
 // 验证一块
 function checkForm(formId, btnId) {
-    console.log("formId: "+$("#"+ formId).data('bootstrapValidator'));
     $("#"+ formId).data('bootstrapValidator').validate();
     if ($("#"+ formId).data('bootstrapValidator').isValid()) {
         $("#"+btnId).attr("disabled","disabled");
@@ -272,16 +271,14 @@ function validator(formId) {
 
         }
     }).on('success.form.bv', function (e) {
-        console.log(formId);
         if (formId == "materialsForm") {
             var tag = $("#formTag").val(); // edit  add
             if(tag === "add") {
-                formSubmit("/flow/subForm", "application", formId,"subButton1", "reviewingTable");
+                formSubmit("/flow/subForm", "application", formId,"subButton1", "workInfoAccDetailTable");
             } else if(tag === "edit") {
                 formSubmit("/flow/reSubForm", "application", formId,"subButton1", "reviewingTable");
             }
         } else if (formId == "appendMaterialsForm") {
-            console.log("isisAppend")
             formSubmit("/materials/insert","appendModal", formId, "subButton2", "materialsTable");
         }
     })
@@ -289,7 +286,6 @@ function validator(formId) {
 
 // 向与后台连接一块
 function formSubmit(url, modalId ,formId, subBtnId,tableId){
-    console.log( $("#"+ formId).serialize());
     $.post(url,
         $("#"+ formId).serialize(),
         function (data) {
@@ -329,10 +325,9 @@ function removeMaterialsProInst(url, proInstId) {
 
 // tableFormatter一块
 function todoCell(ele, row, index) {
-    return "<span onclick='showWorkInfoDetail(\"" + row.recordId +"\")'>查看清单</span>";
+    return "<a href='javascript:;'><span onclick='showWorkInfoDetail(\"" + row.recordId +"\")'><span class='glyphicon glyphicon-list-alt icon-list-alt' style='margin-right: 5px;' ></span><span>查看清单</span></span></a>";
 }
 function reTodoBtn(ele, row, index) {
-    console.log(row);
     var retodoHtml = [];
     if (row.varsMap.respMsg != null) {
         retodoHtml.push('<button type="button" class="btn btn-success resub" style="margin-right:10px">');
@@ -349,6 +344,18 @@ function reTodoBtn(ele, row, index) {
 function countFormatter(ele, row, index) {
     return ele +  "&nbsp;&nbsp;/" + row.varsMap.acc.accUnit;
 }
+function userRequestsFormatter(ele ,row, index) {
+    var reqView = "";
+    if(ele.length>10) {
+        reqView = ele.slice(0,10)+ "...";
+    } else {
+        reqView = ele;
+    }
+    var reqHtml = "<p title='"+ ele +"'> "+ reqView +" </p>"
+
+}
+
+
 function getReturnAndUseCount(counts) {
     var rAu = {};
     var rtn = 0;
@@ -364,13 +371,10 @@ function getReturnAndUseCount(counts) {
     return rAu;
 }
 function accInfoFormat(element, row, index){
-    console.log(row);
     var rAu = {rtn: 0, use: 0};
     if(row.other.materialURTemp) {
-        console.log("intoOther")
         rAu = getReturnAndUseCount(row.other.materialURTemp.varsMap.accCount);
     }
-    console.log(rAu);
     var min ;
     if(!isnull(row.materialUse)&&!isnull(row.materialReturn)){
         min = row.materialUse.accCount- row.materialReturn.accCount;
@@ -422,12 +426,16 @@ function reviewUserFormatter(el, row, index) {
     var reviewCellHtml = "";
     reviewCellHtml= "未审核";
     if(varsMap.respMsg!=null && varsMap.respMsg != undefined && varsMap.respMsg != "") {
-        reviewCellHtml = "未通过";
+        reviewCellHtml = '<span style="margin-right:5px;">未通过</span><span  class="glyphicon glyphicon-question-sign" title="原因: '+ varsMap.respMsg +'"></span>'
     }
     /*reviewCellHtml.push("<p>审核人:</p> "+ row.workInfo.user.userName + " </br>");
      reviewCellHtml.push("<p>审核时间:</p> " + formatterDate(row.taskTemp.endTime)+ " </br>");
      reviewCellHtml.push("<p>原因:</p> " + varsMap.respMsg);*/
     return reviewCellHtml;
+}
+
+function noSucMsgPopEve() {
+    $(".noSucMsg").popover();
 }
 function todoType(ele, row, index) {
     if(ele === 'U'){
@@ -472,7 +480,6 @@ function removeMa(e, value, row, index) {
         })
 }
 function  resub(e, value, row, index) {
-    console.log("resub")
     var varsMap = row.varsMap;
     var materials = {};
     materials.recordId = varsMap.recordId;
@@ -484,7 +491,6 @@ function  resub(e, value, row, index) {
     materials.accCountView = Math.abs(varsMap.accCount);
     materials.reqMsg =varsMap.reqMsg;
     materials.processInstanceId = row.processInstanceId;
-    console.log(materials);
     $("#formTag").val("edit");
     var reSubFormNumInput = $("#materialsForm input[type=number]");
     $(reSubFormNumInput).removeAttr("readonly");
@@ -496,7 +502,6 @@ function  resub(e, value, row, index) {
 
 // 通用的零碎的方法
 function  closeModal(modalId,formId) {
-    console.log("clocloclo")
     $("#"+ modalId).modal("hide");
     $('#'+ formId + " input[type=reset]").trigger("click"); // 移除表单中填的值
     $('#'+ formId).data('bootstrapValidator').resetForm(true); // 移除所有验证

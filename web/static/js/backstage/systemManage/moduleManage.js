@@ -124,9 +124,10 @@ function appendModulePanel(module) {
     modulePanels.append(panel);
 }
 
-function updateModule(moduleId, moduleName) {
+function updateModule(moduleId, module) {
     var oldModule = getModule(moduleId);
     oldModule.moduleName = moduleName;
+    oldModule.moduleDes = moduleDes;
 }
 function getModulePanelByModuleId(moduelId) {
     var modulePanels = $("#modulePanels").children(".modulePanel");
@@ -144,7 +145,6 @@ function updBodyModulePanel(module) {
     var modulePanel = getModulePanelByModuleId(module.moduleId);
     updateModuelPanelTitle(modulePanel,module.moduleName);
     updateModulePanelDes(modulePanel, module.moduleDes);
-    updateModule(module.moduleId, module.moduleName);
 }
 function updateModuelPanelTitle(modulePanel, newTitle) {
     var heading = $(modulePanel).children(".panel-heading")
@@ -420,9 +420,10 @@ function formSubmit(url, modalId ,formId, flag) {
                                 module.moduleName = $(input).val();
                             }
                         }
-                        module.moduleDes = textarea.val();
-                        updBodyModulePanel(module);
-                        updateLeftNavTitle(module);
+                        var moduleTemp = getModule(module.moduleId);
+                        moduleTemp.moduleDes = textarea.val();
+                        updBodyModulePanel(moduleTemp);
+                        updateLeftNavTitle(moduleTemp);
                     }
                     closeModal();
                 });// 提示窗口, 修改成功

@@ -1,11 +1,9 @@
 package com.gs.controller.pickingManage;
 
 import ch.qos.logback.classic.Logger;
-import com.gs.bean.MaterialList;
-import com.gs.bean.MaterialReturn;
-import com.gs.bean.MaterialUse;
-import com.gs.bean.User;
+import com.gs.bean.*;
 import com.gs.bean.view.MaterialURTemp;
+import com.gs.common.bean.ComboBox4EasyUI;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
@@ -13,10 +11,7 @@ import com.gs.common.util.RoleUtil;
 import com.gs.common.util.SessionUtil;
 import com.gs.common.util.UUIDUtil;
 import com.gs.controller.SystemManageController;
-import com.gs.service.MaterialListService;
-import com.gs.service.MaterialReturnService;
-import com.gs.service.MaterialUseService;
-import com.gs.service.WorkInfoService;
+import com.gs.service.*;
 import org.activiti.engine.*;
 import org.activiti.engine.history.HistoricProcessInstance;
 import org.activiti.engine.impl.identity.Authentication;
@@ -28,16 +23,14 @@ import org.activiti.engine.task.TaskQuery;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 领料与退料
@@ -54,6 +47,9 @@ public class MaterialsController {
 
     @Resource
     private MaterialListService materialListService;
+
+    @Resource
+    private AccessoriesService accessoriesService;
 
     @Resource
     private MaterialUseService materialUseService;
@@ -86,16 +82,16 @@ public class MaterialsController {
     public Pager4EasyUI materialsByPager(@RequestParam("pageNumber") int pageNumber, @RequestParam("pageSize") int pageSize, HttpSession session){
         // TODO 公司员工
         if(SessionUtil.isLogin(session)) {
-            User user = (User)session.getAttribute("user");
-            Pager pager = new Pager();
-            Pager4EasyUI pager4EasyUI = new Pager4EasyUI();
-            pager.setPageNo(pageNumber);
-            pager.setPageSize(pageSize);
-            int total = materialListService.count(user.getUserId());
-            pager4EasyUI.setTotal(total);
-            List list = materialListService.queryByPager(user.getUserId(),pager);
-            pager4EasyUI.setRows(list);
-            return pager4EasyUI;
+                User user = (User) session.getAttribute("user");
+                Pager pager = new Pager();
+                Pager4EasyUI pager4EasyUI = new Pager4EasyUI();
+                pager.setPageNo(pageNumber);
+                pager.setPageSize(pageSize);
+                int total = materialListService.count(user.getUserId());
+                pager4EasyUI.setTotal(total);
+                List list = materialListService.queryByPager(user.getUserId(), pager);
+                pager4EasyUI.setRows(list);
+                return pager4EasyUI;
         } else {
             logger.info("请先登录");
             return null;
@@ -131,13 +127,14 @@ public class MaterialsController {
     public Pager4EasyUI recordAccsByPager(@RequestParam("pageNumber") int pageNumber, @RequestParam("pageSize") int pageSize,@RequestParam("recordId")String recordId, HttpSession session){
         // TODO 所有登录公司员工
         if(SessionUtil.isLogin(session)) {
+            User user = (User)session.getAttribute("user");
             Pager pager = new Pager();
             pager.setPageNo(pageNumber);
             pager.setPageSize(pageSize);
-            int total = materialListService.countRecordAccs(recordId);
+            int total = materialListService.countRecordAccs(recordId, user);
             Pager4EasyUI pager4EasyUI = new Pager4EasyUI();
             pager4EasyUI.setTotal(total);
-            List list = materialListService.recordAccsByPager(recordId, pager);
+            List list = materialListService.recordAccsByPager(recordId, user, pager);
             setFlowingVars(list);
             pager4EasyUI.setRows(list);
             return pager4EasyUI;
@@ -257,8 +254,14 @@ public class MaterialsController {
     public ControllerResult insertMaterials(MaterialList materialList, HttpSession session){
         // TODO 未知, 可能学徒都可以
         if(SessionUtil.isLogin(session)) {
-            int resultCount = materialListService.insert(materialList);
-            return isSuc(resultCount,"添加成功","添加失败");
+            String roles = "公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师,汽车公司学徒,汽车公司销售人员,汽车公司财务人员,汽车公司采购人员,汽车公司库管人员,汽车公司人力资源管理部";
+            if(RoleUtil.checkRoles(roles)) {
+                int resultCount = materialListService.insert(materialList);
+                return isSuc(resultCount, "添加成功", "添加失败");
+            }  else {
+                logger.info("此用户无拥有追加物料的角色");
+                return ControllerResult.getNotRoleResult("权限不足");
+            }
         } else {
             logger.info("请先登录");
             return null;
@@ -270,6 +273,37 @@ public class MaterialsController {
             return ControllerResult.getSuccessResult(sucmsg);
         }
         return ControllerResult.getFailResult(ermsg);
+    }
+
+
+    /**
+     * 查询全部的配件信息
+     */
+    @ResponseBody
+    @RequestMapping(value = "queryAllAccInv",method = RequestMethod.GET)
+    public List<ComboBox4EasyUI> queryAllAccInv(HttpSession session){
+        if(SessionUtil.isLogin(session)){
+            User user = (User) session.getAttribute("user");
+            String roles="公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师,汽车公司技师,汽车公司销售人员,汽车公司财务人员,汽车公司采购人员,汽车公司库管人员,汽车公司人力资源管理部,系统超级管理员,系统普通管理员";
+            if(RoleUtil.checkRoles(roles)){
+                logger.info("查询所有配件信息");
+                List<Accessories> accessories = materialUseService.accQueryAll(user);
+                List<ComboBox4EasyUI> comboxs = new ArrayList<ComboBox4EasyUI>();
+                for(Accessories c : accessories){
+                    ComboBox4EasyUI comboBox4EasyUI = new ComboBox4EasyUI();
+                    comboBox4EasyUI.setId(c.getAccId());
+                    comboBox4EasyUI.setText(c.getAccName());
+                    comboxs.add(comboBox4EasyUI);
+                }
+                return comboxs;
+            }else{
+                logger.info("此用户无拥有此方法角色");
+                return null;
+            }
+        }else{
+            logger.info("请先登陆");
+            return null;
+        }
     }
 
 

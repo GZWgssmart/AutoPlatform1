@@ -1,6 +1,7 @@
 package com.gs.service;
 
 import com.gs.bean.MaterialList;
+import com.gs.bean.User;
 import com.gs.bean.view.MaterialURTemp;
 import com.gs.bean.view.MaterialView;
 import com.gs.common.bean.Pager;
@@ -20,8 +21,8 @@ public interface MaterialListService extends BaseService<String, MaterialList>{
 
     public int count(String userId);
 
-    public List<MaterialList> recordAccsByPager(String recordId, Pager pager);
-    public int countRecordAccs(String recordId);
+    public List<MaterialList> recordAccsByPager(String recordId, User user, Pager pager);
+    public int countRecordAccs(String recordId, User user);
 
     public void insertList(List<MaterialList> materialLists);
 

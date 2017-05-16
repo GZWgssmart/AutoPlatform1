@@ -157,6 +157,14 @@
         span.glyphicon {
             cursor: hand;
         }
+        .modal-header h3{
+            font-family: '微软雅黑';
+        }
+       .close {
+           right:20px;
+           top:10px;
+           position: relative;
+       }
     </style>
 </head>
 
@@ -195,12 +203,11 @@
 <div class="modal fade" id="addModal" aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
+            <span  class="close"   onclick = "closeModal()">&times;</span>
                 <div class="modal-header" style="overflow:auto;">
                     <h3>修改模块</h3>
                 </div>
                 <input style="display:none"/>
-            </div>
             <hr/>
             <form id="addForm" class="form-horizontal">
                 <input type="text" name="moduleId" define="module.moduleId" style="display: none;"/>

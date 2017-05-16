@@ -38,6 +38,17 @@
         .sd{
             font-weight: bold;
         }
+        .modal-header h2 {
+            text-align: left;
+        }
+        a {
+            color: #337ab7;
+            text-decoration: none;
+        }
+        .close {
+            right:20px;
+            position: relative;
+        }
     </style>
 </head>
 <body>
@@ -84,12 +95,14 @@
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     </th>
-                    <th data-width="180" data-hide="all" data-field="useRequests" >
+                    <th data-width="180" data-hide="all" data-field="useRequests"  data-formatter = "userRequestsFormatter">
                         用户留言
                     </th>
-                    <th data-width="180" data-hide="all" data-field="todoCell"  data-formatter="todoCell" >
-                        操作
-                    </th>
+                    <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师,汽车公司学徒,汽车公司销售人员,汽车公司财务人员,汽车公司采购人员,汽车公司库管人员,汽车公司人力资源管理部">
+                        <th data-width="180" data-hide="all" data-field="todoCell"  data-formatter="todoCell" >
+                            操作
+                        </th>
+                    </shiro:hasAnyRoles>
                 </tr>
                 </thead>
             </table>
@@ -104,7 +117,9 @@
                     <th data-field="varsMap.acc.accTotal" data-formatter="countFormatter" data-width="100">总数量</th>
                     <th data-field="varsMap.acc.accPrice" data-width="100">单价</th>
                     <th data-field="reviewUser" data-formatter="reviewUserFormatter"  data-width="100">审批状态</th>
-                    <th data-field="todoCell" data-formatter="reTodoBtn" data-width="200" data-events="resubbtnevent">操作</th>
+                    <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师,汽车公司学徒,汽车公司销售人员,汽车公司财务人员,汽车公司采购人,汽车公司库管人员,汽车公司人力资源管理部">
+                        <th data-field="todoCell" data-formatter="reTodoBtn" data-width="200" data-events="resubbtnevent">操作</th>
+                    </shiro:hasAnyRoles>
                 </tr>
                 </thead>
             </table>
@@ -133,18 +148,19 @@
 </div>
 
 <!-- 零件明细弹窗 -->
-<div class="modal fade" id="accsInfo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师,汽车公司学徒,汽车公司销售人员,汽车公司财务人员,汽车公司采购人员,汽车公司库管人员,汽车公司人力资源管理部">
+    <div class="modal fade" id="accsInfo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header" style="margin-right:0;width:95%;">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel">零件明细
-                    <button type="button" class="btn btn-warning"  aria-hidden="true" onclick="showAppend()">追加物料</button>
-                </h4>
+                <h3 class="modal-title" id="myModalLabel">零件明细
+                                           <button type="button" class="btn btn-warning"  aria-hidden="true" onclick="showAppend()">追加物料</button>
+
+                </h3>
             </div>
             <div class="modal-body">
                 <input style="display: none;" id="seachRecordId" />
-
                 <table id="workInfoAccDetailTable" style="table-layout: fixed" data-single-select="true"
                        data-show-header="false" >
                     <thead>
@@ -161,13 +177,12 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal -->
 </div>
-
-
 <!-- 领取/退回表单弹窗 -->
-<div class="modal fade" id="application" aria-hidden="true">
+    <div class="modal fade" id="application" aria-hidden="true">
     <div class="modal-dialog" style="overflow:hidden;">
             <div class="modal-content">
                 <div class="modal-footer" style="text-align: center;">
+                    <span  class="close"  onclick = "closeModal('application','materialsForm')">&times;</span>
                     <div class="modal-header" style="overflow:auto;">
                         <h2>领取/退回 物料</h2>
                     </div>
@@ -214,17 +229,18 @@
 
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-
 <!-- 追加弹窗 -->
-<div class="modal fade" id="appendModal" aria-hidden="true">
+    <div class="modal fade" id="appendModal" aria-hidden="true">
     <div class="modal-dialog" style="overflow:hidden;">
         <div class="modal-content">
-            <div class="modal-footer" style="text-align: center;">
+            <div style="text-align: center;">
+                <span  class="close"   onclick="closeModal('appendModal','appendMaterialsForm')">&times;</span>
                 <div class="modal-header" style="overflow:auto;">
                     <h2>追加配件</h2>
                 </div>
                 <hr>
                 <form role="form" id="appendMaterialsForm" class="form-horizontal">
+                    <input name="maintainRecordId" readonly style="display:none" />
                     <div class="form-group">
                         <label class="col-sm-3 control-label">请选择零件：</label>
                         <div class="col-sm-7">
@@ -251,7 +267,7 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-
+</shiro:hasAnyRoles>
 
 
 <script src="/static/js/jquery.min.js"></script>

@@ -35,6 +35,10 @@
             border:none;
             box-shadow: none;
         }
+        .close {
+            right:20px;
+            position: relative;
+        }
     </style>
 </head>
 <body>
@@ -105,9 +109,9 @@
 <div class="modal fade" id="addModal" aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog">
         <div class="modal-content">
-
             <form class="form-horizontal" role="form" id="addForm" >
                 <input type="reset" name="reset" style="display: none;"/>
+                <span  class="close"   onclick = "formModalclose('addModal', 'addForm' )">&times;</span>
                 <div class="modal-header" style="overflow:auto;">
                     <h3></h3><input style="display: none;">
                 </div>
@@ -142,9 +146,9 @@
 <div class="modal fade" id="editPermission" aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog">
         <div class="modal-content">
+            <span  class="close"   data-dismiss="modal">&times;</span>
             <div class="panel-heading">
                 <h4 style="display: inline-block">修改角色权限</h4>
-                <div style="float:right"><span data-dismiss="modal">关闭</span></div>
             </div>
             <div class="panel-body" style="width: 60%;margin-left: auto;margin-right: auto;">
                 <div class="col-md-12">

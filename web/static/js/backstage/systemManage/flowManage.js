@@ -27,7 +27,7 @@ $(function () {
 function flowStatusFormatter(el, row, index) {
     var stat = checkDeployTime(row);
     if(stat === "NEW") {
-        return "已有新版本,请重新部署";
+        return "<p style='color: red;'>已有新版本,请重新部署</p>";
     } else if(stat === "OK"){
         return "已经部署";
     } else if(stat === "NO") {
@@ -43,7 +43,6 @@ function deployDateFormatter(el, row, index) {
 function todoCell(el, row, index) {
     var stat = checkDeployTime(row);
     var btn = "";
-    console.log(this);
     if(stat === "OK") {
         btn = '<button  type="button"   class="btn btn-danger cold disabled " >'
             + '禁用'
@@ -75,7 +74,6 @@ function coldBtnClick(e, val, row, idx) {
     var $curBtn = $(curBtn);
     if(!enterCtrlKey) {
         if (!$curBtn.hasClass("disabled")) {
-            console.log("禁用这个流程模版");
             swal(
                 {title:"",
                     text:"确定删除该流程模型吗",
@@ -109,7 +107,6 @@ function updBtnClick(e,val, row, idx) {
     }
 }
 function updateProceDef(btn, url, fileName) {
-    console.log(btn);
     $(btn).attr("disabled");
     $.post(url, "fileName="+fileName,
         function(data) {

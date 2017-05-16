@@ -91,10 +91,10 @@ public class MaterialUseServiceImpl implements MaterialUseService {
 	}
 
 	@Override
-	public List<MaterialURTemp> queryUseFlowingbyPager(String flowName, String companyId, String curActId,Pager pager) {
+	public List<MaterialURTemp> queryUseFlowingbyPager(String flowName, User user, String curActId,Pager pager) {
 		Map paramMap = new HashMap();
 		paramMap.put("flowName",flowName);
-		paramMap.put("companyId",companyId);
+		paramMap.put("user",user);
 		paramMap.put("curActId",curActId);
 		paramMap.put("isUse",true);
 		paramMap.put("pager",pager);
@@ -102,20 +102,20 @@ public class MaterialUseServiceImpl implements MaterialUseService {
 	}
 
 	@Override
-	public int countUseFlowing(String flowName, String companyId,String curActId) {
+	public int countUseFlowing(String flowName, User user,String curActId) {
 		Map paramMap = new HashMap();
 		paramMap.put("flowName",flowName);
-		paramMap.put("companyId",companyId);
+		paramMap.put("user",user);
 		paramMap.put("curActId",curActId);
 		paramMap.put("isUse",true);
 		return materialUseDAO.countMaterialFlowing(paramMap);
 	}
 
 	@Override
-	public List<MaterialURTemp> queryReturnFlowingbyPager(String flowName, String companyId, String curActId, Pager pager) {
+	public List<MaterialURTemp> queryReturnFlowingbyPager(String flowName, User user , String curActId, Pager pager) {
 		Map paramMap = new HashMap();
 		paramMap.put("flowName",flowName);
-		paramMap.put("companyId",companyId);
+		paramMap.put("user",user);
 		paramMap.put("curActId",curActId);
 		paramMap.put("isUse",false);
 		paramMap.put("pager",pager);
@@ -123,19 +123,19 @@ public class MaterialUseServiceImpl implements MaterialUseService {
 	}
 
 	@Override
-	public int countReturnFlowing(String flowName, String companyId, String roleId) {
+	public int countReturnFlowing(String flowName, User user, String roleId) {
 		Map paramMap = new HashMap();
 		paramMap.put("roleId",roleId);
 		paramMap.put("flowName",flowName);
-		paramMap.put("companyId",companyId);
+		paramMap.put("user",user);
 		paramMap.put("isUse",false);
 		return materialUseDAO.countMaterialFlowing(paramMap);
 	}
 
 	@Override
-	public List queryHistoryFlowingbyPager(String companyId, String flowName, String taskKey, Pager pager) {
+	public List queryHistoryFlowingbyPager(User user, String flowName, String taskKey, Pager pager) {
 		Map paramMap = new HashMap();
-		paramMap.put("companyId", companyId);
+		paramMap.put("user", user);
 		paramMap.put("flowName", flowName);
 		paramMap.put("taskKey", taskKey);
 		paramMap.put("pager", pager);
@@ -143,28 +143,28 @@ public class MaterialUseServiceImpl implements MaterialUseService {
 	}
 
 	@Override
-	public int countHistoryFlowing(String companyId, String flowName) {
+	public int countHistoryFlowing(User user, String flowName) {
 		Map paramMap = new HashMap();
-		paramMap.put("companyId", companyId);
+		paramMap.put("user", user);
 		paramMap.put("flowName", flowName);
 		return materialUseDAO.countHistoryFlowing(paramMap);
 	}
 
     @Override
-    public List queryUserFlowingByPager(String flowName, String userId, String reviewTaskName, Pager pager) {
+    public List queryUserFlowingByPager(String flowName, User user, String reviewTaskName, Pager pager) {
         Map paramMap = new HashMap();
         paramMap.put("flowName", flowName);
-        paramMap.put("userId", userId);
+        paramMap.put("user", user);
         paramMap.put("reviewTaskName", reviewTaskName);
         paramMap.put("pager", pager);
         return materialUseDAO.queryUserFlowingByPager(paramMap);
     }
 
     @Override
-    public int countUserFlowing(String flowName, String userId) {
+    public int countUserFlowing(String flowName, User user) {
         Map paramMap = new HashMap();
         paramMap.put("flowName", flowName);
-        paramMap.put("userId", userId);
+        paramMap.put("user", user);
         return materialUseDAO.countUserFlowing(paramMap);
     }
 
@@ -197,23 +197,23 @@ public class MaterialUseServiceImpl implements MaterialUseService {
 	}
 
 	@Override
-	public List<WorkView> userWorksByPager(String userId, Pager pager) {
-		return materialUseDAO.userWorksByPager(userId,pager);
+	public List<WorkView> userWorksByPager(User user, Pager pager) {
+		return materialUseDAO.userWorksByPager(user,pager);
 	}
 
 	@Override
-	public List<WorkView> userWorksStatusByPager(String userId, String status, Pager pager) {
-		return materialUseDAO.userWorksByPager(userId,status,pager);
+	public List<WorkView> userWorksStatusByPager(User user, String status, Pager pager) {
+		return materialUseDAO.userWorksByPager(user,status,pager);
 	}
 
 	@Override
-	public int countUserWorks(String userId) {
-		return materialUseDAO.countUserWorks(userId);
+	public int countUserWorks(User user) {
+		return materialUseDAO.countUserWorks(user);
 	}
 
 	@Override
-	public int countUserWorksStatus(String userId, String status) {
-		return materialUseDAO.countUserWorks(userId,status);
+	public int countUserWorksStatus(User user, String status) {
+		return materialUseDAO.countUserWorks(user,status);
 	}
 
 	@Override
@@ -245,8 +245,13 @@ public class MaterialUseServiceImpl implements MaterialUseService {
         return materialUseDAO.accQueryById(accId);
     }
 
+	@Override
+	public List accQueryAll(User user) {
+		return materialUseDAO.accQueryAll(user);
+	}
 
-    private class Flag{
+
+	private class Flag{
 		private  String flag;
 		private String id;
 

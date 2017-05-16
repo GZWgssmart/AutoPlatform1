@@ -24,8 +24,8 @@ public interface MaterialListDAO extends BaseDAO<String, MaterialList>{
 
     public int count(@Param("userId")String userId);
 
-    public List<MaterialList> recordAccsByPager(@Param("recordId")String recordId, @Param("pager")Pager pager);
-    public int countRecordAccs(@Param("recordId")String recordId);
+    public List<MaterialList> recordAccsByPager(Map paramMap);
+    public int countRecordAccs(Map paramMap);
     public void insertList(List<MaterialList> materialLists);
 
     // 与流程相关

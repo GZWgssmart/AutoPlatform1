@@ -18,6 +18,13 @@
     <link rel="stylesheet" href="/static/css/bootstrap-table.css">
     <link rel="stylesheet" href="/static/css/sweetalert.css">
     <link rel="stylesheet" href="/static/css/table/table.css">
+
+    <style>
+        .close {
+            right:20px;
+            position: relative;
+        }
+    </style>
 </head>
 <body>
 <%@include file="../backstage/contextmenu.jsp"%>
@@ -53,7 +60,7 @@
                     <th data-field="varsMap.acc.accTotal">总数量</th>
                     <th data-field="varsMap.acc.accUnit">计量单位</th>
                     <th data-field="varsMap.acc.accPrice">单价</th>
-                    <th data-field="varsMap.reqMsg" >领料原因</th>
+                    <th data-field="varsMap.reqMsg" data-formatter = "reqMsgFormatter" >领料原因</th>
                     <th data-field="processInstance.startTime" data-formatter="dateTimeFormatter">时间
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
@@ -68,12 +75,11 @@
     </div>
 </div>
 
-
-<div class="modal fade" id="reviewModal" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static">
+    <div class="modal fade" id="reviewModal" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
-                <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
+                <span  class="close"  onclick = "closeModal('reviewModal','form')">&times;</span>
                 <form role="form" class="form-horizontal" id="reviewForm">
                     <div class="modal-header">
                     </div>
@@ -86,19 +92,20 @@
                                           name="respMsg" rows="3" maxlength="100"></textarea>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default"
-                                onclick = "closeModal('reviewModal','form')">关闭
-                        </button>
-                        <button id="subButton1" type="button" onclick="checkReview()" class="btn btn-success">保存</button>
-                        <input type="reset" name="reset" style="display: none;"/>
-                    </div>
+                    <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司库管人员">
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default"
+                                    onclick = "closeModal('reviewModal','form')">关闭
+                            </button>
+                            <button id="subButton1" type="button" onclick="checkReview()" class="btn btn-success">保存</button>
+                            <input type="reset" name="reset" style="display: none;"/>
+                        </div>
+                    </shiro:hasAnyRoles>
                 </form>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-
 
 
 <script src="/static/js/jquery.min.js"></script>

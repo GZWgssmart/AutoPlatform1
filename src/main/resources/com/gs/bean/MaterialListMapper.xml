@@ -76,7 +76,7 @@
     where t_work_info.workStatus='Y' and  u.userId = #{userId};
   </select>
 
-  <select id="recordAccsByPager" resultMap="BaseMaterialList">
+  <select id="recordAccsByPager" resultMap="BaseMaterialList" parameterType="hashMap">
       select
       list.maintainRecordId 'recordId',
       acc.accId,
@@ -95,16 +95,22 @@
           on mare.matainRecordId = list.maintainRecordId and mare.accId = list.accId
       left join t_accessories acc on list.accId = acc.accId
       where list.maintainRecordId = #{recordId}
+      <if test="user.companyId != '' and user.companyId != null">
+          and acc.companyId = #{user.companyId}
+      </if>
       limit #{pager.beginIndex}, #{pager.pageSize}
   </select>
 
-    <select id="countRecordAccs" resultType="int">
+    <select id="countRecordAccs" resultType="int" parameterType="hashMap">
           select count(materialId) from (
             select *
-              from t_material_list
+              from t_material_list lis
               GROUP BY maintainRecordId, accId
-            ) a
+            ) a left join t_accessories acc on acc.accId = a.accId
         where  a.maintainRecordId = #{recordId}
+        <if test="user.companyId != '' and user.companyId != null">
+            and acc.companyId = #{user.companyId}
+        </if>
     </select>
 
     <insert id="insert"  parameterType="materialList">

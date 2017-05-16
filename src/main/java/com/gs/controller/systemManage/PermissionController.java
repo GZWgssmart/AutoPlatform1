@@ -54,17 +54,22 @@ public class PermissionController {
     public Pager4EasyUI queryByPager(@RequestParam("pageNumber") int pageNumber, @RequestParam("pageSize") int pageSize, HttpSession session){
         // TODO 系统所有管理员可以查看
         if(SessionUtil.isLogin(session)) {
-            final String status = "Y";
-                Pager pager = new Pager();
-                pager.setPageNo(pageNumber);
-                pager.setPageSize(pageSize);
-                List rows = permissionService.queryByPager(status,pager);
-                int total = permissionService.count(status);
-                Pager4EasyUI pager4EasyUI = new Pager4EasyUI();
-                pager4EasyUI.setRows(rows);
-                pager4EasyUI.setTotal(total);
-                return pager4EasyUI;
-
+            String roles="公司超级管理员,公司普通管理员,系统超级管理员,系统普通管理员";
+            if(RoleUtil.checkRoles(roles)){
+                final String status = "Y";
+                    Pager pager = new Pager();
+                    pager.setPageNo(pageNumber);
+                    pager.setPageSize(pageSize);
+                    List rows = permissionService.queryByPager(status,pager);
+                    int total = permissionService.count(status);
+                    Pager4EasyUI pager4EasyUI = new Pager4EasyUI();
+                    pager4EasyUI.setRows(rows);
+                    pager4EasyUI.setTotal(total);
+                    return pager4EasyUI;
+            }else{
+                logger.info("此用户无拥有此方法角色");
+                return null;
+            }
         } else {
             logger.info("请先登录");
             return null;
@@ -139,16 +144,22 @@ public class PermissionController {
         // 无用 但是
         // TODO 系统所有管理员可以查看
         if(SessionUtil.isLogin(session)) {
-            final String status = "N";
-            Pager pager = new Pager();
-            pager.setPageNo(pageNumber);
-            pager.setPageSize(pageSize);
-            List rows = permissionService.queryByPager(status,pager);
-            int total = permissionService.count(status);
-            Pager4EasyUI pager4EasyUI = new Pager4EasyUI();
-            pager4EasyUI.setRows(rows);
-            pager4EasyUI.setTotal(total);
-            return pager4EasyUI;
+            String roles = "系统超级管理员,系统普通管理员";
+            if(RoleUtil.checkRoles(roles)) {
+                final String status = "N";
+                Pager pager = new Pager();
+                pager.setPageNo(pageNumber);
+                pager.setPageSize(pageSize);
+                List rows = permissionService.queryByPager(status,pager);
+                int total = permissionService.count(status);
+                Pager4EasyUI pager4EasyUI = new Pager4EasyUI();
+                pager4EasyUI.setRows(rows);
+                pager4EasyUI.setTotal(total);
+                return pager4EasyUI;
+            } else {
+                logger.info("此用户无拥有修改权限的角色");
+                return null;
+            }
         } else {
             logger.info("请先登录");
             return null;
@@ -261,7 +272,13 @@ public class PermissionController {
         // 无用
         // TODO 所有系统管理员
         if(SessionUtil.isLogin(session)) {
-            return permissionService.queryAll("Y");
+            String roles = "系统超级管理员,系统普通管理员";
+            if(RoleUtil.checkRoles(roles)) {
+                return permissionService.queryAll("Y");
+            } else {
+                logger.info("此用户无拥有启用或禁用权限的角色");
+                return null;
+            }
         } else {
             logger.info("请先登录");
             return null;
@@ -274,7 +291,13 @@ public class PermissionController {
         // 无用
         // TODO 所有系统管理员
         if(SessionUtil.isLogin(session)) {
-            return permissionService.queryAll("N");
+            String roles = "系统超级管理员,系统普通管理员";
+            if(RoleUtil.checkRoles(roles)) {
+                return permissionService.queryAll("N");
+            } else {
+                logger.info("此用户无拥有启用或禁用权限的角色");
+                return null;
+            }
         } else {
             logger.info("请先登录");
             return null;

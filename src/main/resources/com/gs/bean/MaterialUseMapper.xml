@@ -166,7 +166,13 @@
                     where reprodep.KEY_ = #{flowName}
                         and ruiden.TYPE_ = "starter"
                         and ruiden.USER_ID_ in (
-                            select userId from t_user where companyId = #{companyId} /*-- 第二层嵌套, 这层查询出所属公司的员工ID,流程发起人是公司的员工*/
+                            select userId from t_user
+                            <where>
+                            <if test="user.companyId != null and user.companyId != ''">
+                                 companyId = #{user.companyId}
+                            </if>
+                            </where>
+        /*-- 第二层嵌套, 这层查询出所属公司的员工ID,流程发起人是公司的员工*/
                         )
                         and rvar.name_ = 'accCount'
 
@@ -199,7 +205,12 @@
                     where reprodep.KEY_ = #{flowName}
                         and ruiden.TYPE_ = "starter"
                         and ruiden.USER_ID_ in (
-                            select userId from t_user where companyId = #{companyId}	/*--  第二层嵌套, 这层查询出所属公司的员工ID,流程发起人是公司的员工*/
+                            select userId from t_user
+                            <where>
+                                <if test="user.companyId != null and user.companyId != ''">
+                                    companyId = #{user.companyId}
+                                </if>
+                            </where>
                         )
                         and rvar.name_ = 'accCount'
         <choose>
@@ -228,7 +239,12 @@
             left join t_user tuser on hitask.assignee_ = tuser.userId
             where hipro.start_User_ID_ in (
                 (select tuser.userId from t_company company left join t_user tuser on company.companyId = tuser.companyId
-                where company.companyId = #{companyId} )
+                    <where>
+                        <if test="user.companyId != null and user.companyId != ''">
+                            company.companyId = #{user.companyId}
+                        </if>
+                    </where>
+                )
             ) and repro.key_ = #{flowName}
             and hitask.TASK_DEF_KEY_ = #{taskKey}
         and hipro.end_time_ is not null
@@ -239,7 +255,12 @@
             left join act_hi_procinst hipro on repro.ID_ = hipro.proc_def_id_
             where hipro.start_User_ID_ in (
                 (select tuser.userId from t_company company left join t_user tuser on company.companyId = tuser.companyId
-                where company.companyId = #{companyId} )
+                    <where>
+                        <if test="user.companyId != null and user.companyId != ''">
+                            company.companyId = #{user.companyId}
+                        </if>
+                    </where>
+                )
             ) and repro.key_ = #{flowName}
       and hipro.end_time_ is not null
     </select>
@@ -257,10 +278,16 @@
         left join (select PROC_INST_ID_,id_  , TASK_DEF_KEY_, ASSIGNEE_, max(START_TIME_) as 'START_TIME_', END_TIME_ from act_hi_taskinst  group by PROC_INST_ID_, TASK_DEF_KEY_) hitask
                     on hipro.ID_ = hitask.PROC_INST_ID_
         left join t_user tuser on tuser.userId = hitask.ASSIGNEE_
+        left join t_company comp on tuser.companyId = comp.companyId
         where hipro.END_TIME_ is null
         and repro.KEY_ = #{flowName}
         and hitask.TASK_DEF_KEY_ = #{reviewTaskName}
-        and hipro.START_USER_ID_ = #{userId}
+        <if test="user.companyId != '' and user.companyId != null" >
+            and comp.companyId = #{user.companyId}
+            <if test="user.userId != '' and user.userId != null" >
+                and hipro.START_USER_ID_ = #{user.userId}
+            </if>
+        </if>
         limit #{pager.beginIndex}, #{pager.pageSize}
     </select>
 
@@ -269,7 +296,10 @@
         left join act_ru_execution ruexe on repro.ID_ =  ruexe.PROC_DEF_ID_
         left join act_hi_procinst hipro on ruexe.PROC_INST_ID_ = hipro.PROC_INST_ID_
         where repro.KEY_ = #{flowName}
-        and hipro.START_USER_ID_ = #{userId};
+        <if test="user.userId != '' and user.userId != null" >
+            and hipro.START_USER_ID_ = #{user.userId}
+        </if>
+
     </select>
 
   <!-- 其它的 不与这个表相关的-->
@@ -364,7 +394,10 @@
         left join t_car_color color on checkin.colorId = color.colorId
         left join t_car_brand brand on checkin.brandId = brand.brandId
         <where>
-            workinfo.userId = #{userId}
+            1 = 1
+            <if test="user.companyId != '' and user.companyId != null">
+              and workinfo.userId = #{user.userId}
+            </if>
             <if test="status!=null">
                 and workinfo.workStatus = #{status}
             </if>
@@ -378,7 +411,10 @@
         from
         t_work_info workinfo
         <where>
-            workinfo.userId = #{userId}
+            1 = 1
+            <if test="user.companyId != '' and user.companyId != null">
+                and workinfo.userId = #{user.userId}
+            </if>
             <if test="status!=null">
                 and workinfo.workStatus = #{status}
             </if>
@@ -412,7 +448,23 @@
         update t_work_info workinfo set userid= #{userId} where workinfo.recordId = #{recordId}
     </update>
 
+    <select id = "accQueryAll" resultType ="Accessories" parameterType="hashMap" >
+            <![CDATA[
+            select * FROM auto_platform.t_accessories ac where 1=1 and ac.accStatus = 'Y'
+        ]]>
+            <if test="companyId != '' and companyId !=null">
+                and ac.companyId = #{companyId}
+            </if>
+    </select>
 
+    <select id = "countAccQueryAll" resultType ="int" parameterType="hashMap" >
+        <![CDATA[
+            select * FROM auto_platform.t_accessories ac where 1=1 and ac.accStatus = 'Y'
+        ]]>
+        <if test="companyId != '' and companyId !=null">
+            and ac.companyId = #{companyId}
+        </if>
+    </select>
 
 
 </mapper>

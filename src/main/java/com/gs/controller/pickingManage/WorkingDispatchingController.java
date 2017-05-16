@@ -58,14 +58,20 @@ public class WorkingDispatchingController {
     public Pager4EasyUI records(@RequestParam("pageNumber")String pageNo, @RequestParam("pageSize")String pageSize, HttpSession session){
         if(SessionUtil.isLogin(session)) {
             // TODO 需要公司人员登录才能指派员工
-            User user = (User)session.getAttribute("user");
-            Pager pager = new Pager();
-            pager.setPageNo(str2int(pageNo));
-            pager.setPageSize(str2int(pageSize));
-            int total = materialUseService.countNoUseRecord(user.getCompanyId());
-            List<RecordBaseView> rbvs = materialUseService.queryNoUseRecord(user.getCompanyId(), pager);
-            Pager4EasyUI pager4EasyUI = new Pager4EasyUI(total, rbvs);
-            return pager4EasyUI;
+            String roles = "公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师,汽车公司学徒,汽车公司销售人员,汽车公司财务人员,汽车公司采购人员,汽车公司库管人员,汽车公司人力资源管理部,系统超级管理员,系统普通管理员";
+            if(RoleUtil.checkRoles(roles)) {
+                User user = (User) session.getAttribute("user");
+                Pager pager = new Pager();
+                pager.setPageNo(str2int(pageNo));
+                pager.setPageSize(str2int(pageSize));
+                int total = materialUseService.countNoUseRecord(user.getCompanyId());
+                List<RecordBaseView> rbvs = materialUseService.queryNoUseRecord(user.getCompanyId(), pager);
+                Pager4EasyUI pager4EasyUI = new Pager4EasyUI(total, rbvs);
+                return pager4EasyUI;
+            } else {
+                logger.info("此用户无拥有此方法角色");
+                return null;
+            }
         } else {
             logger.info("请先登录");
             return null;
@@ -77,14 +83,20 @@ public class WorkingDispatchingController {
     @RequestMapping("dispRecordByPager")
     public Pager4EasyUI curRecords(@RequestParam("pageNumber")String pageNo, @RequestParam("pageSize")String pageSize, HttpSession session){
         if(SessionUtil.isLogin(session)) {
-            User user = (User)session.getAttribute("user");
-            Pager pager = new Pager();
-            pager.setPageNo(str2int(pageNo));
-            pager.setPageSize(str2int(pageSize));
-            int total = materialUseService.countNoUseRecord(user.getCompanyId());
-            List<RecordBaseView> rbvs = materialUseService.queryHasUseRecord(user.getCompanyId(), pager);
-            Pager4EasyUI pager4EasyUI = new Pager4EasyUI(total, rbvs);
-            return pager4EasyUI;
+            String roles = "公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师,汽车公司学徒,汽车公司销售人员,汽车公司财务人员,汽车公司采购人员,汽车公司库管人员,汽车公司人力资源管理部,系统超级管理员,系统普通管理员";
+            if(RoleUtil.checkRoles(roles)) {
+                User user = (User)session.getAttribute("user");
+                Pager pager = new Pager();
+                pager.setPageNo(str2int(pageNo));
+                pager.setPageSize(str2int(pageSize));
+                int total = materialUseService.countNoUseRecord(user.getCompanyId());
+                List<RecordBaseView> rbvs = materialUseService.queryHasUseRecord(user.getCompanyId(), pager);
+                Pager4EasyUI pager4EasyUI = new Pager4EasyUI(total, rbvs);
+                return pager4EasyUI;
+            } else {
+                logger.info("此用户无拥有此方法角色");
+                return null;
+            }
         } else {
             logger.info("请先登录");
             return null;
@@ -96,10 +108,16 @@ public class WorkingDispatchingController {
     @RequestMapping("queryRecrodAccByPager") // 可能不会使用到
     public Pager4EasyUI accInfos(@RequestParam("pageNumber")String pageNo, @RequestParam("pageSize")String pageSize, @RequestParam("recordId")String recordId, HttpSession session) {
         if(SessionUtil.isLogin(session)) {
-            Pager pager = new Pager();
-            pager.setPageNo(str2int(pageNo));
-            pager.setPageSize(str2int(pageSize));
-            return null;
+            String roles = "公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师,汽车公司学徒,汽车公司销售人员,汽车公司财务人员,汽车公司采购人员,汽车公司库管人员,汽车公司人力资源管理部,系统超级管理员,系统普通管理员";
+            if(RoleUtil.checkRoles(roles)) {
+                Pager pager = new Pager();
+                pager.setPageNo(str2int(pageNo));
+                pager.setPageSize(str2int(pageSize));
+                return null;
+            } else {
+                logger.info("此用户无拥有此方法角色");
+                return null;
+            }
         } else {
             logger.info("请先登录");
             return null;
@@ -111,16 +129,22 @@ public class WorkingDispatchingController {
     @RequestMapping("userWorksByPager") // 用于页面显示员工工单,员工通过这个页面会点击查询该工单所需要的零件
     public Pager4EasyUI userWorks(@RequestParam("pageNumber")String pageNo, @RequestParam("pageSize")String pageSize, HttpSession session) {
         if(SessionUtil.isLogin(session)) {
-            User user = (User)session.getAttribute("user");
-            Pager pager = new Pager();
-            pager.setPageNo(str2int(pageNo));
-            pager.setPageSize(str2int(pageSize));
-            List workInfos = materialUseService.userWorksStatusByPager(user.getUserId(), "Y",pager);
-            int total = materialUseService.countUserWorksStatus(user.getUserId(),"Y");
-            Pager4EasyUI pager4EasyUI = new Pager4EasyUI();
-            pager4EasyUI.setRows(workInfos);
-            pager4EasyUI.setTotal(total);
-            return pager4EasyUI;
+            String roles = "公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师,汽车公司学徒,汽车公司销售人员,汽车公司财务人员,汽车公司采购人员,汽车公司库管人员,汽车公司人力资源管理部,系统超级管理员,系统普通管理员";
+            if(RoleUtil.checkRoles(roles)) {
+                User user = (User)session.getAttribute("user");
+                Pager pager = new Pager();
+                pager.setPageNo(str2int(pageNo));
+                pager.setPageSize(str2int(pageSize));
+                List workInfos = materialUseService.userWorksStatusByPager(user, "Y",pager);
+                int total = materialUseService.countUserWorksStatus(user,"Y");
+                Pager4EasyUI pager4EasyUI = new Pager4EasyUI();
+                pager4EasyUI.setRows(workInfos);
+                pager4EasyUI.setTotal(total);
+                return pager4EasyUI;
+            } else {
+                logger.info("此用户无拥有此方法角色");
+                return null;
+            }
         } else {
             logger.info("请先登录");
             return null;
@@ -134,17 +158,23 @@ public class WorkingDispatchingController {
     @RequestMapping("recordDetails")
     public Pager4EasyUI recordDetails(@RequestParam("pageNumber")int pageNo, @RequestParam("pageSize")int pageSize,@RequestParam("recordId")String recordId, HttpSession session){
         if(SessionUtil.isLogin(session)) {
-            User user = (User)session.getAttribute("user");
-            String companyId = user.getCompanyId();
-            Pager pager = new Pager();
-            pager.setPageNo(pageNo);
-            pager.setPageSize(pageSize);
-            List<DetailTemp> details = materialUseService.queryDetailsByRecordId(recordId, companyId, pager);
-            int total = materialUseService.countDetailsByRecordId(recordId, companyId);
-            Pager4EasyUI pager4EasyUI = new Pager4EasyUI();
-            pager4EasyUI.setTotal(total);
-            pager4EasyUI.setRows(details);
-            return  pager4EasyUI;
+            String roles = "公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师,汽车公司学徒,汽车公司销售人员,汽车公司财务人员,汽车公司采购人员,汽车公司库管人员,汽车公司人力资源管理部,系统超级管理员,系统普通管理员";
+            if(RoleUtil.checkRoles(roles)) {
+                User user = (User)session.getAttribute("user");
+                String companyId = user.getCompanyId();
+                Pager pager = new Pager();
+                pager.setPageNo(pageNo);
+                pager.setPageSize(pageSize);
+                List<DetailTemp> details = materialUseService.queryDetailsByRecordId(recordId, companyId, pager);
+                int total = materialUseService.countDetailsByRecordId(recordId, companyId);
+                Pager4EasyUI pager4EasyUI = new Pager4EasyUI();
+                pager4EasyUI.setTotal(total);
+                pager4EasyUI.setRows(details);
+                return  pager4EasyUI;
+            } else {
+                logger.info("此用户无拥有此方法角色");
+                return null;
+            }
         } else {
             logger.info("请先登录");
             return null;

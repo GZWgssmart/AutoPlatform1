@@ -183,7 +183,13 @@ public class RoleController {
     public List<Permission> queryPermissions(@PathVariable("id") String id, HttpSession session){
         // TODO 所有管理员
         if(SessionUtil.isLogin(session)) {
-            return rolePermissionService.queryPermissions(id, "Y");
+            String roles = "系统超级管理员,系统普通管理员";
+            if(RoleUtil.checkRoles(roles)) {
+                return rolePermissionService.queryPermissions(id, "Y");
+            }  else {
+                logger.info("此用户无拥有更改角色状态的角色");
+                return null;
+            }
         } else {
             logger.info("请先登录");
             return null;

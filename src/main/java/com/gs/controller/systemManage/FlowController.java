@@ -218,22 +218,28 @@ public class FlowController {
     public Pager4EasyUI queryAcquisitionByPager(@RequestParam("pageNumber")int pageNo, @RequestParam("pageSize")int pageSize, HttpSession session) {
         // TODO 库管的页面, 应该是查询申请领取物料的页面
         if(SessionUtil.isLogin(session)) {
-                Pager pager = new Pager();
-                pager.setPageNo(pageNo);
-                pager.setPageSize(pageSize);
-                User user = (User) session.getAttribute("user");
-                final String companyId = user.getCompanyId(); //假设当前登录角色为公司11的库管
-                final String curActId = "usertask2";
-                final String userId = user.getUserId();      //当前用户为2;
-                final String materialFlowKey = "material";
+            String roles="公司超级管理员,公司普通管理员,系统超级管理员,系统普通管理员,汽车公司库管人员";
+            if(RoleUtil.checkRoles(roles)){
+                    Pager pager = new Pager();
+                    pager.setPageNo(pageNo);
+                    pager.setPageSize(pageSize);
+                    User user = (User) session.getAttribute("user");
+                    final String companyId = user.getCompanyId(); //假设当前登录角色为公司11的库管
+                    final String curActId = "usertask2";
+                    final String userId = user.getUserId();      //当前用户为2;
+                    final String materialFlowKey = "material";
 
-                int total = materialUseService.countUseFlowing(materialFlowKey,companyId,curActId);
-                List<MaterialURTemp> prox = materialUseService.queryUseFlowingbyPager(materialFlowKey,companyId,curActId,pager);
-                setMaterProVars2Map(prox);
-                Pager4EasyUI pager4EasyUI = new Pager4EasyUI();
-                pager4EasyUI.setTotal(total);
-                pager4EasyUI.setRows(prox);
-                return pager4EasyUI;
+                    int total = materialUseService.countUseFlowing(materialFlowKey, user, curActId);
+                    List<MaterialURTemp> prox = materialUseService.queryUseFlowingbyPager(materialFlowKey, user, curActId,pager);
+                    setMaterProVars2Map(prox);
+                    Pager4EasyUI pager4EasyUI = new Pager4EasyUI();
+                    pager4EasyUI.setTotal(total);
+                    pager4EasyUI.setRows(prox);
+                    return pager4EasyUI;
+            }else{
+                logger.info("此用户无拥有此方法角色");
+                return null;
+            }
         } else {
             logger.info("请先登录");
             return null;
@@ -245,21 +251,27 @@ public class FlowController {
     public Pager4EasyUI queryReturnedByPager(@RequestParam("pageNumber")int pageNo, @RequestParam("pageSize")int pageSize, HttpSession session) {
         // TODO 库管的页面, 应该是查询申请退料的页面
         if(SessionUtil.isLogin(session)) {
-            Pager pager = new Pager();
-            User user = (User) session.getAttribute("user");
-            pager.setPageNo(pageNo);
-            pager.setPageSize(pageSize);
-            final String userId = user.getUserId();      //当前用户为2;
-            final String companyId = user.getCompanyId(); //假设当前登录角色为公司11的库管
-            final String curActId = "usertask2";
-            final String materialFlowKey = "material";
-            int total = materialUseService.countReturnFlowing(materialFlowKey,companyId,curActId);
-            List<MaterialURTemp> prox = materialUseService.queryReturnFlowingbyPager(materialFlowKey,companyId,curActId,pager);
-            setMaterProVars2Map(prox);
-            Pager4EasyUI pager4EasyUI = new Pager4EasyUI();
-            pager4EasyUI.setTotal(total);
-            pager4EasyUI.setRows(prox);
-            return pager4EasyUI;
+            String roles="公司超级管理员,公司普通管理员,系统超级管理员,系统普通管理员,汽车公司库管人员";
+            if(RoleUtil.checkRoles(roles)){
+                Pager pager = new Pager();
+                User user = (User) session.getAttribute("user");
+                pager.setPageNo(pageNo);
+                pager.setPageSize(pageSize);
+                final String userId = user.getUserId();      //当前用户为2;
+                final String companyId = user.getCompanyId(); //假设当前登录角色为公司11的库管
+                final String curActId = "usertask2";
+                final String materialFlowKey = "material";
+                int total = materialUseService.countReturnFlowing(materialFlowKey, user, curActId);
+                List<MaterialURTemp> prox = materialUseService.queryReturnFlowingbyPager(materialFlowKey, user, curActId,pager);
+                setMaterProVars2Map(prox);
+                Pager4EasyUI pager4EasyUI = new Pager4EasyUI();
+                pager4EasyUI.setTotal(total);
+                pager4EasyUI.setRows(prox);
+                return pager4EasyUI;
+            }else{
+                logger.info("此用户无拥有此方法角色");
+                return null;
+            }
         } else {
             logger.info("请先登录");
             return null;
@@ -271,21 +283,27 @@ public class FlowController {
     public Pager4EasyUI queryAccManagerHistoryByPager(@RequestParam("pageNumber")int pageNo, @RequestParam("pageSize")int pageSize, HttpSession session) {
         // TODO 库管的页面,查询完成流程的物料申请页面
         if(SessionUtil.isLogin(session)) {
-            Pager pager = new Pager();
-            User user = (User) session.getAttribute("user");
-            pager.setPageNo(pageNo);
-            pager.setPageSize(pageSize);
-            final String userId = user.getUserId();      //当前用户为2;
-            final String companyId = user.getCompanyId(); //假设当前登录角色为公司11的库管
-            final String materialFlowKey = "material";
-            final String taskKey = "usertask2";
-            int total = materialUseService.countHistoryFlowing(companyId,materialFlowKey);
-            List<MaterialURTemp> prox = materialUseService.queryHistoryFlowingbyPager(companyId, materialFlowKey, taskKey, pager);
-            setHisMaterProVars2Map(prox);
-            Pager4EasyUI pager4EasyUI = new Pager4EasyUI();
-            pager4EasyUI.setTotal(total);
-            pager4EasyUI.setRows(prox);
-            return pager4EasyUI;
+            String roles="公司超级管理员,公司普通管理员,系统超级管理员,系统普通管理员,汽车公司库管人员";
+            if(RoleUtil.checkRoles(roles)) {
+                Pager pager = new Pager();
+                User user = (User) session.getAttribute("user");
+                pager.setPageNo(pageNo);
+                pager.setPageSize(pageSize);
+                final String userId = user.getUserId();      //当前用户为2;
+                final String companyId = user.getCompanyId(); //假设当前登录角色为公司11的库管
+                final String materialFlowKey = "material";
+                final String taskKey = "usertask2";
+                int total = materialUseService.countHistoryFlowing(user, materialFlowKey);
+                List<MaterialURTemp> prox = materialUseService.queryHistoryFlowingbyPager(user, materialFlowKey, taskKey, pager);
+                setHisMaterProVars2Map(prox);
+                Pager4EasyUI pager4EasyUI = new Pager4EasyUI();
+                pager4EasyUI.setTotal(total);
+                pager4EasyUI.setRows(prox);
+                return pager4EasyUI;
+            }else{
+                logger.info("此用户无拥有此方法角色");
+                return null;
+            }
         } else {
             logger.info("请先登录");
             return null;
@@ -297,20 +315,26 @@ public class FlowController {
     public Pager4EasyUI queryUserFlowingHistoryByPager(@RequestParam("pageNumber")int pageNo, @RequestParam("pageSize")int pageSize, HttpSession session) {
         // TODO 车修工自身的物料流程, 应该是进行中的
         if(SessionUtil.isLogin(session)) {
-            Pager pager = new Pager();
-            User user = (User) session.getAttribute("user");
-            pager.setPageNo(pageNo);
-            pager.setPageSize(pageSize);
-            final String userId = user.getUserId();      //当前用户为1;
-            final String materialFlowKey = "material";
-            final String reveiwTaskKey = "usertask2";
-            int total = materialUseService.countUserFlowing(materialFlowKey,userId);
-            List<MaterialURTemp> prox = materialUseService.queryUserFlowingByPager(materialFlowKey, userId, reveiwTaskKey, pager);
-            setHisMaterProVars2Map(prox);
-            Pager4EasyUI pager4EasyUI = new Pager4EasyUI();
-            pager4EasyUI.setTotal(total);
-            pager4EasyUI.setRows(prox);
-            return pager4EasyUI;
+            String roles="公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师,汽车公司学徒,汽车公司销售人员,汽车公司财务人员,汽车公司采购人员,汽车公司库管人员,汽车公司人力资源管理部,系统超级管理员,系统普通管理员";
+            if(RoleUtil.checkRoles(roles)) {
+                User user = (User) session.getAttribute("user");
+                Pager pager = new Pager();
+                pager.setPageNo(pageNo);
+                pager.setPageSize(pageSize);
+                final String userId = user.getUserId();      //当前用户为1;
+                final String materialFlowKey = "material";
+                final String reveiwTaskKey = "usertask2";
+                int total = materialUseService.countUserFlowing(materialFlowKey,user);
+                List<MaterialURTemp> prox = materialUseService.queryUserFlowingByPager(materialFlowKey, user, reveiwTaskKey, pager);
+                setHisMaterProVars2Map(prox);
+                Pager4EasyUI pager4EasyUI = new Pager4EasyUI();
+                pager4EasyUI.setTotal(total);
+                pager4EasyUI.setRows(prox);
+                return pager4EasyUI;
+            }else{
+                logger.info("此用户无拥有此方法角色");
+                return null;
+            }
         } else {
             logger.info("请先登录");
             return null;

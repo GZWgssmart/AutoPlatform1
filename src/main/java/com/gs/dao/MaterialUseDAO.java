@@ -44,11 +44,11 @@ public interface MaterialUseDAO extends BaseDAO<String, MaterialUse>{
     public List<User> companyEmps(@Param("companyId")String companyId);
     public int insertWorkInfo(WorkInfo workInfo);
 
-    public List<WorkView> userWorksByPager(@Param("userId")String userId,@Param("pager") Pager pager);
-    public List<WorkView> userWorksByPager(@Param("userId")String userId,@Param("status")String status,@Param("pager") Pager pager);
+    public List<WorkView> userWorksByPager(@Param("user")User user,@Param("pager") Pager pager);
+    public List<WorkView> userWorksByPager(@Param("user")User user,@Param("status")String status,@Param("pager") Pager pager);
 
-    public int countUserWorks(@Param("userId")String userId);
-    public int countUserWorks(@Param("userId")String userId, @Param("status")String status);
+    public int countUserWorks(@Param("user")User user);
+    public int countUserWorks(@Param("user")User user, @Param("status")String status);
 
     public WorkInfo queryWorkInfoByRecordId(@Param("recordId")String recordId);
     public List<DetailTemp> queryDetailsByRecordId(@Param("recordId")String recordId, @Param("companyId")String companyId, @Param("pager")Pager pager);
@@ -57,5 +57,7 @@ public interface MaterialUseDAO extends BaseDAO<String, MaterialUse>{
     public int updWorkInfoUser(@Param("recordId")String recordId, @Param("userId")String userId);
 
     public Accessories accQueryById(String accId);
+
+    public List accQueryAll(User user);
 
 }

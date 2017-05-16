@@ -36,7 +36,10 @@
     .search {
         display: none;
     }
-
+    .close {
+        right:20px;
+        position: relative;
+    }
 </style>
 <body>
 <%@include file="../backstage/contextmenu.jsp"%>
@@ -88,11 +91,13 @@
 </div>
 
 <!-- 指派员工弹窗 -->
-<div class="modal fade" id="appointModal" aria-hidden="true" style="overflow:auto; ">
+<shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司总技师">
+    <div class="modal fade" id="appointModal" aria-hidden="true" style="overflow:auto; ">
     <div class="modal-dialog">
         <div class="modal-content">
             <form class="form-horizontal" id="appointForm" method="post">
                 <input type="text" name="recordId" define="record.recordId" style="display:none"/>
+                <span  class="close"   data-dismiss="modal">&times;</span>
                 <div class="modal-header" style="overflow:auto;">
                     <h4 class="sd">请选择指定的员工</h4>
                 </div>
@@ -115,6 +120,7 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+</shiro:hasAnyRoles>
 
 <!-- 维修保养明细弹窗 -->
 <div class="modal fade" id="accsInfo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -135,14 +141,10 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                <button type="button" class="btn btn-primary">提交更改</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal -->
 </div>
-
-
-
 
 <script src="/static/js/jquery.min.js"></script>
 <script src="/static/js/bootstrap.min.js"></script>
@@ -158,7 +160,6 @@
 <script src="/static/js/bootstrap-dateTimePicker/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
 <script src="/static/js/form/jquery.validate.js"></script>
 <script src="/static/js/backstage/picking/assignstaff.js"></script>
-
 </body>
 
 </html>

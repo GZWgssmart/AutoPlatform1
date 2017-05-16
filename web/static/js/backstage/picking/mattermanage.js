@@ -201,7 +201,6 @@ function formSubmit(url, modalId, formId, btnId) {
 
 function endUserFormatter(el, row, index) {
     var workInfo = row.workInfo;
-    console.log(workInfo);
     if(workInfo != null) {
         return workInfo.user.userName;
     }
@@ -217,7 +216,6 @@ function dateTimeFormatter(el, row, index) {
     var begin = formatterDate(proIns.startTime);
     var end = "";
     var htmlTest = begin;
-    console.log(proIns);
     if(proIns.endTime != null ) {
         end = formatterDate(proIns.endTime)
         htmlTest += "<br/>"+ end;
@@ -261,4 +259,15 @@ function n(e, value, row, index) {
     resp.processInstanceId = row.processInstanceId;
     $("#subButton1").removeAttr("disable");
     showModal("reviewModal","reviewForm", resp);
+}
+
+function reqMsgFormatter(value, row, index) {
+    var valView = "";
+    if(value.length>10) {
+         valView = value.slice(0,10)+"...";
+    } else {
+        valView = value;
+    }
+    var cellHtml = '<div title="'+ value +'">' + valView + '</div>'
+    return cellHtml;
 }

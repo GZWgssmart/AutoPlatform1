@@ -277,7 +277,8 @@ function resetPermissions(){
     initObj.permissions = permissionsAjaxVar.responseJSON;
 }
 function resetRolePermission(roleId){
-    initObj.rolePermissions=  $.ajax({url:"/role/permissions/"+roleId ,async:false});
+    var rolePermissoinsAjaxVar =$.ajax({url:"/role/permissions/"+roleId ,async:false});
+    initObj.rolePermissions= rolePermissoinsAjaxVar.responseJSON;
 }
 
 
@@ -293,7 +294,7 @@ function initAll(){
         initObj.role = initObj.roles[0];
         initObj.rolePermissions = null;
         var rolePermissionsAjaxVar = $.ajax({url:"/role/permissions/"+initObj.role.roleId ,async:false});
-        initObj.rolePermissions =  rolePermissionsAjaxVar;
+        initObj.rolePermissions =  rolePermissionsAjaxVar.responseJSON;
         setPageTitle();
         initDnyTree("#dnyTree",initObj.modules, initObj.rolePermissions);//初始了树
         trees.staTree = initStaticTree("#staTree", initObj.permissions, initObj.modules, initObj.rolePermissions)
@@ -654,7 +655,6 @@ function formSubmit(url, modalId ,formId, flag) {
                 role.roleId = $(roleIdEl).val();
                 role.roleName = $(roleNameEl).val();
                 role.roleDes = $(roleDesEl).val();
-                console.log(role);
                 updateRole(role);
                 setPageTitle();
                 /*  }*/

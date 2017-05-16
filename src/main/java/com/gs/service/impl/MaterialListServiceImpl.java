@@ -86,13 +86,20 @@ public class MaterialListServiceImpl implements MaterialListService {
 	}
 
 	@Override
-	public List<MaterialList> recordAccsByPager(String recordId, Pager pager) {
-		return materialListDAO.recordAccsByPager(recordId, pager);
+	public List<MaterialList> recordAccsByPager(String recordId, User user, Pager pager) {
+		Map paramMap = new HashMap();
+		paramMap.put("recordId", recordId);
+		paramMap.put("user", user);
+		paramMap.put("pager", pager);
+		return materialListDAO.recordAccsByPager(paramMap);
 	}
 
 	@Override
-	public int countRecordAccs(String recordId) {
-		return materialListDAO.countRecordAccs(recordId);
+	public int countRecordAccs(String recordId, User user) {
+		Map paramMap = new HashMap();
+		paramMap.put("recordId", recordId);
+		paramMap.put("user", user);
+		return materialListDAO.countRecordAccs(paramMap);
 	}
 
 	@Override
