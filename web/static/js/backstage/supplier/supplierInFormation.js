@@ -239,7 +239,7 @@ function validator(formId) {
                         message: '请输入正确的支付宝帐号'
                     }
                 }
-            }/*,
+            },
             supplyBank: {
                 message: '银行卡全称验证失败',
                 validators: {
@@ -272,7 +272,7 @@ function validator(formId) {
                         message: '请输入正确的卡号'
                     }
                 }
-            }*/
+            }
         }
     })
 
