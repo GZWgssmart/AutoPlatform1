@@ -164,6 +164,84 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+<div id="addWin" class="modal fade" aria-hidden="true" style="overflow-y:scroll" data-backdrop="static" keyboard:false>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
+                <form class="form-horizontal" id="addForm" method="post">
+                    <input type="reset" name="reset" style="display: none;"/>
+                    <div class="modal-header" style="overflow:auto;">
+                        <h4>收入添加</h4>
+                    </div>
+                    <br/>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">收入类型：</label>
+                        <div class="col-sm-7">
+                            <input type="hidden" id="inTypeId" name="inTypeId">
+                            <button type="button" class="btn btn-default" onclick="inOpenCheckInType();">
+                                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查看收入类型
+                            </button>
+                            <input type="text" id="inTypeName" name="inTypeName" readonly="true" placeholder="请点击选择收入类型" class="form-control" style="width:56%;">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">收入金额：</label>
+                        <div class="col-sm-7">
+                            <input type="text" id="inOutMoneyId" name="inOutMoney" placeholder="请输入收入金额" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-8">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            <button class="btn btn-sm btn-success" type="button" id="addButton"
+                                    onclick="addInSubmit()">保 存
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%--收入管理弹窗显示--%>
+<div id="inWin" class="modal fade" aria-hidden="true" style="overflow:scroll" data-backdrop="static" keyboard:false>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
+                <div class="row">
+                    <div class="col-sm-12 b-r">
+                        <h3 class="m-t-none m-b">选择收入类型</h3>
+                        <table class="table table-hover" id="inTable"
+                               data-height="550">
+                            <thead>
+                            <tr>
+                                <th data-radio="true"></th>
+                                <th data-field="inTypeName">
+                                    收入类型
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+
+                        </table>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" odata-dismiss="modal">关闭
+                            </button>
+                            <input type="button" class="btn btn-success" onclick="inCheckInType()" value="确定">
+                            </input>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <script src="/static/js/jquery.min.js"></script>
 <script src="/static/js/bootstrap.min.js"></script>
 <script src="/static/js/bootstrap-table/bootstrap-table.js"></script>

@@ -1,10 +1,7 @@
 package com.gs.controller.clearingOut;
 
 import ch.qos.logback.classic.Logger;
-import com.gs.bean.ChargeBill;
-import com.gs.bean.Checkin;
-import com.gs.bean.MaintainRecord;
-import com.gs.bean.User;
+import com.gs.bean.*;
 import com.gs.bean.echarts.ChargeBillBean;
 import com.gs.bean.echarts.QuarterUtil;
 import com.gs.common.bean.ControllerResult;
@@ -114,6 +111,7 @@ public class ChargeDocumentsController {
         }
     }
 
+    // 添加收费单据, 此方法完成结算出厂
     @ResponseBody
     @RequestMapping(value = "add", method = RequestMethod.POST)
     public ControllerResult addCheckin(HttpSession session, ChargeBill chargeBill) {
@@ -162,9 +160,9 @@ public class ChargeDocumentsController {
         if (SessionUtil.isLogin(session)) {
             String roles = "公司超级管理员,公司普通管理员,系统超级管理员,系统普通管理员";
             if (RoleUtil.checkRoles(roles)) {
+                User user = (User) session.getAttribute("user");
                 chargeBillService.updateDate(chargeBillId);
                 maintainRecordService.updateCurrentStatus("已收费", "'"+maintainRecordId+"'");
-
                 return ControllerResult.getSuccessResult("确认收费成功");
             } else {
                 logger.info("此用户无拥有此方法角色");

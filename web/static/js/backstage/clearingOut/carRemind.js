@@ -31,6 +31,14 @@ function showClearOut(){
         if(data.result == 'success'){
             var row =  $('table').bootstrapTable('getSelections');
             if(row.length ==1) {
+                if(row[0].currentStatus =='待收费' || row[0].currentStatus =='已收费'){
+                    swal({
+                        title:"",
+                        text: "此记录已经结算出厂过了, 不可再次结算!", // 主要文本
+                        confirmButtonColor: "#DD6B55", // 提示按钮的颜色
+                        confirmButtonText:"确定", // 提示按钮上的文本
+                        type:"warning"}) // 提示类型
+                }else{
                     swal({
                         title: "",
                         text: "是否确认结算出厂? 将生成维修保养收费单据!",
@@ -58,7 +66,8 @@ function showClearOut(){
                                 type: "error"
                             })
                         }
-                        })
+                    })
+                }
             }else{
                 swal({
                     title:"",
@@ -186,7 +195,7 @@ function showBell(){
     var roles = "公司超级管理员,公司普通管理员,汽车公司接待员";
     $.post("/user/isLogin/"+roles, function (data) {
         if(data.result == 'success'){
-            var row =  $('table').bootstrapTable('getSelections');
+            var row =  $('#table').bootstrapTable('getSelections');
             // 邮件发送，短信发送，微信公众号
             if(row.length >0) {
                 swal({

@@ -95,22 +95,22 @@
                         <div class="form-content">
                             <form class="form" id="regform">
                                 <div class="form-group">
-                                    <input name="phone" type="text" id="phone" class="form-control" placeholder="请输入您的手机号" >
+                                    <input name="userPhone" type="text" id="phone" class="form-control" placeholder="请输入您的手机号" >
                                     <span class="caveat" id="phone-caveat">手机号错误</span>
                                 </div>
+                                <%--<div class="form-group">--%>
+                                    <%--<div class="row">--%>
+                                        <%--<div class="col-xs-7 col-md-8">--%>
+                                            <%--<input name="phonecode" style="width: 105%" type="text" id="phone-code" class="form-control" placeholder="请输入验证码" >--%>
+                                        <%--</div>--%>
+                                        <%--<div class="col-xs-5 col-md-4">--%>
+                                            <%--<a class="btn btn-info" style="margin-bottom: 0;">发送验证码</a>--%>
+                                        <%--</div>--%>
+                                    <%--</div>--%>
+                                    <%--<span class="caveat" id="phonecode-caveat">验证码错误</span>--%>
+                                <%--</div>--%>
                                 <div class="form-group">
-                                    <div class="row">
-                                        <div class="col-xs-7 col-md-8">
-                                            <input name="phonecode" style="width: 105%" type="text" id="phone-code" class="form-control" placeholder="请输入验证码" >
-                                        </div>
-                                        <div class="col-xs-5 col-md-4">
-                                            <a class="btn btn-info" style="margin-bottom: 0;">发送验证码</a>
-                                        </div>
-                                    </div>
-                                    <span class="caveat" id="phonecode-caveat">验证码错误</span>
-                                </div>
-                                <div class="form-group">
-                                    <input name="password" type="password" id="password1" class="form-control" placeholder="请输入密码" >
+                                    <input name="userPwd" type="password" id="password1" class="form-control" placeholder="请输入密码" >
                                     <span class="caveat" id="pwd1-caveat">密码至少六位并且小于十八位</span>
                                 </div>
                                 <div class="form-group">

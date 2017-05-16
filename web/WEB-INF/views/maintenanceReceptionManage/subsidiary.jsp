@@ -144,13 +144,13 @@
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">维修保养项目：</label>
-                        <div class="col-sm-9">
-                            <input id="addItem" class="form-control" placeholder="请选择维修保养项目" readonly="true"
-                                   style="width:52%;">
-                            </input>
+                        <div class="col-sm-7">
                             <button type="button" class="btn btn-default" onclick="showItem('addWindow');">
                                 <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查看项目
                             </button>
+                            <input id="addItem" name="maintainItemName" class="form-control" placeholder="请选择维修保养项目" readonly="true"
+                                   style="width:66%;">
+                            </input>
                         </div>
                     </div>
                     <div class="form-group">
@@ -190,13 +190,13 @@
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">维修保养项目：</label>
-                        <div class="col-sm-9">
-                            <input id="editItem" type="text" define="maintainDetail.maintainFix.maintainName"
-                                   class="form-control" placeholder="请选择维修保养项目" readonly="true" style="width:52%;">
-                            </input>
+                        <div class="col-sm-7">
                             <button type="button" class="btn btn-default" onclick="showItem('editWindow');">
                                 <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查看项目
                             </button>
+                            <input id="editItem" type="text" name="maintainItemName" define="maintainDetail.maintainFix.maintainName"
+                                   class="form-control" placeholder="请选择维修保养项目" readonly="true" style="width:66%;">
+                            </input>
                         </div>
                     </div>
                     <div class="form-group">

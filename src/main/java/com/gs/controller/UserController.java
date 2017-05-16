@@ -103,6 +103,17 @@ public class UserController {
         }
     }
 
+    @ResponseBody
+    @RequestMapping(value = "register", method = RequestMethod.POST)
+    public ControllerResult register(User user){
+        if(user!=null) {
+            userService.insert(user);
+            return ControllerResult.getSuccessResult("注册成功, 正在跳转..");
+        }else{
+            return ControllerResult.getFailResult("注册失败");
+        }
+    }
+
     /**
      * 退出登录
      */

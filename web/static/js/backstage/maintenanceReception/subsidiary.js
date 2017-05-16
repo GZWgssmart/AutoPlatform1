@@ -511,7 +511,6 @@ function formSubmit(url, formId, winId){
                 $('#table').bootstrapTable('refresh');
                 if(formId == 'addForm'){
                     $("input[type=reset]").trigger("click"); // 移除表单中填的值
-                    $('#addForm').data('bootstrapValidator').resetForm(true); // 移除所有验证样式
                     $("#addButton").removeAttr("disabled"); // 移除不可点击
                 }if(formId == 'editForm'){
                     $('#detailTable').bootstrapTable('refresh');

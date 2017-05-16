@@ -118,61 +118,50 @@ function blurredQuery(){
 }
 
 function showMoney(){
-    var row =  $('table').bootstrapTable('getSelections');
+    var row =  $('#table').bootstrapTable('getSelections');
     if(row.length ==1) {
-        swal({
-            title: "",
-            text: "是否确认结算出厂? 将生成维修保养收费单据!",
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#DD6B55",
-            confirmButtonText: "我确定",
-            cancelButtonText: "再考虑一下",
-            closeOnConfirm: false,
-            closeOnCancel: false
-        },function(ifCor) {
-            if(ifCor){
-                $.post("/charge/updateDate/" + row[0].chargeBillId + "/" + row[0].maintainRecordId, function (data) {
-                    // 修改收费单据收费时间, 修改维修保养记录当前状态
-                    if (data.result == 'success') {
-                        swal({
-                            title: "",
-                            text: data.message,
-                            confirmButtonText: "确认",
-                            type: "success"
-                        })
-                    } else if (data.result == 'notLogin') {
-                        swal({
-                                title: "",
-                                text: data.message,
-                                confirmButtonText: "确认",
-                                type: "error"
-                            }
-                            , function (isConfirm) {
-                                if (isConfirm) {
-                                    top.location = "/user/loginPage";
-                                } else {
-                                    top.location = "/user/loginPage";
-                                }
-                            })
-                    } else if (data.result == 'notRole') {
-                        swal({
-                            title: "",
-                            text: data.message,
-                            confirmButtonText: "确认",
-                            type: "error"
-                        })
-                    }
-                });
-            }else{
+        if(row[0].actualPayment != null && row[0].actualPayment != ""){
+            if(row[0].maintainRecord.currentStatus =='已收费'){
                 swal({
                     title: "",
-                    text: "已取消",
-                    confirmButtonText: "确认",
-                    type: "error"
+                    text: "是否确认已经收到维修保养费用!",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "我确定",
+                    cancelButtonText: "再考虑一下",
+                    closeOnConfirm: true,
+                    closeOnCancel: false
+                },function(ifCor) {
+                    if (ifCor) {
+                        $("#inOutMoneyId").val(row[0].actualPayment);
+                        $("#addWin").modal('show');
+                        validator1("addForm", row[0].chargeBillId, row[0].maintainRecordId);
+                    } else {
+                        swal({
+                            title: "",
+                            text: "已取消",
+                            confirmButtonText: "确认",
+                            type: "error"
+                        });
+                    }
                 })
+            }else{
+                swal({
+                    title:"",
+                    text: "此记录已确认收费!", // 主要文本
+                    confirmButtonColor: "#DD6B55", // 提示按钮的颜色
+                    confirmButtonText:"确定", // 提示按钮上的文本
+                    type:"warning"}) // 提示类型
             }
-        });
+        }else{
+                    swal({
+                        title:"",
+                        text: "此记录还未收到维修保养费用, 不能确认收费", // 主要文本
+                        confirmButtonColor: "#DD6B55", // 提示按钮的颜色
+                        confirmButtonText:"确定", // 提示按钮上的文本
+                        type:"warning"}) // 提示类型
+                }
     }else{
         swal({
             title:"",
@@ -183,11 +172,28 @@ function showMoney(){
     }
 }
 
+
+/** 选择收入类型窗体 */
+function inOpenCheckInType() {
+    initTableNotTollbar("inTable", "/incomingType/queryByPager");
+    $("#addWin").modal('hide');
+    $("#inWin").modal('show');
+    validator1("")
+}
+
+function inCheckInType(){
+    $("#inWin").modal('hide');
+    $("#addWin").modal('show');
+    var row = $("#inTable").bootstrapTable('getSelections');
+    $("#inTypeId").val(row[0].inTypeId);
+    $("#inTypeName").val(row[0].inTypeName);
+}
+
 function showEdit(){
     var roles = "公司超级管理员,公司普通管理员,汽车公司接待员";
     $.post("/user/isLogin/"+roles, function (data) {
         if(data.result == 'success'){
-            var row =  $('table').bootstrapTable('getSelections');
+            var row =  $('#table').bootstrapTable('getSelections');
             if(row.length >0) {
                 $("#editWindow").modal('show'); // 显示弹窗
                 var chargeBill = row[0];
@@ -260,6 +266,15 @@ function showPrint(){
         });
 }
 
+function addInSubmit() {
+    $("#addForm").data('bootstrapValidator').validate();
+    if ($("#addForm").data('bootstrapValidator').isValid()) {
+        $("#addButton").attr("disabled", "disabled");
+    } else {
+        $("#addButton").removeAttr("disabled");
+    }
+}
+
 function validator(formId) {
     $('#' + formId).bootstrapValidator({
         feedbackIcons: {
@@ -325,7 +340,8 @@ function formSubmit(url, formId, winId){
                     title:"",
                     text: data.message,
                     confirmButtonText:"确定", // 提示按钮上的文本
-                    type:"success"})// 提示窗口, 修改成功
+                    type:"success"
+                })// 提示窗口, 修改成功
                 $('#table').bootstrapTable('refresh');
                 $("#" + formId).data('bootstrapValidator').destroy(); // 销毁此form表单
                 $('#' + formId).data('bootstrapValidator', null);// 此form表单设置为空
@@ -353,5 +369,104 @@ function formSubmit(url, formId, winId){
                     $("#editButton").removeAttr("disabled");
                 }
             }
+        }, "json");
+}
+
+function validator1(formId, chargeBillId, recordId) {
+    $('#' + formId).bootstrapValidator({
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            inTypeName: {
+                message: '收入类型验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '收入类型不能为空'
+                    }
+                }
+            },
+            inOutMoney: {
+                message: '收入金额验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '收入金额不能为空'
+                    }
+                }
+            }
+        }
+    })
+        .on('success.form.bv', function (e) {
+            if(formId == 'addForm'){
+                formSubmit1("/incomingOutgoing/add", formId, "addWin", chargeBillId, recordId);
+            }
+        })
+}
+
+function formSubmit1(url, formId, winId, chargeBillId, recordId){
+    $.post(url,
+        $("#" + formId).serialize(),
+        function (data) {
+            if (data.result == "success") {
+              $.post("/charge/updateDate/" + chargeBillId + "/" + recordId, function (data) {
+                  if (data.result == "success") {
+                      $('#' + winId).modal('hide');
+                      swal({
+                          title: "",
+                          text: data.message,
+                          confirmButtonText: "确定", // 提示按钮上的文本
+                          type: "success"
+                      })// 提示窗口, 修改成功
+                      $('#table').bootstrapTable('refresh');
+                      $("#" + formId).data('bootstrapValidator').destroy(); // 销毁此form表单
+                      $('#' + formId).data('bootstrapValidator', null);// 此form表单设置为空
+                  }else if (data.result == "fail") {
+                      swal({title:"",
+                          text:data.message,
+                          confirmButtonText:"确认",
+                          type:"error"})
+                      $("#"+formId).removeAttr("disabled");
+                  }else if (data.result == "notLogin") {
+                      swal({
+                              title: "",
+                              text: data.message,
+                              confirmButtonText: "确认",
+                              type: "error"
+                          }
+                          , function (isConfirm) {
+                              if (isConfirm) {
+                                  top.location = "/user/loginPage";
+                              } else {
+                                  top.location = "/user/loginPage";
+                              }
+                          })
+                  }
+               });
+            }else if (data.result == "fail") {
+                swal({title:"",
+                    text:data.message,
+                    confirmButtonText:"确认",
+                    type:"error"})
+                $("#"+formId).removeAttr("disabled");
+            }else if (data.result == "notLogin") {
+                swal({title:"",
+                        text:data.message,
+                        confirmButtonText:"确认",
+                        type:"error"}
+                    ,function(isConfirm){
+                        if(isConfirm){
+                            top.location = "/user/loginPage";
+                        }else{
+                            top.location = "/user/loginPage";
+                        }
+                    })
+                }
+                if(formId == 'addForm') {
+                    $("#addButton").removeAttr("disabled");
+                }else if(formId == 'editForm'){
+                    $("#editButton").removeAttr("disabled");
+                }
         }, "json");
 }

@@ -41,14 +41,14 @@ function validator2(formId) {
                     }
                 }
             },
-            phonecode: {
-                message: '验证码不能为空',
-                validators: {
-                    notEmpty: {
-                        message: '验证码不能为空'
-                    }
-                }
-            },
+            // phonecode: {
+            //     message: '验证码不能为空',
+            //     validators: {
+            //         notEmpty: {
+            //             message: '验证码不能为空'
+            //         }
+            //     }
+            // },
             password: {
                 message: '用户密码不能为空',
                 validators: {
@@ -68,9 +68,9 @@ function validator2(formId) {
         }
     }).on('success.form.bv', function (e) {
         if (formId == "regform") {
-            $.post("/user/login", $("#regform").serialize(), function (data) {
+            $.post("/user/register", $("#regform").serialize(), function (data) {
                 if (data.result == "success") {
-                    window.location.href = "/backstageIndex";
+
                 } else if (data.result == "fail") {
                     swal({
                         title: "",
