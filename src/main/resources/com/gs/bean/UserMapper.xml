@@ -149,7 +149,7 @@
       select * from t_user u where 1 = 1 and u.userStatus = 'Y'
     ]]>
     <if test="companyId != null and companyId != ''">
-      and u.companyId = #{user.companyId}
+      and u.companyId = #{companyId}
     </if>
   </select>
 
