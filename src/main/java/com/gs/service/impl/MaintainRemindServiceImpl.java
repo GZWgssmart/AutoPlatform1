@@ -77,4 +77,9 @@ public class MaintainRemindServiceImpl implements MaintainRemindService {
 	public int countNull(@Param("user")User user) {
 		return maintainRemindDAO.countNull(user);
 	}
+
+	@Override
+	public void insertBatch(List<MaintainRemind> maintainReminds) {
+		maintainRemindDAO.insertBatch(maintainReminds);
+	}
 }

@@ -63,4 +63,11 @@
 				values(#{remindId}, #{userId}, now(), #{lastMaintainMileage}, #{remindMsg}, #{companyId}, now())
 		]]>
   </insert>
+
+  <insert id="insertBatch"  parameterType="java.util.List">
+    insert into t_maintain_remind (remindId,userId,lastMaintainTime,lastMaintainMileage)values
+    <foreach collection="list" item="item" index="index" separator="," >
+      (uuid(),#{item.userId},#{item.lastMaintainTime},#{item.lastMaintainMileage})
+    </foreach>
+  </insert>
 </mapper>

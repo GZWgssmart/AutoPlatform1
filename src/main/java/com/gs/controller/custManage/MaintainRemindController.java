@@ -136,7 +136,7 @@ public class MaintainRemindController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "insert", method = RequestMethod.POST)
+    @RequestMapping(value = "insertRemind", method = RequestMethod.POST)
     public ControllerResult insertDate(HttpSession session, MaintainRemind maintainRemind, MessageSend messageSend) {
         logger.info("维修保养提醒记录添加操作");
         List<MaintainRecord> maintainRecords = maintainRecordService.queryByPagerSix(getInsertDateTime());
@@ -144,16 +144,15 @@ public class MaintainRemindController {
             List<MaintainRemind> maintainReminds = new ArrayList<MaintainRemind>();
             for(MaintainRecord mrs : maintainRecords) {
                 MaintainRemind mrs1 = new MaintainRemind();
+                mrs1.setUserId(mrs.getCheckin().getUserId());
+                mrs1.setLastMaintainTime(mrs.getActualEndTime());
+                mrs1.setLastMaintainMileage(mrs.getCheckin().getCarMileage());
+                maintainReminds.add(mrs1);
             }
-            maintainRemindService.insert(maintainRemind);
+            maintainRemindService.insertBatch(maintainReminds);
+            return ControllerResult.getSuccessResult("添加成功");
         }
-        messageSend.setMessageId(maintainRemind.getRemindId());
-        messageSend.setUserId(maintainRemind.getUserId());
-        messageSend.setSendTime(maintainRemind.getRemindTime());
-        messageSend.setSendMsg(maintainRemind.getRemindMsg());
-        messageSend.setSendCreatedTime(new Date());
-        messageSendService.insertRemind(messageSend);
-        return ControllerResult.getSuccessResult("添加成功");
+        return null;
     }
 
     public String getInsertDateTime() {
