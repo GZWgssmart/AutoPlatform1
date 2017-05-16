@@ -28,12 +28,12 @@
   <!--
     查询所有的销售记录
 -->
-  <select id="queryAll" resultMap="AccessoriesSaleMap">
+  <select id="queryAll" resultMap="AccessoriesSaleMap" parameterType="com.gs.bean.User">
     <![CDATA[
-            select * FROM auto_platform.t_accessories_sale ac where 1=1 and ac.accSaleStatus = 'Y'
+          select * FROM auto_platform.t_accessories_sale ac where 1=1 and ac.accSaleStatus = 'Y'
         ]]>
     <if test="companyId != '' and companyId !=null">
-      and ac.companyId = #{user.companyId}
+      and ac.companyId = #{companyId}
     </if>
   </select>
 
@@ -54,12 +54,12 @@
   </select>
 
   <!--查询有多少配件销售信息-->
-  <select id="count" resultType="int" >
+  <select id="count" resultType="int" parameterType="com.gs.bean.User">
     <![CDATA[
       select count(accSaleId) from auto_platform.t_accessories_sale u WHERE u.accSaleStatus = 'Y'
     ]]>
     <if test="companyId != '' and companyId !=null">
-      and u.companyId = #{user.companyId}
+      and u.companyId = #{companyId}
     </if>
   </select>
 

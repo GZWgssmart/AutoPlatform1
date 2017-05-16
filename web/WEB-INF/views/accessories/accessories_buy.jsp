@@ -117,7 +117,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">所属公司：</label>
+                    <label class="col-sm-3 control-label">汽车公司</label>
                     <div class="col-sm-7">
                         <select id="addCompany" class="js-example-tags company" name="companyId" style="width:100%">
                         </select>
@@ -208,7 +208,7 @@
                 </div>
                 <br/>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">所属公司：</label>
+                    <label class="col-sm-3 control-label">汽车公司</label>
                     <div class="col-sm-7">
                         <select id="editCompany" class="js-example-tags company" define="AccessoriesBuy.companyId"
                                 name="companyId" style="width:100%">
@@ -301,7 +301,7 @@
                     <thead>
                     <tr>
                         <th data-radio="true" data-field="status"></th>
-                        <th data-field="company.companyName">所属公司名称</th>
+                        <th data-field="company.companyName">汽车公司</th>
                         <th data-field="accessoriesType.accTypeName">配件所属类别</th>
                         <th data-field="supply.supplyName">所属供应商</th>
                         <th data-field="accName">配件名称</th>

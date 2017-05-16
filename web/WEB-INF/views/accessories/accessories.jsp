@@ -113,7 +113,7 @@
                 </div>
                 <br/>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">所属公司：</label>
+                    <label class="col-sm-3 control-label">汽车公司：</label>
                     <div class="col-sm-7">
                         <select id="addCompany" class="js-example-tags company" name="companyId" style="width:100%">
                         </select>
@@ -198,7 +198,7 @@
                 </div>
                 <br/>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">所属公司：</label>
+                    <label class="col-sm-3 control-label">汽车公司：</label>
                     <div class="col-sm-7">
                         <select id="editCompany" class="js-example-tags company" define="Accessories.companyId"
                                 name="companyId" style="width:100%">

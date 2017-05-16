@@ -45,12 +45,12 @@
     <!--
         查询所有的采购记录
     -->
-    <select id="queryAll" resultMap="AccessoriesBuyMap">
+    <select id="queryAll" resultMap="AccessoriesBuyMap" parameterType="com.gs.bean.User">
         <![CDATA[
             select * FROM auto_platform.t_accessories_buy ac where 1=1 and ac.accBuyStatus = 'Y'
         ]]>
         <if test="companyId != '' and companyId !=null">
-            and ac.companyId = #{user.companyId}
+            and ac.companyId = #{companyId}
         </if>
     </select>
 
@@ -73,12 +73,12 @@
     </select>
 
     <!-- 查询有多少配件销售采购信息 -->
-    <select id="count" resultType="int" >
+    <select id="count" resultType="int" parameterType="com.gs.bean.User">
         <![CDATA[
            select count(accBuyId) from auto_platform.t_accessories_buy u where u.accBuyStatus = 'Y'
         ]]>
         <if test="companyId != '' and companyId !=null">
-            and u.companyId = #{user.companyId}
+            and u.companyId = #{companyId}
         </if>
     </select>
 
