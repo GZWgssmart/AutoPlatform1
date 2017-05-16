@@ -17,4 +17,13 @@ public class SessionUtil {
         return false;
     }
 
+    /**
+     * 是否车主登录
+     */
+    public static boolean isOwnerLogin(HttpSession session) {
+        if(session.getAttribute("frontUser")!=null){
+            return true;
+        }
+        return false;
+    }
 }

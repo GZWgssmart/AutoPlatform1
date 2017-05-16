@@ -41,7 +41,7 @@ public class UserController {
 
     @RequestMapping(value = "loginPage", method = RequestMethod.GET)
     public String loginPage() {
-        return "user/login";
+        return "Frontpage/registered";
     }
 
     @RequestMapping(value = "redirectLogin", method = RequestMethod.GET)
@@ -78,6 +78,11 @@ public class UserController {
                     session.setAttribute("user", user);
                     session.setAttribute("userLoginedTime", new Date());
                     return ControllerResult.getSuccessResult("登录成功");
+                }else if(subject.hasRole(Constants.role_owner)){
+                    logger.info("登录成功");
+                    User user = userService.queryUser(user1.getUserEmail());
+                    session.setAttribute("frontUser", user);
+                    return ControllerResult.getIsOwnerResult("登录成功");
                 }else {
                     logger.info("抱歉，你的账号角色并不授权。请联系管理员激活账号！");
                     return ControllerResult.getFailResult("抱歉，你的账号角色并不授权。请联系管理员激活账号！");

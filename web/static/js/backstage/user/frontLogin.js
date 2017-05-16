@@ -120,8 +120,10 @@ function validator(formId) {
         }
     }).on('success.form.bv', function (e) {
         if (formId == "loginForm") {
-            $.post("/userlogin",$("#loginForm").serialize(),function (data) {
+            $.post("/user/login",$("#loginForm").serialize(),function (data) {
                 if(data.result=="success"){
+                    window.location.href="/backstageIndex";
+                }else if(data.result == "isOwner"){
                     window.location.href="/userpage";
                 }else if(data.result=="fail"){
                     swal({
