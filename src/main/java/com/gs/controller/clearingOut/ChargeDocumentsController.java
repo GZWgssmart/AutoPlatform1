@@ -117,7 +117,7 @@ public class ChargeDocumentsController {
             if(RoleUtil.checkRoles(roles)) {
                 logger.info("添加收费单据");
                 chargeBillService.insert(chargeBill);
-                return ControllerResult.getSuccessResult("添加成功");
+                return ControllerResult.getSuccessResult("结算出厂成功");
             }else{
                 logger.info("此用户无拥有添加收费单据的角色");
                 return null;

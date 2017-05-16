@@ -151,6 +151,38 @@ public class MaintainDetailController {
     }
 
     /**
+     * 根据维修保养记录id查询此记录所有明细
+     */
+    @ResponseBody
+    @RequestMapping(value = "queryByRecordId/{maintainRecordId}", method = RequestMethod.POST)
+    public List<Double> queryByRecordId(HttpSession session, @PathVariable("maintainRecordId")String maintainRecordId) {
+        if(SessionUtil.isLogin(session)) {
+            String roles = "公司超级管理员,公司普通管理员,汽车公司接待员";
+            if(RoleUtil.checkRoles(roles)) {
+                logger.info("根据维修保养记录id查询此记录所有明细");
+                // 拿到此维修保养记录下所有明细
+                List<MaintainDetail> maintainDetails = maintainDetailService.queryByRecordId(maintainRecordId);
+                Double disCountMoney = 0.d; // 折扣后总价
+                Double money = 0.d; // 总价
+                for(MaintainDetail md : maintainDetails){
+                    money += md.getMaintainFix().getMaintainMoney();
+                    disCountMoney +=md.getMaintainDiscount() * md.getMaintainFix().getMaintainMoney();
+                }
+                List<Double> doubles = new ArrayList<Double>();
+                doubles.add(money);
+                doubles.add(disCountMoney);
+                return doubles;
+            }else{
+                logger.info("此用户无拥有结算出厂的角色");
+                return null;
+            }
+        }else{
+            logger.info("请先登录");
+            return null;
+        }
+    }
+
+    /**
      * 用户确认, 此时生成所有物料清单, 两个参数一个为维修保养记录id, 一个为所有项目ids
      */
     @ResponseBody

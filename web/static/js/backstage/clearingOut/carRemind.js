@@ -24,13 +24,53 @@ $(function () {
     });
 });
 
-// 激活或禁用
-function statusFormatter(value, row, index) {
-    if(value == 'Y') {
-        return "&nbsp;&nbsp;<button type='button' class='btn btn-danger' onclick='inactive(\""+'/maintainRecord/statusOperate?id='+row.maintainRecordId+'&status=Y'+"\")'>禁用</a>";
-    } else {
-        return "&nbsp;&nbsp;<button type='button' class='btn btn-success' onclick='active(\""+'/maintainRecord/statusOperate?id='+ row.maintainRecordId+'&status=N'+ "\")'>激活</a>";
-    }
+//结算出厂
+function showClearOut(){
+    var roles = "公司超级管理员,公司普通管理员,汽车公司接待员";
+    $.post("/user/isLogin/"+roles, function (data) {
+        if(data.result == 'success'){
+            var row =  $('table').bootstrapTable('getSelections');
+            if(row.length !=1) {
+                swal({title:"",
+                        text:"是否确认结算出厂? 将生成维修保养收费单据!",
+                        confirmButtonText:"确认",
+                        type:"warning"}
+                    ,function(){
+                        $.post("/maintainDetail/queryByRecordId/"+row[0].recordId, function (data) {
+                            $("#money").val(data[0]);
+                            $("#disCountMoney").val(data[1]);
+                            $("#maintainRecordId").val(row[0].recordId);
+                            $("#addWindow").modal('show');
+                            initDateTimePicker('addForm', 'chargeTime'); // 初始化时间框
+                        });
+                    })
+            }else{
+                swal({
+                    title:"",
+                    text: "请先选择要结算出厂的记录且只能选择一条", // 主要文本
+                    confirmButtonColor: "#DD6B55", // 提示按钮的颜色
+                    confirmButtonText:"确定", // 提示按钮上的文本
+                    type:"warning"}) // 提示类型
+            }
+        }else if(data.result == 'notLogin'){
+            swal({title:"",
+                    text:data.message,
+                    confirmButtonText:"确认",
+                    type:"error"}
+                ,function(isConfirm){
+                    if(isConfirm){
+                        top.location = "/user/loginPage";
+                    }else{
+                        top.location = "/user/loginPage";
+                    }
+                })
+        }else if(data.result == 'notRole'){
+            swal({title:"",
+                text:data.message,
+                confirmButtonText:"确认",
+                type:"error"})
+        }
+    });
 }
 
 // 查看全部未提醒
@@ -212,7 +252,7 @@ function showBellAll(){
     var roles = "公司超级管理员,公司普通管理员,汽车公司接待员";
     $.post("/user/isLogin/"+roles, function (data) {
         if(data.result == 'success'){
-            tableData = $("#table").bootstrapTable('getData');//获取表格的所有内容行
+            var tableData = $("#table").bootstrapTable('getData');//获取表格的所有内容行
             if(tableData.length > 0) {
                 swal({
                         title: "",
@@ -294,4 +334,95 @@ function showBellAll(){
                 type:"error"})
         }
     });
+}
+
+function validator(formId) {
+    $('#' + formId).bootstrapValidator({
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            chargeBillMoney: {
+                message: '折扣后总金额验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '折扣后总金额不能为空'
+                    }
+                }
+            },
+            paymentMethod: {
+                message: '付款方式验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '付款方式不能为空'
+                    }
+                }
+            },
+            actualPayment: {
+                message: '实际付款验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '实际付款不能为空'
+                    }
+                }
+            },chargeTime: {
+                message: '收费时间验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '收费时间不能为空'
+                    }
+                }
+            },chargeBillDes: {
+                message: '收费单据描述验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '收费单据描述不能为空'
+                    }
+                }
+            }
+        }
+    })
+        .on('success.form.bv', function (e) {
+                formSubmit("/charge/add", 'addForm', "addWindow");
+        })
+}
+
+function formSubmit(url, formId, winId){
+    $.post(url,
+        $("#" + formId).serialize(),
+        function (data) {
+            if (data.result == "success") {
+                $('#' + winId).modal('hide');
+                swal({
+                    title:"",
+                    text: data.message,
+                    confirmButtonText:"确定", // 提示按钮上的文本
+                    type:"success"})// 提示窗口, 修改成功
+                $("#" + formId).data('bootstrapValidator').destroy(); // 销毁此form表单
+                $('#' + formId).data('bootstrapValidator', null);// 此form表单设置为空
+            } else if (data.result == "fail") {
+                swal({title:"",
+                    text:data.message,
+                    confirmButtonText:"确认",
+                    type:"error"})
+                $("#"+formId).removeAttr("disabled");
+            }else if (data.result == "notLogin") {
+                swal({title:"",
+                        text:data.message,
+                        confirmButtonText:"确认",
+                        type:"error"}
+                    ,function(isConfirm){
+                        if(isConfirm){
+                            top.location = "/user/loginPage";
+                        }else{
+                            top.location = "/user/loginPage";
+                        }
+                    })
+                if(formId == 'addForm') {
+                    $("#addButton").removeAttr("disabled");
+                }
+            }
+        }, "json");
 }

@@ -168,7 +168,7 @@
   <insert id="insert" useGeneratedKeys="true" keyProperty="chargeBillId" parameterType="chargeBill">
     <![CDATA[
         insert into t_charge_bill(chargeBillId, maintainRecordId, chargeBillMoney,paymentMethod,actualPayment,chargeTime,chargeCreatedTime,chargeBillDes,chargeBillStatus)
-        values(uuid(), #{maintainRecordId}, #{chargeBillMoney}, #{paymentMethod},#{actualPayment},#{chargeTime}, #{chargeCreatedTime}, #{chargeBillDes}, #{chargeBillStatus})
+        values(uuid(), #{maintainRecordId}, #{chargeBillMoney}, #{paymentMethod},#{actualPayment},#{chargeTime}, now(), #{chargeBillDes}, 'Y')
         ]]>
   </insert>
 
