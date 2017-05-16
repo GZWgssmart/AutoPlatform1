@@ -212,7 +212,7 @@ function formSubmit(url, formId, winId){
                 $('#table').bootstrapTable('refresh');
                 if (formId == 'addForm') {
                     $("input[type=reset]").trigger("click");
-                        $('#addForm').data('bootstrapValidator').resetForm(true);
+                        // $('#addForm').data('bootstrapValidator').resetForm(true);
                         $("#addButton").removeAttr("disabled");
                         $("#addCarBrand").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
                 }

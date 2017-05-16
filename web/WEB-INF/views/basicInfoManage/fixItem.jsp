@@ -32,7 +32,12 @@
                 <th data-field="maintainManHourFee">维修项目工时费</th>
                 <th data-field="maintainDes">维修项目描述</th>
                 <th data-field="company.companyName">维修项目所属公司</th>
-                <th data-field="maintainStatus" data-formatter="statusFormatter">维修项目状态</th>
+                <th data-field="maintainStatus" data-formatter="showStatusFormatter">维修项目状态</th>
+                <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员">
+                    <th data-field="maintainStatus" data-formatter="statusFormatter">
+                        操作
+                    </th>
+                </shiro:hasAnyRoles>
             </tr>
             </thead>
         </table>
@@ -71,11 +76,11 @@
     </div>
 </div>
 
-<div id="accWindow" class="modal fade" style="overflow-y:scroll" data-backdrop="static">
+<div id="accWindow" class="modal fade" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static" keyboard:false>
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
-                <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
+                <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('accWindow', 'accForm')"></span>
                 <form role="form" class="form-horizontal" id="accForm">
                     <input type="hidden" name="maintainId" define="MaintainFixMap.maintainId">
                     <input type="hidden" id="addaccId" name="accId">
@@ -115,11 +120,11 @@
     </div>
 </div>
 
-<div id="accEditWindow" class="modal fade" style="overflow-y:scroll" data-backdrop="static">
+<div id="accEditWindow" class="modal fade" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static" keyboard:false>
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
-                <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
+                <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('accEditWindow', 'accEditForm')"></span>
                 <form role="form" class="form-horizontal" id="accEditForm">
                     <input type="hidden" id="editmaintainId" name="mainAccId">
                     <input type="hidden" id="editaccId" name="accId">
@@ -159,7 +164,7 @@
     </div>
 </div>
 <%--所有配件--%>
-<div class="modal fade" id="accAllWindow" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static">
+<div class="modal fade" id="accAllWindow" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static" keyboard:false>
     <div class="modal-dialog" style="width:90%;">
         <div class="modal-content">
             <div class="modal-body">
@@ -203,7 +208,7 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<div class="modal fade" id="accEidtAllWindow" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static">
+<div class="modal fade" id="accEidtAllWindow" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static" keyboard:false>
     <div class="modal-dialog" style="width:90%;">
         <div class="modal-content">
             <div class="modal-body">
@@ -247,12 +252,13 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<div id="detailWindow" class="modal fade" aria-hidden="true" style="overflow-y:scroll" data-backdrop="static"
+<div id="detailWindow" class="modal fade" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static" keyboard:false
      keyboard:false>
     <div class="modal-dialog" style="width: 90%">
         <div class="modal-content">
             <div class="modal-body">
-                <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
+                <span class="glyphicon glyphicon-remove closeModal" onclick="closeModalsdetailWindow()"></span>
+                <form role="form" class="form-horizontal" id="detailForm">
                 <h3 class="m-t-none m-b">此维修保养记录下的所有明细</h3>
                 <hr>
                 <table class="table table-hover" id="detailTable">
@@ -277,17 +283,19 @@
                 <div class="modal-footer" style="border: none">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                 </div>
+                </form>
             </div>
         </div>
     </div>
 </div>
 
 <!-- 添加弹窗 -->
-<div id="addWindow" class="modal fade" style="overflow-y:scroll" data-backdrop="static">
+<div id="addWindow" class="modal fade" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static" keyboard:false>
     <div class="modal-dialog">
         <div class="modal-content">
+            <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('addWindow', 'addForm')"></span>
             <form role="form" class="form-horizontal" id="addForm">
-                <div class="modal-header" style="overflow:auto;">
+            <div class="modal-header" style="overflow:auto;">
                     <h4>请填写该维修项目的相关信息</h4>
                 </div>
                 <hr>
@@ -344,9 +352,10 @@
 
 
 <!-- 修改弹窗 -->
-<div class="modal fade" id="editWindow" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static">
+<div class="modal fade" id="editWindow" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static" keyboard:false>
     <div class="modal-dialog">
         <div class="modal-content">
+            <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('editWindow', 'editForm')"></span>
             <form form role="form" class="form-horizontal" id="editForm">
                 <div class="modal-header" style="overflow:auto;">
                     <h4>请填写该维修项目的相关信息</h4>

@@ -35,9 +35,14 @@
                     <th data-field="carBrand.brandName">
                         品牌名称
                     </th>
-                    <th data-field="modelStaus" data-formatter="statusFormatter">
+                    <th data-field="modelStaus" data-formatter="showStatusFormatter">
                         车型状态
                     </th>
+                    <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员">
+                        <th data-field="modelStaus" data-formatter="statusFormatter">
+                            操作
+                        </th>
+                    </shiro:hasAnyRoles>
                 </tr>
             </thead>
         </table>
@@ -87,9 +92,10 @@
 </div>
 
 <!-- 添加弹窗 -->
-<div class="modal fade" id="addWindow" style="overflow-y:scroll" data-backdrop="static" >
+<div class="modal fade" id="addWindow" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static" keyboard:false >
     <div class="modal-dialog" style="width: 700px;height: auto;">
         <div class="modal-content" style="overflow:hidden;">
+            <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('addWindow', 'addForm')"></span>
             <form class="form-horizontal" role="form" id="addForm" method="post">
                 <div class="modal-header" style="overflow:auto;">
                     <h4>请填写汽车车型的相关信息</h4>
@@ -130,9 +136,10 @@
 
 
 <!-- 修改弹窗 -->
-<div class="modal fade" id="editWindow" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static">
+<div class="modal fade" id="editWindow" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static" keyboard:false>
     <div class="modal-dialog">
         <div class="modal-content">
+            <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('editWindow', 'editForm')"></span>
             <form class="form-horizontal" role="form" id="editForm">
                 <div class="modal-header" style="overflow:auto;">
                     <h4>请修改汽车车型的相关信息</h4>

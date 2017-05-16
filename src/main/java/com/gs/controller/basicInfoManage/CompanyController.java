@@ -84,6 +84,7 @@ public class CompanyController {
                 Pager pager = new Pager();
                 pager.setPageNo(Integer.valueOf(pageNumber));
                 pager.setPageSize(Integer.valueOf(pageSize));
+                pager.setUser((User) session.getAttribute("user"));
                 pager.setTotalRecords(companyService.countByDisable((User) session.getAttribute("user")));
                 List<Company> companys = companyService.queryByPagerDisable(pager);
                 return new Pager4EasyUI<Company>(pager.getTotalRecords(), companys);
