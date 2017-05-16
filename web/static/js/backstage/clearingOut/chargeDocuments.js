@@ -120,9 +120,58 @@ function blurredQuery(){
 function showMoney(){
     var row =  $('table').bootstrapTable('getSelections');
     if(row.length ==1) {
-        $.post("/charge/updateDate/"+row[0].chargeBillId+"/"+row[0].maintainRecordId, function (data) {
-            // 修改收费单据收费时间, 修改维修保养记录当前状态
-
+        swal({
+            title: "",
+            text: "是否确认结算出厂? 将生成维修保养收费单据!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "我确定",
+            cancelButtonText: "再考虑一下",
+            closeOnConfirm: false,
+            closeOnCancel: false
+        },function(ifCor) {
+            if(ifCor){
+                $.post("/charge/updateDate/" + row[0].chargeBillId + "/" + row[0].maintainRecordId, function (data) {
+                    // 修改收费单据收费时间, 修改维修保养记录当前状态
+                    if (data.result == 'success') {
+                        swal({
+                            title: "",
+                            text: data.message,
+                            confirmButtonText: "确认",
+                            type: "success"
+                        })
+                    } else if (data.result == 'notLogin') {
+                        swal({
+                                title: "",
+                                text: data.message,
+                                confirmButtonText: "确认",
+                                type: "error"
+                            }
+                            , function (isConfirm) {
+                                if (isConfirm) {
+                                    top.location = "/user/loginPage";
+                                } else {
+                                    top.location = "/user/loginPage";
+                                }
+                            })
+                    } else if (data.result == 'notRole') {
+                        swal({
+                            title: "",
+                            text: data.message,
+                            confirmButtonText: "确认",
+                            type: "error"
+                        })
+                    }
+                });
+            }else{
+                swal({
+                    title: "",
+                    text: "已取消",
+                    confirmButtonText: "确认",
+                    type: "error"
+                })
+            }
         });
     }else{
         swal({

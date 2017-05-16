@@ -23,7 +23,7 @@
 </head>
 
 <body class="fixed-sidebar full-height-layout gray-bg" style="overflow:hidden">
-    <div id="wrapper" style="margin-bottom: 20px;">
+    <div id="wrapper" style="margin-bottom: 20px;display: none">
         <!--左侧导航开始-->
         <nav class="navbar-default navbar-static-side" role="navigation">
             <div class="nav-close"><i class="fa fa-times-circle"></i>
@@ -823,6 +823,7 @@
             var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师,汽车公司学徒,汽车公司销售人员,汽车公司财务人员,汽车公司采购人员,汽车公司库管人员,汽车公司人力资源管理部";
             $.post("/user/isLogin/"+roles, function (data) {
                 if(data.result == 'success'){
+                    $("#wrapper").css("display","block");
                     function bodyScroll(event){
                         event.preventDefault();
                     }

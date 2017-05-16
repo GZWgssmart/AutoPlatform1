@@ -22,6 +22,7 @@
       <result column="pickupTime" property="pickupTime"/>
       <result column="recordDes" property="recordDes"/>
       <result column="recordStatus" property="recordStatus"/>
+      <result column="currentStatus" property="currentStatus"/>
 
         <association property="checkin" javaType="com.gs.bean.Checkin">
           <id column="checkinId" property="checkinId"></id>
@@ -177,6 +178,12 @@
 			update t_charge_bill set chargeBillId = #{chargeBillId}, maintainRecordId = #{maintainRecordId}, chargeBillMoney = #{chargeBillMoney}, paymentMethod = #{paymentMethod},
 				actualPayment = #{actualPayment}, chargeTime = #{chargeTime}, chargeCreatedTime = #{chargeCreatedTime}, chargeBillDes = #{chargeBillDes}, chargeBillStatus = #{chargeBillStatus}
 				where chargeBillId = #{chargeBillId}
+		]]>
+  </update>
+
+  <update id="updateDate" parameterType="chargeBill">
+    <![CDATA[
+			update t_charge_bill set chargeTime = now() where chargeBillId = #{chargeBillId}
 		]]>
   </update>
 

@@ -107,4 +107,12 @@ public class ChargeBillServiceImpl implements ChargeBillService {
     public List<ChargeBill> queryByCondition(String start, String end, String companyId, String maintainOrFix, String type) {
         return chargeBillDAO.queryByCondition(start, end, companyId, maintainOrFix, type);
     }
+
+    /**
+     * 确认收费
+     */
+    @Override
+    public void updateDate(String chargeBillId) {
+        chargeBillDAO.updateDate(chargeBillId);
+    }
 }
