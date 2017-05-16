@@ -6,12 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/css/bootstrap.min.css">
     <link rel="stylesheet" href="/static/css/bootstrap-table.css">
-    <link rel="stylesheet" href="/static/css/select2.min.css">
     <link rel="stylesheet" href="/static/css/sweetalert.css">
     <link rel="stylesheet" href="/static/css/table/table.css">
     <link rel="stylesheet" href="/static/css/bootstrap-validate/bootstrapValidator.min.css">
     <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.css">
     <link rel="stylesheet/less" href="/static/css/bootstrap-dateTimePicker/datetimepicker.less">
+    <link rel="stylesheet" href="/static/css/select2.min.css">
 
     <link rel="stylesheet" href="/static/css/fileinput.css">
 
@@ -54,6 +54,10 @@
         }
         #detailForm .form-control {
             box-shadow: none;
+        }
+
+        .select2-container .select2-selection--multiple {
+            height: auto;
         }
     </style>
 
@@ -104,6 +108,7 @@
     <div class="modal-dialog" style="width:900px;">
         <div class="modal-content">
             <div class="modal-body">
+                <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
                 <div class="modal-header" style="overflow:auto;">
                     <h3>添加人员信息</h3>
                 </div>
@@ -174,8 +179,8 @@
                     <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员">
                         <div class="form-group">
                             <label class="col-md-3 control-label">汽修公司：</label>
-                            <div class="col-md-9" style="border:solid 1px red;">
-                                <select class="js-example-basic-multiple js-states form-control userCompany"
+                            <div class="col-md-9">
+                                <select class="js-example-basic-multiple userCompany" style="width: 50%;"
                                     id="addUserCompany" name="companyId" multiple="multiple"></select>
                             </div>
                         </div>
@@ -198,8 +203,8 @@
                     </div>
                     <div class="form-group col-md-12">
                         <label class="col-md-2 control-label">角色：</label>
-                        <div class="col-md-10" style="border:solid 1px red;">
-                            <select class="js-example-basic-multiple js-states form-control userRole"
+                        <div class="col-md-10">
+                            <select class="js-example-basic-multiple userRole" style="width: 100%;"
                                 id="addUserRole" name="roleId" multiple="multiple"></select>    <%-- js-example-basic-multiple --%>
                         </div>
                     </div>
@@ -236,6 +241,7 @@
 <div class="modal fade" id="editWindow" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog">
         <div class="modal-content" style="width:900px; margin-left:-200px;">
+            <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
             <form role="form" class="form-horizontal" id="editForm" method="post">
                 <div class="modal-header" style="overflow:auto;">
                     <h3>修改人员信息</h3>
@@ -362,6 +368,7 @@
 <div class="modal fade" id="detailWindow" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog">
         <div class="modal-content" style="width:850px; margin-left:-121px;">
+            <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
             <div class="modal-header">
                 <h3>详细信息</h3>
             </div>
@@ -473,23 +480,27 @@
 <script src="/static/js/backstage/emp/jquery.formFillTemp.js"></script>
 <script src="/static/js/bootstrap-table/bootstrap-table.js"></script>
 <script src="/static/js/bootstrap-table/bootstrap-table-zh-CN.js"></script>
-<script src="/static/js/select2/select2.js"></script>
 <script src="/static/js/sweetalert/sweetalert.min.js"></script>
 <script src="/static/js/contextmenu.js"></script>
 <script src="/static/js/backstage/main.js"></script>
 <script src="/static/js/bootstrap-validate/bootstrapValidator.js"></script>
 <script src="/static/js/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.js"></script>
 <script src="/static/js/bootstrap-dateTimePicker/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+<script src="/static/js/select2/select2.js"></script>
 <script src="/static/js/backstage/emp/empInFormation.js"></script>
 
 <%-- 地址选择 --%>
 <script src="/static/js/jquery.cxselect.min.js"></script>
+
 <%-- 文件上传 --%>
 <script src="/static/js/fileInput/fileinput.js"></script>
 <script src="/static/js/fileInput/zh.js"></script>
 
+
+
 </body>
 <script>
+
 
     $.cxSelect.defaults.url = '/static/js/cityData.json';
     $('#city_china').cxSelect({

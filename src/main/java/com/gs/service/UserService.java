@@ -61,6 +61,6 @@ public interface UserService extends BaseService<String, User> {
      */
     public User queryInfoById(String id);
 
-    public User updatePwd(User user);
+    public void updatePwd(User user);
 
 }

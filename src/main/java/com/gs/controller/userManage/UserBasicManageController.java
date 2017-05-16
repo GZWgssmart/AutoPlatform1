@@ -87,6 +87,8 @@ public class UserBasicManageController {
                 String area = request.getParameter("area");
                 user.setUserAddress(province + "-" + city + "-" + area);
                 user.setUserPwd(EncryptUtil.md5Encrypt("123123"));
+                User u = (User) session.getAttribute("user");
+                user.setCompanyId(u.getCompanyId());    // 设置为session获取的user对象的CompanyId
                 userService.insert(user);
                 User userTemp = userService.queryByPhone(user.getUserPhone());
                 map.put("user", userTemp);
@@ -126,7 +128,6 @@ public class UserBasicManageController {
         byte[] temp = new byte[1024];
         int len = -1;
         String rootPath = session.getServletContext().getRealPath("/");
-        System.out.println("文件保存根路径: -------------------------------" + rootPath);
         savePath =rootPath + "/"+ savePath ;
         try {
             File saveDir = new File(savePath);

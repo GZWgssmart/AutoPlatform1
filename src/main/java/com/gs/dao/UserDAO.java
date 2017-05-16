@@ -63,6 +63,6 @@ public interface UserDAO extends BaseDAO<String, User>{
      */
     public User queryInfoById(String id);
 
-    public User updatePwd(User user);
+    public void updatePwd(User user);
 
 }
