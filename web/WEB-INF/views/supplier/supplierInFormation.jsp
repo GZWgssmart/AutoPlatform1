@@ -115,7 +115,7 @@
 <div id="addWindow" class="modal fade" style="overflow-y:scroll" data-backdrop="static" >
     <div class="modal-dialog" style="width:90%">
         <div class="modal-content" >
-            <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal" style="padding:10px"></span>
+            <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('addWindow','addForm')" style="padding:10px"></span>
             <form role="form" class="form-horizontal" id="addForm">
                 <div class="modal-header" style="overflow:auto;">
                     <h4>添加供应商信息</h4>
@@ -205,7 +205,7 @@
                     <p class="clearfix"></p>
                     <div class="modal-footer" >
                          <span id="addError"></span>
-                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭 </button>
+                         <button type="button" class="btn btn-default" onclick="closeModals('addWindow','addForm')">关闭 </button>
                          <button id="addButton" type="button" onclick="addSubmit()" class="btn btn-success">添加</button>
                          <input type="reset" name="reset" style="display: none;"/>
                     </div>
@@ -220,7 +220,7 @@
 <div id="editWindow" class="modal fade" style="overflow-y:scroll" data-backdrop="static" >
     <div class="modal-dialog"  style="width:90%">
         <div class="modal-content">
-            <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal" style="padding:10px"></span>
+            <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('editWindow','editForm')" style="padding:10px"></span>
             <form role="form" class="form-horizontal" id="editForm">
                 <input type="hidden" name="supplyId" define="supply.supplyId"/>
                 <input type="hidden"name="supplyStatus" define="supply.supplyStatus">
@@ -306,7 +306,7 @@
                     <p class="clearfix"></p>
                     <div class="modal-footer" >
                          <span id="editError"></span>
-                         <button type="button" class="btn btn-default"data-dismiss="modal">关闭</button>
+                         <button type="button" class="btn btn-default" onclick="closeModals('editWindow','editForm')">关闭</button>
                          <button id="editButton" type="button" onclick="editSubmit()" class="btn btn-success">保存</button>
                      </div>
                 </div>
@@ -314,7 +314,7 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-
+<%--
 <!-- 删除弹窗 -->
 <div class="modal fade" id="del" aria-hidden="true">
     <div class="modal-dialog" >
@@ -352,7 +352,7 @@
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+</div><!-- /.modal -->--%>
 <script src="/static/js/jquery.min.js"></script>
 <script src="/static/js/bootstrap.min.js"></script>
 <script src="/static/js/bootstrap-table/bootstrap-table.js"></script>
