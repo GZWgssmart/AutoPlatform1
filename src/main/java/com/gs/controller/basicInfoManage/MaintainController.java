@@ -473,4 +473,20 @@ public class MaintainController {
         return comboxs;
     }
 
+    @ResponseBody
+    @RequestMapping(value = "mySelectMaintainName/{maintainOrFix}",method = RequestMethod.GET)
+    public List<ComboBox4EasyUI> mySelectMaintainName(HttpSession session, @PathVariable("maintainOrFix")String maintainOrFix){
+        logger.info("根据汽修公司， 汽修项目，查询项目名字");
+        User user = (User) session.getAttribute("user");
+        List<MaintainFix> maintainDetails = maintainFixService.queryByMaintainName(user.getCompanyId(),maintainOrFix);
+        List<ComboBox4EasyUI> comboxs = new ArrayList<ComboBox4EasyUI>();
+        for (MaintainFix m : maintainDetails) {
+            ComboBox4EasyUI comboBox4EasyUI = new ComboBox4EasyUI();
+            comboBox4EasyUI.setId(m.getMaintainId());
+            comboBox4EasyUI.setText(m.getMaintainName());
+            comboxs.add(comboBox4EasyUI);
+        }
+        return comboxs;
+    }
+
 }

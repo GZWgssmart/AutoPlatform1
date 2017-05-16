@@ -259,6 +259,10 @@
                                 </li>
                                 <li><a class="J_menuItem" href="/statistics/pay">支付统计</a>
                                 </li>
+                                <li><a class="J_menuItem" href="/statistics/repertory">库存统计</a>
+                                </li>
+                                <li><a class="J_menuItem" href="/statistics/inventoryUsing">库存使用情况统计</a>
+                                </li>
                                 <li><a class="J_menuItem" href="/statistics/consume">消费统计</a>
                                 </li>
                                 <li><a class="J_menuItem" href="/statistics/vindicate">维修保养统计</a>

@@ -142,7 +142,7 @@
                             <tr>
                                 <th data-checkbox="true"></th>
                                 <th data-field="outTypeName">
-                                    收支类型
+                                    支出类型
                                 </th>
                             </tr>
                             </thead>
@@ -207,7 +207,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 b-r">
-                        <h3 class="m-t-none m-b">选择支出类型</h3>
+                        <h3 class="m-t-none m-b">选择收入类型</h3>
                         <table class="table table-hover" id="inTable"
                                data-height="550">
                             <thead>

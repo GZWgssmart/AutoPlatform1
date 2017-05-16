@@ -36,6 +36,26 @@ public class StatisticsController {
     }
 
     @RequiresAuthentication
+    @RequestMapping("inventoryUsing")
+    public ModelAndView inventoryUsingPage(){
+        ModelAndView mav = new ModelAndView("statistics/inventoryUsing");
+        return mav;
+    }
+
+
+    /**
+     * 库存
+     * @return
+     */
+    @RequiresAuthentication
+    @RequestMapping("repertory")
+    public ModelAndView repertoryPage(){
+        ModelAndView mav = new ModelAndView("statistics/repertory");
+        return mav;
+    }
+
+
+    @RequiresAuthentication
     @RequestMapping("maintain")
     public ModelAndView maintainPage(){
         ModelAndView mav = new ModelAndView("statistics/maintain");

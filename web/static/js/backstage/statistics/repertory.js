@@ -1,6 +1,6 @@
 
 $(function () {
-    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员";
+    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员";
     $.post("/user/isLogin/"+roles, function (data) {
         if(data.result == 'success'){
             initSelect2("companyName", "请选择公司", "/company/queryAllCompany"); // 初始化select2, 第一个参数是class的名字, 第二个参数是select2的提示语, 第三个参数是select2的查询url
