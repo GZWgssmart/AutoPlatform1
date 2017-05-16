@@ -1,3 +1,4 @@
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <h ead>
@@ -29,7 +30,7 @@
                 <th data-field="maintainRecord.checkinId">
                     保养记录编号
                 </th>
-                <th data-field="user.userNickName">
+                <th data-field="user.userNickname">
                     指派用户
                 </th>
                 <th data-field="workAssignTime" data-formatter="formatterDate">
@@ -41,9 +42,12 @@
                 <th data-field="workStatus" data-formatter="statusFormatter">
                     工单状态
                 </th>
-                <th data-formatter="openStatusFormatter">
-                    操作
-                </th>
+                <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司总技师,汽车公司技师">
+                    <th data-width="100" data-formatter="openStatusFormatter">
+                        操作
+                    </th>
+                </shiro:hasAnyRoles>
+
             </tr>
             </thead>
         </table>
@@ -71,18 +75,12 @@
                 <div class="modal-header" style="overflow:auto;">
                     <h4>请填写订单信息</h4>
                 </div>
-                <%--<div class="form-group">
-                    <label class="col-sm-3 control-label">保养记录编号：</label>
-                    <div class="col-sm-7">
-                        <select id="editRecordId" class="js-example-tags record" define="maintainRecord.checkinId" name="recordId" style="width:100%;">
-                        </select>
-                    </div>
-                </div>--%>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">指派用户：</label>
                     <div class="col-sm-7">
-                        <select id="editUserId" class="js-example-tags user" define="user.userNickName" name="userId" style="width:100%;">
-                        </select>
+                       <%-- <select id="editUserId" class="js-example-tags user" define="user.userNickname" name="userId" style="width:100%;">
+                        </select>--%>
+                        <select id="editUserId" class="js-example-tags user" define="user.userNickname" name="userId" style="width:100%;"></select>
                     </div>
                 </div>
                 <div class="form-group">

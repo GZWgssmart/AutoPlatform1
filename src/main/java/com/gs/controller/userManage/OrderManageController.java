@@ -33,7 +33,9 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/Order")
-public class OrderManageController {
+public class
+
+OrderManageController {
 
     private Logger logger= (Logger) LoggerFactory.getLogger(OrderManageController.class);
 
@@ -77,11 +79,12 @@ public class OrderManageController {
     @RequestMapping(value = "queryByPager",method = RequestMethod.GET)
     public Pager4EasyUI<WorkInfo> queryByPager(HttpSession session, @Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
         if(SessionUtil.isLogin(session)) {
-          String roles="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员";
+          String roles="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司总技师,汽车公司技师";
             if(RoleUtil.checkRoles(roles)) {
                 Pager pager = new Pager();
                 pager.setPageNo(Integer.valueOf(pageNumber));
                 pager.setPageSize(Integer.valueOf(pageSize));
+                pager.setUser((User) session.getAttribute("user"));
                 pager.setTotalRecords(workInfoService.count((User) session.getAttribute("user")));
                 List<WorkInfo> worksList = workInfoService.queryByPager(pager);
                 return new Pager4EasyUI<WorkInfo>(pager.getTotalRecords(), worksList);
@@ -151,6 +154,7 @@ public class OrderManageController {
                 Pager pager = new Pager();
                 pager.setPageNo(Integer.valueOf(pageNumber));
                 pager.setPageSize(Integer.valueOf(pageSize));
+                pager.setUser((User) session.getAttribute("user"));
                 pager.setTotalRecords(workInfoService.countByDisable((User) session.getAttribute("user")));
                 List<WorkInfo> worklLis = workInfoService.queryByPagerDisable(pager);
                 return new Pager4EasyUI<WorkInfo>(pager.getTotalRecords(), worklLis);

@@ -72,44 +72,44 @@
 
     <association property="user" javaType="com.gs.bean.User">
         <id column="userId" property="userId"/>
-        <result column="userNickName" property="userNickName"/>
         <result column="userEmail" property="userEmail" />
         <result column="userPhone" property="userPhone" />
-        <result column="userNickName" property="userNickName" />
+        <result column="userNickname" property="userNickname" />
         <result column="userIdentity" property="userIdentity" />
         <result column="userName" property="userName" />
+        <result column="companyId" property="companyId" />
     </association>
   </resultMap>
 
     <select id="count" resultType="int" parameterType="com.gs.bean.User">
         <![CDATA[
-          SELECT count(workId) FROM t_work_info w where 1 =1 and w.workStatus='Y'
+          SELECT count(workId) FROM t_work_info w where w.workStatus='Y'
         ]]>
         <if test="companyId != '' and companyId !=null">
-            and s.companyId = #{companyId}
+            and w.companyId = #{companyId}
         </if>
     </select>
 
     <select id="countByDisable" resultType="int" parameterType="com.gs.bean.User">
         <![CDATA[
-        SELECT count(*) FROM t_work_info w WHERE w.workStatus='N'
+        SELECT count(*) FROM t_work_info w WHERE 1=1 AND w.workStatus = 'N'
        ]]>
         <if test="companyId != '' and companyId !=null">
-            and s.companyId = #{companyId}
+            and w.companyId = #{companyId}
         </if>
     </select>
 
     <!--分页所有完成查询全部-->
     <select id="queryByPager" resultMap="BaseResultMap" parameterType="com.gs.common.bean.Pager">
         <![CDATA[
-            select w.*,tmR.recordId,tmR.checkinId,u.userId,
-            tmR.pickupTime,u.userNickName FROM t_work_info w
+            select w.*,tmR.recordId,tmR.checkinId,tmR.pickupTime,
+            u.userId,u.userNickname FROM t_work_info w
             Left JOIN t_maintain_Record tmR on w.recordId = tmR.recordId
             Left JOIN t_user u on w.userId = u.userId
             where w.workStatus = 'Y'
         ]]>
         <if test="user.companyId != '' and user.companyId !=null">
-            and s.companyId = #{user.companyId}
+            and u.companyId = #{user.companyId}
         </if>
         order by w.workCreatedTime Desc
         limit #{beginIndex}, #{pageSize}
@@ -145,13 +145,13 @@
     <select id="queryByPagerDisable" resultMap="BaseResultMap" parameterType="com.gs.common.bean.Pager">
         <![CDATA[
             select w.*,tmR.recordId,tmR.checkinId,u.userId,
-            u.userNickName FROM t_work_info w
+            u.userNickname FROM t_work_info w
             Left JOIN t_maintain_Record tmR on w.recordId = tmR.recordId
-            Left JOIN t_user u on w.userId = u.userId
+            Left JOIN t_user u on u.userId = w.userId
             where w.workStatus = 'N'
         ]]>
         <if test="user.companyId != '' and user.companyId !=null">
-            and s.companyId = #{user.companyId}
+            and u.companyId = #{user.companyId}
         </if>
         order by w.workCreatedTime Desc
         limit #{beginIndex}, #{pageSize}

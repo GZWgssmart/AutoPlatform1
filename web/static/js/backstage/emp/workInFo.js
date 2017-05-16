@@ -1,19 +1,45 @@
 var contentPath = ''
-
+var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司总技师,汽车公司技师"
 /**
  *初始化表格
  * @type {string}
  */
 $(function () {
-    initTable("table","/Order/queryByPager");
+    $.post(contentPath + "/user/isLogin/" + roles, function (data){
+        if(data.result == "success"){
+            initTable("table","/Order/queryByPager");//初始化表格
+
+           // initSelect2("maintainRecord","请选择维修保养记录","/Order/queryByPager");
+            //initSelect2("user","请选择员工","/Order/queryByPager");
+            initSelect2("user","请选择员工","/userBasicManage/queryAll");
+        }else if(data.result == "notLogin"){
+            swal({title:"",
+            text:data.message,
+            confirmButtonText:"确认",
+            type:"error"},
+            function(isConfirm){
+               if(isConfirm){
+                   top.location ="/user/loginPage";
+               } else{
+                   top.location="/user/loginPage";
+               }
+            })
+        }else if(data.result == 'notRole'){
+            swal({
+                title:"",
+                confirmButtonText:"确认",
+                type:"error"})
+        }
+    });
+});
 
 
 
     // initSelect2("record","请选择保养记录","/maintainRecord/queryByPager");
-    initSelect2("user","请选择用户","/userBasicManage/queryAll");
+     //initSelect2("user","请选择用户","/userBasicManage/queryAll");
    /* initSelect2("editRecordTable","/maintainRecord/queryByPager");
     initSelect2("editUserTable","/userBasicManage/queryByPager");*/
-});
+
 
 
 
@@ -161,24 +187,49 @@ function formSubmit(url, formId, winId) {
 function showEdit() {
     /*//$("#editButton").removeAttr("disabled");
     initDatePicker('editForm', 'workAssignTime'); // 初始化时间框*/
-    var row = $('#table').bootstrapTable('getSelections');//选择器
-    if (row.length > 0) {
-        $("#editWindow").modal('show'); // 显示弹窗
-        $("#editButton").removeAttr('disabled');//按钮只能点击一次
-        var workInfo=row[0]
-        var editDate = document.getElementById("editDateTimePicker");
-        $("#editDateTimePicker").val(formatterDate(workInfo.workAssignTime));
-        $("#editUserId").html('<option value="' + workInfo.user.userId + '">' + workInfo.user.userNickName + '</option>').trigger("change");
-        $("#editForm").fill(workInfo);
-        validator('editForm');
-    } else {
-        swal({
-            title: "",
-            text: "请先选择要修改的工单信息",   //主要文本
-            confirmButtonText:"确定",     //提示按钮上的文本
-            type: "warning"     //提示类型
-        })
-    }
+    var roles = "公司超级管理员,公司普通管理员";
+    $.post("/user/isLogin/"+roles,function(data){
+        if(data.result == 'success') {
+            var row = $('#table').bootstrapTable('getSelections');//选择器
+            if (row.length > 0) {
+                $("#editWindow").modal('show'); // 显示弹窗
+                $("#editButton").removeAttr('disabled');//按钮只能点击一次
+                var workInfo=row[0]
+                var editDate = document.getElementById("editDateTimePicker");
+                $("#editDateTimePicker").val(formatterDate(workInfo.workAssignTime));
+                $("#editUserId").html('<option value="' + workInfo.user.userId + '">' + workInfo.user.userNickname + '</option>').trigger("change");
+                $("#editForm").fill(workInfo);
+                validator('editForm');
+            } else {
+                swal({
+                    title: "",
+                    text: "请先选择要修改的工单信息",   //主要文本
+                    confirmButtonText:"确定",     //提示按钮上的文本
+                    type: "warning"     //提示类型
+                })
+            }
+        }else if(data.result =='notLogin'){
+            swal({
+                title:"",
+                text: data.message,
+                confirmButtonText:"确认",
+                type: "error"
+            },function (isConfirm) {
+                if(isConfirm){
+                    top.location = "/user/loginPage";
+                }else{
+                    top.location = "/user/loginPage";
+                }
+            })
+        } else if(data.result == 'notRole'){
+            swal({
+                title:"",
+                text: data.result.message,
+                confirmButtonText: "确认",
+                type:"error"
+            })
+        }
+    })
 }
 
 /*// 初始化没有分秒的时间框
