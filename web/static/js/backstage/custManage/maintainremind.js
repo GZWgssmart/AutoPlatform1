@@ -203,13 +203,13 @@ function showAddRemindUser() {
                     "type": "warning"
                 })
             } else {
-                // alert(row[0].user.userId);
-                // alert(row[0].user.userName);
+                alert(row[0].checkin.user.userId);
+                alert(row[0].checkin.user.userName);
                 $("#addRemindId").val(row[0].remindId);
-                $("#addLastMaintainTime").val(formatterDate(row[0].lastMaintainTime));
-                $("#addLastMaintainMileage").val(row[0].lastMaintainMileage);
-                $('#addUserId').val(row[0].user.userId);
-                $('#addUserName').val(row[0].user.userName);
+                $("#addLastMaintainTime").val(formatterDate(row[0].actualEndTime));
+                $("#addLastMaintainMileage").val(row[0].checkin.carMileage);
+                $('#addUserId').val(row[0].checkin.user.userId);
+                $('#addUserName').val(row[0].checkin.user.userName);
                 $("#RemindUserWindow").modal('hide');
                 $("#addWindow").modal('show');
                 $("#addButton").removeAttr("disabled");

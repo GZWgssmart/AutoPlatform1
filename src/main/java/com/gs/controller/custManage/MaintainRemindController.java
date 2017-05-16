@@ -128,7 +128,7 @@ public class MaintainRemindController {
             String roles = "公司超级管理员,公司普通管理员,汽车公司接待员";
             if (RoleUtil.checkRoles(roles)) {
                 logger.info("维修保养提醒记录添加操作");
-                maintainRemindService.update(maintainRemind);
+                maintainRemindService.insert(maintainRemind);
                 messageSend.setMessageId(maintainRemind.getRemindId());
                 messageSend.setUserId(maintainRemind.getUserId());
                 messageSend.setSendTime(maintainRemind.getRemindTime());
