@@ -97,22 +97,25 @@
                     <a href="javaScript:;" onclick="blurredQuery()"><span
                             class="glyphicon glyphicon-search search-style"></span></a>
                     </input>
-                </div><!-- /input-group -->
+                </div>
+                <!-- /input-group -->
             </shiro:hasAnyRoles>
         </div>
     </div>
 </div>
 
 <!-- 添加弹窗 -->
-<div class="modal fade" id="addWindow" aria-hidden="true" style="overflow:auto; ">
-    <div class="modal-dialog">
-        <div class="modal-content" style="overflow:hidden;">
-            <form class="form-horizontal" role="form" id="addForm" method="post">
-                <div class="modal-header" style="overflow:auto;">
-                    <h4>请填写库存信息</h4>
-                </div>
-                <br/>
-                <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员">
+<div class="modal fade" id="addWindow" aria-hidden="true" style="overflow:auto; " data-backdrop="static" keyboard:false>
+    <div class="modal-dialog" style="width: 60%">
+        <div class="modal-content">
+            <div class="modal-body">
+                <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('addWindow','addForm')"
+                      data-dismiss="modal"></span>
+                <form class="form-horizontal" role="form" id="addForm" method="post">
+                    <div class="modal-header" style="overflow:auto;">
+                        <h4>请填写库存信息</h4>
+                    </div>
+                    <br/>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">汽车公司：</label>
                         <div class="col-sm-7">
@@ -120,86 +123,92 @@
                             </select>
                         </div>
                     </div>
-                </shiro:hasAnyRoles>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">供应商：</label>
-                    <div class="col-sm-7">
-                        <select id="addSupply" class="js-example-tags supply" name="supplyId" style="width:100%">
-                        </select>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">供应商：</label>
+                        <div class="col-sm-7">
+                            <select id="addSupply" class="js-example-tags supply" name="supplyId" style="width:100%">
+                            </select>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">配件类型：</label>
-                    <div class="col-sm-7">
-                        <select id="addAccType" class="js-example-tags accType" name="accTypeId" style="width:100%">
-                        </select>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">配件类型：</label>
+                        <div class="col-sm-7">
+                            <select id="addAccType" class="js-example-tags accType" name="accTypeId" style="width:100%">
+                            </select>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">配件名称：</label>
-                    <div class="col-sm-7">
-                        <input type="text" name="accName" placeholder="请输入配件名称" class="form-control">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">配件名称：</label>
+                        <div class="col-sm-7">
+                            <input type="text" name="accName" placeholder="请输入配件名称" class="form-control">
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">配件商品条码：</label>
-                    <div class="col-sm-7">
-                        <input type="number" name="accCommodityCode" placeholder="请输入配件商品条码" class="form-control">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">配件商品条码：</label>
+                        <div class="col-sm-7">
+                            <input type="number" name="accCommodityCode" placeholder="请输入配件商品条码" class="form-control">
+                        </div>
                     </div>
-                </div>
 
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">配件价格：</label>
-                    <div class="col-sm-7">
-                        <input type="number" name="accPrice" placeholder="请输入配件价格" class="form-control">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">配件价格：</label>
+                        <div class="col-sm-7">
+                            <input type="number" name="accPrice" placeholder="请输入配件价格" class="form-control">
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">配件售价：</label>
-                    <div class="col-sm-7">
-                        <input type="number" name="accSalePrice" placeholder="请输入配件售价" class="form-control">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">配件售价：</label>
+                        <div class="col-sm-7">
+                            <input type="number" name="accSalePrice" placeholder="请输入配件售价" class="form-control">
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">配件数量：</label>
-                    <div class="col-sm-7">
-                        <input type="number" name="accTotal" placeholder="请输入配件数量" class="form-control">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">配件数量：</label>
+                        <div class="col-sm-7">
+                            <input type="number" name="accTotal" placeholder="请输入配件数量" class="form-control">
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">配件可用数量：</label>
-                    <div class="col-sm-7">
-                        <input type="number" name="accIdle" placeholder="请输入配件可用数量" class="form-control">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">配件可用数量：</label>
+                        <div class="col-sm-7">
+                            <input type="number" name="accIdle" placeholder="请输入配件可用数量" class="form-control">
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">配件描述：</label>
-                    <div class="col-sm-7">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">配件描述：</label>
+                        <div class="col-sm-7">
                         <textarea type="text" name="accDes" placeholder="请输入相关内容" style="height: 100px;"
                                   class="form-control"></textarea>
+                        </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <div class="col-sm-offset-8">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button id="addButton" type="button" onclick="addSubmit()" class="btn btn-success">添加</button>
+                    <div class="modal-footer">
+                        <div class="col-sm-offset-8">
+                            <button type="button" class="btn btn-default" onclick="closeModals('addWindow','addForm')"
+                                    data-dismiss="modal">关闭
+                            </button>
+                            <button id="addButton" type="button" onclick="addSubmit()" class="btn btn-success">添加
+                            </button>
+                            <input type="reset" name="reset" style="display: none;"/>
+                        </div>
                     </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div>
 <!-- 修改弹窗 -->
-<div class="modal fade" id="editWindow" aria-hidden="true">
-    <div class="modal-dialog">
+<div class="modal fade" id="editWindow" aria-hidden="true" data-backdrop="static" keyboard:false>
+    <div class="modal-dialog" style="width: 60%;">
         <div class="modal-content">
-            <form class="form-horizontal" role="form" id="editForm" method="post">
-                <div class="modal-header" style="overflow:auto;">
-                    <input type="hidden" name="accId" define="Accessories.accId"/>
-                    <h4>请修改库存信息</h4>
-                </div>
-                <br/>
-                <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员">
+            <div class="modal-body">
+                <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('editWindow','editForm')"
+                      data-dismiss="modal"></span>
+                <form class="form-horizontal" role="form" id="editForm" method="post">
+                    <div class="modal-header" style="overflow:auto;">
+                        <input type="hidden" name="accId" define="Accessories.accId"/>
+                        <h4>请修改库存信息</h4>
+                    </div>
+                    <br/>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">汽车公司：</label>
                         <div class="col-sm-7">
@@ -208,81 +217,86 @@
                             </select>
                         </div>
                     </div>
-                </shiro:hasAnyRoles>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">供应商：</label>
-                    <div class="col-sm-7">
-                        <select id="editSupply" class="js-example-tags supply" define="Accessories.supplyId"
-                                name="supplyId" style="width:100%">
-                        </select>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">供应商：</label>
+                        <div class="col-sm-7">
+                            <select id="editSupply" class="js-example-tags supply" define="Accessories.supplyId"
+                                    name="supplyId" style="width:100%">
+                            </select>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">配件类型：</label>
-                    <div class="col-sm-7">
-                        <select id="editAccType" class="js-example-tags accType" define="Accessories.accTypeId"
-                                name="accTypeId" style="width:100%">
-                        </select>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">配件类型：</label>
+                        <div class="col-sm-7">
+                            <select id="editAccType" class="js-example-tags accType" define="Accessories.accTypeId"
+                                    name="accTypeId" style="width:100%">
+                            </select>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">配件名称：</label>
-                    <div class="col-sm-7">
-                        <input type="text" name="accName" define="Accessories.accName" placeholder="请输入配件名称"
-                               class="form-control">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">配件名称：</label>
+                        <div class="col-sm-7">
+                            <input type="text" name="accName" define="Accessories.accName" placeholder="请输入配件名称"
+                                   class="form-control">
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">配件商品条码：</label>
-                    <div class="col-sm-7">
-                        <input type="number" name="accCommodityCode" define="Accessories.accCommodityCode"
-                               placeholder="请输入配件商品条码" class="form-control">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">配件商品条码：</label>
+                        <div class="col-sm-7">
+                            <input type="number" name="accCommodityCode" define="Accessories.accCommodityCode"
+                                   placeholder="请输入配件商品条码" class="form-control">
+                        </div>
                     </div>
-                </div>
 
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">配件价格：</label>
-                    <div class="col-sm-7">
-                        <input type="number" name="accPrice" define="Accessories.accPrice" placeholder="请输入配件价格"
-                               class="form-control">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">配件价格：</label>
+                        <div class="col-sm-7">
+                            <input type="number" name="accPrice" define="Accessories.accPrice" placeholder="请输入配件价格"
+                                   class="form-control">
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">配件售价：</label>
-                    <div class="col-sm-7">
-                        <input type="number" name="accSalePrice" define="Accessories.accSalePrice" placeholder="请输入配件售价"
-                               class="form-control">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">配件售价：</label>
+                        <div class="col-sm-7">
+                            <input type="number" name="accSalePrice" define="Accessories.accSalePrice"
+                                   placeholder="请输入配件售价"
+                                   class="form-control">
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">配件数量：</label>
-                    <div class="col-sm-7">
-                        <input type="number" name="accTotal" define="Accessories.accTotal" placeholder="请输入配件数量"
-                               class="form-control">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">配件数量：</label>
+                        <div class="col-sm-7">
+                            <input type="number" name="accTotal" define="Accessories.accTotal" placeholder="请输入配件数量"
+                                   class="form-control">
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">配件可用数量：</label>
-                    <div class="col-sm-7">
-                        <input type="number" name="accIdle" define="Accessories.accIdle" placeholder="请输入配件可用数量"
-                               class="form-control">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">配件可用数量：</label>
+                        <div class="col-sm-7">
+                            <input type="number" name="accIdle" define="Accessories.accIdle" placeholder="请输入配件可用数量"
+                                   class="form-control">
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">配件描述：</label>
-                    <div class="col-sm-7">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">配件描述：</label>
+                        <div class="col-sm-7">
                         <textarea type="text" name="accDes" define="Accessories.accDes" placeholder="请输入相关内容"
                                   style="height: 100px;"
                                   class="form-control"></textarea>
+                        </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <div class="col-sm-offset-8">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button id="editButton" type="button" onclick="editSubmit()" class="btn btn-success">修改</button>
+                    <div class="modal-footer">
+                        <div class="col-sm-offset-8">
+                            <button type="button" class="btn btn-default" onclick="closeModals('editWindow','editForm')"
+                                    data-dismiss="modal">关闭
+                            </button>
+                            <button id="editButton" type="button" onclick="editSubmit()" class="btn btn-success">修改
+                            </button>
+                            <input type="reset" name="reset" style="display: none;"/>
+                        </div>
                     </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->

@@ -1,9 +1,7 @@
 package com.gs.controller.accessoriesManage;
 
 import ch.qos.logback.classic.Logger;
-import com.gs.bean.Accessories;
-import com.gs.bean.AccessoriesSale;
-import com.gs.bean.User;
+import com.gs.bean.*;
 import com.gs.common.bean.ComboBox4EasyUI;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
@@ -11,6 +9,7 @@ import com.gs.common.bean.Pager4EasyUI;
 import com.gs.common.util.RoleUtil;
 import com.gs.common.util.SessionUtil;
 import com.gs.service.AccessoriesSaleService;
+import com.gs.service.IncomingOutgoingService;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -42,6 +41,9 @@ public class AccessoriesSaleController {
 
     @Resource
     private AccessoriesSaleService accessoriesSaleService;
+
+    @Resource
+    public IncomingOutgoingService incomingOutgoingService;
 
     @ResponseBody
     @RequestMapping(value = "queryAllAccSale", method = RequestMethod.GET)
@@ -104,12 +106,13 @@ public class AccessoriesSaleController {
      */
     @ResponseBody
     @RequestMapping(value = "addAccSale", method = RequestMethod.POST)
-    public ControllerResult addAccSale(HttpSession session, AccessoriesSale accessoriesSale) {
+    public ControllerResult addAccSale(HttpSession session, AccessoriesSale accessoriesSale,@Param("inTypeId")String inTypeId) {
         if (SessionUtil.isLogin(session)) {
             String roles="公司超级管理员,公司普通管理员,汽车公司销售人员";
             if (RoleUtil.checkRoles(roles)) {
                 if (accessoriesSale != null && !accessoriesSale.equals("")) {
                     accessoriesSaleService.insert(accessoriesSale);
+                    incomingOutgoingService.insert(inconSet(accessoriesSale,session,inTypeId));
                     logger.info("添加成功");
                     return ControllerResult.getSuccessResult("添加成功");
                 } else {
@@ -123,6 +126,18 @@ public class AccessoriesSaleController {
             logger.info("请先登陆");
             return null;
         }
+    }
+
+    public IncomingOutgoing inconSet(AccessoriesSale accessoriesSale, HttpSession session, String inTypeId){
+        if(accessoriesSale!=null&&!accessoriesSale.equals("")){
+            User user=(User)session.getAttribute("user");
+            IncomingOutgoing incomingOutgoing=new IncomingOutgoing();
+            incomingOutgoing.setInOutMoney(accessoriesSale.getAccSaleMoney());
+            incomingOutgoing.setInOutCreatedUser(user.getUserId());
+            incomingOutgoing.setInTypeId(inTypeId);
+            return incomingOutgoing;
+        }
+        return null;
     }
 
     /**

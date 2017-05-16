@@ -5,6 +5,7 @@ import com.gs.bean.Checkin;
 import com.gs.bean.IncomingType;
 import com.gs.bean.OutgoingType;
 import com.gs.bean.User;
+import com.gs.common.bean.ComboBox4EasyUI;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -181,5 +183,34 @@ public class IncomingTypeController {
         }
     }
 
+
+    /**
+     * 查询全部的配件分类
+     */
+    @ResponseBody
+    @RequestMapping(value = "queryAllIncoming", method = RequestMethod.GET)
+    public List<ComboBox4EasyUI> queryAllIncoming(HttpSession session) {
+        if (SessionUtil.isLogin(session)) {
+            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员";
+            if (RoleUtil.checkRoles(roles)) {
+                logger.info("查询全部收入类型");
+                List<IncomingType> incomingTypesList = incomingTypeService.queryAll((User) session.getAttribute("user"));
+                List<ComboBox4EasyUI> comboxs = new ArrayList<ComboBox4EasyUI>();
+                for (IncomingType o : incomingTypesList) {
+                    ComboBox4EasyUI comboBox4EasyUI = new ComboBox4EasyUI();
+                    comboBox4EasyUI.setId(o.getInTypeId());
+                    comboBox4EasyUI.setText(o.getInTypeName());
+                    comboxs.add(comboBox4EasyUI);
+                }
+                return comboxs;
+            } else {
+                logger.info("此用户无拥有此方法角色");
+                return null;
+            }
+        } else {
+            logger.info("请先登陆");
+            return null;
+        }
+    }
 
 }

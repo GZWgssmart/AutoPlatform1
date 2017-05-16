@@ -9,6 +9,7 @@ $(function () {
             initSelect2("accType", "请选择配件分类", "/accType/queryAllAccType");
             initSelect2("supply", "请选择供应商", "/supply/queryAllSupply");
             initSelect2("accInv", "请选择配件名称", "/accInv/queryAllAccInv");
+            initSelect2("outgoing", "请选择支出类型", "/outGoingType/queryAllOutGoing");
             $("#app").bootstrapSwitch({
                 onText:"是",
                 offText:"否",
@@ -458,7 +459,6 @@ function formSubmit(url, formId, winId) {
                         $('#table').bootstrapTable('refresh');
                         if (formId == 'addForm') {
                             $("input[type=reset]").trigger("click"); // 移除表单中填的值
-                            $('#addForm').data('bootstrapValidator').resetForm(true); // 移除所有验证样式
                             $("#addButton").removeAttr("disabled"); // 移除不可点击
                             $("#addCompany").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
                             $("#addAccType").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");

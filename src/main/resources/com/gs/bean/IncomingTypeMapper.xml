@@ -61,10 +61,13 @@
 
   </select>
 
-  <select id="queryAll" resultType="list" resultMap="incomingTypeMap">
+  <select id="queryAll" resultMap="incomingTypeMap" parameterType="com.gs.bean.User">
     <![CDATA[
-        select * from t_incoming_type
+            select * FROM auto_platform.t_incoming_type o where 1=1 and o.inTypeStatus = 'Y'
         ]]>
+    <if test="companyId != '' and companyId !=null">
+      and o.companyId = #{companyId}
+    </if>
   </select>
 
   <insert id="insert" useGeneratedKeys="true" keyProperty="inTypeId" parameterType="incomingType">

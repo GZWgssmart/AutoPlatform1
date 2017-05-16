@@ -7,6 +7,7 @@ $(function () {
             initTable('table', '/accSale/queryByPage'); // 初始化表格
             initSelect2("company", "请选择所属公司", "/company/queryAllCompany");
             initSelect2("accInv", "请选择配件", "/accInv/queryAllAccInv");
+            initSelect2("incoming", "请选择收入类型", "/incomingType/queryAllIncoming");
         } else if(data.result == 'notLogin'){
             swal({title:"",
                     text:data.message,
@@ -305,7 +306,6 @@ function formSubmit(url, formId, winId) {
                         $('#table').bootstrapTable('refresh');
                         if (formId == 'addForm') {
                             $("input[type=reset]").trigger("click"); // 移除表单中填的值
-                            $('#addForm').data('bootstrapValidator').resetForm(true); // 移除所有验证样式
                             $("#addButton").removeAttr("disabled"); // 移除不可点击
                             $("#addAccInv").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
                             $("#addCompany").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
@@ -404,10 +404,10 @@ function validator(formId) {
         }
     }).on('success.form.bv', function (e) {
         if (formId == "addForm") {
-            formSubmit("/accSale/addAccSale", formId, "addWindow");
+            formSubmit(contentPath+"/accSale/addAccSale", formId, "addWindow");
 
         } else if (formId == "editForm") {
-            formSubmit("/accSale/updateAccSale", formId, "editWindow");
+            formSubmit(contentPath+"/accSale/updateAccSale", formId, "editWindow");
 
         }
     })

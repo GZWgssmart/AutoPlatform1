@@ -95,28 +95,38 @@
                     <a href="javaScript:;" onclick="blurredQuery()"><span
                             class="glyphicon glyphicon-search search-style"></span></a>
                     </input>
-                </div><!-- /input-group -->
+                </div>
+                <!-- /input-group -->
             </shiro:hasAnyRoles>
         </div>
     </div>
 </div>
 <!-- 添加弹窗 -->
-<div class="modal fade" id="addWindow" aria-hidden="true" style="overflow:auto; ">
-    <div class="modal-dialog">
-        <div class="modal-content" style="overflow:hidden;">
-            <form class="form-horizontal" role="form" id="addForm" method="get">
-                <input name="accId" type="hidden" id="accInvId"/>
-                <div class="modal-header" style="overflow:auto;">
-                    <h4>请填写配件采购信息</h4>
-                </div>
-                <br/>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">是否新增：</label>
-                    <div class="col-sm-7">
-                        <input id="app" type="checkbox" onchange="appOnChange()"/>
+<div class="modal fade" id="addWindow" aria-hidden="true" style="overflow:auto; " data-backdrop="static" keyboard:false>
+    <div class="modal-dialog" style="width: 60%;">
+        <div class="modal-content">
+            <div class="modal-body">
+                <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('addWindow','addForm')"
+                      data-dismiss="modal"></span>
+                <form class="form-horizontal" role="form" id="addForm" method="get">
+                    <input name="accId" type="hidden" id="accInvId"/>
+                    <div class="modal-header" style="overflow:auto;">
+                        <h4>请填写配件采购信息</h4>
                     </div>
-                </div>
-                <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员">
+                    <br/>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">是否新增：</label>
+                        <div class="col-sm-7">
+                            <input id="app" type="checkbox" onchange="appOnChange()"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">支出类型</label>
+                        <div class="col-sm-7">
+                            <select id="addOutGoing" class="js-example-tags outgoing" name="outgoingId" style="width:100%">
+                            </select>
+                        </div>
+                    </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">汽车公司</label>
                         <div class="col-sm-7">
@@ -124,92 +134,100 @@
                             </select>
                         </div>
                     </div>
-                </shiro:hasAnyRoles>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">供应商：</label>
-                    <div class="col-sm-7">
-                        <select id="addSupply" class="js-example-tags supply" name="supplyId" style="width:100%">
-                        </select>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">供应商：</label>
+                        <div class="col-sm-7">
+                            <select id="addSupply" class="js-example-tags supply" name="supplyId" style="width:100%">
+                            </select>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">配件所属类别：</label>
-                    <div class="col-sm-7">
-                        <select id="addAccType" class="js-example-tags accType" name="accTypeId" style="width:100%">
-                        </select>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">配件所属类别：</label>
+                        <div class="col-sm-7">
+                            <select id="addAccType" class="js-example-tags accType" name="accTypeId" style="width:100%">
+                            </select>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">配件名称：</label>
-                    <div class="col-sm-7">
-                        <input type="text" name="accName" id="accInvName" placeholder="请输入配件名称" class="form-control">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">配件名称：</label>
+                        <div class="col-sm-7">
+                            <input type="text" name="accName" id="accInvName" placeholder="请输入配件名称"
+                                   class="form-control">
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">购买时间：</label>
-                    <div class="col-sm-7">
-                        <input type="text" name="accBuyTime" placeholder="请选择购买时间"
-                               onclick="getDate('addDateTimePicker')" id="addDateTimePicker" class="form-control">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">购买时间：</label>
+                        <div class="col-sm-7">
+                            <input type="text" name="accBuyTime" placeholder="请选择购买时间"
+                                   onclick="getDate('addDateTimePicker')" id="addDateTimePicker" class="form-control">
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">购买数量：</label>
-                    <div class="col-sm-7">
-                        <input type="number" name="accBuyCount" onchange="Addcalculate();" id="addCountNum"
-                               placeholder="请输入购买数量" class="form-control">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">购买数量：</label>
+                        <div class="col-sm-7">
+                            <input type="number" name="accBuyCount" onchange="Addcalculate();" id="addCountNum"
+                                   placeholder="请输入购买数量" class="form-control">
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">购买单价：</label>
-                    <div class="col-sm-7">
-                        <input type="number" min="0" name="accBuyPrice" onchange="Addcalculate();" id="addBuyPrice"
-                               placeholder="请输入购买单价" class="form-control">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">购买单价：</label>
+                        <div class="col-sm-7">
+                            <input type="number" min="0" name="accBuyPrice" onchange="Addcalculate();" id="addBuyPrice"
+                                   placeholder="请输入购买单价" class="form-control">
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">购买折扣：</label>
-                    <div class="col-sm-7">
-                        <input type="number" min="0.0" step="0.1" max="1" value="1" onchange="Addcalculate();"
-                               name="accBuyDiscount" id="addBuyDiscount" placeholder="请输入购买折扣，0.1代表1折"
-                               class="form-control">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">购买折扣：</label>
+                        <div class="col-sm-7">
+                            <input type="number" min="0.0" step="0.1" max="1" value="1" onchange="Addcalculate();"
+                                   name="accBuyDiscount" id="addBuyDiscount" placeholder="请输入购买折扣，0.1代表1折"
+                                   class="form-control">
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">购买总价：</label>
-                    <div class="col-sm-7">
-                        <input type="number" readonly="true" min="0.0" step="0.1" name="accBuyTotal" id="addBuyTotal"
-                               class="form-control">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">购买总价：</label>
+                        <div class="col-sm-7">
+                            <input type="number" readonly="true" min="0.0" step="0.1" name="accBuyTotal"
+                                   id="addBuyTotal"
+                                   class="form-control">
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">购买最终价：</label>
-                    <div class="col-sm-7">
-                        <input type="number" readonly="true" min="0.0" step="0.1" name="accBuyMoney" id="addBuyMoney"
-                               class="form-control">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">购买最终价：</label>
+                        <div class="col-sm-7">
+                            <input type="number" readonly="true" min="0.0" step="0.1" name="accBuyMoney"
+                                   id="addBuyMoney"
+                                   class="form-control">
+                        </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <div class="col-sm-offset-8">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button id="addButton" type="button" onclick="addSubmit()" class="btn btn-success">添加</button>
-                        <input type="reset" name="reset" style="display: none;"/>
+                    <div class="modal-footer">
+                        <div class="col-sm-offset-8">
+                            <button type="button" class="btn btn-default" onclick="closeModals('addWindow','addForm')"
+                                    data-dismiss="modal">关闭
+                            </button>
+                            <button id="addButton" type="button" onclick="addSubmit()" class="btn btn-success">添加
+                            </button>
+                            <input type="reset" name="reset" style="display: none;"/>
+                        </div>
                     </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div>
 <!-- 修改弹窗 -->
-<div class="modal fade" id="editWindow" aria-hidden="true">
-    <div class="modal-dialog">
+<div class="modal fade" id="editWindow" aria-hidden="true" data-backdrop="static" keyboard:false>
+    <div class="modal-dialog" style="width: 60%">
         <div class="modal-content">
-            <form class="form-horizontal" role="form" id="editForm" method="post">
-                <input type="hidden" name="accBuyId" define="AccessoriesBuy.accBuyId"/>
-                <div class="modal-header" style="overflow:auto;">
-                    <h4>请修改配件采购信息</h4>
-                </div>
-                <br/>
-                <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员">
+            <div class="modal-body">
+                <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('editWindow','editForm')"
+                      data-dismiss="modal"></span>
+                <form class="form-horizontal" role="form" id="editForm" method="post">
+                    <input type="hidden" name="accBuyId" define="AccessoriesBuy.accBuyId"/>
+                    <div class="modal-header" style="overflow:auto;">
+                        <h4>请修改配件采购信息</h4>
+                    </div>
+                    <br/>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">汽车公司</label>
                         <div class="col-sm-7">
@@ -218,79 +236,85 @@
                             </select>
                         </div>
                     </div>
-                </shiro:hasAnyRoles>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">配件名称：</label>
-                    <div class="col-sm-7">
-                        <select id="editAccInv" class="js-example-tags accInv" name="accId" style="width:100%">
-                        </select>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">配件名称：</label>
+                        <div class="col-sm-7">
+                            <select id="editAccInv" class="js-example-tags accInv" name="accId" style="width:100%">
+                            </select>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">供应商：</label>
-                    <div class="col-sm-7">
-                        <select id="editSupply" class="js-example-tags supply" name="supplyId" style="width:100%">
-                        </select>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">供应商：</label>
+                        <div class="col-sm-7">
+                            <select id="editSupply" class="js-example-tags supply" name="supplyId" style="width:100%">
+                            </select>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">配件所属类别：</label>
-                    <div class="col-sm-7">
-                        <select id="editAccType" class="js-example-tags accType" name="accTypeId" style="width:100%">
-                        </select>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">配件所属类别：</label>
+                        <div class="col-sm-7">
+                            <select id="editAccType" class="js-example-tags accType" name="accTypeId"
+                                    style="width:100%">
+                            </select>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">购买时间：</label>
-                    <div class="col-sm-7">
-                        <input type="text" name="accBuyTime" onclick="getDate('editDateTimePicker')"
-                               placeholder="请输入购买时间" id="editDateTimePicker" class="form-control">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">购买时间：</label>
+                        <div class="col-sm-7">
+                            <input type="text" name="accBuyTime" onclick="getDate('editDateTimePicker')"
+                                   placeholder="请输入购买时间" id="editDateTimePicker" class="form-control">
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">购买数量：</label>
-                    <div class="col-sm-7">
-                        <input type="number" name="accBuyCount" onchange="Editcalculate();" id="editBuyNum"
-                               define="AccessoriesBuy.accBuyCount" placeholder="请输入购买数量" class="form-control">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">购买数量：</label>
+                        <div class="col-sm-7">
+                            <input type="number" name="accBuyCount" onchange="Editcalculate();" id="editBuyNum"
+                                   define="AccessoriesBuy.accBuyCount" placeholder="请输入购买数量" class="form-control">
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">购买单价：</label>
-                    <div class="col-sm-7">
-                        <input type="number" name="accBuyPrice" onchange="Editcalculate();" id="editBuyPrice"
-                               define="AccessoriesBuy.accBuyPrice" placeholder="请输入购买单价" class="form-control">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">购买单价：</label>
+                        <div class="col-sm-7">
+                            <input type="number" name="accBuyPrice" onchange="Editcalculate();" id="editBuyPrice"
+                                   define="AccessoriesBuy.accBuyPrice" placeholder="请输入购买单价" class="form-control">
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">购买折扣：</label>
-                    <div class="col-sm-7">
-                        <input type="number" min="0.0" step="0.1" max="1" onchange="Editcalculate();"
-                               name="accBuyDiscount" id="editBuyDiscount" define="AccessoriesBuy.accBuyDiscount"
-                               placeholder="请输入折扣，0.1代表1折" class="form-control">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">购买折扣：</label>
+                        <div class="col-sm-7">
+                            <input type="number" min="0.0" step="0.1" max="1" onchange="Editcalculate();"
+                                   name="accBuyDiscount" id="editBuyDiscount" define="AccessoriesBuy.accBuyDiscount"
+                                   placeholder="请输入折扣，0.1代表1折" class="form-control">
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">购买总价：</label>
-                    <div class="col-sm-7">
-                        <input type="number" min="0.0" step="0.1" readonly="true" name="accBuyTotal" id="editBuyTotal"
-                               define="AccessoriesBuy.accBuyTotal" class="form-control">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">购买总价：</label>
+                        <div class="col-sm-7">
+                            <input type="number" min="0.0" step="0.1" readonly="true" name="accBuyTotal"
+                                   id="editBuyTotal"
+                                   define="AccessoriesBuy.accBuyTotal" class="form-control">
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">购买最终价：</label>
-                    <div class="col-sm-7">
-                        <input type="number" readonly="true" min="0.0" step="0.1" name="accBuyMoney" id="editBuyMoney"
-                               define="AccessoriesBuy.accBuyMoney" class="form-control">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">购买最终价：</label>
+                        <div class="col-sm-7">
+                            <input type="number" readonly="true" min="0.0" step="0.1" name="accBuyMoney"
+                                   id="editBuyMoney"
+                                   define="AccessoriesBuy.accBuyMoney" class="form-control">
+                        </div>
                     </div>
-                </div>
-
-                <div class="modal-footer">
-                    <div class="col-sm-offset-8">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button id="editButton" type="button" onclick="editSubmit()" class="btn btn-success">修改</button>
+                    <div class="modal-footer">
+                        <div class="col-sm-offset-8">
+                            <button type="button" class="btn btn-default" onclick="closeModals('editWindow','editForm')"
+                                    data-dismiss="modal">关闭
+                            </button>
+                            <button id="editButton" type="button" onclick="editSubmit()" class="btn btn-success">修改
+                            </button>
+                            <input type="reset" name="reset" style="display: none;"/>
+                        </div>
                     </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
@@ -332,26 +356,6 @@
         </div>
     </div>
 </div>
-
-<!-- 删除弹窗 -->
-<div class="modal fade" id="del" aria-hidden="true">
-    <div class="modal-dialog" style="overflow:hidden;">
-        <form action="/table/edit" method="post">
-            <div class="modal-content">
-                <input type="hidden" id="delNoticeId"/>
-                <div class="modal-footer" style="text-align: center;">
-                    <h2>确认删除吗?</h2>
-                    <button type="button" class="btn btn-default"
-                            data-dismiss="modal">关闭
-                    </button>
-                    <button type="sumbit" class="btn btn-primary" onclick="del()">
-                        确认
-                    </button>
-                </div>
-            </div><!-- /.modal-content -->
-        </form>
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
 
 <!-- 提示弹窗 -->
 <div class="modal fade" id="tanchuang" aria-hidden="true">

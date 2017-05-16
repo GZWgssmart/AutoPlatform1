@@ -83,5 +83,13 @@
         ]]>
   </update>
 
+  <select id="queryAll" resultMap="outGoingTypeMap" parameterType="com.gs.bean.User">
+    <![CDATA[
+            select * FROM auto_platform.t_outgoing_type o where 1=1 and o.outTypeStatus = 'Y'
+        ]]>
+    <if test="companyId != '' and companyId !=null">
+      and o.companyId = #{companyId}
+    </if>
+  </select>
 
 </mapper>

@@ -70,7 +70,6 @@ public class AccessoriesTypeController {
             logger.info("请先登陆");
             return null;
         }
-
     }
 
     /**
