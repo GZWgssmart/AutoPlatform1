@@ -175,11 +175,7 @@
                             <thead>
                             <tr>
                                 <th data-radio="true" data-field="status"></th>
-                                <th data-field="userPhone">用户手机号</th>
                                 <th data-field="userName">姓名</th>
-                                <th data-field="userIdentity">身份证号</th>
-                                <th data-field="wechatOpenId">微信</th>
-                                <th data-field="companyId">所属公司</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -250,11 +246,7 @@
                             <thead>
                             <tr>
                                 <th data-radio="true" data-field="status"></th>
-                                <th data-field="userPhone">用户手机号</th>
                                 <th data-field="userName">姓名</th>
-                                <th data-field="userIdentity">身份证号</th>
-                                <th data-field="wechatOpenId">微信</th>
-                                <th data-field="companyId">所属公司</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -376,11 +368,8 @@
                             <thead>
                             <tr>
                                 <th data-radio="true" data-field="status"></th>
-                                <th data-field="userPhone">用户手机号</th>
                                 <th data-field="userName">姓名</th>
-                                <th data-field="userIdentity">身份证号</th>
-                                <th data-field="wechatOpenId">微信</th>
-                                <th data-field="companyId">所属公司</th>
+
                             </tr>
                             </thead>
                             <tbody>

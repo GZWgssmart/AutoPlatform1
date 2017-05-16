@@ -104,8 +104,8 @@ public class ChargeBillServiceImpl implements ChargeBillService {
     }
 
     @Override
-    public List<ChargeBill> queryByCondition(String start, String end, String companyId, String maintainOrFix, String type) {
-        return chargeBillDAO.queryByCondition(start, end, companyId, maintainOrFix, type);
+    public List<ChargeBill> queryByCondition(String start, String end, String userId, String maintainOrFix, String type) {
+        return chargeBillDAO.queryByCondition(start, end, userId, maintainOrFix, type);
     }
 
     /**

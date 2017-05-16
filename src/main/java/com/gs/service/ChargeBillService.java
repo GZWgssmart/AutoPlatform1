@@ -21,11 +21,10 @@ public interface ChargeBillService extends BaseService<String, ChargeBill>{
      * 查询消费统计记录
      * @param start
      * @param end
-     * @param companyId
      * @param maintainOrFix
      * @param type
      * @return
      */
-    public List<ChargeBill> queryByCondition( String start,  String end,  String companyId, String maintainOrFix, String type);
+    public List<ChargeBill> queryByCondition( String start,  String end,  String userId, String maintainOrFix, String type);
 
 }

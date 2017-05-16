@@ -297,8 +297,8 @@
   <!--员工工单报表-->
   <select id="queryByCondition" resultMap="chargeBillMap">
     <![CDATA[
-  select sum(cb.actualPayment) as actualPayment, cb.chargeCreatedTime from t_charge_bill cb, t_company c, t_maintain_record mr, t_checkin ck where cb.maintainRecordId = mr.recordId
-and ck.checkinId = mr.checkinId and ck.companyId = c.companyId and cb.chargeBillStatus = 'Y' and c.companyId = #{companyId} and
+ select sum(cb.actualPayment) as actualPayment, cb.chargeCreatedTime from t_charge_bill cb, t_user u, t_maintain_record mr, t_checkin ck where ck.userId = u.userId and cb.maintainRecordId = mr.recordId
+and ck.checkinId = mr.checkinId and cb.chargeBillStatus = 'Y' AND u.userId = #{userId} and
 cb.chargeCreatedTime >= #{start} and cb.chargeCreatedTime <= #{end}
         ]]>
     <if test="maintainOrFix ==0">

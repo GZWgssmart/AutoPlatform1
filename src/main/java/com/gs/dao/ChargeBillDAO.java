@@ -37,7 +37,7 @@ public interface ChargeBillDAO extends BaseDAO<String, ChargeBill>{
      * @param type
      * @return
      */
-    public List<ChargeBill> queryByCondition(@Param("start") String start, @Param("end") String end, @Param("companyId") String companyId, @Param("maintainOrFix")String maintainOrFix, @Param("type") String type);
+    public List<ChargeBill> queryByCondition(@Param("start") String start, @Param("end") String end, @Param("userId") String companyId, @Param("maintainOrFix")String maintainOrFix, @Param("type") String type);
     /**
      * 确认收费
      */

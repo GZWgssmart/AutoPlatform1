@@ -46,16 +46,6 @@
     <div class='tab-content'>
         <div class='tab-pane active' id='tab1'>
             <div class="form-inline">
-                <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员">
-                    <div class="company" id="companySelect" style="width: 300px;">
-                        <label>公司:</label>
-                        <select id="yearCompanyId" name="companyId" class="form-control select2 companyName" style="width: 80%;" >
-                        </select>
-                    </div>
-                </shiro:hasAnyRoles>
-                <div id="start" class="startime">
-
-                </div>
                 <div id="start" class="startime">
                     <label>
                         开始时间:
@@ -82,14 +72,7 @@
         </div>
         <div class='tab-pane' id='tab2'>
             <div class="form-inline">
-                <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员">
-                    <div class="company" id="companySelect" style="width: 300px;">
-                        <label>公司:</label>
-                        <select id="monthCompanyId" name="companyId" class="form-control select2 companyName" style="width: 80%;" >
-                        </select>
-                    </div>
-                </shiro:hasAnyRoles>
-                <div id="start" class="startime">
+                <div  class="startime">
                     <label>
                         开始时间:
                     </label>
@@ -99,7 +82,7 @@
                                                                               aria-hidden="true"></span></span>
                     </div>
                 </div>
-                <div id="end" class="endtime" >
+                <div  class="endtime" >
                     <label>结束时间：</label>
                     <div class="input-group">
                         <input type="text" class="form-control form_Month" id="endMonthInput" name="addtime"  placeholder="请选择结束时间">
@@ -115,14 +98,8 @@
         </div>
         <div class='tab-pane' id='tab3'>
             <div class="form-inline">
-                <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员">
-                    <div class="company" id="companySelect" style="width: 300px;">
-                        <label>公司:</label>
-                        <select id="dayCompanyId" name="companyId" class="form-control select2 companyName" style="width: 80%;" >
-                        </select>
-                    </div>
-                </shiro:hasAnyRoles>
-                <div id="start" class="startime">
+
+                <div  class="startime">
                     <label>
                         开始时间:
                     </label>
@@ -132,7 +109,7 @@
                                                                             aria-hidden="true"></span></span>
                     </div>
                 </div>
-                <div id="end" class="endtime" >
+                <div  class="endtime" >
                     <label>结束时间：</label>
                     <div class="input-group">
                         <input type="text" class="form-control form_Day" id="endDayInput" name="addtime"  placeholder="请选择结束时间">
@@ -148,14 +125,7 @@
         </div>
         <div class='tab-pane' id='tab4'>
             <div class="form-inline">
-                <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员">
-                    <div class="company" id="companySelect" style="width: 300px;">
-                        <label>公司:</label>
-                        <select id="quarterCompanyId" name="companyId" class="form-control select2 companyName" style="width: 80%;" >
-                        </select>
-                    </div>
-                </shiro:hasAnyRoles>
-                <div id="start" class="startime">
+                <div  class="startime">
                     <label>
                         开始时间:
                     </label>
@@ -165,7 +135,7 @@
                                                                                 aria-hidden="true"></span></span>
                     </div>
                 </div>
-                <div id="end" class="endtime" >
+                <div class="endtime" >
                     <label>结束时间：</label>
                     <div class="input-group">
                         <input type="text" class="form-control form_Day" id="endQuarterInput" name="addtime"  placeholder="请选择结束时间">
@@ -181,14 +151,7 @@
         </div>
         <div class='tab-pane' id='tab5'>
             <div class="form-inline">
-                <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员">
-                    <div class="company" id="companySelect" style="width: 300px;">
-                        <label>公司:</label>
-                        <select id="weekCompanyId" name="companyId" class="form-control select2 companyName" style="width: 80%;" >
-                        </select>
-                    </div>
-                </shiro:hasAnyRoles>
-                <div id="start" class="startime">
+                <div  class="startime">
                     <label>
                         开始时间:
                     </label>
@@ -198,7 +161,7 @@
                                                                              aria-hidden="true"></span></span>
                     </div>
                 </div>
-                <div id="end" class="endtime" >
+                <div class="endtime" >
                     <label>结束时间：</label>
                     <div class="input-group">
                         <input type="text" class="form-control form_Day" id="endWeekInput" name="addtime"  placeholder="请选择结束时间">

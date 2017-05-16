@@ -1,25 +1,29 @@
 $(function () {
     var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员";
-    $.post("/user/isLogin/"+roles, function (data) {
-        if(data.result == 'success'){
+    $.post("/user/isLogin/" + roles, function (data) {
+        if (data.result == 'success') {
             initSelect2("companyName", "请选择公司", "/company/queryAllCompany"); // 初始化select2, 第一个参数是class的名字, 第二个参数是select2的提示语, 第三个参数是select2的查询url
-        }else if(data.result == 'notLogin'){
-            swal({title:"",
-                    text:data.message,
-                    confirmButtonText:"确认",
-                    type:"error"}
-                ,function(isConfirm){
-                    if(isConfirm){
+        } else if (data.result == 'notLogin') {
+            swal({
+                    title: "",
+                    text: data.message,
+                    confirmButtonText: "确认",
+                    type: "error"
+                }
+                , function (isConfirm) {
+                    if (isConfirm) {
                         top.location = "/user/loginPage";
-                    }else{
+                    } else {
                         top.location = "/user/loginPage";
                     }
                 })
-        }else if(data.result == 'notRole'){
-            swal({title:"",
-                text:data.message,
-                confirmButtonText:"确认",
-                type:"error"})
+        } else if (data.result == 'notRole') {
+            swal({
+                title: "",
+                text: data.message,
+                confirmButtonText: "确认",
+                type: "error"
+            })
         }
     });
 });
@@ -55,7 +59,7 @@ var option = {
             end: 100
         }
     ],
-    color:[
+    color: [
         '#FF3333',	//温度曲线颜色
         '#49ebff'//温度曲线颜色
     ],
@@ -77,36 +81,36 @@ var option = {
             saveAsImage: {show: true}
         }
     },
-    xAxis:  {	//X轴
-        type : 'category',
-        data : []	//先设置数据值为空，后面用Ajax获取动态数据填入
+    xAxis: {	//X轴
+        type: 'category',
+        data: []	//先设置数据值为空，后面用Ajax获取动态数据填入
     },
-    yAxis : [	//Y轴（这里我设置了两个Y轴，左右各一个）
+    yAxis: [	//Y轴（这里我设置了两个Y轴，左右各一个）
         {
             //第一个（左边）Y轴，yAxisIndex为0
-            type : 'value',
-            name : '数量',
+            type: 'value',
+            name: '数量',
             /* max: 120,
              min: -40, */
-            axisLabel : {
+            axisLabel: {
                 formatter: '{value}'	//控制输出格式
             }
         },
 
 
     ],
-    series : [	//系列（内容）列表
+    series: [	//系列（内容）列表
         {
-            name:'保养消费金额',
-            type:'line',	//折线图表示（生成温度曲线）
-            symbol:'emptycircle',	//设置折线图中表示每个坐标点的符号；emptycircle：空心圆；emptyrect：空心矩形；circle：实心圆；emptydiamond：菱形
-            data:[]		//数据值通过Ajax动态获取
+            name: '保养消费金额',
+            type: 'line',	//折线图表示（生成温度曲线）
+            symbol: 'emptycircle',	//设置折线图中表示每个坐标点的符号；emptycircle：空心圆；emptyrect：空心矩形；circle：实心圆；emptydiamond：菱形
+            data: []		//数据值通过Ajax动态获取
         },
         {
-            name:'维修消费金额',
-            type:'line',	//折线图表示（生成温度曲线）
-            symbol:'emptycircle',	//设置折线图中表示每个坐标点的符号；emptycircle：空心圆；emptyrect：空心矩形；circle：实心圆；emptydiamond：菱形
-            data:[]		//数据值通过Ajax动态获取
+            name: '维修消费金额',
+            type: 'line',	//折线图表示（生成温度曲线）
+            symbol: 'emptycircle',	//设置折线图中表示每个坐标点的符号；emptycircle：空心圆；emptyrect：空心矩形；circle：实心圆；emptydiamond：菱形
+            data: []		//数据值通过Ajax动态获取
         }
     ]
 };
@@ -114,14 +118,12 @@ var option = {
 myChart.showLoading();	//数据加载完之前先显示一段简单的loading动画
 
 
-
-
 $.ajax({	//使用JQuery内置的Ajax方法
-    type : "post",		//post请求方式
-    async : true,		//异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
-    data: {"start": "2017-1-1", "end": "2017-12-31", "type":"day"},		//请求内包含一个key为name，value为A0001的参数；服务器接收到客户端请求时通过request.getParameter方法获取该参数值
-    dataType : "json",		//返回数据形式为json
-    success : function(result) {
+    type: "post",		//post请求方式
+    async: true,		//异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
+    data: {"start": "2017-1-1", "end": "2017-12-31", "type": "day"},		//请求内包含一个key为name，value为A0001的参数；服务器接收到客户端请求时通过request.getParameter方法获取该参数值
+    dataType: "json",		//返回数据形式为json
+    success: function (result) {
         //请求成功时执行该函数内容，result即为服务器返回的json对象
 
 
@@ -163,7 +165,7 @@ $.ajax({	//使用JQuery内置的Ajax方法
         }
 
     },
-    error : function(errorMsg) {
+    error: function (errorMsg) {
         //请求失败时执行该函数
         alert("图表请求数据失败，可能是服务器开小差了");
         myChart.hideLoading();
@@ -176,7 +178,6 @@ myChart.setOption(option, true);	//载入图表
 window.addEventListener('resize', function () {
     myChart.resize();
 })
-
 
 
 $('.form_Year').datetimepicker({
@@ -207,22 +208,20 @@ $('.form_Year').datetimepicker({
     })
 
 
-var maintainMoney=[];		//湿度数组
-var preserveMoney=[];		//湿度数组
-var workInfoDatas=[];		//时间数组
-
-
+var maintainMoney = [];		//湿度数组
+var preserveMoney = [];		//湿度数组
+var workInfoDatas = [];		//时间数组
 
 
 function selectYears() {
     var start = $("#startYearInput").val() + "-01-01";
     var end = $("#endYearInput").val() + "-12-31";
-    var companyId = $("#yearCompanyId").val();
+
     $.ajax({	//使用JQuery内置的Ajax方法
         type: "post",		//post请求方式
         async: true,		//异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
         url: "/charge/queryByCondition",	//请求发送到ShowInfoIndexServlet处
-        data: {"start": start, "end": end, "type":"year", "companyId":companyId},		//请求内包含一个key为name，value为A0001的参数；服务器接收到客户端请求时通过request.getParameter方法获取该参数值
+        data: {"start": start, "end": end, "type": "year"},		//请求内包含一个key为name，value为A0001的参数；服务器接收到客户端请求时通过request.getParameter方法获取该参数值
         dataType: "json",		//返回数据形式为json
         success: function (result) {
             //请求成功时执行该函数内容，result即为服务器返回的json对象
@@ -279,12 +278,12 @@ function selectMonth() {
 
     var start = $("#startMonthInput").val() + "-01";
     var end = $("#endMonthInput").val() + "-31";
-    var companyId = $("#monthCompanyId").val();
+    ;
     $.ajax({	//使用JQuery内置的Ajax方法
         type: "post",		//post请求方式
         async: true,		//异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
         url: "/charge/queryByCondition",	//请求发送到ShowInfoIndexServlet处
-        data: {"start": start, "end": end, "type":"month", "companyId":companyId},		//请求内包含一个key为name，value为A0001的参数；服务器接收到客户端请求时通过request.getParameter方法获取该参数值
+        data: {"start": start, "end": end, "type": "month"},		//请求内包含一个key为name，value为A0001的参数；服务器接收到客户端请求时通过request.getParameter方法获取该参数值
         dataType: "json",		//返回数据形式为json
         success: function (result) {
             //请求成功时执行该函数内容，result即为服务器返回的json对象
@@ -339,12 +338,11 @@ function selectMonth() {
 function selectDay() {
     var start = $("#startDayInput").val();
     var end = $("#endDayInput").val();
-    var companyId = $("#dayCompanyId").val();
     $.ajax({	//使用JQuery内置的Ajax方法
         type: "post",		//post请求方式
         async: true,		//异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
         url: "/charge/queryByCondition",	//请求发送到ShowInfoIndexServlet处
-        data: {"start": start, "end": end, "type":"day", "companyId":companyId},		//请求内包含一个key为name，value为A0001的参数；服务器接收到客户端请求时通过request.getParameter方法获取该参数值
+        data: {"start": start, "end": end, "type": "day"},		//请求内包含一个key为name，value为A0001的参数；服务器接收到客户端请求时通过request.getParameter方法获取该参数值
         dataType: "json",		//返回数据形式为json
         success: function (result) {
             //请求成功时执行该函数内容，result即为服务器返回的json对象
@@ -399,12 +397,11 @@ function selectDay() {
 function selectQuarter() {
     var start = $("#startQuarterInput").val();
     var end = $("#endQuarterInput").val();
-    var companyId = $("#quarterCompanyId").val();
     $.ajax({	//使用JQuery内置的Ajax方法
         type: "post",		//post请求方式
         async: true,		//异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
         url: "/charge/queryByCondition",	//请求发送到ShowInfoIndexServlet处
-        data: {"start": start, "end": end, "type":"quarter","companyId":companyId},		//请求内包含一个key为name，value为A0001的参数；服务器接收到客户端请求时通过request.getParameter方法获取该参数值
+        data: {"start": start, "end": end, "type": "quarter", "companyId": companyId},		//请求内包含一个key为name，value为A0001的参数；服务器接收到客户端请求时通过request.getParameter方法获取该参数值
         dataType: "json",		//返回数据形式为json
         success: function (result) {
             //请求成功时执行该函数内容，result即为服务器返回的json对象
@@ -460,12 +457,12 @@ function selectQuarter() {
 function selectWeek() {
     var start = $("#startWeekInput").val();
     var end = $("#endWeekInput").val();
-    var companyId = $("#weekCompanyId").val();
+
     $.ajax({	//使用JQuery内置的Ajax方法
         type: "post",		//post请求方式
         async: true,		//异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
         url: "/charge/queryByCondition",	//请求发送到ShowInfoIndexServlet处
-        data: {"start": start, "end": end, "type":"week", "companyId":companyId},		//请求内包含一个key为name，value为A0001的参数；服务器接收到客户端请求时通过request.getParameter方法获取该参数值
+        data: {"start": start, "end": end, "type": "week"},		//请求内包含一个key为name，value为A0001的参数；服务器接收到客户端请求时通过request.getParameter方法获取该参数值
         dataType: "json",		//返回数据形式为json
         success: function (result) {
             //请求成功时执行该函数内容，result即为服务器返回的json对象

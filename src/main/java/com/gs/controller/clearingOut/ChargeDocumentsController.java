@@ -331,7 +331,7 @@ public class ChargeDocumentsController {
 
     @ResponseBody
     @RequestMapping(value = "queryByCondition")
-    public List<ChargeBillBean> queryByCondition(HttpSession session, String start, String end, String type, String companyId){
+    public List<ChargeBillBean> queryByCondition(HttpSession session, String start, String end, String type){
         logger.info("根据年月日周季去查询所有的消费统计");
         List<ChargeBillBean> list = null;
         List<ChargeBill> timeList = null;
@@ -340,19 +340,13 @@ public class ChargeDocumentsController {
         list = new ArrayList<ChargeBillBean>();
         User user = (User)session.getAttribute("user");
         if(SessionUtil.isLogin(session)) {
-            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员";
+            String roles = "车主";
             if(RoleUtil.checkRoles(roles)) {
                 if (type != null && !type.equals("")) {
                     if (type.equals("year")) {
-                        if (companyId != null) {
-                            timeList = chargeBillService.queryByCondition(start, end,companyId,"0","year");
-                            maintainList=chargeBillService.queryByCondition(start, end,companyId,"1","year");
-                            preserveList=chargeBillService.queryByCondition(start, end,companyId,"2","year");
-                        } else {
-                            timeList = chargeBillService.queryByCondition(start, end,user.getCompanyId(),"0","year");
-                            maintainList=chargeBillService.queryByCondition(start, end,user.getCompanyId(),"1","year");
-                            preserveList=chargeBillService.queryByCondition(start, end,user.getCompanyId(),"2","year");
-                        }
+                        timeList = chargeBillService.queryByCondition(start, end,user.getUserId(),"0","year");
+                        maintainList=chargeBillService.queryByCondition(start, end,user.getUserId(),"1","year");
+                        preserveList=chargeBillService.queryByCondition(start, end,user.getUserId(),"2","year");
                         for (int p = 0; p < timeList.size(); p++) {
                             ChargeBillBean io = new ChargeBillBean();
                             String ag = DateFormatUtil.YearFormater(timeList.get(p).getChargeCreatedTime());
@@ -379,15 +373,9 @@ public class ChargeDocumentsController {
                         }
 
                     } else if (type.equals("quarter")) {
-                        if (companyId != null) {
-                            timeList = chargeBillService.queryByCondition(start, end,companyId,"0","quarter");
-                            maintainList=chargeBillService.queryByCondition(start, end,companyId,"1","quarter");
-                            preserveList=chargeBillService.queryByCondition(start, end,companyId,"2","quarter");
-                        } else {
-                            timeList = chargeBillService.queryByCondition(start, end,user.getCompanyId(),"0","quarter");
-                            maintainList=chargeBillService.queryByCondition(start, end,user.getCompanyId(),"1","quarter");
-                            preserveList=chargeBillService.queryByCondition(start, end,user.getCompanyId(),"2","quarter");
-                        }
+                        timeList = chargeBillService.queryByCondition(start, end,user.getUserId(),"0","quarter");
+                        maintainList=chargeBillService.queryByCondition(start, end,user.getUserId(),"1","quarter");
+                        preserveList=chargeBillService.queryByCondition(start, end,user.getUserId(),"2","quarter");
                         for (int p = 0; p < timeList.size(); p++) {
                             ChargeBillBean io = new ChargeBillBean();
                             String ag = DateFormatUtil.MonthFormater(timeList.get(p).getChargeCreatedTime());
@@ -416,15 +404,9 @@ public class ChargeDocumentsController {
                             list.add(io);
                         }
                     } else if (type.equals("month")) {
-                        if (companyId != null) {
-                            timeList = chargeBillService.queryByCondition(start, end,companyId,"0","month");
-                            maintainList=chargeBillService.queryByCondition(start, end,companyId,"1","month");
-                            preserveList=chargeBillService.queryByCondition(start, end,companyId,"2","month");
-                        } else {
-                            timeList = chargeBillService.queryByCondition(start, end,user.getCompanyId(),"0","month");
-                            maintainList=chargeBillService.queryByCondition(start, end,user.getCompanyId(),"1","month");
-                            preserveList=chargeBillService.queryByCondition(start, end,user.getCompanyId(),"2","month");
-                        }
+                        timeList = chargeBillService.queryByCondition(start, end,user.getUserId(),"0","month");
+                        maintainList=chargeBillService.queryByCondition(start, end,user.getUserId(),"1","month");
+                        preserveList=chargeBillService.queryByCondition(start, end,user.getUserId(),"2","month");
                         for (int p = 0; p < timeList.size(); p++) {
                             ChargeBillBean io = new ChargeBillBean();
                             String ag = DateFormatUtil.MonthFormater(timeList.get(p).getChargeCreatedTime());
@@ -450,15 +432,9 @@ public class ChargeDocumentsController {
                             list.add(io);
                         }
                     } else if (type.equals("week")) {
-                        if (companyId != null) {
-                            timeList = chargeBillService.queryByCondition(start, end,companyId,"0","week");
-                            maintainList=chargeBillService.queryByCondition(start, end,companyId,"1","week");
-                            preserveList=chargeBillService.queryByCondition(start, end,companyId,"2","week");
-                        } else {
-                            timeList = chargeBillService.queryByCondition(start, end,user.getCompanyId(),"0","week");
-                            maintainList=chargeBillService.queryByCondition(start, end,user.getCompanyId(),"1","week");
-                            preserveList=chargeBillService.queryByCondition(start, end,user.getCompanyId(),"2","week");
-                        }
+                        timeList = chargeBillService.queryByCondition(start, end,user.getUserId(),"0","week");
+                        maintainList=chargeBillService.queryByCondition(start, end,user.getUserId(),"1","week");
+                        preserveList=chargeBillService.queryByCondition(start, end,user.getUserId(),"2","week");
                         for (int p = 0; p < timeList.size(); p++) {
                             ChargeBillBean io = new ChargeBillBean();
                             String ag = DateFormatUtil.WEEK(timeList.get(p).getChargeCreatedTime());
@@ -493,15 +469,9 @@ public class ChargeDocumentsController {
                             list.add(io);
                         }
                     } else if (type.equals("day")) {
-                        if (companyId != null) {
-                            timeList = chargeBillService.queryByCondition(start, end,companyId,"0","day");
-                            maintainList=chargeBillService.queryByCondition(start, end,companyId,"1","day");
-                            preserveList=chargeBillService.queryByCondition(start, end,companyId,"2","day");
-                        } else {
-                            timeList = chargeBillService.queryByCondition(start, end,user.getCompanyId(),"0","day");
-                            maintainList=chargeBillService.queryByCondition(start, end,user.getCompanyId(),"1","day");
-                            preserveList=chargeBillService.queryByCondition(start, end,user.getCompanyId(),"2","day");
-                        }
+                        timeList = chargeBillService.queryByCondition(start, end,user.getUserId(),"0","day");
+                        maintainList=chargeBillService.queryByCondition(start, end,user.getUserId(),"1","day");
+                        preserveList=chargeBillService.queryByCondition(start, end,user.getUserId(),"2","day");
                         for (int p = 0; p < timeList.size(); p++) {
                             ChargeBillBean io = new ChargeBillBean();
                             String ag = DateFormatUtil.DayFormater(timeList.get(p).getChargeCreatedTime());
