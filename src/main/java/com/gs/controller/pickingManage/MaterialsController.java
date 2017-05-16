@@ -165,25 +165,29 @@ public class MaterialsController {
             String roles = "公司超级管理员,公司普通管理员,汽车公司库管人员";
             if(RoleUtil.checkRoles(roles)) {
                 User user = (User) session.getAttribute("user");
+                final String reviewTaskKey = "usertask2";
                 TaskQuery taskQuery = taskService.createTaskQuery();
 
                 String proInsId = materialUse.getProcessInstanceId();
                 Task task = taskQuery.processInstanceId(proInsId).singleResult();
 
+                if(task!= null && task.getTaskDefinitionKey().equals(reviewTaskKey)) {
+                    boolean isOK = Boolean.parseBoolean(req.getParameter("isOK"));
+                    String respMsg = materialUse.getRespMsg();
 
-                boolean isOK = Boolean.parseBoolean(req.getParameter("isOK"));
-                String respMsg = materialUse.getRespMsg();
-
-                Map map = new HashMap();
-                map.put("isOK", isOK);
-                map.put("respMsg", respMsg);
-                String resultPre = "拒绝";
-                if (isOK) {
-                    resultPre = "同意";
-
+                    Map map = new HashMap();
+                    map.put("isOK", isOK);
+                    map.put("respMsg", respMsg);
+                    String resultPre = "拒绝";
+                    if (isOK) {
+                        resultPre = "同意";
+                    }
+                    taskService.setAssignee(task.getId(), user.getUserId());
+                    return nextTask(proInsId, task.getId(), map, resultPre);
+                } else {
+                    return ControllerResult.getFailResult("审批失败,该申请已被用户删除");
                 }
-                taskService.setAssignee(task.getId(), user.getUserId());
-                return nextTask(proInsId, task.getId(), map, resultPre);
+
             } else {
                 logger.info("此用户无拥有审核领/退料的角色");
                 return ControllerResult.getNotRoleResult("权限不足");

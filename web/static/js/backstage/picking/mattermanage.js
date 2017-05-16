@@ -237,7 +237,7 @@ function closeModal(modalId, formId) {
     $('#'+ formId + " input[type=reset]").trigger("click"); // 移除表单中填的值
     $('#'+ formId).data('bootstrapValidator').resetForm(true); // 移除所有验证
     $("#" + formId).data('bootstrapValidator').destroy(); // 销毁此form表单
-    // $('#' + formId).data('bootstrapValidator', null);// 此form表单设置为空
+    $('#' + formId).data('bootstrapValidator', null);// 此form表单设置为空
 }
 
 function showModal(modalId ,formId, obj) {
@@ -251,6 +251,7 @@ function y(e, value, row, index) {
     resp.isOK = true;
     resp.processInstanceId = row.processInstanceId;
     $("#subButton1").removeAttr("disable");
+    console.log($("#subButton1"))
     showModal("reviewModal","reviewForm", resp);
 }
 function n(e, value, row, index) {

@@ -357,7 +357,6 @@ function userRequestsFormatter(ele ,row, index) {
         ele = "暂无留言"
     }
     var reqHtml = "<span title='"+ ele +"'> "+ reqView +" </span>"
-    console.log(reqHtml)
     return reqHtml;
 }
 
@@ -421,7 +420,10 @@ function accInfoFormat(element, row, index){
 
     if(min >= row.materialCount ){
         htmltest.push("<div style='position: relative;top:-10px;right:-10px;height:60px' class='materialsSuc' ></div>");
-    }else {
+
+    }else if ((min+rAu.use) >= row.materialCount) {
+        htmltest.push("<span class='bgFont'><p>请耐心等待</p><p>审核完成</p></span>");
+    } else{
         htmltest.push("<button type='button' class='btn btn-success' onclick='showDel(this);' style='height:60px;top:10px;position:inherit; width:100%;'>领料/退料</button>");
     }
     htmltest.push("</div>");

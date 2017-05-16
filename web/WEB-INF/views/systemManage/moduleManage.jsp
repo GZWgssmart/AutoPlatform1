@@ -200,7 +200,7 @@
 </div>
 
 <!-- 添加/修改弹窗 -->
-<div class="modal fade" id="addModal" aria-hidden="true" data-backdrop="static">
+<div class="modal fade" id="addModal" aria-hidden="true" data-backdrop="static" keyboard="false">
     <div class="modal-dialog">
         <div class="modal-content">
             <span  class="close"   onclick = "closeModal()">&times;</span>

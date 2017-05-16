@@ -75,7 +75,7 @@
     </div>
 </div>
 
-    <div class="modal fade" id="reviewModal" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static">
+    <div class="modal fade" id="reviewModal" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static" keyboard="false">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">

@@ -49,6 +49,10 @@
             right:20px;
             position: relative;
         }
+        .bgFont {
+            color: #aaa;
+            font-family: 微软雅黑;
+        }
     </style>
 </head>
 <body>
@@ -149,7 +153,7 @@
 
 <!-- 零件明细弹窗 -->
 <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师,汽车公司学徒,汽车公司销售人员,汽车公司财务人员,汽车公司采购人员,汽车公司库管人员,汽车公司人力资源管理部">
-    <div class="modal fade" id="accsInfo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal fade" id="accsInfo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" keyboard="false">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header" style="margin-right:0;width:95%;">
@@ -177,8 +181,9 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal -->
 </div>
-<!-- 领取/退回表单弹窗 -->
-    <div class="modal fade" id="application" aria-hidden="true">
+
+    <!-- 领取/退回表单弹窗 -->
+    <div class="modal fade" id="application" aria-hidden="true"  data-backdrop="static" keyboard="false" >
     <div class="modal-dialog" style="overflow:hidden;">
             <div class="modal-content">
                 <div class="modal-footer" style="text-align: center;">
@@ -229,8 +234,10 @@
 
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+
 <!-- 追加弹窗 -->
-    <div class="modal fade" id="appendModal" aria-hidden="true">
+    <div class="modal fade" id="appendModal" aria-hidden="true" aria-hidden="true" data-backdrop="static" keyboard="false" >
     <div class="modal-dialog" style="overflow:hidden;">
         <div class="modal-content">
             <div style="text-align: center;">
