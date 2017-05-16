@@ -103,4 +103,9 @@ public class MaintainRecordServiceImpl implements MaintainRecordService {
 	public List<MaintainRecord> queryByPagerRemindYes(Pager pager) {
 		return maintainRecordDAO.queryByPagerRemindYes(pager);
 	}
+
+	@Override
+	public List<MaintainRecord> queryByPagerSix(String actualEndTime) {
+		return maintainRecordDAO.queryByPagerSix(actualEndTime);
+	}
 }

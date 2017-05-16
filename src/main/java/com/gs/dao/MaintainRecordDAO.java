@@ -59,4 +59,6 @@ public interface MaintainRecordDAO extends BaseDAO<String, MaintainRecord>{
     public int countByRemindYes(User user);
 
     public List<MaintainRecord> queryByPagerRemindYes(Pager pager);
+
+    public List<MaintainRecord> queryByPagerSix(@Param("actualEndTime") String actualEndTime);
 }

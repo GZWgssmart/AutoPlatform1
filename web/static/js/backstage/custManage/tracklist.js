@@ -4,8 +4,8 @@ $(function () {
         if (data.result == 'success') {
             initTable('table', '/tracklist/queryByPager'); // 初始化表格
 
-            initSelect2("admin", "请选择回访人", "/tracklist/queryCombox");
-            initSelect2("user", "请选择跟踪回访用户", "/tracklist/queryCombox");
+            initSelect2("admin", "请选择回访人", "/tracklist/queryAdmin");
+            initSelect2("user", "请选择跟踪回访用户", "/tracklist/queryUser");
         } else if (data.result == 'notLogin') {
             swal({
                     title: "",

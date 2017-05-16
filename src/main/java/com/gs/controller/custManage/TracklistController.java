@@ -115,13 +115,43 @@ public class TracklistController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "queryCombox", method = RequestMethod.GET)
-    public List<ComboBox4EasyUI> queryCombox(HttpSession session) {
+    @RequestMapping(value = "queryUser", method = RequestMethod.GET)
+    public List<ComboBox4EasyUI> queryUser(HttpSession session) {
         if (SessionUtil.isLogin(session)) {
             String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,车主";
             if (RoleUtil.checkRoles(roles)) {
                 logger.info("查看用户");
-                List<User> users = userService.queryAll((User) session.getAttribute("user"));
+                List<User> users = userService.queryByRoleName("车主");
+                List<ComboBox4EasyUI> combo = new ArrayList<ComboBox4EasyUI>();
+                for (User u : users) {
+                    ComboBox4EasyUI co = new ComboBox4EasyUI();
+                    co.setId(u.getUserId());
+                    co.setText(u.getUserName());
+                    String userId = req.getParameter("userId");
+                    if (u.getUserId().equals(userId)) {
+                        co.setSelected(true);
+                    }
+                    combo.add(co);
+                }
+                return combo;
+            } else {
+                logger.info("此用户无拥有此方法");
+                return null;
+            }
+        } else {
+            logger.info("请先登录");
+            return null;
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "queryAdmin", method = RequestMethod.GET)
+    public List<ComboBox4EasyUI> queryAdmin(HttpSession session) {
+        if (SessionUtil.isLogin(session)) {
+            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,车主";
+            if (RoleUtil.checkRoles(roles)) {
+                logger.info("查看用户");
+                List<User> users = userService.queryByRoleName("汽车公司接待员");
                 List<ComboBox4EasyUI> combo = new ArrayList<ComboBox4EasyUI>();
                 for (User u : users) {
                     ComboBox4EasyUI co = new ComboBox4EasyUI();

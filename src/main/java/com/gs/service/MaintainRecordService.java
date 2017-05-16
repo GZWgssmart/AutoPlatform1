@@ -3,6 +3,7 @@ package com.gs.service;
 import com.gs.bean.MaintainRecord;
 import com.gs.bean.User;
 import com.gs.common.bean.Pager;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -47,4 +48,6 @@ public interface MaintainRecordService extends BaseService<String, MaintainRecor
     public int countByRemindYes(User user);
 
     public List<MaintainRecord> queryByPagerRemindYes(Pager pager);
+
+    public List<MaintainRecord> queryByPagerSix(@Param("actualEndTime") String actualEndTime);
 }

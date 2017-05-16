@@ -83,6 +83,7 @@
     <div class="modal-dialog" style="width: 750px;height: auto;">
         <div class="modal-content" style="overflow:hidden;">
             <form class="form-horizontal" id="addForm" method="post">
+                <input type="text" name="userId" value="${sessionScope.user.userId}">
                 <div class="modal-header" style="overflow:auto;">
                     <h4>请填写跟踪回访管理信息</h4>
                 </div>
@@ -90,9 +91,10 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">回访人：</label>
                     <div class="col-sm-7">
-                        <select id="addAdminName" name="userId" class="form-control js-data-example-ajax admin"
-                                style="width:100%">
-                        </select>
+                        <%--<select id="addAdminName" name="userId" class="form-control js-data-example-ajax admin"--%>
+                                <%--style="width:100%">--%>
+                        <%--</select>--%>
+                        <input type="text" readonly value="${sessionScope.user.userName}" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">

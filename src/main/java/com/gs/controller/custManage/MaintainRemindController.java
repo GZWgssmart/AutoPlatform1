@@ -1,18 +1,14 @@
 package com.gs.controller.custManage;
 
 import ch.qos.logback.classic.Logger;
-import com.gs.bean.MaintainRemind;
-import com.gs.bean.MessageSend;
-import com.gs.bean.User;
+import com.gs.bean.*;
 import com.gs.common.bean.ComboBox4EasyUI;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
 import com.gs.common.util.RoleUtil;
 import com.gs.common.util.SessionUtil;
-import com.gs.service.MaintainRemindService;
-import com.gs.service.MessageSendService;
-import com.gs.service.UserService;
+import com.gs.service.*;
 import org.apache.ibatis.annotations.Param;
 import org.joda.time.DateTime;
 import org.slf4j.LoggerFactory;
@@ -31,6 +27,7 @@ import javax.servlet.http.HttpSession;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -59,6 +56,9 @@ public class MaintainRemindController {
 
     @Resource
     private MessageSendService messageSendService;
+
+    @Resource
+    private MaintainRecordService maintainRecordService;
 
     @ResponseBody
     @RequestMapping(value = "queryByPager", method = RequestMethod.GET)
@@ -133,6 +133,43 @@ public class MaintainRemindController {
             logger.info("请先登录");
             return null;
         }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "insert", method = RequestMethod.POST)
+    public ControllerResult insertDate(HttpSession session, MaintainRemind maintainRemind, MessageSend messageSend) {
+        logger.info("维修保养提醒记录添加操作");
+        List<MaintainRecord> maintainRecords = maintainRecordService.queryByPagerSix(getInsertDateTime());
+        if(maintainRecords != null) {
+            List<MaintainRemind> maintainReminds = new ArrayList<MaintainRemind>();
+            for(MaintainRecord mrs : maintainRecords) {
+                MaintainRemind mrs1 = new MaintainRemind();
+            }
+            maintainRemindService.insert(maintainRemind);
+        }
+        messageSend.setMessageId(maintainRemind.getRemindId());
+        messageSend.setUserId(maintainRemind.getUserId());
+        messageSend.setSendTime(maintainRemind.getRemindTime());
+        messageSend.setSendMsg(maintainRemind.getRemindMsg());
+        messageSend.setSendCreatedTime(new Date());
+        messageSendService.insertRemind(messageSend);
+        return ControllerResult.getSuccessResult("添加成功");
+    }
+
+    public String getInsertDateTime() {
+        Calendar c = Calendar.getInstance();//获得一个日历的实例
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String actualEndTime = sdf.format(new Date());
+        Date date = null;
+        try{
+            date = sdf.parse(actualEndTime);//初始日期
+        }catch(Exception e){
+
+        }
+        c.setTime(date);//设置日历时间
+        c.add(Calendar.MONTH,-6);//在日历的月份上增加6个月
+        System.out.println(sdf.format(c.getTime()));//的到你想要得6个月后的日期
+        return sdf.format(c.getTime());
     }
 
     @ResponseBody
