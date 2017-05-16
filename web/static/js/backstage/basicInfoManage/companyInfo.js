@@ -472,10 +472,10 @@ function endSuc(data, winId, formId) {
     var controllerResult= data.controllerResult;
     if (controllerResult.result == "success") {
         swal({
-            title: "",
-            text: controllerResult.message,
-            confirmButtonText: "确认",
-            type: "error"
+            title:"提示",
+            text: "操作成功",
+            confirmButtonText:"确定", // 提示按钮上的文本
+            type:"success"
         })
         $('#' + winId).modal('hide');
         $('#table').bootstrapTable('refresh');

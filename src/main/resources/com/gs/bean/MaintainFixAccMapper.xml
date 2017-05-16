@@ -28,22 +28,22 @@
     select mfa.*,mf.*,a.* from t_maintain_fix_acc mfa,t_maintain_fix mf, t_accessories a where mfa.maintainId = mf.maintainId and mfa.accId = a.accId and mfa.maintainId in (${fixId})
   </select>
 
-  <select id="queryByDetailsByPager" resultMap="maintainFixAccMap" parameterType="com.gs.common.bean.Pager">
+  <select id="queryByDetailsByPager" resultMap="maintainFixAccMap">
     <![CDATA[
      select fix.*,acc.*,a.accName, c.companyId, c.companyName from t_maintain_fix fix,t_maintain_fix_acc acc,t_accessories a, t_company c where fix.maintainId = acc.maintainId and a.accId = acc.accId and c.companyId = fix.companyId and fix.maintainId = #{maintainId}
     ]]>
-    <if test="user.companyId != '' and user.companyId !=null">
-      and fix.companyId = #{user.companyId}
+    <if test="pager.user.companyId != '' and pager.user.companyId !=null">
+      and fix.companyId = #{pager.user.companyId}
     </if>
     limit #{pager.beginIndex}, #{pager.pageSize}
   </select>
 
-  <select id="countByDetails" resultType="int" parameterType="com.gs.bean.User">
+  <select id="countByDetails" resultType="int">
     <![CDATA[
       select count(maintainId) from t_maintain_fix fix where maintainId = #{maintainId}
 		]]>
-    <if test="companyId != '' and companyId !=null">
-      and fix.companyId = #{companyId}
+    <if test="user.companyId != '' and user.companyId !=null">
+      and fix.companyId = #{user.companyId}
     </if>
   </select>
 

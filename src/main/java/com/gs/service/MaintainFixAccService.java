@@ -2,6 +2,7 @@ package com.gs.service;
 
 import com.gs.bean.MaintainFix;
 import com.gs.bean.MaintainFixAcc;
+import com.gs.bean.User;
 import com.gs.common.bean.Pager;
 import org.apache.ibatis.annotations.Param;
 
@@ -18,5 +19,5 @@ public interface MaintainFixAccService extends BaseService<String, MaintainFixAc
     public List<MaintainFixAcc> queryByRecord(String fixId);
 
     public List<MaintainFixAcc> queryByDetailsByPager(Pager pager, String maintainId);
-    public int countByDetails(@Param("maintainId") String maintainId);
+    public int countByDetails(String maintainId,User user);
 }

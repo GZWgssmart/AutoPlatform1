@@ -137,7 +137,8 @@ public class MaintainController {
                 Pager pager = new Pager();
                 pager.setPageNo(Integer.valueOf(pageNumber));
                 pager.setPageSize(Integer.valueOf(pageSize));
-                pager.setTotalRecords(maintainFixAccService.countByDetails(maintainId));
+                pager.setUser((User) session.getAttribute("user"));
+                pager.setTotalRecords(maintainFixAccService.countByDetails(maintainId,(User) session.getAttribute("user")));
                 List<MaintainFixAcc> maintainFixAccs = maintainFixAccService.queryByDetailsByPager(pager,maintainId);
                 System.out.print(maintainFixAccs);
                 return new Pager4EasyUI<MaintainFixAcc>(pager.getTotalRecords(), maintainFixAccs);

@@ -90,8 +90,8 @@ public class MaintainFixAccServiceImpl implements MaintainFixAccService {
 	}
 
 	@Override
-	public int countByDetails(String maintainId) {
-		return maintainFixAccDAO.countByDetails(maintainId);
+	public int countByDetails(String maintainId,User user) {
+		return maintainFixAccDAO.countByDetails(maintainId,user);
 	}
 
 }
