@@ -87,7 +87,7 @@ public class MaintainRemindController {
 
     @ResponseBody
     @RequestMapping(value = "queryByPagerNull", method = RequestMethod.GET)
-    public Pager4EasyUI<MaintainRemind> queryByPagerNull(HttpSession session, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
+    public Pager4EasyUI<MaintainRecord> queryByPagerNull(HttpSession session, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
         if (SessionUtil.isLogin(session)) {
             String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员";
             if (RoleUtil.checkRoles(roles)) {
@@ -95,11 +95,11 @@ public class MaintainRemindController {
                 Pager pager = new Pager();
                 pager.setPageNo(Integer.valueOf(pageNumber));
                 pager.setPageSize(Integer.valueOf(pageSize));
-                int count = maintainRemindService.countNull((User) session.getAttribute("user"));
+                int count = maintainRecordService.countSix(getInsertDateTime());
                 pager.setTotalRecords(count);
                 pager.setUser((User) session.getAttribute("user"));
-                List<MaintainRemind> queryList = maintainRemindService.queryByPagerNull(pager);
-                return new Pager4EasyUI<MaintainRemind>(pager.getTotalRecords(), queryList);
+                List<MaintainRecord> queryList = maintainRecordService.queryByPagerSix(getInsertDateTime());
+                return new Pager4EasyUI<MaintainRecord>(pager.getTotalRecords(), queryList);
             } else {
                 logger.info("此用户无拥有此方法");
                 return null;

@@ -445,6 +445,17 @@
     </select>
 
     <select id="queryByPagerSix" resultMap="MaintainRecordMap" parameterType="com.gs.common.bean.Pager">
-    SELECT m.*, ck.*, u.userId, u.userName FROM t_maintain_record m, t_checkin ck, t_user u WHERE m.checkinId = ck.checkinId AND ck.userId=u.userId AND m.recordStatus = 'Y' AND m.actualEndTime LIKE CONCAT('%',#{actualEndTime},'%')
+        SELECT m.*, ck.*, u.userId, u.userName
+        FROM t_maintain_record m, t_checkin ck, t_user u
+        WHERE m.checkinId = ck.checkinId AND ck.userId=u.userId
+        AND m.recordStatus = 'Y' AND m.actualEndTime LIKE CONCAT('%',#{actualEndTime},'%')
+        limit #{beginIndex}, #{pageSize}
+    </select>
+
+    <select id="countSix" resultType="int">
+        SELECT count(m.recordId)
+        FROM t_maintain_record m, t_checkin ck, t_user u
+        WHERE m.checkinId = ck.checkinId AND ck.userId=u.userId
+        AND m.recordStatus = 'Y' AND m.actualEndTime LIKE CONCAT('%',#{actualEndTime},'%')
     </select>
 </mapper>

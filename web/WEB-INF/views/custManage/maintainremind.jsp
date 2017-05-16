@@ -225,10 +225,10 @@
                         <th data-field="user.userName">
                             用户名称
                         </th>
-                        <th data-field="lastMaintainTime" data-formatter="formatterDate">
+                        <th data-field="actualEndTime" data-formatter="formatterDate">
                             上次维修保养时间
                         </th>
-                        <th data-field="lastMaintainMileage">
+                        <th data-field="checkin.carMileage">
                             上次汽车行驶里程
                         </th>
                     </tr>
