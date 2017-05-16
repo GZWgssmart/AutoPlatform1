@@ -120,7 +120,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
-            <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
+            <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('editWindow', 'editForm')"></span>
                 <form id="editForm" role="form" class="form-horizontal">
                     <div class="modal-header" style="overflow:auto;">
                         <h4>修改收费单据</h4>
@@ -155,7 +155,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default"
-                                data-dismiss="modal">关闭
+                                onclick="closeModals('editWindow','editForm')">关闭
                         </button>
                         <button type="submit" class="btn btn-success btn-sm">保存</button>
                     </div>

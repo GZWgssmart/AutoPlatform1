@@ -134,11 +134,11 @@
     </div>
 </div>
 
-<div id="addWindow" class="modal fade" style="overflow-y:scroll" data-backdrop="static">
+<div id="addWindow" class="modal fade" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static" keyboard:false>
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
-                <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
+                <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('addWindow', 'addForm')"></span>
                 <form role="form" class="form-horizontal" id="addForm">
                     <input type="hidden" id="maintainRecordId" name="maintainRecordId"/>
                     <div class="modal-header" style="overflow:auto;">
@@ -177,7 +177,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default"
-                                data-dismiss="modal">关闭
+                                onclick="closeModals('addWindow','addForm')">关闭
                         </button>
                         <button id="addButton" type="button" onclick="addSubmit()" class="btn btn-success">生成
                         </button>

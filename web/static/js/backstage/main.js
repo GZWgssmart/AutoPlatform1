@@ -37,8 +37,8 @@ function initDateTimePicker(formId, fieldName, fieldId){
 }
 
 // 初始化没有分秒的时间框
-function initDatePicker(formId, field){
-    $(".datetimepicker").datetimepicker({
+function initDatePicker(formId, fieldName, fieldId){
+    $("#"+fieldId).datetimepicker({
         minView: "month", //选择日期后，不会再跳转去选择时分秒
         language: 'zh-CN',
         format: 'yyyy-mm-dd',
@@ -49,8 +49,8 @@ function initDatePicker(formId, field){
         autoclose: 1
     }).on('hide',function(e) {
         $('#'+formId).data('bootstrapValidator')
-            .updateStatus(field, 'NOT_VALIDATED',null)
-            .validateField(field);
+            .updateStatus(fieldName, 'NOT_VALIDATED',null)
+            .validateField(fieldName);
     });
 }
 

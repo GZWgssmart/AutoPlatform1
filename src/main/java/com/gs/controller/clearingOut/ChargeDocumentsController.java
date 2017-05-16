@@ -17,6 +17,7 @@ import com.gs.common.util.RoleUtil;
 import com.gs.common.util.SessionUtil;
 import com.gs.service.ChargeBillService;
 import com.gs.service.CheckinService;
+import com.gs.service.IncomingOutgoingService;
 import com.gs.service.MaintainRecordService;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
@@ -53,6 +54,9 @@ public class ChargeDocumentsController {
     // 收费单据service
     @Resource
     private ChargeBillService chargeBillService;
+    // 收支记录service
+    @Resource
+    private IncomingOutgoingService incomingOutgoingService;
 
     /**
      * 分页查询所有收费单据
@@ -160,6 +164,7 @@ public class ChargeDocumentsController {
             if (RoleUtil.checkRoles(roles)) {
                 chargeBillService.updateDate(chargeBillId);
                 maintainRecordService.updateCurrentStatus("已收费", "'"+maintainRecordId+"'");
+
                 return ControllerResult.getSuccessResult("确认收费成功");
             } else {
                 logger.info("此用户无拥有此方法角色");

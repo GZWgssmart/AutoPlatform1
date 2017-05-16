@@ -292,6 +292,8 @@ function showEditDetail(){
 function closeEditForm(){
     $("#editWindow").modal('hide');
     $("#detailWindow").modal('show');
+    $("#editForm").data('bootstrapValidator').destroy(); // 销毁此form表单
+    $('#editForm').data('bootstrapValidator', null);// 此form表单设置为空
 }
 
 // 项目window关闭按钮

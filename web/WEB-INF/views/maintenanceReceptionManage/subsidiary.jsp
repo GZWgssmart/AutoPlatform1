@@ -11,8 +11,6 @@
     <link rel="stylesheet" href="/static/css/sweetalert.css">
     <link rel="stylesheet" href="/static/css/table/table.css">
     <link rel="stylesheet" href="/static/css/bootstrap-validate/bootstrapValidator.min.css">
-    <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.css">
-    <link rel="stylesheet/less" href="/static/css/bootstrap-dateTimePicker/datetimepicker.less">
 </head>
 <body>
 <%@include file="../backstage/contextmenu.jsp" %>
@@ -133,11 +131,11 @@
     </div>
 </div>
 
-<div id="addWindow" class="modal fade" style="overflow-y:scroll" data-backdrop="static">
+<div id="addWindow" class="modal fade" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static" keyboard:false>
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
-                <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
+                <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('addWindow', 'addForm')"></span>
                 <form role="form" class="form-horizontal" id="addForm">
                     <input type="hidden" define="maintainDetail.recordId" name="maintainRecordId"/>
                     <input type="hidden" id="addItemId" name="maintainItemId">
@@ -164,7 +162,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default"
-                                data-dismiss="modal">关闭
+                                onclick="closeModals('addWindow', 'addForm')">关闭
                         </button>
                         <button id="addButton" type="button" onclick="addSubmit()" class="btn btn-success">生成
                         </button>
@@ -178,7 +176,7 @@
 
 
 <!-- 修改弹窗 -->
-<div class="modal fade" id="editWindow" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static">
+<div class="modal fade" id="editWindow" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static" keyboard:false>
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
