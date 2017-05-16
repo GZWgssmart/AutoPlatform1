@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="/static/css/systemManage/bootstrap.vertical-tabs.css">
     <link rel="stylesheet" href="/static/css/systemManage/icon.css">
     <link rel="stylesheet" href="/static/css/systemManage/gijgo.css">
+    <link rel="stylesheet/less" href="/static/css/bootstrap-dateTimePicker/datetimepicker.less">
     <style>
         .gj-checkbox-md input[type="checkbox"]:checked + span::after {
             top: 0px;

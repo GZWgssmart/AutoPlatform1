@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="/static/css/sweetalert.css">
     <link rel="stylesheet" href="/static/css/table/table.css">
     <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.css">
-    <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/datetimepicker.less">
+    <link rel="stylesheet/less" href="/static/css/bootstrap-dateTimePicker/datetimepicker.less">
     <%--<link rel="stylesheet" href="/static/css/picking/bootstrap-spinner.css">--%>
 
     <style>
@@ -67,7 +67,7 @@
             </li>
             <li class="pull-right" onclick="initReviewing()">
                 <a href="#reviewingPanel" data-toggle="tab">
-                    <h4>申核中</h4>
+                    <h4>审核中</h4>
                 </a>
             </li>
             <li class="active pull-right">
