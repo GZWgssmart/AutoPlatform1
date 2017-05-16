@@ -154,16 +154,20 @@ public class CompanyController {
 
     @ResponseBody
     @RequestMapping(value = "updateCompany",method = RequestMethod.POST)
-    public ControllerResult update(HttpSession session,Company company){
+    public Object update(HttpSession session,Company company){
         if (SessionUtil.isLogin(session)) {
             String roles = "系统超级管理员,系统普通管理员";
             if (RoleUtil.checkRoles(roles)) {
+                Map map = new HashMap();
                 if (company != null && !company.equals("")) {
                     logger.info("修改汽车品牌");
                     companyService.update(company);
-                    return ControllerResult.getSuccessResult("修改成功");
+                    map.put("company",company);
+                    map.put("controllerResult",ControllerResult.getSuccessResult("修改成功"));
+                    return map;
                 } else {
-                    return ControllerResult.getFailResult("修改失败，请输入必要的信息");
+                    map.put("controllerResult",ControllerResult.getFailResult("修改失败，请输入必要的信息"));
+                    return  map;
                 }
             }else {
                 logger.info("此用户无拥有此方法角色");

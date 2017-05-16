@@ -169,7 +169,7 @@
 <div class="modal fade" id="editWindow" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form class="form-horizontal" role="form" id="editForm" method="post">
+            <form class="form-horizontal" role="form" id="editForm" method="post" enctype="multipart/form-data">
                 <input type="hidden"name="companyId" define="company.companyId">
                 <input type="hidden"name="companyStatus" define="company.companyStatus">
                 <div class="modal-header" style="overflow:auto;">
@@ -246,19 +246,37 @@
                     </div>
                 </div>
 
+                <%--<div class="form-group">--%>
+                    <%--<label class="col-sm-3 control-label">公司logo：</label>--%>
+                    <%--<div class="col-lg-7">--%>
+                        <%--<div class="ibox-title">--%>
+                            <%--<div class="input-group" style="padding-left: 15px;">--%>
+                                <%--<input id="edit_companyLogo" define="companyInfo.companyLogo" name="txt_file"--%>
+                                       <%--type="file" class="form-control" multiple--%>
+                                       <%--class="file-loading"--%>
+                                       <%--placeholder="请选择或输入一个你想上传的相册类型,默认当天日期为类型!"/>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                    <%--</div>--%>
+                <%--</div>--%>
+
                 <div class="form-group">
                     <label class="col-sm-3 control-label">公司logo：</label>
                     <div class="col-lg-7">
                         <div class="ibox-title">
-                            <div class="input-group" style="padding-left: 15px;">
-                                <input id="edit_companyLogo" define="companyInfo.companyLogo" name="txt_file"
-                                       type="file" class="form-control" multiple
-                                       class="file-loading"
-                                       placeholder="请选择或输入一个你想上传的相册类型,默认当天日期为类型!"/>
+                            <div class="container kv-main">
+                                <div class="ibox-title">
+                                    <div class="input-group">   <%-- FileInput边框和组件组在一起 --%>
+                                        <div class="input-group-btn"></div> <%-- 用来显示选中的图片 --%>
+                                            <input id="file1" define="companyInfo.companyLogo" name="companyLogo" type="file" class="form-control" multiple
+                                                   class="file-loading"/>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default"
                             data-dismiss="modal">关闭

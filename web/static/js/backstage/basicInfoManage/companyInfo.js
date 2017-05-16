@@ -75,6 +75,8 @@ function showEdit() {
         if (data.result == 'success') {
             var row = $('#table').bootstrapTable('getSelections');
             if (row.length > 0) {
+                var oFileInput = new FileInput();
+                oFileInput.Init("file1", "/company/addFile");
                 $("#editWindow").modal('show'); // 显示弹窗
                 $("#editButton").removeAttr("disabled");
                 var ceshi = row[0];
@@ -306,10 +308,10 @@ function validator(formId) {
 
         .on('success.form.bv', function (e) {
             if (formId == "addForm") {
-                formSubmit("/company/addCompany", formId, "addWindow");
+                formSubmit("/company/addCompany", formId, "addWindow", "file");
 
             } else if (formId == "editForm") {
-                formSubmit("/company/updateCompany", formId, "editWindow");
+                formSubmit("/company/updateCompany", formId, "editWindow", "file1");
 
             }
         })
@@ -411,7 +413,7 @@ function editSubmit(){
     }
 }
 
-function formSubmit(url, formId, winId) {
+function formSubmit(url, formId, winId, fileId) {
     $.post("/user/isLogin/"+roles, function (data) {
         if (data.result == "success") {
             $.post(url, $("#"+formId).serialize(),
@@ -420,7 +422,7 @@ function formSubmit(url, formId, winId) {
 
                         if(data.company) {
                             console.log(data);
-                            var fileData = document.getElementById("file").files[0];
+                            var fileData = document.getElementById(fileId).files[0];
                             var formData = new FormData();
                             formData.append("companyLogo", fileData);
                             formData.append("companyId", data.company.companyId);

@@ -59,7 +59,7 @@
   <!--修改公司-->
   <update id="update" parameterType="company">
     <![CDATA[
-			update t_company set companyName = #{companyName},companyAddress = #{companyAddress},companyTel = #{companyTel},companyPricipal = #{companyPricipal},companyWebsite = #{companyWebsite},companyOpendate = #{companyOpendate},companySize = #{companySize},companyLongitude = #{companyLongitude},companyLatitude = #{companyLatitude},companyDes = #{companyDes}where companyId = #{companyId}
+			update t_company set companyName = #{companyName},companyAddress = #{companyAddress},companyTel = #{companyTel},companyPricipal = #{companyPricipal},companyWebsite = #{companyWebsite},companyLogo = #{companyLogo},companyOpendate = #{companyOpendate},companySize = #{companySize},companyLongitude = #{companyLongitude},companyLatitude = #{companyLatitude},companyDes = #{companyDes}where companyId = #{companyId}
      ]]>
   </update>
 
