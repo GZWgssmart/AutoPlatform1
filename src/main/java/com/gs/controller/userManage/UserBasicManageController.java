@@ -335,4 +335,11 @@ public class UserBasicManageController {
         return userService.queryInfoById(id);
     }
 
+    @ResponseBody
+    @RequestMapping(value = "updatePwd", method = RequestMethod.POST)
+    public ControllerResult updatePwd(User user) {
+        userService.updatePwd(user);
+        logger.info("修改密码成功");
+        return ControllerResult.getSuccessResult("修改密码成功");
+    }
 }

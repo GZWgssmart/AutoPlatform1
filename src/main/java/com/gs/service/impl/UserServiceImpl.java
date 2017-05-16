@@ -163,4 +163,8 @@ public class UserServiceImpl implements UserService {
     public User queryInfoById(String id) {
         return userDAO.queryInfoById(id);
     }
+
+    public User updatePwd(User user) {
+        return userDAO.updatePwd(user);
+    }
 }
