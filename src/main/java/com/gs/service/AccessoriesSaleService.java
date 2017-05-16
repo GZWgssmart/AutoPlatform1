@@ -13,8 +13,5 @@ import java.util.List;
 *@des 配件销售service
 */
 public interface AccessoriesSaleService extends BaseService<String, AccessoriesSale>{
-    /**
-     * 分页查询被禁用的记录
-     */
-    public int countByDisable();
+
 }

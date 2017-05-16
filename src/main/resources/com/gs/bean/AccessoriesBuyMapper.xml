@@ -208,15 +208,15 @@
             and abu.companyId = #{user.companyId}
         </if>
         and(
-        <if test="accBuy.companyId != '' and accBuy.companyId != null">
-            cp.companyName like '%${accBuy.companyId}%'
+        <if test="accessoriesBuy.companyId != '' and accessoriesBuy.companyId != null">
+            cp.companyName like '%${accessoriesBuy.companyId}%'
         </if>
-        <if test="accBuy.companyId != '' and accBuy.companyId != null and
-            accBuy.accId != '' and accBuy.accId != null">
+        <if test="accessoriesBuy.companyId != '' and accessoriesBuy.companyId != null and
+            accessoriesBuy.accId != '' and accessoriesBuy.accId != null">
             OR
         </if>
-        <if test="accBuy.accId!='' and accBuy.accId!= null">
-            ac.accName LIKE '%${accBuy.accId}%'
+        <if test="accessoriesBuy.accId!='' and accessoriesBuy.accId!= null">
+            ac.accName LIKE '%${accessoriesBuy.accId}%'
         </if>)
     </select>
     <!--下单报表统计-->

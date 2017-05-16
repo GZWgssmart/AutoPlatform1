@@ -172,15 +172,15 @@
       and asa.companyId = #{user.companyId}
     </if>
     and (
-    <if test="accSale.companyId != '' and accSale.companyId != null">
-      cp.companyName like '%${accSale.companyId}%'
+    <if test="accessoriesSale.companyId != '' and accessoriesSale.companyId != null">
+      cp.companyName like '%${accessoriesSale.companyId}%'
     </if>
-    <if test="accSale.companyId != '' and accSale.companyId != null and
-            accSale.accId != '' and accSale.accId != null">
+    <if test="accessoriesSale.companyId != '' and accessoriesSale.companyId != null and
+            accessoriesSale.accId != '' and accessoriesSale.accId != null">
       OR
     </if>
-    <if test="accSale.accId!='' and accSale.accId!= null">
-      ac.accName LIKE '%${accSale.accId}%'
+    <if test="accessoriesSale.accId!='' and accessoriesSale.accId!= null">
+      ac.accName LIKE '%${accessoriesSale.accId}%'
     </if>)
   </select>
 </mapper>

@@ -24,14 +24,16 @@
 </head>
 <body>
 <%@include file="../backstage/contextmenu.jsp" %>
-<div class="container ">
+<div class="container">
     <div class="panel-body" style="padding-bottom:0px;">
         <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司采购人员,系统超级管理员,系统普通管理员">
             <table id="table">
                 <thead>
                 <tr>
                     <th data-radio="true" data-field="status"></th>
-                    <th data-field="company.companyName">所属公司</th>
+                    <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员">
+                        <th data-field="company.companyName">汽车公司</th>
+                    </shiro:hasAnyRoles>
                     <th data-field="supply.supplyName">供应商</th>
                     <th data-field="accessoriesType.accTypeName">配件分类</th>
                     <th data-field="accessories.accName">配件名称</th>
@@ -42,7 +44,8 @@
                     <th data-field="accBuyMoney">购买最终价</th>
                     <th data-field="accBuyTime" data-formatter="formatterDate">购买时间</th>
                     <th data-field="accBuyCreatedTime" data-formatter="formatterDateTime">购买记录创建时间</th>
-                    <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司采购人员,系统超级管理员,系统普通管理员">
+                    <th data-field="accTypeStatus" data-formatter="showStatusFormatter">配件分类状态</th>
+                    <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司采购人员">
                         <th data-width="100" data-field="accBuyStatus" data-formatter="statusFormatter">
                             操作
                         </th>
@@ -80,8 +83,10 @@
                         <ul class="dropdown-menu pull-right">
                             <li><a onclick="onclikLi(this)">汽车公司/配件名称</a></li>
                             <li class="divider"></li>
-                            <li><a onclick="onclikLi(this)">汽车公司</a></li>
-                            <li class="divider"></li>
+                            <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员">
+                                <li><a onclick="onclikLi(this)">汽车公司</a></li>
+                                <li class="divider"></li>
+                            </shiro:hasAnyRoles>
                             <li><a onclick="onclikLi(this)">配件名称</a></li>
                             <li class="divider"></li>
                         </ul>

@@ -170,7 +170,7 @@ public class AccessoriesSaleController {
                 pager.setPageNo(Integer.valueOf(pageNumber));
                 pager.setPageSize(Integer.valueOf(pageSize));
                 pager.setUser((User) session.getAttribute("user"));
-                pager.setTotalRecords(accessoriesSaleService.countByDisable());
+                pager.setTotalRecords(accessoriesSaleService.countByDisable((User)session.getAttribute("user")));
                 List<AccessoriesSale> accessoriesSales = accessoriesSaleService.queryByPagerDisable(pager);
                 return new Pager4EasyUI<AccessoriesSale>(pager.getTotalRecords(), accessoriesSales);
             } else {
