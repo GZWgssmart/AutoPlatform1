@@ -45,6 +45,9 @@
                         汽车公司
                     </th>
                 </shiro:hasAnyRoles>
+                <th data-width="100" data-hide="all" data-field="maintainRecord.currentStatus">
+                    当前状态
+                </th>
                 <th data-width="130" data-field="chargeBillStatus" data-formatter="showStatusFormatter">收费单据状态</th>
             <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司接待员">
                 <th data-width="90" data-field="chargeBillStatus" data-formatter="statusFormatter">操作</th>
@@ -70,7 +73,7 @@
             </shiro:hasAnyRoles>
             <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司接待员">
                 <button id="btn_edit" type="button" class="btn btn-default" onclick="showMoney();">
-                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>确认收费
+                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span>确认收费
                 </button>
             </shiro:hasAnyRoles>
             <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司接待员">

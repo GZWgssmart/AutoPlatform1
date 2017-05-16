@@ -1,10 +1,12 @@
 package com.gs.controller.clearingOut;
 
 import ch.qos.logback.classic.Logger;
-import com.gs.bean.*;
+import com.gs.bean.ChargeBill;
+import com.gs.bean.Checkin;
+import com.gs.bean.MaintainRecord;
+import com.gs.bean.User;
 import com.gs.bean.echarts.ChargeBillBean;
 import com.gs.bean.echarts.QuarterUtil;
-import com.gs.bean.echarts.ChargeBillBean;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Echarts;
 import com.gs.common.bean.Pager;
@@ -21,10 +23,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -154,8 +153,8 @@ public class ChargeDocumentsController {
      * 确认收费
      */
     @ResponseBody
-    @RequestMapping(value = "updateDate/{chargeBillId}/{maintainRecordId}", method = RequestMethod.GET)
-    public ControllerResult updateDate(HttpSession session, @Param("chargeBillId") String chargeBillId, @Param("maintainRecordId") String maintainRecordId) {
+    @RequestMapping(value = "updateDate/{chargeBillId}/{maintainRecordId}", method = RequestMethod.POST)
+    public ControllerResult updateDate(HttpSession session, @PathVariable("chargeBillId") String chargeBillId, @PathVariable("maintainRecordId") String maintainRecordId) {
         if (SessionUtil.isLogin(session)) {
             String roles = "公司超级管理员,公司普通管理员,系统超级管理员,系统普通管理员";
             if (RoleUtil.checkRoles(roles)) {

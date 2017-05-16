@@ -104,9 +104,11 @@ public class UserController {
     @RequestMapping(value="logout",method=RequestMethod.GET)
     public String logout(HttpSession session) {
         Subject currentUser = SecurityUtils.getSubject();
-        User user = (User)session.getAttribute("user");
-        user.setUserLoginedTime((Date)session.getAttribute("userLoginedTime"));
-        userService.update(user);
+        if(SessionUtil.isLogin(session)) {
+            User user = (User) session.getAttribute("user");
+            user.setUserLoginedTime((Date) session.getAttribute("userLoginedTime"));
+            userService.update(user);
+        }
         currentUser.logout();
         return "user/login";
     }
