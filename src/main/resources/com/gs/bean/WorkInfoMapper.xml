@@ -201,12 +201,9 @@
     <select id="queryByCondition" resultMap="BaseResultMap" parameterType="com.gs.bean.User">
         <![CDATA[
    select count(*) as count ,week(wi.workCreatedTime) as week, wi.workCreatedTime from t_work_info wi, t_maintain_record mr, t_checkin c where
-    wi.recordId = mr.recordId and mr.checkinId = c.checkinId and wi.workStatus = 'Y' and
+   wi.recordId = mr.recordId and mr.checkinId = c.checkinId and wi.workStatus = 'Y' and c.companyId = #{companyId} and
  wi.workCreatedTime >= #{start} and wi.workCreatedTime <= #{end}
         ]]>
-        <if test="user.companyId != '' and user.companyId != null">
-            and c.companyId = #{user.companyId}
-        </if>
         <if test="maintainOrFix ==0">
         </if>
         <if test="maintainOrFix ==1">

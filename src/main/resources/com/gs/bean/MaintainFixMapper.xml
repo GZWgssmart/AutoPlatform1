@@ -160,5 +160,14 @@
         ]]>
   </update>
 
+  <!--根据汽修公司， 汽修项目，查询项目名字（id）-->
+  <select id="queryByMaintainName" resultMap="MaintainFixMap">
+    <![CDATA[
+    select mf.maintainId, mf.maintainName, md.mdCreatedTime from t_maintain_detail md, t_maintain_fix mf, t_company c where md.maintainItemId = mf.maintainId and
+    c.companyId = mf.companyId and mf.maintainStatus = 'Y'  and c.companyId = #{companyId} and mf.maintainOrFix = #{maintainOrFix}
+    ORDER BY md.mdCreatedTime ASC;
+        ]]>
+  </select>
+
 
 </mapper>

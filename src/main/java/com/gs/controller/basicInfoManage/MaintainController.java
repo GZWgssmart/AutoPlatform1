@@ -1,6 +1,7 @@
 package com.gs.controller.basicInfoManage;
 
 import ch.qos.logback.classic.Logger;
+import com.gs.bean.MaintainDetail;
 import com.gs.bean.MaintainFix;
 import com.gs.bean.MaintainFixAcc;
 import com.gs.bean.User;
@@ -405,6 +406,25 @@ public class MaintainController {
             return ControllerResult.getNotLoginResult("登录信息无效，请重新登录");
         }
 
+    }
+
+    /**
+     * 根据汽修公司， 汽修项目，查询项目名字（id）
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "queryByMaintainName",method = RequestMethod.GET)
+    public List<ComboBox4EasyUI> queryAll(String companyId, String maintainOrFix){
+        logger.info("查询所有公司信息");
+        List<MaintainFix> maintainDetails = maintainFixService.queryByMaintainName(companyId,maintainOrFix);
+        List<ComboBox4EasyUI> comboxs = new ArrayList<ComboBox4EasyUI>();
+        for (MaintainFix m : maintainDetails) {
+            ComboBox4EasyUI comboBox4EasyUI = new ComboBox4EasyUI();
+            comboBox4EasyUI.setId(m.getMaintainId());
+            comboBox4EasyUI.setText(m.getMaintainName());
+            comboxs.add(comboBox4EasyUI);
+        }
+        return comboxs;
     }
 
 }

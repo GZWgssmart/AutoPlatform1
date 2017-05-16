@@ -3,8 +3,10 @@ $(function () {
     var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员";
     $.post("/user/isLogin/"+roles, function (data) {
         if(data.result == 'success'){
+            var companyId = $("#companyId").val();
+            var maintainId = $("#maintainTypeId").val();
             initSelect2("companyName", "请选择公司", "/company/queryAllCompany"); // 初始化select2, 第一个参数是class的名字, 第二个参数是select2的提示语, 第三个参数是select2的查询url
-            initSelect2("maintainName", "请选择项目名称", "/carModel/queryByBrandId/"+select);
+            initSelect2("maintainName", "请选择项目名称", "/maintain/queryByMaintainName?companyId"+companyId+"&maintainOrFix"+maintainId);
         }else if(data.result == 'notLogin'){
             swal({title:"",
                     text:data.message,
@@ -30,11 +32,8 @@ $(function () {
 $("#maintainId").change(function(){
     var companyId = $("#companyId").select2("val");
     var maintainId = $("#maintainTypeId").select2("val");
-    alert(companyId)
-    console.log(companyId + "aa")
-    console.log(maintainId + "aa")
     $('#maintainId').html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
-    initSelect2("maintainName", "请选择车型", "/carModel/queryByBrandId/"+select);
+    initSelect2("maintainName", "请选择项目名称", "/maintain/queryByMaintainName?companyId"+companyId+"&maintainOrFix"+maintainId);
 });
 
 

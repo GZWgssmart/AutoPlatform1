@@ -310,18 +310,34 @@ public class AccessoriesBuyController {
                             list = accessoriesBuyService.queryByCondition(start, end, user.getCompanyId(), "year");
                         }
                     } else if (type.equals("quarter")) {
-                        list = accessoriesBuyService.queryByCondition(start, end, user.getCompanyId(), "quarter");
+                        if (companyId != null) {
+                            list = accessoriesBuyService.queryByCondition(start, end, companyId, "quarter");
+                        } else {
+                            list = accessoriesBuyService.queryByCondition(start, end, user.getCompanyId(), "quarter");
+                        }
                     } else if (type.equals("month")) {
-                        list = accessoriesBuyService.queryByCondition(start, end, user.getCompanyId(), "month");
+                        if (companyId != null) {
+                            list = accessoriesBuyService.queryByCondition(start, end, companyId, "month");
+                        } else {
+                            list = accessoriesBuyService.queryByCondition(start, end, user.getCompanyId(), "month");
+                        }
                     } else if (type.equals("week")) {
-                        list = accessoriesBuyService.queryByCondition(start, end, user.getCompanyId(), "week");
+                        if (companyId != null) {
+                            list = accessoriesBuyService.queryByCondition(start, end, companyId, "week");
+                        } else {
+                            list = accessoriesBuyService.queryByCondition(start, end, user.getCompanyId(), "week");
+                        }
                     } else if (type.equals("day")) {
-                        list = accessoriesBuyService.queryByCondition(start, end, user.getCompanyId(), "day");
+                        if (companyId != null) {
+                            list = accessoriesBuyService.queryByCondition(start, end, companyId, "day");
+                        } else {
+                            list = accessoriesBuyService.queryByCondition(start, end, user.getCompanyId(), "day");
+                        }
                     }
                 }
                 return list;
             }else{
-                logger.info("此用户无法拥有此方法角色");
+                logger.info("此用户无法拥有下单报表查询角色");
                 return null;
             }
         }else{
@@ -332,7 +348,7 @@ public class AccessoriesBuyController {
 
     @ResponseBody
     @RequestMapping(value = "queryByPayCondition")
-    public List<AccessoriesBuy> queryByPayCondition(HttpSession session,String start, String end, String type) {
+    public List<AccessoriesBuy> queryByPayCondition(HttpSession session,String start, String end, String type, String companyId) {
         if(SessionUtil.isLogin(session)){
             String roles="公司超级管理员,公司普通管理员,汽车公司采购人员,汽修公司销售员,汽修公司库管人员,系统超级管理员,系统普通管理员";
             if(RoleUtil.checkRoles(roles)){
@@ -340,20 +356,40 @@ public class AccessoriesBuyController {
                 User user = (User) session.getAttribute("user");
                 if (type != null && !type.equals("")) {
                     if (type.equals("year")) {
-                        list = accessoriesBuyService.queryByPayCondition(start, end, user.getCompanyId(), "year");
+                        if (companyId != null) {
+                            list = accessoriesBuyService.queryByPayCondition(start, end, companyId, "year");
+                        } else {
+                            list = accessoriesBuyService.queryByPayCondition(start, end, user.getCompanyId(), "year");
+                        }
                     } else if (type.equals("quarter")) {
-                        list = accessoriesBuyService.queryByPayCondition(start, end, user.getCompanyId(), "quarter");
+                        if (companyId != null) {
+                            list = accessoriesBuyService.queryByPayCondition(start, end, companyId, "quarter");
+                        } else {
+                            list = accessoriesBuyService.queryByPayCondition(start, end, user.getCompanyId(), "quarter");
+                        }
                     } else if (type.equals("month")) {
-                        list = accessoriesBuyService.queryByPayCondition(start, end, user.getCompanyId(), "month");
+                        if (companyId != null) {
+                            list = accessoriesBuyService.queryByPayCondition(start, end, companyId, "month");
+                        } else {
+                            list = accessoriesBuyService.queryByPayCondition(start, end, user.getCompanyId(), "month");
+                        }
                     } else if (type.equals("week")) {
-                        list = accessoriesBuyService.queryByPayCondition(start, end, user.getCompanyId(), "week");
+                        if (companyId != null) {
+                            list = accessoriesBuyService.queryByPayCondition(start, end, companyId, "week");
+                        } else {
+                            list = accessoriesBuyService.queryByPayCondition(start, end, user.getCompanyId(), "week");
+                        }
                     } else if (type.equals("day")) {
-                        list = accessoriesBuyService.queryByPayCondition(start, end, user.getCompanyId(), "day");
+                        if (companyId != null) {
+                            list = accessoriesBuyService.queryByPayCondition(start, end, companyId, "day");
+                        } else {
+                            list = accessoriesBuyService.queryByPayCondition(start, end, user.getCompanyId(), "day");
+                        }
                     }
                 }
                 return list;
             }else{
-                logger.info("此用户无法拥有此方法角色");
+                logger.info("此用户无法拥有支付统计角色");
                 return null;
             }
         }else{

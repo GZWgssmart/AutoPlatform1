@@ -227,7 +227,7 @@
 </script>
 <!-- 显示Echarts图表 -->
 
-<script type="text/javascript" src="/static/js/backstage/statistics/vindicate.js"></script>
+<script type="text/javascript" src="/static/js/backstage/statistics/maintain.js"></script>
 <script src="/static/js/backstage/statistics/myEcharts.js"></script>
 <script src="/static/js/jquery.min.js"></script>
 <script src="/static/js/contextmenu.js"></script>

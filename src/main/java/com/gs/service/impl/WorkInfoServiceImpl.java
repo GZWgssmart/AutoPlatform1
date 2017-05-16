@@ -53,8 +53,8 @@ public class WorkInfoServiceImpl implements WorkInfoService {
 	}
 
 	@Override
-	public List<WorkInfo> queryByCondition(String start, String end, String userId,String maintainOrFix, String type) {
-		return workInfoDAO.queryByCondition(start, end, userId,maintainOrFix, type);
+	public List<WorkInfo> queryByCondition(String start, String end, String companyId,String maintainOrFix, String type) {
+		return workInfoDAO.queryByCondition(start, end, companyId,maintainOrFix, type);
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package com.gs.service.impl;
 
+import com.gs.bean.MaintainDetail;
 import com.gs.bean.MaintainFix;
 import com.gs.bean.User;
 import com.gs.common.bean.Pager;
@@ -32,6 +33,11 @@ public class MaintainFixServiceImpl implements MaintainFixService {
 	@Override
 	public int countByDisableService() {
 		return maintainFixDAO.countByDisableService();
+	}
+
+	@Override
+	public List<MaintainFix> queryByMaintainName(String companyId, String maintainOrFix) {
+		return maintainFixDAO.queryByMaintainName(companyId,maintainOrFix);
 	}
 
 	@Resource
