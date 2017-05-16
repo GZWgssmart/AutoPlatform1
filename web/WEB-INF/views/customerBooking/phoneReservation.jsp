@@ -339,7 +339,7 @@
                                 <th data-width="90" data-field="userGender">
                                     用户性别
                                 </th>
-                                <th data-width="90" data-field="userBirthday">
+                                <th data-width="90" data-field="userBirthday"data-formatter="formatterDate">
                                     用户生日
                                 </th>
                                 <th data-width="90" data-field="userAddress">
@@ -366,10 +366,10 @@
                                 <th data-width="90" data-field="userSalary">
                                     用户基本工资
                                 </th>
-                                <th data-width="90" data-field="userCreatedTime">
+                                <th data-width="90" data-field="userCreatedTime"data-formatter="formatterDate">
                                     用户创建时间
                                 </th>
-                                <th data-width="90"data-field="userLoginedTime">
+                                <th data-width="90"data-field="userLoginedTime"data-formatter="formatterDate">
                                     用户最近一次登录时间
                                 </th>
                                 <th data-width="90" data-field="userStatus">
