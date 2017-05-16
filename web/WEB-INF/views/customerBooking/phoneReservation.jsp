@@ -200,9 +200,11 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">预估到店时间：</label>
-                            <div class="col-sm-7">     <!-- 当设置不可编辑后, 会修改颜色, 在min.css里搜索.form-control{background-color:#eee;opacity:1} -->
-                                <input id="addArriveTime" placeholder="请选择预估到店时间" onclick="getDate('addArriveTime')" readonly="true" type="text" name="arriveTime"
+                            <label class="col-sm-3 control-label">到店时间：</label>
+                            <div class="col-sm-7">
+                                <!-- 当设置不可编辑后, 会修改颜色, 在min.css里搜索.form-control{background-color:#eee;opacity:1} -->
+                                <input id="addArriveTime" placeholder="请选择到店时间" onclick="getDate('addArriveTime')"
+                                       readonly="true" type="text" name="arriveTime"
                                        class="form-control datetimepicker"/>
                             </div>
                         </div>
@@ -289,9 +291,11 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">预估到店时间：</label>
-                    <div class="col-sm-7">     <!-- 当设置不可编辑后, 会修改颜色, 在min.css里搜索.form-control{background-color:#eee;opacity:1} -->
-                        <input id="editArriveTime" placeholder="请选择预估到店时间" readonly="true" type="text" name="arriveTime" define="appointment.arriveTime"
+                    <label class="col-sm-3 control-label">到店时间：</label>
+                    <div class="col-sm-7">
+                        <!-- 当设置不可编辑后, 会修改颜色, 在min.css里搜索.form-control{background-color:#eee;opacity:1} -->
+                        <input id="editArriveTime" placeholder="请选择到店时间" readonly="true" type="text"
+                               name="arriveTime"
                                class="form-control datetimepicker"/>
                     </div>
                 </div>
@@ -365,7 +369,7 @@
                                 <th data-width="90" data-field="userCreatedTime">
                                     用户创建时间
                                 </th>
-                                <th data-width="90" data-field="userLoginedTime">
+                                <th data-width="90"data-field="userLoginedTime">
                                     用户最近一次登录时间
                                 </th>
                                 <th data-width="90" data-field="userStatus">

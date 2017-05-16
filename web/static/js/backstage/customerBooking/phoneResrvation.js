@@ -317,7 +317,7 @@ function validator(formId) {
                 }
             },
             userPhone: {
-                message: '用户名验证失败',
+                message: '用户手机号失败',
                 validators: {
                     notEmpty: {
                         message: '用户手机号码不能为空'
@@ -392,15 +392,8 @@ function validator(formId) {
                         message: '预约记录时间不能为空'
                     }
                 }
-            },
-            currentStatus:{
-                message: '预约验证失败',
-                validators: {
-                    notEmpty: {
-                        message: '预约不能为空'
-                    }
-                }
-            },
+            }
+
         }
     })
 
