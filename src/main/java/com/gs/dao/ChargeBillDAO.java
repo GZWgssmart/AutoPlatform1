@@ -2,6 +2,7 @@ package com.gs.dao;
 
 import com.gs.bean.ChargeBill;
 import com.gs.bean.User;
+import com.gs.bean.WorkInfo;
 import com.gs.common.bean.Pager;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -26,4 +27,15 @@ public interface ChargeBillDAO extends BaseDAO<String, ChargeBill>{
      * 模糊查询的记录数
      */
     public int countByBlurred(@Param("chargeBill")ChargeBill chargeBill,@Param("user")User user);
+
+    /**
+     * 查询消费统计记录
+     * @param start
+     * @param end
+     * @param companyId
+     * @param maintainOrFix
+     * @param type
+     * @return
+     */
+    public List<ChargeBill> queryByCondition(@Param("start") String start, @Param("end") String end, @Param("companyId") String companyId, @Param("maintainOrFix")String maintainOrFix, @Param("type") String type);
 }

@@ -264,7 +264,7 @@ public class OrderManageController {
         list = new ArrayList<WorkInFoBean>();
         User user = (User)session.getAttribute("user");
         if(SessionUtil.isLogin(session)) {
-            String roles="汽车公司总技师,公司超级管理员";
+            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员";
             if(RoleUtil.checkRoles(roles)) {
                 if (type != null && !type.equals("")) {
                     if (type.equals("year")) {

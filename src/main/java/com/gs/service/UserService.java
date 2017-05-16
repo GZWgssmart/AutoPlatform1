@@ -54,4 +54,13 @@ public interface UserService extends BaseService<String, User> {
      */
     public List<User> queryByRoleName(String roleName);
 
+    /**
+     * 根据id查询 只查询t_user表
+     * @param id
+     * @return
+     */
+    public User queryInfoById(String id);
+
+    public User updatePwd(User user);
+
 }

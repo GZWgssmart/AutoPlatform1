@@ -154,4 +154,17 @@ public class UserServiceImpl implements UserService {
     public List<User> queryByRoleName(String roleName) {
         return userDAO.queryByRoleName(roleName);
     }
+
+    /**
+     * 根据id查询 只查询t_user表
+     * @param id
+     * @return
+     */
+    public User queryInfoById(String id) {
+        return userDAO.queryInfoById(id);
+    }
+
+    public User updatePwd(User user) {
+        return userDAO.updatePwd(user);
+    }
 }

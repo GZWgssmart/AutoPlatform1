@@ -13,6 +13,8 @@
     <link rel="stylesheet" href="/static/css/sweetalert.css">
     <link rel="stylesheet" href="/static/css/table/table.css">
     <link rel="stylesheet" href="/static/css/bootstrap-validate/bootstrapValidator.min.css">
+    <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet/less" href="/static/css/bootstrap-dateTimePicker/datetimepicker.less">
 </head>
 <body>
 <%@include file="../backstage/contextmenu.jsp"%>
@@ -76,11 +78,6 @@
                 <th data-width="90" data-field="recordStatus" data-formatter="showStatusFormatter">
                     记录状态
                 </th>
-                <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司接待员">
-                    <th data-width="100" data-field="recordStatus" data-formatter="statusFormatter">
-                        操作
-                    </th>
-                </shiro:hasAnyRoles>
             </tr>
             </thead>
         </table>
@@ -104,6 +101,11 @@
                         <button id="btn_bellAll" type="button" class="btn btn-default" onclick="showBellAll();">
                             <span class="glyphicon glyphicon-bell" aria-hidden="true"></span>全部提醒
                         </button>
+            </shiro:hasAnyRoles>
+            <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司接待员">
+                <button id="btn_bellAll" type="button" class="btn btn-default" onclick="showClearOut();">
+                    <span class="glyphicon glyphicon-bell" aria-hidden="true"></span>结算出厂
+                </button>
             </shiro:hasAnyRoles>
             <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员">
                         <div class="input-group" style="width:350px;float:left;padding:0;margin:0 0 0 -1px;">
@@ -133,6 +135,69 @@
         </div>
     </div>
 </div>
+
+<div id="addWindow" class="modal fade" style="overflow-y:scroll" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
+                <form role="form" class="form-horizontal" id="addForm">
+                    <input type="hidden" id="maintainRecordId" name="maintainRecordId"/>
+                    <div class="modal-header" style="overflow:auto;">
+                        <h3>生成维修保养收费单据</h3>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">收费总金额：</label>
+                        <div class="col-sm-7">
+                            <input id="money" class="form-control" readonly="true" style="width:100%"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">折扣后总金额：</label>
+                        <div class="col-sm-7">
+                            <input id="disCountMoney" name="chargeBillMoney" class="form-control" readonly="true" style="width:100%"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">付款方式：</label>
+                        <div class="col-sm-7">
+                            <input type="text" name="paymentMethod" placeholder="请输入付款方式" class="form-control" style="width:100%"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">实际付款金额：</label>
+                        <div class="col-sm-7">
+                            <input type="number" name="actualPayment" step="1" min="1"
+                                   placeholder="请输入实际付款金额" class="form-control" style="width:100%"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">收费描述：</label>
+                        <div class="col-sm-7">
+                            <textarea type="textarea" name="chargeBillDes" placeholder="请输入收费描述" class="form-control" style="width:100%"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">收费时间：</label>
+                        <div class="col-sm-7">
+                            <input id="addDatetimepicker" placeholder="请选择收费时间" onclick="getDate()"
+                                   type="text" name="chargeTime" readonly="true"
+                                   class="form-control datetimepicker"/>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default"
+                                data-dismiss="modal">关闭
+                        </button>
+                        <button id="addButton" type="button" onclick="addSubmit()" class="btn btn-success">生成
+                        </button>
+                        <input type="reset" name="reset" style="display: none;"/>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 <script src="/static/js/jquery.min.js"></script>
 <script src="/static/js/bootstrap.min.js"></script>
 <script src="/static/js/bootstrap-table/bootstrap-table.js"></script>
@@ -141,6 +206,8 @@
 <script src="/static/js/select2/select2.js"></script>
 <script src="/static/js/sweetalert/sweetalert.min.js"></script>
 <script src="/static/js/contextmenu.js"></script>
+<script src="/static/js/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.js"></script>
+<script src="/static/js/bootstrap-dateTimePicker/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
 <script src="/static/js/backstage/clearingOut/carRemind.js"></script>
 <script src="/static/js/backstage/main.js"></script>
 <script src="/static/js/bootstrap-validate/bootstrapValidator.js"></script>

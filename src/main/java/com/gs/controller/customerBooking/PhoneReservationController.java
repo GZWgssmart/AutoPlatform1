@@ -47,7 +47,7 @@ public class PhoneReservationController {
     @RequestMapping(value="queryByPager", method = RequestMethod.GET)
     public Pager4EasyUI<Appointment> queryByPager(HttpSession session, @Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
         if(SessionUtil.isLogin(session)) {
-            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员";
+            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,车主";
             if(RoleUtil.checkRoles(roles)) {
                 logger.info("分页查询所有登记记录");
                 Pager pager = new Pager();
@@ -74,7 +74,7 @@ public class PhoneReservationController {
     @RequestMapping(value="queryByPagerDisable", method = RequestMethod.GET)
     public Pager4EasyUI<Appointment> queryByPagerDisable(HttpSession session,@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
         if (SessionUtil.isLogin(session)) {
-            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽修公司接待员";
+            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽修公司接待员,车主";
             if (RoleUtil.checkRoles(roles)) {
                 logger.info("分页查询所有被禁用登记记录");
                 Pager pager = new Pager();
@@ -217,7 +217,7 @@ public class PhoneReservationController {
     @RequestMapping(value="blurredQuery", method = RequestMethod.GET)
     public Pager4EasyUI<Appointment> blurredQuery(HttpSession session, HttpServletRequest request, @Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
         if(SessionUtil.isLogin(session)) {
-            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员";
+            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,车主";
             if(RoleUtil.checkRoles(roles)) {
                 logger.info("登记记录模糊查询");
                 Pager pager = new Pager();

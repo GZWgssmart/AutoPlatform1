@@ -49,7 +49,6 @@
                 <div class="company" id="companySelect" style="width: 300px;">
                     <label>公司:</label>
                     <select id="companyId" name="companyId" class="form-control select2 companyName" style="width: 80%;" >
-
                     </select>
                 </div>
                 <div class="project"  style="width: 150px;">

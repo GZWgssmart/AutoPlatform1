@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="/static/css/bootstrap-validate/bootstrapValidator.min.css">
     <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.css">
     <link rel="stylesheet/less" href="/static/css/bootstrap-dateTimePicker/datetimepicker.less">
+    <link rel="stylesheet" href="/static/css/fileinput.css">
 </head>
 <body>
 <%@include file="../backstage/contextmenu.jsp" %>
@@ -29,7 +30,7 @@
                     <th data-field="companyTel">联系电话</th>
                     <th data-field="companyPricipal">负责人</th>
                     <th data-field="companyWebsite">公司官网网址</th>
-                    <th data-field="companyLogo">公司LOGO</th>
+                    <th data-field="companyLogo" data-formatter="formatterImg">公司LOGO</th>
                     <th data-field="companyOpendate" data-formatter="formatterDate">公司成立时间</th>
                     <th data-field="companySize">公司规模</th>
                     <th data-field="companyLongitude">公司经度</th>
@@ -144,9 +145,8 @@
                     <div class="col-lg-7">
                         <div class="ibox-title">
                             <div class="input-group" style="padding-left: 15px;">
-                                <input id="add_companyLogo" name="txt_file" type="file" class="form-control" multiple
-                                       class="file-loading"
-                                       placeholder="请选择或输入一个你想上传的相册类型,默认当天日期为类型!"/>
+                                <input id="file" name="companyLogo" type="file" class="form-control" multiple
+                                       class="file-loading"/>
                             </div>
                         </div>
                     </div>
@@ -286,5 +286,8 @@
     <script src="/static/js/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.js"></script>
     <script src="/static/js/bootstrap-dateTimePicker/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
     <script src="/static/js/backstage/basicInfoManage/companyInfo.js"></script>
+    <%-- 文件上传 --%>
+    <script src="/static/js/fileInput/fileinput.js"></script>
+    <script src="/static/js/fileInput/zh.js"></script>
 </body>
 </html>

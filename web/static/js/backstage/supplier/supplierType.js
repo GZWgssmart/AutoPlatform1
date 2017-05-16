@@ -235,6 +235,8 @@ function formSubmit(url, formId, winId) {
         }, "json");
 }
 
+
+
 // 激活或禁用
 function statusFormatter(value, row, index) {
     if(value == 'Y') {

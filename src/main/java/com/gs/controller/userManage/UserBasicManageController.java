@@ -328,4 +328,18 @@ public class UserBasicManageController {
         return userService.queryByRoleName(roleName);
     }
 
+    @ResponseBody
+    @RequestMapping(value = "queryInfoById", method = RequestMethod.POST)
+    public User queryInfoById(@Param("roleName") String id) {
+        logger.info("根据userId查询");
+        return userService.queryInfoById(id);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "updatePwd", method = RequestMethod.POST)
+    public ControllerResult updatePwd(User user) {
+        userService.updatePwd(user);
+        logger.info("修改密码成功");
+        return ControllerResult.getSuccessResult("修改密码成功");
+    }
 }

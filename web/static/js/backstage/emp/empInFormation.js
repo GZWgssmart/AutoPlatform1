@@ -651,10 +651,11 @@ function formatterStatus(value, row, index) {
             return "&nbsp;<button type='button' class='btn btn-danger' " +
                 "onclick='inactive(\"" + '/userBasicManage/updateStatus?id=' + row.userId + '&status=Y' + "\")'>禁用</button>&nbsp;&nbsp;"
                 + "<a onclick='showDetail()' class='btn btn-info btn-sm'><span class='glyphicon glyphicon-fullscreen'></span>详细信息</a>";
+        } else if(row.role.roleName != '系统超级管理员' || row.role.roleName != '系统普通管理员') {
+            return "&nbsp;<button type='button' class='btn btn-danger' " +
+                "onclick='inactive(\"" + '/userBasicManage/updateStatus?id=' + row.userId + '&status=Y' + "\")'>辞退</button>&nbsp;&nbsp;"
+                + "<a onclick='showDetail()' class='btn btn-info btn-sm'><span class='glyphicon glyphicon-fullscreen'></span>详细信息</a>";
         }
-        return "&nbsp;<button type='button' class='btn btn-danger' " +
-            "onclick='inactive(\"" + '/userBasicManage/updateStatus?id=' + row.userId + '&status=Y' + "\")'>辞退</button>&nbsp;&nbsp;"
-            + "<a onclick='showDetail()' class='btn btn-info btn-sm'><span class='glyphicon glyphicon-fullscreen'></span>详细信息</a>";
     } else {
         if(row.role.roleName == '车主') {
             return "&nbsp;<button type='button' class='btn btn-success' " +

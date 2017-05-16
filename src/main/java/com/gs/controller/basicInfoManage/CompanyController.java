@@ -3,6 +3,8 @@ package com.gs.controller.basicInfoManage;
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.Company;
 import com.gs.bean.User;
+import com.gs.common.Constants;
+import com.gs.common.Methods;
 import com.gs.common.bean.ComboBox4EasyUI;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
@@ -18,14 +20,15 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 /**
  * 公司信息管理
@@ -121,16 +124,23 @@ public class CompanyController {
 
     @ResponseBody
     @RequestMapping(value = "addCompany",method = RequestMethod.POST)
-    public ControllerResult add(HttpSession session,Company company){
+    public Object add(HttpSession session,Company company){
         if (SessionUtil.isLogin(session)) {
             String roles = "系统超级管理员,系统普通管理员";
             if (RoleUtil.checkRoles(roles)) {
+                Map map = new HashMap();
                 if (company != null && !company.equals("")) {
                     logger.info("添加公司信息");
+                    company.setCompanyId(UUIDUtil.uuid());
                     companyService.insert(company);
-                    return ControllerResult.getSuccessResult("添加成功");
+
+
+                    map.put("company",company);
+                    map.put("controllerResult",ControllerResult.getSuccessResult("添加成功"));
+                    return map;
                 } else {
-                    return ControllerResult.getFailResult("添加失败，请输入必要的信息");
+                    map.put("controllerResult",ControllerResult.getFailResult("添加失败，请输入必要的信息"));
+                    return  map;
                 }
             }else {
                     logger.info("此用户无拥有此方法角色");
@@ -194,42 +204,42 @@ public class CompanyController {
         }
     }
 
-    private boolean saveFile(MultipartFile file, HttpSession session, Company company) {
-        // 判断文件是否为空
-        if (!file.isEmpty()) {
-            try {
-                String ofilename = file.getOriginalFilename();
-                System.out.print("文件后缀名为："+ofilename.substring(ofilename.lastIndexOf(".")+1));
-                // 文件保存路径
-                String filePath = FileUtil.uploadPath(session, "companyLog") + "/company_"
-                        + DateFormatUtil.format(new Date(),"yyyyMMddHHmmssS") + new Random().nextInt(100)
-                        + "." + ofilename.substring(ofilename.lastIndexOf(".")+1);
-                // 转存文件
-                file.transferTo(new File(filePath));
-                company.setCompanyLogo("/static/companyLog"+filePath.substring(filePath.lastIndexOf("/")));
-                companyService.insert(company);
-                return true;
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        return false;
-    }
+//    private boolean saveFile(MultipartFile file, HttpSession session, Company company) {
+//        // 判断文件是否为空
+//        if (!file.isEmpty()) {
+//            try {
+//                String ofilename = file.getOriginalFilename();
+//                System.out.print("文件后缀名为："+ofilename.substring(ofilename.lastIndexOf(".")+1));
+//                // 文件保存路径
+//                String filePath = FileUtil.uploadPath(session, "companyLog") + "/company_"
+//                        + DateFormatUtil.format(new Date(),"yyyyMMddHHmmssS") + new Random().nextInt(100)
+//                        + "." + ofilename.substring(ofilename.lastIndexOf(".")+1);
+//                // 转存文件
+//                file.transferTo(new File(filePath));
+//                company.setCompanyLogo("/static/companyLog"+filePath.substring(filePath.lastIndexOf("/")));
+//                companyService.insert(company);
+//                return true;
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }
+//        return false;
+//    }
 
-    @ResponseBody
-    @RequestMapping("/editFile")
-    public String filesUpload(@RequestParam("files") MultipartFile[] files, HttpSession session, Company company) {
-        //判断file数组不能为空并且长度大于0
-        if(files!=null&&files.length>0){
-            //循环获取file数组中得文件
-            for(int i = 0;i<files.length;i++){
-                MultipartFile file = files[i];
-                //保存文件
-                saveFile(file,session,company);
-            }
-        }
-        return "1";
-    }
+//    @ResponseBody
+//    @RequestMapping("/editFile")
+//    public String filesUpload(@RequestParam("files") MultipartFile[] files, HttpSession session, Company company) {
+//        //判断file数组不能为空并且长度大于0
+//        if(files!=null&&files.length>0){
+//            //循环获取file数组中得文件
+//            for(int i = 0;i<files.length;i++){
+//                MultipartFile file = files[i];
+//                //保存文件
+//                saveFile(file,session,company);
+//            }
+//        }
+//        return "1";
+//    }
 
     /**
      * 时间格式化
@@ -239,5 +249,74 @@ public class CompanyController {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         dateFormat.setLenient(false);
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
+    }
+
+    /**
+     *
+     * 在提交表单后，续图片提交，这里接收用户ID
+     */
+    @ResponseBody
+    @RequestMapping(value = "afterUpdIcon", method = RequestMethod.POST)
+    public Map afterSubForm(@RequestParam("companyLogo") MultipartFile file, @RequestParam("companyId") String userId, HttpServletRequest request){
+        String fileName = file.getOriginalFilename();
+        HttpSession session = request.getSession();
+
+        String savePath = Constants.UPLOAD_HEAD + Methods.createNewFolder() + "/";
+        Map map= new HashMap();
+        System.out.println(fileName);
+        if(fileSave(file, savePath,userId,session)) {
+            companyService.updLogo(userId,savePath+userId+".jpg");   // 设置头像
+            map.put("controllerResult", ControllerResult.getSuccessResult("提交成功"));
+            map.put("imgPath", savePath);
+        } else {
+            map.put("controllerResult", ControllerResult.getFailResult("提交失败"));
+        }
+        return map;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "addFile", method = RequestMethod.POST)
+    public Map addFile(@RequestParam("companyLogo") MultipartFile file, HttpServletRequest request){
+        String fileName = file.getOriginalFilename();
+        String savePath = "E://abc.jpg";
+        Map map= new HashMap();
+        System.out.println(fileName);
+        if(fileSave(file, savePath,"",null)) {
+
+            map.put("controllerResult", ControllerResult.getSuccessResult("上传成功"));
+            map.put("imgPath", savePath);
+        } else {
+            map.put("controllerResult", ControllerResult.getFailResult("上传失败"));
+        }
+        return map;
+    }
+
+    private boolean fileSave(MultipartFile sourceFile, String savePath,String userId, HttpSession session) {
+        byte[] temp = new byte[1024];
+        int len = -1;
+        String rootPath = session.getServletContext().getRealPath("/");
+        System.out.println("文件保存根路径: -------------------------------" + rootPath);
+        savePath =rootPath + "/"+ savePath ;
+        try {
+            File saveDir = new File(savePath);
+            if(!saveDir.isDirectory()) {
+                saveDir.mkdirs();
+            }
+
+            File saveFile = new File(savePath + userId + ".jpg");
+            InputStream fis = sourceFile.getInputStream();
+            OutputStream fos = new FileOutputStream(saveFile);
+            while((len = fis.read(temp)) != -1) {
+                fos.write(temp, 0 ,len);
+            }
+            System.out.println(saveFile.getAbsolutePath());
+            fis.close();
+            fos.flush();
+            fos.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
 }

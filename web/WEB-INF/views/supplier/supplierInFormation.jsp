@@ -48,8 +48,13 @@
                     </th>
                 </shiro:hasAnyRoles>
                 <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员">
-                    <th data-width="100" data-field="supplyStatus" data-formatter="statusFormatter">
+                    <th data-width="100" data-field="supplyStatus" data-formatter="showStatusFormatter">
                         记录状态
+                    </th>
+                </shiro:hasAnyRoles>
+                <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员">
+                    <th data-width="100" data-field="supplyStatus" data-formatter="statusFormatter">
+                        操作
                     </th>
                 </shiro:hasAnyRoles>
             </tr>

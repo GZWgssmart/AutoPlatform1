@@ -88,30 +88,7 @@
 
 
 
-  <!--维修项目统计报表-->
-  <!--员工工单报表-->
-  <select id="queryByCondition" resultMap="maintainDetailMap">
-    <![CDATA[
-  select count(md.maintainDetailId), md.mdCreatedTime from t_maintain_detail md, t_maintain_fix mf, t_company c where md.maintainItemId = mf.maintainId and
-c.companyId = mf.companyId and mf.maintainStatus = 'Y'  and c.companyId = #{companyId}
-and mf.maintainId = #{maintainId} and md.mdCreatedTime >= #{start} and md.mdCreatedTime <= #{end};
-        ]]>
-    <if test="type =='year'">
-      group by date_format(md.mdCreatedTime, '%Y') ORDER BY md.mdCreatedTime ASC;
-    </if>
-    <if test="type =='quarter'">
-      group by concat(date_format(md.mdCreatedTime, '%Y'),FLOOR((date_format(md.mdCreatedTime, '%m')+2)/3)) ORDER BY md.mdCreatedTime ASC;
-    </if>
-    <if test="type =='month'">
-      group by date_format(md.mdCreatedTime, '%y-%m') ORDER BY md.mdCreatedTime ASC;
-    </if>
-    <if test="type =='week'">
-      group by date_format(md.mdCreatedTime, '%y-%m') ORDER BY md.mdCreatedTime ASC;
-    </if>
-    <if test="type =='day'">
-      group by date(md.mdCreatedTime) ORDER BY md.mdCreatedTime ASC;
-    </if>
-  </select>
+
 
 
 </mapper>

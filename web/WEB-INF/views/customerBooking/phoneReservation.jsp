@@ -77,12 +77,12 @@
             </thead>
         </table>
         <div id="toolbar" class="btn-group">
-            <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽修公司接待员">
+            <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽修公司接待员,车主">
             <button id="btn_available" type="button" class="btn btn-success" onclick="showAvailable();">
                 <span class="glyphicon glyphicon-search" aria-hidden="true"></span>可用预约记录
             </button>
             </shiro:hasAnyRoles>
-            <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽修公司接待员">
+            <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽修公司接待员,车主">
             <button id="btn_disable" type="button" class="btn btn-danger" onclick="showDisable()">
                 <span class="glyphicon glyphicon-search" aria-hidden="true"></span>禁用预约记录
             </button>
@@ -97,7 +97,7 @@
                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
             </button>
             </shiro:hasAnyRoles>
-            <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员">
+            <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,车主">
                 <div class="input-group" style="width:350px;float:left;padding:0;margin:0 0 0 -1px;">
                     <div class="input-group-btn">
                         <button type="button" id="ulButton" class="btn btn-default" style="border-radius:0px;"
@@ -224,6 +224,7 @@
 <div class="modal fade" id="editWindow" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog">
         <div class="modal-content">
+            <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
             <form role="form" class="form-horizontal" id="editForm">
                 <div class="modal-header" style="overflow:auto;">
                     <h4>修改电话预约信息</h4>
@@ -306,68 +307,68 @@
 </div><!-- /.modal -->
 
 <div id="appWindow" class="modal fade" aria-hidden="true" style="overflow-y:scroll" data-backdrop="static" keyboard:false>
-    <div class="modal-dialog">
+    <div class="modal-dialog"style="width: 90%">
         <div class="modal-content">
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 b-r">
                         <h3 class="m-t-none m-b">选择预约记录</h3>
-                        <table class="table table-hover" id="appTable">
+                        <table class="table table-hover" id="appTable"style="table-layout: fixed">
                             <thead>
                             <tr>
                                 <th data-radio="true"></th>
-                                <th data-field="userName">
+                                <th data-width="90" data-field="userName">
                                     用户姓名
                                 </th>
-                                <th data-field="userEmail">
+                                <th data-width="90" data-field="userEmail">
                                     用户邮箱
                                 </th>
-                                <th data-field="userPhone">
+                                <th data-width="90" data-field="userPhone">
                                     用户电话
                                 </th>
-                                <th data-field="userIdentity">
+                                <th data-width="90" data-field="userIdentity">
                                     用户身份证
                                 </th>
-                                <th data-field="userNickname">
+                                <th data-width="90" data-field="userNickname">
                                     用户昵称
                                 </th>
-                                <th data-field="userGender">
+                                <th data-width="90" data-field="userGender">
                                     用户性别
                                 </th>
-                                <th data-field="userBirthday">
+                                <th data-width="90" data-field="userBirthday">
                                     用户生日
                                 </th>
-                                <th data-field="userAddress">
+                                <th data-width="90" data-field="userAddress">
                                     用户地址
                                 </th>
-                                <th data-field="qqOpenId">
+                                <th data-width="90" data-field="qqOpenId">
                                     用户qq
                                 </th>
-                                <th data-field="weiboOpenId">
+                                <th data-width="90" data-field="weiboOpenId">
                                     用户微博
                                 </th>
-                                <th data-field="wechatOpenId">
+                                <th data-width="90"data-field="wechatOpenId">
                                     用户微信
                                 </th>
-                                <th data-field="userIcon">
+                                <th data-width="90" data-field="userIcon">
                                     用户头像
                                 </th>
-                                <th data-field="userDes">
+                                <th data-width="90" data-field="userDes">
                                     用户描叙
                                 </th>
-                                <th data-field="companyId">
+                                <th data-width="90" data-field="companyId">
                                     用户所属公司
                                 </th>
-                                <th data-field="userSalary">
+                                <th data-width="90" data-field="userSalary">
                                     用户基本工资
                                 </th>
-                                <th data-field="userCreatedTime">
+                                <th data-width="90" data-field="userCreatedTime">
                                     用户创建时间
                                 </th>
-                                <th data-field="userLoginedTime">
+                                <th data-width="90" data-field="userLoginedTime">
                                     用户最近一次登录时间
                                 </th>
-                                <th data-field="userStatus">
+                                <th data-width="90" data-field="userStatus">
                                     用户状态
                                 </th>
                             </thead>

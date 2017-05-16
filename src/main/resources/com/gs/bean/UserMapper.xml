@@ -57,7 +57,7 @@
        update t_user u set u.userName = #{userName}, u.userEmail = #{userEmail}, u.userPhone = #{userPhone},
             u.userIdentity = #{userIdentity}, u.userGender = #{userGender},u.userNickname=#{userNickname},
            u.userBirthDay = #{userBirthday}, u.userDes = #{userDes}, u.userSalary = #{userSalary},
-           u.userLoginedTime = #{userLoginedTime}
+           u.userLoginedTime = #{userLoginedTime}, u.userAddress = #{userAddress}
         where u.userId = #{userId};
      ]]>
   </update>
@@ -111,6 +111,8 @@
     ]]>
     <if test="user.companyId != null and user.companyId != ''">
       and u.companyId = #{user.companyId}
+      and ur.roleId !='7ff4f1c5-3205-11e7-bc72-507b9d765567'
+      and ur.roleId != '80095901-3205-11e7-bc72-507b9d765567'
     </if>
      limit #{beginIndex}, #{pageSize};
   </select>
@@ -126,6 +128,8 @@
     ]]>
     <if test="user.companyId != null and user.companyId != ''">
       and u.companyId = #{user.companyId}
+      and ur.roleId !='7ff4f1c5-3205-11e7-bc72-507b9d765567'
+      and ur.roleId != '80095901-3205-11e7-bc72-507b9d765567'
     </if>
     limit #{beginIndex}, #{pageSize};
   </select>
@@ -163,6 +167,13 @@
     </if>
   </select>
 
+  <!-- 根据id查询员工的基本信息 -->
+  <select id="queryInfoById" resultMap="userBasicManageMap" parameterType="String">
+    <![CDATA[
+      select u.* from t_user u where u.userId = #{userId}
+    ]]>
+  </select>
+
   <select id="queryRoles" parameterType="String" resultType="String">
     SELECT roleName FROM auto_platform.t_role WHERE roleStatus = 'Y' and roleId
     IN (select t_user_role.roleId from auto_platform.t_user_role
@@ -196,8 +207,8 @@
   <!-- 根据角色名称查询人员基本信息 -->
   <select id="queryByRoleName" resultMap="userBasicManageMap">
     <![CDATA[
-      SELECT u.*,ur.userId,ur.roleId,r.roleName FROM t_user u, t_user_role ur, t_role r
-	    WHERE u.userId = ur.userId  AND ur.roleId = r.roleId  AND r.roleName IN (#{roleName})
+      SELECT u.* FROM t_user u, t_user_role ur, t_role r
+	    WHERE u.userId = ur.userId AND ur.roleId = r.roleId AND r.roleName IN (#{roleName})
     ]]>
   </select>
 
