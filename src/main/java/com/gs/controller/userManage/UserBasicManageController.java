@@ -328,4 +328,11 @@ public class UserBasicManageController {
         return userService.queryByRoleName(roleName);
     }
 
+    @ResponseBody
+    @RequestMapping(value = "queryInfoById", method = RequestMethod.POST)
+    public User queryInfoById(@Param("roleName") String id) {
+        logger.info("根据userId查询");
+        return userService.queryInfoById(id);
+    }
+
 }
