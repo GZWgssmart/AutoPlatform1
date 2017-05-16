@@ -460,10 +460,10 @@ function bean4DnyTreeData(modules,rolePermissions){
             otherPernodes.push(pernode);
         }
     }
-    if(pernodes.length > 0) {
-        otherMolnode.permissions = otherPernodes;
-        molnodes.push(otherMolnode);
-    }
+        if(otherPernodes.length > 0) {
+            otherMolnode.permissions = otherPernodes;
+            molnodes.push(otherMolnode);
+        }
     return molnodes;
 }
 function bean4StaTreeData(permissions, modules, rolePermissions){
@@ -499,10 +499,8 @@ function bean4StaTreeData(permissions, modules, rolePermissions){
             molnodes.push(molnode);
         }
     }
-    if(pernodes.length >0) {
-        var otherMolnode = getModuleByAlonePers(permissions, rolePermissions);
-        molnodes.push(otherMolnode);
-    }
+    var otherMolnode = getModuleByAlonePers(permissions, rolePermissions);
+    molnodes.push(otherMolnode);
     return molnodes;
 }
     // 没有在模块中的权限,在树中创建另一个伪模块
