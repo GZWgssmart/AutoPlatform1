@@ -12,8 +12,6 @@
     <link rel="stylesheet" href="/static/css/select2.min.css">
     <link rel="stylesheet" href="/static/css/sweetalert.css">
     <link rel="stylesheet" href="/static/css/table/table.css">
-    <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.css">
-    <link rel="stylesheet/less" href="/static/css/bootstrap-dateTimePicker/datetimepicker.less">
     <link rel="stylesheet" href="/static/css/bootstrap-validate/bootstrapValidator.min.css">
 </head>
 <body>
@@ -69,6 +67,11 @@
                         <button id="btn_edit" type="button" class="btn btn-default" onclick="showEdit();">
                             <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
                         </button>
+            </shiro:hasAnyRoles>
+            <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司接待员">
+                <button id="btn_edit" type="button" class="btn btn-default" onclick="showMoney();">
+                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>确认收费
+                </button>
             </shiro:hasAnyRoles>
             <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司接待员">
                         <button id="btn_Export" type="button" class="btn btn-default"><a href="/charge/exportExcel">
@@ -142,14 +145,6 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">收费时间：</label>
-                        <div class="col-sm-7">
-                            <input id="addDatetimepicker" placeholder="请选择收费时间"
-                                   type="text" name="chargeTime" readonly="true"
-                                   class="form-control datetimepicker"/>
-                        </div>
-                    </div>
-                    <div class="form-group">
                         <label class="col-sm-3 control-label">收费单据描述：</label>
                         <div class="col-sm-7">
                             <textarea type="textarea" name="chargeBillDes" class="form-control" define="chargeBill.chargeBillDes" placeholder="请输入收费单据描述" maxlength="100"></textarea>
@@ -174,8 +169,6 @@
 <script src="/static/js/select2/select2.js"></script>
 <script src="/static/js/sweetalert/sweetalert.min.js"></script>
 <script src="/static/js/contextmenu.js"></script>
-<script src="/static/js/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.js"></script>
-<script src="/static/js/bootstrap-dateTimePicker/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
 <script src="/static/js/backstage/clearingOut/chargeDocuments.js"></script>
 <script src="/static/js/backstage/main.js"></script>
 <script src="/static/js/bootstrap-validate/bootstrapValidator.js"></script>

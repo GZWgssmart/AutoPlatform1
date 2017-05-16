@@ -13,7 +13,10 @@ import java.util.List;
 *@des 收费单据Service
 */
 public interface ChargeBillService extends BaseService<String, ChargeBill>{
-
+    /**
+     * 确认收费
+     */
+    public void updateDate(String chargeBillId);
     /**
      * 查询消费统计记录
      * @param start

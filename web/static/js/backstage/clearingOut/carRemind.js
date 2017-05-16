@@ -30,20 +30,35 @@ function showClearOut(){
     $.post("/user/isLogin/"+roles, function (data) {
         if(data.result == 'success'){
             var row =  $('table').bootstrapTable('getSelections');
-            if(row.length !=1) {
-                swal({title:"",
-                        text:"是否确认结算出厂? 将生成维修保养收费单据!",
-                        confirmButtonText:"确认",
-                        type:"warning"}
-                    ,function(){
-                        $.post("/maintainDetail/queryByRecordId/"+row[0].recordId, function (data) {
-                            $("#money").val(data[0]);
-                            $("#disCountMoney").val(data[1]);
-                            $("#maintainRecordId").val(row[0].recordId);
-                            $("#addWindow").modal('show');
-                            initDateTimePicker('addForm', 'chargeTime'); // 初始化时间框
-                        });
-                    })
+            if(row.length ==1) {
+                    swal({
+                        title: "",
+                        text: "是否确认结算出厂? 将生成维修保养收费单据!",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: "我确定",
+                        cancelButtonText: "再考虑一下",
+                        closeOnConfirm: true,
+                        closeOnCancel: false
+                    },function(ifCor){
+                        if(ifCor){
+                            $.post("/maintainDetail/queryByRecordId/"+row[0].recordId, function (data) {
+                                $("#money").val(data[0]);
+                                $("#disCountMoney").val(data[1]);
+                                $("#maintainRecordId").val(row[0].recordId);
+                                $("#addWindow").modal('show');
+                                validator('addForm');
+                            });
+                        }else{
+                            swal({
+                                title: "",
+                                text: "已取消",
+                                confirmButtonText: "确认",
+                                type: "error"
+                            })
+                        }
+                        })
             }else{
                 swal({
                     title:"",
@@ -71,6 +86,15 @@ function showClearOut(){
                 type:"error"})
         }
     });
+}
+
+function addSubmit(){
+    $("#addForm").data('bootstrapValidator').validate();
+    if ($("#addForm").data('bootstrapValidator').isValid()) {
+        $("#addButton").attr("disabled","disabled");
+    } else {
+        $("#addButton").removeAttr("disabled");
+    }
 }
 
 // 查看全部未提醒
@@ -395,6 +419,7 @@ function formSubmit(url, formId, winId){
         function (data) {
             if (data.result == "success") {
                 $('#' + winId).modal('hide');
+                $('#table').bootstrapTable('refresh');
                 swal({
                     title:"",
                     text: data.message,

@@ -117,17 +117,32 @@ function blurredQuery(){
         });
 }
 
+function showMoney(){
+    var row =  $('table').bootstrapTable('getSelections');
+    if(row.length ==1) {
+        $.post("/charge/updateDate/"+row[0].chargeBillId+"/"+row[0].maintainRecordId, function (data) {
+            // 修改收费单据收费时间, 修改维修保养记录当前状态
+
+        });
+    }else{
+        swal({
+            title:"",
+            text: "请先选择要确认收费的记录且只能选择一条", // 主要文本
+            confirmButtonColor: "#DD6B55", // 提示按钮的颜色
+            confirmButtonText:"确定", // 提示按钮上的文本
+            type:"warning"}) // 提示类型
+    }
+}
+
 function showEdit(){
     var roles = "公司超级管理员,公司普通管理员,汽车公司接待员";
     $.post("/user/isLogin/"+roles, function (data) {
         if(data.result == 'success'){
-            initDateTimePicker('editForm', 'chargeTime'); // 初始化时间框
             var row =  $('table').bootstrapTable('getSelections');
             if(row.length >0) {
                 $("#editWindow").modal('show'); // 显示弹窗
                 var chargeBill = row[0];
                 $("#editForm").fill(chargeBill);
-                $('#addDatetimepicker').val(formatterDate(chargeBill.chargeTime));
                 $('#chargeCreatedTime').val(formatterDate(chargeBill.chargeCreatedTime))
                 validator('editForm'); // 初始化验证
             }else{

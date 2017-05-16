@@ -118,6 +118,7 @@ public class ChargeDocumentsController {
             String roles = "公司超级管理员,公司普通管理员,汽车公司接待员";
             if(RoleUtil.checkRoles(roles)) {
                 logger.info("添加收费单据");
+                maintainRecordService.updateCurrentStatus("待收费", "'"+chargeBill.getMaintainRecordId()+"'");
                 chargeBillService.insert(chargeBill);
                 return ControllerResult.getSuccessResult("结算出厂成功");
             }else{
@@ -147,6 +148,29 @@ public class ChargeDocumentsController {
             logger.info("请先登录");
             return null;
         }
+    }
+
+    /**
+     * 确认收费
+     */
+    @ResponseBody
+    @RequestMapping(value = "updateDate/{chargeBillId}/{maintainRecordId}", method = RequestMethod.GET)
+    public ControllerResult updateDate(HttpSession session, @Param("chargeBillId") String chargeBillId, @Param("maintainRecordId") String maintainRecordId) {
+        if (SessionUtil.isLogin(session)) {
+            String roles = "公司超级管理员,公司普通管理员,系统超级管理员,系统普通管理员";
+            if (RoleUtil.checkRoles(roles)) {
+                chargeBillService.updateDate(chargeBillId);
+                maintainRecordService.updateCurrentStatus("已收费", "'"+maintainRecordId+"'");
+                return ControllerResult.getSuccessResult("确认收费成功");
+            } else {
+                logger.info("此用户无拥有此方法角色");
+                return ControllerResult.getFailResult("权限不足");
+            }
+        } else {
+            logger.info("请先登陆");
+            return ControllerResult.getFailResult("请先登录");
+        }
+
     }
 
     /**

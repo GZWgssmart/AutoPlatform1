@@ -13,8 +13,6 @@
     <link rel="stylesheet" href="/static/css/sweetalert.css">
     <link rel="stylesheet" href="/static/css/table/table.css">
     <link rel="stylesheet" href="/static/css/bootstrap-validate/bootstrapValidator.min.css">
-    <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.css">
-    <link rel="stylesheet/less" href="/static/css/bootstrap-dateTimePicker/datetimepicker.less">
 </head>
 <body>
 <%@include file="../backstage/contextmenu.jsp"%>
@@ -84,12 +82,12 @@
         <div id="toolbar" class="btn-group">
             <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员">
                         <button id="btn_available" type="button" class="btn btn-danger" onclick="showNoRemind();">
-                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>未提醒维修保养记录
+                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>未提醒记录
                         </button>
             </shiro:hasAnyRoles>
             <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员">
                         <button id="btn_disable" type="button" class="btn btn-success" onclick="showYesRemind();">
-                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>已提醒维修保养记录
+                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>已提醒记录
                         </button>
             </shiro:hasAnyRoles>
             <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司接待员">
@@ -172,17 +170,9 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">收费描述：</label>
+                        <label class="col-sm-3 control-label">收费单据描述：</label>
                         <div class="col-sm-7">
-                            <textarea type="textarea" name="chargeBillDes" placeholder="请输入收费描述" class="form-control" style="width:100%"/>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">收费时间：</label>
-                        <div class="col-sm-7">
-                            <input id="addDatetimepicker" placeholder="请选择收费时间" onclick="getDate()"
-                                   type="text" name="chargeTime" readonly="true"
-                                   class="form-control datetimepicker"/>
+                            <textarea type="textarea" name="chargeBillDes" class="form-control" placeholder="请输入收费单据描述" maxlength="100"></textarea>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -195,9 +185,9 @@
                     </div>
                 </form>
             </div>
-        </div>
-    </div>
-</div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 <script src="/static/js/jquery.min.js"></script>
 <script src="/static/js/bootstrap.min.js"></script>
 <script src="/static/js/bootstrap-table/bootstrap-table.js"></script>
@@ -205,11 +195,9 @@
 <script src="/static/js/jquery.formFill.js"></script>
 <script src="/static/js/select2/select2.js"></script>
 <script src="/static/js/sweetalert/sweetalert.min.js"></script>
-<script src="/static/js/contextmenu.js"></script>
-<script src="/static/js/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.js"></script>
-<script src="/static/js/bootstrap-dateTimePicker/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
 <script src="/static/js/backstage/clearingOut/carRemind.js"></script>
 <script src="/static/js/backstage/main.js"></script>
 <script src="/static/js/bootstrap-validate/bootstrapValidator.js"></script>
+<script src="/static/js/contextmenu.js"></script>
 </body>
 </html>

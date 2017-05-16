@@ -114,14 +114,16 @@
   </select>
 
     <select id="count" resultType="int" parameterType="com.gs.bean.User">
-      select count(recordId) from t_maintain_record mr, t_checkin ck where recordStatus = 'Y'
+      select count(recordId) from t_maintain_record mr, t_checkin ck
+      where mr.checkinId = ck.checkinId and recordStatus = 'Y'
       <if test="companyId != '' and companyId != null">
          and ck.companyId = #{companyId}
       </if>
   </select>
 
     <select id="countByDisable" resultType="int" parameterType="com.gs.bean.User">
-    select count(recordId) from t_maintain_record mr, t_checkin ck where recordStatus = 'N'
+    select count(recordId) from t_maintain_record mr, t_checkin ck where
+        mr.checkinId = ck.checkinId and recordStatus = 'N'
         <if test="companyId != '' and companyId != null">
             and ck.companyId = #{companyId}
         </if>
@@ -353,7 +355,8 @@
     </select>
 
     <select id="countByRemindNo" resultType="int" parameterType="com.gs.bean.User">
-        select count(recordId) from t_maintain_record mr, t_checkin ck where recordStatus = 'Y' and mr.currentStatus = '待提醒'
+        select count(recordId) from t_maintain_record mr, t_checkin ck where
+        mr.checkinId = ck.checkinId and recordStatus = 'Y' and mr.currentStatus = '待提醒'
         <if test="companyId != '' and companyId != null">
             and ck.companyId = #{companyId}
         </if>
@@ -372,20 +375,23 @@
               where m.checkinId = ck.checkinId and ck.brandId = cb.brandId
               and ck.colorId = cc.colorId and ck.modelId = cm.modelId
              and ck.plateId = cp.plateId and ck.companyId = company.companyId
-             and m.recordStatus = 'Y' and m.currentStatus = '待结算'
+             and m.recordStatus = 'Y'
          ]]>
         <if test="user.companyId != '' and user.companyId != null">
             and ck.companyId = #{user.companyId}
         </if>
+        and (m.currentStatus = '待结算' or m.currentStatus = '待收费' or m.currentStatus = '已收费')
         order by m.recordCreatedTime Desc
         limit #{beginIndex}, #{pageSize}
     </select>
 
     <select id="countByRemindYes" resultType="int" parameterType="com.gs.bean.User">
-        select count(recordId) from t_maintain_record mr, t_checkin ck where recordStatus = 'Y' and mr.currentStatus = '待结算'
+        select count(recordId) from t_maintain_record mr, t_checkin ck where
+        mr.checkinId = ck.checkinId and recordStatus = 'Y'
         <if test="companyId != '' and companyId != null">
             and ck.companyId = #{companyId}
         </if>
+        and (mr.currentStatus = '待结算' or mr.currentStatus = '待收费' or mr.currentStatus = '已收费')
     </select>
 
     <!--维修记录的报表显示-->
@@ -423,5 +429,9 @@
             group by date(mr.recordCreatedTime) ORDER BY mr.recordCreatedTime ASC;
         </if>
 
+    </select>
+
+    <select id="queryByPagerSix" resultMap="MaintainRecordMap" parameterType="com.gs.common.bean.Pager">
+    SELECT m.*, ck.*, u.userId, u.userName FROM t_maintain_record m, t_checkin ck, t_user u WHERE m.checkinId = ck.checkinId AND ck.userId=u.userId AND m.recordStatus = 'Y' AND m.actualEndTime LIKE CONCAT('%',#{actualEndTime},'%')
     </select>
 </mapper>
