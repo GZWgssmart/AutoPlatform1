@@ -62,7 +62,7 @@
     <div class="modal-dialog" style="width: 790px;height: auto;">
         <div class="modal-content" style="overflow:hidden;">
             <form class="form-horizontal" id="addForm" method="post">
-                <input id="addRemindId" type="text" name="remindId">
+                <%--<input id="addRemindId" type="text" name="remindId">--%>
                 <input id="addLastMaintainTime" type="text" name="lastMaintainTime" >
                 <input id="addLastMaintainMileage" type="text" name="lastMaintainMileage" >
                 <input id="addUserId" type="text" name="userId">
@@ -222,7 +222,7 @@
                     <thead>
                     <tr>
                         <th data-checkbox="true"></th>
-                        <th data-field="checkin.userId">
+                        <th data-field="checkin.user.userName">
                             用户名称
                         </th>
                         <th data-field="actualEndTime" data-formatter="formatterDate">

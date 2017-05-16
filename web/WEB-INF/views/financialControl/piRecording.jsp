@@ -79,10 +79,13 @@
 </div>
 
 <!-- 添加支出类型 -->
-<div class="modal fade" id="addOutWin" aria-hidden="true" style="overflow:auto;">
+<div aria-hidden="true" data-backdrop="static" keyboard:false
+     class="modal fade" id="addOutWin" aria-hidden="true" style="overflow:auto;">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="container" style="width: 80%;">
+            <div class="container">
+                <div class="modal-body">
+                    <span class="glyphicon glyphicon-remove closeModal"  onclick="closeModals('addOutWin', 'addOutForm')"></span>
                 <form class="form-horizontal" role="form" id="addOutForm" method="post">
                     <div class="modal-header" style="overflow:auto;">
                         <h4>其它支出添加</h4>
@@ -112,13 +115,14 @@
                     </div>
                     <div class="form-group">
                         <div class="col-sm-offset-8">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="closeModals('addOutWin', 'addOutForm')">关闭</button>
                             <button class="btn btn-sm btn-success" id="addOutButton" onclick="addOutSubmit()"
                                     type="button">保 存
                             </button>
                         </div>
                     </div>
                 </form>
+                </div>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
@@ -197,7 +201,7 @@
 </div>
 
 <%--收入管理弹窗显示--%>
-<div id="inWin" class="modal fade" aria-hidden="true" style="overflow:scroll" data-backdrop="static" keyboard:false>
+<div  id="inWin" class="modal fade" aria-hidden="true" style="overflow:scroll" data-backdrop="static" keyboard:false>
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
@@ -269,10 +273,13 @@
 
 
 <!-- 添加收入类型 -->
-<div class="modal fade" id="addInWin" aria-hidden="true" style="overflow:auto;">
+<div aria-hidden="true" data-backdrop="static" keyboard:false
+     class="modal fade" id="addInWin" aria-hidden="true" style="overflow:auto;">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="container" style="width: 80%;">
+            <div class="container">
+                <div class="modal-body">
+                    <span class="glyphicon glyphicon-remove closeModal"  onclick="closeModals('addInWin', 'addInForm')"></span>
                 <form class="form-horizontal" id="addInForm" method="post">
                     <input type="reset" name="reset" style="display: none;"/>
                     <div class="modal-header" style="overflow:auto;">
@@ -304,13 +311,14 @@
                     </div>
                     <div class="form-group">
                         <div class="col-sm-offset-8">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="closeModals('addInWin', 'addInForm')">关闭</button>
                             <button class="btn btn-sm btn-success" type="button" id="addInButton"
                                     onclick="addInSubmit()">保 存
                             </button>
                         </div>
                     </div>
                 </form>
+                </div>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
@@ -428,10 +436,13 @@
 </div>
 
 <!-- 修改弹窗 -->
-<div class="modal fade" id="editIOWin" aria-hidden="true">
+<div aria-hidden="true" data-backdrop="static" keyboard:false
+     class="modal fade" id="editIOWin" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="container" style="width: 80%;">
+            <div class="container">
+                <div class="modal-body">
+                    <span class="glyphicon glyphicon-remove closeModal"  onclick="closeModals('editIOWin', 'editIOForm')"></span>
                 <form class="form-horizontal" role="form" id="editIOForm" method="post">
                     <input type="reset" name="reset" style="display: none;"/>
                     <input type="hidden" define="io.inOutId" name="inOutId">
@@ -485,12 +496,13 @@
                     <div class="modal-footer">
                         <span id="editError"></span>
                         <button type="button" class="btn btn-default"
-                                data-dismiss="modal">关闭
+                                data-dismiss="modal" onclick="closeModals('editIOWin', 'editIOForm')">关闭
                         </button>
                         <button type="button" id="editButton" onclick="editSubmit()" class="btn btn-primary btn-sm">保存
                         </button>
                     </div>
                 </form>
+                </div>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->

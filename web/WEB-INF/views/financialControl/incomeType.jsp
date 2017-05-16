@@ -57,10 +57,13 @@
 </div>
 
 <!-- 添加弹窗 -->
-<div class="modal fade" id="add" aria-hidden="true" style="overflow:auto;">
+<div aria-hidden="true" data-backdrop="static" keyboard:false
+     class="modal fade" id="add" aria-hidden="true" style="overflow:auto;">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="container" style="width: 80%;">
+            <div class="container">
+                <div class="modal-body">
+                    <span class="glyphicon glyphicon-remove closeModal"  onclick="closeModals('add', 'addForm')"></span>
                 <form class="form-horizontal" role="form" id="addForm">
                     <div class="modal-header" style="overflow:auto;">
                         <h4>收入类型添加</h4>
@@ -75,23 +78,27 @@
                     </div>
                     <div class="form-group">
                         <div class="col-sm-offset-8">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal"onclick="closeModals('add', 'addForm')">关闭</button>
                             <button id="addButton" class="btn btn-sm btn-success" onclick="addSubmit();" type="button">保
                                 存
                             </button>
                         </div>
                     </div>
                 </form>
+                </div>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
 <!-- 修改弹窗 -->
-<div class="modal fade" id="edit" aria-hidden="true" style="overflow:auto;">
+<div aria-hidden="true" data-backdrop="static" keyboard:false
+     class="modal fade" id="edit" aria-hidden="true" style="overflow:auto;">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="container" style="width: 80%;">
+            <div class="container">
+                <div class="modal-body">
+                    <span class="glyphicon glyphicon-remove closeModal"  onclick="closeModals('edit', 'editForm')"></span>
                 <form class="form-horizontal" role="form" id="editForm">
                     <input type="hidden" name="inTypeId" define="inTypeName.inTypeId">
                     <input type="hidden" name="inTypeStatus" define="inTypeName.inTypeStatus">
@@ -108,13 +115,14 @@
                     </div>
                     <div class="form-group">
                         <div class="col-sm-offset-8">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="closeModals('edit', 'editForm')">关闭</button>
                             <button id="editButton" class="btn btn-sm btn-success" onclick="editSubmit()" type="button">
                                 保 存
                             </button>
                         </div>
                     </div>
                 </form>
+                </div>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->

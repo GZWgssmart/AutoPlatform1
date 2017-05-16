@@ -66,7 +66,8 @@
 
 
     <!-- 添加弹窗 -->
-    <div class="modal fade" id="import" aria-hidden="true" style="overflow:auto;">
+    <div aria-hidden="true" data-backdrop="static" keyboard:false
+         class="modal fade" id="import" aria-hidden="true" style="overflow:auto;">
     <div class="container kv-main">
     <div class="ibox-title">
     <div class="input-group">
@@ -81,62 +82,67 @@
     </div><!-- /.modal -->
 
     <!-- 添加弹窗 -->
-    <div class="modal fade" id="add" aria-hidden="true" style="overflow:auto;">
+    <div aria-hidden="true" data-backdrop="static" keyboard:false
+         class="modal fade" id="add" aria-hidden="true" style="overflow:auto;">
     <div class="modal-dialog">
     <div class="modal-content">
-    <div class="container" style="width: 80%;">
-    <form class="form-horizontal" role="form" id="addForm">
-    <div class="modal-header" style="overflow:auto;">
-    <p>员工工资录入</p>
-    </div>
-    <div class="form-group">
-    <label class="col-sm-3 control-label" for="userName">员工姓名：</label>
-    <div class="col-sm-7">
-    <input type="hidden" id="userId" readonly="true" name="userId">
-    <input onclick="checkAppointment();" type="text" readonly="true" name="userName" id="userName" placeholder="请点击选择员工" class="form-control">
-    </div>
+    <div class="container">
+        <div class="modal-body">
 
-    </div>
-    <div class="form-group">
-    <label class="col-sm-3 control-label">罚款：</label>
-    <div class="col-sm-7">
-    <input type="text" name="minusSalay" placeholder="请输入罚款" class="form-control">
-    </div>
-    </div>
-    <div class="form-group">
-    <label class="col-sm-3 control-label">奖金：</label>
-    <div class="col-sm-7">
-    <input type="text" name="prizeSalary" placeholder="请输入奖金" class="form-control">
-    </div>
-    </div>
-    <div class="form-group">
-    <label class="col-sm-3 control-label">总工资：</label>
-    <div class="col-sm-7">
-    <input type="text" name="totalSalary" placeholder="请输入总工资" class="form-control">
-    </div>
-    </div>
+            <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal" onclick="closeModals('add','addForm')"></span>
+                <form class="form-horizontal" role="form" id="addForm">
+                <div class="modal-header" style="overflow:auto;">
+                <p>员工工资录入</p>
+                </div>
+                <div class="form-group">
+                <label class="col-sm-3 control-label" for="userName">员工姓名：</label>
+                <div class="col-sm-7">
+                <input type="hidden" id="userId" readonly="true" name="userId">
+                <input onclick="checkAppointment();" type="text" readonly="true" name="userName" id="userName" placeholder="请点击选择员工" class="form-control">
+                </div>
 
-    <div class="form-group">
-    <label class="col-sm-3 control-label" >工资描述：</label>
-    <div class="col-sm-7">
-    <input type="text" name="salaryDes" placeholder="请输入工资发放描述" class="form-control">
-    </div>
-    </div>
+                </div>
+                <div class="form-group">
+                <label class="col-sm-3 control-label">罚款：</label>
+                <div class="col-sm-7">
+                <input type="text" name="minusSalay" placeholder="请输入罚款" class="form-control">
+                </div>
+                </div>
+                <div class="form-group">
+                <label class="col-sm-3 control-label">奖金：</label>
+                <div class="col-sm-7">
+                <input type="text" name="prizeSalary" placeholder="请输入奖金" class="form-control">
+                </div>
+                </div>
+                <div class="form-group">
+                <label class="col-sm-3 control-label">总工资：</label>
+                <div class="col-sm-7">
+                <input type="text" name="totalSalary" placeholder="请输入总工资" class="form-control">
+                </div>
+                </div>
 
-    <div class="form-group">
-    <label class="col-sm-3 control-label">工资发放时间：</label>
-    <div class="col-sm-7">
-    <input type="date" name="salaryTime" placeholder="请选择工资发放时间" id="salaryTime" class="form-control">
-    </div>
-    </div>
+                <div class="form-group">
+                <label class="col-sm-3 control-label" >工资描述：</label>
+                <div class="col-sm-7">
+                <input type="text" name="salaryDes" placeholder="请输入工资发放描述" class="form-control">
+                </div>
+                </div>
 
-    <div class="modal-footer">
-    <span id="addError"></span>
-    <button type="button" class="btn btn-default" onclick="addWinClose()">关闭
-    </button>
-    <button type="button" id="addButton" onclick="addSubmit()" class="btn btn-primary btn-sm">保存</button>
-    </div>
-    </form>
+                <div class="form-group">
+                <label class="col-sm-3 control-label">工资发放时间：</label>
+                <div class="col-sm-7">
+                <input type="date" name="salaryTime" placeholder="请选择工资发放时间" id="salaryTime" class="form-control">
+                </div>
+                </div>
+
+                <div class="modal-footer">
+                <span id="addError"></span>
+                <button type="button" class="btn btn-default" onclick="closeModals('add','addForm')">关闭
+                </button>
+                <button type="button" id="addButton" onclick="addSubmit()" class="btn btn-success btn-sm">保存</button>
+                </div>
+                </form>
+        </div>
     </div>
     </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
@@ -156,11 +162,7 @@
     <thead>
     <tr>
     <th data-radio="true" data-field="status"></th>
-    <th data-field="userPhone">用户手机号</th>
     <th data-field="userName">姓名</th>
-    <th data-field="userIdentity">身份证号</th>
-    <th data-field="wechatOpenId">微信</th>
-    <th data-field="companyId">所属公司</th>
     </tr>
     </thead>
     <tbody>
@@ -183,10 +185,14 @@
 
 
     <!-- 修改弹窗 -->
-    <div class="modal fade" id="edit" aria-hidden="true">
+    <div aria-hidden="true" data-backdrop="static" keyboard:false
+         class="modal fade" id="edit" aria-hidden="true">
     <div class="modal-dialog">
     <div class="modal-content">
-    <div class="container" style="width: 80%;">
+    <div class="container" >
+        <div class="modal-body">
+
+        <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal" onclick="closeModals('edit','editForm')"></span>
     <form class="form-horizontal" role="form" id="editForm" method="post">
     <input type="hidden" define="salary.salaryId" name="salaryId">
     <div class="modal-header" style="overflow:auto;">
@@ -235,11 +241,12 @@
     <div class="modal-footer">
     <span id="editError"></span>
     <button type="button" class="btn btn-default"
-    data-dismiss="modal">关闭
+    data-dismiss="modal"  onclick="closeModals('edit','editForm')">关闭
     </button>
-    <button type="button" id="editButton" onclick="editSubmit()" class="btn btn-primary btn-sm">保存</button>
+    <button type="button" id="editButton" onclick="editSubmit()" class="btn btn-success btn-sm">保存</button>
     </div>
     </form>
+        </div>
     </div>
     </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->

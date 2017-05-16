@@ -46,9 +46,11 @@
     <div class='tab-content'>
         <div class="tab-pane active"  id='tab1' style="margin: 10px 15px;">
             <div class="form-inline">
+                《
+
                 <div class="company" id="companySelect" style="width: 300px;">
                     <label>公司:</label>
-                    <select id="companyId" name="companyId" class="form-control select2 companyName" style="width: 80%;" >
+                    <select id="companyId" onchange="selectMaintainName();" name="companyId" class="form-control select2 companyName" style="width: 80%;" >
                     </select>
                 </div>
                 <div class="project"  style="width: 150px;">
@@ -82,6 +84,9 @@
                                                                          aria-hidden="true"></span></span>
                     </div>
                 </div>
+                <button id="b" type="button" class="btn btn-default"  onclick="selectYears();">
+                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>查询
+                </button>
                 <div class="clearfix"></div>
             </div>
         </div>
@@ -137,7 +142,7 @@
                 </div>
             </div>
 
-            <button id="dayBtnId" type="button" class="btn btn-default"  onclick="selectDay();">
+            <button id="a" type="button" class="btn btn-default"  onclick="selectDay();">
                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>查询
             </button>
         </div>

@@ -26,9 +26,24 @@ $(function () {
 });
 
 
-$("#companyId").change(function () {
-    alert("aaaaaaaaaaaaaaaaaaa")
+function selectMaintainName() {
+    var companyId = $("#companyId").val();
+    var maintainTypeId = $("#maintainTypeId").val();
+    console.log(companyId + maintainTypeId)
+
+    initSelect2("maintainName", "请选择项目名称", "/maintain/queryByMaintainName/"+companyId+"/"+maintainTypeId);
+}
+
+// 这个方法别看
+$("#maintainTypeId").change(function(){
+    var companyId = $("#companyId").val();
+    var maintainTypeId = $("#maintainTypeId").val();
+    $('#maintainId').html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
+    console.log(companyId + maintainTypeId)
+    initSelect2("maintainName", "请选择项目名称", "/maintain/queryByMaintainName/"+companyId+"/"+maintainTypeId);
 });
+
+
 
 
 // 基于准备好的dom，初始化echarts实例
@@ -127,7 +142,7 @@ $.ajax({	//使用JQuery内置的Ajax方法
             for (var i = 0; i < result.length; i++) {
                 inMoney.push(result[i].inMoney);
                 outMoney.push(result[i].outMoney);
-                Datas.push(result[i].date);
+                Datas.push(result[i].mdCreatedTime);
 
             }
 
@@ -200,8 +215,7 @@ $('.form_Year').datetimepicker({
     })
 
 
-var maintainCount=[];		//湿度数组
-var maintainCount=[];		//湿度数组
+var count=[];		//湿度数组
 var workInfoDatas=[];		//时间数组
 
 
@@ -210,18 +224,22 @@ var workInfoDatas=[];		//时间数组
 function selectYears() {
     var start = $("#startYearInput").val() + "-01-01";
     var end = $("#endYearInput").val() + "-12-31";
+    var companyId = $("#companyId").val();
+    var maintainOrFix = $("#maintainTypeId").val();
+    var maintainId = $("#maintainId").val();
+    console.log(companyId + maintainOrFix + maintainId)
     $.ajax({	//使用JQuery内置的Ajax方法
         type: "post",		//post请求方式
         async: true,		//异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
         url: "/maintain/queryByCondition",	//请求发送到ShowInfoIndexServlet处
-        data: {"start": start, "end": end, "type":"year"},		//请求内包含一个key为name，value为A0001的参数；服务器接收到客户端请求时通过request.getParameter方法获取该参数值
+        data: {"start": start, "end": end, "type":"year", "companyId":companyId, "maintainId":maintainId, "maintainOrFix":maintainOrFix},		//请求内包含一个key为name，value为A0001的参数；服务器接收到客户端请求时通过request.getParameter方法获取该参数值
         dataType: "json",		//返回数据形式为json
         success: function (result) {
             //请求成功时执行该函数内容，result即为服务器返回的json对象
             if (result !== null && result.length > 0) {
                 for (var i = 0; i < result.length; i++) {
-                    maintainCount.push(result[i].maintainCount);
-                    workInfoDatas.push(result[i].date);
+                    count.push(result[i].count);
+                    workInfoDatas.push(formatterYear(result[i].mdCreatedTime));
                 }
 
                 myChart.hideLoading();	//隐藏加载动画
@@ -234,7 +252,7 @@ function selectYears() {
                         {
                             // 根据名字对应到相应的系列
                             name: '维修项目统计',
-                            data: maintainCount
+                            data: count
                         }
                     ]
                 });
@@ -275,8 +293,8 @@ function selectMonth() {
 
             if (result != null && result.length > 0) {
                 for (var i = 0; i < result.length; i++) {
-                    maintainCount.push(result[i].maintainCount);
-                    workInfoDatas.push(result[i].date);
+                    count.push(result[i].count);
+                    workInfoDatas.push(formatterMonth(result[i].mdCreatedTime));
 
                 }
                 myChart.hideLoading();	//隐藏加载动画
@@ -291,7 +309,7 @@ function selectMonth() {
                         {
                             // 根据名字对应到相应的系列
                             name: '维修项目统计',
-                            data: maintainCount
+                            data: count
                         }
                     ]
                 });
@@ -328,8 +346,8 @@ function selectDay() {
 
             if (result != null && result.length > 0) {
                 for (var i = 0; i < result.length; i++) {
-                    maintainCount.push(result[i].maintainCount);
-                    workInfoDatas.push(result[i].date);
+                    count.push(result[i].count);
+                    workInfoDatas.push(formatterDay(result[i].mdCreatedTime));
 
                 }
                 myChart.hideLoading();	//隐藏加载动画
@@ -343,7 +361,7 @@ function selectDay() {
                         {
                             // 根据名字对应到相应的系列
                             name: '维修项目统计',
-                            data: maintainCount
+                            data: count
                         }
                     ]
                 });
@@ -380,8 +398,8 @@ function selectQuarter() {
 
             if (result != null && result.length > 0) {
                 for (var i = 0; i < result.length; i++) {
-                    maintainCount.push(result[i].maintainCount);
-                    workInfoDatas.push(formatterQuarterDate(result[i].date));
+                    count.push(result[i].count);
+                    workInfoDatas.push(formatterQuarter(result[i].mdCreatedTime));
 
                 }
                 myChart.hideLoading();	//隐藏加载动画
@@ -396,7 +414,7 @@ function selectQuarter() {
                         {
                             // 根据名字对应到相应的系列
                             name: '维修项目统计',
-                            data: maintainCount
+                            data: count
                         }
                     ]
                 });
@@ -434,8 +452,8 @@ function selectWeek() {
 
             if (result != null && result.length > 0) {
                 for (var i = 0; i < result.length; i++) {
-                    maintainCount.push(result[i].maintainCount);
-                    workInfoDatas.push(result[i].date);
+                    count.push(result[i].count);
+                    workInfoDatas.push(formatterWeek(result[i].mdCreatedTime));
 
                 }
                 myChart.hideLoading();	//隐藏加载动画
@@ -450,7 +468,7 @@ function selectWeek() {
                         {
                             // 根据名字对应到相应的系列
                             name: '维修项目统计',
-                            data: maintainCount
+                            data: count
                         }
                     ]
                 });
