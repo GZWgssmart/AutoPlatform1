@@ -20,4 +20,9 @@ public interface AccessoriesService extends BaseService<String, Accessories>{
     public int updateCount(@Param("accCount") int accCount,@Param("accId") String accId);
 
     public Accessories queryByName(@Param("accName") String accName);
+
+    /**
+     * 库存报表
+     */
+    public List<Accessories> queryByCondition(String start,String end, String companyId, String accTypeId, String type);
 }

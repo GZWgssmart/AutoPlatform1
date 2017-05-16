@@ -130,8 +130,8 @@ public class IncomingOutgoingController {
             String roles = "公司超级管理员,公司普通管理员,汽车公司财务人员";
             if (RoleUtil.checkRoles(roles)) {
                 logger.info("添加收支记录");
-                incomingOutgoing.setCompanyId("1");
                 User user = (User) session.getAttribute("user");
+                incomingOutgoing.setInOutCreatedUser(user.getUserId());
                 incomingOutgoing.setCompanyId(user.getCompanyId());
                 incomingOutgoingService.insert(incomingOutgoing);
                 return ControllerResult.getSuccessResult("添加成功");
@@ -155,7 +155,12 @@ public class IncomingOutgoingController {
             if (RoleUtil.checkRoles(roles)) {
                 logger.info("修改收支记录");
                 User user = (User) session.getAttribute("user");
-                incomingOutgoing.setCompanyId(user.getCompanyId());
+                if (incomingOutgoing.getInTypeId() == "" && incomingOutgoing.getInTypeId() == null) {
+                    incomingOutgoing.setInTypeId("");
+                }
+                if (incomingOutgoing.getOutTypeId() == "" && incomingOutgoing.getOutTypeId() == null) {
+                    incomingOutgoing.setOutTypeId("");
+                }
                 incomingOutgoingService.update(incomingOutgoing);
                 return ControllerResult.getSuccessResult("修改成功");
             } else {

@@ -105,14 +105,14 @@
                             <input type="text" name="inOutMoney" placeholder="请输入支出金额" class="form-control">
                         </div>
                     </div>
-                    <div class="form-group">
+                  <%--  <div class="form-group">
                         <label class="col-sm-3 control-label">创建人：</label>
                         <div class="col-sm-7">
                             <input type="hidden" id="userId" readonly="true" name="inOutCreatedUser">
                             <input onclick="checkAppointment();" type="text" readonly="true" name="inOutCreatedUserName"
                                    id="userName" placeholder="请输入支出记录创建人" class="form-control">
                         </div>
-                    </div>
+                    </div>--%>
                     <div class="form-group">
                         <div class="col-sm-offset-8">
                             <button type="button" class="btn btn-default" data-dismiss="modal" onclick="closeModals('addOutWin', 'addOutForm')">关闭</button>
@@ -165,7 +165,7 @@
 </div>
 
 
-<%--人员管理窗弹窗显示--%>
+<%--人员管理窗弹窗显示
 <div id="personnelWin" class="modal fade" aria-hidden="true" style="overflow:scroll" data-backdrop="static"
      keyboard:false>
     <div class="modal-dialog">
@@ -198,7 +198,7 @@
             </div>
         </div>
     </div>
-</div>
+</div>--%>
 
 <%--收入管理弹窗显示--%>
 <div  id="inWin" class="modal fade" aria-hidden="true" style="overflow:scroll" data-backdrop="static" keyboard:false>
@@ -236,7 +236,8 @@
     </div>
 </div>
 
-<%--人员管理窗弹窗显示--%>
+<%--
+&lt;%&ndash;人员管理窗弹窗显示&ndash;%&gt;
 <div id="inPersonnelWin" class="modal fade" aria-hidden="true" style="overflow:scroll" data-backdrop="static"
      keyboard:false>
     <div class="modal-dialog">
@@ -271,6 +272,7 @@
     </div>
 </div>
 
+--%>
 
 <!-- 添加收入类型 -->
 <div aria-hidden="true" data-backdrop="static" keyboard:false
@@ -300,7 +302,7 @@
                             <input type="text" name="inOutMoney" placeholder="请输入收支金额" class="form-control">
                         </div>
                     </div>
-                    <div class="form-group">
+                   <%-- <div class="form-group">
                         <label class="col-sm-3 control-label">创建人：</label>
                         <div class="col-sm-7">
                             <input type="hidden" id="inUserId" readonly="true" name="inOutCreatedUser">
@@ -308,7 +310,7 @@
                                    name="inOutCreatedUserName" id="inUserName" placeholder="请输入收入记录创建人"
                                    class="form-control">
                         </div>
-                    </div>
+                    </div>--%>
                     <div class="form-group">
                         <div class="col-sm-offset-8">
                             <button type="button" class="btn btn-default" data-dismiss="modal" onclick="closeModals('addInWin', 'addInForm')">关闭</button>
@@ -363,7 +365,7 @@
 </div>
 
 
-<div id="updatePersonnelWin" class="modal fade" aria-hidden="true" style="overflow:scroll" data-backdrop="static"
+<%--<div id="updatePersonnelWin" class="modal fade" aria-hidden="true" style="overflow:scroll" data-backdrop="static"
      keyboard:false>
     <div class="modal-dialog">
         <div class="modal-content">
@@ -396,7 +398,7 @@
             </div>
         </div>
     </div>
-</div>
+</div>--%>
 
 <%--收入管理弹窗显示--%>
 <div id="updateInWin" class="modal fade" aria-hidden="true" style="overflow:scroll" data-backdrop="static"
@@ -446,12 +448,14 @@
                 <form class="form-horizontal" role="form" id="editIOForm" method="post">
                     <input type="reset" name="reset" style="display: none;"/>
                     <input type="hidden" define="io.inOutId" name="inOutId">
+                    <input type="hidden" define="io.inOutCreatedUser" name="inOutCreatedUser">
+                    <input type="hidden" define="io.companyId" name="companyId">
                     <div class="modal-header" style="overflow:auto;">
                         <p>修改收支记录</p>
                     </div>
 
                     <div id="inTypeDiv" class="form-group">
-                        <label class="col-sm-3 control-label" for="userName">收入类型：</label>
+                        <label class="col-sm-3 control-label">收入类型：</label>
                         <div class="col-sm-7">
                             <input type="hidden" id="updateInTypeId" define="io.incomingType.inTypeId" name="inTypeId">
                             <input define="io.incomingType.inTypeName" id="inType" type="text" readonly="true"
@@ -464,7 +468,7 @@
 
 
                     <div id="outTypeDiv" class="form-group">
-                        <label class="col-sm-3 control-label" for="userName">支出类型：</label>
+                        <label class="col-sm-3 control-label">支出类型：</label>
                         <div class="col-sm-7">
                             <input type="hidden" id="updateOutTypeId" define="io.outgoingType.outTypeId"
                                    name="outTypeId">
@@ -482,7 +486,7 @@
                             <input type="text" define="io.inOutMoney" name="inOutMoney" class="form-control">
                         </div>
                     </div>
-                    <div class="form-group">
+                  <%--  <div class="form-group">
                         <label class="col-sm-3 control-label">收支记录创建人：</label>
                         <div class="col-sm-7">
                             <input type="hidden" id="updateUserId" define="io.inOutCreatedUser" name="inOutCreatedUser">
@@ -492,7 +496,7 @@
                                 <span class="glyphicon glyphicon-search" aria-hidden="true"></span>选择创建人
                             </button>
                         </div>
-                    </div>
+                    </div>--%>
                     <div class="modal-footer">
                         <span id="editError"></span>
                         <button type="button" class="btn btn-default"

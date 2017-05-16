@@ -261,7 +261,7 @@
 </script>
 <!-- 显示Echarts图表 -->
 <script src="/static/js/backstage/statistics/myEcharts.js"></script>
-<script type="text/javascript" src="/static/js/backstage/statistics/repertory.js"></script>
+<script type="text/javascript" src="/static/js/backstage/statistics/inventoryUsing.js"></script>
 <script src="/static/js/jquery.min.js"></script>
 <script src="/static/js/contextmenu.js"></script>
 <script src="/static/js/select2/select2.js"></script>

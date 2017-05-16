@@ -310,6 +310,58 @@ public class MaterialsController {
         }
     }
 
+    @ResponseBody
+    @RequestMapping(value = "queryByCondition")
+    public List<MaterialReturn> queryByCondition(HttpSession session,String start, String end, String type, String companyId, String accTypeId) {
+        if(SessionUtil.isLogin(session)){
+            String roles="公司超级管理员,公司普通管理员,系统超级管理员,系统普通管理员";
+            if(RoleUtil.checkRoles(roles)){
+                List<MaterialReturn> list = null;
+                User user = (User) session.getAttribute("user");
+                if (type != null && !type.equals("")) {
+                    if (type.equals("year")) {
+                        if (companyId != null) {
+                            list = materialReturnService.queryByCondition(start, end, companyId, accTypeId,"year");
+                        } else {
+                            list = materialReturnService.queryByCondition(start, end, user.getCompanyId(), accTypeId,"year");
+                        }
+                    } else if (type.equals("quarter")) {
+                        if (companyId != null) {
+                            list = materialReturnService.queryByCondition(start, end, companyId, accTypeId,"quarter");
+                        } else {
+                            list = materialReturnService.queryByCondition(start, end, user.getCompanyId(),accTypeId, "quarter");
+                        }
+                    } else if (type.equals("month")) {
+                        if (companyId != null) {
+                            list = materialReturnService.queryByCondition(start, end, companyId, accTypeId,"month");
+                        } else {
+                            list = materialReturnService.queryByCondition(start, end, user.getCompanyId(), accTypeId,"month");
+                        }
+                    } else if (type.equals("week")) {
+                        if (companyId != null) {
+                            list = materialReturnService.queryByCondition(start, end, companyId, accTypeId,"week");
+                        } else {
+                            list = materialReturnService.queryByCondition(start, end, user.getCompanyId(), accTypeId,"week");
+                        }
+                    } else if (type.equals("day")) {
+                        if (companyId != null) {
+                            list = materialReturnService.queryByCondition(start, end, companyId, accTypeId,"day");
+                        } else {
+                            list = materialReturnService.queryByCondition(start, end, user.getCompanyId(), accTypeId,"day");
+                        }
+                    }
+                }
+                return list;
+            }else{
+                logger.info("此用户无法拥有库存统计查询角色");
+                return null;
+            }
+        }else{
+            logger.info("请先登陆");
+            return null;
+        }
+    }
+
 
 
 }

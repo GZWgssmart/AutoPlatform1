@@ -2,6 +2,7 @@ package com.gs.service;
 
 import com.gs.bean.AccessoriesType;
 import com.gs.common.bean.Pager;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -17,4 +18,9 @@ public interface AccessoriesTypeService extends BaseService<String, AccessoriesT
      * 分页查询被禁用的记录
      */
     public int countByDisable();
+
+    /**
+     * 根据公司查看配件分类名称
+     */
+    public List<AccessoriesType> queryTypeName(String companyId);
 }

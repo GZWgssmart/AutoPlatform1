@@ -3,6 +3,7 @@
 <mapper namespace="com.gs.dao.AccessoriesDAO" >
   <resultMap id="AccessoriesMap" type="com.gs.bean.Accessories" >
     <id column="accId" property="accId" jdbcType="VARCHAR" />
+    <result column="count" property="count"/>
     <result column="accName" property="accName" jdbcType="VARCHAR" />
     <result column="accCommodityCode" property="accCommodityCode" jdbcType="VARCHAR" />
     <result column="accDes" property="accDes" jdbcType="VARCHAR" />
@@ -245,6 +246,30 @@
     <![CDATA[
         SELECT ac.accId,ac.accName FROM auto_platform.t_accessories ac WHERE accName=#{accName}
     ]]>
+  </select>
+
+  <!--库存统计-->
+  <select id="queryByCondition" resultMap="AccessoriesMap">
+    <![CDATA[
+ select  sum(a.accTotal) as count, a.accUsedTime from t_accessories a, t_accessories_type t,t_company c
+where a.accTypeId = t.accTypeId and a.companyId = c.companyId and a.accStatus = 'Y' and
+c.companyId = #{companyId} and t.accTypeId = #{accTypeId} and a.accUsedTime >= #{start} and a.accUsedTime <= #{end}
+        ]]>
+    <if test="type =='year'">
+      group by date_format(a.accUsedTime, '%Y') ORDER BY a.accUsedTime ASC;
+    </if>
+    <if test="type =='quarter'">
+      group by concat(date_format(a.accUsedTime, '%Y'),FLOOR((date_format(a.accUsedTime, '%m')+2)/3)) ORDER BY a.accUsedTime ASC;
+    </if>
+    <if test="type =='month'">
+      group by date_format(a.accUsedTime, '%y-%m') ORDER BY a.accUsedTime ASC;
+    </if>
+    <if test="type =='week'">
+      group by date_format(a.accUsedTime, '%y-%m') ORDER BY a.accUsedTime ASC;
+    </if>
+    <if test="type =='day'">
+      group by date(a.accUsedTime) ORDER BY a.accUsedTime ASC;
+    </if>
   </select>
 
 </mapper>

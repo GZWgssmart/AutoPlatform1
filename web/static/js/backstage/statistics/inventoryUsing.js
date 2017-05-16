@@ -76,7 +76,7 @@ var option = {
          */
     },
     legend: {
-        data: ['库存统计']
+        data: ['库存使用统计']
     },
     dataZoom: [
         {
@@ -132,7 +132,7 @@ var option = {
     ],
     series : [	//系列（内容）列表
         {
-            name:'项目库存统计',
+            name:'项目库存使用统计',
             type:'line',	//折线图表示（生成温度曲线）
             symbol:'emptycircle',	//设置折线图中表示每个坐标点的符号；emptycircle：空心圆；emptyrect：空心矩形；circle：实心圆；emptydiamond：菱形
             data:[]		//数据值通过Ajax动态获取
@@ -155,7 +155,7 @@ $.ajax({	//使用JQuery内置的Ajax方法
             for (var i = 0; i < result.length; i++) {
                 inMoney.push(result[i].inMoney);
                 outMoney.push(result[i].outMoney);
-                Datas.push(result[i].accUsedTime);
+                Datas.push(result[i].mrCreatedDate);
 
             }
 
@@ -168,7 +168,7 @@ $.ajax({	//使用JQuery内置的Ajax方法
                 series: [	//填入系列（内容）数据
                     {
                         // 根据名字对应到相应的系列
-                        name: '库存统计',
+                        name: '库存使用统计',
                         data: inMoney
                     },
 
@@ -243,7 +243,7 @@ function selectYears() {
     $.ajax({	//使用JQuery内置的Ajax方法
         type: "post",		//post请求方式
         async: true,		//异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
-        url: "/accInv/queryByCondition",	//请求发送到ShowInfoIndexServlet处
+        url: "/materials/queryByCondition",	//请求发送到ShowInfoIndexServlet处
         data: {"start": start, "end": end, "type":"year", "companyId":companyId, "accTypeId":maintainId},		//请求内包含一个key为name，value为A0001的参数；服务器接收到客户端请求时通过request.getParameter方法获取该参数值
         dataType: "json",		//返回数据形式为json
         success: function (result) {
@@ -251,7 +251,7 @@ function selectYears() {
             if (result !== null && result.length > 0) {
                 for (var i = 0; i < result.length; i++) {
                     count.push(result[i].count);
-                    workInfoDatas.push(formatterYear(result[i].accUsedTime));
+                    workInfoDatas.push(formatterYear(result[i].mrCreatedDate));
                 }
 
                 myChart.hideLoading();	//隐藏加载动画
@@ -263,7 +263,7 @@ function selectYears() {
                     series: [	//填入系列（内容）数据
                         {
                             // 根据名字对应到相应的系列
-                            name: '库存统计',
+                            name: '库存使用统计',
                             data: count
                         }
                     ]
@@ -298,7 +298,7 @@ function selectMonth() {
     $.ajax({	//使用JQuery内置的Ajax方法
         type: "post",		//post请求方式
         async: true,		//异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
-        url: "/accInv/queryByCondition",	//请求发送到ShowInfoIndexServlet处
+        url: "/materials/queryByCondition",	//请求发送到ShowInfoIndexServlet处
         data: {"start": start, "end": end, "type":"month", "companyId":companyId, "accTypeId":maintainId},		//请求内包含一个key为name，value为A0001的参数；服务器接收到客户端请求时通过request.getParameter方法获取该参数值
         dataType: "json",		//返回数据形式为json
         success: function (result) {
@@ -308,7 +308,7 @@ function selectMonth() {
             if (result != null && result.length > 0) {
                 for (var i = 0; i < result.length; i++) {
                     count.push(result[i].count);
-                    workInfoDatas.push(formatterMonth(result[i].accUsedTime));
+                    workInfoDatas.push(formatterMonth(result[i].mrCreatedDate));
 
                 }
                 myChart.hideLoading();	//隐藏加载动画
@@ -322,7 +322,7 @@ function selectMonth() {
 
                         {
                             // 根据名字对应到相应的系列
-                            name: '库存统计',
+                            name: '库存使用统计',
                             data: count
                         }
                     ]
@@ -353,7 +353,7 @@ function selectDay() {
     $.ajax({	//使用JQuery内置的Ajax方法
         type: "post",		//post请求方式
         async: true,		//异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
-        url: "/accInv/queryByCondition",	//请求发送到ShowInfoIndexServlet处
+        url: "/materials/queryByCondition",	//请求发送到ShowInfoIndexServlet处
         data: {"start": start, "end": end, "type":"day", "companyId":companyId, "accTypeId":maintainId},		//请求内包含一个key为name，value为A0001的参数；服务器接收到客户端请求时通过request.getParameter方法获取该参数值
         dataType: "json",		//返回数据形式为json
         success: function (result) {
@@ -363,7 +363,7 @@ function selectDay() {
             if (result != null && result.length > 0) {
                 for (var i = 0; i < result.length; i++) {
                     count.push(result[i].count);
-                    workInfoDatas.push(formatterDay(result[i].accUsedTime));
+                    workInfoDatas.push(formatterDay(result[i].mrCreatedDate));
 
                 }
                 myChart.hideLoading();	//隐藏加载动画
@@ -376,7 +376,7 @@ function selectDay() {
                     series: [	//填入系列（内容）数据
                         {
                             // 根据名字对应到相应的系列
-                            name: '库存统计',
+                            name: '库存使用统计',
                             data: count
                         }
                     ]
@@ -407,7 +407,7 @@ function selectQuarter() {
     $.ajax({	//使用JQuery内置的Ajax方法
         type: "post",		//post请求方式
         async: true,		//异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
-        url: "/accInv/queryByCondition",	//请求发送到ShowInfoIndexServlet处
+        url: "/materials/queryByCondition",	//请求发送到ShowInfoIndexServlet处
         data: {"start": start, "end": end, "type":"quarter", "companyId":companyId, "accTypeId":maintainId},		//请求内包含一个key为name，value为A0001的参数；服务器接收到客户端请求时通过request.getParameter方法获取该参数值
         dataType: "json",		//返回数据形式为json
         success: function (result) {
@@ -417,7 +417,7 @@ function selectQuarter() {
             if (result != null && result.length > 0) {
                 for (var i = 0; i < result.length; i++) {
                     count.push(result[i].count);
-                    workInfoDatas.push(formatterQuarter(result[i].accUsedTime));
+                    workInfoDatas.push(formatterQuarter(result[i].mrCreatedDate));
 
                 }
                 myChart.hideLoading();	//隐藏加载动画
@@ -431,7 +431,7 @@ function selectQuarter() {
 
                         {
                             // 根据名字对应到相应的系列
-                            name: '库存统计',
+                            name: '库存使用统计',
                             data: count
                         }
                     ]
@@ -463,7 +463,7 @@ function selectWeek() {
     $.ajax({	//使用JQuery内置的Ajax方法
         type: "post",		//post请求方式
         async: true,		//异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
-        url: "/accInv/queryByCondition",	//请求发送到ShowInfoIndexServlet处
+        url: "/materials/queryByCondition",	//请求发送到ShowInfoIndexServlet处
         data: {"start": start, "end": end, "type":"week", "companyId":companyId, "accTypeId":maintainId},		//请求内包含一个key为name，value为A0001的参数；服务器接收到客户端请求时通过request.getParameter方法获取该参数值
         dataType: "json",		//返回数据形式为json
         success: function (result) {
@@ -473,7 +473,7 @@ function selectWeek() {
             if (result != null && result.length > 0) {
                 for (var i = 0; i < result.length; i++) {
                     count.push(result[i].count);
-                    workInfoDatas.push(formatterWeek(result[i].accUsedTime));
+                    workInfoDatas.push(formatterWeek(result[i].mrCreatedDate));
 
                 }
                 myChart.hideLoading();	//隐藏加载动画
@@ -487,7 +487,7 @@ function selectWeek() {
 
                         {
                             // 根据名字对应到相应的系列
-                            name: '库存统计',
+                            name: '库存使用统计',
                             data: count
                         }
                     ]

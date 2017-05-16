@@ -103,6 +103,11 @@ public class AccessoriesTypeServiceImpl implements AccessoriesTypeService {
         return accessoriesTypeDAO.countByDisable();
     }
 
+    @Override
+    public List<AccessoriesType> queryTypeName(String companyId) {
+        return accessoriesTypeDAO.queryTypeName(companyId);
+    }
+
     public List<AccessoriesType> blurredQuery(Pager pager, AccessoriesType accessoriesType) {
         return accessoriesTypeDAO.blurredQuery(pager, accessoriesType);
     }

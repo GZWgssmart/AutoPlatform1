@@ -1,5 +1,6 @@
 package com.gs.service.impl;
 
+import com.gs.bean.Accessories;
 import com.gs.bean.Checkin;
 import com.gs.bean.MaterialReturn;
 import com.gs.bean.User;
@@ -66,5 +67,10 @@ public class MaterialReturnServiceImpl implements MaterialReturnService {
 
 	public int countByBlurred(MaterialReturn materialReturn) {
 		return 0;
+	}
+
+	@Override
+	public List<MaterialReturn> queryByCondition(String start, String end, String companyId, String accTypeId, String type) {
+		return materialReturnDAO.queryByCondition(start, end, companyId, accTypeId, type);
 	}
 }

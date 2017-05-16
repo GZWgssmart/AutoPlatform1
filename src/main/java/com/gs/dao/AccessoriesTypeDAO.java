@@ -35,4 +35,9 @@ public interface AccessoriesTypeDAO extends BaseDAO<String, AccessoriesType>{
      * 模糊查询的记录数
      */
     public int countByBlurred(@Param("accessoriesType") AccessoriesType accessoriesType, @Param("user") User user);
+
+    /**
+     * 根据公司查看配件分类名称
+     */
+    public List<AccessoriesType> queryTypeName(@Param("companyId")String companyId);
 }

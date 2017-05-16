@@ -117,6 +117,11 @@ public class AccessoriesServiceImpl implements AccessoriesService {
         return accessoriesDAO.queryByName(accName);
     }
 
+    @Override
+    public List<Accessories> queryByCondition(String start, String end, String companyId, String accTypeId, String type) {
+        return accessoriesDAO.queryByCondition(start, end,companyId,accTypeId, type);
+    }
+
 
     public List<Accessories> blurredQuery(Pager pager, Accessories accessories) {
         return accessoriesDAO.blurredQuery(pager, accessories);
@@ -130,4 +135,6 @@ public class AccessoriesServiceImpl implements AccessoriesService {
     public int countByBlurred(Accessories accessories) {
         return accessoriesDAO.countByBlurred(accessories);
     }
+
+
 }

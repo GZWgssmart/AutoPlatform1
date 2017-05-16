@@ -15,6 +15,16 @@ public class MaterialReturn {
 
     private Date mrReturnDate;
 
+    private int count;
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
     /**
      *  关联其它表的其它实例
      */

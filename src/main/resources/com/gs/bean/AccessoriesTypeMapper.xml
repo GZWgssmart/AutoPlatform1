@@ -160,4 +160,12 @@
         </if>)
     </select>
 
+    <select id="queryTypeName" resultMap="AccessoriesTypeMap">
+        <![CDATA[
+         select t.accTypeId, t.accTypeName from t_accessories a, t_accessories_type t,t_company c
+        where a.accTypeId = t.accTypeId and a.companyId = c.companyId and a.accStatus = 'Y' and
+        c.companyId = #{companyId}
+        ]]>
+    </select>
+
 </mapper>

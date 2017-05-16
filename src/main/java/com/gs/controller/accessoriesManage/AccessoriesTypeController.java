@@ -1,6 +1,7 @@
 package com.gs.controller.accessoriesManage;
 
 import com.gs.bean.AccessoriesType;
+import com.gs.bean.MaintainFix;
 import com.gs.bean.User;
 import com.gs.common.bean.ComboBox4EasyUI;
 import com.gs.common.bean.ControllerResult;
@@ -15,10 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import ch.qos.logback.classic.Logger;
 
 import javax.annotation.Resource;
@@ -273,4 +271,36 @@ public class AccessoriesTypeController {
         dateFormat.setLenient(false);
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
     }
+
+    @ResponseBody
+    @RequestMapping(value = "queryTypeName/{companyId}",method = RequestMethod.GET)
+    public List<ComboBox4EasyUI> queryAll(@PathVariable("companyId") String companyId){
+        logger.info("根据汽修公司， 汽修项目，查询项目名字");
+        List<AccessoriesType> accessoriesTypes = accessoriesTypeService.queryTypeName(companyId);
+        List<ComboBox4EasyUI> comboxs = new ArrayList<ComboBox4EasyUI>();
+        for (AccessoriesType a : accessoriesTypes) {
+            ComboBox4EasyUI comboBox4EasyUI = new ComboBox4EasyUI();
+            comboBox4EasyUI.setId(a.getAccTypeId());
+            comboBox4EasyUI.setText(a.getAccTypeName());
+            comboxs.add(comboBox4EasyUI);
+        }
+        return comboxs;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "queryMyTypeName",method = RequestMethod.GET)
+    public List<ComboBox4EasyUI> mySelectMaintainName(HttpSession session){
+        logger.info("根据汽修公司， 汽修项目，查询项目名字");
+        User user = (User) session.getAttribute("user");
+        List<AccessoriesType> accessoriesTypes = accessoriesTypeService.queryTypeName(user.getCompanyId());
+        List<ComboBox4EasyUI> comboxs = new ArrayList<ComboBox4EasyUI>();
+        for (AccessoriesType a : accessoriesTypes) {
+            ComboBox4EasyUI comboBox4EasyUI = new ComboBox4EasyUI();
+            comboBox4EasyUI.setId(a.getAccTypeId());
+            comboBox4EasyUI.setText(a.getAccTypeName());
+            comboxs.add(comboBox4EasyUI);
+        }
+        return comboxs;
+    }
+
 }
