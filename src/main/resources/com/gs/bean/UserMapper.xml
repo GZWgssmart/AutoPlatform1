@@ -57,7 +57,7 @@
        update t_user u set u.userName = #{userName}, u.userEmail = #{userEmail}, u.userPhone = #{userPhone},
             u.userIdentity = #{userIdentity}, u.userGender = #{userGender},u.userNickname=#{userNickname},
            u.userBirthDay = #{userBirthday}, u.userDes = #{userDes}, u.userSalary = #{userSalary},
-           u.userLoginedTime = #{userLoginedTime}
+           u.userLoginedTime = #{userLoginedTime}, u.userAddress = #{userAddress}
         where u.userId = #{userId};
      ]]>
   </update>
