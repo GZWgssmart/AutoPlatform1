@@ -77,8 +77,8 @@ function showEdit() {
                 var TrackList = row[0];
                 $("#editForm").fill(TrackList);
                 $("#editTrackCreatedTime").val(formatterDate(TrackList.trackCreatedTime));
-                $('#editAdminName').html('<option value="' + TrackList.admin.userId + '">' + TrackList.admin.userName + '</option>').trigger("change");
-                $('#editUserName').html('<option value="' + TrackList.user.userId + '">' + TrackList.user.userName + '</option>').trigger("change");
+                $('#editAdminName').html('<option value="' + TrackList.user.userId + '">' + TrackList.user.userName + '</option>').trigger("change");
+                $('#editUserName').html('<option value="' + TrackList.checkin.userId + '">' + TrackList.checkin.userName + '</option>').trigger("change");
                 validator('editForm');
             } else {
                 swal({

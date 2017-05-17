@@ -17,7 +17,7 @@ public class TrackList {
 
     private User user;
 
-    private User admin;
+    private Checkin checkin;
 
     public User getUser() {
         return user;
@@ -27,12 +27,12 @@ public class TrackList {
         this.user = user;
     }
 
-    public User getAdmin() {
-        return admin;
+    public Checkin getCheckin() {
+        return checkin;
     }
 
-    public void setAdmin(User admin) {
-        this.admin = admin;
+    public void setCheckin(Checkin checkin) {
+        this.checkin = checkin;
     }
 
     public String getTrackId() {

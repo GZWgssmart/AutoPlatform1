@@ -33,10 +33,10 @@
             <thead>
             <tr>
                 <th data-checkbox="true"></th>
-                <th data-field="admin.userName">回访人</th>
+                <th data-field="user.userName">回访人</th>
                 <th data-field="trackContent">回访问题</th>
                 <th data-field="serviceEvaluate">本次服务评价</th>
-                <th data-field="user.userName">跟踪回访用户</th>
+                <th data-field="checkin.userName">跟踪回访用户</th>
                 <th data-field="trackCreatedTime" data-formatter="formatterDate">跟踪回访创建时间</th>
             </tr>
             </thead>
@@ -84,7 +84,7 @@
         <div class="modal-content" style="overflow:hidden;">
             <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('addWindow', 'addForm')"></span>
             <form class="form-horizontal" id="addForm" method="post">
-                <input type="text" name="userId" value="${sessionScope.user.userId}">
+                <input type="hidden" name="userId" value="${sessionScope.user.userId}">
                 <div class="modal-header" style="overflow:auto;">
                     <h4>请填写跟踪回访管理信息</h4>
                 </div>
