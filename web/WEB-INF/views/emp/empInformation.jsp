@@ -69,10 +69,10 @@
     <div class="panel-body" style="padding-bottom:0px;">
         <!--show-refresh, show-toggle的样式可以在bootstrap-table.js的948行修改-->
         <!-- table里的所有属性在bootstrap-table.js的240行-->
-        <table id="table" data-single-select="true">
+        <table id="table" style="table-layout: fixed">
             <thead>
             <tr>
-                <th data-checkbox="true"></th>
+                <th data-radio="true"></th>
                 <th data-field="userName">姓名</th>
                 <th data-field="userGender" data-formatter="formatterGender">性别</th>
                 <th data-formatter="formatterRole">用户角色</th>
@@ -169,6 +169,7 @@
                                        name="userBirthday" class="form-control datetimepicker"/>
                             </div>
                         </div>
+                        <%-- 底薪要修改 --%>
                         <div class="form-group">
                             <label class="col-md-3 control-label">底薪：</label>
                             <div class="col-md-9">
@@ -180,7 +181,7 @@
                         <div class="form-group">
                             <label class="col-md-3 control-label">汽修公司：</label>
                             <div class="col-md-9">
-                                <select class="js-example-basic-multiple userCompany" style="width: 50%;"
+                                <select class="js-example-basic-multiple userCompany" style="width: 100%;"
                                     id="addUserCompany" name="companyId" multiple="multiple"></select>
                             </div>
                         </div>
@@ -334,7 +335,7 @@
                         <div class="form-group col-md-12 pull-right">
                             <label class="col-md-2 control-label" style="top: 9px;right:5px">地址：</label>
                             <div class="col-md-9" id="address" style="margin-top: 10px;display: block;">
-                                <input type="text" define="emp.userAddress" class="form-control">
+                                <input id="sourceAddress" type="text" define="emp.userAddress" class="form-control">
                             </div>
                             <div class="col-md-9" id="userAddress" style="display: none;">
                                 <fieldset id="editCity_china">

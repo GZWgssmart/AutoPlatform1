@@ -82,7 +82,7 @@ var FileInput = function () {
 function showAdd(){
     $.post(contentPath + "/user/isLogin/" + roles, function (data) {
         if (data.result == "success") {
-            initDatePicker('addForm', 'userBirthday'); // 初始化时间框, 第一参数是form表单id, 第二参数是input的name
+            initDatePicker('addForm', 'userBirthday', 'addDatetimepicker'); // 初始化时间框, 第一参数是form表单id, 第二参数是input的name
             $("#addWindow").modal('show');
             $("#addButton").removeAttr("disabled");
             $("#addUserRole").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
@@ -331,7 +331,7 @@ function addSubmit() {
 function showEdit(){
     $.post(contentPath + "/user/isLogin/" + roles, function (data) {
         if (data.result == "success") {
-            initDatePicker('editForm', 'userBirthday'); // 初始化时间框, 第一参数是form表单id, 第二参数是input的name
+            initDatePicker('editForm', 'userBirthday', 'editDatetimepicker'); // 初始化时间框, 第一参数是form表单id, 第二参数是input的name
             var row =  $('table').bootstrapTable('getSelections');
             if(row.length >0) {
                 var emp = row[0];

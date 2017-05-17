@@ -86,6 +86,14 @@ public class UserBasicManageController {
                 String city = request.getParameter("city");
                 String area = request.getParameter("area");
                 user.setUserAddress(province + "-" + city + "-" + area);
+
+                String[] selects = request.getParameterValues("roleId");   // 获取页面上多选的角色值
+                if(selects != null) {
+                    for(int i = 0; i < selects.length;i++) {
+                        System.out.println(i + " -----------------------------------------" + selects[i]);
+                    }
+                }
+
                 user.setUserPwd(EncryptUtil.md5Encrypt("123123"));
                 User u = (User) session.getAttribute("user");
                 user.setCompanyId(u.getCompanyId());    // 设置为session获取的user对象的CompanyId
