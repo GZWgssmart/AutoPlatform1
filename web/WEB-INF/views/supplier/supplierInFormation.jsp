@@ -21,6 +21,9 @@
             <thead>
             <tr>
                 <th data-radio="true"></th>
+                <th data-width="100" data-field="supplyType.supplyTypeName">
+                    供应商类型
+                </th>
                 <th data-width="100" data-field="supplyName">
                     供应商名称
                 </th>
@@ -38,9 +41,6 @@
                 </th>
                 <th data-width="180" data-field="supplyCreatedTime"data-formatter="formatterDateTime">
                     创建时间
-                </th>
-                <th data-width="100" data-field="supplyType.supplyTypeName">
-                    供应商类型
                 </th>
                 <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员">
                     <th data-width="130" data-field="company.companyName">
@@ -122,58 +122,51 @@
                 </div>
                 <div>
                     <div>
-                        <div class="form-group col-md-6 pull-left" >
-                            <label class="col-md-4 control-label">供应商名称：</label>
-                            <div class="col-md-8">
-                                <input id="addSupplyName" name="supplyName" type="text" placeholder="请输入供应商名称" class="form-control">
-                            </div>
-                        </div>
-                        <div class="form-group col-md-6 pull-left">
-                            <label class="col-md-4 control-label">联系电话：</label>
-                            <div class="col-md-8">
-                                <input type="number" id="addSupplyTel" placeholder="请输入联系电话" name="supplyTel" class="form-control" style="width:100%"/>
-                            </div>
-                        </div>
-                        <p class="clearfix"></p>
-                    </div>
-                    <div>
-                        <div class="form-group col-md-6 pull-left">
-                            <label class="col-md-4 control-label">供应商负责人：</label>
-                            <div class="col-md-8">
-                                <input type="text"  name="supplyPricipal" placeholder="请输入供应商负责人" class="form-control">
-                            </div>
-                        </div>
-                        <div class="form-group col-md-6 pull-left">
-                            <label class="col-md-4 control-label">供应商地址：</label>
-                            <div class="col-md-8">
-                                <input type="text" name="supplyAddress" placeholder="请输入供应商地址" class="form-control">
-                            </div>
-                        </div>
-                        <p class="clearfix"></p>
-                    </div>
-                    <div>
-                        <div class="form-group col-md-6 pull-left">
-                            <label class="col-md-4 control-label">供应商微信号：</label>
-                            <div class="col-md-8">
-                                <input type="text"  name="supplyWeChat" placeholder="请输入供应商微信号" class="form-control">
-                            </div>
-                        </div>
                         <div class="form-group col-md-6 pull-left">
                             <label class="col-md-4 control-label">供应商类型：</label>
                             <div class="col-md-8">
                                 <select id="addSupplyType" class="js-example-tags supplyType" name="supplyTypeId" style="width:100%"></select>
                             </div>
                         </div>
+                        <div class="form-group col-md-6 pull-left" >
+                            <label class="col-md-4 control-label">供应商名称：</label>
+                            <div class="col-md-8">
+                                <input id="addSupplyName" name="supplyName" type="text" placeholder="请输入供应商名称" class="form-control">
+                            </div>
+                        </div>
                         <p class="clearfix"></p>
                     </div>
                     <div>
-                        <%--<div class="form-group col-md-6 pull-left">
-                            <label class="col-md-4 control-label">供应商所属公司：</label>
+                        <div class="form-group col-md-6 pull-left">
+                            <label class="col-md-4 control-label">联系电话：</label>
                             <div class="col-md-8">
-                                <select id="addCompany" class="js-example-tags company" name="companyId" style="width:100%">
-                            </select>
+                                <input type="number" id="addSupplyTel" placeholder="请输入联系电话" name="supplyTel" class="form-control" style="width:100%"/>
                             </div>
-                        </div>--%>
+                        </div>
+                        <div class="form-group col-md-6 pull-left">
+                            <label class="col-md-4 control-label">供应商负责人：</label>
+                            <div class="col-md-8">
+                                <input type="text"  name="supplyPricipal" placeholder="请输入供应商负责人" class="form-control">
+                            </div>
+                        </div>
+                        <p class="clearfix"></p>
+                    </div>
+                    <div>
+                        <div class="form-group col-md-6 pull-left">
+                            <label class="col-md-4 control-label">供应商地址：</label>
+                            <div class="col-md-8">
+                                <input type="text" name="supplyAddress" placeholder="请输入供应商地址" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6 pull-left">
+                            <label class="col-md-4 control-label">供应商微信号：</label>
+                            <div class="col-md-8">
+                                <input type="text"  name="supplyWeChat" placeholder="请输入供应商微信号" class="form-control">
+                            </div>
+                        </div>
+                        <p class="clearfix"></p>
+                    </div>
+                    <div>
                         <div class="form-group col-md-6 pull-left">
                             <label class="col-md-4 control-label">支付宝账号：</label>
                             <div class="col-md-8">
@@ -181,9 +174,36 @@
                             </div>
                         </div>
                         <div class="form-group col-md-6 pull-left">
-                            <label class="col-md-4 control-label">银行卡全称：</label>
-                            <div class="col-md-8">
+                            <label class="col-md-4 control-label">开户银行全称：</label>
+                            <%--<div class="col-md-8">
                                 <input type="text" placeholder="请输入银行卡全称" name="supplyBank" class="form-control">
+                            </div>--%>
+                            <div class="col-md-8">
+                                <select class="js-example-tags form-control" name="supplyBank" placeholder="请选择开户银行全称" class="form-control">
+                                    <option value="中国银行">中国银行</option>
+                                    <option value="交通银行">交通银行</option>
+                                    <option value="招商银行">招商银行</option>
+                                    <option value="广发银行">广发银行</option>
+                                    <option value="浦发银行">浦发银行</option>
+                                    <option value="中信银行">中信银行</option>
+                                    <option value="华夏银行">华夏银行</option>
+                                    <option value="汇丰银行">汇丰银行</option>
+                                    <option value="光大银行">光大银行</option>
+                                    <option value="平安银行">平安银行</option>
+                                    <option value="浙商银行">浙商银行</option>
+                                    <option value="上海银行">上海银行</option>
+                                    <option value="北京银行">北京银行</option>
+                                    <option value="中信银行">中信银行</option>
+                                    <option value="温州银行">温州银行</option>
+                                    <option value="民生银行">民生银行</option>
+                                    <option value="中国建设银行">中国建设银行</option>
+                                    <option value="中国农业银行">中国农业银行</option>
+                                    <option value="中国工商银行">中国工商银行</option>
+                                    <option value="中国农业银行">中国农业银行</option>
+                                    <option value="杭州联合银行">杭州联合银行</option>
+                                    <option value="深圳发展银行">深圳发展银行</option>
+                                    <option value="中国邮政储蓄银行">中国邮政储蓄银行</option>
+                                </select>
                             </div>
                         </div>
                        <p class="clearfix"></p>
@@ -196,9 +216,9 @@
                             </div>
                         </div>
                         <div class="form-group col-md-6 pull-left">
-                            <label class="col-md-4 control-label">银行卡卡号：</label>
+                            <label class="col-md-4 control-label">开户银行卡号：</label>
                             <div class="col-md-8">
-                                <input type="number" placeholder="请输入银行卡卡号" name="supplyBankNo"  class="form-control">
+                                <input type="number" placeholder="请输入开户银行卡号" name="supplyBankNo"  class="form-control">
                             </div>
                         </div>
                     </div>
@@ -230,45 +250,45 @@
                 <div>
                     <div>
                         <div class="form-group col-md-6 pull-left">
+                            <label class="col-md-4 control-label">供应商类型：</label>
+                            <div class="col-md-8">
+                                <select id="editSupplyType" class="js-example-tags supplyType" name="supplyTypeId" style="width:100%"></select>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6 pull-left">
                             <label class="col-md-4 control-label">供应商名称：</label>
                             <div class="col-md-8">
                                 <input type="text" name="supplyName" define="supply.supplyName" placeholder="请输入供应商名称"  class="form-control">
                             </div>
                         </div>
+                        <p class="clearfix"></p>
+                    </div>
+                    <div>
                         <div class="form-group col-md-6 pull-left">
                             <label class="col-md-4 control-label">联系电话：</label>
                             <div class="col-md-8">
                                 <input type="number" define="supply.supplyTel" placeholder="请输入联系电话" name="supplyTel" class="form-control" style="width:100%"/>
                             </div>
                         </div>
-                        <p class="clearfix"></p>
-                    </div>
-                    <div>
                         <div class="form-group col-md-6 pull-left">
                             <label class="col-md-4 control-label">供应商负责人：</label>
                             <div class="col-md-8">
                                 <input type="text" define="supply.supplyPricipal"   name="supplyPricipal" class="form-control">
                             </div>
                         </div>
+                        <p class="clearfix"></p>
+                    </div>
+                    <div>
                         <div class="form-group col-md-6 pull-left">
                             <label class="col-md-4 control-label">供应商地址：</label>
                             <div class="col-md-8">
                                 <input type="text" define="supply.supplyAddress" name="supplyAddress" class="form-control">
                             </div>
                         </div>
-                        <p class="clearfix"></p>
-                    </div>
-                    <div>
                         <div class="form-group col-md-6 pull-left">
                             <label class="col-md-4 control-label">供应商微信号：</label>
                             <div class="col-md-8">
                                 <input type="text" define="supply.supplyWeChat" name="supplyWeChat"  class="form-control">
-                            </div>
-                        </div>
-                        <div class="form-group col-md-6 pull-left">
-                            <label class="col-md-4 control-label">供应商类型：</label>
-                            <div class="col-md-8">
-                                <select id="editSupplyType" class="js-example-tags supplyType" name="supplyTypeId" style="width:100%"></select>
                             </div>
                         </div>
                         <p class="clearfix"></p>
@@ -281,9 +301,36 @@
                             </div>
                         </div>
                         <div class="form-group col-md-6 pull-left">
-                            <label class="col-md-4 control-label">银行卡全称：</label>
-                            <div class="col-md-8">
+                            <label class="col-md-4 control-label">开户银行全称：</label>
+                            <%--<div class="col-md-8">
                                 <input type="text" define="supply.supplyBank" name="supplyBank" class="form-control">
+                            </div>--%>
+                            <div class="col-md-8">
+                                <select class="js-example-tags form-control" define="supply.supplyBank" class="form-control" name="supplyBank">
+                                    <option value="中国银行">中国银行</option>
+                                    <option value="交通银行">交通银行</option>
+                                    <option value="招商银行">招商银行</option>
+                                    <option value="广发银行">广发银行</option>
+                                    <option value="浦发银行">浦发银行</option>
+                                    <option value="中信银行">中信银行</option>
+                                    <option value="华夏银行">华夏银行</option>
+                                    <option value="汇丰银行">汇丰银行</option>
+                                    <option value="光大银行">光大银行</option>
+                                    <option value="平安银行">平安银行</option>
+                                    <option value="浙商银行">浙商银行</option>
+                                    <option value="上海银行">上海银行</option>
+                                    <option value="北京银行">北京银行</option>
+                                    <option value="中信银行">中信银行</option>
+                                    <option value="温州银行">温州银行</option>
+                                    <option value="民生银行">民生银行</option>
+                                    <option value="中国建设银行">中国建设银行</option>
+                                    <option value="中国农业银行">中国农业银行</option>
+                                    <option value="中国工商银行">中国工商银行</option>
+                                    <option value="中国农业银行">中国农业银行</option>
+                                    <option value="杭州联合银行">杭州联合银行</option>
+                                    <option value="深圳发展银行">深圳发展银行</option>
+                                    <option value="中国邮政储蓄银行">中国邮政储蓄银行</option>
+                                </select>
                             </div>
                         </div>
                         <p class="clearfix"></p>
@@ -296,7 +343,7 @@
                             </div>
                         </div>
                         <div class="form-group col-md-6 pull-left">
-                            <label class="col-md-4 control-label">银行卡卡号：</label>
+                            <label class="col-md-4 control-label">开户银行卡号：</label>
                             <div class="col-md-8">
                                 <input type="number" define="supply.supplyBankNo" name="supplyBankNo"  class="form-control">
                             </div>
