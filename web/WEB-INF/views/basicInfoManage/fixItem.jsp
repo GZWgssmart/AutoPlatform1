@@ -335,7 +335,7 @@
                     <button type="button" class="btn btn-default"
                             data-dismiss="modal">关闭
                     </button>
-                    <button id="addButton" type="button" onclick="addSubmit()" class="btn btn-primary">添加
+                    <button id="addButton" type="button" onclick="addSubmit()" class="btn btn-sm btn-success">添加
                     </button>
                     <input type="reset" name="reset" style="display: none;"/>
                 </div>

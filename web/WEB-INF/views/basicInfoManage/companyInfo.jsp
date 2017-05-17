@@ -292,7 +292,7 @@
                     <button type="button" class="btn btn-default"
                             data-dismiss="modal">关闭
                     </button>
-                    <button id="editButton" type="button" onclick="editSubmit()" class="btn btn-primary">保存
+                    <button id="editButton" type="button" onclick="editSubmit()" class="btn btn-sm btn-success">保存
                     </button>
                 </div>
             </form>
