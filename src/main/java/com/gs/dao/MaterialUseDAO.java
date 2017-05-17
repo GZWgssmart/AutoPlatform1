@@ -40,7 +40,7 @@ public interface MaterialUseDAO extends BaseDAO<String, MaterialUse>{
      *
      */
     public List<RecordBaseView> queryCurRecordsByPager(@Param("companyId")String companyId,@Param("hasEmp")String hasEmp, @Param("pager")Pager pager);
-    public int countNoUseRecord(@Param("companyId")String companyId);
+    public int countNoUseRecord(@Param("companyId")String companyId, @Param("hasEmp")String hasEmp);
     public List<User> companyEmps(@Param("companyId")String companyId);
     public int insertWorkInfo(WorkInfo workInfo);
 

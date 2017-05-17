@@ -321,7 +321,7 @@
 
   <!-- 其它的 不与这个表相关的-->
     <select id="queryCurRecordsByPager" resultMap="baseRecordView">
-  	select record.recordCreatedTime,
+  	<!--select record.recordCreatedTime,
 				(select sum(fix.maintainHour) from t_maintain_detail detail
 					Left JOIN t_maintain_fix fix 	on detail.maintainItemId = fix.maintainId
 					where detail.maintainRecordId = record.recordId) as 'needHours',
@@ -349,10 +349,10 @@
             <otherwise>not in</otherwise>
         </choose>
          (select workinfo.recordId from t_work_info workinfo	) order by  record.recordCreatedTime desc
-	 limit #{pager.beginIndex}, #{pager.pageSize}
+	 limit #{pager.beginIndex}, #{pager.pageSize}-->
 
 
-       <!-- select record.recordCreatedTime,
+        select record.recordCreatedTime,
         (select sum(fix.maintainHour) from t_maintain_detail detail
         Left JOIN t_maintain_fix fix 	on detail.maintainItemId = fix.maintainId
         where detail.maintainRecordId = record.recordId) as 'needHours',
@@ -379,9 +379,9 @@
                 and workinfo.userId is null or workinfo.userId = ''
             </otherwise>
         </choose>
-        and com.companyId = "11"
+        and com.companyId = #{companyId}
         order by  record.recordCreatedTime desc
-        limit #{pager.beginIndex}, #{pager.pageSize}-->
+        limit #{pager.beginIndex}, #{pager.pageSize}
   </select>
 
     <select id="countNoUseRecord" resultType="int">
@@ -394,8 +394,14 @@
         <if test="companyId != null ">
             and checkin.companyId = #{companyId}
         </if>
-
-          and workinfo.userId is null or workinfo.userId = ''
+        <choose>
+            <when test="hasEmp!=null and  hasEmp != ''">
+                and workinfo.userId is not null or workinfo.userId != ''
+            </when>
+            <otherwise>
+                and workinfo.userId is null or workinfo.userId = ''
+            </otherwise>
+        </choose>
     </select>
 
     <select id="recordAccByPager">
@@ -418,12 +424,16 @@
       where t_company.companyId = #{companyId};
     </select>
 
-    <insert id="insertWorkInfo" parameterType="com.gs.bean.WorkInfo">
+  <!--  <insert id="insertWorkInfo" parameterType="com.gs.bean.WorkInfo">
         INSERT INTO t_work_info
         (workId,recordId, userId, workAssignTime, workCreatedTime,workStatus)
         VALUES
         (uuid(),#{recordId},#{userId},#{workAssignTime},#{workCreatedTime},'Y')
-    </insert>
+    </insert>-->
+
+    <update id="insertWorkInfo" parameterType="com.gs.bean.WorkInfo">
+        update t_work_info  set userId = #{userId} , workAssignTime = #{workAssignTime} where recordId = #{recordId}
+    </update>
     
     <select id="userWorksByPager" resultMap="userWorkView">
         select

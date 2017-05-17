@@ -48,6 +48,7 @@ public interface MaterialUseService extends BaseService<String, MaterialUse>{
     public List<RecordBaseView> queryNoUseRecord( String companyId, Pager pager);
     public List<RecordBaseView> queryHasUseRecord(String companyId, Pager pager);
     public int countNoUseRecord(String companyId);
+    public int countHasUseRecord(String companyId);
     public List<User> companyEmps(String companyId);
     public int insertWorkInfo(WorkInfo workInfo);
 

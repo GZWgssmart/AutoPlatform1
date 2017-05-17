@@ -184,12 +184,19 @@ public class MaterialUseServiceImpl implements MaterialUseService {
 	}
 	@Override
 	public int countNoUseRecord(String companyId) {
-		return materialUseDAO.countNoUseRecord(companyId);
+		return materialUseDAO.countNoUseRecord(companyId, "");
 	}
+
+	@Override
+	public int countHasUseRecord(String companyId) {
+		return materialUseDAO.countNoUseRecord(companyId, "Y");
+	}
+
 	@Override
 	public List<User> companyEmps(String companyId){
 		return materialUseDAO.companyEmps(companyId);
 	}
+
 
 	@Override
 	public int insertWorkInfo(WorkInfo workInfo) {

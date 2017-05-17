@@ -89,7 +89,7 @@ public class WorkingDispatchingController {
                 Pager pager = new Pager();
                 pager.setPageNo(str2int(pageNo));
                 pager.setPageSize(str2int(pageSize));
-                int total = materialUseService.countNoUseRecord(user.getCompanyId());
+                int total = materialUseService.countHasUseRecord(user.getCompanyId());
                 List<RecordBaseView> rbvs = materialUseService.queryHasUseRecord(user.getCompanyId(), pager);
                 Pager4EasyUI pager4EasyUI = new Pager4EasyUI(total, rbvs);
                 return pager4EasyUI;
