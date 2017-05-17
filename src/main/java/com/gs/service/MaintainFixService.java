@@ -23,7 +23,7 @@ public interface MaintainFixService extends BaseService<String, MaintainFix>{
     /**
      * 分页查询被禁用的记录
      */
-    public int countByDisable();
+    public int countByDisable(User user);
 
     public List<MaintainFix> queryByPagerMaintain(Pager pager);
     //    分页查询保养项目总数
@@ -33,7 +33,7 @@ public interface MaintainFixService extends BaseService<String, MaintainFix>{
 
     public List<MaintainFix> queryByPagerDisableService(Pager pager);
 
-    public int countByDisableService();
+    public int countByDisableService(User user);
 
     /*<!--根据汽修公司， 汽修项目，查询项目名字（id）-->*/
     public List<MaintainFix> queryByMaintainName(String companyId, String maintainOrFix);

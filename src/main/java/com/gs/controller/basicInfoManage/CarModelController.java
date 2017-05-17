@@ -120,9 +120,9 @@ public class CarModelController {
                 if (carModel != null && !carModel.equals("")) {
                     logger.info("添加汽车车型");
                     carModelService.insert(carModel);
-                    return ControllerResult.getSuccessResult("添加成功");
+                    return ControllerResult.getSuccessResult("添加汽车车型成功");
                 } else {
-                    return ControllerResult.getFailResult("添加失败，请输入必要的信息");
+                    return ControllerResult.getFailResult("添加汽车车型失败");
                 }
             } else {
                 logger.info("此用户无拥有此方法角色");
@@ -144,9 +144,9 @@ public class CarModelController {
                 if (carModel != null && !carModel.equals("")) {
                     logger.info("修改汽车车型");
                     carModelService.update(carModel);
-                    return ControllerResult.getSuccessResult("修改成功");
+                    return ControllerResult.getSuccessResult("修改汽车车型成功");
                 } else {
-                    return ControllerResult.getFailResult("修改失败，请输入必要的信息");
+                    return ControllerResult.getFailResult("修改汽车车型失败");
                 }
             } else {
                 logger.info("此用户无拥有此方法角色");

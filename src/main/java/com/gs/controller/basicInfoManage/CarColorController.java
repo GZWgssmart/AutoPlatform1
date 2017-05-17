@@ -96,9 +96,9 @@ public class CarColorController {
                 if (carColor != null && !carColor.equals("")) {
                     logger.info("添加汽车颜色");
                     carColorService.insert(carColor);
-                    return ControllerResult.getSuccessResult("添加成功");
+                    return ControllerResult.getSuccessResult("添加汽车颜色成功");
                 } else {
-                    return ControllerResult.getFailResult("添加失败，请输入必要的信息");
+                    return ControllerResult.getFailResult("添加汽车颜色失败");
                 }
             } else {
                 logger.info("此用户无拥有此方法角色");
@@ -120,9 +120,9 @@ public class CarColorController {
                 if (carColor != null && !carColor.equals("")) {
                     logger.info("修改汽车颜色");
                     carColorService.update(carColor);
-                    return ControllerResult.getSuccessResult("修改成功");
+                    return ControllerResult.getSuccessResult("修改汽车颜色成功");
                 } else {
-                    return ControllerResult.getFailResult("修改失败，请输入必要的信息");
+                    return ControllerResult.getFailResult("修改汽车颜色失败");
                 }
             } else {
                 logger.info("此用户无拥有此方法角色");

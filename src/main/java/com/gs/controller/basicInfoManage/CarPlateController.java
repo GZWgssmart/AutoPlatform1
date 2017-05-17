@@ -95,9 +95,9 @@ public class CarPlateController {
                 if (carPlate != null && !carPlate.equals("")) {
                     logger.info("添加车牌信息");
                     carPlateService.insert(carPlate);
-                    return ControllerResult.getSuccessResult("添加成功");
+                    return ControllerResult.getSuccessResult("添加车牌信息成功");
                 } else {
-                    return ControllerResult.getFailResult("添加失败，请输入必要的信息");
+                    return ControllerResult.getFailResult("添加车牌信息失败");
                 }
             } else {
                 logger.info("此用户无拥有此方法角色");
@@ -118,9 +118,9 @@ public class CarPlateController {
                 if (carPlate != null && !carPlate.equals("")) {
                     logger.info("修改车牌信息");
                     carPlateService.update(carPlate);
-                    return ControllerResult.getSuccessResult("修改成功");
+                    return ControllerResult.getSuccessResult("修改车牌信息成功");
                 } else {
-                    return ControllerResult.getFailResult("修改失败，请输入必要的信息");
+                    return ControllerResult.getFailResult("修改车牌信息失败");
                 }
             } else {
                 logger.info("此用户无拥有此方法角色");

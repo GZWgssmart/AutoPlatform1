@@ -78,7 +78,7 @@ public class CompanyController {
     @RequestMapping(value="queryByPagerDisable", method = RequestMethod.GET)
     public Pager4EasyUI<Company> queryByPagerDisable(HttpSession session,@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
         if (SessionUtil.isLogin(session)) {
-            String roles = "系统超级管理员,系统普通管理员";
+            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员";
             if (RoleUtil.checkRoles(roles)) {
                 logger.info("分页查询所有被禁用公司信息");
                 Pager pager = new Pager();
@@ -103,7 +103,7 @@ public class CompanyController {
     @RequestMapping(value="queryByPagerCompany", method = RequestMethod.GET)
     public Pager4EasyUI<Company> queryAll(HttpSession session,@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
         if (SessionUtil.isLogin(session)) {
-            String roles = "系统超级管理员,系统普通管理员";
+            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员";
             if (RoleUtil.checkRoles(roles)) {
                 logger.info("分页查询所有公司信息");
                 Pager pager = new Pager();
@@ -134,13 +134,11 @@ public class CompanyController {
                     logger.info("添加公司信息");
                     company.setCompanyId(UUIDUtil.uuid());
                     companyService.insert(company);
-
-
                     map.put("company",company);
-                    map.put("controllerResult",ControllerResult.getSuccessResult("添加成功"));
+                    map.put("controllerResult",ControllerResult.getSuccessResult("添加公司信息成功"));
                     return map;
                 } else {
-                    map.put("controllerResult",ControllerResult.getFailResult("添加失败，请输入必要的信息"));
+                    map.put("controllerResult",ControllerResult.getFailResult("添加公司信息失败"));
                     return  map;
                 }
             }else {
@@ -157,17 +155,17 @@ public class CompanyController {
     @RequestMapping(value = "updateCompany",method = RequestMethod.POST)
     public Object update(HttpSession session,Company company){
         if (SessionUtil.isLogin(session)) {
-            String roles = "系统超级管理员,系统普通管理员";
+            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员";
             if (RoleUtil.checkRoles(roles)) {
                 Map map = new HashMap();
                 if (company != null && !company.equals("")) {
-                    logger.info("修改汽车品牌");
+                    logger.info("修改公司信息");
                     companyService.update(company);
                     map.put("company",company);
-                    map.put("controllerResult",ControllerResult.getSuccessResult("修改成功"));
+                    map.put("controllerResult",ControllerResult.getSuccessResult("修改公司信息成功"));
                     return map;
                 } else {
-                    map.put("controllerResult",ControllerResult.getFailResult("修改失败，请输入必要的信息"));
+                    map.put("controllerResult",ControllerResult.getFailResult("修改公司信息失败"));
                     return  map;
                 }
             }else {

@@ -1,6 +1,6 @@
-var roles = "系统超级管理员,系统普通管理员";
+
 $(function () {
-    var roles = "系统超级管理员,系统普通管理员";
+    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员";
     $.post("/user/isLogin/"+roles, function (data) {
         if(data.result == 'success'){
             initTable('table', '/company/queryByPagerCompany'); // 初始化表格
@@ -164,7 +164,8 @@ function statusFormatter(value, row, index) {
 
 //显示添加
 function showAdd(){
-    initDatePicker('addForm', 'companyOpendate','addDateTimePicker'); // 初始化时间框, 第一参数是form表单id, 第二参数是input的name
+    // 初始化时间框, 第一参数是form表单id, 第二参数是input的name, 第三个参数为input的id
+    initDatePicker('addForm', 'companyOpendate','addDateTimePicker');
     // $("#addWindow").modal('show');
     // $("#addButton").removeAttr("disabled");
     // validator('addForm'); // 初始化验证
@@ -230,10 +231,10 @@ function validator(formId) {
                 }
             },
             companyTel: {
-                message: '公司联系电话验证失败',
+                message: '负责人验证失败',
                 validators: {
                     notEmpty: {
-                        message: '公司联系电话不能为空'
+                        message: '负责人不能为空'
                     },
                 }
             },
@@ -396,6 +397,7 @@ function editSubmit(){
 }
 
 function formSubmit(url, formId, winId, fileId) {
+    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员";
     $.post("/user/isLogin/"+roles, function (data) {
         if (data.result == "success") {
             $.post(url, $("#"+formId).serialize(),
@@ -457,7 +459,7 @@ function endSuc(data, winId, formId) {
     if (controllerResult.result == "success") {
         swal({
             title:"",
-            text: "添加成功",
+            text: "修改公司信息成功",
             confirmButtonText:"确定", // 提示按钮上的文本
             type:"success"
         })
@@ -472,7 +474,7 @@ function endSuc(data, winId, formId) {
         } else if (controllerResult.result == "fail") {
             swal({
                 title: "",
-                text: "添加失败",
+                text: "修改公司信息失败",
                 confirmButtonText: "确认",
                 type: "error"
             })

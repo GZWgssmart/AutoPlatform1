@@ -21,13 +21,13 @@ import java.util.List;
 @Repository
 public interface MaintainFixDAO extends BaseDAO<String, MaintainFix>{
     /**
-     * 分页查询被禁用的记录
+     * 分页查询被禁用的保养记录
      */
     public List<MaintainFix> queryByPagerDisable(Pager pager);
     /**
-     * 分页查询被禁用的记录
+     * 分页查询被禁用的保养记录
      */
-    public int countByDisable();
+    public int countByDisable(User user);
 
 
 //    分页查询保养项目
@@ -39,7 +39,7 @@ public interface MaintainFixDAO extends BaseDAO<String, MaintainFix>{
 
     public List<MaintainFix> queryByPagerDisableService(Pager pager);
 
-    public int countByDisableService();
+    public int countByDisableService(User user);
 
     /*<!--根据汽修公司， 汽修项目，查询项目名字（id）-->*/
     public List<MaintainFix> queryByMaintainName(@Param("companyId")String companyId, @Param("maintainOrFix")String maintainOrFix);

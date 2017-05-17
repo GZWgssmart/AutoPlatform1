@@ -337,7 +337,8 @@ public class MaintainController {
                 Pager pager = new Pager();
                 pager.setPageNo(Integer.valueOf(pageNumber));
                 pager.setPageSize(Integer.valueOf(pageSize));
-                pager.setTotalRecords(maintainFixService.countByDisable());
+                pager.setUser((User) session.getAttribute("user"));
+                pager.setTotalRecords(maintainFixService.countByDisable((User) session.getAttribute("user")));
                 List<MaintainFix> maintainFixes = maintainFixService.queryByPagerDisable(pager);
                 return new Pager4EasyUI<MaintainFix>(pager.getTotalRecords(), maintainFixes);
             }else {
@@ -365,7 +366,8 @@ public class MaintainController {
                 Pager pager = new Pager();
                 pager.setPageNo(Integer.valueOf(pageNumber));
                 pager.setPageSize(Integer.valueOf(pageSize));
-                pager.setTotalRecords(maintainFixService.countByDisableService());
+                pager.setUser((User) session.getAttribute("user"));
+                pager.setTotalRecords(maintainFixService.countByDisableService((User) session.getAttribute("user")));
                 List<MaintainFix> maintainFixes = maintainFixService.queryByPagerDisableService(pager);
                 return new Pager4EasyUI<MaintainFix>(pager.getTotalRecords(), maintainFixes);
             }else {
