@@ -209,7 +209,7 @@
                     <h3></h3><input style="display:none" data-flag="flag"/>
                 </div>
             <hr/>
-            <form id="addForm" class="form-horizontal">
+            <form id="addForm" role="form" class="form-horizontal">
                 <input type="text" name="moduleId" define="module.moduleId" style="display: none;"/>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">模块名称：</label>
@@ -229,6 +229,7 @@
                             onclick = "closeModal()">关闭
                     </button>
                     <button id="addButton" type="submit" class="btn btn-primary btn-sm" onclick="addSubmit()">保存</button>
+                    <input type="reset" name="reset" style="display: none;"/>
                 </div>
             </form>
         </div><!-- /.modal-content -->

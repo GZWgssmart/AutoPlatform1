@@ -426,8 +426,6 @@ function formSubmit(url, modalId ,formId, flag) {
                         updBodyModulePanel(moduleTemp);
                         updateLeftNavTitle(moduleTemp);
                     }
-                    closeModal();
-
                 });// 提示窗口, 修改成功
             } else if (data.controllResult.result == "fail") {
                 swal({title:"",
@@ -436,6 +434,7 @@ function formSubmit(url, modalId ,formId, flag) {
                     type:"error"});
                 $("#"+formId).removeAttr("disabled");
             }
+            closeModal();
         }, "json"
     )
 }
