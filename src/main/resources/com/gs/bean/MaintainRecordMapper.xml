@@ -412,6 +412,30 @@
         and (mr.currentStatus = '待结算' or mr.currentStatus = '待收费' or mr.currentStatus = '已收费')
     </select>
 
+    <!-- 查询所有可用维修保养记录 -->
+    <select id="queryByOwner" resultMap="MaintainRecordMap">
+        <![CDATA[
+            select m.*, ck.*, cc.colorId, cc.colorName, cp.plateId, cp.plateName,
+            cm.modelId, cm.modelName, company.companyId,
+            company.companyName,company.companyAddress,
+            company.companyAddress, company.companyTel,
+            company.companyLogo, cb.brandId, cb.brandName
+            from t_maintain_record m, t_checkin ck, t_car_brand cb,
+             t_car_color cc, t_car_model cm, t_car_plate cp, t_company company
+              where m.checkinId = ck.checkinId and ck.brandId = cb.brandId
+              and ck.colorId = cc.colorId and ck.modelId = cm.modelId
+             and ck.plateId = cp.plateId and ck.companyId = company.companyId
+             and m.recordStatus = 'Y' and ck.userId = #{userId}
+         ]]>
+        order by m.recordCreatedTime Desc
+        limit #{pager.beginIndex}, #{pager.pageSize}
+    </select>
+    <!-- 查询所有可用维修保养记录个数 -->
+    <select id="countByOwner" resultType="int">
+        select count(recordId) from t_maintain_record mr, t_checkin ck
+        where mr.checkinId = ck.checkinId and recordStatus = 'Y' and ck.userId = #{userId}
+    </select>
+
     <!--维修记录的报表显示-->
 
     <!--员工工单报表-->
