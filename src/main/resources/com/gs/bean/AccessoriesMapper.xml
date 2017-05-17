@@ -278,12 +278,4 @@ c.companyId = #{companyId} and t.accTypeId = #{accTypeId} and a.accUsedTime >= #
     ]]>
   </select>
 
-
-  <select id="queryById" resultMap="AccessoriesMap">
-    <![CDATA[
-        SELECT ac.accIdle FROM auto_platform.t_accessories ac WHERE accId=#{accId}
-    ]]>
-  </select>
-
-
 </mapper>
