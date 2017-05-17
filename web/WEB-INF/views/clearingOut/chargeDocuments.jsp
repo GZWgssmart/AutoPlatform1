@@ -183,13 +183,13 @@
                             <button type="button" class="btn btn-default" onclick="inOpenCheckInType();">
                                 <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查看收入类型
                             </button>
-                            <input type="text" id="inTypeName" name="inTypeName" readonly="true" placeholder="请点击选择收入类型" class="form-control" style="width:56%;">
+                            <input type="text" id="inTypeName" name="inTypeName" readonly="true" placeholder="请选择收入类型" class="form-control" style="width:56%;">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">收入金额：</label>
                         <div class="col-sm-7">
-                            <input type="text" id="inOutMoneyId" name="inOutMoney" placeholder="请输入收入金额" class="form-control">
+                            <input type="text" id="inOutMoneyId" name="inOutMoney" readonly="true" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">

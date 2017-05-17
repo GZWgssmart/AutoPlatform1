@@ -117,7 +117,7 @@ public class MaintainDetailController {
             if(RoleUtil.checkRoles(roles)) {
                 logger.info("添加维修保养明细");
                 maintainDetailService.insert(maintainDetail);
-                return ControllerResult.getSuccessResult("添加成功");
+                return ControllerResult.getSuccessResult("生成维修保养明细成功");
             }else{
                 logger.info("此用户无拥有添加维修保养明细的角色");
                 return ControllerResult.getNotRoleResult("权限不足");
@@ -139,7 +139,7 @@ public class MaintainDetailController {
             if(RoleUtil.checkRoles(roles)) {
                 logger.info("修改维修保养明细");
                 maintainDetailService.update(maintainDetail);
-                return ControllerResult.getSuccessResult("修改成功");
+                return ControllerResult.getSuccessResult("修改维修保养明细成功");
             }else{
                 logger.info("此用户无拥有修改维修保养明细的角色");
                 return ControllerResult.getNotRoleResult("权限不足");
@@ -257,7 +257,7 @@ public class MaintainDetailController {
                             maintainRecord.setCurrentStatus("维修保养中");
                             maintainRecord.setIfConfirm("Y");
                             maintainRecordService.update(maintainRecord);
-                            return ControllerResult.getSuccessResult("确定成功");
+                            return ControllerResult.getSuccessResult("确定成功, 开始进行维修保养...");
                     }else{
                         return ControllerResult.getFailResult("确定失败, 此维修保养记录所属明细的维修项目并没有配件");
                     }

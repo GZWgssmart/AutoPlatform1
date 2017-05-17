@@ -126,7 +126,7 @@ public class UserController {
             userService.update(user);
         }
         currentUser.logout();
-        return "user/login";
+        return "Frontpage/registered";
     }
 
     /**

@@ -121,7 +121,7 @@ function showMoney(){
     var row =  $('#table').bootstrapTable('getSelections');
     if(row.length ==1) {
         if(row[0].actualPayment != null && row[0].actualPayment != ""){
-            if(row[0].maintainRecord.currentStatus =='已收费'){
+            if(row[0].maintainRecord.currentStatus !='已收费'){
                 swal({
                     title: "",
                     text: "是否确认已经收到维修保养费用!",

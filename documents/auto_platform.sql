@@ -18,7 +18,6 @@ CREATE TABLE `t_company` (
   `companyStatus` varchar(2) DEFAULT NULL COMMENT '公司状态，Y为可用，N为不可用',
   PRIMARY KEY (`companyId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-INSERT INTO `t_company` VALUES ('c515f5d623e011e7a97af832e40312b3', 'XX有限公司', '赣州', '400-120-111', null, null, null, null, null, null, null, null, 'Y');
 
 /**
 用户表
@@ -47,6 +46,7 @@ CREATE TABLE `t_user` (
   `userStatus` varchar(2) DEFAULT NULL COMMENT '用户状态，Y表示可用，N表示不可用',
   PRIMARY KEY (`userId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+INSERT INTO `t_user` VALUES ('7ff4f1c5-3205-11e7-bc72-507b9d763421', '1@qq.com', '15570102341', '6khXbzC+FmmXFpnAmtBclA==', '星空', '360721199812014014', '张文星', '男', '1999-01-01 08:23:38', '赣州', '', '', '', 'static/img/a3.jpg', '系统超级管理员', '', null, '2017-05-17 08:25:04', null, 'Y');
 
 /**
 角色表
@@ -72,7 +72,6 @@ INSERT INTO `t_role` VALUES ('804532c4-3205-11e7-bc72-507b9d765567', '汽车公�
 INSERT INTO `t_role` VALUES ('804cc69c-3205-11e7-bc72-507b9d765567', '汽车公司采购人员', '汽车公司采购人员', 'Y');
 INSERT INTO `t_role` VALUES ('8052af73-3205-11e7-bc72-507b9d765567', '汽车公司库管人员', '汽车公司库管人员', 'Y');
 INSERT INTO `t_role` VALUES ('805a2613-3205-11e7-bc72-507b9d765567', '汽车公司人力资源管理部', '汽车公司人力资源管理部', 'Y');
-INSERT INTO `t_role` VALUES ('80602224-3205-11e7-bc72-507b9d765567', '其他人员', '其他人员', 'Y');
 INSERT INTO `t_role` VALUES ('8067fa42-3205-11e7-bc72-507b9d765567', '车主', '车主', 'Y');
 
 /**
@@ -112,7 +111,7 @@ CREATE TABLE `t_user_role` (
   `urCreatedTime` datetime DEFAULT NULL COMMENT '用户角色分配时间',
   PRIMARY KEY (`userRoleId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
+INSERT INTO `t_user_role` VALUES ('7ff4f1c5-3205-11e7-bc72-507b9d123456', '7ff4f1c5-3205-11e7-bc72-507b9d763421', '7ff4f1c5-3205-11e7-bc72-507b9d765567', '2017-05-17 08:26:28');
 
 /**
 角色权限表
@@ -440,12 +439,12 @@ CREATE TABLE `t_maintain_detail` (
 */
 DROP TABLE IF EXISTS `t_maintain_schedule`;
 CREATE TABLE `t_maintain_schedule` (
- 	`maintainScheduleId` varchar(36) DEFAULT NULL COMMENT '维修保养进度编号，UUID,主键',
+ 	`maintainScheduleId` varchar(36) NOT NULL COMMENT '维修保养进度编号，UUID,主键',
   `maintainRecordId` varchar(36) DEFAULT NULL COMMENT '维修保养记录编号，来源于t_maintain_record表',
   `maintainScheduleDes` varchar(500) DEFAULT NULL COMMENT '维修保养进度描述',
   `msCreatedTime` datetime DEFAULT NULL COMMENT '维修保养进度创建时间',
   `msStatus` varchar(2) DEFAULT NULL COMMENT '维修保养进度状态，Y表示可用，N表示不可用',
-  `currentStatus` varchar(2) DEFAULT NULL COMMENT '标记此进度是否完成'
+  `currentStatus` varchar(2) DEFAULT NULL COMMENT '标记此进度是否完成',
   PRIMARY KEY (`maintainScheduleId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

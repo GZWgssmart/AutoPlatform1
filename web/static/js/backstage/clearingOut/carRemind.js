@@ -227,6 +227,7 @@ function showBell(){
                         $.get("/carRemind/remind/" + ids + "/" + phones,
                             function (data) {
                                 if (data.result == "success") {
+                                    $('#table').bootstrapTable('refresh');
                                     swal({
                                         title: "",
                                         text: "提醒成功",
@@ -316,6 +317,7 @@ function showBellAll(){
                         $.get("/carRemind/remind/" + ids + "/" + phones,
                             function (data) {
                                 if (data.result == "success") {
+                                    $('#table').bootstrapTable('refresh');
                                     swal({
                                         title: "",
                                         text: "提醒成功",

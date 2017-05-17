@@ -101,6 +101,7 @@ public class CarRemindController {
                         // 当提醒成功之后, 应该修改状态, 提醒完毕, 页面不再显示此记录
                         return ControllerResult.getSuccessResult("提醒成功");
                     }else{
+                        maintainRecordService.updateCurrentStatus("待结算",ids);
                         return ControllerResult.getSuccessResult("提醒成功");
                     }
                 }else{

@@ -311,7 +311,7 @@ function showUserDetail(){
             if(tableData.length > 0){
                 swal(
                     {title:"",
-                        text:"确定用户已经在维修保养明细清单上签字了吗",
+                        text:"确定用户已经在维修保养明细清单上签字了吗? 将开始进行维修保养",
                         type:"warning",
                         showCancelButton:true,
                         confirmButtonColor:"#DD6B55",
@@ -376,7 +376,9 @@ function userConfirm(){
                 });
             $.post("/maintainDetail/userConfirm/"+recordId+"/"+ids+"/"+tableDataLength,function (data) {
                 if (data.result == "success") {
-                    $('#table').bootstrapTable('refresh');
+                    $("#ifConfirm").css("display","block");
+                    $("#detailToolbar").css("display","none");
+
                     swal({
                         title: "",
                         text: data.message,
