@@ -316,9 +316,8 @@
     <div class="modal-dialog"style="width: 90%">
         <div class="modal-content">
             <div class="modal-body">
-                <div class="row">
-                    <div class="col-sm-12 b-r">
-                        <h3 class="m-t-none m-b">选择用户记录</h3>
+                <span class="glyphicon glyphicon-remove closeModal" onclick="closeAppWin()"></span>
+                        <h3>选择用户记录</h3>
                         <table class="table table-hover" id="appTable"style="table-layout: fixed">
                             <thead>
                             <tr>
@@ -383,15 +382,13 @@
 
                         </table>
                         <div style="height: 100px;"></div>
-                        <div class="modal-footer" style="overflow:hidden;">
-                            <button type="button" class="btn btn-default" onclick="closeAppWin()">关闭
-                            </button>
-                            <input type="button" class="btn btn-primary" onclick="checkApp()" value="确定">
-                            </input>
-                        </div>
-                    </div>
-
+                <div class="modal-footer" style="overflow:hidden;">
+                    <button type="button" class="btn btn-default" onclick="closeAppWin()">关闭
+                    </button>
+                    <input type="button" class="btn btn-success" onclick="checkApp()" value="确定">
+                    </input>
                 </div>
+                    </div>
             </div>
         </div>
     </div>
