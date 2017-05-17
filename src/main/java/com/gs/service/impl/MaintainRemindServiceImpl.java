@@ -82,4 +82,14 @@ public class MaintainRemindServiceImpl implements MaintainRemindService {
 	public void insertBatch(List<MaintainRemind> maintainReminds) {
 		maintainRemindDAO.insertBatch(maintainReminds);
 	}
+
+	@Override
+	public List<MaintainRemind> queryByPagerUser(Pager pager, String userId) {
+		return maintainRemindDAO.queryByPagerUser(pager, userId);
+	}
+
+	@Override
+	public int countUser(String userId) {
+		return maintainRemindDAO.countUser(userId);
+	}
 }

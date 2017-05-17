@@ -23,17 +23,17 @@
     select mr.*,u.userId as user_id,u.userName as user_name
     from t_maintain_remind mr,t_user u where mr.userId = u.userId
     and remindMsg is not null
-    <if test="user.companyId != null and user.companyId != ''">
-      and mr.companyId = #{user.companyId}
-    </if>
+    <!--<if test="user.companyId != null and user.companyId != ''">-->
+      <!--and mr.companyId = #{user.companyId}-->
+    <!--</if>-->
     limit #{beginIndex}, #{pageSize}
   </select>
 
   <select id="count" resultType="int" parameterType="com.gs.bean.User">
     select count(mr.remindId) from t_maintain_remind mr,t_user u where mr.userId = u.userId and remindMsg is not null
-    <if test="companyId != null and companyId != ''">
-      and mr.companyId = #{companyId}
-    </if>
+    <!--<if test="companyId != null and companyId != ''">-->
+      <!--and mr.companyId = #{companyId}-->
+    <!--</if>-->
   </select>
 
   <update id="update" parameterType="maintainremind">
@@ -44,17 +44,17 @@
     select mr.*,u.userId as user_id,u.userName as user_name
     from t_maintain_remind mr,t_user u where mr.userId = u.userId
     and remindMsg is null
-    <if test="user.companyId != null and user.companyId != ''">
-      and mr.companyId = #{user.companyId}
-    </if>
+    <!--<if test="user.companyId != null and user.companyId != ''">-->
+      <!--and mr.companyId = #{user.companyId}-->
+    <!--</if>-->
     limit #{pager.beginIndex}, #{pager.pageSize}
   </select>
 
   <select id="countNull" resultType="int" parameterType="com.gs.bean.User">
     select count(mr.remindId) from t_maintain_remind mr,t_user u where mr.userId = u.userId and remindMsg is null
-    <if test="companyId != null and companyId != ''">
-      and mr.companyId = #{companyId}
-    </if>
+    <!--<if test="companyId != null and companyId != ''">-->
+      <!--and mr.companyId = #{companyId}-->
+    <!--</if>-->
   </select>
   <insert id="insert"  parameterType="maintainremind">
     <![CDATA[
@@ -70,4 +70,15 @@
       (uuid(),#{item.userId},#{item.lastMaintainTime},#{item.lastMaintainMileage})
     </foreach>
   </insert>
+
+  <select id="queryByPagerUser" resultMap="BaseResultMap" parameterType="com.gs.common.bean.Pager">
+    select mr.*,u.userId as user_id,u.userName as user_name
+    from t_maintain_remind mr,t_user u where mr.userId = u.userId
+    and mr.userId = #{userId}
+    limit #{pager.beginIndex}, #{pager.pageSize}
+  </select>
+
+  <select id="countUser" resultType="int">
+    select count(mr.remindId) from t_maintain_remind mr,t_user u where mr.userId = u.userId and mr.userId = #{userId}
+  </select>
 </mapper>

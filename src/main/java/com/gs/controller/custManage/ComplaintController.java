@@ -156,6 +156,8 @@ public class ComplaintController {
             String roles = "车主";
             if (RoleUtil.checkRoles(roles)) {
                 logger.info("投诉记录添加操作");
+                User user = (User) session.getAttribute("user");
+                complaint.setComplaintReplyUser(user.getUserId());
                 complaintService.insert(complaint);
                 return ControllerResult.getSuccessResult("添加成功");
             } else {
@@ -213,7 +215,7 @@ public class ComplaintController {
      */
     @InitBinder
     public void initBinder(WebDataBinder binder) {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         dateFormat.setLenient(false);
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
     }

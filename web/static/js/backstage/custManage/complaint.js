@@ -76,6 +76,7 @@ function showEdit() {
     var roles = "公司超级管理员,公司普通管理员,汽车公司接待员";
     $.post("/user/isLogin/" + roles, function (data) {
         if (data.result == 'success') {
+            initDateTimePicker('editForm', 'complaintReplyTime', 'editComplaintReplyTime');
             var row = $('table').bootstrapTable('getSelections');
             if (row.length > 0) {
                 if (row[0].complaintReplyTime != null || row[0].complaintReply != null) {
@@ -147,6 +148,7 @@ function showReply() {
     var roles = "公司超级管理员,公司普通管理员,汽车公司接待员";
     $.post("/user/isLogin/" + roles, function (data) {
         if (data.result == 'success') {
+            initDateTimePicker('addReplyForm', 'complaintReplyTime', 'addReplyComplaintReplyTime');
             var row = $('table').bootstrapTable('getSelections');
             if (row.length > 0) {
                 if (row[0].complaintReplyTime == null || row[0].complaintReply == null) {
@@ -200,6 +202,7 @@ function showAdd(){
     var roles = "车主";
     $.post("/user/isLogin/" + roles, function (data) {
         if (data.result == 'success') {
+            initDateTimePicker('addForm', 'complaintCreatedTime', 'addComplaintCreatedTime');
             $("#addWindow").modal('show');
             $("#addButton").removeAttr("disabled");
             validator('addForm'); // 初始化验证
@@ -237,30 +240,30 @@ function validator(formId) {
             validating: 'glyphicon glyphicon-refresh'
         },
         fields: {
-            userName: {
-                message: '投诉人验证失败',
-                validators: {
-                    notEmpty: {
-                        message: '投诉人不能为空'
-                    }
-                }
-            },
-            complaintCreatedTime: {
-                message: '投诉时间验证失败',
-                validators: {
-                    notEmpty: {
-                        message: '投诉时间不能为空'
-                    }
-                }
-            },
-            complaintContent: {
-                message: '投诉内容验证失败',
-                validators: {
-                    notEmpty: {
-                        message: '投诉内容不能为空'
-                    }
-                }
-            },
+            // userName: {
+            //     message: '投诉人验证失败',
+            //     validators: {
+            //         notEmpty: {
+            //             message: '投诉人不能为空'
+            //         }
+            //     }
+            // },
+            // complaintCreatedTime: {
+            //     message: '投诉时间验证失败',
+            //     validators: {
+            //         notEmpty: {
+            //             message: '投诉时间不能为空'
+            //         }
+            //     }
+            // },
+            // complaintContent: {
+            //     message: '投诉内容验证失败',
+            //     validators: {
+            //         notEmpty: {
+            //             message: '投诉内容不能为空'
+            //         }
+            //     }
+            // },
             complaintReplyUser: {
                 message: '投诉回复人验证失败',
                 validators: {
@@ -350,6 +353,10 @@ function formSubmit(url, formId, winId){
                     // $('#addForm').data('bootstrapValidator').resetForm(true); // 移除所有验证样式
                     $("#addButton").removeAttr("disabled"); // 移除不可点击
                     $("#addUserName").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
+                } else if(formId == 'addReplyForm'){
+                    $("input[type=reset]").trigger("click"); // 移除表单中填的值
+                    // $('#addForm').data('bootstrapValidator').resetForm(true); // 移除所有验证样式
+                    $("#replyButton").removeAttr("disabled"); // 移除不可点击
                 }
                 $("#" + formId).data('bootstrapValidator').destroy(); // 销毁此form表单
                 $('#' + formId).data('bootstrapValidator', null);// 此form表单设置为空

@@ -16,10 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -83,6 +80,21 @@ public class MaintainRemindController {
             logger.info("请先登录");
             return null;
         }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "queryByPagerUser", method = RequestMethod.GET)
+    public Pager4EasyUI<MaintainRemind> queryByPagerUser(HttpSession session, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
+        logger.info("分页查看维修保养提醒记录");
+        Pager pager = new Pager();
+        pager.setPageNo(Integer.valueOf(pageNumber));
+        pager.setPageSize(Integer.valueOf(pageSize));
+        User user = (User) session.getAttribute("user");
+        int count = maintainRemindService.countUser(user.getUserId());
+        pager.setTotalRecords(count);
+        pager.setUser((User) session.getAttribute("user"));
+        List<MaintainRemind> queryList = maintainRemindService.queryByPagerUser(pager,user.getUserId());
+        return new Pager4EasyUI<MaintainRemind>(pager.getTotalRecords(), queryList);
     }
 
     @ResponseBody

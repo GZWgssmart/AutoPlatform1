@@ -21,6 +21,8 @@
     <link rel="stylesheet" href="/static/css/sweetalert.css">
     <link rel="stylesheet" href="/static/css/table/table.css">
     <link rel="stylesheet" href="/static/js/plugins/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet/less" href="/static/css/bootstrap-dateTimePicker/datetimepicker.less">
 </head>
 <body>
 <%@include file="../backstage/contextmenu.jsp" %>
@@ -34,9 +36,9 @@
             <tr>
                 <th data-checkbox="true"></th>
                 <th data-field="user.userName">回访人</th>
+                <th data-field="checkin.userName">跟踪的回访用户</th>
                 <th data-field="trackContent">回访问题</th>
                 <th data-field="serviceEvaluate">本次服务评价</th>
-                <th data-field="checkin.userName">跟踪回访用户</th>
                 <th data-field="trackCreatedTime" data-formatter="formatterDate">跟踪回访创建时间</th>
             </tr>
             </thead>
@@ -99,6 +101,14 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <label class="col-sm-3 control-label">跟踪回访的用户：</label>
+                    <div class="col-sm-7">
+                        <select id="addUserName" name="trackUser" class="form-control js-data-example-ajax user"
+                                style="width:100%">
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
                     <label class="col-sm-3 control-label">回访问题：</label>
                     <div class="col-sm-7">
                         <textarea type="text" name="trackContent" placeholder="请输入回访问题内容" style="height: 100px;"
@@ -108,7 +118,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">跟踪回访创建时间：</label>
                     <div class="col-sm-7">
-                        <input id="addTrackCreatedTime" name="trackCreatedTime" readonly class="layui-input"/>
+                        <input id="addTrackCreatedTime" name="trackCreatedTime" readonly onclick="getDate('addTrackCreatedTime')" class="form-control datetimepicker"/>
                         <%--onclick="layui.laydate({elem: this, min: laydate.now(), format: 'yyyy-MM-dd hh:mm:ss', max: '2099-06-16 23:59:59'})"--%>
                     </div>
                 </div>
@@ -117,14 +127,6 @@
                     <div class="col-sm-7">
                         <input type="number" name="serviceEvaluate" min="1" max="10" placeholder="请输入本次服务评价（1-10分）"
                                class="form-control"></input>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">跟踪回访用户：</label>
-                    <div class="col-sm-7">
-                        <select id="addUserName" name="trackUser" class="form-control js-data-example-ajax user"
-                                style="width:100%">
-                        </select>
                     </div>
                 </div>
                 <div class="form-group">
@@ -165,6 +167,14 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <label class="col-sm-3 control-label">跟踪回访的用户：</label>
+                    <div class="col-sm-7">
+                        <select id="editUserName" name="trackUser" class="form-control js-data-example-ajax user"
+                                style="width:100%">
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
                     <label class="col-sm-3 control-label">回访问题：</label>
                     <div class="col-sm-7">
                         <textarea type="text" name="trackContent" define="TrackList.trackContent"
@@ -176,7 +186,7 @@
                     <label class="col-sm-3 control-label">跟踪回访创建时间：</label>
                     <div class="col-sm-7">
                         <input id="editTrackCreatedTime" name="trackCreatedTime" readonly
-                               define="TrackList.trackCreatedTime" class="layui-input">
+                               define="TrackList.trackCreatedTime" class="form-control datetimepicker">
                     </div>
                 </div>
                 <div class="form-group">
@@ -184,14 +194,6 @@
                     <div class="col-sm-7">
                         <input type="number" name="serviceEvaluate" min="1" max="10 " define="TrackList.serviceEvaluate"
                                placeholder="请输入本次服务评价（1-10分）" class="form-control"></input>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">跟踪回访用户：</label>
-                    <div class="col-sm-7">
-                        <select id="editUserName" name="trackUser" class="form-control js-data-example-ajax user"
-                                style="width:100%">
-                        </select>
                     </div>
                 </div>
                 <div class="form-group">
@@ -221,37 +223,39 @@
 <script src="/static/js/bootstrap-validate/bootstrapValidator.js"></script>
 <script src="/static/js/plugins/layui/layui.js" charset="utf-8"></script>
 <script src="/static/js/backstage/main.js"></script>
-<script>
-    layui.use('laydate', function () {
-        var laydate = layui.laydate;
+<script src="/static/js/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.js"></script>
+<script src="/static/js/bootstrap-dateTimePicker/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+<%--<script>--%>
+    <%--layui.use('laydate', function () {--%>
+        <%--var laydate = layui.laydate;--%>
 
-        var addTrackCreatedTime = {
-            format: 'yyyy-MM-dd hh:mm:ss',
-            min: laydate.now(), //设定最小日期为当前日期
-            max: '2099-12-30 23:59:59', //最大日期
-            istime: true,
-            istoday: false,
-            festival: true
-        };
+        <%--var addTrackCreatedTime = {--%>
+            <%--format: 'yyyy-MM-dd hh:mm:ss',--%>
+            <%--min: laydate.now(), //设定最小日期为当前日期--%>
+            <%--max: '2099-12-30 23:59:59', //最大日期--%>
+            <%--istime: true,--%>
+            <%--istoday: false,--%>
+            <%--festival: true--%>
+        <%--};--%>
 
-        document.getElementById('addTrackCreatedTime').onclick = function () {
-            addTrackCreatedTime.elem = this;
-            laydate(addTrackCreatedTime);
-        }
+        <%--document.getElementById('addTrackCreatedTime').onclick = function () {--%>
+            <%--addTrackCreatedTime.elem = this;--%>
+            <%--laydate(addTrackCreatedTime);--%>
+        <%--}--%>
 
-        var editTrackCreatedTime = {
-            format: 'yyyy-MM-dd hh:mm:ss',
-            max: '2099-12-30 23:59:59', //最大日期
-            istime: true,
-            istoday: false,
-            festival: true
-        };
+        <%--var editTrackCreatedTime = {--%>
+            <%--format: 'yyyy-MM-dd hh:mm:ss',--%>
+            <%--max: '2099-12-30 23:59:59', //最大日期--%>
+            <%--istime: true,--%>
+            <%--istoday: false,--%>
+            <%--festival: true--%>
+        <%--};--%>
 
-        document.getElementById('editTrackCreatedTime').onclick = function () {
-            editTrackCreatedTime.elem = this;
-            laydate(editTrackCreatedTime);
-        }
-    });
-</script>
+        <%--document.getElementById('editTrackCreatedTime').onclick = function () {--%>
+            <%--editTrackCreatedTime.elem = this;--%>
+            <%--laydate(editTrackCreatedTime);--%>
+        <%--}--%>
+    <%--});--%>
+<%--</script>--%>
 </body>
 </html>

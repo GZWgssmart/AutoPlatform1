@@ -15,6 +15,26 @@ public class TrackList {
 
     private Date trackCreatedTime;
 
+    private String companyId;
+
+    private Company company;
+
+    public String getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(String companyId) {
+        this.companyId = companyId;
+    }
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
+    }
+
     private User user;
 
     private Checkin checkin;

@@ -17,17 +17,17 @@
   <select id="queryByPager" resultMap="BaseResultMap" parameterType="com.gs.common.bean.Pager">
     SELECT m.*,u.userId as user_id,u.userName as user_name  FROM t_message_send m
     LEFT JOIN t_user u ON m.userId = u.userId
-    <if test="user.companyId != null and user.companyId != ''">
-      and m.companyId = #{user.companyId}
-    </if>
+    <!--<if test="user.companyId != null and user.companyId != ''">-->
+      <!--and m.companyId = #{user.companyId}-->
+    <!--</if>-->
     limit #{beginIndex}, #{pageSize}
   </select>
 
   <select id="count" resultType="int" parameterType="com.gs.bean.User" >
     select count(m.messageId) from t_message_send m where 1=1
-    <if test="companyId != null and companyId != ''">
-      and m.companyId = #{companyId}
-    </if>
+    <!--<if test="companyId != null and companyId != ''">-->
+      <!--and m.companyId = #{companyId}-->
+    <!--</if>-->
   </select>
 
   <insert id="insertRemind" parameterType="messageSend">

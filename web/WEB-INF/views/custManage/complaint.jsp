@@ -21,6 +21,8 @@
     <link rel="stylesheet" href="/static/css/sweetalert.css">
     <link rel="stylesheet" href="/static/css/table/table.css">
     <link rel="stylesheet" href="/static/js/plugins/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet/less" href="/static/css/bootstrap-dateTimePicker/datetimepicker.less">
 </head>
 <body>
 <%@include file="../backstage/contextmenu.jsp" %>
@@ -101,7 +103,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">投诉时间：</label>
                     <div class="col-sm-7">
-                        <input id="addComplaintCreatedTime" name="complaintCreatedTime" readonly class="layui-input" />
+                        <input id="addComplaintCreatedTime" name="complaintCreatedTime" readonly onclick="getDate('addComplaintCreatedTime')" class="form-control datetimepicker"/>
                     </div>
                 </div>
                 <div class="form-group">
@@ -114,7 +116,9 @@
 
                 <div class="form-group">
                     <div class="col-sm-offset-8">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="button" class="btn btn-default"
+                                onclick="closeModals('addWindow', 'addForm')">关闭
+                        </button>
                         <button id="addButton" class="btn btn-sm btn-success" type="button" onclick="addSubmit()">保 存</button>
                         <input type="reset" name="reset" style="display: none;"/>
                     </div>
@@ -131,7 +135,7 @@
             <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('addReplyWindow', 'addReplyForm')"></span>
             <form class="form-horizontal" role="form" id="addReplyForm" method="post">
                 <input type="hidden" name="complaintId" define="Complaint.complaintId" />
-                <%--<input type="hidden" name="userId" define="Complaint.user.userId" />--%>
+                <%--<input type="text" name="complaintReplyUser" value="${sessionScope.user.userId}"/>--%>
                 <%--<input id="start2" type="text" name="complaintCreatedTime" define="Complaint.complaintCreatedTime" />--%>
                 <%--<input type="hidden" name="complaintContent" define="Complaint.complaintContent" />--%>
                 <div class="modal-header" style="overflow:auto;">
@@ -143,13 +147,13 @@
                     <div class="col-sm-7">
                         <%--<select id="addAdminName" name="complaintReplyUser" class="form-control js-data-example-ajax admin" style="width:100%">--%>
                         <%--</select>--%>
-                        <input id="addAdminId" name="complaintReplyUser" readonly define="Complaint.complaintReplyUser" value="${sessionScope.user.userName}" class="form-control">
+                        <input  readonly value="${sessionScope.user.userName}" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">投诉回复时间：</label>
                     <div class="col-sm-7">
-                        <input id="addReplyComplaintReplyTime" name="complaintReplyTime" readonly define="Complaint.complaintReplyTime" class="layui-input">
+                        <input id="addReplyComplaintReplyTime" name="complaintReplyTime" readonly define="Complaint.complaintReplyTime" onclick="getDate('addReplyComplaintReplyTime')" class="form-control datetimepicker"/>
                     </div>
                 </div>
                 <div class="form-group">
@@ -163,7 +167,7 @@
                 <div class="form-group">
                     <div class="col-sm-offset-8">
                         <button type="button" class="btn btn-default"
-                                onclick="closeModals('addWindow', 'addForm')">关闭
+                                onclick="closeModals('addReplyWindow', 'addReplyForm')">关闭
                         </button>
                         <button id="replyButton" class="btn btn-sm btn-success" type="button" onclick="addReplySubmit()">保 存</button>
                         <input type="reset" name="reset" style="display: none;"/>
@@ -199,7 +203,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">投诉回复时间：</label>
                     <div class="col-sm-7">
-                        <input id="editComplaintReplyTime" name="complaintReplyTime" readonly  define="Complaint.complaintReplyTime" class="layui-input">
+                        <input id="editComplaintReplyTime" name="complaintReplyTime" readonly  define="Complaint.complaintReplyTime" onclick="getDate('editComplaintReplyTime')" class="form-control datetimepicker"/>
                     </div>
                 </div>
                 <div class="form-group">
@@ -234,55 +238,57 @@
 <script src="/static/js/bootstrap-validate/bootstrapValidator.js"></script>
 <script src="/static/js/plugins/layui/layui.js" charset="utf-8"></script>
 <script src="/static/js/backstage/main.js"></script>
-<script>
-    $(function() {
-        layui.use('laydate', function () {
+<script src="/static/js/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.js"></script>
+<script src="/static/js/bootstrap-dateTimePicker/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+<%--<script>--%>
+    <%--$(function() {--%>
+        <%--layui.use('laydate', function () {--%>
 
-            var laydate = layui.laydate;
+            <%--var laydate = layui.laydate;--%>
 
-            //日期范围限制
-            var addComplaintCreatedTime = {
-                format: 'yyyy-MM-dd hh:mm:ss',
-                min: laydate.now(), //设定最小日期为当前日期
-                max: '2099-12-30 23:59:59', //最大日期
-                istime: true,
-                istoday: false,
-                festival: true
-            };
+            <%--//日期范围限制--%>
+            <%--var addComplaintCreatedTime = {--%>
+                <%--format: 'yyyy-MM-dd hh:mm:ss',--%>
+                <%--min: laydate.now(), //设定最小日期为当前日期--%>
+                <%--max: '2099-12-30 23:59:59', //最大日期--%>
+                <%--istime: true,--%>
+                <%--istoday: false,--%>
+                <%--festival: true--%>
+            <%--};--%>
 
-            var addReplyComplaintReplyTime = {
-                format: 'yyyy-MM-dd hh:mm:ss',
-                min: laydate.now(),
-                max: '2099-12-30 23:59:59',
-                istime: true,
-                istoday: false,
-                festival: true
-            };
+            <%--var addReplyComplaintReplyTime = {--%>
+                <%--format: 'yyyy-MM-dd hh:mm:ss',--%>
+                <%--min: laydate.now(),--%>
+                <%--max: '2099-12-30 23:59:59',--%>
+                <%--istime: true,--%>
+                <%--istoday: false,--%>
+                <%--festival: true--%>
+            <%--};--%>
 
-            document.getElementById('addComplaintCreatedTime').onclick = function () {
-                addComplaintCreatedTime.elem = this;
-                laydate(addComplaintCreatedTime);
-            }
+            <%--document.getElementById('addComplaintCreatedTime').onclick = function () {--%>
+                <%--addComplaintCreatedTime.elem = this;--%>
+                <%--laydate(addComplaintCreatedTime);--%>
+            <%--}--%>
 
-            document.getElementById('addReplyComplaintReplyTime').onclick = function () {
-                addReplyComplaintReplyTime.elem = this;
-                laydate(addReplyComplaintReplyTime);
-            }
+            <%--document.getElementById('addReplyComplaintReplyTime').onclick = function () {--%>
+                <%--addReplyComplaintReplyTime.elem = this;--%>
+                <%--laydate(addReplyComplaintReplyTime);--%>
+            <%--}--%>
 
 
-            var editComplaintReplyTime = {
-                format: 'yyyy-MM-dd hh:mm:ss',
-                max: '2099-12-30 23:59:59',
-                istime: true,
-                istoday: false,
-            };
+            <%--var editComplaintReplyTime = {--%>
+                <%--format: 'yyyy-MM-dd hh:mm:ss',--%>
+                <%--max: '2099-12-30 23:59:59',--%>
+                <%--istime: true,--%>
+                <%--istoday: false,--%>
+            <%--};--%>
 
-            document.getElementById('editComplaintReplyTime').onclick = function () {
-                editComplaintReplyTime.elem = this;
-                laydate(editComplaintReplyTime);
-            }
-        });
-    });
-</script>
+            <%--document.getElementById('editComplaintReplyTime').onclick = function () {--%>
+                <%--editComplaintReplyTime.elem = this;--%>
+                <%--laydate(editComplaintReplyTime);--%>
+            <%--}--%>
+        <%--});--%>
+    <%--});--%>
+<%--</script>--%>
 </body>
 </html>

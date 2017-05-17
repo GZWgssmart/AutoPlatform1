@@ -70,6 +70,7 @@ function showEdit() {
     var roles = "公司超级管理员,公司普通管理员,汽车公司接待员";
     $.post("/user/isLogin/" + roles, function (data) {
         if (data.result == 'success') {
+            initDateTimePicker('editForm', 'trackCreatedTime', 'editTrackCreatedTime');
             var row = $('table').bootstrapTable('getSelections');
             if (row.length > 0) {
                 $("#editWindow").modal('show'); // 显示弹窗
@@ -117,6 +118,7 @@ function showAdd() {
     var roles = "公司超级管理员,公司普通管理员,汽车公司接待员";
     $.post("/user/isLogin/" + roles, function (data) {
         if (data.result == 'success') {
+            initDateTimePicker('addForm', 'trackCreatedTime', 'addTrackCreatedTime');
             $("#addWindow").modal('show');
             $("#addButton").removeAttr("disabled");
             validator('addForm'); // 初始化验证

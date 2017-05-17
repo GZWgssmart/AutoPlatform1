@@ -23,4 +23,8 @@ public interface MaintainRemindDAO extends BaseDAO<String, MaintainRemind>{
     public int countNull(@Param("user") User user);
 
     public void insertBatch(List<MaintainRemind> maintainReminds);
+
+    public List<MaintainRemind> queryByPagerUser(@Param("pager") Pager pager, @Param("userId") String userId);
+
+    public int countUser(@Param("userId") String userId);
 }

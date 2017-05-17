@@ -157,6 +157,7 @@ public class TracklistController {
                     ComboBox4EasyUI co = new ComboBox4EasyUI();
                     co.setId(u.getUserId());
                     co.setText(u.getUserName());
+                    u.getCompanyId();
                     String userId = req.getParameter("userId");
                     if (u.getUserId().equals(userId)) {
                         co.setSelected(true);
@@ -217,7 +218,7 @@ public class TracklistController {
      */
     @InitBinder
     public void initBinder(WebDataBinder binder) {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         dateFormat.setLenient(false);
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
     }
