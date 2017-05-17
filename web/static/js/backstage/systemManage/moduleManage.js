@@ -158,7 +158,7 @@ function updateModulePanelDes(modulePanel, newDes) {
     var span= $(titleDiv[0]).find("small span")[1];
     $(span).text(newDes);
 }
-// 右边事件相关
+// 事件相关
 function canDragSetting() {
     $( ".connectedSortable" ).sortable({
         connectWith: ".connectedSortable",
@@ -407,6 +407,7 @@ function formSubmit(url, modalId ,formId, flag) {
                         appendLeftNav(data.module);
                         addModule(data.module);
                         appendModulePanel(data.module);
+                        canDragSetting();
                     } else {
                         var inputs = $("#" + formId).find("input");
                         var textarea = $("#" + formId).find("textarea");
@@ -426,6 +427,7 @@ function formSubmit(url, modalId ,formId, flag) {
                         updateLeftNavTitle(moduleTemp);
                     }
                     closeModal();
+
                 });// 提示窗口, 修改成功
             } else if (data.controllResult.result == "fail") {
                 swal({title:"",
