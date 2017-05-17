@@ -593,5 +593,3 @@ function clearAddForm() {
     $('#addAccType').html('').trigger("change");
     $("input[type=reset]").trigger("click");
 }
-
-

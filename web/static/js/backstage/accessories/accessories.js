@@ -339,14 +339,6 @@ function validator(formId) {
                         message: '配件可用数量不能为空'
                     }
                 }
-            },
-            accDes: {
-                message: '配件库存描述不能为空',
-                validators: {
-                    notEmpty: {
-                        message: '配件库存描述不能为空'
-                    }
-                }
             }
         }
     }).on('success.form.bv', function (e) {

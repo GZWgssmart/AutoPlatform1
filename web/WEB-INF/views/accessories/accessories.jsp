@@ -60,12 +60,12 @@
         <div id="toolbar" class="btn-group">
             <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司采购人员,系统超级管理员,系统普通管理员">
                 <button id="btn_available" type="button" class="btn btn-success" onclick="showAvailable();">
-                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询激活类型
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>可用配件
                 </button>
             </shiro:hasAnyRoles>
             <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司采购人员,系统超级管理员,系统普通管理员">
                 <button id="btn_disable" type="button" class="btn btn-danger" onclick="showDisable();">
-                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询禁用类型
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>禁用配件
                 </button>
             </shiro:hasAnyRoles>
             <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司采购人员">
@@ -108,7 +108,7 @@
 <div class="modal fade" id="addWindow" aria-hidden="true" style="overflow:auto; " data-backdrop="static" keyboard:false>
     <div class="modal-dialog" style="width: 60%">
         <div class="modal-content">
-            <div class="modal-body">
+            <div class="modal-body" onkeydown="keydown('addButton')">
                 <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('addWindow','addForm')"
                       data-dismiss="modal"></span>
                 <form class="form-horizontal" role="form" id="addForm" method="post">
@@ -116,13 +116,6 @@
                         <h4>请填写库存信息</h4>
                     </div>
                     <br/>
-                    <%--<div class="form-group">--%>
-                        <%--<label class="col-sm-3 control-label">汽车公司：</label>--%>
-                        <%--<div class="col-sm-7">--%>
-                            <%--<select id="addCompany" class="js-example-tags company" name="companyId" style="width:100%">--%>
-                            <%--</select>--%>
-                        <%--</div>--%>
-                    <%--</div>--%>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">供应商：</label>
                         <div class="col-sm-7">
@@ -200,7 +193,7 @@
 <div class="modal fade" id="editWindow" aria-hidden="true" data-backdrop="static" keyboard:false>
     <div class="modal-dialog" style="width: 60%;">
         <div class="modal-content">
-            <div class="modal-body">
+            <div class="modal-body" onkeydown="keydown('editButton')">
                 <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('editWindow','editForm')"
                       data-dismiss="modal"></span>
                 <form class="form-horizontal" role="form" id="editForm" method="post">
@@ -209,14 +202,6 @@
                         <h4>请修改库存信息</h4>
                     </div>
                     <br/>
-                    <%--<div class="form-group">--%>
-                        <%--<label class="col-sm-3 control-label">汽车公司：</label>--%>
-                        <%--<div class="col-sm-7">--%>
-                            <%--<select id="editCompany" class="js-example-tags company" define="Accessories.companyId"--%>
-                                    <%--name="companyId" style="width:100%">--%>
-                            <%--</select>--%>
-                        <%--</div>--%>
-                    <%--</div>--%>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">供应商：</label>
                         <div class="col-sm-7">

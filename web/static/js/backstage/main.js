@@ -249,3 +249,10 @@ function closeModals(winId, formId){
     $("#" + formId).data('bootstrapValidator').destroy(); // 销毁此form表单
     $('#' + formId).data('bootstrapValidator', null);// 此form表单设置为空
 }
+
+/*回车登录*/
+function keydown(buttonId){
+    if(event.keyCode == 13){
+        document.getElementById(buttonId).click();
+    }
+}
