@@ -68,18 +68,20 @@
     <!-- 添加弹窗 -->
     <div aria-hidden="true" data-backdrop="static" keyboard:false
          class="modal fade" id="import" aria-hidden="true" style="overflow:auto;">
-    <div class="container kv-main">
-    <div class="ibox-title">
-    <div class="input-group">
-    <div class="input-group-btn">
-    </div>
-    <input id="txt_file" name="txt_file" type="file" class="form-control" multiple class="file-loading"
-    placeholder="请选择或输入一个你想上传的相册类型,默认当天日期为类型!"/>
-    </div>
-    </div>
+        <div class="container kv-main">
+            <div class="ibox-title">
+                <div class="input-group">
+                    <div class="input-group-btn">
+                    </div>
+                    <input id="txt_file" name="txt_file" type="file" class="form-control" multiple class="file-loading"
+                           placeholder="请选择或输入一个你想上传的相册类型,默认当天日期为类型!"/>
+                </div>
 
-    </div>
+            </div>
+
+        </div>
     </div><!-- /.modal -->
+
 
     <!-- 添加弹窗 -->
     <div aria-hidden="true" data-backdrop="static" keyboard:false

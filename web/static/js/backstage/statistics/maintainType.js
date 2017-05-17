@@ -300,13 +300,14 @@ $('.form_Year').datetimepicker({
     })
 
 
-var count=[];		//湿度数组
-var workInfoDatas=[];		//时间数组
-
 
 
 
 function selectYears() {
+
+    var count=[];		//湿度数组
+    var workInfoDatas=[];		//时间数组
+
     var start = $("#startYearInput").val() + "-01-01";
     var end = $("#endYearInput").val() + "-12-31";
     var companyId = $("#companyId").val();
@@ -364,6 +365,10 @@ function selectYears() {
 
 function selectMonth() {
 
+
+    var count=[];		//湿度数组
+    var workInfoDatas=[];		//时间数组
+
     var start = $("#startMonthInput").val() + "-01";
     var end = $("#endMonthInput").val() + "-31";
     var companyId = $("#monthCompanyId").val();
@@ -420,6 +425,10 @@ function selectMonth() {
 }
 
 function selectDay() {
+
+    var count=[];		//湿度数组
+    var workInfoDatas=[];		//时间数组
+
     var start = $("#startDayInput").val();
     var end = $("#endDayInput").val();
     var companyId = $("#dayCompanyId").val();
@@ -475,6 +484,10 @@ function selectDay() {
 }
 
 function selectQuarter() {
+
+    var count=[];		//湿度数组
+    var workInfoDatas=[];		//时间数组
+
     var start = $("#startQuarterInput").val();
     var end = $("#endQuarterInput").val();
     var companyId = $("#quarterCompanyId").val();
@@ -532,6 +545,10 @@ function selectQuarter() {
 
 
 function selectWeek() {
+
+    var count=[];		//湿度数组
+    var workInfoDatas=[];		//时间数组
+
     var start = $("#startWeekInput").val();
     var end = $("#endWeekInput").val();
     var companyId = $("#weekCompanyId").val();

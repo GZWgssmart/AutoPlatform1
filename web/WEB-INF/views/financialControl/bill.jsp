@@ -44,7 +44,6 @@
                 <th data-width="180" data-field="chargeCreatedTime" data-formatter="formatterDate">收费单据创建时间</th>
                 <th data-width="130" data-field="chargeBillDes">收费单据描述</th>
                 <th data-width="130" data-field="chargeBillStatus" data-formatter="showStatusFormatter">收费单据状态</th>
-                <th data-width="90" data-field="chargeBillStatus" data-formatter="statusFormatter">操作</th>
             </tr>
             </thead>
         </table>

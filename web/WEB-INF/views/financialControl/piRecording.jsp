@@ -115,7 +115,7 @@
                     </div>--%>
                     <div class="form-group">
                         <div class="col-sm-offset-8">
-                            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="closeModals('addOutWin', 'addOutForm')">关闭</button>
+                            <button type="button" class="btn btn-default" onclick="closeModals('addOutWin', 'addOutForm')">关闭</button>
                             <button class="btn btn-sm btn-success" id="addOutButton" onclick="addOutSubmit()"
                                     type="button">保 存
                             </button>

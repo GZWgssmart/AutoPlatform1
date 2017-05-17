@@ -71,7 +71,7 @@ var option = {
             mark: {show: true},
             //dataZoom，框选区域缩放，自动与存在的dataZoom控件同步，分别是启用，缩放后退
             //数据视图，打开数据视图，可设置更多属性,readOnly 默认数据视图为只读(即值为true)，可指定readOnly为false打开编辑功能
-            dataView: {show: true, readOnly: true},
+            dataView: {show: true, readOnly: false},
             //magicType，动态类型切换，支持直角系下的折线图、柱状图、堆积、平铺转换
             magicType: {show: true, type: ['line', 'bar']},
             //restore，还原，复位原始图表
@@ -119,16 +119,20 @@ myChart.showLoading();	//数据加载完之前先显示一段简单的loading动
 
 
 
+var inMoney=[];		//湿度数组
+var outMoney=[];		//湿度数组
+var Datas=[];		//时间数组
+var start = $("#startYearInput").val() + "-01-01";
+var end = $("#endYearInput").val() + "-12-31";
+var companyId = $("#yearCompanyId").val();
 $.ajax({	//使用JQuery内置的Ajax方法
-    type : "post",		//post请求方式
-    async : true,		//异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
-/*    url : "/incomingOutgoing/queryByCondition",	//请求发送到ShowInfoIndexServlet处*/
-    data: {"start": "2017-1-1", "end": "2017-12-31", "type":"day"},		//请求内包含一个key为name，value为A0001的参数；服务器接收到客户端请求时通过request.getParameter方法获取该参数值
-    dataType : "json",		//返回数据形式为json
-    success : function(result) {
+    type: "post",		//post请求方式
+    async: true,		//异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
+    url: "/incomingOutgoing/queryByCondition",	//请求发送到ShowInfoIndexServlet处
+    data: {"start": '2017-1-1', "end": '2017-12-30', "type":"day", "companyId": companyId},		//请求内包含一个key为name，value为A0001的参数；服务器接收到客户端请求时通过request.getParameter方法获取该参数值
+    dataType: "json",		//返回数据形式为json
+    success: function (result) {
         //请求成功时执行该函数内容，result即为服务器返回的json对象
-
-
         if (result !== null && result.length > 0) {
             for (var i = 0; i < result.length; i++) {
                 inMoney.push(result[i].inMoney);
@@ -162,18 +166,18 @@ $.ajax({	//使用JQuery内置的Ajax方法
         }
         else {
             //返回的数据为空时显示提示信息
-            alert("请选择完全，或该时间段没有数据,请选择一个时间段的数据，可以根据年月日季度周查询");
+            alert("请选择完全，或该时间段没有数据");
             myChart.hideLoading();
         }
 
+
     },
-    error : function(errorMsg) {
+    error: function (errorMsg) {
         //请求失败时执行该函数
-        alert("请选择条件查询图表");
+        alert("图表请求数据失败，可能是服务器开小差了");
         myChart.hideLoading();
     }
 })
-
 
 myChart.setOption(option, true);	//载入图表
 
@@ -210,11 +214,11 @@ $('.form_Year').datetimepicker({
         autoclose: true //选择日期后自动关闭
     })
 
-var inMoney=[];		//湿度数组
-var outMoney=[];		//湿度数组
-var Datas=[];		//时间数组
 
 function selectYears() {
+    var inMoney=[];		//湿度数组
+    var outMoney=[];		//湿度数组
+    var Datas=[];		//时间数组
     var start = $("#startYearInput").val() + "-01-01";
     var end = $("#endYearInput").val() + "-12-31";
     var companyId = $("#yearCompanyId").val();
@@ -228,13 +232,8 @@ function selectYears() {
             //请求成功时执行该函数内容，result即为服务器返回的json对象
             if (result !== null && result.length > 0) {
                 for (var i = 0; i < result.length; i++) {
-                    if (result[i].inMoney == null || result[i].outMoney == null) {
-                        inMoney.push(0);
-                        outMoney.push(0);
-                    } else {
-                        inMoney.push(result[i].inMoney);
-                        outMoney.push(result[i].outMoney);
-                    }
+                    inMoney.push(result[i].inMoney);
+                    outMoney.push(result[i].outMoney);
                     Datas.push(result[i].date);
 
                 }
@@ -268,6 +267,7 @@ function selectYears() {
                 myChart.hideLoading();
             }
 
+
         },
         error: function (errorMsg) {
             //请求失败时执行该函数
@@ -276,11 +276,14 @@ function selectYears() {
         }
     })
 
-
 }
 
 
 function selectMonth() {
+    var inMoney=[];		//湿度数组
+    var outMoney=[];		//湿度数组
+    var Datas=[];		//时间数组
+
     var start = $("#startMonthInput").val() + "-01";
     var end = $("#endMonthInput").val() + "-31";
     var companyId = $("#monthCompanyId").val();
@@ -340,6 +343,10 @@ function selectMonth() {
 }
 
 function selectDay() {
+    var inMoney=[];		//湿度数组
+    var outMoney=[];		//湿度数组
+    var Datas=[];		//时间数组
+
     var start = $("#startDayInput").val();
     var end = $("#endDayInput").val();
     var companyId = $("#dayCompanyId").val();
@@ -400,6 +407,10 @@ function selectDay() {
 }
 
 function selectQuarter() {
+    var inMoney=[];		//湿度数组
+    var outMoney=[];		//湿度数组
+    var Datas=[];		//时间数组
+
     var start = $("#startQuarterInput").val();
     var end = $("#endQuarterInput").val();
     var companyId = $("#quarterCompanyId").val();
@@ -463,6 +474,10 @@ function selectQuarter() {
 
 
 function selectWeek() {
+    var inMoney=[];		//湿度数组
+    var outMoney=[];		//湿度数组
+    var Datas=[];		//时间数组
+
     var start = $("#startWeekInput").val();
     var end = $("#endWeekInput").val();
     var companyId = $("#weekCompanyId").val();

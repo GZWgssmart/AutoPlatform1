@@ -121,6 +121,7 @@ myChart.showLoading();	//数据加载完之前先显示一段简单的loading动
 $.ajax({	//使用JQuery内置的Ajax方法
     type: "post",		//post请求方式
     async: true,		//异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
+    url: "/charge/queryByCondition",	//请求发送到ShowInfoIndexServlet处
     data: {"start": "2017-1-1", "end": "2017-12-31", "type": "day"},		//请求内包含一个key为name，value为A0001的参数；服务器接收到客户端请求时通过request.getParameter方法获取该参数值
     dataType: "json",		//返回数据形式为json
     success: function (result) {
@@ -208,12 +209,13 @@ $('.form_Year').datetimepicker({
     })
 
 
-var maintainMoney = [];		//湿度数组
-var preserveMoney = [];		//湿度数组
-var workInfoDatas = [];		//时间数组
+
 
 
 function selectYears() {
+    var maintainMoney = [];		//湿度数组
+    var preserveMoney = [];		//湿度数组
+    var workInfoDatas = [];		//时间数组
     var start = $("#startYearInput").val() + "-01-01";
     var end = $("#endYearInput").val() + "-12-31";
 
@@ -275,7 +277,9 @@ function selectYears() {
 
 
 function selectMonth() {
-
+    var maintainMoney = [];		//湿度数组
+    var preserveMoney = [];		//湿度数组
+    var workInfoDatas = [];		//时间数组
     var start = $("#startMonthInput").val() + "-01";
     var end = $("#endMonthInput").val() + "-31";
     ;
@@ -336,6 +340,9 @@ function selectMonth() {
 }
 
 function selectDay() {
+    var maintainMoney = [];		//湿度数组
+    var preserveMoney = [];		//湿度数组
+    var workInfoDatas = [];		//时间数组
     var start = $("#startDayInput").val();
     var end = $("#endDayInput").val();
     $.ajax({	//使用JQuery内置的Ajax方法
@@ -395,6 +402,9 @@ function selectDay() {
 }
 
 function selectQuarter() {
+    var maintainMoney = [];		//湿度数组
+    var preserveMoney = [];		//湿度数组
+    var workInfoDatas = [];		//时间数组
     var start = $("#startQuarterInput").val();
     var end = $("#endQuarterInput").val();
     $.ajax({	//使用JQuery内置的Ajax方法
@@ -455,6 +465,9 @@ function selectQuarter() {
 
 
 function selectWeek() {
+    var maintainMoney = [];		//湿度数组
+    var preserveMoney = [];		//湿度数组
+    var workInfoDatas = [];		//时间数组
     var start = $("#startWeekInput").val();
     var end = $("#endWeekInput").val();
 
