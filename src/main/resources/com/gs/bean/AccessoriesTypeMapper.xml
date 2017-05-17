@@ -109,7 +109,7 @@
           select count(accTypeId) from auto_platform.t_accessories_type atp where atp.accTypeStatus = 'N'
         ]]>
         <if test="companyId != '' and companyId !=null">
-            and atp.companyId = #{user.companyId}
+            and atp.companyId = #{companyId}
         </if>
     </select>
 

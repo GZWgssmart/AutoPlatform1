@@ -152,7 +152,7 @@
       select count(accId) from auto_platform.t_accessories ac where ac.accStatus = 'N'
     ]]>
     <if test="companyId != '' and companyId !=null">
-      and ac.companyId = #{user.companyId}
+      and ac.companyId = #{companyId}
     </if>
   </select>
 

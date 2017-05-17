@@ -157,12 +157,12 @@
         limit #{beginIndex}, #{pageSize}
     </select>
 
-    <select id="countByDisable" resultType="int" >
+    <select id="countByDisable" resultType="int" parameterType="com.gs.bean.User">
         <![CDATA[
           select count(accBuyId) from auto_platform.t_accessories_buy abu where abu.accBuyStatus = 'N'
         ]]>
         <if test="companyId != '' and companyId !=null">
-            and abu.companyId = #{user.companyId}
+            and abu.companyId = #{companyId}
         </if>
     </select>
 

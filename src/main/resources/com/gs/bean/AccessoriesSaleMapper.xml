@@ -130,7 +130,7 @@
       select count(accSaleId) from auto_platform.t_accessories_sale asa where asa.accSaleStatus = 'N'
     ]]>
     <if test="companyId != '' and companyId !=null">
-      and asa.companyId = #{user.companyId}
+      and asa.companyId = #{companyId}
     </if>
   </select>
 
