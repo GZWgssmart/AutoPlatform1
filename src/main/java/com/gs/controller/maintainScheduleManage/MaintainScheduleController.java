@@ -1,6 +1,7 @@
 package com.gs.controller.maintainScheduleManage;
 
 import ch.qos.logback.classic.Logger;
+import com.gs.bean.MaintainRecord;
 import com.gs.bean.MaintainSchedule;
 import com.gs.bean.User;
 import com.gs.common.bean.ComboBox4EasyUI;
@@ -122,6 +123,70 @@ public class    MaintainScheduleController {
         }else{
             logger.info("请先登录");
             return null;
+        }
+    }
+
+    /**
+     * 禁用
+     * @param session
+     * @param pageNumber
+     * @param pageSize
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value= "queryByPagerDisable", method = RequestMethod.POST)
+    public Pager4EasyUI<MaintainSchedule> queryByPagerDisable(HttpSession session, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
+        if(SessionUtil.isLogin(session)) {
+            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司总技师,汽车公司技师";
+            if(RoleUtil.checkRoles(roles)) {
+                logger.info("分布查看已禁用的维修保养记录");
+                Pager pager = new Pager();
+                pager.setPageNo(Integer.valueOf(pageNumber));
+                pager.setPageSize(Integer.valueOf(pageSize));
+                pager.setUser((User)session.getAttribute("user"));
+                int count = maintainScheduleService.countByDisable((User)session.getAttribute("user"));
+                pager.setTotalRecords(count);
+                List<MaintainSchedule> queryList = maintainScheduleService.queryByPagerDisable(pager);
+                return new Pager4EasyUI<MaintainSchedule>(pager.getTotalRecords(), queryList);
+            }else{
+                logger.info("此用户无拥有可用维修保养分页查询的角色");
+                return null;
+            }
+        }else{
+            logger.info("请先登录");
+            return null;
+        }
+    }
+
+    /**
+     * 对状态的激活和启用，只使用一个方法进行切换。
+     */
+    @ResponseBody
+    @RequestMapping(value = "statusOperate", method = RequestMethod.POST)
+    public ControllerResult inactive(HttpSession session, String id, String status) {
+        if(SessionUtil.isLogin(session)) {
+            String roles = "公司超级管理员,公司普通管理员,汽车公司接待员";
+            if(RoleUtil.checkRoles(roles)) {
+                if (id != null && !id.equals("") && status != null && !status.equals("")) {
+                    if (status.equals("N")) {
+                        maintainScheduleService.active(id);
+                        logger.info("激活成功");
+                        return ControllerResult.getSuccessResult("激活成功");
+                    } else {
+                        maintainScheduleService.inactive(id);
+                        logger.info("禁用成功");
+                        return ControllerResult.getSuccessResult("禁用成功");
+                    }
+                } else {
+                    return ControllerResult.getFailResult("操作失败");
+                }
+            }else{
+                logger.info("此用户无拥有更改维修保养的角色");
+                return ControllerResult.getNotRoleResult("权限不足");
+            }
+        }else{
+            logger.info("请先登录");
+            return ControllerResult.getNotLoginResult("登录信息无效，请重新登录");
         }
     }
 

@@ -70,17 +70,17 @@ public class MaintainScheduleServiceImpl implements MaintainScheduleService {
 
     @Override
     public int inactive(String id) {
-        return 0;
+        return maintainScheduleDAO.inactive(id);
     }
 
     @Override
     public int active(String id) {
-        return 0;
+        return maintainScheduleDAO.active(id);
     }
 
     @Override
     public List<MaintainSchedule> queryByPagerDisable(Pager pager) {
-        return null;
+        return maintainScheduleDAO.queryByPagerDisable(pager);
     }
 
     @Override

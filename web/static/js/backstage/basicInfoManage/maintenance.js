@@ -29,28 +29,47 @@ $(function(){
 
 
 
-// 显示所有明细
+// 显示所有进度
 function showSchedule(){
     var row =  $('#table').bootstrapTable('getSelections');
     if(row.length >0) {
-        //maintainId = row[0].maintainId;
         $("#ScheduleWindow").modal('show');
-        //initDetailTable('detailTable', '/maintain/queryByDetailsByPager?maintainId='+row[0].maintainId);
     }else{
         swal({
             title:"",
-            text: "请选择要查看明细的维修保养记录", // 主要文本
+            text: "请选择要查看进度的维修保养记录", // 主要文本
             confirmButtonColor: "#dd2e32", // 提示按钮的颜色
             confirmButtonText:"确定", // 提示按钮上的文本
             type:"warning"}) // 提示类型
     }
 }
+function statusFormatter(index, row) {
+    /*处理数据*/
+    if (row.workStatus == 'Y') {
+        return "&nbsp;&nbsp;已完成";
+    } else {
+        return "&nbsp;&nbsp;未完成";
+    }
+
+}
 
 //显示添加
 function showAdd() {
-    $("#addWindow").modal('show');
-    $("#addButton").removeAttr("disabled");//按钮只能点击一次
-    validator('addForm');//初始化验证
+    var row = $("#table").bootstrapTable('getSelections');
+    if(row.length > 0){
+        $("#addMaintainRecordId").val(row[0].maintainRecord.recordId);
+        $("#ScheduleWindow").modal('hide');
+        $("#addWindow").modal('show');
+        $("#addButton").removeAttr("disabled");//按钮只能点击一次
+        validator('addForm');//初始化验证
+    }else{
+        swal({
+            title:"",
+            text: "请选择要添加进度描述的维修保养记录", // 主要文本
+            confirmButtonColor: "#DD6B55", // 提示按钮的颜色
+            confirmButtonText:"确定", // 提示按钮上的文本
+            type:"warning"}) // 提示类型
+    }
 }
 
 
@@ -102,24 +121,6 @@ function checkPersonnel() {
     }
 }
 
-//显示删除
-function showDel() {
-
-    var row = $('table').bootstrapTable('getSelections');
-    if (row.length > 0) {
-        $("#del").modal('show');
-        var ceshi = row[0];
-        $("#tanchuang").fill(ceshi);
-    } else {
-        swal({
-            "title": "",
-            "text": "请先选择一条数据",
-            "type": "warning"
-        })
-    }
-
-}
-
 //验证数据格式
 function validator(formId) {
     $('#' + formId).bootstrapValidator({
@@ -129,27 +130,11 @@ function validator(formId) {
             validating: 'glyphicon glyphicon-refresh'
         },
         fields: {
-            maintainRecordId: {
-                message: '维修记录编号不能为空',
-                validators: {
-                    notEmpty: {
-                        message: '维修记录编号不能为空'
-                    }
-                }
-            },
             maintainScheduleDes: {
                 message: '进度不能为空',
                 validators: {
                     notEmpty: {
                         message: '进度不能为空'
-                    }
-                }
-            },
-            msCreatedTime: {
-                message: '维修创建时间不能为空',
-                validators: {
-                    notEmpty: {
-                        message: '维修创建时间不能为空'
                     }
                 }
             }
@@ -202,53 +187,55 @@ function checkEdit() {
     );
 }
 
-//格式化不带时分秒的时间值。
-function formatterDate(value) {
-    if (value == undefined || value == null || value == '') {
-        return "";
-    } else {
-        var date = new Date(value);
-        var year = date.getFullYear().toString();
-        var month = (date.getMonth() + 1);
-        var day = date.getDate().toString();
-        if (month < 10) {
-            month = "0" + month;
-        }
-        if (day < 10) {
-            day = "0" + day;
-        }
-        return year + "-" + month + "-" + day
-    }
-}
-
-//格式化带时分秒的时间值。
-function formatterDateTime(value) {
-    if (value == undefined || value == null || value == '') {
-        return "";
-    }
-    else {
-        var date = new Date(value);
-        var year = date.getFullYear().toString();
-        var month = (date.getMonth() + 1);
-        var day = date.getDate().toString();
-        var hour = date.getHours().toString();
-        var minutes = date.getMinutes().toString();
-        var seconds = date.getSeconds().toString();
-        if (month < 10) {
-            month = "0" + month;
-        }
-        if (day < 10) {
-            day = "0" + day;
-        }
-        if (hour < 10) {
-            hour = "0" + hour;
-        }
-        if (minutes < 10) {
-            minutes = "0" + minutes;
-        }
-        if (seconds < 10) {
-            seconds = "0" + seconds;
-        }
-        return year + "-" + month + "-" + day + " " + hour + ":" + minutes + ":" + seconds;
-    }
+function formSubmit(url, formId, winId) {
+    $.post(url,
+        $("#" + formId).serialize(),
+        function (data) {
+            if (data.result == "success") {
+                $('#' + winId).modal('hide');
+                swal({
+                    title: "",
+                    text: data.message,
+                    confirmButtonText: "确定", // 提示按钮上的文本
+                    type: "success"
+                })// 提示窗口, 修改成功
+                $('#table').bootstrapTable('refresh');
+                if (formId == 'addForm') {
+                    /*  $("input[type=reset]").trigger("click"); // 移除表单中填的值
+                     $('#addForm').data('bootstrapValidator').resetForm(true); // 移除所有验证样式
+                     $("#addButton").removeAttr("disabled"); // 移除不可点击*/
+                    // 设置select2的值为空
+                   // $("#addCompanyName").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
+                }
+            } else if (data.result == "fail") {
+                swal({
+                    title: "",
+                    text: "添加失败",
+                    confirmButtonText: "确认",
+                    type: "error"
+                })
+                if(formId == 'addForm') {
+                    $("#addButton").removeAttr("disabled");
+                }else if(formId == 'editForm'){
+                    $("#editButton").removeAttr("disabled");
+                }
+            }else if (data.result == "notLogin") {
+                swal({title:"",
+                        text:data.message,
+                        confirmButtonText:"确认",
+                        type:"error"}
+                    ,function(isConfirm){
+                        if(isConfirm){
+                            top.location = "/user/loginPage";
+                        }else{
+                            top.location = "/user/loginPage";
+                        }
+                    })
+                if(formId == 'addForm') {
+                    $("#addButton").removeAttr("disabled");
+                }else if(formId == 'editForm'){
+                    $("#editButton").removeAttr("disabled");
+                }
+            }
+        }, "json");
 }

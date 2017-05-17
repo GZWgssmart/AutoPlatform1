@@ -1,7 +1,7 @@
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-<h ead>
+<head>
     <title>员工工单管理</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -53,7 +53,7 @@
         </table>
         <div id="toolbar" class="btn-group">
             <button id="btn_edit" type="button" class="btn btn-default" onclick="showEdit();">
-                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
+                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>指派员工
             </button>
             <button id="searchDisable" type="button" class="btn btn-danger" onclick="showDisable();">
                 <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询未完成工单
@@ -83,13 +83,13 @@
                         <select id="editUserId" class="js-example-tags user" define="user.userNickname" name="userId" style="width:100%;"></select>
                     </div>
                 </div>
-                <div class="form-group">
+               <%-- <div class="form-group">
                     <label class="col-sm-3 control-label">工单指派时间：</label>
                     <div class="col-sm-7">
                         <input type="text" name="workAssignTime" onclick="getDate('editDateTimePicker')" placeholder="请输入工单指派时间" id="editDateTimePicker" class="form-control">
-                        <%--<input type="text" name="workAssignTime" readonly="true" id="editworkAssignTime" onclick="getDate('editworkAssignTime');" placeholder="请输入工单指派时间" class="form-control datetimepicker">--%>
+                        &lt;%&ndash;<input type="text" name="workAssignTime" readonly="true" id="editworkAssignTime" onclick="getDate('editworkAssignTime');" placeholder="请输入工单指派时间" class="form-control datetimepicker">&ndash;%&gt;
                     </div>
-                </div>
+                </div>--%>
                 <div class="modal-footer">
                     <div class="col-sm-offset-8">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>

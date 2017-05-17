@@ -16,12 +16,31 @@
             <result column="actualEndTime" property="actualEndTime"/>
             <result column="recordCreatedTime" property="recordCreatedTime"/>
             <result column="pickupTime" property="pickupTime"/>
-        </association>
 
-        <!--<association property="checkin" javaType="com.gs.bean.Checkin">
-            <id column="checkinId" property="checkinId"></id>
-            <result column="userName" property="userName"></result>
-        </association>-->
+            <association property="checkin" javaType="com.gs.bean.Checkin">
+                <id column="checkinId" property="checkinId" jdbcType="VARCHAR" />
+                <result column="userId" property="userId" jdbcType="VARCHAR" />
+                <result column="appointmentId" property="appointmentId" jdbcType="VARCHAR" />
+                <result column="userName" property="userName" jdbcType="VARCHAR" />
+                <result column="userPhone" property="userPhone" jdbcType="VARCHAR" />
+                <result column="brandId" property="brandId" jdbcType="VARCHAR" />
+                <result column="colorId" property="colorId" jdbcType="VARCHAR" />
+                <result column="modelId" property="modelId" jdbcType="VARCHAR" />
+                <result column="plateId" property="plateId" jdbcType="VARCHAR" />
+                <result column="carPlate" property="carPlate" jdbcType="VARCHAR" />
+                <result column="arriveTime" property="arriveTime" jdbcType="TIMESTAMP" />
+                <result column="carMileage" property="carMileage" jdbcType="DOUBLE" />
+                <result column="carThings" property="carThings" jdbcType="VARCHAR" />
+                <result column="intactDegrees" property="intactDegrees" jdbcType="VARCHAR" />
+                <result column="userRequests" property="userRequests" jdbcType="VARCHAR" />
+                <result column="maintainOrFix" property="maintainOrFix" jdbcType="VARCHAR" />
+                <result column="checkinCreatedTime" property="checkinCreatedTime" jdbcType="TIMESTAMP" />
+                <result column="companyId" property="companyId" jdbcType="VARCHAR" />
+                <result column="checkinStatus" property="checkinStatus" jdbcType="VARCHAR" />
+                <result column="nowOil" property="nowOil" jdbcType="DOUBLE" />
+                <result column="ifClearCar" property="ifClearCar" jdbcType="VARCHAR" />
+            </association>
+        </association>
     </resultMap>
 
     <!--查询全部-->
