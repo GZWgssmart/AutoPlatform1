@@ -356,7 +356,7 @@
                                 <th data-width="90"data-field="wechatOpenId">
                                     用户微信
                                 </th>
-                                <th data-width="90" data-field="userIcon">
+                                <th data-width="90" data-field="userIcon"data-formatter="formatterImg">
                                     用户头像
                                 </th>
                                 <th data-width="90" data-field="userDes">

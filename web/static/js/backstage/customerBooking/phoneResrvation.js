@@ -411,6 +411,13 @@ function validator(formId) {
 
 }
 
+function formatterImg(value, row, index){
+    if(row.userIcon !=null){
+        return [
+            '<img style="width:100px;height:40px;" src="/'+ value +'">'
+        ]
+    }
+}
 function addSubmit(){
     $("#addForm").data('bootstrapValidator').validate();
     if ($("#addForm").data('bootstrapValidator').isValid()) {
