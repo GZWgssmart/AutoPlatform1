@@ -108,9 +108,11 @@ public class AccessoriesSaleController {
     @RequestMapping(value = "addAccSale", method = RequestMethod.POST)
     public ControllerResult addAccSale(HttpSession session, AccessoriesSale accessoriesSale,@Param("inTypeId")String inTypeId) {
         if (SessionUtil.isLogin(session)) {
+            User user= (User) session.getAttribute("user");
             String roles="公司超级管理员,公司普通管理员,汽车公司销售人员";
             if (RoleUtil.checkRoles(roles)) {
                 if (accessoriesSale != null && !accessoriesSale.equals("")) {
+                    accessoriesSale.setCompanyId(user.getCompanyId());
                     accessoriesSaleService.insert(accessoriesSale);
                     incomingOutgoingService.insert(inconSet(accessoriesSale,session,inTypeId));
                     logger.info("添加成功");
@@ -149,9 +151,11 @@ public class AccessoriesSaleController {
     @RequestMapping(value = "updateAccSale", method = RequestMethod.POST)
     public ControllerResult updateAccSale(HttpSession session, AccessoriesSale accessoriesSale) {
         if (SessionUtil.isLogin(session)) {
+            User user= (User) session.getAttribute("user");
             String roles="公司超级管理员,公司普通管理员,汽车公司销售人员";
             if (RoleUtil.checkRoles(roles)) {
                 if (accessoriesSale != null && !accessoriesSale.equals("")) {
+                    accessoriesSale.setCompanyId(user.getCompanyId());
                     accessoriesSaleService.update(accessoriesSale);
                     logger.info("更新成功");
                     return ControllerResult.getSuccessResult("更新成功");

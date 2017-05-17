@@ -109,9 +109,11 @@ public class AccessoriesTypeController {
     @RequestMapping(value = "addAccType", method = RequestMethod.POST)
     public ControllerResult addAccType(HttpSession session, AccessoriesType accessoriesType) {
         if (SessionUtil.isLogin(session)) {
+            User user = (User)session.getAttribute("user");
             String roles = "公司超级管理员,公司普通管理员";
             if (RoleUtil.checkRoles(roles)) {
                 if (accessoriesType != null && !accessoriesType.equals("")) {
+                    accessoriesType.setCompanyId(user.getCompanyId());
                     accessoriesTypeService.insert(accessoriesType);
                     logger.info("添加成功");
                     return ControllerResult.getSuccessResult("添加成功");
@@ -138,9 +140,11 @@ public class AccessoriesTypeController {
     @RequestMapping(value = "updateAccType", method = RequestMethod.POST)
     public ControllerResult updateAccType(HttpSession session, AccessoriesType accessoriesType) {
         if (SessionUtil.isLogin(session)) {
+            User user = (User)session.getAttribute("user");
             String roles = "公司超级管理员,公司普通管理员";
             if (RoleUtil.checkRoles(roles)) {
                 if (accessoriesType != null && !accessoriesType.equals("")) {
+                    accessoriesType.setCompanyId(user.getCompanyId());
                     accessoriesTypeService.update(accessoriesType);
                     logger.info("更新成功");
                     return ControllerResult.getSuccessResult("更新成功");

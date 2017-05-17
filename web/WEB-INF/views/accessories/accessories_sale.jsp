@@ -118,13 +118,6 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">汽车公司：</label>
-                        <div class="col-sm-7">
-                            <select id="addCompany" class="js-example-tags company" name="companyId" style="width:100%">
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
                         <label class="col-sm-3 control-label">配件：</label>
                         <div class="col-sm-7">
                             <select id="addAccInv" class="js-example-tags accInv" name="accId" style="width:100%">
@@ -142,7 +135,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">配件销售数量：</label>
                         <div class="col-sm-7">
-                            <input type="number" id="addCountNum" name="accSaleCount" onchange="Addcalculate();"
+                            <input type="number" id="addCountNum" min="1" data-max="100" step="any" name="accSaleCount" onchange="Addcalculate();"
                                    placeholder="请输入配件销售数量" class="form-control">
                         </div>
                     </div>
@@ -158,7 +151,8 @@
                         <label class="col-sm-3 control-label">配件销售折扣：</label>
                         <div class="col-sm-7">
                             <input type="number" min="0.0" step="0.1" max="1" value="1" id="addSaleDiscount"
-                                   name="accSaleDiscount" onchange="Addcalculate();" placeholder="请输入配件销售折扣" class="form-control">
+                                   name="accSaleDiscount" onchange="Addcalculate();" placeholder="请输入配件销售折扣"
+                                   class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
@@ -205,14 +199,6 @@
                         <h4>请修改配件销售信息</h4>
                     </div>
                     <br/>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">汽车公司：</label>
-                        <div class="col-sm-7">
-                            <select id="editCompany" class="js-example-tags company" define="AccessoriesSale.companyId"
-                                    name="companyId" style="width:100%">
-                            </select>
-                        </div>
-                    </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">配件：</label>
                         <div class="col-sm-7">

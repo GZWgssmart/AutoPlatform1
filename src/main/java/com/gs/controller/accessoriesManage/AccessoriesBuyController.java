@@ -112,11 +112,13 @@ public class AccessoriesBuyController {
     @RequestMapping(value = "addAccBuy", method = RequestMethod.POST)
     public ControllerResult addAccBuy(HttpSession session, AccessoriesBuy accessoriesBuy, @Param("accName") String accName,@Param("outgoingId")String outgoingId) {
         if (SessionUtil.isLogin(session)) {
+            User user= (User) session.getAttribute("user");
             String roles = "公司超级管理员,公司普通管理员,汽车公司采购人员";
             if (RoleUtil.checkRoles(roles)) {
                 if (accessoriesBuy != null && !accessoriesBuy.equals("")) {
                     if (accessoriesBuy.getAccId() != null && !accessoriesBuy.getAccId().equals("")) {
                         accessoriesBuy.setAccBuyDiscount(1.0);
+                        accessoriesBuy.setCompanyId(user.getCompanyId());
                         accessoriesBuyService.insert(accessoriesBuy);
                         accessoriesService.updateCount(accessoriesBuy.getAccBuyCount(), accessoriesBuy.getAccId());
                         incomingOutgoingService.insert(inconSet(accessoriesBuy,session,outgoingId));
@@ -127,6 +129,7 @@ public class AccessoriesBuyController {
                             if (a != null) {
                                 accessoriesBuy.setAccBuyDiscount(1.0);
                                 accessoriesBuy.setAccId(a.getAccId());
+                                accessoriesBuy.setCompanyId(user.getCompanyId());
                                 accessoriesBuyService.insert(accessoriesBuy);
                                 accessoriesService.updateCount(accessoriesBuy.getAccBuyCount(), accessoriesBuy.getAccId());
                                 incomingOutgoingService.insert(inconSet(accessoriesBuy,session,outgoingId));
@@ -135,6 +138,7 @@ public class AccessoriesBuyController {
                                 String uuid = UUIDUtil.uuid();
                                 accessoriesService.insert(accSet(accessoriesBuy,accName,uuid));
                                 accessoriesBuy.setAccId(uuid);
+                                accessoriesBuy.setCompanyId(user.getCompanyId());
                                 accessoriesBuyService.insert(accessoriesBuy);
                                 incomingOutgoingService.insert(inconSet(accessoriesBuy,session,outgoingId));
                                 return ControllerResult.getSuccessResult("添加成功");
@@ -194,9 +198,11 @@ public class AccessoriesBuyController {
     @RequestMapping(value = "updateAccBuy", method = RequestMethod.POST)
     public ControllerResult updateAccBuy(HttpSession session, AccessoriesBuy accessoriesBuy) {
         if (SessionUtil.isLogin(session)) {
+            User user= (User) session.getAttribute("user");
             String roles = "公司超级管理员,公司普通管理员,汽车公司采购人员";
             if (RoleUtil.checkRoles(roles)) {
                 if (accessoriesBuy != null && !accessoriesBuy.equals("")) {
+                    accessoriesBuy.setCompanyId(user.getCompanyId());
                     accessoriesBuyService.update(accessoriesBuy);
                     logger.info("修改成功");
                     return ControllerResult.getSuccessResult("修改成功");

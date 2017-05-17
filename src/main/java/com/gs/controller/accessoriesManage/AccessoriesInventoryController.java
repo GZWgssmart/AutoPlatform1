@@ -41,6 +41,7 @@ public class AccessoriesInventoryController {
 
     @Resource
     private AccessoriesService accessoriesService;
+
     /**
      * 查询所有的配件库存信息
      *
@@ -49,19 +50,19 @@ public class AccessoriesInventoryController {
     @ResponseBody
     @RequestMapping(value = "queryAll", method = RequestMethod.GET)
     public List<Accessories> queryAll(HttpSession session) {
-        if(SessionUtil.isLogin(session)){
-            String roles="公司超级管理员,公司普通管理员,汽车公司采购人员,系统超级管理员,系统普通管理员";
-            if(RoleUtil.checkRoles(roles)){
+        if (SessionUtil.isLogin(session)) {
+            String roles = "公司超级管理员,公司普通管理员,汽车公司采购人员,系统超级管理员,系统普通管理员";
+            if (RoleUtil.checkRoles(roles)) {
                 List<Accessories> accessoriesList = accessoriesService.queryAll((User) session.getAttribute("user"));
                 if (accessoriesList != null && !accessoriesList.equals("")) {
                     return accessoriesList;
                 }
                 return null;
-            }else{
+            } else {
                 logger.info("此用户无拥有此方法角色");
                 return null;
             }
-        }else{
+        } else {
             logger.info("请先登陆");
             return null;
         }
@@ -71,26 +72,26 @@ public class AccessoriesInventoryController {
      * 查询全部的配件信息
      */
     @ResponseBody
-    @RequestMapping(value = "queryAllAccInv",method = RequestMethod.GET)
-    public List<ComboBox4EasyUI> queryAllAccInv(HttpSession session){
-        if(SessionUtil.isLogin(session)){
-            String roles="公司超级管理员,公司普通管理员,汽车公司采购人员,系统超级管理员,系统普通管理员";
-            if(RoleUtil.checkRoles(roles)){
+    @RequestMapping(value = "queryAllAccInv", method = RequestMethod.GET)
+    public List<ComboBox4EasyUI> queryAllAccInv(HttpSession session) {
+        if (SessionUtil.isLogin(session)) {
+            String roles = "公司超级管理员,公司普通管理员,汽车公司采购人员,系统超级管理员,系统普通管理员";
+            if (RoleUtil.checkRoles(roles)) {
                 logger.info("查询所有配件信息");
                 List<Accessories> accessories = accessoriesService.queryAll((User) session.getAttribute("user"));
                 List<ComboBox4EasyUI> comboxs = new ArrayList<ComboBox4EasyUI>();
-                for(Accessories c : accessories){
+                for (Accessories c : accessories) {
                     ComboBox4EasyUI comboBox4EasyUI = new ComboBox4EasyUI();
                     comboBox4EasyUI.setId(c.getAccId());
                     comboBox4EasyUI.setText(c.getAccName());
                     comboxs.add(comboBox4EasyUI);
                 }
                 return comboxs;
-            }else{
+            } else {
                 logger.info("此用户无拥有此方法角色");
                 return null;
             }
-        }else{
+        } else {
             logger.info("请先登陆");
             return null;
         }
@@ -98,23 +99,23 @@ public class AccessoriesInventoryController {
 
     @ResponseBody
     @RequestMapping(value = "queryByIdAcc", method = RequestMethod.GET)
-    public Pager4EasyUI<Accessories> queryByIdAccPager(HttpSession session,@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize,@Param("id")String id) {
-        if(SessionUtil.isLogin(session)){
-            String roles="公司超级管理员,公司普通管理员,汽车公司采购人员,系统超级管理员,系统普通管理员";
-            if(RoleUtil.checkRoles(roles)){
+    public Pager4EasyUI<Accessories> queryByIdAccPager(HttpSession session, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize, @Param("id") String id) {
+        if (SessionUtil.isLogin(session)) {
+            String roles = "公司超级管理员,公司普通管理员,汽车公司采购人员,系统超级管理员,系统普通管理员";
+            if (RoleUtil.checkRoles(roles)) {
                 Pager pager = new Pager();
                 logger.info("分页查询所有配件");
                 pager.setPageNo(Integer.valueOf(pageNumber));
                 pager.setPageSize(Integer.valueOf(pageSize));
                 pager.setUser((User) session.getAttribute("user"));
                 pager.setTotalRecords(accessoriesService.count((User) session.getAttribute("user")));
-                List<Accessories> accessoriesList = accessoriesService.queryByIdPager(id,pager);
+                List<Accessories> accessoriesList = accessoriesService.queryByIdPager(id, pager);
                 return new Pager4EasyUI<Accessories>(pager.getTotalRecords(), accessoriesList);
-            }else{
+            } else {
                 logger.info("此用户无拥有此方法角色");
                 return null;
             }
-        }else{
+        } else {
             logger.info("请先登陆");
             return null;
         }
@@ -125,11 +126,11 @@ public class AccessoriesInventoryController {
      * 分页查询配件库存信息
      */
     @ResponseBody
-    @RequestMapping(value="queryByPage", method = RequestMethod.GET)
-    public Pager4EasyUI queryByPager(HttpSession session,@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
-        if(SessionUtil.isLogin(session)){
-            String roles="公司超级管理员,公司普通管理员,汽车公司采购人员,系统超级管理员,系统普通管理员";
-            if(RoleUtil.checkRoles(roles)){
+    @RequestMapping(value = "queryByPage", method = RequestMethod.GET)
+    public Pager4EasyUI queryByPager(HttpSession session, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
+        if (SessionUtil.isLogin(session)) {
+            String roles = "公司超级管理员,公司普通管理员,汽车公司采购人员,系统超级管理员,系统普通管理员";
+            if (RoleUtil.checkRoles(roles)) {
                 Pager pager = new Pager();
                 pager.setPageNo(Integer.valueOf(pageNumber));
                 pager.setPageSize(Integer.valueOf(pageSize));
@@ -138,11 +139,11 @@ public class AccessoriesInventoryController {
                 logger.info("分页查询配件库存信息成功");
                 List<Accessories> accessories = accessoriesService.queryByPager(pager);
                 return new Pager4EasyUI<Accessories>(pager.getTotalRecords(), accessories);
-            }else{
+            } else {
                 logger.info("此用户无拥有此方法角色");
                 return null;
             }
-        }else{
+        } else {
             logger.info("请先登陆");
             return null;
         }
@@ -150,26 +151,29 @@ public class AccessoriesInventoryController {
 
     /**
      * 添加添加配件到库存
+     *
      * @return
      */
     @ResponseBody
     @RequestMapping(value = "addAccInv", method = RequestMethod.POST)
-    public ControllerResult addAccInv(HttpSession session,Accessories accessories) {
-        if(SessionUtil.isLogin(session)){
-            String roles="公司超级管理员,公司普通管理员,汽车公司采购人员";
-            if(RoleUtil.checkRoles(roles)){
-                if(accessories!=null&&!accessories.equals("")){
+    public ControllerResult addAccInv(HttpSession session, Accessories accessories) {
+        if (SessionUtil.isLogin(session)) {
+            User user= (User) session.getAttribute("user");
+            String roles = "公司超级管理员,公司普通管理员,汽车公司采购人员";
+            if (RoleUtil.checkRoles(roles)) {
+                if (accessories != null && !accessories.equals("")) {
+                    accessories.setCompanyId(user.getCompanyId());
                     accessoriesService.insert(accessories);
                     logger.info("添加成功");
                     return ControllerResult.getSuccessResult("添加成功");
-                }else{
+                } else {
                     return ControllerResult.getFailResult("添加失败");
                 }
-            }else{
+            } else {
                 logger.info("此用户无拥有此方法角色");
                 return null;
             }
-        }else{
+        } else {
             logger.info("请先登陆");
             return null;
         }
@@ -177,26 +181,29 @@ public class AccessoriesInventoryController {
 
     /**
      * 更新库存信息
+     *
      * @return
      */
     @ResponseBody
     @RequestMapping(value = "updateAccInv", method = RequestMethod.POST)
-    public ControllerResult updateAccInv(HttpSession session,Accessories accessories) {
-        if(SessionUtil.isLogin(session)){
-            String roles="公司超级管理员,公司普通管理员,汽车公司采购人员";
-            if(RoleUtil.checkRoles(roles)){
-                if(accessories!=null&&!accessories.equals("")){
+    public ControllerResult updateAccInv(HttpSession session, Accessories accessories) {
+        if (SessionUtil.isLogin(session)) {
+            User user= (User) session.getAttribute("user");
+            String roles = "公司超级管理员,公司普通管理员,汽车公司采购人员";
+            if (RoleUtil.checkRoles(roles)) {
+                if (accessories != null && !accessories.equals("")) {
+                    accessories.setCompanyId(user.getCompanyId());
                     accessoriesService.update(accessories);
                     logger.info("修改成功");
                     return ControllerResult.getSuccessResult("修改成功");
-                }else{
+                } else {
                     return ControllerResult.getFailResult("修改失败");
                 }
-            }else{
+            } else {
                 logger.info("此用户无拥有此方法角色");
                 return null;
             }
-        }else{
+        } else {
             logger.info("请先登陆");
             return null;
         }
@@ -204,14 +211,15 @@ public class AccessoriesInventoryController {
 
     /**
      * 查询所有被禁用的登记记录
+     *
      * @return
      */
     @ResponseBody
-    @RequestMapping(value="queryByPagerDisable", method = RequestMethod.GET)
-    public Pager4EasyUI<Accessories> queryByPagerDisable(HttpSession session,@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
-        if(SessionUtil.isLogin(session)){
-            String roles="公司超级管理员,公司普通管理员,汽车公司采购人员,系统超级管理员,系统普通管理员";
-            if(RoleUtil.checkRoles(roles)){
+    @RequestMapping(value = "queryByPagerDisable", method = RequestMethod.GET)
+    public Pager4EasyUI<Accessories> queryByPagerDisable(HttpSession session, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
+        if (SessionUtil.isLogin(session)) {
+            String roles = "公司超级管理员,公司普通管理员,汽车公司采购人员,系统超级管理员,系统普通管理员";
+            if (RoleUtil.checkRoles(roles)) {
                 logger.info("分页查询所有被禁用登记记录");
                 Pager pager = new Pager();
                 pager.setPageNo(Integer.valueOf(pageNumber));
@@ -220,11 +228,11 @@ public class AccessoriesInventoryController {
                 pager.setTotalRecords(accessoriesService.countByDisable((User) session.getAttribute("user")));
                 List<Accessories> accessories = accessoriesService.queryByPagerDisable(pager);
                 return new Pager4EasyUI<Accessories>(pager.getTotalRecords(), accessories);
-            }else{
+            } else {
                 logger.info("此用户无拥有此方法角色");
                 return null;
             }
-        }else{
+        } else {
             logger.info("请先登陆");
             return null;
         }
@@ -235,10 +243,10 @@ public class AccessoriesInventoryController {
      */
     @ResponseBody
     @RequestMapping(value = "statusOperate", method = RequestMethod.POST)
-    public ControllerResult inactive(HttpSession session,String accId, String accStatus) {
-        if(SessionUtil.isLogin(session)){
-            String roles="公司超级管理员,公司普通管理员,汽车公司采购人员";
-            if(RoleUtil.checkRoles(roles)){
+    public ControllerResult inactive(HttpSession session, String accId, String accStatus) {
+        if (SessionUtil.isLogin(session)) {
+            String roles = "公司超级管理员,公司普通管理员,汽车公司采购人员";
+            if (RoleUtil.checkRoles(roles)) {
                 if (accId != null && !accId.equals("") && accStatus != null && !accStatus.equals("")) {
                     if (accStatus.equals("N")) {
                         accessoriesService.active(accId);
@@ -252,11 +260,11 @@ public class AccessoriesInventoryController {
                 } else {
                     return ControllerResult.getFailResult("操作失败");
                 }
-            }else{
+            } else {
                 logger.info("此用户无拥有此方法角色");
                 return null;
             }
-        }else{
+        } else {
             logger.info("请先登陆");
             return null;
         }
@@ -264,15 +272,15 @@ public class AccessoriesInventoryController {
 
     @ResponseBody
     @RequestMapping(value = "blurredQuery", method = RequestMethod.GET)
-    public Pager4EasyUI<Accessories> blurredQuery(HttpSession session,HttpServletRequest request, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
-        if(SessionUtil.isLogin(session)){
-            String roles="公司超级管理员,公司普通管理员,汽车公司采购人员,系统超级管理员,系统普通管理员";
-            if(RoleUtil.checkRoles(roles)){
+    public Pager4EasyUI<Accessories> blurredQuery(HttpSession session, HttpServletRequest request, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
+        if (SessionUtil.isLogin(session)) {
+            String roles = "公司超级管理员,公司普通管理员,汽车公司采购人员,系统超级管理员,系统普通管理员";
+            if (RoleUtil.checkRoles(roles)) {
                 logger.info("配件库存模糊查询");
                 Pager pager = new Pager();
                 pager.setPageNo(Integer.valueOf(pageNumber));
                 pager.setPageSize(Integer.valueOf(pageSize));
-                pager.setUser((User)session.getAttribute("user"));
+                pager.setUser((User) session.getAttribute("user"));
                 String text = request.getParameter("text");
                 String value = request.getParameter("value");
                 if (text != null && !text.equals("") && value != null && !value.equals("")) {
@@ -287,27 +295,40 @@ public class AccessoriesInventoryController {
                         accessories.setCompanyId(value);
                     } else if (text.equals("配件名称")) {
                         accessories.setAccName(value);
-                    }else if(text.equals("供应商")){
+                    } else if (text.equals("供应商")) {
                         accessories.setSupplyId(value);
-                    }else if(text.equals("配件类型")){
+                    } else if (text.equals("配件类型")) {
                         accessories.setAccTypeId(value);
                     }
                     accessoriesList = accessoriesService.blurredQuery(pager, accessories);
-                    pager.setTotalRecords(accessoriesService.countByBlurred(accessories,(User) session.getAttribute("user")));
+                    pager.setTotalRecords(accessoriesService.countByBlurred(accessories, (User) session.getAttribute("user")));
                     return new Pager4EasyUI<Accessories>(pager.getTotalRecords(), accessoriesList);
                 } else {
-                    pager.setTotalRecords(accessoriesService.count((User)session.getAttribute("user")));
+                    pager.setTotalRecords(accessoriesService.count((User) session.getAttribute("user")));
                     List<Accessories> accessoriesList = accessoriesService.queryByPager(pager);
                     return new Pager4EasyUI<Accessories>(pager.getTotalRecords(), accessoriesList);
                 }
-            }else{
+            } else {
                 logger.info("此用户无拥有此方法角色");
                 return null;
             }
-        }else{
+        } else {
             logger.info("请先登陆");
             return null;
         }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "queryAccInvById", method = RequestMethod.POST)
+    public Accessories queryAccInvById(String accId) {
+        if(accId!=null&&!accId.equals("")){
+            Accessories accessories=accessoriesService.queryById(accId);
+            if(accessories!=null){
+                return accessories;
+            }
+            return null;
+        }
+        return null;
     }
 
     @InitBinder

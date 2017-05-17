@@ -1,5 +1,6 @@
 var contentPath = '';
 var roles = "公司超级管理员,公司普通管理员,汽车公司销售人员,系统超级管理员,系统普通管理员";
+var accIdle="";
 //初始化表格
 $(function () {
     $.post(contentPath + "/user/isLogin/" + roles, function (data) {
@@ -164,7 +165,7 @@ function showAdd() {
         if (data.result == "success") {
             $("#addWindow").modal('show');
             $("#addButton").removeAttr("disabled");
-            validator('addForm'); // 初始化验证
+            validator('addForm');
         } else if (data.result == "notLogin") {
             swal({
                 text: data.message,
@@ -388,6 +389,11 @@ function validator(formId) {
             accSaleCount: {
                 message: '配件销售数量不能为空',
                 validators: {
+                    between: {
+                        min: 1,
+                        max: accIdle,
+                        message: '配件销售数量必须要在 %s and %s 之间'
+                    },
                     notEmpty: {
                         message: '配件销售数量不能为空'
                     }
@@ -467,4 +473,14 @@ function Editcalculate() {
             addBuyMoney.value = totalPrice;
         }
     }
+}
+
+function limitIdle() {
+    var accId=$("#addCountNum").value;
+    $.post(contentPath+"/accInv/queryAccInvById?accId="+accId,function (data) {
+        alert(data.accIdle);
+        if(data.accIdle!=null&&data.accIdle>0){
+            accIdle=data.accIdle;
+        }
+    }, "json")
 }
