@@ -108,12 +108,13 @@ OrderManageController {
     @RequestMapping(value = "queryBySche",method = RequestMethod.GET)
     public Pager4EasyUI<WorkInfo> queryBySche(HttpSession session,@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
         if(SessionUtil.isLogin(session)) {
-            String roles="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,车主";
+            String roles="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,车主,汽车公司总技师,汽车公司技师";
             if(RoleUtil.checkRoles(roles)) {
                 logger.info("维修保养记录分页查询");
                 Pager pager = new Pager();
                 pager.setPageNo(Integer.valueOf(pageNumber));
                 pager.setPageSize(Integer.valueOf(pageSize));
+                pager.setUser((User) session.getAttribute("user"));
                 pager.setTotalRecords(workInfoService.count((User) session.getAttribute("user")));
                 List<WorkInfo> worksList = workInfoService.queryByPagerschelude(pager);
                 return new Pager4EasyUI<WorkInfo>(pager.getTotalRecords(), worksList);

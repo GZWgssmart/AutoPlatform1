@@ -1,10 +1,31 @@
 var contentPath = ''
-
+var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,车主,汽车公司总技师,汽车公司技师"
 /*初始化表格*/
 $(function(){
-    initTable('table','/Order/queryBySche');
-    // initSelect2("maintainRecord","请选择保养记录编号","/maintainRecord/queryByPager");
-})
+    $.post(contentPath + "/user/isLogin/" + roles, function (data) {
+        if(data.result == 'success'){
+            initTable('table','/Order/queryBySche');//初始化表格
+            // initSelect2("maintainRecord","请选择保养记录编号","/maintainRecord/queryByPager");
+        }else if(data.result == 'notLogin'){
+            swal({
+                title:"",
+                confirmButtonText:"确认",
+                type:"error"
+            },function (isConfirm) {
+                if(isConfirm){
+                    top.location = "/user/loginPage";
+                }else{
+                    top.location = "/user/loginPage";
+                }
+            })
+        }else if(data.result == 'notRole'){
+            swal({
+                title:"",
+                confirmButtonText:"确认",
+                type:"error"})
+        }
+    });
+});
 
 
 
@@ -19,7 +40,7 @@ function showSchedule(){
         swal({
             title:"",
             text: "请选择要查看明细的维修保养记录", // 主要文本
-            confirmButtonColor: "#DD6B55", // 提示按钮的颜色
+            confirmButtonColor: "#dd2e32", // 提示按钮的颜色
             confirmButtonText:"确定", // 提示按钮上的文本
             type:"warning"}) // 提示类型
     }
