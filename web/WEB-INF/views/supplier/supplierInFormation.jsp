@@ -43,7 +43,7 @@
                     供应商类型
                 </th>
                 <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员">
-                    <th data-width="170" data-field="company.companyName">
+                    <th data-width="130" data-field="company.companyName">
                         供应商所属公司
                     </th>
                 </shiro:hasAnyRoles>
