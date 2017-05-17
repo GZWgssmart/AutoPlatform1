@@ -34,6 +34,10 @@ function showSchedule(){
     var row =  $('#table').bootstrapTable('getSelections');
     if(row.length >0) {
         $("#ScheduleWindow").modal('show');
+        // 查询出此记录所有明细进行forEach
+        var htmlDiv = "<button class='btn btn-info btn-circle btn-lg' type='button' style='border-radius:45px;height:45px;'>1</button>" +
+        "<div style='border-bottom: 1px solid black;display:inline;'>&nbsp;&nbsp;维修保养进度描述&nbsp;&nbsp;</div>"
+        $("#maintenance").html(htmlDiv);
     }else{
         swal({
             title:"",

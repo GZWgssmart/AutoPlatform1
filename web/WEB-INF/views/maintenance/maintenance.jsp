@@ -9,11 +9,6 @@
     <link rel="stylesheet" href="/static/css/select2.min.css">
     <link rel="stylesheet" href="/static/css/sweetalert.css">
     <link rel="stylesheet" href="/static/css/table/table.css">
-    <link rel="stylesheet" href="/static/css/bootstrap-validate/bootstrapValidator.min.css">
-    <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.css">
-
-    <!-- 引入ystep样式 -->
-    <link rel="stylesheet" href="/static/css/Schedule/ystep.css">
 </head>
 <body>
 <%@include file="../backstage/contextmenu.jsp" %>
@@ -168,7 +163,7 @@
                     </button>
                 </div>
                 <hr>
-                <div class="ystep2"></div>
+                <div id="maintenance"></div>
                 <div class="modal-footer" style="border: none">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                 </div>
@@ -178,9 +173,6 @@
 </div>
 
 <!-- 引入jquery -->
-<script src="/static/js/Schedule/jquery.min.js"></script>
-
-
 <script src="/static/js/jquery.min.js"></script>
 <script src="/static/js/bootstrap.min.js"></script>
 <script src="/static/js/bootstrap-table/bootstrap-table.js"></script>
@@ -190,38 +182,8 @@
 <script src="/static/js/sweetalert/sweetalert.min.js"></script>
 <script src="/static/js/contextmenu.js"></script>
 <script src="/static/js/bootstrap-validate/bootstrapValidator.js"></script>
-<script src="/static/js/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.js"></script>
-<script src="/static/js/bootstrap-dateTimePicker/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
 <script src="/static/js/backstage/main.js"></script>
 <script src="/static/js/backstage/basicInfoManage/maintenance.js"></script>
 
-<%--插入ystep插件--%>
-<script src="/static/js/Schedule/ystep.js"></script>
-<script>
-    $(".ystep2").loadStep({
-        size: "large",
-        color: "green",
-        steps: [{
-            title: "客户",
-            content: "维修保养登记"
-        },{
-            title: "员工",
-            content: "指派员工"
-        },{
-            title: "描述",
-            content: "维修保养进度描述"
-        },{
-            title: "结束",
-            content: "维修保养结束时间"
-        },{
-            title: "提车",
-            content: "通知提车"
-        },{
-            title: "完成",
-            content: "完成车辆维修保养"
-        }]
-    });
-    $(".ystep2").setStep(5);
-</script>
 </body>
 </html>
