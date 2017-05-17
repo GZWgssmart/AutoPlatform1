@@ -123,13 +123,22 @@
 
 <!--请在下方写此页面业务相关的脚本-->
 <script type="text/javascript" src="/static/h-ui/js/jquery.contextmenu.r2.js"></script>
+<script src="/static/js/sweetalert/sweetalert.min.js"></script>
 <script type="text/javascript">
-$(function(){
-	
-});
+$(function() {
+    var roles = "车主";
+    $.post('/isOwnerLogin/  ' + roles, function (data) {
+        if (data.result == "success") {
+            alert("已登录");
+        }else if (data.result == 'notLogin') {
+            alert(data.message);
+            window.location = "home";
+        }
 
+    });
+})
 
-</script> 
+</script>
 
 
 </body>

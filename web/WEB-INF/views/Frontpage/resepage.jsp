@@ -70,9 +70,8 @@
                     <div class="body-form1">
                         <div class="form-content">
                             <form name="form1" id="form1" method="post" onsubmit="return verification()" >
-                                <input type="hidden" name="userId" value="${sessionScope.frontUser.userId}">
+                                <%--<input type="hidden" name="userId" value="${sessionScope.frontUser.userId}">--%>
                                 <div class="form-group">
-
                                     <c:if test="${sessionScope.frontUser != null}">
                                         <label>姓名：</label>
                                         <input id="name" name="userName" type="text" value="${sessionScope.frontUser.userName}" class="form-control" onblur="verification()"  maxlength="15" placeholder="您的名字">
@@ -103,15 +102,23 @@
                                         <span class="prompt" id="phone-pro2">号码格式错误</span>
                                     </c:if>
                                 </div>
+                               <%-- <div class="form-group">
+                                        <label>车牌编号：</label>
+                                        <input id="plateId" type="text" name="plateId" value="" class="form-control"  placeholder="">
+                                </div>
                                 <div class="form-group">
-                                    <span style="float: left;"><label>预约时间：</label></span>
+                                    <label>车牌：</label>
+                                    <input id="carPlate" type="text" name="carPlate" value="" class="form-control"   placeholder="">
+                                </div>--%>
+                                <div class="form-group">
+                                    <span style="float: left;"><label>到店时间：</label></span>
                                     <div class="clearfix"></div>
                                     <input id="date" name="arriveTime" type="date" class="form-control yy-date">
                                     <input id="time" type="time" onblur="verification()" class="form-control yy-time">
                                     <span class="prompt" id="time-pro">请填写该字段</span>
                                     <div class="clearfix"></div>
                                 </div>
-                                <div class="form-group choosecar">
+                                <%--<div class="form-group choosecar">
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">汽车品牌：</label>
                                         <div class="col-sm-7">
@@ -127,9 +134,9 @@
                                         </div>
                                     </div>
 
-                                </div>
+                                </div>--%>
                                 <div class="form-group">
-                                    <input type="submit" onclick="rese();" class="btn btn-success" value="预约"/>
+                                    <input type="button" onclick="addApp();" class="btn btn-success" value="预约"/>
                                     <input type="reset" class="btn btn-warning" value="重置">
                                 </div>
                             </form>
@@ -163,18 +170,19 @@
 <script src="/static/js/rese.js"></script>
 <script src="/static/js/select2/select2.js"></script>
 <script>
-    function rese(){
-        $.post("/url",$("#form1").serialize(),function (data) {
-            if(data.message == "sccuess"){
+
+    function addApp() {
+        $.post("/addApp",$("#form1").serialize(),function (data) {
+            if(data.result=="success"){
                 alert(data.message);
             }else{
-                alert(data.message);
+                alert(data.message)
             }
         })
     }
-    $(function () {
-        initSelect2("carBrand", "请选择车型", "/carBrand/queryAllCarBrand");
-        initSelect2("carModel", "请选择品牌", "/carBrand/queryAllCarModel");
-   })
+//    $(function () {
+//        initSelect2("carBrand", "请选择车型", "/carBrand/queryAllCarBrand");
+//        initSelect2("carModel", "请选择品牌", "/carBrand/queryAllCarModel");
+//   })
 </script>
 </html>

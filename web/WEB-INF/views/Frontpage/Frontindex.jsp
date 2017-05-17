@@ -83,7 +83,7 @@
                                 <img src="/static/img/Frontpage/582.jpg"/>
                             </div>
                             <div class="item">
-                                <img src="/static/img/Frontpage/lunbo3.jpg"/>
+                                <img src="/static/img/Frontpage/homeback1.jpg"/>
                             </div>
                         </div>
                         <!-- 轮播（Carousel）导航 -->
@@ -276,7 +276,7 @@
                             <div class="com-icon">
                                 <div class="icon-t">
                                     <i class="ms glyphicon glyphicon-thumbs-up" title="五星好评"></i>
-                                    <i class="hp glyphicon glyphicon-hourglass" title="闪电发货"></i>
+                                    <i class="hp glyphicon glyphicon-h'ourglass" title="闪电发货"></i>
                                     <span class="tuij" title="五星店铺">
                                         <i class="glyphicon glyphicon-star" style="width: 14px;height: 16px;"></i> 推荐
                                     </span>

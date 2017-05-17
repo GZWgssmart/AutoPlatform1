@@ -1,24 +1,27 @@
 package com.gs.controller;
 
 import ch.qos.logback.classic.Logger;
+import com.gs.bean.Appointment;
 import com.gs.bean.User;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.util.EncryptUtil;
 import com.gs.common.util.RoleUtil;
 import com.gs.common.util.SessionUtil;
+import com.gs.service.AppointmentService;
 import com.gs.service.UserService;
 import org.apache.ibatis.annotations.Param;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -33,6 +36,9 @@ public class UserIndexController {
     private Subject subject;
 
     private Logger logger = (Logger) LoggerFactory.getLogger(UserIndexController.class);
+
+    @Resource
+    private AppointmentService appointmentService;
 
     @Resource
     private UserService userService;
@@ -70,7 +76,6 @@ public class UserIndexController {
     public String myrese() {
         return "Frontpage/Personalcenter/reservation/reservation";
     }
-
 
 
     /*维修保养记录*/
@@ -150,32 +155,32 @@ public class UserIndexController {
     @ResponseBody
     @RequestMapping(value = "updatePwd", method = RequestMethod.POST)
     public ControllerResult updatePwd(@Param("oldPwd") String oldPwd, @Param("newPwd")
-            String newPwd, @Param("conPwd") String conPwd,HttpSession session) {
-        User user=(User) session.getAttribute("frontUser");
-        if(user!=null&&!user.equals("")){
-            if(user.getUserPwd().equals(EncryptUtil.md5Encrypt(oldPwd))){
-                if(newPwd!=null&&newPwd.equals(conPwd)){
+            String newPwd, @Param("conPwd") String conPwd, HttpSession session) {
+        User user = (User) session.getAttribute("frontUser");
+        if (user != null && !user.equals("")) {
+            if (user.getUserPwd().equals(EncryptUtil.md5Encrypt(oldPwd))) {
+                if (newPwd != null && newPwd.equals(conPwd)) {
                     user.setUserPwd(EncryptUtil.md5Encrypt(conPwd));
                     userService.updatePwd(user);
                     logger.info("用户更新密码成功");
                     return ControllerResult.getSuccessResult("修改密码成功");
-                }else{
+                } else {
                     logger.info("两次密码输入不一致");
                     return ControllerResult.getFailResult("两次密码输入不一致，请重新输入！");
                 }
-            }else{
+            } else {
                 logger.info("旧密码输入有误！");
                 return ControllerResult.getFailResult("更新密码失败，您的旧密码输入有误");
             }
-        }else{
+        } else {
             logger.info("用户还未登陆");
             return ControllerResult.getFailResult("请登录");
         }
     }
 
     /*用户退出*/
-    @RequestMapping(value="outusers",method = RequestMethod.GET)
-    public String outUser(HttpSession session){
+    @RequestMapping(value = "outusers", method = RequestMethod.GET)
+    public String outUser(HttpSession session) {
         Subject currentUser = SecurityUtils.getSubject();
         if (SessionUtil.isOwnerLogin(session)) {
             User user = (User) session.getAttribute("frontUser");
@@ -189,20 +194,45 @@ public class UserIndexController {
     /**
      * 验证是否登录
      */
-    @RequestMapping(value="isLogin/{roles}",method=RequestMethod.POST)
     @ResponseBody
+    @RequestMapping(value = "isOwnerLogin/{roles}", method = RequestMethod.POST)
     public ControllerResult isLogin(@PathVariable("roles") String roles, HttpSession session) {
-        if(SessionUtil.isOwnerLogin(session)) {
-            if(RoleUtil.checkRoles(roles)){
+        if (SessionUtil.isOwnerLogin(session)) {
+            if (RoleUtil.checkRoles(roles)) {
                 return ControllerResult.getSuccessResult("拥有角色");
-            }else{
+            } else {
                 logger.info("无进入方法角色");
                 return ControllerResult.getNotRoleResult("权限不足");
             }
-        }else{
+        } else {
             logger.info("请先登录");
             return ControllerResult.getNotLoginResult("登录信息无效，请重新登录");
         }
     }
 
+    @ResponseBody
+    @RequestMapping(value = "addApp",method = RequestMethod.POST)
+    public ControllerResult addApp(HttpSession session,Appointment appointment){
+        if(SessionUtil.isOwnerLogin(session)){
+            if(appointment!=null&&!appointment.equals("")){
+                appointmentService.insert(appointment);
+                return ControllerResult.getSuccessResult("添加预约成功");
+            }else{
+                return ControllerResult.getFailResult("添加预约失败，请输入预约信息");
+            }
+        }else{
+            logger.info("用户未登录");
+            return ControllerResult.getFailResult("用户未登录");
+        }
+    }
+    /**
+     * 时间格式化
+     */
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        dateFormat.setLenient(false);
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
+    }
 }
+

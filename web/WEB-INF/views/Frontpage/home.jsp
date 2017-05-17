@@ -37,30 +37,18 @@
                 <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
                 <li data-target="#myCarousel" data-slide-to="1"></li>
                 <li data-target="#myCarousel" data-slide-to="2"></li>
-                <li data-target="#myCarousel" data-slide-to="3"></li>
-                <li data-target="#myCarousel" data-slide-to="4"></li>
             </ol>
             <!-- 轮播项目-->
             <div class="carousel-inner">
                 <div class="item active">
                     <img src="/static/img/Frontpage/banner1.png">
-                    <div class="carousel-caption">标题 1</div>
                 </div>
                 <div class="item ">
                     <img src="/static/img/Frontpage/banner5.png"/>
-                    <div class="carousel-caption">标题 2</div>
                 </div>
                 <div class="item">
-                    <img src="/static/img/Frontpage/lunbo3.jpg"/>
-                    <div class="carousel-caption">标题 3</div>
-                </div>
-                <div class="item">
-                    <img src="/static/img/Frontpage/lunbo4.jpg"/>
-                    <div class="carousel-caption">标题 4</div>
-                </div>
-                <div class="item">
-                    <img src="/static/img/Frontpage/lunbo5.jpg"/>
-                    <div class="carousel-caption">标题 5</div>
+                    <img src="/static/img/Frontpage/homeback3.jpg"/>
+                    <%--<div class="carousel-caption">标题 5</div>--%>
                 </div>
             </div>
             <!-- 轮播（Carousel）导航 -->
