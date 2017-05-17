@@ -318,7 +318,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 b-r">
-                        <h3 class="m-t-none m-b">选择预约记录</h3>
+                        <h3 class="m-t-none m-b">选择用户记录</h3>
                         <table class="table table-hover" id="appTable"style="table-layout: fixed">
                             <thead>
                             <tr>
