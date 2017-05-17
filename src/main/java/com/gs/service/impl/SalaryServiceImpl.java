@@ -59,12 +59,14 @@ public class SalaryServiceImpl implements SalaryService {
 	}
 
 	public List<Salary> blurredQuery(Pager pager, Salary salary) {
-		return null;
+
+		return salaryDAO.blurredQuery(pager, salary);
 	}
 
 	@Override
 	public int countByBlurred(Salary salary, User user) {
-		return 0;
+
+		return salaryDAO.countByBlurred(salary, user);
 	}
 
 	public int countByBlurred(Salary salary) {

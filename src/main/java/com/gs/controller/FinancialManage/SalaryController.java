@@ -1,9 +1,6 @@
 package com.gs.controller.FinancialManage;
 
-import com.gs.bean.IncomingOutgoing;
-import com.gs.bean.OutgoingType;
-import com.gs.bean.Salary;
-import com.gs.bean.User;
+import com.gs.bean.*;
 import com.gs.common.Constants;
 import com.gs.common.Methods;
 import com.gs.common.bean.ControllerResult;
@@ -193,6 +190,44 @@ public class SalaryController {
         }
 
     }
+
+    @ResponseBody
+    @RequestMapping(value = "blurredQuery", method = RequestMethod.GET)
+    public Pager4EasyUI<Salary> blurredQuery(HttpSession session, HttpServletRequest request, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
+        if (SessionUtil.isLogin(session)) {
+            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员";
+            if (RoleUtil.checkRoles(roles)) {
+                logger.info("工资分类模糊查询");
+                Pager pager = new Pager();
+                pager.setUser((User) session.getAttribute("user"));
+                pager.setPageNo(Integer.parseInt(pageNumber));
+                pager.setPageSize(Integer.parseInt(pageSize));
+                String text = request.getParameter("text");
+                String value = request.getParameter("value");
+                if (text != null && !text.equals("") && value != null && !value.equals("")) {
+                    List<Salary> salaries = null;
+                    Salary salary = new Salary();
+                    if (text.equals("姓名")) {
+                        salary.setUserId(value);
+                    } else if (text.equals("工资")) {
+                        salary.setTotalSalary(Double.valueOf(value));
+                    }
+                    salaries = salaryService.blurredQuery(pager, salary);
+                    pager.setTotalRecords(salaryService.countByBlurred(salary, (User) session.getAttribute("user")));
+                    return new Pager4EasyUI<Salary>(pager.getTotalRecords(), salaries);
+                } else {
+                    return null;
+                }
+            } else {
+                logger.info("此用户无拥有此方法角色");
+                return null;
+            }
+        } else {
+            logger.info("请先登陆");
+            return null;
+        }
+    }
+
 
 
 

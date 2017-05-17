@@ -591,7 +591,8 @@ CREATE TABLE `t_outgoing_type` (
   `outTypeId` varchar(36) NOT NULL COMMENT '支出类型编号，UUID,主键',
   `outTypeName` varchar(20) DEFAULT NULL COMMENT '支出类型名称',
   `companyId` varchar(36) DEFAULT NULL COMMENT '标识来源于哪家公司',
-  `outTypeStatus` varchar(2) DEFAULT NULL COMMENT '支出类型状态，Y表示可用，N表示不可用',
+   `outTypeStatus` varchar(2) DEFAULT NULL COMMENT '支出类型状态，Y表示可用，N表示不可用',
+ `createTime` datetime DEFAULT NULL COMMENT '支出类型创建时间',
   PRIMARY KEY (`outTypeId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -604,6 +605,7 @@ CREATE TABLE `t_incoming_type` (
   `inTypeName` varchar(20) DEFAULT NULL COMMENT '收入类型名称',
   `companyId` varchar(36) DEFAULT NULL COMMENT '标识来源于哪家公司',
   `inTypeStatus` varchar(2) DEFAULT NULL COMMENT '收入类型状态，Y表示可用，N表示不可用',
+  `createTime` datetime DEFAULT NULL COMMENT '收入类型创建时间',
   PRIMARY KEY (`inTypeId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

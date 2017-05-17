@@ -42,28 +42,31 @@
                 <th data-field="inOutStatus" data-formatter="statusFormatter">
                     记录状态
                 </th>
-                <th data-field="inOutStatus" data-formatter="openStatusFormatter">
-                    操作
-                </th>
+                <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司财务人员">
+                    <th data-field="inOutStatus" data-formatter="openStatusFormatter">
+                        操作
+                    </th>
+                </shiro:hasAnyRoles>
+
             </tr>
             </thead>
         </table>
         <div id="toolbar" class="btn-group">
             <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司财务人员">
                 <button id="o_add" type="button" class="btn btn-default" onclick="outAddWin();">
-                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>支出信息添加
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>其它支出信息添加
                 </button>
             </shiro:hasAnyRoles>
             <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司财务人员">
                 <button id="i_add" type="button" class="btn btn-default" onclick="inAddWin();">
-                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>收入信息添加
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>其它收入信息添加
                 </button>
             </shiro:hasAnyRoles>
-            <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司财务人员">
+<%--            <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司财务人员">
                 <button id="btn_edit" type="button" class="btn btn-default" onclick="showEdit();">
                     <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
                 </button>
-            </shiro:hasAnyRoles>
+            </shiro:hasAnyRoles>--%>
             <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员">
                 <button id="searchDisable" type="button" class="btn btn-default" onclick="searchDisableStatus();">
                     <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询禁用类型
@@ -400,7 +403,7 @@
     </div>
 </div>--%>
 
-<%--收入管理弹窗显示--%>
+<%--修改收支记录--%>
 <div id="updateInWin" class="modal fade" aria-hidden="true" style="overflow:scroll" data-backdrop="static"
      keyboard:false>
     <div class="modal-dialog">

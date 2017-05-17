@@ -14,11 +14,13 @@
         <association property="incomingType" javaType="com.gs.bean.IncomingType">
             <id column="inTypeId" property="inTypeId"/>
             <result column="inTypeName" property="inTypeName"/>
+            <result column="inTypeStatus" property="inTypeStatus"/>
         </association>
 
         <association property="outgoingType" javaType="com.gs.bean.OutgoingType">
             <id column="outTypeId" property="outTypeId"/>
             <result column="outTypeName" property="outTypeName"/>
+            <result column="outTypeStatus" property="outTypeStatus"/>
         </association>
 
         <association property="user" javaType="com.gs.bean.User">
@@ -34,7 +36,11 @@
     <select id="count" resultType="int" parameterType="com.gs.bean.User">
     <![CDATA[
 
-      select count(*) from t_incoming_outgoing io where 1 = 1 and  io.inOutStatus = 'Y'
+       select COUNT(*) from t_incoming_outgoing io
+				LEFT JOIN t_incoming_type i on io.inTypeId = i.inTypeId
+				LEFT JOIN t_outgoing_type o on io.outTypeId = o.outTypeId
+				LEFT JOIN  t_user u on io.inOutCreatedUser = u.userId
+				where  io.inOutStatus = 'Y' AND (i.inTypeStatus = 'Y' or o.outTypeStatus = 'Y')
 
         ]]>
         <if test="companyId != '' and companyId != null">
@@ -49,7 +55,7 @@
 				LEFT JOIN t_incoming_type i on io.inTypeId = i.inTypeId
 				LEFT JOIN t_outgoing_type o on io.outTypeId = o.outTypeId
 				LEFT JOIN  t_user u on io.inOutCreatedUser = u.userId
-				where  io.inOutStatus = 'Y'
+				where  io.inOutStatus = 'Y' AND (i.inTypeStatus = 'Y' or o.outTypeStatus = 'Y')
     ]]>
         <if test="user.companyId != '' and user.companyId != null">
             and io.companyId = #{user.companyId}
@@ -94,7 +100,11 @@
     <select id="countByDisable" resultType="int" parameterType="com.gs.bean.User">
     <![CDATA[
 
-        select count(*) from t_incoming_outgoing io where 1 =1 and  io.inOutStatus = 'N'
+        select count(*) from t_incoming_outgoing io
+				LEFT JOIN t_incoming_type i on io.inTypeId = i.inTypeId
+				LEFT JOIN t_outgoing_type o on io.outTypeId = o.outTypeId
+				LEFT JOIN  t_user u on io.inOutCreatedUser = u.userId
+				where  io.inOutStatus = 'N' AND (i.inTypeStatus = 'Y' or o.outTypeStatus = 'Y')
 
         ]]>
         <if test="companyId != '' and companyId != null">
@@ -109,7 +119,7 @@
 				LEFT JOIN t_incoming_type i on io.inTypeId = i.inTypeId
 				LEFT JOIN t_outgoing_type o on io.outTypeId = o.outTypeId
 				LEFT JOIN  t_user u on io.inOutCreatedUser = u.userId
-				where  io.inOutStatus = 'N'
+				where  io.inOutStatus = 'N' AND (i.inTypeStatus = 'Y' or o.outTypeStatus = 'Y')
 
     ]]>
         <if test="user.companyId != '' and user.companyId != null">

@@ -196,6 +196,9 @@
                                 <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司总技师">
                                     <li><a class="J_menuItem" href="pickingControll/assignstaffIndex">指派员工</a></li>
                                 </shiro:hasAnyRoles>
+                                <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司库管人员">
+                                    <li><a class="J_menuItem" href="pickingControll/mattermanageIndex">物料管理</a></li>
+                                </shiro:hasAnyRoles>
                             </ul>
                         </li>
                     </shiro:hasAnyRoles>

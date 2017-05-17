@@ -26,8 +26,15 @@
             <tr>
                 <th data-radio="true"></th>
                 <th data-field="inTypeName">收入类型</th>
+                <th data-field="createTime" data-formatter="formatterDate">
+                    类型创建时间
+                </th>
                 <th data-formatter="statusFormatter">收入类型状态</th>
-                <th data-formatter="openStatusFormatter">操作</th>
+
+                <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司财务人员">
+                    <th data-formatter="openStatusFormatter">操作</th>
+                </shiro:hasAnyRoles>
+
             </tr>
             </thead>
         </table>

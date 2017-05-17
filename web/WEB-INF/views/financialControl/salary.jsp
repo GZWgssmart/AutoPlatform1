@@ -60,6 +60,19 @@
             <a href="javascript:void(0)" onclick="importData();">导入数据</a>
         </button>
     </shiro:hasAnyRoles>
+    <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员">
+        <div class="input-group" style="width:350px;float:left;padding:0;margin:0 0 0 -1px;">
+            <div class="input-group-btn">
+                <button type="button" id="ulButton" class="btn btn-default" style="border-radius:0px;"
+                        data-toggle="dropdown">姓名<span class="caret"></span></button>
+            </div><!-- /btn-group -->
+            <input id="ulInput" class="form-control" onkeypress="if(event.keyCode==13) {blurredQuery();}">
+            <a href="javaScript:;" onclick="blurredQuery()"><span
+                    class="glyphicon glyphicon-search search-style"></span></a>
+            </input>
+        </div>
+        <!-- /input-group -->
+    </shiro:hasAnyRoles>
     </div>
     </div>
     </div>
@@ -130,12 +143,13 @@
                 </div>
                 </div>
 
-                <div class="form-group">
-                <label class="col-sm-3 control-label">工资发放时间：</label>
-                <div class="col-sm-7">
-                <input type="date" name="salaryTime" placeholder="请选择工资发放时间" id="salaryTime" class="form-control">
-                </div>
-                </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">工资发放时间：</label>
+                        <div class="col-sm-7">
+                            <input type="text" name="salaryTime"
+                                   onclick="getDate('addDateTimePicker')" id="addDateTimePicker" class="form-control">
+                        </div>
+                    </div>
 
                 <div class="modal-footer">
                 <span id="addError"></span>

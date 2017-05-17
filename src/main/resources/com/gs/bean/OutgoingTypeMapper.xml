@@ -5,6 +5,7 @@
     <id column="outTypeId" property="outTypeId" jdbcType="VARCHAR" />
     <result column="outTypeName" property="outTypeName" jdbcType="VARCHAR" />
     <result column="outTypeStatus" property="outTypeStatus" jdbcType="VARCHAR" />
+    <result column="createTime" property="createTime"  />
 
     <association property="company" javaType="com.gs.bean.Company">
       <id column="companyId" property="companyId"/>
@@ -18,6 +19,7 @@
     ]]>
     <if test="companyId != '' and companyId != null">
       and o.companyId = #{companyId}
+      order by o.createTime Desc
     </if>
   </select>
 
@@ -27,6 +29,7 @@
     ]]>
     <if test="user.companyId != '' and user.companyId != null">
       and o.companyId = #{user.companyId}
+      order by o.createTime Desc
     </if>
     limit #{beginIndex}, #{pageSize}
   </select>
@@ -37,6 +40,7 @@
     ]]>
     <if test="companyId != '' and companyId != null">
       and o.companyId = #{companyId}
+      order by o.createTime Desc
     </if>
   </select>
 
@@ -46,6 +50,7 @@
     ]]>
     <if test="user.companyId != '' and user.companyId != null">
       and o.companyId = #{user.companyId}
+      order by o.createTime Desc
     </if>
      limit #{beginIndex}, #{pageSize}
   </select>
@@ -59,7 +64,7 @@
 
   <insert id="insert" useGeneratedKeys="true" keyProperty="outTypeId" parameterType="outGoingType">
     <![CDATA[
-        insert into t_outgoing_type(outTypeId,companyId,outTypeName, outTypeStatus) values(uuid(), #{companyId}, #{outTypeName}, 'Y')
+        insert into t_outgoing_type(outTypeId,companyId,outTypeName, outTypeStatus,createTime) values(uuid(), #{companyId}, #{outTypeName}, 'Y',now())
         ]]>
   </insert>
 

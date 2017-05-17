@@ -1,6 +1,9 @@
 package com.gs.dao;
 
 import com.gs.bean.Salary;
+import com.gs.bean.User;
+import com.gs.common.bean.Pager;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -17,4 +20,8 @@ public interface SalaryDAO extends BaseDAO<String, Salary>{
 
     // 批量添加，导入时要用
     public void addInsert(List<Salary> salarys);
+
+    public List<Salary> blurredQuery(@Param("pager") Pager pager, @Param("salary") Salary salary);
+
+    public int countByBlurred(@Param("salary") Salary salary, @Param("user") User user);
 }

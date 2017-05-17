@@ -1,5 +1,7 @@
 package com.gs.bean;
 
+import java.util.Date;
+
 public class IncomingType {
     private String inTypeId;
 
@@ -8,6 +10,16 @@ public class IncomingType {
     private String companyId;
 
     private String inTypeStatus;
+
+    private Date createTime;
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
 
     /**
      * 关联公司

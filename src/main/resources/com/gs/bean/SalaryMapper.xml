@@ -15,13 +15,14 @@
     <association property="user" javaType="com.gs.bean.User">
       <id column="userId" property="userId"/>
       <result column="userName" property="userName"/>
+      <result column="userStatus" property="userStatus"/>
     </association>
 
   </resultMap>
 
   <select id="count" resultType="int" parameterType="com.gs.bean.User">
     <![CDATA[
-       select count(*) from t_salary s,t_user u where s.userId = u.userId
+       select count(*) from t_salary s,t_user u where s.userId = u.userId and u.userStatus = 'Y'
     ]]>
     <if test="companyId != '' and companyId != null">
       and u.companyId = #{companyId}
@@ -30,7 +31,7 @@
 
   <select id="queryByPager" resultMap="salaryMap" parameterType="com.gs.common.bean.Pager">
     <![CDATA[
-        select s.*, u.userId,u.userName from t_salary s, t_user u where 1 =1 and u.userId = s.userId
+        select s.*, u.userId,u.userName from t_salary s, t_user u where 1 =1 and u.userId = s.userId  and u.userStatus = 'Y'
     ]]>
     <if test="user.companyId != '' and user.companyId != null">
       and u.companyId = #{user.companyId}
@@ -40,7 +41,7 @@
 
   <select id="queryAll" resultMap="salaryMap" parameterType="com.gs.bean.User">
     <![CDATA[
-        select *  from t_salary s, t_user u where s.userId = u.userId
+        select *  from t_salary s, t_user u where s.userId = u.userId and u.userStatus = 'Y'
     ]]>
     <if test="companyId != '' and companyId != null">
       and u.companyId = #{companyId}
@@ -77,4 +78,33 @@
     </foreach>
   </insert>
 
+  <!-- 分页模糊查询 -->
+  <select id="blurredQuery" resultMap="salaryMap">
+    <![CDATA[
+         select s.*, u.userId,u.userName from t_salary s, t_user u where 1 =1 and u.userId = s.userId
+        ]]>
+    <if test="pager.user.companyId != '' and pager.user.companyId != null">
+      and u.companyId = #{pager.user.companyId}
+    </if>
+    and(
+    <if test="salary.userId != '' and salary.userId != null">
+      u.userName like '%${salary.userId}%'
+    </if>)
+    limit #{pager.beginIndex}, #{pager.pageSize}
+  </select>
+
+  <!-- 分页模糊查询个数 -->
+  <select id="countByBlurred" resultType="int">
+    <![CDATA[
+         select count(*) from t_salary s, t_user u where 1 =1 and u.userId = s.userId
+        ]]>
+    <if test="user.companyId != '' and user.companyId != null">
+      and u.companyId = #{user.companyId}
+    </if>
+    and(
+    <if test="salary.userId != '' and salary.userId != null">
+      u.userName like '%${salary.userId}%'
+    </if>
+    )
+  </select>
 </mapper>

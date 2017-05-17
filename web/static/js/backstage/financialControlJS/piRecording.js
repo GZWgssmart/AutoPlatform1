@@ -167,9 +167,6 @@ function showEdit(){
             $("#editButton").removeAttr("disabled");
             var row =  $('table').bootstrapTable('getSelections');
             if(row.length >0) {
-//                $('#editId').val(row[0].id);
-//                $('#editName').val(row[0].name);
-//                $('#editPrice').val(row[0].price);
                 $("#editIOWin").modal('show'); // 显示弹窗
                 var io = row[0];
                 $("#editIOWin").fill(io);
@@ -496,6 +493,7 @@ function updateInCheckInType () {
     } else {
         $("#updateInWin").modal('hide');
         var inType = selectRow[0];
+        console.log(inType.inTypeName + inType.inTypeId)
         $("#inType").val(inType.inTypeName);
         $("#updateInTypeId").val(inType.inTypeId);
         $("#editIOWin").modal('show');
@@ -604,14 +602,17 @@ function formSubmit(url, formId, winId) {
                 })// 提示窗口, 修改成功
                 $('#table').bootstrapTable('refresh');
                 if (formId == 'addOutForm') {
+                    $('#table').bootstrapTable('refresh');
                     $("input[type=reset]").trigger("click"); // 移除表单中填的值
-                    $('#addOutForm').data('bootstrapValidator').resetForm(true); // 移除所有验证样式
                     $("#addOutButton").removeAttr("disabled"); // 移除不可点击
-                } else if  (formId == 'addInForm') {
+                }
+                if  (formId == 'addInForm') {
+                    $('#table').bootstrapTable('refresh');
                     $("input[type=reset]").trigger("click"); // 移除表单中填的值
-                    $('#addInForm').data('bootstrapValidator').resetForm(true); // 移除所有验证样式
                     $("#addInButton").removeAttr("disabled"); // 移除不可点击
                 }
+                $("#" + formId).data('bootstrapValidator').destroy(); // 销毁此form表单
+                $('#' + formId).data('bootstrapValidator', null);// 此form表单设置为空
             } else if (data.result == "fail") {
                 swal({
                     title: "",
