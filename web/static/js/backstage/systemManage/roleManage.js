@@ -587,7 +587,7 @@ function showEdit(){
     $("#addButton").removeAttr("disabled");
     $("#addModal").modal('show');
     validator('addForm');
-    $("#addModal .modal-header> h3").text("修改角色");
+    $("#addModal .modal-header> h4").text("修改角色信息");
     $("#addModal .modal-header input[data-flag=flag]").val("editForm");
     var role = initObj.role;
     var roleNameInput = $("#addForm").find("input[name=roleName]");
@@ -611,32 +611,15 @@ function validator(formId) {
         },
         fields: {
             roleDes: {
-                message: '角色简介验证失败',
+                message: '角色描述验证失败',
                 validators: {
                     notEmpty: {
-                        message: '角色简介不能为空'
+                        message: '角色描述不能为空'
                     },
                     stringLength: {
                         min: 1,
                         max: 100,
-                        message: "角色简介长度必须在1至100个字符之间"
-                    }
-                }
-            },
-            roleName: {
-                message: '角色名称验证失败',
-                validators: {
-                    notEmpty: {
-                        message: '角色名称不能为空'
-                    },
-                    stringLength: {
-                        min: 1,
-                        max: 20,
-                        message: '角色名称必须为11位'
-                    },
-                    regexp: {
-                        regexp: /^[^$&,""''\s]+$/,
-                        message: '名称不允许存在符号'
+                        message: "角色描述长度必须在1至100个字符之间"
                     }
                 }
             }
@@ -672,7 +655,7 @@ function formSubmit(url, modalId ,formId, flag) {
             } else if (data.result == "fail") {
                 swal({title:"",
                     text:data.message,
-                    confirmButtonText:"确认",
+                    confirmButtonText:"确定",
                     type:"error"});
             }
             formModalclose(modalId,formId, "editButton");
@@ -701,6 +684,7 @@ function savePermission(){
                     swal({
                             title: "",
                             text: data.message,
+                            confirmButtonText:"确定", // 提示按钮上的文本
                             type: "success"
                         },
                         function (isConfirm) {
@@ -713,6 +697,7 @@ function savePermission(){
                     swal({
                         title: "",
                         text: data.message,
+                        confirmButtonText:"确定", // 提示按钮上的文本
                         type: "error"
                     }, function (isConfirm) {
                         $("#editPermission").modal("hide");

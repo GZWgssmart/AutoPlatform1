@@ -30,6 +30,9 @@
 <%@include file="../backstage/contextmenu.jsp"%>
 
 <div class="container">
+    <div class="panel-heading" style="height:90px; border-bottom: 1px solid #ddd">
+        <h3 style="display: inline;line-height:70px;" >流程管理</h3>
+    </div>
     <div class="panel-body" style="padding-bottom:0px;"  >
         <table id="table">
             <thead>

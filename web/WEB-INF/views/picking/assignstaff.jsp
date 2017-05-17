@@ -113,7 +113,7 @@
                     <button type="button" class="btn btn-default"
                             data-dismiss="modal">关闭
                     </button>
-                    <button type="button" onclick="submitDispatcher()" class="btn btn-primary">
+                    <button type="button" onclick="submitDispatcher()" class="btn btn-success">
                         确认
                     </button>
                 </div>

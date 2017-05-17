@@ -225,7 +225,7 @@
                             </div>
                         </div>
                         <button type="button" class="btn btn-default" onclick = "closeModal('application','materialsForm')">取消</button>
-                        <button  class="btn btn-primary" id = "subButton1" onclick = "checkForm('materialsForm','subButton1')" >确认</button>
+                        <button  class="btn btn-success" id = "subButton1" onclick = "checkForm('materialsForm','subButton1')" >确认</button>
                         <input type="reset" name="reset" style="display: none;"/>
                     </form>
                 </div>
@@ -266,7 +266,7 @@
                         </div>
                     </div>
                     <button type="button" class="btn btn-default" onclick="closeModal('appendModal','appendMaterialsForm') ">取消</button>
-                    <button  class="btn btn-primary" id="subButton2" onclick = "checkForm('appendMaterialsForm','subButton2')">确认</button>
+                    <button  class="btn btn-success" id="subButton2" onclick = "checkForm('appendMaterialsForm','subButton2')">确认</button>
                     <input type="reset" name="reset" style="display: none;"/>
                 </form>
             </div>

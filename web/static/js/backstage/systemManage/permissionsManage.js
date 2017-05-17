@@ -396,9 +396,9 @@ function validator(formId) {
                         message: '权限名称不能为空'
                     },
                     stringLength: {
-                        min: 3,
-                        max: 20,
-                        message: '权限名称必须在3至20个字符之间'
+                        min: 1,
+                        max: 6,
+                        message: '权限名称必须在1至6个字符之间'
                     },
                     regexp: {
                         regexp: /^[^$&,""''\s]+$/,
@@ -407,15 +407,15 @@ function validator(formId) {
                 }
             },
             permissionDes: {
-                message: '权限简介验证失败',
+                message: '权限描述验证失败',
                 validators: {
                     notEmpty: {
-                        message: '权限中文名称不能为空'
+                        message: '权限描述不能为空'
                     },
                     stringLength: {
                         min: 3,
                         max: 100,
-                        message: '权限中文名称必须在3至100个字符之间'
+                        message: '权限描述必须在3至100个字符之间'
                     }
                 }
             },
@@ -443,9 +443,8 @@ function editServlet(data) {
     swal({
             title:"",
             text: result.msg, // 主要文本
-            confirmButtonColor: "#DD6B55", // 提示按钮的颜色
             confirmButtonText:"确定", // 提示按钮上的文本
-            type:result.code},
+            type: result.code},
         function (){
             closeModal();
             $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
@@ -456,7 +455,7 @@ function showEdit (e, value, row, index) {
     var permission = row;
     validator("editForm");
     $("#edit .modal-header> input").val("edit");
-    $("#edit .modal-header> h3").text("修改权限: " + permission.permissionZhname);
+    $("#edit .modal-header> h4").text("修改权限管理信息");
     $("#editForm").fill(permission);
     $("#edit").modal('show'); // 显示弹窗
 }

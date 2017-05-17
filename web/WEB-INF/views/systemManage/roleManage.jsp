@@ -24,7 +24,7 @@
         .gj-checkbox-md input[type="checkbox"]:indeterminate + span::after {
             top:0px;
         }
-        h3, h4{
+        h3{
             font-weight: bold;
         }
         li[data-id|=module]>div[data-role="wrapper"]{
@@ -114,7 +114,7 @@
             <form class="form-horizontal" role="form" id="addForm" >
                 <span  class="close"   onclick = "formModalclose('addModal', 'addForm' )">&times;</span>
                 <div class="modal-header" style="overflow:auto;">
-                    <h3></h3><input data-flag="flag" style="display: none;">
+                    <h4></h4><input data-flag="flag" style="display: none;">
                 </div>
                 <hr/>
                 <input define="role.roleId" type="text" name="roleId" style="width:100%;display: none" />
@@ -135,7 +135,7 @@
                     <button type="button" class="btn btn-default"
                             onclick = "formModalclose('addModal', 'addForm' )">关闭
                     </button>
-                    <button id="editButton" type="button" class="btn btn-primary btn-sm" onclick = "editSave()"  >保存</button>
+                    <button id="editButton" type="button" class="btn btn-success btn-sm" onclick = "editSave()"  >保存</button>
                     <input type="reset" name="reset" style="display: none;"/>
                 </div>
             </form>
@@ -144,7 +144,7 @@
 </div><!-- /.modal -->
 
 <!-- 修改角色权限弹窗 -->
-<div class="modal" id="editPermission" aria-hidden="true" data-backdrop="static"  keyboard="false">
+<div class="modal fade" id="editPermission" aria-hidden="true" data-backdrop="static"  keyboard="false">
     <div class="modal-dialog">
         <div class="modal-content">
             <span  class="close"   data-dismiss="modal">&times;</span>
@@ -158,7 +158,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default"  data-dismiss="modal">取消</button>
-                <button  type="submit" id="subRolePer" class="btn btn-primary btn-sm" onclick="savePermission()">保存</button>
+                <button  type="submit" id="subRolePer" class="btn btn-success btn-sm" onclick="savePermission()">保存</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->

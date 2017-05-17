@@ -300,6 +300,8 @@ function showAdd(){
     validator('addForm');
     $("#addButton").removeAttr("disabled");
     $("#addModal .modal-header input[data-flag=flag]").val("addForm");
+    $("#addModal .modal-header h4[data-tit=title]").text("添加模块管理信息");
+    $("#addButton").text("添加");
     $("#addModal").modal('show');
 }
 function delModule(el) {
@@ -328,6 +330,8 @@ function delModule(el) {
 function showEdit(moduleId) {
     validator('addForm');
     $("#addModal .modal-header input[data-flag=flag]").val("editForm");
+    $("#addModal .modal-header h4[data-tit=title]").text("修改模块管理信息");
+    $("#addButton").text("保存");
     $("#addButton").removeAttr("disabled");
     var module = getModule(moduleId);
     $("#addForm").fill(module);
@@ -349,39 +353,38 @@ function validator(formId) {
         },
         fields: {
             moduleDes: {
-                message: '角色简介验证失败',
+                message: '模块描述验证失败',
                 validators: {
                     notEmpty: {
-                        message: '角色简介不能为空'
+                        message: '模块描述不能为空'
                     },
                     stringLength: {
                         min: 1,
                         max: 100,
-                        message: "角色简介长度必须在1至100个字符之间"
+                        message: "模块描述长度必须在1至100个字符之间"
                     }
                 }
             },
             moduleName: {
-                message: '角色名称验证失败',
+                message: '模块名称验证失败',
                 validators: {
                     notEmpty: {
-                        message: '角色名称不能为空'
+                        message: '模块名称不能为空'
                     },
                     stringLength: {
-                        min: 3,
-                        max: 8,
-                        message: '角色名称必须在3至8个字符之间'
+                        min: 1,
+                        max: 6,
+                        message: '模块名称必须在1至6个字符之间'
                     },
                     regexp: {
                         regexp: /^[^$&,""''\s]+$/,
-                        message: '名称不允许存在符号'
+                        message: '模块名称不允许存在符号'
                     }
                 }
             }
         }
     }) .on('success.form.bv', function (e) {
         var title =$("#addModal .modal-header input[data-flag=flag]").val();
-        console.log(title)
         if(title === "addForm") {
             formSubmit("/module/insert", "addModal",formId, title);
         }else if (title === "editForm"){
@@ -426,15 +429,18 @@ function formSubmit(url, modalId ,formId, flag) {
                         updBodyModulePanel(moduleTemp);
                         updateLeftNavTitle(moduleTemp);
                     }
+                    closeModal();
                 });// 提示窗口, 修改成功
             } else if (data.controllResult.result == "fail") {
                 swal({title:"",
                     text:data.controllResult.message,
                     confirmButtonText:"确认",
-                    type:"error"});
+                    type:"error"},function(isc) {
+                            closeModal();
+                });
                 $("#"+formId).removeAttr("disabled");
             }
-            closeModal();
+
         }, "json"
     )
 }

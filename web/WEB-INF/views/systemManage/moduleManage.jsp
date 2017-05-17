@@ -30,7 +30,7 @@
         }
        .connectedSortable li:before {
            content: "";
-           background-color: rgba(218, 218, 218,0.7);
+           background-color: rgba(152, 152, 152, 0.7);
            width: 30px;
            height: 35px;
            position: absolute;
@@ -206,7 +206,7 @@
         <div class="modal-content">
             <span  class="close"   onclick = "closeModal()">&times;</span>
                 <div class="modal-header" style="overflow:auto;">
-                    <h3></h3><input style="display:none" data-flag="flag"/>
+                    <h4 data-tit = "title"></h4><input style="display:none" data-flag="flag"/>
                 </div>
             <hr/>
             <form id="addForm" role="form" class="form-horizontal">
@@ -214,7 +214,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">模块名称：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="moduleName" define="module.moduleName"  class="form-control" data-field="moduleName" maxlength="10">
+                        <input type="text" name="moduleName" define="module.moduleName"  class="form-control" data-field="moduleName"   placeholder="请输入模块名称"  maxlength="10">
                     </div>
                 </div>
                 <div class="form-group">
@@ -228,7 +228,7 @@
                     <button type="button" class="btn btn-default"
                             onclick = "closeModal()">关闭
                     </button>
-                    <button id="addButton" type="submit" class="btn btn-primary btn-sm" onclick="addSubmit()">保存</button>
+                    <button id="addButton" type="submit" class="btn btn-success btn-sm" onclick="addSubmit()">保存</button>
                     <input type="reset" name="reset" style="display: none;"/>
                 </div>
             </form>

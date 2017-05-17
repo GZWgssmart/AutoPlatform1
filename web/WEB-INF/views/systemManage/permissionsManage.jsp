@@ -35,6 +35,9 @@
 <%@include file="../backstage/contextmenu.jsp"%>
 
 <div class="container">
+    <div class="panel-heading" style="height:90px; border-bottom: 1px solid #ddd">
+        <h3 style="display: inline;line-height:70px;" >权限管理</h3>
+    </div>
 <%--    <div class="nav">
         <ul id="myTab" class="nav nav-tabs">
             <li class="pull-right" onclick = "recycle()">
@@ -91,15 +94,15 @@
         <div class="modal-content">
             <span  class="close"   onclick = "closeModal()">&times;</span>
             <div class="modal-header">
-                <h3></h3>
+                <h4></h4>
             </div>
             <hr/>
             <form id="editForm" class="form-horizontal">
                 <input type="text" name="permissionId" define="permission.permissionId" style="display:none">
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">权限中文名称：</label>
+                    <label class="col-sm-3 control-label">权限名称：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="permissionZhname" define="permission.permissionZhname" class="form-control" maxlength="20">
+                        <input type="text" name="permissionZhname" define="permission.permissionZhname" class="form-control" maxlength="20"  placeholder="请输入权限名称">
                     </div>
                 </div>
                 <div class="form-group">
@@ -120,7 +123,7 @@
                     <button type="button" class="btn btn-default"
                             data-dismiss="modal" onclick = "closeModal()">关闭
                     </button>
-                    <button id="subButton"  class="btn btn-primary" onclick="saveEdit()">保存</button>
+                    <button id="subButton"  class="btn btn-success" onclick="saveEdit()">保存</button>
                     <input type="reset" name="reset" style="display: none;"/>
                 </div>
         </div><!-- /.modal-content -->
