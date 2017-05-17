@@ -398,7 +398,7 @@ function formSubmit(url, formId, winId){
                     $("#addCompany").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
                 } else if(formId == 'accForm'){
                     $("input[type=reset]").trigger("click"); // 移除表单中填的值
-                    $('#accForm').data('bootstrapValidator').resetForm(true); // 移除所有验证样式
+                    // $('#accForm').data('bootstrapValidator').resetForm(true); // 移除所有验证样式
                     $("#accButton").removeAttr("disabled"); // 移除不可点击
                     $("#addAccessories").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
                     // $("#accWindow").modal("hide");

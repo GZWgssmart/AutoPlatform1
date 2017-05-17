@@ -15,26 +15,26 @@
     <link rel="stylesheet" href="/static/css/table/table.css">
     <link rel="stylesheet" href="/static/css/bootstrap-validate/bootstrapValidator.min.css">
     <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.css">
-    <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/datetimepicker.less">
+    <link rel="stylesheet/less" href="/static/css/bootstrap-dateTimePicker/datetimepicker.less">
 </head>
 <body>
 <%@include file="../backstage/contextmenu.jsp" %>
 
 <div class="container">
     <div class="panel-body" style="padding-bottom:0px;">
-        <table id="table">
+        <table id="table" style="table-layout: fixed">
             <thead>
             <tr>
                 <th data-radio="true" data-field="status"></th>
-                <th data-field="maintainName">保养项目名称</th>
-                <th data-field="maintainHour">保养项目工时</th>
-                <th data-field="maintainMoney">保养项目基础费用</th>
-                <th data-field="maintainManHourFee">保养项目工时费</th>
-                <th data-field="maintainDes">保养项目描述</th>
-                <th data-field="company.companyName">保养项目所属公司</th>
-                <th data-field="maintainStatus" data-formatter="showStatusFormatter">保养项目状态</th>
+                <th data-width="150" data-field="maintainName">保养项目名称</th>
+                <th data-width="150" data-field="maintainHour">保养项目工时</th>
+                <th data-width="150" data-field="maintainMoney">保养项目基础费用</th>
+                <th data-width="150" data-field="maintainManHourFee">保养项目工时费</th>
+                <th data-width="150" data-field="maintainDes">保养项目描述</th>
+                <th data-width="150" data-field="company.companyName">保养项目所属公司</th>
+                <th data-width="150" data-field="maintainStatus" data-formatter="showStatusFormatter">保养项目状态</th>
                 <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员">
-                    <th data-field="maintainStatus" data-formatter="statusFormatter">
+                    <th data-width="150" data-field="maintainStatus" data-formatter="statusFormatter">
                         操作
                     </th>
                 </shiro:hasAnyRoles>
@@ -42,12 +42,14 @@
             </thead>
         </table>
         <div id="toolbar" class="btn-group">
-            <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师,汽车公司学徒,汽车公司销售人员,汽车公司财务人员,汽车公司采购人员,汽车公司库管人员,汽车公司人力资源管理部">
+            <shiro:hasAnyRoles
+                    name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师,汽车公司学徒,汽车公司销售人员,汽车公司财务人员,汽车公司采购人员,汽车公司库管人员,汽车公司人力资源管理部">
                 <button id="btn_available" type="button" class="btn btn-success" onclick="showAvailable();">
                     <span class="glyphicon glyphicon-search" aria-hidden="true"></span>可用保养记录
                 </button>
             </shiro:hasAnyRoles>
-            <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师,汽车公司学徒,汽车公司销售人员,汽车公司财务人员,汽车公司采购人员,汽车公司库管人员,汽车公司人力资源管理部">
+            <shiro:hasAnyRoles
+                    name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师,汽车公司学徒,汽车公司销售人员,汽车公司财务人员,汽车公司采购人员,汽车公司库管人员,汽车公司人力资源管理部">
                 <button id="btn_disable" type="button" class="btn btn-danger" onclick="showDisable();">
                     <span class="glyphicon glyphicon-search" aria-hidden="true"></span>禁用保养记录
                 </button>
@@ -76,11 +78,13 @@
     </div>
 </div>
 
-<div id="accWindow" class="modal fade" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static" keyboard:false>
+<div id="accWindow" class="modal fade" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static"
+     keyboard:false>
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
-                <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('accWindow', 'accForm')"></span>
+                <span class="glyphicon glyphicon-remove closeModal"
+                      onclick="closeModals('accWindow', 'accForm')"></span>
                 <form role="form" class="form-horizontal" id="accForm">
                     <input type="hidden" name="maintainId" define="MaintainFixMap.maintainId">
                     <input type="hidden" id="addaccId" name="accId">
@@ -102,10 +106,9 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">配件数量：</label>
                         <div class="col-sm-7">
-                            <input type="text" name="accCount" placeholder="请输入配件数量" class="form-control">
+                            <input type="number" name="accCount" placeholder="请输入配件数量" min="1" class="form-control" style="width:100%"/>
                         </div>
                     </div>
-
                     <div class="modal-footer" style="border: none">
                         <button type="button" class="btn btn-default"
                                 data-dismiss="modal">关闭
@@ -120,11 +123,13 @@
     </div>
 </div>
 
-<div id="accEditWindow" class="modal fade" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static" keyboard:false>
+<div id="accEditWindow" class="modal fade" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static"
+     keyboard:false>
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
-                <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('accEditWindow', 'accEditForm')"></span>
+                <span class="glyphicon glyphicon-remove closeModal"
+                      onclick="closeModals('accEditWindow', 'accEditForm')"></span>
                 <form role="form" class="form-horizontal" id="accEditForm">
                     <input type="hidden" id="editmaintainId" name="mainAccId">
                     <input type="hidden" id="editaccId" name="accId">
@@ -143,10 +148,17 @@
                             </button>
                         </div>
                     </div>
+                    <%--<div class="form-group">--%>
+                        <%--<label class="col-sm-3 control-label">配件数量：</label>--%>
+                        <%--<div class="col-sm-7">--%>
+                            <%--<input type="text" id="editaccCount" name="accCount" placeholder="请输入配件数量"class="form-control">--%>
+                        <%--</div>--%>
+                    <%--</div>--%>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">配件数量：</label>
                         <div class="col-sm-7">
-                            <input type="text" id="editaccCount" name="accCount" placeholder="请输入配件数量" class="form-control">
+                            <input type="number" id="editaccCount" name="accCount" placeholder="请输入配件数量" min="1" class="form-control"
+                                   style="width:100%"/>
                         </div>
                     </div>
 
@@ -165,7 +177,8 @@
 </div>
 
 <%--所有配件--%>
-<div class="modal fade" id="accAllWindow" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static" keyboard:false>
+<div class="modal fade" id="accAllWindow" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static"
+     keyboard:false>
     <div class="modal-dialog" style="width:90%;">
         <div class="modal-content">
             <div class="modal-body">
@@ -177,7 +190,8 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">配件类型：</label>
                     <div class="col-sm-7">
-                        <select id="addAccessories" class="js-example-tags AccessoriesType" onchange="queryByTypeId(this)" name="accId" style="width:100%" >
+                        <select id="addAccessories" class="js-example-tags AccessoriesType"
+                                onchange="queryByTypeId(this)" name="accId" style="width:100%">
                         </select>
                     </div>
                 </div>
@@ -185,13 +199,13 @@
                     <thead>
                     <tr>
                         <th data-field="state" data-radio="true"></th>
-                        <th data-field="accName" >
+                        <th data-field="accName">
                             配件名称
                         </th>
-                        <th data-field="accIdle" >
+                        <th data-field="accIdle">
                             配件库可用数
                         </th>
-                        <th data-field="accSalePrice" >
+                        <th data-field="accSalePrice">
                             配件单价
                         </th>
                     </tr>
@@ -209,7 +223,8 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<div class="modal fade" id="accEidtAllWindow" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static" keyboard:false>
+<div class="modal fade" id="accEidtAllWindow" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static"
+     keyboard:false>
     <div class="modal-dialog" style="width:90%;">
         <div class="modal-content">
             <div class="modal-body">
@@ -221,7 +236,8 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">配件类型：</label>
                     <div class="col-sm-7">
-                        <select id="editAccessories" class="js-example-tags AccessoriesType" onchange="queryByTypeId2(this)" name="accId" style="width:100%" >
+                        <select id="editAccessories" class="js-example-tags AccessoriesType"
+                                onchange="queryByTypeId2(this)" name="accId" style="width:100%">
                         </select>
                     </div>
                 </div>
@@ -229,13 +245,13 @@
                     <thead>
                     <tr>
                         <th data-radio="true"></th>
-                        <th data-field="accName" >
+                        <th data-field="accName">
                             配件名称
                         </th>
-                        <th data-field="accIdle" >
+                        <th data-field="accIdle">
                             配件库可用数
                         </th>
-                        <th data-field="accSalePrice" >
+                        <th data-field="accSalePrice">
                             配件单价
                         </th>
                     </tr>
@@ -260,30 +276,30 @@
             <div class="modal-body">
                 <span class="glyphicon glyphicon-remove closeModal" onclick="closedetailWindow()"></span>
                 <form role="form" class="form-horizontal" id="detailForm">
-                <h3 class="m-t-none m-b">此维修保养记录下的所有明细</h3>
-                <hr>
-                <table class="table table-hover" id="detailTable">
-                    <thead>
-                    <tr>
-                        <th data-radio="true" data-field="status"></th>
-                        <th data-field="maintainFix.maintainName">维修项目名称</th>
-                        <th data-field="maintainFix.maintainHour">维修项目工时</th>
-                        <th data-field="maintainFix.maintainMoney">维修项目基础费用</th>
-                        <th data-field="maintainFix.maintainManHourFee">维修项目工时费</th>
-                        <th data-field="maintainFix.maintainDes">维修项目描述</th>
-                        <th data-field="company.companyName">维修项目所属公司</th>
-                        <th data-field="accessories.accName" >配件名称</th>
-                        <th data-field="accCount" >配件数量</th>
-                    </thead>
-                </table>
-                <div id="detailToolbar" class="btn-group">
-                    <button id="btn_editDetail" type="button" class="btn btn-default" onclick="showdetai();">
-                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改配件
-                    </button>
-                </div>
-                <div class="modal-footer" style="border: none">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                </div>
+                    <h3 class="m-t-none m-b">此维修保养记录下的所有明细</h3>
+                    <hr>
+                    <table class="table table-hover" id="detailTable">
+                        <thead>
+                        <tr>
+                            <th data-radio="true" data-field="status"></th>
+                            <th data-field="maintainFix.maintainName">维修项目名称</th>
+                            <th data-field="maintainFix.maintainHour">维修项目工时</th>
+                            <th data-field="maintainFix.maintainMoney">维修项目基础费用</th>
+                            <th data-field="maintainFix.maintainManHourFee">维修项目工时费</th>
+                            <th data-field="maintainFix.maintainDes">维修项目描述</th>
+                            <th data-field="company.companyName">维修项目所属公司</th>
+                            <th data-field="accessories.accName">配件名称</th>
+                            <th data-field="accCount">配件数量</th>
+                        </thead>
+                    </table>
+                    <div id="detailToolbar" class="btn-group">
+                        <button id="btn_editDetail" type="button" class="btn btn-default" onclick="showdetai();">
+                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改配件
+                        </button>
+                    </div>
+                    <div class="modal-footer" style="border: none">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    </div>
                 </form>
             </div>
         </div>
@@ -295,50 +311,54 @@
     <div class="modal-dialog" style="width: 65%">
         <div class="modal-content">
             <div class="modal-body">
-            <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('addWindow', 'addForm')"></span>
-            <form role="form" class="form-horizontal" id="addForm">
-            <div class="modal-header" style="overflow:auto;">
-                    <h4>请填写该保养项目的信息</h4>
-                </div>
-                <br/>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">保养项目名称：</label>
-                    <div class="col-sm-7">
-                        <input type="text" name="maintainName" placeholder="请输入保养项目的名称" class="form-control">
+                <span class="glyphicon glyphicon-remove closeModal"
+                      onclick="closeModals('addWindow', 'addForm')"></span>
+                <form role="form" class="form-horizontal" id="addForm">
+                    <div class="modal-header" style="overflow:auto;">
+                        <h4>请填写该保养项目的信息</h4>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">保养项目工时：</label>
-                    <div class="col-sm-7">
-                        <input type="text" name="maintainHour" placeholder="请输入保养项目工时" class="form-control">
+                    <br/>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">保养项目名称：</label>
+                        <div class="col-sm-7">
+                            <input type="text" name="maintainName" placeholder="请输入保养项目的名称" class="form-control">
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">保养项目基础费用：</label>
-                    <div class="col-sm-7">
-                        <input type="text" name="maintainMoney" placeholder="请输入保养项目基础费用" class="form-control"/>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">保养项目工时：</label>
+                        <div class="col-sm-7">
+                            <input type="number" name="maintainHour" placeholder="请输入保养项目工时" min="1" class="form-control"
+                                   style="width:100%"/>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">保养项目工时费：</label>
-                    <div class="col-sm-7">
-                        <input type="text" name="maintainManHourFee" placeholder="请输入保养项目工时费" class="form-control"/>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">保养项目基础费用：</label>
+                        <div class="col-sm-7">
+                            <input type="number" name="maintainMoney" placeholder="请输入保养项目基础费用" min="1" class="form-control" style="width:100%"/>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">保养项目描述：</label>
-                    <div class="col-sm-7">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">保养项目工时费：</label>
+                        <div class="col-sm-7">
+                            <input type="number" name="maintainManHourFee" placeholder="请输入保养项目工时费" min="1" class="form-control" style="width:100%"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">保养项目描述：</label>
+                        <div class="col-sm-7">
                         <textarea type="text" name="maintainDes" placeholder="请输入保养项目描述" style="height: 100px;"
                                   class="form-control"></textarea>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-offset-8">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button id="addButton" type="button" onclick="addSubmit()" class="btn btn-sm btn-success">添加</button>
+                    <div class="form-group">
+                        <div class="col-sm-offset-8">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            <button id="addButton" type="button" onclick="addSubmit()" class="btn btn-sm btn-success">
+                                添加
+                            </button>
+                        </div>
                     </div>
-                </div>
-            </form>
+                </form>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
@@ -350,51 +370,59 @@
     <div class="modal-dialog" style="width: 65%">
         <div class="modal-content">
             <div class="modal-body">
-            <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('editWindow', 'editForm')"></span>
-            <form form role="form" class="form-horizontal" id="editForm">
-                <div class="modal-header" style="overflow:auto;">
-                    <h4>请填写该维修项目的相关信息</h4>
-                </div>
-                <input type="hidden" name="maintainId" define="MaintainFixMap.maintainId">
-                <input type="hidden" name="maintainStatus" define="MaintainFixMap.maintainStatus">
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">保养项目名称：</label>
-                    <div class="col-sm-7">
-                        <input type="text" name="maintainName" define="MaintainFixMap.maintainName" placeholder="请输入保养项目名称" class="form-control">
+                <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('editWindow', 'editForm')"></span>
+                <form form role="form" class="form-horizontal" id="editForm">
+                    <div class="modal-header" style="overflow:auto;">
+                        <h4>请填写该维修项目的相关信息</h4>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">保养项目工时：</label>
-                    <div class="col-sm-7">
-                        <input type="text" name="maintainHour" define="MaintainFixMap.maintainHour" placeholder="请输入保养项目工时" class="form-control">
+                    <input type="hidden" name="maintainId" define="MaintainFixMap.maintainId">
+                    <input type="hidden" name="maintainStatus" define="MaintainFixMap.maintainStatus">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">保养项目名称：</label>
+                        <div class="col-sm-7">
+                            <input type="text" name="maintainName" define="MaintainFixMap.maintainName"
+                                   placeholder="请输入保养项目名称" class="form-control">
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">保养项目基础费用：</label>
-                    <div class="col-sm-7">
-                        <input type="text" name="maintainMoney" define="MaintainFixMap.maintainMoney" placeholder="请输入保养项目基础费用" class="form-control">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">保养项目工时：</label>
+                        <div class="col-sm-7">
+                            <input type="number" name="maintainHour" define="MaintainFixMap.maintainHour"
+                                   placeholder="请输入保养项目工时" min="1" class="form-control" style="width:100%"/>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">保养项目工时费：</label>
-                    <div class="col-sm-7">
-                        <input type="text" name="maintainManHourFee" define="MaintainFixMap.maintainManHourFee" placeholder="请输入保养项目工时费" class="form-control">
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">保养项目基础费用：</label>
+                        <div class="col-sm-7">
+                            <input type="number" name="maintainMoney" define="MaintainFixMap.maintainMoney"
+                                   placeholder="请输入保养项目基础费用" min="1" class="form-control" style="width:100%"/>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">保养项目描述：</label>
-                    <div class="col-sm-7">
-                                <textarea type="textarea" class="form-control" placeholder="请输入保养项目描述" define="MaintainFixMap.maintainDes" name="maintainDes"
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">保养项目工时费：</label>
+                        <div class="col-sm-7">
+                            <input type="number" name="maintainManHourFee" define="MaintainFixMap.maintainManHourFee"
+                                   placeholder="请输入保养项目工时费" min="1" class="form-control" style="width:100%"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">保养项目描述：</label>
+                        <div class="col-sm-7">
+                                <textarea type="textarea" class="form-control" placeholder="请输入保养项目描述"
+                                          define="MaintainFixMap.maintainDes" name="maintainDes"
                                           rows="3" maxlength="500"></textarea>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-offset-8">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button id="editButton" type="button" onclick="editSubmit()" class="btn btn-sm btn-success">保存</button>
+                    <div class="form-group">
+                        <div class="col-sm-offset-8">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            <button id="editButton" type="button" onclick="editSubmit()" class="btn btn-sm btn-success">
+                                保存
+                            </button>
+                        </div>
                     </div>
-                </div>
-            </form>
+                </form>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->

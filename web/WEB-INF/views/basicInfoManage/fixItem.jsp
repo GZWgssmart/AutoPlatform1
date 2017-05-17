@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="/static/css/table/table.css">
     <link rel="stylesheet" href="/static/css/bootstrap-validate/bootstrapValidator.min.css">
     <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.css">
-    <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/datetimepicker.less">
+    <link rel="stylesheet/less" href="/static/css/bootstrap-dateTimePicker/datetimepicker.less">
 </head>
 <body>
 <%@include file="../backstage/contextmenu.jsp" %>
@@ -26,15 +26,15 @@
             <thead>
             <tr>
                 <th data-radio="true" data-field="status"></th>
-                <th data-field="maintainName">维修项目名称</th>
-                <th data-field="maintainHour">维修项目工时</th>
-                <th data-field="maintainMoney">维修项目基础费用</th>
-                <th data-field="maintainManHourFee">维修项目工时费</th>
-                <th data-field="maintainDes">维修项目描述</th>
-                <th data-field="company.companyName">维修项目所属公司</th>
-                <th data-field="maintainStatus" data-formatter="showStatusFormatter">维修项目状态</th>
+                <th data-width="150" data-field="maintainName">维修项目名称</th>
+                <th data-width="150" data-field="maintainHour">维修项目工时</th>
+                <th data-width="150" data-field="maintainMoney">维修项目基础费用</th>
+                <th data-width="150" data-field="maintainManHourFee">维修项目工时费</th>
+                <th data-width="150" data-field="maintainDes">维修项目描述</th>
+                <th data-width="150" data-field="company.companyName">维修项目所属公司</th>
+                <th data-width="150" data-field="maintainStatus" data-formatter="showStatusFormatter">维修项目状态</th>
                 <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员">
-                    <th data-field="maintainStatus" data-formatter="statusFormatter">
+                    <th data-width="150" data-field="maintainStatus" data-formatter="statusFormatter">
                         操作
                     </th>
                 </shiro:hasAnyRoles>
@@ -99,13 +99,13 @@
                             </button>
                         </div>
                     </div>
+
                     <div class="form-group">
                         <label class="col-sm-3 control-label">配件数量：</label>
                         <div class="col-sm-7">
-                            <input type="text" name="accCount" placeholder="请输入配件数量" class="form-control">
+                            <input type="number" name="accCount" placeholder="请输入配件数量" min="1" class="form-control" style="width:100%"/>
                         </div>
                     </div>
-
                     <div class="modal-footer" style="border: none">
                         <button type="button" class="btn btn-default"
                                 data-dismiss="modal">关闭
@@ -146,10 +146,10 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">配件数量：</label>
                         <div class="col-sm-7">
-                            <input type="text" id="editaccCount" name="accCount" placeholder="请输入配件数量" class="form-control">
+                            <input type="number" id="editaccCount" name="accCount" placeholder="请输入配件数量" min="1" class="form-control"
+                                   style="width:100%"/>
                         </div>
                     </div>
-
                     <div class="modal-footer" style="border: none">
                         <button type="button" class="btn btn-default"
                                 data-dismiss="modal">关闭
@@ -291,7 +291,7 @@
 
 <!-- 添加弹窗 -->
 <div id="addWindow" class="modal fade" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static" keyboard:false>
-    <div class="modal-dialog">
+    <div class="modal-dialog" style="width: 65%">
         <div class="modal-content">
             <div class="modal-body">
             <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('addWindow', 'addForm')"></span>
@@ -309,19 +309,20 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">维修项目工时：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="maintainHour" placeholder="请输入维修项目工时" class="form-control">
+                        <input type="number" name="maintainHour" placeholder="请输入维修项目工时" min="1" class="form-control" style="width:100%"/>
                     </div>
                 </div>
+
                 <div class="form-group">
                     <label class="col-sm-3 control-label">维修项目基础费用：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="maintainMoney" placeholder="请预估维修项目基础费用" class="form-control">
+                        <input type="number" name="maintainMoney" placeholder="请预估维修项目基础费用" min="1" class="form-control" style="width:100%"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">维修项目工时费：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="maintainManHourFee" placeholder="请输入维修项目工时费" class="form-control">
+                        <input type="number" name="maintainManHourFee" placeholder="请输入维修项目工时费" min="1" class="form-control" style="width:100%"/>
                     </div>
                 </div>
                 <div class="form-group">
@@ -348,7 +349,7 @@
 
 <!-- 修改弹窗 -->
 <div class="modal fade" id="editWindow" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static" keyboard:false>
-    <div class="modal-dialog">
+    <div class="modal-dialog" style="width: 65%">
         <div class="modal-content">
             <div class="modal-body">
             <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('editWindow', 'editForm')"></span>
@@ -367,19 +368,20 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">维修项目工时：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="maintainHour" define="MaintainFixMap.maintainHour" placeholder="请输入维修项目工时" class="form-control">
+                        <input type="number" name="maintainHour" define="MaintainFixMap.maintainHour" min="1" placeholder="请输入维修项目工时" class="form-control" style="width:100%"/>
                     </div>
                 </div>
+
                 <div class="form-group">
                     <label class="col-sm-3 control-label">维修项目基础费用：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="maintainMoney" define="MaintainFixMap.maintainMoney" placeholder="请输入维修项目基础费用" class="form-control">
+                        <input type="number" name="maintainMoney" placeholder="请输入维修项目基础费用" min="1" define="MaintainFixMap.maintainMoney" class="form-control" style="width:100%">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">维修项目工时费：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="maintainManHourFee" define="MaintainFixMap.maintainManHourFee" placeholder="请输入维修项目工时费" class="form-control">
+                        <input type="number" name="maintainManHourFee" placeholder="请输入维修项目工时费" min="1" define="MaintainFixMap.maintainManHourFee" class="form-control" style="width:100%">
                     </div>
                 </div>
                 <div class="form-group">

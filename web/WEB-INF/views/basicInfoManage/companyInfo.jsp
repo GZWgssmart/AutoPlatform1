@@ -96,7 +96,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">公司联系电话：</label>
                     <div class="col-sm-7">
-                        <input type="text" id="addcompanyTel" name="companyTel" placeholder="请输入公司联系电话" class="form-control">
+                        <input type="number" id="addcompanyTel" name="companyTel" placeholder="请输入公司联系电话" class="form-control" style="width:100%"/>
                     </div>
                 </div>
 
@@ -114,10 +114,21 @@
                     </div>
                 </div>
 
+                <%--<div class="form-group">--%>
+                    <%--<label class="col-sm-3 control-label">公司规模：</label>--%>
+                    <%--<div class="col-sm-7">--%>
+                        <%--<input type="text" name="companySize" placeholder="请输入公司规模" class="form-control">--%>
+                    <%--</div>--%>
+                <%--</div>--%>
+
                 <div class="form-group">
                     <label class="col-sm-3 control-label">公司规模：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="companySize" placeholder="请输入公司规模" class="form-control">
+                        <select class="form-control" name="companySize" >
+                            <option value="5~10">5~10</option>
+                            <option value="10~50">10~50</option>
+                            <option value="50~100">50~100</option>
+                        </select>
                     </div>
                 </div>
 
@@ -220,14 +231,24 @@
                                class="form-control">
                     </div>
                 </div>
-
+                <%--<div class="form-group">--%>
+                    <%--<label class="col-sm-3 control-label">公司规模：</label>--%>
+                    <%--<div class="col-sm-7">--%>
+                        <%--<input type="text" name="companySize" define="companyInfo.companySize" placeholder="请输入公司规模"--%>
+                               <%--class="form-control">--%>
+                    <%--</div>--%>
+                <%--</div>--%>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">公司规模：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="companySize" define="companyInfo.companySize" placeholder="请输入公司规模"
-                               class="form-control">
+                        <select class="form-control" define="companyInfo.companySize" id="companys" name="companySize">
+                            <option value="5~10">5~10</option>
+                            <option value="10~50">10~50</option>
+                            <option value="50~100">50~100</option>
+                        </select>
                     </div>
                 </div>
+
                 <div class="form-group">
                     <label class="col-sm-3 control-label">公司成立时间：</label>
                     <div class="col-sm-7">     <!-- 当设置不可编辑后, 会修改颜色, 在min.css里搜索.form-control{background-color:#eee;opacity:1} -->

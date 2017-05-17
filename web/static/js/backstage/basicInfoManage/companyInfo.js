@@ -39,7 +39,7 @@ var FileInput = function () {
             language: 'zh', //设置语言
             uploadUrl: uploadUrl, //上传的地址
             allowedFileExtensions: ['jpg', 'gif', 'png'],//接收的文件后缀
-            showUpload: true, //是否显示上传按钮
+            showUpload: false, //是否显示上传按钮
             showCaption: false,//是否显示标题
             browseClass: "btn btn-primary", //按钮样式
             dropZoneEnabled: true,//是否显示拖拽区域
@@ -231,6 +231,19 @@ function validator(formId) {
                 }
             },
             companyTel: {
+                message: '公司联系电话证失败',
+                validators: {
+                    notEmpty: {
+                        message: '公司联系电话不能为空'
+                    },
+                    stringLength: {
+                        min: 1,
+                        max: 11,
+                        message: '公司联系电话长度必须在1到11位之间'
+                    }
+                }
+            },
+            companyPricipal: {
                 message: '负责人验证失败',
                 validators: {
                     notEmpty: {

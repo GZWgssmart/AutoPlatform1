@@ -65,7 +65,7 @@
 
 <%--添加窗口--%>
 <div id="addWindow" class="modal fade" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static" keyboard:false>
-    <div class="modal-dialog">
+    <div class="modal-dialog" style="width: 60%">
         <div class="modal-content">
             <div class="modal-body">
             <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('addWindow', 'addForm')"></span>
@@ -118,7 +118,7 @@
 
 <%--修改窗口--%>
 <div class="modal fade" id="editWindow" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static" keyboard:false>
-    <div class="modal-dialog">
+    <div class="modal-dialog" style="width: 60%">
         <div class="modal-content">
             <div class="modal-body">
             <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('editWindow', 'editForm')"></span>
