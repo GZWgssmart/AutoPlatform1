@@ -291,8 +291,9 @@
 
 <!-- 添加弹窗 -->
 <div id="addWindow" class="modal fade" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static" keyboard:false>
-    <div class="modal-dialog">
+    <div class="modal-dialog" style="width: 65%">
         <div class="modal-content">
+            <div class="modal-body">
             <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('addWindow', 'addForm')"></span>
             <form role="form" class="form-horizontal" id="addForm">
             <div class="modal-header" style="overflow:auto;">
@@ -341,11 +342,12 @@
                     <button type="button" class="btn btn-default"
                             data-dismiss="modal">关闭
                     </button>
-                    <button id="addButton" type="button" onclick="addSubmit()" class="btn btn-primary">添加
+                    <button id="addButton" type="button" onclick="addSubmit()" class="btn btn-sm btn-success">添加
                     </button>
                     <input type="reset" name="reset" style="display: none;"/>
                 </div>
             </form>
+            </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
@@ -353,8 +355,9 @@
 
 <!-- 修改弹窗 -->
 <div class="modal fade" id="editWindow" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static" keyboard:false>
-    <div class="modal-dialog">
+    <div class="modal-dialog" style="width: 65%">
         <div class="modal-content">
+            <div class="modal-body">
             <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('editWindow', 'editForm')"></span>
             <form form role="form" class="form-horizontal" id="editForm">
                 <div class="modal-header" style="overflow:auto;">
@@ -407,6 +410,7 @@
                     </div>
                 </div>
             </form>
+            </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->

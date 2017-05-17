@@ -74,6 +74,7 @@
 <div class="modal fade"  id="addWindow" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static" keyboard:false>
     <div class="modal-dialog">
         <div class="modal-content">
+              <div class="modal-body">
             <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('addWindow', 'addForm')"></span>
             <form class="form-horizontal" role="form" id="addForm">
                 <div class="modal-header" style="overflow:auto;">
@@ -93,11 +94,12 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">联系电话：</label>
+                    <label class="col-sm-3 control-label">公司联系电话：</label>
                     <div class="col-sm-7">
-                        <input type="number" id="addcompanyTel" placeholder="请输入联系方式" name="companyTel" class="form-control" style="width:100%"/>
+                        <input type="text" id="addcompanyTel" name="companyTel" placeholder="请输入公司联系电话" class="form-control">
                     </div>
                 </div>
+
                 <div class="form-group">
                     <label class="col-sm-3 control-label">负责人：</label>
                     <div class="col-sm-7">
@@ -161,12 +163,13 @@
                     <button type="button" class="btn btn-default"
                             data-dismiss="modal">关闭
                     </button>
-                    <button id="addButton" type="button" onclick="addSubmit()" class="btn btn-primary">添加
+                    <button id="addButton" type="button" onclick="addSubmit()" class="btn btn-sm btn-success">添加
                     </button>
                     <input type="reset" name="reset" style="display: none;"/>
                 </div>
             </form>
         </div><!-- /.modal-content -->
+        </div>
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
@@ -175,6 +178,7 @@
 <div class="modal fade" id="editWindow" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static" keyboard:false>
     <div class="modal-dialog">
         <div class="modal-content">
+            <div class="modal-body">
             <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('editWindow', 'editForm')"></span>
             <form class="form-horizontal" role="form" id="editForm" method="post" enctype="multipart/form-data">
                 <input type="hidden"name="companyId" define="company.companyId">
@@ -292,6 +296,7 @@
                     </button>
                 </div>
             </form>
+            </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->

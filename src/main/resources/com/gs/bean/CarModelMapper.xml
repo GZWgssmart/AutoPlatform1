@@ -83,15 +83,32 @@
         ]]>
     </update>
 
-    <select id="blurredQuery" resultMap="carmodelMap" >
+    <select id="blurredQuery" resultMap="carmodelMap"  parameterType="com.gs.common.bean.Pager">
         <![CDATA[
             select cm.*, cb.brandId, cb.brandName from auto_platform.t_car_model cm
             left join t_car_brand cb on cm.brandId = cb.brandId
-            where 1=1
+            where 1=1 and
        ]]>
-        <if test="carmodel.modelName != '' and carmodel.modelName != null">
-            cm.modelName like '%${carmodel.modelName}%'
+        <if test="carModel.modelName != '' and carModel.modelName != null">
+            cm.modelName like '%${carModel.modelName}%'
         </if>
+        <if test="carModel.brandId != '' and carModel.brandId != null">
+            cb.brandName like '%${carModel.brandId}%'
+        </if>
+        limit #{pager.beginIndex}, #{pager.pageSize}
     </select>
 
+    <select id="countByBlurred" resultType="int">
+    <![CDATA[
+      select count(*) from auto_platform.t_car_model cm
+      left join t_car_brand cb on cm.brandId = cb.brandId
+      where 1=1 and
+    ]]>
+        <if test="carModel.modelName != '' and carModel.modelName != null">
+            cm.modelName like '%${carModel.modelName}%'
+        </if>
+        <if test="carModel.brandId != '' and carModel.brandId != null">
+            cb.brandName like '%${carModel.brandId}%'
+        </if>
+    </select>
 </mapper>

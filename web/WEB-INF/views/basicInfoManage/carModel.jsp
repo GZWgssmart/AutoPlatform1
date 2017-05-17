@@ -95,6 +95,7 @@
 <div class="modal fade" id="addWindow" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static" keyboard:false >
     <div class="modal-dialog" style="width: 700px;height: auto;">
         <div class="modal-content" style="overflow:hidden;">
+            <div class="modal-body">
             <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('addWindow', 'addForm')"></span>
             <form class="form-horizontal" role="form" id="addForm" method="post">
                 <div class="modal-header" style="overflow:auto;">
@@ -102,9 +103,9 @@
                 </div>
                 <br/>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">车型命名：</label>
+                    <label class="col-sm-3 control-label">车型名称：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="modelName" placeholder="请输入该车型名字" class="form-control">
+                        <input type="text" name="modelName" placeholder="请输入该车型名称" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
@@ -130,6 +131,7 @@
                     </div>
                 </div>
             </form>
+            </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
@@ -139,6 +141,7 @@
 <div class="modal fade" id="editWindow" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static" keyboard:false>
     <div class="modal-dialog">
         <div class="modal-content">
+            <div class="modal-body">
             <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('editWindow', 'editForm')"></span>
             <form class="form-horizontal" role="form" id="editForm">
                 <div class="modal-header" style="overflow:auto;">
@@ -173,6 +176,7 @@
                     </div>
                 </div>
             </form>
+            </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->

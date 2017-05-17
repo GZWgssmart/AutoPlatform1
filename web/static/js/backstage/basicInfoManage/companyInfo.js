@@ -69,7 +69,7 @@ var FileInput = function () {
 
 //显示弹窗
 function showEdit() {
-    initDatePicker('editForm', 'companyOpendate'); // 初始化时间框
+    initDatePicker('editForm', 'companyOpendate','editDatetimepicker'); // 初始化时间框
     var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员";
     $.post("/user/isLogin/"+roles, function (data) {
         if (data.result == 'success') {
@@ -164,7 +164,7 @@ function statusFormatter(value, row, index) {
 
 //显示添加
 function showAdd(){
-    initDatePicker('addForm', 'companyOpendate'); // 初始化时间框, 第一参数是form表单id, 第二参数是input的name
+    initDatePicker('addForm', 'companyOpendate','addDateTimePicker'); // 初始化时间框, 第一参数是form表单id, 第二参数是input的name
     // $("#addWindow").modal('show');
     // $("#addButton").removeAttr("disabled");
     // validator('addForm'); // 初始化验证
@@ -230,20 +230,11 @@ function validator(formId) {
                 }
             },
             companyTel: {
-                message: '联系电话验证失败',
+                message: '公司联系电话验证失败',
                 validators: {
                     notEmpty: {
-                        message: '联系电话不能为空'
+                        message: '公司联系电话不能为空'
                     },
-                    stringLength: {
-                        min: 11,
-                        max: 11,
-                        message: '联系电话必须为11位'
-                    },
-                    regexp: {
-                        regexp: /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/,
-                        message: '请输入正确的手机号'
-                    }
                 }
             },
             companyPricipal: {
@@ -252,15 +243,6 @@ function validator(formId) {
                     notEmpty: {
                         message: '负责人不能为空'
                     },
-                }
-            },
-
-            companyWebsite: {
-                message: '公司官网网址验证失败',
-                validators: {
-                    notEmpty: {
-                        message: '公司官网网址不能为空'
-                    }
                 }
             },
             companySize: {
@@ -474,8 +456,8 @@ function endSuc(data, winId, formId) {
     var controllerResult= data.controllerResult;
     if (controllerResult.result == "success") {
         swal({
-            title:"提示",
-            text: "操作成功",
+            title:"",
+            text: "添加成功",
             confirmButtonText:"确定", // 提示按钮上的文本
             type:"success"
         })
@@ -490,7 +472,7 @@ function endSuc(data, winId, formId) {
         } else if (controllerResult.result == "fail") {
             swal({
                 title: "",
-                text: "操作失败",
+                text: "添加失败",
                 confirmButtonText: "确认",
                 type: "error"
             })
