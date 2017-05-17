@@ -189,9 +189,11 @@ public class MaintainController {
         if (SessionUtil.isLogin(session)) {
             String roles = "公司超级管理员,公司普通管理员";
             if (RoleUtil.checkRoles(roles)) {
+                User user = (User)session.getAttribute("user");
                 if(maintainFix != null && !maintainFix.equals("")){
                     logger.info("添加维修项目");
                     maintainFix.setMaintainOrFix("维修");
+                    maintainFix.setCompanyId(user.getCompanyId());
                     maintainFixService.insert(maintainFix);
                     return ControllerResult.getSuccessResult("添加维修项目成功");
                 }else {
@@ -262,9 +264,11 @@ public class MaintainController {
         if (SessionUtil.isLogin(session)) {
             String roles = "公司超级管理员,公司普通管理员";
             if (RoleUtil.checkRoles(roles)) {
+                User user = (User)session.getAttribute("user");
                 if(maintainFix != null && !maintainFix.equals("")){
                     logger.info("添加保养项目");
                     maintainFix.setMaintainOrFix("保养");
+                    maintainFix.setCompanyId(user.getCompanyId());
                     maintainFixService.insert(maintainFix);
                     return ControllerResult.getSuccessResult("添加保养项目成功");
                 }else {
@@ -292,7 +296,9 @@ public class MaintainController {
         if (SessionUtil.isLogin(session)) {
             String roles = "公司超级管理员,公司普通管理员";
             if (RoleUtil.checkRoles(roles)) {
+                User user = (User)session.getAttribute("user");
                 if (maintainFix != null && !maintainFix.equals("")) {
+                    maintainFix.setCompanyId(user.getCompanyId());
                     maintainFixService.update(maintainFix);
                     logger.info("修改保养项目成功");
                     return ControllerResult.getSuccessResult("修改保养项目成功");

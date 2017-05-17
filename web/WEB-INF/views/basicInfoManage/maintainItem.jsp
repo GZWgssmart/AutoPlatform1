@@ -326,13 +326,6 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">保养项目所属公司：</label>
-                    <div class="col-sm-7">
-                        <select id="addCompany" class="js-example-tags Company" name="companyId" style="width:100%">
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
                     <label class="col-sm-3 control-label">保养项目描述：</label>
                     <div class="col-sm-7">
                         <textarea type="text" name="maintainDes" placeholder="请输入保养项目描述" style="height: 100px;"
@@ -393,13 +386,6 @@
                     <div class="col-sm-7">
                                 <textarea type="textarea" class="form-control" placeholder="请输入保养项目描述" define="MaintainFixMap.maintainDes" name="maintainDes"
                                           rows="3" maxlength="500"></textarea>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">保养项目所属公司：</label>
-                    <div class="col-sm-7">
-                        <select id="editcompany" class="js-example-tags company" define="MaintainFixMap.companyId" name="companyId" style="width:100%">
-                        </select>
                     </div>
                 </div>
                 <div class="form-group">
