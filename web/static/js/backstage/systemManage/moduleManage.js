@@ -299,7 +299,7 @@ function getlis2PermissionIds(lis) {
 function showAdd(){
     validator('addForm');
     $("#addButton").removeAttr("disabled");
-    $("#addModal .modal-header> input").val("addForm");
+    $("#addModal .modal-header input[data-flag=flag]").val("addForm");
     $("#addModal").modal('show');
 }
 function delModule(el) {
@@ -327,7 +327,7 @@ function delModule(el) {
 }
 function showEdit(moduleId) {
     validator('addForm');
-    $("#addModal .modal-header> input").val("editForm");
+    $("#addModal .modal-header input[data-flag=flag]").val("editForm");
     $("#addButton").removeAttr("disabled");
     var module = getModule(moduleId);
     $("#addForm").fill(module);
@@ -380,7 +380,8 @@ function validator(formId) {
             }
         }
     }) .on('success.form.bv', function (e) {
-        var title =$("#addModal .modal-header> input").val();
+        var title =$("#addModal .modal-header input[data-flag=flag]").val();
+        console.log(title)
         if(title === "addForm") {
             formSubmit("/module/insert", "addModal",formId, title);
         }else if (title === "editForm"){

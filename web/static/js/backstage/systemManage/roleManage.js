@@ -331,6 +331,7 @@ function initTabs(tabMsg) {
 
 function setPageTitle(){
     var role = initObj.role;
+    console.log(role)
     var title = $("#home .title:eq(0)")
     var roleNameNode = "<span>" + role.roleName + "</span>";
     var roleDesNode = "<br /><small style='font-size:9px;color:#999; position:relative; margin-top: 5px;margin-left:10px;'>简介: "+ role.roleDes +"</small>"
@@ -386,20 +387,30 @@ function initDnyTree(treeid,modules, rolePermissions){
 }
 function initStaticTree(treeid, permissions, modules, rolePermissions) {		//添加了方法
     var treenodes = bean4StaTreeData(permissions,modules, rolePermissions);
-    var staTree = $(treeid).tree({
-        primaryKey: 'id',
-        uiLibrary: 'materialdesign',
-        childrenField: 'permissions',
-        checkedField: 'checked',
-        dataSource: treenodes,
-        checkboxes: true
-    })
-    return staTree;
+    if(treenodes.length) {
+        var staTree = $(treeid).tree({
+            primaryKey: 'id',
+            uiLibrary: 'materialdesign',
+            childrenField: 'permissions',
+            checkedField: 'checked',
+            dataSource: treenodes,
+            checkboxes: true
+        })
+        return staTree;
+    }
+    appendNotHasElMsg(treeid, "暂无权限");
+    // TODO
+    $("#subRolePer").remove();
+    return null;
 }
 
 function reloadStatic(staTree,permissions, modules, rolePermissions){
     var nodeData = bean4StaTreeData(permissions,modules, rolePermissions);
-    reloadTree("#staTree", nodeData)
+    if(nodeData && nodeData.length) {
+        reloadTree("#staTree", nodeData)
+        return true;
+    }
+    return false;
 }
 function reloadDny(modules, rolePermissions) {
     var nodeData =  bean4DnyTreeData(modules,rolePermissions);
@@ -418,7 +429,7 @@ function reloadTree(treeEl, data){
 function appendNotHasElMsg(el, msg) {
     removeNotHasElMsg(el);
     var appElHtml = "<h2 class='msg' style='color:#aaa; font-family:\"微软雅黑\"'>"+ msg +"</h2>"
-    $(el).append(appElHtml);
+    console.log($(el).append(appElHtml));
 }
 function removeNotHasElMsg(el) {
     $(el).children(".msg").remove();
@@ -460,10 +471,10 @@ function bean4DnyTreeData(modules,rolePermissions){
             otherPernodes.push(pernode);
         }
     }
-        if(otherPernodes.length > 0) {
-            otherMolnode.permissions = otherPernodes;
-            molnodes.push(otherMolnode);
-        }
+    if(otherPernodes && otherPernodes.length >0) {
+        otherMolnode.permissions = otherPernodes;
+        molnodes.push(otherMolnode);
+    }
     return molnodes;
 }
 function bean4StaTreeData(permissions, modules, rolePermissions){
@@ -500,7 +511,9 @@ function bean4StaTreeData(permissions, modules, rolePermissions){
         }
     }
     var otherMolnode = getModuleByAlonePers(permissions, rolePermissions);
-    molnodes.push(otherMolnode);
+    if(otherMolnode.permissions && otherMolnode.permissions.length >0 ) {
+        molnodes.push(otherMolnode);
+    }
     return molnodes;
 }
     // 没有在模块中的权限,在树中创建另一个伪模块
@@ -526,7 +539,9 @@ function getModuleByAlonePers(permissions, rolePermissions){
             pernodes.push(pernode);
         }
     }
-    molnode.permissions =pernodes;
+    if(pernodes && pernodes.length >0) {
+            molnode.permissions =pernodes;
+    }
     return molnode;
 }
 
@@ -547,8 +562,11 @@ function setModulePermissions(permissions, modules){
 }
 function showEditPermission(){
     var curObj = initObj;
-    reloadStatic($("#staTree").tree(),curObj.permissions, curObj.modules, curObj.rolePermissions);
+    var bool = reloadStatic($("#staTree").tree(),curObj.permissions, curObj.modules, curObj.rolePermissions);
     $("#editPermission").modal("show");
+    if(!bool) {
+        appendNotHasElMsg("#staTree","暂无权限可分配");
+    }
 }
 
 /**
@@ -570,7 +588,7 @@ function showEdit(){
     $("#addModal").modal('show');
     validator('addForm');
     $("#addModal .modal-header> h3").text("修改角色");
-    $("#addModal .modal-header> input").val("editForm");
+    $("#addModal .modal-header input[data-flag=flag]").val("editForm");
     var role = initObj.role;
     var roleNameInput = $("#addForm").find("input[name=roleName]");
     $(roleNameInput).attr("readonly");
@@ -624,7 +642,7 @@ function validator(formId) {
             }
         }
     }) .on('success.form.bv', function (e) {
-        var title =$("#addModal .modal-header> input").val();
+        var title =$("#addModal .modal-header input[data-flag=flag]").val();
         if(title === "addForm") {
             formSubmit("/role/insert", "addModal",formId, title);
         }else if (title === "editForm"){
@@ -642,10 +660,6 @@ function formSubmit(url, modalId ,formId, flag) {
                     text: data.message,
                     confirmButtonText:"确定", // 提示按钮上的文本
                     type:"success"});// 提示窗口, 修改成功
-                /*if(flag === "addForm") {
-                 resetRole();
-                 initRoleTabs();
-                 } else {*/
                 var roleNameEl = $("#"+formId).find("input[name=roleName]")[0];
                 var roleIdEl = $("#"+formId).find("input[name=roleId]")[0];
                 var roleDesEl = $("#" + formId).find("textarea")[0];
@@ -655,7 +669,6 @@ function formSubmit(url, modalId ,formId, flag) {
                 role.roleDes = $(roleDesEl).val();
                 updateRole(role);
                 setPageTitle();
-                /*  }*/
             } else if (data.result == "fail") {
                 swal({title:"",
                     text:data.message,
@@ -678,43 +691,52 @@ function formModalclose(modalId, formId, btnId) {
 // 修改角色权限用到的
 function savePermission(){
     var addAndRemoveIds = getAddedAndRemovePermissionIds();
-    var roleId = initObj.role.roleId;
-    var seachText = "roleId="+ roleId+"&added="+addAndRemoveIds.added+"&removed="+addAndRemoveIds.removed;
-    $.post("/role/updatePermission",
-        seachText,
-        function(data){
-            if (data.result == "success") {
-                swal({
-                        title:"",
+    if(addAndRemoveIds) {
+        var roleId = initObj.role.roleId;
+        var seachText = "roleId=" + roleId + "&added=" + addAndRemoveIds.added + "&removed=" + addAndRemoveIds.removed;
+        $.post("/role/updatePermission",
+            seachText,
+            function (data) {
+                if (data.result == "success") {
+                    swal({
+                            title: "",
+                            text: data.message,
+                            type: "success"
+                        },
+                        function (isConfirm) {
+                            $("#editPermission").modal("hide");
+                            resetRolePermission(roleId);
+                            var rolePermissions = initObj.rolePermissions;
+                            reloadDny(initObj.modules, rolePermissions);
+                        });// 提示窗口, 修改成功
+                } else if (data.result == "fail") {
+                    swal({
+                        title: "",
                         text: data.message,
-                        type:"success"},
-                    function(isConfirm) {
+                        type: "error"
+                    }, function (isConfirm) {
                         $("#editPermission").modal("hide");
-                        resetRolePermission(roleId);
-                        var rolePermissions = initObj.rolePermissions;
-                        reloadDny(initObj.modules, rolePermissions);
                     });// 提示窗口, 修改成功
-            } else if (data.result == "fail") {
-                swal({
-                    title:"",
-                    text: data.message,
-                    type:"error"},function(isConfirm) {
-                    $("#editPermission").modal("hide");
-                });// 提示窗口, 修改成功
-                //$.messager.alert("提示", data.result.message, "info");
-            }
+                    //$.messager.alert("提示", data.result.message, "info");
+                }
 
-        })
+            })
+    }
 }
 function getAddedAndRemovePermissionIds(){
-    var nodes = trees.staTree.getCheckedNodes();
-    var oldRolePermission= initObj.rolePermissions;
-    var currPermissionIds = filterPermissionIds(nodes);
-    var oldPermissionIds = rolePermissionsObj2permissionIds(oldRolePermission);
-    var addedPermissionIds = contrast(currPermissionIds,oldPermissionIds);
-    var removedPermissionIds = contrast(oldPermissionIds, currPermissionIds);
-    var resultObj = {added: addedPermissionIds.join("|"), removed: removedPermissionIds.join("|")};
-    return resultObj;
+    if(trees.staTree) {
+        var nodes = trees.staTree.getCheckedNodes();
+        var oldRolePermission= initObj.rolePermissions;
+        var currPermissionIds = filterPermissionIds(nodes);
+        var oldPermissionIds = rolePermissionsObj2permissionIds(oldRolePermission);
+        var addedPermissionIds = contrast(currPermissionIds,oldPermissionIds);
+        var removedPermissionIds = contrast(oldPermissionIds, currPermissionIds);
+        var resultObj = {added: addedPermissionIds.join("|"), removed: removedPermissionIds.join("|")};
+        return resultObj;
+    } else {
+        return null;
+    }
+
 }
 function  filterPermissionIds(nodes){
     var permissionNodes = removeModuleId(nodes);
@@ -761,7 +783,8 @@ function updateRole(role){
     for(var i = 0, len = roles.length; i<len; i++) {
         var roleTemp = roles[i];
         if(roleTemp.roleId == role.roleId) {
-            initObj.role =  role;
+            initObj.role.roleName =  role.roleName;
+            initObj.role.roleDes =  role.roleDes;
             return ;
         }
     }

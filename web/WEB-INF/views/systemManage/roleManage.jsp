@@ -38,6 +38,7 @@
         }
         .close {
             right:20px;
+            top: 10px;
             position: relative;
         }
     </style>
@@ -111,10 +112,9 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <form class="form-horizontal" role="form" id="addForm" >
-                <input type="reset" name="reset" style="display: none;"/>
                 <span  class="close"   onclick = "formModalclose('addModal', 'addForm' )">&times;</span>
                 <div class="modal-header" style="overflow:auto;">
-                    <h3></h3><input style="display: none;">
+                    <h3></h3><input data-flag="flag" style="display: none;">
                 </div>
                 <hr/>
                 <input define="role.roleId" type="text" name="roleId" style="width:100%;display: none" />
@@ -144,7 +144,7 @@
 </div><!-- /.modal -->
 
 <!-- 修改角色权限弹窗 -->
-<div class="modal fade" id="editPermission" aria-hidden="true" data-backdrop="static"  keyboard="false">
+<div class="modal" id="editPermission" aria-hidden="true" data-backdrop="static"  keyboard="false">
     <div class="modal-dialog">
         <div class="modal-content">
             <span  class="close"   data-dismiss="modal">&times;</span>
@@ -158,7 +158,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default"  data-dismiss="modal">取消</button>
-                <button  type="submit" class="btn btn-primary btn-sm" onclick="savePermission()">保存</button>
+                <button  type="submit" id="subRolePer" class="btn btn-primary btn-sm" onclick="savePermission()">保存</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->

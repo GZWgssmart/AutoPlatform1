@@ -206,9 +206,8 @@
         <div class="modal-content">
             <span  class="close"   onclick = "closeModal()">&times;</span>
                 <div class="modal-header" style="overflow:auto;">
-                    <h3>修改模块</h3>
+                    <h3></h3><input style="display:none" data-flag="flag"/>
                 </div>
-                <input style="display:none"/>
             <hr/>
             <form id="addForm" class="form-horizontal">
                 <input type="text" name="moduleId" define="module.moduleId" style="display: none;"/>
