@@ -153,31 +153,22 @@
                     </div>
                     <div>
                         <div class="form-group col-md-6 pull-left">
-                            <label class="col-md-4 control-label">供应商地址：</label>
-                            <div class="col-md-8">
-                                <input type="text" name="supplyAddress" placeholder="请输入供应商地址" class="form-control">
-                            </div>
-                        </div>
-                        <div class="form-group col-md-6 pull-left">
                             <label class="col-md-4 control-label">供应商微信号：</label>
                             <div class="col-md-8">
                                 <input type="text"  name="supplyWeChat" placeholder="请输入供应商微信号" class="form-control">
                             </div>
                         </div>
-                        <p class="clearfix"></p>
-                    </div>
-                    <div>
                         <div class="form-group col-md-6 pull-left">
                             <label class="col-md-4 control-label">支付宝账号：</label>
                             <div class="col-md-8">
                                 <input type="number"  name="supplyAlipay" placeholder="请输入支付宝账号" class="form-control">
                             </div>
                         </div>
+                        <p class="clearfix"></p>
+                    </div>
+                    <div>
                         <div class="form-group col-md-6 pull-left">
                             <label class="col-md-4 control-label">开户银行全称：</label>
-                            <%--<div class="col-md-8">
-                                <input type="text" placeholder="请输入银行卡全称" name="supplyBank" class="form-control">
-                            </div>--%>
                             <div class="col-md-8">
                                 <select class="js-example-tags form-control" name="supplyBank" placeholder="请选择开户银行全称" class="form-control">
                                     <option value="中国银行">中国银行</option>
@@ -206,21 +197,31 @@
                                 </select>
                             </div>
                         </div>
-                       <p class="clearfix"></p>
-                    </div>
-                    <div>
-                        <div class="form-group col-md-6 pull-left">
-                            <label class="col-md-4 control-label">持卡人姓名：</label>
-                            <div class="col-md-8">
-                                <input type="text" placeholder="请输入持卡人姓名"  name="supplyBankAccount"   class="form-control">
-                            </div>
-                        </div>
                         <div class="form-group col-md-6 pull-left">
                             <label class="col-md-4 control-label">开户银行卡号：</label>
                             <div class="col-md-8">
                                 <input type="number" placeholder="请输入开户银行卡号" name="supplyBankNo"  class="form-control">
                             </div>
                         </div>
+                       <p class="clearfix"></p>
+                    </div>
+                    <div>
+                        <div class="form-group col-md-12">
+                            <label class="col-md-2 control-label">开户人姓名：</label>
+                            <div class="col-md-10">
+                                <input type="text" placeholder="请输入开户人姓名"  name="supplyBankAccount"  class="form-control" style="width: 100%;">
+                            </div>
+                        </div>
+                        <p class="clearfix"></p>
+                    </div>
+                    <div>
+                        <div class="form-group col-md-6 pull-left">
+                           <label class="col-md-4 control-label">供应商地址：</label>
+                           <div class="col-md-8">
+                              <input type="text" name="supplyAddress" placeholder="请输入供应商地址" class="form-control" >
+                           </div>
+                       </div>
+                        <p class="clearfix"></p>
                     </div>
                     <p class="clearfix"></p>
                     <div class="modal-footer" >
@@ -280,31 +281,22 @@
                     </div>
                     <div>
                         <div class="form-group col-md-6 pull-left">
-                            <label class="col-md-4 control-label">供应商地址：</label>
-                            <div class="col-md-8">
-                                <input type="text" define="supply.supplyAddress" name="supplyAddress" class="form-control">
-                            </div>
-                        </div>
-                        <div class="form-group col-md-6 pull-left">
                             <label class="col-md-4 control-label">供应商微信号：</label>
                             <div class="col-md-8">
                                 <input type="text" define="supply.supplyWeChat" name="supplyWeChat"  class="form-control">
                             </div>
                         </div>
-                        <p class="clearfix"></p>
-                    </div>
-                    <div>
                         <div class="form-group col-md-6 pull-left">
                             <label class="col-md-4 control-label">支付宝账号：</label>
                             <div class="col-md-8">
                                 <input type="number" define="supply.supplyAlipay"  name="supplyAlipay"  class="form-control">
                             </div>
                         </div>
+                        <p class="clearfix"></p>
+                    </div>
+                    <div>
                         <div class="form-group col-md-6 pull-left">
                             <label class="col-md-4 control-label">开户银行全称：</label>
-                            <%--<div class="col-md-8">
-                                <input type="text" define="supply.supplyBank" name="supplyBank" class="form-control">
-                            </div>--%>
                             <div class="col-md-8">
                                 <select class="js-example-tags form-control" define="supply.supplyBank" class="form-control" name="supplyBank">
                                     <option value="中国银行">中国银行</option>
@@ -333,21 +325,30 @@
                                 </select>
                             </div>
                         </div>
-                        <p class="clearfix"></p>
-                    </div>
-                    <div>
-                        <div class="form-group col-md-6 pull-left">
-                            <label class="col-md-4 control-label">持卡人姓名：</label>
-                            <div class="col-md-8">
-                                <input type="text" define="supply.supplyBankAccount"  name="supplyBankAccount"   class="form-control">
-                            </div>
-                        </div>
                         <div class="form-group col-md-6 pull-left">
                             <label class="col-md-4 control-label">开户银行卡号：</label>
                             <div class="col-md-8">
                                 <input type="number" define="supply.supplyBankNo" name="supplyBankNo"  class="form-control">
                             </div>
                         </div>
+                        <p class="clearfix"></p>
+                    </div>
+                    <div>
+                        <div class="form-group col-md-12 pull-left">
+                            <label class="col-md-2 control-label">开户人姓名：</label>
+                            <div class="col-md-10">
+                                <input type="text" define="supply.supplyBankAccount"  name="supplyBankAccount"  class="form-control" style="width: 100%;">
+                            </div>
+                        </div>
+                        <p class="clearfix"></p>
+                    </div>
+                    <div>
+                        <div class="form-group col-md-6 pull-left">
+                             <label class="col-md-4 control-label">供应商地址：</label>
+                             <div class="col-md-8">
+                                 <input type="text" define="supply.supplyAddress" name="supplyAddress" class="form-control">
+                             </div>
+                         </div>
                         <p class="clearfix"></p>
                     </div>
                     <p class="clearfix"></p>
@@ -361,45 +362,7 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-<%--
-<!-- 删除弹窗 -->
-<div class="modal fade" id="del" aria-hidden="true">
-    <div class="modal-dialog" >
-        <form action="/table/edit" method="post">
-            <div class="modal-content">
-                <input type="hidden" id="delNoticeId"/>
-                <div class="modal-footer" style="text-align: center;">
-                    <h2>确认删除吗?</h2>
-                    <button type="button" class="btn btn-default"
-                            data-dismiss="modal">关闭
-                    </button>
-                    <button type="sumbit" class="btn btn-primary" onclick="del()">
-                        确认
-                    </button>
-                </div>
-            </div><!-- /.modal-content -->
-        </form>
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
 
-<!-- 提示弹窗 -->
-<div class="modal fade" id="tanchuang" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                提示
-            </div>
-            <div class="modal-body">
-                请先选择某一行
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default"
-                        data-dismiss="modal">关闭
-                </button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->--%>
 <script src="/static/js/jquery.min.js"></script>
 <script src="/static/js/bootstrap.min.js"></script>
 <script src="/static/js/bootstrap-table/bootstrap-table.js"></script>
@@ -411,5 +374,25 @@
 <script src="/static/js/bootstrap-validate/bootstrapValidator.js"></script>
 <script src="/static/js/backstage/main.js"></script>
 <script src="/static/js/backstage/supplier/supplierInFormation.js"></script>
+
+<%-- 地址选择 --%>
+<script src="/static/js/jquery.cxselect.min.js"></script>
+
 </body>
+<script>
+
+
+    $.cxSelect.defaults.url = '/static/js/cityData.json';
+    $('#city_china').cxSelect({
+        selects: ['province', 'city', 'area']
+    });
+    $('#editCity_china').cxSelect({
+        selects: ['province', 'city', 'area']
+    });
+    $('#city_china_val').cxSelect({
+        selects: ['province', 'city', 'area'],
+        nodata: 'none'
+    });
+
+</script>
 </html>

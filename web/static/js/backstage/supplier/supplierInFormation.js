@@ -242,35 +242,35 @@ function validator(formId) {
                 }
             },
             supplyBank: {
-                message: '银行卡全称验证失败',
+                message: '开户银行全称验证失败',
                 validators: {
                     notEmpty: {
-                        message: '银行卡全称不能为空'
+                        message: '开户银行全称不能为空'
                     }
                 }
             },
             supplyBankAccount: {
-                message: '持卡人姓名验证失败',
+                message: '开户人姓名验证失败',
                 validators: {
                     notEmpty: {
-                        message: '持卡人姓名不能为空'
+                        message: '开户人姓名不能为空'
                     }
                 }
             },
             supplyBankNo: {
-                message: '银行卡卡号验证失败',
+                message: '开户银行卡号验证失败',
                 validators: {
                     notEmpty: {
-                        message: '银行卡卡号不能为空'
+                        message: '开户银行卡号不能为空'
                     },
                     stringLength: {
                         min: 16,
                         max: 19,
-                        message: '银行卡卡号长度保持在16-19位'
+                        message: '开户银行卡号长度保持在16-19位'
                     },
                     regexp: {
                         regexp: /^(\d{16}|\d{19})$/,
-                        message: '请输入正确的卡号'
+                        message: '请输入正确的开户银行卡号'
                     }
                 }
             }
