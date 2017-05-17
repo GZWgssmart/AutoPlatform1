@@ -42,7 +42,7 @@
 -->
   <select id="queryAll" resultMap="AccessoriesMap" parameterType="com.gs.bean.User">
     <![CDATA[
-            select * FROM auto_platform.t_accessories ac where 1=1 and ac.accStatus = 'Y'
+            select ac.accName,ac.accId FROM auto_platform.t_accessories ac where 1=1 and ac.accStatus = 'Y'
         ]]>
     <if test="companyId != '' and companyId !=null">
       and ac.companyId = #{companyId}
@@ -271,5 +271,19 @@ c.companyId = #{companyId} and t.accTypeId = #{accTypeId} and a.accUsedTime >= #
       group by date(a.accUsedTime) ORDER BY a.accUsedTime ASC;
     </if>
   </select>
+
+  <select id="queryById" resultMap="AccessoriesMap">
+    <![CDATA[
+        SELECT ac.accIdle FROM auto_platform.t_accessories ac WHERE accId=#{accId}
+    ]]>
+  </select>
+
+
+  <select id="queryById" resultMap="AccessoriesMap">
+    <![CDATA[
+        SELECT ac.accIdle FROM auto_platform.t_accessories ac WHERE accId=#{accId}
+    ]]>
+  </select>
+
 
 </mapper>
