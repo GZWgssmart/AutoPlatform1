@@ -30,7 +30,7 @@
                 <th data-width="130" data-field="supplyPricipal">
                     供应商负责人
                 </th>
-                <th data-width="100" data-field="supplyAddress">
+                <th data-width="160" data-field="supplyAddress">
                     供应商地址
                 </th>
                 <th data-width="130" data-field="supplyWeChat">

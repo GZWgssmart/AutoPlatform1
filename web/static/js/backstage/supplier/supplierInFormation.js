@@ -198,11 +198,12 @@ function validator(formId) {
                         message: '供应商微信号不能为空'
                     },
                     stringLength: {
-                        min: 5,
-                        message: '微信号必须在5位以上，只支持数字，英文以及下划线'
+                        min: 6,
+                        max:20,
+                        message: '可以使用6—20个字母、数字、下划线和减号，必须以字母开头。'
                     },
                     regexp: {
-                        regexp: /^[a-zA-Z\d_]{5,}$/,
+                        regexp: /^[a-zA-Z][a-zA-Z0-9_]{5,19}$/,
                         message: '请输入正确的微信号'
                     }
                 }
