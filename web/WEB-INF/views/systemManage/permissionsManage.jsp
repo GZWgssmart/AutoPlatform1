@@ -102,7 +102,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">权限名称：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="permissionZhname" define="permission.permissionZhname" class="form-control" maxlength="20"  placeholder="请输入权限名称">
+                        <input type="text" name="permissionZhname" define="permission.permissionZhname" class="form-control" maxlength="20"   placeholder="请输入权限名称">
                     </div>
                 </div>
                 <div class="form-group">
@@ -141,4 +141,7 @@
 <script src="/static/js/backstage/main.js"></script>
 <script src="/static/js/backstage/systemManage/permissionsManage.js"></script>
 </body>
+
+<script>
+</script>
 </html>

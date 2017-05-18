@@ -21,4 +21,6 @@ public interface ModuleDAO extends BaseDAO<String, Module>{
     public int updPermissions(@Param("oldModuleId")String oldModuleId, @Param("newModuleId")String newModuleId);
 
     public int updPermission(@Param("permissionId")String permissionId, @Param("moduleId")String moduleId);
+
+    public int countByModuleName(@Param("moduleName")String moduleName, @Param("moduleId")String moduleId);
 }

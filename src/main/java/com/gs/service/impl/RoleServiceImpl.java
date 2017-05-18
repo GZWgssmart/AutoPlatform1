@@ -8,7 +8,9 @@ import com.gs.dao.RoleDAO;
 import com.gs.service.RoleService;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.gs.common.bean.Pager;
 /**
@@ -35,14 +37,33 @@ public class RoleServiceImpl implements RoleService {
 	public int batchUpdate(List<Role> list) { return roleDAO.batchUpdate(list); }
 	public List<Role> queryAll(User user) { return roleDAO.queryAll(user); }
 
-	@Override
-	public List<Role> queryAll(String status) {
-		return roleDAO.queryAll(status);
-	}
 
 	@Override
 	public List<Role> queryByPager(String roleStatus, Pager pager) {
 		return roleDAO.queryByPager(roleStatus, pager);
+	}
+
+	@Override
+	public List<Role> queryAll(String status) {
+		Map paramMap = new HashMap();
+		paramMap.put("roleStatus",status);
+		return roleDAO.queryAll(paramMap);
+	}
+
+	@Override
+	public List<Role> querySysManager(String rolestatus) {
+		Map paramMap = new HashMap();
+		paramMap.put("roleStatus",rolestatus);
+		paramMap.put("isMana",true);
+		return roleDAO.queryAll(paramMap);
+	}
+
+	@Override
+	public List<Role> queryCompManager(String rolestatus) {
+		Map paramMap = new HashMap();
+		paramMap.put("roleStatus",rolestatus);
+		paramMap.put("isCompMana",true);
+		return roleDAO.queryAll(paramMap);
 	}
 
 	@Override

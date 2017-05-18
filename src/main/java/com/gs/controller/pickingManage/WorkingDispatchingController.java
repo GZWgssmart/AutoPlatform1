@@ -216,8 +216,16 @@ public class WorkingDispatchingController {
                 int result = 0;
                 String msg = "";
                 if (materialUseService.recordIsDisp(recordId)) {
-                    result = materialUseService.updWorkInfoUser(recordId, userId);
+                    final String flowName = "material";
+                    String oldUserId = materialUseService.queryUserIdbyRecordId4workInfo(recordId);
+                    String newUserId = userId;
                     msg = "修改";
+                    try {
+                        materialUseService.updRunProInstStartUser(newUserId, recordId, flowName);
+                        result = materialUseService.updWorkInfoUser(recordId, newUserId);
+                    } catch(Exception e) {
+                        e.printStackTrace();
+                    }
                 } else {
                     WorkInfo workInfo = new WorkInfo();
                     workInfo.setRecordId(recordId);

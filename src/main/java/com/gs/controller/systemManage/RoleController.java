@@ -3,6 +3,7 @@ package com.gs.controller.systemManage;
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.Permission;
 import com.gs.bean.Role;
+import com.gs.bean.User;
 import com.gs.common.bean.ComboBox4EasyUI;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
@@ -161,15 +162,26 @@ public class RoleController {
     public  List<ComboBox4EasyUI> queryAll2CheckBox(HttpSession session){
         // TODO 所有人
         if(SessionUtil.isLogin(session)) {
-            List<Role> roles= roleService.queryAll("Y");
-            List<ComboBox4EasyUI> comboBoxes = new ArrayList<ComboBox4EasyUI>();
-            for(Role role: roles) {
-                ComboBox4EasyUI comboBox4EasyUI = new ComboBox4EasyUI();
-                comboBox4EasyUI.setId(role.getRoleId());
-                comboBox4EasyUI.setText(role.getRoleDes());
-                comboBoxes.add(comboBox4EasyUI);
+            User user = (User)session.getAttribute("user");
+            List<Role> roles = null;
+            String roless = "车主";
+            if(RoleUtil.checkRoles(roless)) {
+                return null;
+            } else {
+                if(user.getCompanyId()!=null  && !user.getCompanyId().equals("")) {
+                    roles = roleService.queryCompManager("Y");
+                } else {
+                    roles = roleService.querySysManager("Y");
+                }
+                List<ComboBox4EasyUI> comboBoxes = new ArrayList<ComboBox4EasyUI>();
+                for (Role role : roles) {
+                    ComboBox4EasyUI comboBox4EasyUI = new ComboBox4EasyUI();
+                    comboBox4EasyUI.setId(role.getRoleId());
+                    comboBox4EasyUI.setText(role.getRoleDes());
+                    comboBoxes.add(comboBox4EasyUI);
+                }
+                return comboBoxes;
             }
-            return comboBoxes;
         } else {
             logger.info("请先登录");
             return null;

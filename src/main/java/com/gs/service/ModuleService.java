@@ -16,4 +16,6 @@ public interface ModuleService extends BaseService<String, Module>{
     public int updPermissions(String oldModuleId, String newModuleId);
 
     public int updPermission(String permissionId, String moduleId);
+
+    public int countByModuleName(String moduleName, String moduleId);
 }

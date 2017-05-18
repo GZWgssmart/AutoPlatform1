@@ -22,4 +22,5 @@ public interface PermissionService extends BaseService<String, Permission>{
 
     public int updateStatus(List permissionIds,String status );
 
+    public int countByPerName(String permissionZhname, String permissionId);
 }

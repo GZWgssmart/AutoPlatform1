@@ -7,14 +7,23 @@
     <result column="roleDes" property="roleDes" jdbcType="VARCHAR" />
     <result column="roleStatus" property="roleStatus" jdbcType="VARCHAR" />
   </resultMap>
-  <select id="queryAll" resultMap="roleMap" >
+  <select id="queryAll" resultMap="roleMap" parameterType="hashMap" >
     select * from t_role r
     <where>
-      <if test="roleStatus!=null">
-        r.roleStatus = #{roleStatus}
+        1 = 1
+        <if test="isMana != null">
+            and r.roleName like "%系统%"
+        </if>
+        <if test="isCompMana!= null">
+            and r.roleName not like "%系统%"
+            and r.roleName != "车主"
+        </if>
+        <if test="roleStatus!=null">
+         and r.roleStatus = #{roleStatus}
       </if>
     </where>
   </select>
+
 
     <select id = "queryByPager" resultMap="roleMap">
           select * from t_role r

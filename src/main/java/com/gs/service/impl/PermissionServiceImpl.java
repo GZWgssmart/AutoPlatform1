@@ -67,6 +67,11 @@ public class PermissionServiceImpl implements PermissionService {
 	}
 
 	@Override
+	public int countByPerName(String permissionZhname, String permissionId) {
+		return permissionDAO.countByPerName(permissionZhname, permissionId);
+	}
+
+	@Override
 	public List<Permission> queryAll(String status) {
 		return permissionDAO.queryAll(status);
 	}

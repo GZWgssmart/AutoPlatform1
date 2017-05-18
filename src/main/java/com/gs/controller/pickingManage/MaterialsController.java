@@ -363,5 +363,9 @@ public class MaterialsController {
     }
 
 
+    public List<Company> newarCompany(@RequestParam("longitude")double longitude, @RequestParam("latitude")double latitude) {
+        return null;
+    }
+
 
 }

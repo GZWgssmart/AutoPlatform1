@@ -382,6 +382,8 @@ function saveEdit(){
     }
 }
 function validator(formId) {
+    console.log($("input[name=permissionId]").val());
+    var perIdEl = $("#"+formId + " input[name=permissionId]")[0];
     $('#' + formId).bootstrapValidator({
         feedbackIcons: {
             valid: 'glyphicon glyphicon-ok',
@@ -403,6 +405,16 @@ function validator(formId) {
                     regexp: {
                         regexp: /^[^$&,""''\s]+$/,
                         message: '权限名称不允许存在符号'
+                    },
+                    remote: {
+                        url: '/permission/checkPerZhName',//验证地址
+                        message: '该名称的模块已存在',//提示消息
+                        data: {
+                            permissionId: $("input[name=permissionId]").val(),
+                            permissionZhname: $("input[name=permissionZhname]").val()
+                        },
+                        delay :  2000,//每输入一个字符，就发ajax请求，服务器压力还是太大，设置2秒发送一次ajax（默认输入一个字符，提交一次，服务器压力太大）
+                        type: 'POST'//请求方式
                     }
                 }
             },
@@ -453,10 +465,10 @@ function editServlet(data) {
 
 function showEdit (e, value, row, index) {
     var permission = row;
-    validator("editForm");
+    $("#editForm").fill(permission);
     $("#edit .modal-header> input").val("edit");
     $("#edit .modal-header> h4").text("修改权限管理信息");
-    $("#editForm").fill(permission);
+    validator("editForm");
     $("#edit").modal('show'); // 显示弹窗
 }
 

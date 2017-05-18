@@ -20,6 +20,7 @@ import com.gs.service.RoleService;
 import com.sun.tracing.dtrace.ModuleName;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -28,7 +29,9 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -303,6 +306,23 @@ public class PermissionController {
             return null;
         }
     }
+
+    @ResponseBody
+    @RequestMapping(value = "checkPerZhName")
+    public Map checkPerZhName(Permission permission,  HttpSession session) {
+        // TODO 所有系统管理员
+        Map<String, Boolean> map = new HashMap<String, Boolean>();
+        int countPerZhName = permissionService.countByPerName(permission.getPermissionZhname(), permission.getPermissionId());
+        if(countPerZhName >0 ) {
+            map.put("valid", false);
+        } else {
+            map.put("valid", true);
+        }
+        return map;
+    }
+
+
+
 
     private String newStatus(String oldStatus){
         if(oldStatus.equals("Y")){

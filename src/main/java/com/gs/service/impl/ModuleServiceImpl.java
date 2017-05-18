@@ -77,4 +77,10 @@ public class ModuleServiceImpl implements ModuleService {
 	public int updPermission(String permissionId, String moduleId) {
 		return moduleDAO.updPermission(permissionId, moduleId);
 	}
+
+	@Override
+	public int countByModuleName(String moduleName, String moduleId) {
+		return moduleDAO.countByModuleName(moduleName, moduleId);
+	}
+
 }
