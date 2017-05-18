@@ -23,4 +23,6 @@ public interface AccessoriesTypeService extends BaseService<String, AccessoriesT
      * 根据公司查看配件分类名称
      */
     public List<AccessoriesType> queryTypeName(String companyId);
+
+    public AccessoriesType queryAccTypeNameOne(String accTypeName);
 }

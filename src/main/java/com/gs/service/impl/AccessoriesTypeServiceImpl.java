@@ -108,6 +108,11 @@ public class AccessoriesTypeServiceImpl implements AccessoriesTypeService {
         return accessoriesTypeDAO.queryTypeName(companyId);
     }
 
+    @Override
+    public AccessoriesType queryAccTypeNameOne(String accTypeName) {
+        return accessoriesTypeDAO.queryAccTypeNameOne(accTypeName);
+    }
+
     public List<AccessoriesType> blurredQuery(Pager pager, AccessoriesType accessoriesType) {
         return accessoriesTypeDAO.blurredQuery(pager, accessoriesType);
     }

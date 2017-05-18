@@ -107,7 +107,8 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">配件分类名称：</label>
                         <div class="col-sm-7">
-                            <input type="text" name="accTypeName" placeholder="请输入配件分类名称" class="form-control">
+                            <input type="text" id="addTypeName"
+                                   name="accTypeName" placeholder="请输入配件分类名称" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
@@ -148,7 +149,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">配件分类名称：</label>
                         <div class="col-sm-7">
-                            <input type="text" name="accTypeName" define="AccessoriesType.accTypeName"
+                            <input type="text" id="editTypeName" name="accTypeName" define="AccessoriesType.accTypeName"
                                    placeholder="请输入配件分类名称" class="form-control">
                         </div>
                     </div>

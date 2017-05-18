@@ -1,5 +1,7 @@
 package com.gs.controller.accessoriesManage;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gs.bean.AccessoriesType;
 import com.gs.bean.MaintainFix;
 import com.gs.bean.User;
@@ -10,6 +12,7 @@ import com.gs.common.bean.Pager4EasyUI;
 import com.gs.common.util.RoleUtil;
 import com.gs.common.util.SessionUtil;
 import com.gs.service.AccessoriesTypeService;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.activiti.engine.impl.Page;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
@@ -24,9 +27,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * 王怡 配件分类管理
@@ -109,7 +110,7 @@ public class AccessoriesTypeController {
     @RequestMapping(value = "addAccType", method = RequestMethod.POST)
     public ControllerResult addAccType(HttpSession session, AccessoriesType accessoriesType) {
         if (SessionUtil.isLogin(session)) {
-            User user = (User)session.getAttribute("user");
+            User user = (User) session.getAttribute("user");
             String roles = "公司超级管理员,公司普通管理员";
             if (RoleUtil.checkRoles(roles)) {
                 if (accessoriesType != null && !accessoriesType.equals("")) {
@@ -140,7 +141,7 @@ public class AccessoriesTypeController {
     @RequestMapping(value = "updateAccType", method = RequestMethod.POST)
     public ControllerResult updateAccType(HttpSession session, AccessoriesType accessoriesType) {
         if (SessionUtil.isLogin(session)) {
-            User user = (User)session.getAttribute("user");
+            User user = (User) session.getAttribute("user");
             String roles = "公司超级管理员,公司普通管理员";
             if (RoleUtil.checkRoles(roles)) {
                 if (accessoriesType != null && !accessoriesType.equals("")) {
@@ -278,8 +279,8 @@ public class AccessoriesTypeController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "queryTypeName/{companyId}",method = RequestMethod.GET)
-    public List<ComboBox4EasyUI> queryAll(@PathVariable("companyId") String companyId){
+    @RequestMapping(value = "queryTypeName/{companyId}", method = RequestMethod.GET)
+    public List<ComboBox4EasyUI> queryAll(@PathVariable("companyId") String companyId) {
         logger.info("根据汽修公司， 汽修项目，查询项目名字");
         List<AccessoriesType> accessoriesTypes = accessoriesTypeService.queryTypeName(companyId);
         List<ComboBox4EasyUI> comboxs = new ArrayList<ComboBox4EasyUI>();
@@ -293,8 +294,8 @@ public class AccessoriesTypeController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "queryMyTypeName",method = RequestMethod.GET)
-    public List<ComboBox4EasyUI> mySelectMaintainName(HttpSession session){
+    @RequestMapping(value = "queryMyTypeName", method = RequestMethod.GET)
+    public List<ComboBox4EasyUI> mySelectMaintainName(HttpSession session) {
         logger.info("根据汽修公司， 汽修项目，查询项目名字");
         User user = (User) session.getAttribute("user");
         List<AccessoriesType> accessoriesTypes = accessoriesTypeService.queryTypeName(user.getCompanyId());
@@ -306,6 +307,31 @@ public class AccessoriesTypeController {
             comboxs.add(comboBox4EasyUI);
         }
         return comboxs;
+    }
+
+    /**
+     * 验证手机号是否存在
+     */
+    @ResponseBody
+    @RequestMapping(value = "queryNameByOne", method = RequestMethod.GET)
+    public String queryNameByOne(String accTypeName) {
+        boolean result = true;
+        String resultString = "";
+        Map<String, Boolean> map=new HashMap<String,Boolean>();
+        ObjectMapper mapper = new ObjectMapper();
+        if (accTypeName != null && !accTypeName.equals("")) {
+            AccessoriesType accessoriesType = accessoriesTypeService.queryAccTypeNameOne(accTypeName);
+            if (accessoriesType != null) {
+                result=false;
+            }
+        }
+        map.put("valid",result);
+        try{
+            resultString=mapper.writeValueAsString(map);
+        }catch (JsonProcessingException e){
+            e.printStackTrace();
+        }
+        return resultString;
     }
 
 }

@@ -1,5 +1,7 @@
+var accTypeName;
 var contentPath = ''
 var roles = "公司超级管理员,公司普通管理员,系统超级管理员,系统普通管理员";
+
 //初始化表格
 $(function () {
     $.post(contentPath + "/user/isLogin/" + roles, function (data) {
@@ -128,6 +130,9 @@ function showEdit() {
                 $("#editForm").fill(ceshi);
                 $('#editCompany').html('<option value="' + ceshi.company.companyId + '">' + ceshi.company.companyName + '</option>').trigger("change");
                 validator('editForm');
+                $('#editTypeName').bind('input propertychange', function() {
+                    accTypeName = $("#editTypeName").val();
+                });
             } else {
                 swal({
                     "title": "",
@@ -165,6 +170,9 @@ function showAdd() {
         if (data.result == "success") {
             $("#addWindow").modal('show');
             $("#addButton").removeAttr("disabled");
+            $('#addTypeName').bind('input propertychange', function() {
+                accTypeName = $("#addTypeName").val();
+            });
             validator('addForm'); // 初始化验证
         } else if (data.result == "notLogin") {
             swal({
@@ -218,6 +226,17 @@ function validator(formId) {
                 validators: {
                     notEmpty: {
                         message: '配件分类名称不能为空'
+                    },
+                    stringLength: {
+                        min: 2,
+                        max: 10,
+                        message: '分类名称必须2位字符以上'
+                    },
+                    remote: {
+                        url: '/accType/queryNameByOne',
+                        message: '该配件名称已存在',
+                        delay :  2000,
+                        type: 'GET'
                     }
                 }
             },

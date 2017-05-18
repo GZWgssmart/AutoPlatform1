@@ -40,4 +40,11 @@ public interface AccessoriesTypeDAO extends BaseDAO<String, AccessoriesType>{
      * 根据公司查看配件分类名称
      */
     public List<AccessoriesType> queryTypeName(@Param("companyId")String companyId);
+
+    /**
+     * 查询是否存在相同的accTypeName
+     * @param accTypeName
+     * @return
+     */
+    public AccessoriesType queryAccTypeNameOne(String accTypeName);
 }

@@ -120,7 +120,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">配件：</label>
                         <div class="col-sm-7">
-                            <select id="addAccInv" class="js-example-tags accInv" name="accId" style="width:100%">
+                            <select id="addAccInv" onchange="limitIdle();" class="js-example-tags accInv" name="accId" style="width:100%">
                             </select>
                         </div>
                     </div>
@@ -135,7 +135,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">配件销售数量：</label>
                         <div class="col-sm-7">
-                            <input type="number" id="addCountNum" min="1" data-max="1" step="any" name="accSaleCount" onchange="Addcalculate();"
+                            <input type="number" id="addCountNum" name="accSaleCount" max="100" onchange="Addcalculate();"
                                    placeholder="请输入配件销售数量" class="form-control">
                         </div>
                     </div>

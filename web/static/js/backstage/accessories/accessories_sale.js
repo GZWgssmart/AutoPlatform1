@@ -385,19 +385,14 @@ function validator(formId) {
                     }
                 }
             },
-            accSaleCount: {
-                message: '配件销售数量不能为空',
-                validators: {
-                    between: {
-                        min: 1,
-                        max: 100,
-                        message: '配件销售数量必须要在 %s and %s 之间'
-                    },
-                    notEmpty: {
-                        message: '配件销售数量不能为空'
-                    }
-                }
-            },
+            // accSaleCount: {
+            //     message: '配件销售数量不能为空',
+            //     validators: {
+            //         notEmpty: {
+            //             message: '配件销售数量不能为空'
+            //         }
+            //     }
+            // },
             accSalePrice: {
                 message: '配件销售单价不能为空',
                 validators: {
@@ -476,10 +471,10 @@ function Editcalculate() {
 
 function limitIdle() {
     var accId=document.getElementById("addAccInv").value;
+    alert(accId)
     $.post(contentPath+"/accInv/queryAccInvById?accId="+accId,function (data) {
         if(data.accIdle!=null&&data.accIdle>0){
-            $("#accIdle").attr("value",data.accIdle);
-            return data.accIdle;
+            $("#addCountNum").attr("max",data.accIdle);
         }
     }, "json")
 }
