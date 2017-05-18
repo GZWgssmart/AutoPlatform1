@@ -431,12 +431,12 @@
                                    style="margin-left: 30px;" disabled="true">
                             </div>
                             <div class="form-group pull-left">
-                                <label class=" control-label">昵称：</label>
+                                <label class="control-label">昵称：</label>
                                 <input type="text" define="emp.userNickname" class="form-control" disabled="true" style="margin-left: 30px;">
                             </div>
                             <div class="form-group pull-left">
                                 <label class="control-label">所属公司：</label>
-                                <input define="emp.companyId" class="form-control" disabled="true">
+                                <input define="emp.company.companyName" class="form-control" disabled="true">
                             </div>
                             <div class="form-group pull-left">
                                 <label class="control-label" >地址：</label>

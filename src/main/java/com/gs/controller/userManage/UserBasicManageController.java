@@ -344,4 +344,31 @@ public class UserBasicManageController {
         logger.info("修改密码成功");
         return ControllerResult.getSuccessResult("修改密码成功");
     }
+
+    @ResponseBody
+    @RequestMapping(value = "queryIsPhoneByOne")
+    public Map queryIsPhoneByOne(User user, HttpSession session) {
+        int countPhone = userService.queryIsPhoneByOne(user.getUserPhone(), user.getUserId());
+        Map<String, Boolean> map = new HashMap<String, Boolean>();
+        if(countPhone > 0)
+            map.put("valid", false);
+        else
+            map.put("valid", true);
+
+        return map;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "queryIsEmailByOne")
+    public Map queryIsEmailByOne(User user, HttpSession session) {
+        int countEmail = userService.queryIsEmailByOne(user.getUserEmail(), user.getUserId());
+        Map<String, Boolean> map = new HashMap<String, Boolean>();
+        if(countEmail > 0)
+            map.put("valid", false);
+        else
+            map.put("valid", true);
+
+        return map;
+    }
+
 }

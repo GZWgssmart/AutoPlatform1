@@ -188,4 +188,18 @@ public class UserServiceImpl implements UserService {
     public int queryPhoneByOne(String userPhone) {
         return userDAO.queryPhoneByOne(userPhone);
     }
+
+    /**
+     * 查询此手机号是否已存在此手机
+     */
+    public int queryIsPhoneByOne(String phone, String userId) {
+        return userDAO.queryIsPhoneByOne(phone, userId);
+    }
+
+    /**
+     * 查询此email是否已存在此email
+     */
+    public int queryIsEmailByOne(String userEmail, String userId) {
+        return userDAO.queryIsEmailByOne(userEmail, userId);
+    }
 }

@@ -219,10 +219,24 @@
     ]]>
   </select>
 
-  <!-- 根据手机号查询是否当前数据库已经存在此手机号 -->
+  <!-- 根据手机号查询是否当前数据库已经存在此手机号 注册验证 -->
   <select id="queryPhoneByOne" resultType="int">
     <![CDATA[
-      select count(userId) from t_user where userPhone = #{userPhone};
+      select count(userId) from t_user where userPhone = #{userPhone} and userId != #{userId};
+    ]]>
+  </select>
+
+  <!-- 根据手机号查询是否当前数据库已经存在此手机号 人员管理添加和修改时验证 -->
+  <select id="queryIsPhoneByOne" resultType="int">
+    <![CDATA[
+      select count(userId) from t_user where userPhone = #{userPhone} and userId != #{userId};
+    ]]>
+  </select>
+
+  <!-- 根据email查询是否当前数据库已经存在此email 人员管理添加和修改时验证 -->
+  <select id="queryIsEmailByOne" resultType="int">
+    <![CDATA[
+      select count(userId) from t_user where userEmail = #{userEmail} and userId != #{userId};
     ]]>
   </select>
 

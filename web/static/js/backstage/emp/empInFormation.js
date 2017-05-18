@@ -143,8 +143,19 @@ function validator(formId) {
                 validators: {
                     notEmpty: {
                         message: '邮箱不能为空'
+                    },
+                    remote: {
+                        url: '/userBasicManage/queryIsEmailByOne',//验证邮箱
+                        message: '该邮箱已存在',//提示消息
+                        data: {
+                            userId: $("#"+formId + " input[name=userId]").val(),
+                            userEmail: $("#" + formId + " input[name=userEmail]").val()
+                        },
+                        delay :  2000,//每输入一个字符，就发ajax请求，服务器压力还是太大，设置2秒发送一次ajax（默认输入一个字符，提交一次，服务器压力太大）
+                        type: 'POST'//请求方式
                     }
-                }
+                },
+
             },
             userIdentity: {
                 message: '身份证验证失败',
@@ -173,6 +184,16 @@ function validator(formId) {
                     regexp: {
                         regexp: /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/,
                         message: '请输入正确的手机号'
+                    },
+                    remote: {
+                        url: '/userBasicManage/queryIsPhoneByOne',//验证号码
+                        message: '该手机号已存在',//提示消息
+                        data: {
+                            userId: $("#" + formId + " input[name=userId]").val(),
+                            userPhone: $("#" + formId + " input[name=userPhone]").val()
+                        },
+                        delay :  2000,//每输入一个字符，就发ajax请求，服务器压力还是太大，设置2秒发送一次ajax（默认输入一个字符，提交一次，服务器压力太大）
+                        type: 'POST'//请求方式
                     }
                 }
             },
