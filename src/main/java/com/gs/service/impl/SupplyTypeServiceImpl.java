@@ -36,6 +36,11 @@ public class SupplyTypeServiceImpl implements SupplyTypeService {
 		return supplyTypeDAO.countByDisable();
 	}
 
+	@Override
+	public int queryNameByOne(String supplyTypeName) {
+		return supplyTypeDAO.queryNameByOne(supplyTypeName);
+	}
+
 	public int deleteById(String id) {
         return supplyTypeDAO.deleteById(id);
     }

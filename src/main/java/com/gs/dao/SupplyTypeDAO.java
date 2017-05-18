@@ -25,4 +25,7 @@ public interface SupplyTypeDAO extends BaseDAO<String, SupplyType>{
      */
     public int countByDisable();
 
+    // 检查此供应商类型名称是否已经存在
+    public int queryNameByOne(String supplyTypeName);
+
 }

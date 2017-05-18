@@ -47,7 +47,7 @@
             </shiro:hasAnyRoles>
             <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员">
                 <button id="searchRapid" type="button" class="btn btn-success" onclick="searchRapidStatus();">
-                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>激活供应商类型
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>可用供应商类型
                 </button>
             </shiro:hasAnyRoles>
             <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员">
@@ -77,7 +77,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">供应商类型名称：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="supplyTypeName" id="name" placeholder="请输入供应商类型名称" class="form-control">
+                        <input type="text" name="supplyTypeName" id="addSTName" placeholder="请输入供应商类型名称" class="form-control">
                     </div>
                 </div>
                <%-- <div class="form-group">
@@ -119,7 +119,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">供应商类型：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="supplyTypeName" define="supplyType.supplyTypeName"  placeholder="请输入供应商类型" class="form-control">
+                        <input type="text" id="editSTName" name="supplyTypeName"  define="supplyType.supplyTypeName"  placeholder="请输入供应商类型" class="form-control">
                     </div>
                 </div>
                <%-- <div class="form-group">

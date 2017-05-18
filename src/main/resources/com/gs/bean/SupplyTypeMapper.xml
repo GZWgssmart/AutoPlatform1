@@ -15,6 +15,13 @@
 
   </resultMap>
 
+  <!-- 根据供应商类型名称查询是否当前数据库已经存在此名称 -->
+  <select id="queryNameByOne" resultType="int">
+    <![CDATA[
+      select count(supplyTypeId) from t_supply_type where supplyTypeName = #{supplyTypeName};
+    ]]>
+  </select>
+
   <select id="queryAll" resultMap="supplyTypeMap" parameterType="com.gs.bean.User">
     <![CDATA[
           select * from t_supply_type st where st.supplyTypeStatus = 'Y'

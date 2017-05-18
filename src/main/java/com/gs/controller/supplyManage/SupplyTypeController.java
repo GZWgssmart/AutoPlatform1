@@ -1,6 +1,8 @@
 package com.gs.controller.supplyManage;
 
 import ch.qos.logback.classic.Logger;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gs.bean.SupplyType;
 import com.gs.bean.User;
 import com.gs.common.bean.ComboBox4EasyUI;
@@ -18,9 +20,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 钟燕玲 供应商类型管理
@@ -34,6 +39,7 @@ public class SupplyTypeController {
     @Resource
     private SupplyTypeService supplyTypeService;
     private Logger logger = (Logger) LoggerFactory.getLogger(SupplyTypeController.class);
+
 
     /*
         查询全部供应商类型
@@ -93,6 +99,34 @@ public class SupplyTypeController {
         }
 
     }
+
+    /**
+     * 验证供应商类型名称是否存在
+     */
+    @ResponseBody
+    @RequestMapping(value = "queryNameByOne", method = RequestMethod.GET)
+    public String queryNameByOne(HttpServletRequest req) {
+        logger.info("验证供应商类型名称是否已经存在");
+        String supplyTypeName = (String)req.getParameter("supplyTypeName");
+        boolean result = true;
+        String resultString = "";
+        Map<String, Boolean> map = new HashMap<String, Boolean>();
+        ObjectMapper mapper = new ObjectMapper();
+        if (supplyTypeName != null && supplyTypeName !="") {
+            int count = supplyTypeService.queryNameByOne(supplyTypeName);
+            if (count > 1 || count == 1) {
+                result = false;
+            }
+        }
+        map.put("valid", result);
+        try {
+            resultString = mapper.writeValueAsString(map);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return resultString;
+    }
+
 
     @ResponseBody
     @RequestMapping(value = "queryByPagerDisable",method = RequestMethod.GET)

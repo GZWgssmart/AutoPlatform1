@@ -413,9 +413,11 @@ function formatterDateTime(value) {
 // 激活或禁用
 function statusFormatter(value, row, index) {
     if(value == 'Y') {
-        return "&nbsp;&nbsp;<button type='button' class='btn btn-danger' onclick='inactive(\""+'/supply/statusOperate?id='+row.supplyId+'&status=Y'+"\")'>禁用</a>";
+        return "&nbsp;&nbsp;<button type='button' class='btn btn-danger' onclick='inactive(\""+'/supply/statusOperate?id='+row.supplyId+'&status=Y'+"\")'>禁用</button>&nbsp;&nbsp;"
+                + "<a onclick='showDetail()' class='btn btn-info btn-sm'><span class='glyphicon glyphicon-fullscreen'></span>详细信息</a>";
     } else {
-        return "&nbsp;&nbsp;<button type='button' class='btn btn-success' onclick='active(\""+'/supply/statusOperate?id='+ row.supplyId+'&status=N'+ "\")'>激活</a>";
+        return "&nbsp;&nbsp;<button type='button' class='btn btn-success' onclick='active(\""+'/supply/statusOperate?id='+ row.supplyId+'&status=N'+ "\")'>激活</button>&nbsp;&nbsp;"
+                + "<a onclick='showDetail()' class='btn btn-info btn-sm'><span class='glyphicon glyphicon-fullscreen'></span>详细信息</a>";
     }
 }
 
@@ -470,4 +472,26 @@ function searchDisableStatus(){
                 type:"error"})
         }
     });
+}
+
+// 点击显示详细信息
+function showDetail() {
+    var row = $('table').bootstrapTable('getSelections');
+    if (row.length > 0) {
+        var supply = row[0];
+        var createdTime = supply.supplyCreatedTime;
+        /* 创建时间 */
+        var formatterCreateTime = formatterDateTime(createdTime);
+        $("#detailCreatedTime").val(formatterCreateTime);
+
+        $("#detailWindow").modal('show');
+        $('#detailCreatedTime').val(formatterDateTime(supply.supplyCreatedTime));
+        /* 格式化带时分秒的时间 */
+        $("#detailForm").fill(supply);
+
+        // 将获取到的userIcon 的值 赋给img的src  attr=>属性 val=>值
+
+        console.log(formatterDateTime(supply.supplyCreatedTime));
+        console.log(supply);
+    }
 }

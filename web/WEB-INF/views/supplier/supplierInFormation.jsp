@@ -2,7 +2,6 @@
 <%@taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <html>
 <head>
-    <title>供应商管理</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/css/bootstrap.min.css">
@@ -11,6 +10,37 @@
     <link rel="stylesheet" href="/static/css/sweetalert.css">
     <link rel="stylesheet" href="/static/css/table/table.css">
     <link rel="stylesheet" href="/static/css/bootstrap-validate/bootstrapValidator.min.css">
+
+    <title>供应商管理</title>
+
+    <style>
+
+        /* 让显示详细信息的窗口中的所有Input都不显示边框 */
+        #detailWindow input {
+            border:0px;
+        }
+        .form-right .form-group{
+            padding-top:10px;
+            padding-left: 25%;
+        }
+        #detailWindow .form-group input{
+            width: 200px;
+        }
+        .form-group label{
+            padding:0;
+        }
+        .form-left{
+            padding-top:20px;
+        }
+
+        #detailForm .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
+            background: #fff;
+        }
+        #detailForm .form-control {
+            box-shadow: none;
+        }
+
+    </style>
 </head>
 <body>
 <%@include file="../backstage/contextmenu.jsp"%>
@@ -21,24 +51,24 @@
             <thead>
             <tr>
                 <th data-radio="true"></th>
-                <th data-width="100" data-field="supplyType.supplyTypeName">
+                <th data-width="120" data-field="supplyType.supplyTypeName">
                     供应商类型
                 </th>
-                <th data-width="100" data-field="supplyName">
+                <th data-width="120" data-field="supplyName">
                     供应商名称
                 </th>
                 <th data-width="150" data-field="supplyTel">
                     供应商联系电话
                 </th>
-                <th data-width="130" data-field="supplyPricipal">
+               <%-- <th data-width="130" data-field="supplyPricipal">
                     供应商负责人
-                </th>
-                <th data-width="160" data-field="supplyAddress">
+                </th>--%>
+                <th data-width="190" data-field="supplyAddress">
                     供应商地址
                 </th>
-                <th data-width="130" data-field="supplyWeChat">
+               <%-- <th data-width="140" data-field="supplyWeChat">
                     供应商微信号
-                </th>
+                </th>--%>
                 <th data-width="180" data-field="supplyCreatedTime"data-formatter="formatterDateTime">
                     创建时间
                 </th>
@@ -53,7 +83,7 @@
                     </th>
                 </shiro:hasAnyRoles>
                 <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员">
-                    <th data-width="100" data-field="supplyStatus" data-formatter="statusFormatter">
+                    <th data-width="180" data-field="supplyStatus" data-formatter="statusFormatter">
                         操作
                     </th>
                 </shiro:hasAnyRoles>
@@ -68,7 +98,7 @@
             </shiro:hasAnyRoles>
             <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员">
                 <button id="searchRapid" type="button" class="btn btn-success" onclick="searchRapidStatus();">
-                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>激活供应商
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>可用供应商
                 </button>
             </shiro:hasAnyRoles>
             <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员">
@@ -206,9 +236,9 @@
                        <p class="clearfix"></p>
                     </div>
                     <div>
-                        <div class="form-group col-md-12">
-                            <label class="col-md-2 control-label">开户人姓名：</label>
-                            <div class="col-md-10">
+                        <div class="form-group col-md-6">
+                            <label class="col-md-4 control-label">开户人姓名：</label>
+                            <div class="col-md-8">
                                 <input type="text" placeholder="请输入开户人姓名"  name="supplyBankAccount"  class="form-control" style="width: 100%;">
                             </div>
                         </div>
@@ -344,9 +374,9 @@
                         <p class="clearfix"></p>
                     </div>
                     <div>
-                        <div class="form-group col-md-12 pull-left">
-                            <label class="col-md-2 control-label">开户人姓名：</label>
-                            <div class="col-md-10">
+                        <div class="form-group col-md-6 pull-left">
+                            <label class="col-md-4 control-label">开户人姓名：</label>
+                            <div class="col-md-8">
                                 <input type="text" define="supply.supplyBankAccount"  name="supplyBankAccount"  class="form-control" style="width: 100%;">
                             </div>
                         </div>
@@ -381,6 +411,78 @@
                          <button id="editButton" type="button" onclick="editSubmit()" class="btn btn-success">保存</button>
                      </div>
                 </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- 详细信息弹窗 -->
+<div id="detailWindow" class="modal fade" style="overflow-y:scroll" data-backdrop="static" >
+    <div class="modal-dialog"  style="width:90%">
+        <div class="modal-content">
+            <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('detailWindow','detailForm')" style="padding:10px"></span>
+            <div class="modal-header" style="overflow:auto;">
+                <h4>供应商详细信息</h4>
+            </div>
+            <form role="form" class="form-horizontal" id="detailForm">
+                    <div class="row">
+                        <div  class="form-right col-md-6">
+                            <div class="form-group pull-left">
+                                <label class="control-label">供应商类型：</label>
+                                <input define="supply.supplyType.supplyTypeName" class="form-control" type="text" disabled="true">
+                            </div>
+                            <div class="form-group pull-left">
+                                <label class="control-label">供应商名称：</label>
+                                <input type="text" define="supply.supplyName"  disabled="true" class="form-control">
+                            </div>
+                            <div class="form-group pull-left">
+                                <label class="control-label">联系电话：</label>
+                                <input type="number" define="supply.supplyTel" disabled="true" class="form-control"/>
+                            </div>
+                            <div class="form-group pull-left">
+                                <label class="control-label">供应商负责人：</label>
+                                <input type="text" define="supply.supplyPricipal" disabled="true" class="form-control">
+                            </div>
+                            <div class="form-group pull-left">
+                                <label class="control-label">供应商微信号：</label>
+                                <input type="text" define="supply.supplyWeChat" disabled="true" class="form-control">
+                            </div>
+                            <div class="form-group pull-left">
+                                <label class="control-label">支付宝账号：</label>
+                                <input type="number" define="supply.supplyAlipay" disabled="true" class="form-control">
+                            </div>
+                        </div>
+                    <div class="form-left col-md-6">
+                        <div class="form-group pull-left">
+                            <label class="control-label">创建时间：</label>
+                            <input id="detailCreatedTime" type="text" class="form-control" disabled="true">
+                        </div>
+                        <div class="form-group pull-left">
+                            <label class="control-label">供应商所属公司：</label>
+                            <input define="supply.company.companyName" class="form-control" type="text" disabled="true">
+                        </div>
+                        <div class="form-group pull-left">
+                            <label class="control-label">开户银行全称：</label>
+                            <input type="text" define="supply.supplyBank" class="form-control" disabled="true">
+                        </div>
+                        <div class="form-group pull-left">
+                            <label class="control-label">开户银行卡号：</label>
+                            <input type="number" define="supply.supplyBankNo"disabled="true" class="form-control">
+                        </div>
+                        <div class="form-group pull-left">
+                            <label class="control-label">开户人姓名：</label>
+                            <input type="text" define="supply.supplyBankAccount" disabled="true"  class="form-control">
+                        </div>
+                        <div class="form-group pull-left">
+                            <label class="control-label">供应商地址：</label>
+                            <input type="text" define="supply.supplyAddress" class="form-control" disabled="true">
+                        </div>
+                        <p class="clearfix"></p>
+                    </div>
+                    </div>
+                    <div class="modal-footer" >
+                        <button type="button" class="btn btn-default" onclick="closeModals('detailWindow','detailForm')">关闭</button>
+                    </div>
             </form>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->

@@ -45,6 +45,9 @@ function showEdit(){
                 $('#editCompanyName').html('<option value="' + supplyType.company.companyId + '">' + supplyType.company.companyName + '</option>').trigger("change");
                 $("#editForm").fill(supplyType);
                 validator('editForm');
+                $('#editSTName').bind('input propertychange', function() {
+                    userPhone = $("#editSTName").val();
+                });
             } else {
                 swal({
                     title: "",
@@ -85,6 +88,9 @@ function showAdd(){
         if (data.result == 'success') {
             $("#addWindow").modal('show');
             $("#addButton").removeAttr("disabled");
+            $('#addSTName').bind('input propertychange', function() {
+                userPhone = $("#addSTName").val();
+            });
             validator('addForm'); // 初始化验证
         }else if (data.result == 'notLogin') {
             swal({
@@ -130,6 +136,12 @@ function validator(formId) {
                         min: 1,
                         max: 6,
                         message: '供应商类型名称长度必须在1到6位之间'
+                    },
+                    remote: {
+                        url: '/supplyType/queryNameByOne',
+                        message: '该供应商类型名称已存在',
+                        delay :  2000,
+                        type: 'GET'
                     }
                 }
             },
@@ -140,7 +152,7 @@ function validator(formId) {
                         message: '供应商类型所属公司不能为空'
                     }
                 }
-            },
+            }/*,
             supplyTypeDes: {
                 message: '供应商类型描述内容验证失败',
                 validators: {
@@ -148,7 +160,7 @@ function validator(formId) {
                         message: '供应商类型描述内容不能为空'
                     }
                 }
-            }
+            }*/
         }
     })
 
