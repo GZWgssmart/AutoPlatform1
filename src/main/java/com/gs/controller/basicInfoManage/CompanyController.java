@@ -2,7 +2,9 @@ package com.gs.controller.basicInfoManage;
 
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.Company;
+import com.gs.bean.Role;
 import com.gs.bean.User;
+import com.gs.bean.UserRole;
 import com.gs.common.Constants;
 import com.gs.common.Methods;
 import com.gs.common.bean.ComboBox4EasyUI;
@@ -144,7 +146,21 @@ public class CompanyController {
                 Map map = new HashMap();
                 if (company != null && !company.equals("")) {
                     logger.info("添加公司信息");
-                    company.setCompanyId(UUIDUtil.uuid());
+//                    company.setCompanyId(UUIDUtil.uuid());
+                    String companyId = UUIDUtil.uuid();
+                    company.setCompanyId(companyId);
+                    User user = new User();
+                    user.setUserId(UUIDUtil.uuid());
+                    user.setUserPhone(company.getCompanyPricipalphone());
+                    user.setCompanyId(companyId);
+                    user.setUserName(company.getCompanyPricipal());
+                    user.setUserAddress(company.getCompanyAddress());
+                    user.setUserPwd(EncryptUtil.md5Encrypt("123456"));
+                    UserRole userRole = new UserRole();
+                    userRole.setUserId(user.getUserId());
+                    userRole.setRoleId("8010cecf-3205-11e7-bc72-507b9d765567");
+                    userService.insert(user);
+                    userRoleService.insert(userRole);
                     companyService.insert(company);
                     map.put("company",company);
                     map.put("controllerResult",ControllerResult.getSuccessResult("添加公司信息成功"));

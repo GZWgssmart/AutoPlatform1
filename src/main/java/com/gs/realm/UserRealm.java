@@ -39,8 +39,14 @@ public class UserRealm extends AuthorizingRealm {
         String email=authenticationToken.getPrincipal().toString();
         User user=userService.queryByEmail(email);
         if(user!=null){
-            AuthenticationInfo authenticationInfo=new SimpleAuthenticationInfo(user.getUserEmail(),user.getUserPwd(),"user");
-            return authenticationInfo;
+            AuthenticationInfo authenticationInfo;
+            if(user.getUserEmail() != null && user.getUserEmail() != "") {
+                authenticationInfo = new SimpleAuthenticationInfo(user.getUserEmail(), user.getUserPwd(), "user");
+                return authenticationInfo;
+            }else{
+                authenticationInfo = new SimpleAuthenticationInfo(user.getUserPhone(), user.getUserPwd(), "user");
+                return authenticationInfo;
+            }
         }else{
             return null;
         }
