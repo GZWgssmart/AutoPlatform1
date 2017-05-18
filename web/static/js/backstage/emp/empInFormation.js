@@ -1,10 +1,6 @@
 var contentPath = ''
 var roles = "公司超级管理员,公司普通管理员,汽车公司人力资源管理部,系统超级管理员,系统普通管理员";
 
-$(".js-example-basic-multiple").select2({
-    allowClear: true
-});
-
 $(function () {
     $.post(contentPath + "/user/isLogin/" + roles, function (data) {
         if (data.result == "success") {
@@ -51,7 +47,7 @@ var FileInput = function () {
             language: 'zh', //设置语言
             uploadUrl: uploadUrl, //上传的地址
             allowedFileExtensions: ['jpg', 'gif', 'png'],//接收的文件后缀
-            showUpload: true, //是否显示上传按钮
+            showUpload: false, //是否显示上传按钮
             showCaption: false,//是否显示标题
             browseClass: "btn btn-primary", //按钮样式
             dropZoneEnabled: true,//是否显示拖拽区域
@@ -87,6 +83,7 @@ function showAdd(){
             $("#addButton").removeAttr("disabled");
             $("#addUserRole").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
             $("#addUserCompany").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
+
             validator('addForm'); // 初始化验证
         } else if (data.result == "notLogin") {
             swal({
@@ -108,6 +105,16 @@ function showAdd(){
             })
         }
     })
+}
+
+//  当选中的角色为系统管理员时,显示底薪的DIV
+function isSalary(value) {
+    alert(eval(document.getElementById('addUserRole')).value);
+    var div = $("#addSalary");
+    if(value != '7ff4f1c5-3205-11e7-bc72-507b9d765567' || value != '80095901-3205-11e7-bc72-507b9d765567') {
+        div.css("display","block");
+    }
+    div.css("display","none");
 }
 
 function validator(formId) {
@@ -402,68 +409,68 @@ function editSubmit() {
     }
 }
 
-function showReturn(){
-    $.post(contentPath + "/user/isLogin/" + roles, function (data) {
-        if (data.result == "success") {
-            var row =  $('table').bootstrapTable('getSelections');
-            if(row.length >0) {
-                swal(
-                    {title:"",
-                        text:"您确定要辞退此员工吗",
-                        type:"warning",
-                        showCancelButton:true,
-                        confirmButtonColor:"#DD6B55",
-                        confirmButtonText:"我确定",
-                        cancelButtonText:"再考虑一下",
-                        closeOnConfirm:false,
-                        closeOnCancel:false
-                    },function(isConfirm){
-                        if (isConfirm) {
-                            swal({
-                                title: "提示",
-                                text: "操作成功",
-                                type: "success",
-                                confirmButtonText: "确认",
-                            }, function () {
-                            })
-                        }
-                        else{
-                            swal({title:"提示",
-                                text:"已取消",
-                                confirmButtonText:"确认",
-                                type:"error"})
-                        }
-                    }
-                )
-            }else{
-                swal({
-                    title:"",
-                    text: "请先选择要辞退的员工", // 主要文本
-                    confirmButtonColor: "#DD6B55", // 提示按钮的颜色
-                    confirmButtonText:"确定", // 提示按钮上的文本
-                    type:"warning"}) // 提示类型
-            }
-        } else if (data.result == "notLogin") {
-            swal({
-                text: data.message,
-                confirmButtonText: "确认", // 提示按钮上的文本
-                type: "error"
-            }, function (isConfirm) {
-                if (isConfirm) {
-                    top.location = "/user/loginPage";
-                } else {
-                    top.location = "/user/loginPage";
-                }
-            })
-        } else if (data.result == "notRole") {
-            swal({
-                text: data.message,
-                confirmButtonText: "确认", // 提示按钮上的文本
-                type: "error"
-            })
-        }
-    })
-}
+// function showReturn(){
+//     $.post(contentPath + "/user/isLogin/" + roles, function (data) {
+//         if (data.result == "success") {
+//             var row =  $('table').bootstrapTable('getSelections');
+//             if(row.length >0) {
+//                 swal(
+//                     {title:"",
+//                         text:"您确定要辞退此员工吗",
+//                         type:"warning",
+//                         showCancelButton:true,
+//                         confirmButtonColor:"#DD6B55",
+//                         confirmButtonText:"我确定",
+//                         cancelButtonText:"再考虑一下",
+//                         closeOnConfirm:false,
+//                         closeOnCancel:false
+//                     },function(isConfirm){
+//                         if (isConfirm) {
+//                             swal({
+//                                 title: "提示",
+//                                 text: "操作成功",
+//                                 type: "success",
+//                                 confirmButtonText: "确认",
+//                             }, function () {
+//                             })
+//                         }
+//                         else{
+//                             swal({title:"提示",
+//                                 text:"已取消",
+//                                 confirmButtonText:"确认",
+//                                 type:"error"})
+//                         }
+//                     }
+//                 )
+//             }else{
+//                 swal({
+//                     title:"",
+//                     text: "请先选择要辞退的员工", // 主要文本
+//                     confirmButtonColor: "#DD6B55", // 提示按钮的颜色
+//                     confirmButtonText:"确定", // 提示按钮上的文本
+//                     type:"warning"}) // 提示类型
+//             }
+//         } else if (data.result == "notLogin") {
+//             swal({
+//                 text: data.message,
+//                 confirmButtonText: "确认", // 提示按钮上的文本
+//                 type: "error"
+//             }, function (isConfirm) {
+//                 if (isConfirm) {
+//                     top.location = "/user/loginPage";
+//                 } else {
+//                     top.location = "/user/loginPage";
+//                 }
+//             })
+//         } else if (data.result == "notRole") {
+//             swal({
+//                 text: data.message,
+//                 confirmButtonText: "确认", // 提示按钮上的文本
+//                 type: "error"
+//             })
+//         }
+//     })
+// }
 
 // 点击显示详细信息
 function showDetail() {
@@ -492,7 +499,7 @@ function showDetail() {
 
         $("#detailWindow").modal('show');
         $('#detailBirthday').val(formatterDate(emp.userBirthday));  /* 格式化不带时分秒的时间 */
-        $('#detailCreatedTime').val(formatterDateTime(emp.userCreatedTime));    /* 格式化带时分秒的时间 */
+        // $('#detailCreatedTime').val(formatterDateTime(emp.userCreatedTime));    /* 格式化带时分秒的时间 */
         $("#detailForm").fill(emp);
 
         // 将获取到的userIcon 的值 赋给img的src  attr=>属性 val=>值
@@ -646,13 +653,8 @@ function formatterDateTime(value) {
 // 激活或禁用
 function formatterStatus(value, row, index) {
     if (value == 'Y') {
-        if(row.role.roleName == '车主') {
-            return "&nbsp;<button type='button' class='btn btn-danger' " +
-                "onclick='inactive(\"" + '/userBasicManage/updateStatus?id=' + row.userId + '&status=Y' + "\")'>禁用</button>&nbsp;&nbsp;"
-                + "<a onclick='showDetail()' class='btn btn-info btn-sm'><span class='glyphicon glyphicon-fullscreen'></span>详细信息</a>";
-        }
         return "&nbsp;<button type='button' class='btn btn-danger' " +
-            "onclick='inactive(\"" + '/userBasicManage/updateStatus?id=' + row.userId + '&status=Y' + "\")'>辞退</button>&nbsp;&nbsp;"
+            "onclick='inactive(\"" + '/userBasicManage/updateStatus?id=' + row.userId + '&status=Y' + "\")'>禁用</button>&nbsp;&nbsp;"
             + "<a onclick='showDetail()' class='btn btn-info btn-sm'><span class='glyphicon glyphicon-fullscreen'></span>详细信息</a>";
     } else {
         if(row.role.roleName == '车主') {
@@ -677,3 +679,6 @@ address.click(function () {
     $('#userAddress').css('display', 'block');
 })
 
+// $(".js-example-basic-multiple").select2({
+//     allowClear: true
+// });

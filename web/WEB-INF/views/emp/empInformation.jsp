@@ -18,6 +18,11 @@
     <title>员工基本信息</title>
 
     <style>
+        .table th, .table td {
+            text-align: center;
+            vertical-align: middle!important;
+        }
+
         fieldset {
             margin: 1em 0;
         }
@@ -73,32 +78,36 @@
             <thead>
             <tr>
                 <th data-radio="true"></th>
-                <th data-field="userName">姓名</th>
-                <th data-field="userGender" data-formatter="formatterGender">性别</th>
+                <th data-width="100" data-field="userName">姓名</th>
+                <th data-width="70" data-field="userGender" data-formatter="formatterGender">性别</th>
                 <th data-formatter="formatterRole">用户角色</th>
-                <th data-field="company" data-formatter="companyFormatter">所属公司</th>
+                <th data-width="150" data-field="company" data-formatter="companyFormatter">所属公司</th>
                 <th data-field="userEmail">用户Email</th>
                 <th data-field="userPhone">用户手机号</th>
+            <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司人力资源管理部">
                 <th data-field="userStatus" data-formatter="formatterStatus">操作</th>
+            </shiro:hasAnyRoles>
             </tr>
             </thead>
         </table>
         <div id="toolbar" class="btn-group">
+            <button id="searchRapid" type="button" class="btn btn-success" onclick="searchRapidStatus();">
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询可用记录
+            </button>
+            <button id="searchDisable" type="button" class="btn btn-danger" onclick="searchDisableStatus();">
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询不可用的记录
+            </button>
+        <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司人力资源管理部">
             <button id="btn_add" type="button" class="btn btn-default" onclick="showAdd();">
                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
             </button>
             <button id="btn_edit" type="button" class="btn btn-default" onclick="showEdit();">
                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
             </button>
-            <button id="btn_return" type="button" class="btn btn-default" onclick="showReturn();">
+            <%--<button id="btn_return" type="button" class="btn btn-default" onclick="showReturn();">
                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>辞退
-            </button>
-            <button id="searchDisable" type="button" class="btn btn-danger" onclick="searchDisableStatus();">
-                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询不可用的记录
-            </button>
-            <button id="searchRapid" type="button" class="btn btn-success" onclick="searchRapidStatus();">
-                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询可用记录
-            </button>
+            </button>--%>
+        </shiro:hasAnyRoles>
         </div>
     </div>
 </div>
@@ -106,7 +115,7 @@
 <!-- 添加弹窗 aria-hidden="true" 默认隐藏 data-backdrop="static" 点击模态窗底层不会关闭模态窗 -->
 <div class="modal fade" id="addWindow" aria-hidden="true" data-backdrop="static" keyboard:false>
     <div class="modal-dialog" style="width:900px;">
-        <div class="modal-content">
+        <div class="modal-content" data-options="resizable:true,modal:true">
             <div class="modal-body">
                 <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('addWindow', 'addForm')"></span>
                 <div class="modal-header" style="overflow:auto;">
@@ -169,23 +178,22 @@
                                        name="userBirthday" class="form-control datetimepicker"/>
                             </div>
                         </div>
-                        <%-- 底薪要修改 --%>
                         <div class="form-group">
+                            <label class="col-md-3 control-label">角色：</label>
+                            <div class="col-md-9">
+                                <select id="addUserRole" name="roleId" class="js-example-tags userRole"
+                                        style="width: 100%;" onchange="isSalary();"></select>
+                            </div>
+                        </div>
+                    <%--<shiro:hasAnyRoles name="系统超级管理员,系统普通管理员">--%>
+                        <div class="form-group" id="addSalary" style="display: none;">
                             <label class="col-md-3 control-label">底薪：</label>
                             <div class="col-md-9">
                                 <input id="addUserSalary" type="number" min="0" name="userSalary"
                                        placeholder="请输入底薪" class="form-control">
                             </div>
                         </div>
-                    <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员">
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">汽修公司：</label>
-                            <div class="col-md-9">
-                                <select class="js-example-basic-multiple userCompany" style="width: 100%;"
-                                    id="addUserCompany" name="companyId" multiple="multiple"></select>
-                            </div>
-                        </div>
-                    </shiro:hasAnyRoles>
+                    <%--</shiro:hasAnyRoles>--%>
                     </div>
                     <div>
                         <div class="form-group col-md-6">
@@ -200,13 +208,6 @@
                             <div class="col-md-8">
                                 <textarea id="addUserDes" class="form-control" name="userDes" placeholder="请输入用户描述"></textarea>
                             </div>
-                        </div>
-                    </div>
-                    <div class="form-group col-md-12">
-                        <label class="col-md-2 control-label">角色：</label>
-                        <div class="col-md-10">
-                            <select class="js-example-basic-multiple userRole" style="width: 100%;"
-                                id="addUserRole" name="roleId" multiple="multiple"></select>    <%-- js-example-basic-multiple --%>
                         </div>
                     </div>
                     <div class="form-group col-md-12">
@@ -284,8 +285,7 @@
                             <label class="col-md-4 control-label">角色：</label>
                             <div class="col-md-8">
                                 <select id="editUserRole" name="roleId" define="emp.role.roleId"
-                                    class="js-example-basic-multiple userRole" multiple="multiple"
-                                    style="width: 100%;"></select>
+                                    class="js-example-tags userRole" style="width: 100%;"></select>
                             </div>
                         </div>
                         <div class="form-group col-md-6 pull-left">
@@ -311,7 +311,7 @@
                             <label class="col-md-4 control-label">生日：</label>
                             <div class="col-md-8">
                                 <input id="editDatetimepicker" readonly="true" type="date" define="emp.userBirthday"
-                                   name="userBirthdayTemp" class="form-control datetimepicker">
+                                   name="userBirthday" class="form-control datetimepicker">
                             </div>
                         </div>
                         <p class="clearfix"></p>
@@ -503,7 +503,6 @@
 
 </body>
 <script>
-
 
     $.cxSelect.defaults.url = '/static/js/cityData.json';
     $('#city_china').cxSelect({
