@@ -27,4 +27,9 @@ public interface CarBrandDAO extends BaseDAO<String, CarBrand>{
      * 模糊查询的记录数
      */
     public int countByBlurred(@Param("carBrand")CarBrand carBrand, @Param("user")User user);
+
+    /**
+     * 查询此品牌名称是否已存在此品牌名称
+     */
+    public int querybrandName(String brandName);
 }

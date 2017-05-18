@@ -58,6 +58,13 @@
     ]]>
   </select>
 
+  <!--  查询此品牌名称是否已存在此品牌名称 -->
+  <select id="querybrandName" resultType="int">
+    <![CDATA[
+      select count(brandId) from t_car_brand where brandName = #{brandName};
+    ]]>
+  </select>
+
   <!--冻结数据-->
   <update id="inactive" keyProperty="brandId" parameterType="carbrand">
     <![CDATA[

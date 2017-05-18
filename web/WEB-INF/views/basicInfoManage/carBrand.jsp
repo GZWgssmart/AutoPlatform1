@@ -73,7 +73,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">汽车品牌名称：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="brandName" placeholder="请输入汽车品牌的名字" class="form-control">
+                        <input type="text" id="addbrandName" name="brandName" placeholder="请输入汽车品牌的名字" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
@@ -113,7 +113,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">汽车品牌名称：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="brandName" define="carBrand.brandName" placeholder="请输入汽车品牌名称" class="form-control">
+                        <input type="text" id="editbrandName" name="brandName" define="carBrand.brandName" placeholder="请输入汽车品牌名称" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">

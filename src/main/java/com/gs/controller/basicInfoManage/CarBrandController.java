@@ -1,5 +1,7 @@
 package com.gs.controller.basicInfoManage;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.CarBrand;
 import com.gs.bean.Checkin;
@@ -21,9 +23,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 汽车品牌管理
@@ -163,6 +168,34 @@ public class CarBrandController {
             logger.info("请先登录");
             return ControllerResult.getNotLoginResult("登录信息无效，请重新登录");
         }
+    }
+
+
+    /**
+     * 验证查询此品牌名称是否已存在此品牌名称
+     */
+    @ResponseBody
+    @RequestMapping(value = "querybrandName", method = RequestMethod.GET)
+    public String querybrandName(HttpServletRequest req) {
+        logger.info("此品牌名称是否已存在此品牌名称");
+        String brandName = (String)req.getParameter("brandName");
+        boolean result = true;
+        String resultString = "";
+        Map<String, Boolean> map = new HashMap<String, Boolean>();
+        ObjectMapper mapper = new ObjectMapper();
+        if (brandName != null && brandName !="") {
+            int count = carBrandService.querybrandName(brandName);
+            if (count > 1 || count == 1) {
+                result = false;
+            }
+        }
+        map.put("valid", result);
+        try {
+            resultString = mapper.writeValueAsString(map);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return resultString;
     }
 
     /**

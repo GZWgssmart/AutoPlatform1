@@ -101,6 +101,20 @@ function showAdd() {
     });
 }
 
+var brandName;
+$(function () {
+    $('#addbrandName').bind('input propertychange', function() {
+        brandName = $("#addbrandName").val();
+    });
+    validator('addForm');
+})
+$(function () {
+    $('#editbrandName').bind('input propertychange', function() {
+        brandName = $("#editbrandName").val();
+    });
+    validator('editForm');
+})
+
 function validator(formId) {
     $('#' + formId).bootstrapValidator({
         feedbackIcons: {
@@ -119,6 +133,12 @@ function validator(formId) {
                         min: 1,
                         max: 6,
                         message: '汽车品牌名称长度必须在1到6位之间'
+                    },
+                    remote: {
+                        url: '/carBrand/querybrandName',
+                        message: '该汽车品牌已存在',
+                        delay :  2000,
+                        type: 'GET'
                     }
                 }
             },
@@ -179,7 +199,7 @@ function formSubmit(url, formId, winId){
                     // $('#addForm').data('bootstrapValidator').resetForm(true); // 移除所有验证样式
                     $("#addButton").removeAttr("disabled"); // 移除不可点击
                 }
-                $("#" + formId).data('bootstrapValidator').destroy(); // 销毁此form表单
+                // $("#" + formId).data('bootstrapValidator').destroy(); // 销毁此form表单
                 $('#' + formId).data('bootstrapValidator', null);// 此form表单设置为空
             } else if (data.result == "fail") {
                 swal({title:"",

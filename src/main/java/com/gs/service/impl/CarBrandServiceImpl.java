@@ -63,4 +63,9 @@ public class CarBrandServiceImpl implements CarBrandService {
 	public int countByBlurred(CarBrand carBrand,User user ) {
 		return carBrandDAO.countByBlurred(carBrand,user);
 	}
+
+	@Override
+	public int querybrandName(String brandName) {
+		return carBrandDAO.querybrandName(brandName);
+	}
 }
