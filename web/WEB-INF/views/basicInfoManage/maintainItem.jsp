@@ -148,12 +148,6 @@
                             </button>
                         </div>
                     </div>
-                    <%--<div class="form-group">--%>
-                        <%--<label class="col-sm-3 control-label">配件数量：</label>--%>
-                        <%--<div class="col-sm-7">--%>
-                            <%--<input type="text" id="editaccCount" name="accCount" placeholder="请输入配件数量"class="form-control">--%>
-                        <%--</div>--%>
-                    <%--</div>--%>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">配件数量：</label>
                         <div class="col-sm-7">

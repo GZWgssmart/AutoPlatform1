@@ -397,13 +397,13 @@ function formSubmit(url, formId, winId){
                 $('#table').bootstrapTable('refresh');
                 if(formId == 'addForm'){
                     $("input[type=reset]").trigger("click"); // 移除表单中填的值
-                    // $('#addForm').data('bootstrapValidator').resetForm(true); // 移除所有验证样式
-                    $("#addButton").removeAttr("disabled"); // 移除不可点击
+                    // $('#addForm').data('bootstrapValidator').resetForm(true); //
+                    $("#addButton").removeAttr("disabled"); // 移除不可点击移除所有验证样式
 
                     $("#addCompany").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
                 } else if(formId == 'accForm'){
                     $("input[type=reset]").trigger("click"); // 移除表单中填的值
-                    $('#accForm').data('bootstrapValidator').resetForm(true); // 移除所有验证样式
+                    // $('#accForm').data('bootstrapValidator').resetForm(true); // 移除所有验证样式
                     $("#accButton").removeAttr("disabled"); // 移除不可点击
 
                     $("#addAccessories").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
