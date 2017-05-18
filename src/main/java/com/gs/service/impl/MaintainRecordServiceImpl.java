@@ -110,8 +110,8 @@ public class MaintainRecordServiceImpl implements MaintainRecordService {
 	}
 
 	@Override
-	public int countSix(String actualEndTime) {
-		return maintainRecordDAO.countSix(actualEndTime);
+	public int countSix(User user, String actualEndTime) {
+		return maintainRecordDAO.countSix(user,actualEndTime);
 	}
 
 	/**
@@ -125,5 +125,15 @@ public class MaintainRecordServiceImpl implements MaintainRecordService {
 	@Override
 	public List<MaintainRecord> queryByOwner(Pager pager, String userId) {
 		return maintainRecordDAO.queryByOwner(pager, userId);
+	}
+
+	@Override
+	public List<MaintainRecord> queryByPagerSuccess(Pager pager) {
+		return maintainRecordDAO.queryByPagerSuccess(pager);
+	}
+
+	@Override
+	public int countSuccess(User user) {
+		return maintainRecordDAO.countSuccess(user);
 	}
 }

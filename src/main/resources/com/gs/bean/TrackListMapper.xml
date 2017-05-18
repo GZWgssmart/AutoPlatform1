@@ -8,7 +8,7 @@
     <result column="serviceEvaluate" property="serviceEvaluate" jdbcType="INTEGER" />
     <result column="trackUser" property="trackUser" jdbcType="VARCHAR" />
     <result column="trackCreatedTime" property="trackCreatedTime" jdbcType="TIMESTAMP" />
-    <result column="companyId" property="companyId" jdbcType="TIMESTAMP" />
+    <result column="companyId" property="companyId" jdbcType="VARCHAR" />
 
     <association property="user" javaType="com.gs.bean.User">
       <id column="user_id" property="userId"></id>
@@ -21,8 +21,10 @@
     </association>
 
     <association property="company" javaType="com.gs.bean.Company">
-      <id column="companyId" property="companyId"></id>
-      <result column="companyName" property="companyName"></result>
+      <id column="company_id" property="companyId"></id>
+      <result column="company_name" property="companyName"></result>
+      <result column="company_address" property="companyAddress"></result>
+      <result column="company_tel" property="companyTel"></result>
     </association>
   </resultMap>
 
@@ -31,9 +33,9 @@
     c.userId AS checkin_id,c.userName AS checkin_name from t_track_list t,
     t_checkin c, t_user u where u.userId = t.userId and t.trackUser = c.userId
     and c.checkinStatus = 'Y'
-    <!--<if test="user.companyId != null and user.companyId != ''">-->
-    <!--and t.companyId = #{user.companyId}-->
-    <!--</if>-->
+    <if test="user.companyId != null and user.companyId != ''">
+    and t.companyId = #{user.companyId}
+    </if>
     limit #{beginIndex}, #{pageSize}
   </select>
 
@@ -41,17 +43,17 @@
     select count(t.trackId) FROM t_track_list t,
     t_checkin c, t_user u where u.userId = t.userId and t.trackUser = c.userId
     and c.checkinStatus = 'Y'
-    <!--<if test="companyId != null and companyId != ''">-->
-      <!--and t.companyId = #{companyId}-->
-    <!--</if>-->
+    <if test="companyId != null and companyId != ''">
+      and t.companyId = #{companyId}
+    </if>
   </select>
 
   <update id="update" parameterType="trackList">
-    update t_track_list set userId=#{userId},trackContent=#{trackContent},serviceEvaluate=#{serviceEvaluate},trackUser=#{trackUser},trackCreatedTime=#{trackCreatedTime} where trackId = #{trackId}
+    update t_track_list set trackContent=#{trackContent},serviceEvaluate=#{serviceEvaluate},trackUser=#{trackUser} where trackId = #{trackId}
   </update>
 
   <insert id="insert" parameterType="trackList">
-    insert into t_track_list(trackId,userId,trackContent,serviceEvaluate,trackUser,trackCreatedTime) values(uuid(),#{userId},#{trackContent},#{serviceEvaluate},#{trackUser},#{trackCreatedTime})
+    insert into t_track_list(trackId,userId,trackContent,serviceEvaluate,trackUser,trackCreatedTime,companyId) values(uuid(),#{userId},#{trackContent},#{serviceEvaluate},#{trackUser},now(),#{companyId})
   </insert>
 
   <select id="queryByPagerName" resultMap="BaseResultMap" parameterType="com.gs.common.bean.Pager">
@@ -59,9 +61,9 @@
     c.userId AS checkin_id,c.userName AS checkin_name FROM t_track_list t,
     t_checkin c, t_user u where u.userId = t.userId and t.trackUser = c.userId
     and c.checkinStatus = 'Y'
-    <!--<if test="user.companyId != null and user.companyId != ''">-->
-      <!--and t.companyId = #{user.companyId}-->
-    <!--</if>-->
+    <if test="user.companyId != null and user.companyId != ''">
+      and t.companyId = #{user.companyId}
+    </if>
     <if test="trackList.userId != null and trackList.userId != ''">
       and u.userName like concat('%',#{trackList.userId},'%')
     </if>
@@ -81,9 +83,9 @@
     SELECT count(*) FROM t_track_list t,
     t_checkin c, t_user u where u.userId = t.userId and t.trackUser = c.userId
     and c.checkinStatus = 'Y'
-    <!--<if test="companyId != null and companyId != ''">-->
-      <!--and t.companyId = #{companyId}-->
-    <!--</if>-->
+    <if test="companyId != null and companyId != ''">
+      and t.companyId = #{companyId}
+    </if>
     <if test="trackList.userId != null and trackList.userId != ''">
       and u.userName like concat('%',#{trackList.userId},'%')
     </if>

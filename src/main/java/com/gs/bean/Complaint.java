@@ -17,6 +17,16 @@ public class Complaint {
 
     private String complaintReplyUser;
 
+    private String companyId;
+
+    public String getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(String companyId) {
+        this.companyId = companyId;
+    }
+
     private User user;
 
     private User admin;

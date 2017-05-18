@@ -142,20 +142,20 @@
                     <h4>请填写回复信息</h4>
                 </div>
                 <br/>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">投诉回复人：</label>
-                    <div class="col-sm-7">
-                        <%--<select id="addAdminName" name="complaintReplyUser" class="form-control js-data-example-ajax admin" style="width:100%">--%>
-                        <%--</select>--%>
-                        <input  readonly value="${sessionScope.user.userName}" class="form-control">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">投诉回复时间：</label>
-                    <div class="col-sm-7">
-                        <input id="addReplyComplaintReplyTime" name="complaintReplyTime" readonly define="Complaint.complaintReplyTime" onclick="getDate('addReplyComplaintReplyTime')" class="form-control datetimepicker"/>
-                    </div>
-                </div>
+                <%--<div class="form-group">--%>
+                    <%--<label class="col-sm-3 control-label">投诉回复人：</label>--%>
+                    <%--<div class="col-sm-7">--%>
+                        <%--&lt;%&ndash;<select id="addAdminName" name="complaintReplyUser" class="form-control js-data-example-ajax admin" style="width:100%">&ndash;%&gt;--%>
+                        <%--&lt;%&ndash;</select>&ndash;%&gt;--%>
+                        <%--<input  readonly value="${sessionScope.user.userName}" class="form-control">--%>
+                    <%--</div>--%>
+                <%--</div>--%>
+                <%--<div class="form-group">--%>
+                    <%--<label class="col-sm-3 control-label">投诉回复时间：</label>--%>
+                    <%--<div class="col-sm-7">--%>
+                        <%--<input id="addReplyComplaintReplyTime" name="complaintReplyTime" readonly define="Complaint.complaintReplyTime" onclick="getDate('addReplyComplaintReplyTime')" class="form-control datetimepicker"/>--%>
+                    <%--</div>--%>
+                <%--</div>--%>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">投诉回复内容：</label>
                     <div class="col-sm-7">
@@ -193,19 +193,19 @@
                     <h4>请修改投诉管理信息</h4>
                 </div>
                 <br/>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">投诉回复人：</label>
-                    <div class="col-sm-7">
-                        <select id="editAdminName" name="complaintReplyUser" class="form-control js-data-example-ajax admin" style="width:100%">
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">投诉回复时间：</label>
-                    <div class="col-sm-7">
-                        <input id="editComplaintReplyTime" name="complaintReplyTime" readonly  define="Complaint.complaintReplyTime" onclick="getDate('editComplaintReplyTime')" class="form-control datetimepicker"/>
-                    </div>
-                </div>
+                <%--<div class="form-group">--%>
+                    <%--<label class="col-sm-3 control-label">投诉回复人：</label>--%>
+                    <%--<div class="col-sm-7">--%>
+                        <%--<select id="editAdminName" name="complaintReplyUser" class="form-control js-data-example-ajax admin" style="width:100%">--%>
+                        <%--</select>--%>
+                    <%--</div>--%>
+                <%--</div>--%>
+                <%--<div class="form-group">--%>
+                    <%--<label class="col-sm-3 control-label">投诉回复时间：</label>--%>
+                    <%--<div class="col-sm-7">--%>
+                        <%--<input id="editComplaintReplyTime" name="complaintReplyTime" readonly  define="Complaint.complaintReplyTime" onclick="getDate('editComplaintReplyTime')" class="form-control datetimepicker"/>--%>
+                    <%--</div>--%>
+                <%--</div>--%>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">投诉回复内容：</label>
                     <div class="col-sm-7">

@@ -9,6 +9,7 @@
     <result column="complaintReply" property="complaintReply" jdbcType="VARCHAR" />
     <result column="complaintReplyTime" property="complaintReplyTime" jdbcType="TIMESTAMP" />
     <result column="complaintReplyUser" property="complaintReplyUser" jdbcType="VARCHAR" />
+    <result column="companyId" property="companyId" jdbcType="VARCHAR" />
 
     <association property="user" javaType="com.gs.bean.User">
       <id column="user_id" property="userId"></id>
@@ -37,9 +38,9 @@
     LEFT JOIN t_user u ON c.userId = u.userId
     LEFT  JOIN t_user u2 ON c.complaintReplyUser = u2.userId
     WHERE u.companyId = co.companyId
-    <!--<if test="user.companyId != null and user.companyId != ''">-->
-      <!--and c.companyId = #{user.companyId}-->
-    <!--</if>-->
+    <if test="user.companyId != null and user.companyId != ''">
+      and c.companyId = #{user.companyId}
+    </if>
     limit #{beginIndex}, #{pageSize}
   </select>
 
@@ -52,9 +53,9 @@
     LEFT JOIN t_user u ON c.userId = u.userId
     LEFT  JOIN t_user u2 ON c.complaintReplyUser = u2.userId
     WHERE u.companyId = co.companyId
-    <!--<if test="user.companyId != null and user.companyId != ''">-->
-      <!--and c.companyId = #{user.companyId}-->
-    <!--</if>-->
+    <if test="user.companyId != null and user.companyId != ''">
+      and c.companyId = #{user.companyId}
+    </if>
     <if test="complaint.userId != null and complaint.userId != ''">
       and u.userName like concat('%',#{complaint.userId},'%')
     </if>
@@ -76,9 +77,9 @@
     LEFT JOIN t_user u ON c.userId = u.userId
     LEFT  JOIN t_user u2 ON c.complaintReplyUser = u2.userId
     WHERE u.companyId = co.companyId
-    <!--<if test="companyId != null and companyId != ''">-->
-      <!--and c.companyId = #{companyId}-->
-    <!--</if>-->
+    <if test="companyId != null and companyId != ''">
+      and c.companyId = #{companyId}
+    </if>
     <if test="complaint.userId != null and complaint.userId != ''">
       and u.userName like concat('%',#{complaint.userId},'%')
     </if>
@@ -95,17 +96,17 @@
 
   <select id="count" resultType="int" parameterType="com.gs.bean.User">
     select count(c.complaintId) from t_complaint c where 1=1
-    <!--<if test="companyId != null and companyId != ''">-->
-      <!--and c.companyId = #{companyId}-->
-    <!--</if>-->
+    <if test="companyId != null and companyId != ''">
+      and c.companyId = #{companyId}
+    </if>
   </select>
 
   <update id="update" parameterType="complaint">
-    update t_complaint set complaintReply=#{complaintReply},complaintReplyTime=#{complaintReplyTime},complaintReplyUser=#{complaintReplyUser} where complaintId = #{complaintId}
+    update t_complaint set complaintReply=#{complaintReply},complaintReplyTime=now(),complaintReplyUser=#{complaintReplyUser} where complaintId = #{complaintId}
   </update>
 
   <insert id="insert" parameterType="complaint">
-    insert into t_complaint(complaintId,userId,complaintContent,complaintCreatedTime) values(uuid(),#{userId},#{complaintContent},#{complaintCreatedTime})
+    insert into t_complaint(complaintId,userId,complaintContent,complaintCreatedTime,companyId) values(uuid(),#{userId},#{complaintContent},now(),#{companyId})
   </insert>
 
 </mapper>

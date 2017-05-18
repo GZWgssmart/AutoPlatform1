@@ -219,6 +219,31 @@ public class MaintainRecordController {
         }
     }
 
+    @ResponseBody
+    @RequestMapping(value = "queryByPagerSuccess", method = RequestMethod.GET)
+    public Pager4EasyUI<MaintainRecord> queryByPagerSuccess(HttpSession session, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
+        if(SessionUtil.isLogin(session)) {
+            String roles = "公司超级管理员,公司普通管理员,汽车公司接待员";
+            if(RoleUtil.checkRoles(roles)) {
+                logger.info("分布查看已完成的维修保养记录");
+                Pager pager = new Pager();
+                pager.setPageNo(Integer.valueOf(pageNumber));
+                pager.setPageSize(Integer.valueOf(pageSize));
+                pager.setUser((User)session.getAttribute("user"));
+                int count = maintainRecordService.countSuccess((User)session.getAttribute("user"));
+                pager.setTotalRecords(count);
+                List<MaintainRecord> queryList = maintainRecordService.queryByPagerSuccess(pager);
+                return new Pager4EasyUI<MaintainRecord>(pager.getTotalRecords(), queryList);
+            }else{
+                logger.info("此用户无拥有可用维修保养分页查询的角色");
+                return null;
+            }
+        }else{
+            logger.info("请先登录");
+            return null;
+        }
+    }
+
     /**
      * 根据用户id查询此车主所有预约记录
      */

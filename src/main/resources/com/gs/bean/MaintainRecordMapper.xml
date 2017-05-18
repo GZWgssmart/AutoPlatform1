@@ -473,11 +473,15 @@
 
     </select>
 
-    <select id="queryByPagerSix" resultMap="MaintainRecordMap" parameterType="com.gs.common.bean.Pager">
+    <select id="queryByPagerSix" resultMap="MaintainRecordMap">
         SELECT m.*, ck.*, u.userId, u.userName
         FROM t_maintain_record m, t_checkin ck, t_user u
         WHERE m.checkinId = ck.checkinId AND ck.userId=u.userId
-        AND m.recordStatus = 'Y' AND m.actualEndTime >= #{actualEndTime}
+        AND m.recordStatus = 'Y' AND #{actualEndTime} >= m.actualEndTime
+        <if test="pager.user.companyId != '' and pager.user.companyId != null">
+            and ck.companyId = #{pager.user.companyId}
+        </if>
+        order by m.recordCreatedTime Desc
         limit #{pager.beginIndex}, #{pager.pageSize}
     </select>
 
@@ -485,7 +489,32 @@
         SELECT count(m.recordId)
         FROM t_maintain_record m, t_checkin ck, t_user u
         WHERE m.checkinId = ck.checkinId AND ck.userId=u.userId
-        AND m.recordStatus = 'Y' AND m.actualEndTime >= #{actualEndTime}
+        AND m.recordStatus = 'Y' AND #{actualEndTime} >= m.actualEndTime
+        <if test="user.companyId != '' and user.companyId != null">
+            and ck.companyId = #{user.companyId}
+        </if>
+    </select>
+
+    <select id="queryByPagerSuccess" resultMap="MaintainRecordMap" parameterType="com.gs.common.bean.Pager">
+        SELECT m.*, ck.*, u.userId, u.userName
+        FROM t_maintain_record m, t_checkin ck, t_user u
+        WHERE m.checkinId = ck.checkinId AND ck.userId=u.userId
+        AND m.recordStatus = 'Y'
+        <if test="user.companyId != '' and user.companyId != null">
+            and ck.companyId = #{user.companyId}
+        </if>
+        order by m.recordCreatedTime Desc
+        limit #{beginIndex}, #{pageSize}
+    </select>
+
+    <select id="countSuccess" resultType="int" parameterType="com.gs.bean.User">
+        SELECT count(m.recordId)
+        FROM t_maintain_record m, t_checkin ck, t_user u
+        WHERE m.checkinId = ck.checkinId AND ck.userId=u.userId
+        AND m.recordStatus = 'Y'
+        <if test="companyId != '' and companyId != null">
+            and ck.companyId = #{companyId}
+        </if>
     </select>
 
 </mapper>

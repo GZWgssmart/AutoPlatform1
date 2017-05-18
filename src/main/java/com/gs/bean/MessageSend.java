@@ -13,14 +13,34 @@ public class MessageSend {
 
     private Date sendCreatedTime;
 
-    private User user;
+    private String companyId;
 
-    public User getUser() {
-        return user;
+    public String getCompanyId() {
+        return companyId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setCompanyId(String companyId) {
+        this.companyId = companyId;
+    }
+
+    private Checkin checkin;
+
+    private Company company;
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
+    }
+
+    public Checkin getCheckin() {
+        return checkin;
+    }
+
+    public void setCheckin(Checkin checkin) {
+        this.checkin = checkin;
     }
 
     public String getMessageId() {

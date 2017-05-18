@@ -182,6 +182,8 @@ public class TracklistController {
             String roles = "公司超级管理员,公司普通管理员,汽车公司接待员";
             if (RoleUtil.checkRoles(roles)) {
                 logger.info("跟踪回访记录添加操作");
+                User user = (User) session.getAttribute("user");
+                trackList.setCompanyId(user.getCompanyId());
                 trackListService.insert(trackList);
                 return ControllerResult.getSuccessResult("添加成功");
             } else {

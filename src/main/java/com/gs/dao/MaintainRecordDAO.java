@@ -62,7 +62,7 @@ public interface MaintainRecordDAO extends BaseDAO<String, MaintainRecord>{
 
     public List<MaintainRecord> queryByPagerSix(@Param("pager")Pager pager, @Param("actualEndTime") String actualEndTime);
 
-    public int countSix(@Param("actualEndTime") String actualEndTime);
+    public int countSix(@Param("user") User user, @Param("actualEndTime") String actualEndTime);
 
     /**
      * 根据用户id查询此车主所有预约记录
@@ -70,4 +70,8 @@ public interface MaintainRecordDAO extends BaseDAO<String, MaintainRecord>{
     public int countByOwner(String userId);
 
     public List<MaintainRecord> queryByOwner(@Param("pager")Pager pager, @Param("userId")String userId);
+
+    public List<MaintainRecord> queryByPagerSuccess(Pager pager);
+
+    public int countSuccess(User user);
 }

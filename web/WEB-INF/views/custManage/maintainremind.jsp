@@ -21,6 +21,8 @@
     <link rel="stylesheet" href="/static/css/sweetalert.css">
     <link rel="stylesheet" href="/static/css/table/table.css">
     <link rel="stylesheet" href="/static/js/plugins/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet/less" href="/static/css/bootstrap-dateTimePicker/datetimepicker.less">
 </head>
 <body>
 <%@include file="../backstage/contextmenu.jsp" %>
@@ -33,7 +35,7 @@
             <thead>
             <tr>
                 <th data-checkbox="true"></th>
-                <th data-field="user.userName">用户名</th>
+                <th data-field="checkin.userName">用户名</th>
                 <th data-field="lastMaintainTime" data-formatter="formatterDate">上次维修保养时间</th>
                 <th data-field="lastMaintainMileage">上次汽车行驶里程</th>
                 <th data-field="remindMsg">维修保养提醒消息</th>
@@ -74,10 +76,10 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">用户名：</label>
                     <div class="col-sm-7">
-                        <input id="addUserName" type="text" readonly class="form-control" style="width: 315px;">
-                            <button type="button" class="btn btn-default" onclick="showCheckUser();">
-                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>请选择用户
-                        </button>
+                        <input id="addUserName" type="text" readonly class="form-control">
+                            <%--<button type="button" class="btn btn-default" onclick="showCheckUser();">--%>
+                            <%--<span class="glyphicon glyphicon-search" aria-hidden="true"></span>请选择用户--%>
+                        <%--</button>--%>
                     </div>
                 </div>
                 <div class="form-group">
@@ -87,12 +89,12 @@
                                   class="form-control"></textarea>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">维修保养提醒时间：</label>
-                    <div class="col-sm-7">
-                        <input id="addRemindTime" name="remindTime" readonly class="layui-input">
-                    </div>
-                </div>
+                <%--<div class="form-group">--%>
+                    <%--<label class="col-sm-3 control-label">维修保养提醒时间：</label>--%>
+                    <%--<div class="col-sm-7">--%>
+                        <%--<input id="addRemindTime" name="remindTime" readonly class="layui-input">--%>
+                    <%--</div>--%>
+                <%--</div>--%>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">维修保养提醒方式：</label>
                     <div class="col-sm-7">
@@ -102,12 +104,12 @@
                         </select>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">维修保养记录创建时间：</label>
-                    <div class="col-sm-7">
-                        <input id="addRemindCreatedTime" name="remindCreatedTime" readonly class="layui-input">
-                    </div>
-                </div>
+                <%--<div class="form-group">--%>
+                    <%--<label class="col-sm-3 control-label">维修保养记录创建时间：</label>--%>
+                    <%--<div class="col-sm-7">--%>
+                        <%--<input id="addRemindCreatedTime" name="remindCreatedTime" readonly class="layui-input">--%>
+                    <%--</div>--%>
+                <%--</div>--%>
                 <div class="form-group">
                     <div class="col-sm-offset-8">
                         <button type="button" class="btn btn-default"
@@ -269,64 +271,66 @@
 <script src="/static/js/bootstrap-validate/bootstrapValidator.js"></script>
 <script src="/static/js/plugins/layui/layui.js" charset="utf-8"></script>
 <script src="/static/js/backstage/main.js"></script>
-<script>
-    layui.use('laydate', function(){
-        var laydate = layui.laydate;
+<script src="/static/js/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.js"></script>
+<script src="/static/js/bootstrap-dateTimePicker/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+<%--<script>--%>
+    <%--layui.use('laydate', function(){--%>
+        <%--var laydate = layui.laydate;--%>
 
-        var addRemindTime = {
-            format: 'yyyy-MM-dd hh:mm:ss',
-            min: laydate.now(), //设定最小日期为当前日期
-            max: '2099-12-30 23:59:59', //最大日期
-            istime: true,
-            istoday: false,
-            festival: true
-        };
+        <%--var addRemindTime = {--%>
+            <%--format: 'yyyy-MM-dd hh:mm:ss',--%>
+            <%--min: laydate.now(), //设定最小日期为当前日期--%>
+            <%--max: '2099-12-30 23:59:59', //最大日期--%>
+            <%--istime: true,--%>
+            <%--istoday: false,--%>
+            <%--festival: true--%>
+        <%--};--%>
 
-        document.getElementById('addRemindTime').onclick = function () {
-            addRemindTime.elem = this;
-            laydate(addRemindTime);
-        }
+        <%--document.getElementById('addRemindTime').onclick = function () {--%>
+            <%--addRemindTime.elem = this;--%>
+            <%--laydate(addRemindTime);--%>
+        <%--}--%>
 
-        var addRemindCreatedTime = {
-            format: 'yyyy-MM-dd hh:mm:ss',
-            max: '2099-12-30 23:59:59', //最大日期
-            istime: true,
-            istoday: false,
-            festival: true
-        };
+        <%--var addRemindCreatedTime = {--%>
+            <%--format: 'yyyy-MM-dd hh:mm:ss',--%>
+            <%--max: '2099-12-30 23:59:59', //最大日期--%>
+            <%--istime: true,--%>
+            <%--istoday: false,--%>
+            <%--festival: true--%>
+        <%--};--%>
 
-        document.getElementById('addRemindCreatedTime').onclick = function () {
-            addRemindCreatedTime.elem = this;
-            laydate(addRemindCreatedTime);
-        }
+        <%--document.getElementById('addRemindCreatedTime').onclick = function () {--%>
+            <%--addRemindCreatedTime.elem = this;--%>
+            <%--laydate(addRemindCreatedTime);--%>
+        <%--}--%>
 
-        var editRemindTime = {
-            format: 'yyyy-MM-dd hh:mm:ss',
-            min: laydate.now(), //设定最小日期为当前日期
-            max: '2099-12-30 23:59:59', //最大日期
-            istime: true,
-            istoday: false,
-            festival: true
-        };
+        <%--var editRemindTime = {--%>
+            <%--format: 'yyyy-MM-dd hh:mm:ss',--%>
+            <%--min: laydate.now(), //设定最小日期为当前日期--%>
+            <%--max: '2099-12-30 23:59:59', //最大日期--%>
+            <%--istime: true,--%>
+            <%--istoday: false,--%>
+            <%--festival: true--%>
+        <%--};--%>
 
-        document.getElementById('editRemindTime').onclick = function () {
-            editRemindTime.elem = this;
-            laydate(editRemindTime);
-        }
+        <%--document.getElementById('editRemindTime').onclick = function () {--%>
+            <%--editRemindTime.elem = this;--%>
+            <%--laydate(editRemindTime);--%>
+        <%--}--%>
 
-        var editRemindCreatedTime = {
-            format: 'yyyy-MM-dd hh:mm:ss',
-            max: '2099-12-30 23:59:59', //最大日期
-            istime: true,
-            istoday: false,
-            festival: true
-        };
+        <%--var editRemindCreatedTime = {--%>
+            <%--format: 'yyyy-MM-dd hh:mm:ss',--%>
+            <%--max: '2099-12-30 23:59:59', //最大日期--%>
+            <%--istime: true,--%>
+            <%--istoday: false,--%>
+            <%--festival: true--%>
+        <%--};--%>
 
-        document.getElementById('editRemindCreatedTime').onclick = function () {
-            editRemindCreatedTime.elem = this;
-            laydate(editRemindCreatedTime);
-        }
-    });
-</script>
+        <%--document.getElementById('editRemindCreatedTime').onclick = function () {--%>
+            <%--editRemindCreatedTime.elem = this;--%>
+            <%--laydate(editRemindCreatedTime);--%>
+        <%--}--%>
+    <%--});--%>
+<%--</script>--%>
 </body>
 </html>

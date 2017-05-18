@@ -49,13 +49,17 @@ public interface MaintainRecordService extends BaseService<String, MaintainRecor
 
     public List<MaintainRecord> queryByPagerRemindYes(Pager pager);
 
-    public List<MaintainRecord> queryByPagerSix(@Param("pager")Pager pager, @Param("actualEndTime") String actualEndTime);
+    public List<MaintainRecord> queryByPagerSix(Pager pager, String actualEndTime);
 
-    public int countSix(@Param("actualEndTime") String actualEndTime);
+    public int countSix(User user, String actualEndTime);
     /**
      * 根据用户id查询此车主所有预约记录
      */
     public int countByOwner(String userId);
 
     public List<MaintainRecord> queryByOwner(Pager pager, String userId);
+
+    public List<MaintainRecord> queryByPagerSuccess(Pager pager);
+
+    public int countSuccess(User user);
 }

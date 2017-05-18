@@ -8,6 +8,7 @@ import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
 import com.gs.common.util.RoleUtil;
 import com.gs.common.util.SessionUtil;
+import com.gs.common.util.UUIDUtil;
 import com.gs.service.*;
 import org.apache.ibatis.annotations.Param;
 import org.joda.time.DateTime;
@@ -107,7 +108,7 @@ public class MaintainRemindController {
                 Pager pager = new Pager();
                 pager.setPageNo(Integer.valueOf(pageNumber));
                 pager.setPageSize(Integer.valueOf(pageSize));
-                int count = maintainRecordService.countSix(getInsertDateTime());
+                int count = maintainRecordService.countSix((User)session.getAttribute("user"), getInsertDateTime());
                 pager.setTotalRecords(count);
                 pager.setUser((User) session.getAttribute("user"));
                 List<MaintainRecord> queryList = maintainRecordService.queryByPagerSix(pager,getInsertDateTime());
@@ -140,13 +141,21 @@ public class MaintainRemindController {
             String roles = "公司超级管理员,公司普通管理员,汽车公司接待员";
             if (RoleUtil.checkRoles(roles)) {
                 logger.info("维修保养提醒记录添加操作");
+                String remindType = req.getParameter("remindType");
+                String uuid = UUIDUtil.uuid();
+                maintainRemind.setRemindId(uuid);
+                User user = (User) session.getAttribute("user");
+                maintainRemind.setCompanyId(user.getCompanyId());
                 maintainRemindService.insert(maintainRemind);
-                messageSend.setMessageId(maintainRemind.getRemindId());
-                messageSend.setUserId(maintainRemind.getUserId());
-                messageSend.setSendTime(maintainRemind.getRemindTime());
-                messageSend.setSendMsg(maintainRemind.getRemindMsg());
-                messageSend.setSendCreatedTime(new Date());
-                messageSendService.insertRemind(messageSend);
+                if(remindType.equals("短信提醒")) {
+                    messageSend.setMessageId(maintainRemind.getRemindId());
+                    messageSend.setUserId(maintainRemind.getUserId());
+//                messageSend.setSendTime(maintainRemind.getRemindTime());
+                    messageSend.setSendMsg(maintainRemind.getRemindMsg());
+//                messageSend.setSendCreatedTime(new Date());
+                    messageSend.setCompanyId(user.getCompanyId());
+                    messageSendService.insertRemind(messageSend);
+                }
                 return ControllerResult.getSuccessResult("添加成功");
             } else {
                 logger.info("此用户无拥有此方法");
@@ -223,7 +232,7 @@ public class MaintainRemindController {
      */
     @InitBinder
     public void initBinder(WebDataBinder binder) {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         dateFormat.setLenient(false);
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
     }
