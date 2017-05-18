@@ -68,6 +68,7 @@ function showEdit(){
                 var supply = row[0];
                 $('#editSupplyType').html('<option value="' + supply.supplyType.supplyTypeId + '">' + supply.supplyType.supplyTypeName + '</option>').trigger("change");
                 $('#editCompanyName').html('<option value="' + supply.company.companyId + '">' + supply.company.companyName + '</option>').trigger("change");
+                $('#editCity_china').val(formatterAddress(supply.supplyAddress));
                 $("#editForm").fill(supply);
                 validator('editForm');
             } else {
@@ -183,14 +184,14 @@ function validator(formId) {
                     }
                 }
             },
-            supplyAddress: {
+            /*supplyAddress: {
                 message: '供应商地址验证失败',
                 validators: {
                     notEmpty: {
                         message: '供应商地址不能为空'
                     }
                 }
-            },
+            },*/
             supplyWeChat: {
                 message: '供应商微信号验证失败',
                 validators: {
@@ -297,6 +298,22 @@ function addSubmit(){
         $("#addButton").removeAttr("disabled");
     }
 }
+
+// 格式化地址
+function formatterAddress(val) {
+    var address = val.split('-');
+    $("#editProvince").val(address[0]);
+    $("#editCity").val(address[1]);
+    $("#editArea").val(address[2]);
+}
+
+//  修改时，点击地址的文本框后，文本框隐藏，地址下拉选择显示
+var address = $("#address");
+address.click(function () {
+    address.css('display', 'none');
+    $('#supplyAddress').css('display', 'block');
+})
+
 
 function editSubmit(){
     $("#editForm").data('bootstrapValidator').validate();

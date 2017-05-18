@@ -215,12 +215,22 @@
                         <p class="clearfix"></p>
                     </div>
                     <div>
-                        <div class="form-group col-md-6 pull-left">
-                           <label class="col-md-4 control-label">供应商地址：</label>
-                           <div class="col-md-8">
-                              <input type="text" name="supplyAddress" placeholder="请输入供应商地址" class="form-control" >
+                       <div class="form-group col-md-12">
+                               <label class="col-md-2 control-label" style="top:3px;right:5px">供应商地址：</label>
+                               <div class="col-md-10">
+                                   <fieldset id="city_china">
+                                       <div class="form-group col-md-4">
+                                           <select class="province js-example-tags form-control" disabled="disabled" name="province"></select>
+                                       </div>
+                                       <div class="form-group col-md-4">
+                                           <select class="city js-example-tags form-control" disabled="disabled" name="city"></select>
+                                       </div>
+                                       <div class="form-group col-md-4">
+                                           <select class="area js-example-tags form-control" disabled="disabled" name="area"></select>
+                                       </div>
+                                   </fieldset>
+                               </div>
                            </div>
-                       </div>
                         <p class="clearfix"></p>
                     </div>
                     <p class="clearfix"></p>
@@ -343,12 +353,25 @@
                         <p class="clearfix"></p>
                     </div>
                     <div>
-                        <div class="form-group col-md-6 pull-left">
-                             <label class="col-md-4 control-label">供应商地址：</label>
-                             <div class="col-md-8">
-                                 <input type="text" define="supply.supplyAddress" name="supplyAddress" class="form-control">
-                             </div>
-                         </div>
+                        <div class="form-group col-md-12 pull-right">
+                            <label class="col-md-2 control-label" style="bottom: 6px;right:5px">供应商地址：</label>
+                            <div class="col-md-9" id="address" style="bottom:3px;display: block;">
+                                <input type="text" define="supply.supplyAddress" class="form-control">
+                            </div>
+                            <div class="col-md-9" id="supplyAddress" style="display: none;">
+                                <fieldset id="editCity_china">
+                                    <div class="pull-left">
+                                        省份：<select class="province" disabled="disabled" id="editProvince" name="editProvince"></select>
+                                    </div>
+                                    <div class="pull-left">
+                                        &nbsp;&nbsp;&nbsp;城市：<select class="city" disabled="disabled" id="editCity" name="editCity"></select>
+                                    </div>
+                                    <div class="pull-left">
+                                        &nbsp;&nbsp;&nbsp;地区：<select class="area" disabled="disabled" id="editArea" name="editArea"></select>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
                         <p class="clearfix"></p>
                     </div>
                     <p class="clearfix"></p>

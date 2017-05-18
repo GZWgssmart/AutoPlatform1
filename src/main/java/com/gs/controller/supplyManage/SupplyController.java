@@ -133,7 +133,7 @@ public class SupplyController {
      */
     @ResponseBody
     @RequestMapping(value = "addSupply", method = RequestMethod.POST)
-    public ControllerResult addSupply(HttpSession session,Supply supply) {
+    public ControllerResult addSupply(HttpSession session,HttpServletRequest request,Supply supply) {
         if(SessionUtil.isLogin(session)) {
             String roles = "公司超级管理员,公司普通管理员";
             if (RoleUtil.checkRoles(roles)) {
@@ -141,6 +141,10 @@ public class SupplyController {
                 logger.info("添加供应商记录");
                 if (supply != null && !supply.equals("")) {
                     supply.setCompanyId(user.getCompanyId());
+                    String province = request.getParameter("province");
+                    String city = request.getParameter("city");
+                    String area = request.getParameter("area");
+                    supply.setSupplyAddress(province + "-" + city + "-" + area);
                     supplyService.insert(supply);
                     logger.info("添加供应商记录成功");
                     return ControllerResult.getSuccessResult("添加供应商记录成功");
@@ -165,7 +169,7 @@ public class SupplyController {
      */
     @ResponseBody
     @RequestMapping(value = "updateSupply", method = RequestMethod.POST)
-    public ControllerResult updateSupply(HttpSession session,Supply supply) {
+    public ControllerResult updateSupply(HttpSession session,Supply supply,HttpServletRequest request) {
         if(SessionUtil.isLogin(session)) {
             String roles = "公司超级管理员,公司普通管理员";
             if (RoleUtil.checkRoles(roles)) {
@@ -173,6 +177,10 @@ public class SupplyController {
                 if (supply != null && !supply.equals("")) {
                     User user = (User)session.getAttribute("user");
                     supply.setCompanyId(user.getCompanyId());
+                    String province = request.getParameter("editProvince");
+                    String city = request.getParameter("editCity");
+                    String area = request.getParameter("editArea");
+                    supply.setSupplyAddress(province + "-" + city + "-" + area);
                     supplyService.update(supply);
                     logger.info("修改供应商记录成功");
                     return ControllerResult.getSuccessResult("修改供应商记录成功");
