@@ -1,6 +1,8 @@
 var map;
 var localSearch;
 var windowId;
+var companyName;
+var companyTel;
 $(function () {
     var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员";
     $.post("/user/isLogin/"+roles, function (data) {
@@ -98,6 +100,12 @@ function showEdit() {
                 $('#editDatetimepicker').val(formatterDate(ceshi.companyOpendate));
                 $("#editForm").fill(ceshi);
                 validator('editForm');
+                $('#editcompanyName').bind('input propertychange', function() {
+                    companyName = $("#editcompanyName").val();
+                });
+                $('#editcompanyTel').bind('input propertychange', function() {
+                    companyTel = $("#editcompanyTel").val();
+                });
             } else {
                 swal({
                     title: "",
@@ -189,6 +197,12 @@ function showAdd(){
         if (data.result == 'success') {
             $("#addWindow").modal('show');
             $("#addButton").removeAttr("disabled");
+            $('#addcompanyName').bind('input propertychange', function() {
+                companyName = $("#addcompanyName").val();
+            });
+            $('#addcompanyTel').bind('input propertychange', function() {
+                companyTel = $("#addcompanyTel").val();
+            });
             validator('addForm'); // 初始化验证
         } else if (data.result == 'notLogin') {
             swal({
@@ -233,6 +247,12 @@ function validator(formId) {
                         min: 1,
                         max: 10,
                         message: '公司名称长度必须在1到10位之间'
+                    },
+                    remote: {
+                        url: '/company/querycompanyName',
+                        message: '该公司名称已存在',
+                        delay :  2000,
+                        type: 'GET'
                     }
                 }
             },
@@ -255,6 +275,12 @@ function validator(formId) {
                         min: 1,
                         max: 11,
                         message: '公司联系电话长度必须在1到11位之间'
+                    },
+                    remote: {
+                        url: '/company/querycompanyTel',
+                        message: '该公司联系电话已存在',
+                        delay :  2000,
+                        type: 'GET'
                     }
                 }
             },

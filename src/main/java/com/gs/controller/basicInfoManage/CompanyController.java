@@ -1,6 +1,8 @@
 package com.gs.controller.basicInfoManage;
 
 import ch.qos.logback.classic.Logger;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gs.bean.Company;
 import com.gs.bean.Role;
 import com.gs.bean.User;
@@ -177,6 +179,62 @@ public class CompanyController {
                 logger.info("请先登录");
                 return ControllerResult.getNotLoginResult("登录信息无效，请重新登录");
             }
+    }
+
+
+
+    /**
+     * 查询此公司名称是否已存在
+     */
+    @ResponseBody
+    @RequestMapping(value = "querycompanyName", method = RequestMethod.GET)
+    public String querycompanyName(HttpServletRequest req) {
+        logger.info("此公司名称是否已存在此公司名称");
+        String companyName = (String)req.getParameter("companyName");
+        boolean result = true;
+        String resultString = "";
+        Map<String, Boolean> map = new HashMap<String, Boolean>();
+        ObjectMapper mapper = new ObjectMapper();
+        if (companyName != null && companyName !="") {
+            int count = companyService.querycompanyName(companyName);
+            if (count > 1 || count == 1) {
+                result = false;
+            }
+        }
+        map.put("valid", result);
+        try {
+            resultString = mapper.writeValueAsString(map);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return resultString;
+    }
+
+    /**
+     * 查询此公司联系电话是否已存在
+     */
+    @ResponseBody
+    @RequestMapping(value = "querycompanyTel", method = RequestMethod.GET)
+    public String querycompanyTel(HttpServletRequest req) {
+        logger.info("此公司联系电话是否已存在此公司联系电话");
+        String companyTel = (String)req.getParameter("companyTel");
+        boolean result = true;
+        String resultString = "";
+        Map<String, Boolean> map = new HashMap<String, Boolean>();
+        ObjectMapper mapper = new ObjectMapper();
+        if (companyTel != null && companyTel !="") {
+            int count = companyService.querycompanyTel(companyTel);
+            if (count > 1 || count == 1) {
+                result = false;
+            }
+        }
+        map.put("valid", result);
+        try {
+            resultString = mapper.writeValueAsString(map);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return resultString;
     }
 
     @ResponseBody

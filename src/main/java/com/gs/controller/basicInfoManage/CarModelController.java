@@ -1,6 +1,8 @@
 package com.gs.controller.basicInfoManage;
 
 import ch.qos.logback.classic.Logger;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gs.bean.CarModel;
 import com.gs.bean.User;
 import com.gs.common.bean.ComboBox4EasyUI;
@@ -20,7 +22,9 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 汽车品牌管理
@@ -186,6 +190,33 @@ public class CarModelController {
             logger.info("请先登录");
             return null;
         }
+    }
+
+    /**
+     * 查询此车型名称是否已存在
+     */
+    @ResponseBody
+    @RequestMapping(value = "querymodelName", method = RequestMethod.GET)
+    public String querymodelName(HttpServletRequest req) {
+        logger.info("此车型名称是否已存在此品牌名称");
+        String modelName = (String)req.getParameter("modelName");
+        boolean result = true;
+        String resultString = "";
+        Map<String, Boolean> map = new HashMap<String, Boolean>();
+        ObjectMapper mapper = new ObjectMapper();
+        if (modelName != null && modelName !="") {
+            int count = carModelService.querymodelName(modelName);
+            if (count > 1 || count == 1) {
+                result = false;
+            }
+        }
+        map.put("valid", result);
+        try {
+            resultString = mapper.writeValueAsString(map);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return resultString;
     }
 
     /**

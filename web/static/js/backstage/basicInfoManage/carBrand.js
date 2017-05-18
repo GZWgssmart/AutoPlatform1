@@ -192,7 +192,7 @@ function formSubmit(url, formId, winId){
                     // $('#addForm').data('bootstrapValidator').resetForm(true); // 移除所有验证样式
                     $("#addButton").removeAttr("disabled"); // 移除不可点击
                 }
-                // $("#" + formId).data('bootstrapValidator').destroy(); // 销毁此form表单
+                $("#" + formId).data('bootstrapValidator').destroy(); // 销毁此form表单
                 $('#' + formId).data('bootstrapValidator', null);// 此form表单设置为空
             } else if (data.result == "fail") {
                 swal({title:"",

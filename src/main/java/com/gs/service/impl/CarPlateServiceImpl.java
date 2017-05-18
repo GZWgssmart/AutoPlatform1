@@ -66,4 +66,9 @@ public class CarPlateServiceImpl implements CarPlateService {
 	public int countByBlurred(CarPlate carPlate, User user) {
 		return carPlateDAO.countByBlurred(carPlate,user);
 	}
+
+	@Override
+	public int queryplateName(String plateName) {
+		return carPlateDAO.queryplateName(plateName);
+	}
 }

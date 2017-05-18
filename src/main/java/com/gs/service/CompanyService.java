@@ -13,4 +13,14 @@ import org.apache.ibatis.annotations.Param;
 public interface CompanyService extends BaseService<String, Company>{
 
     public int updLogo(@Param("userId")String userId, @Param("companyLogo")String companyLogo);
+
+    /**
+     * 查询此公司名称是否已存在
+     */
+    public int querycompanyName(String companyName);
+
+    /**
+     * 查询此公司联系方式是否已存在
+     */
+    public int querycompanyTel(String companyTel);
 }

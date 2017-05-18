@@ -85,7 +85,7 @@
                     <div class="form-group col-md-6">
                         <label class="col-md-4 control-label">公司名称：</label>
                         <div class="col-md-8">
-                            <input type="text" id="companyName" name="companyName" placeholder="请输入公司名称" class="form-control">
+                            <input type="text" id="addcompanyName" name="companyName" placeholder="请输入公司名称" class="form-control">
                         </div>
                     </div>
                     <div class="form-group col-md-6">
@@ -177,9 +177,7 @@
                     <p class="clearfix"></p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default"
-                            data-dismiss="modal">关闭
-                    </button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" onclick="closeModals('addWindow', 'addForm')">关闭</button>
                     <button id="addButton" type="button" onclick="addSubmit()" class="btn btn-sm btn-success">添加
                     </button>
                     <input type="reset" name="reset" style="display: none;"/>
@@ -207,7 +205,7 @@
                     <div class="form-group col-md-6">
                         <label class="col-md-4 control-label">公司名称：</label>
                         <div class="col-md-8">
-                            <input type="text" name="companyName" define="companyInfo.companyName" placeholder="请输入公司名称" class="form-control">
+                            <input type="text" id="editcompanyName" name="companyName" define="companyInfo.companyName" placeholder="请输入公司名称" class="form-control">
                         </div>
                     </div>
                     <div class="form-group col-md-6">
@@ -223,7 +221,7 @@
                 <div class="form-group col-md-6">
                     <label class="col-md-4 control-label">联系电话：</label>
                     <div class="col-md-8">
-                        <input type="number" name="companyTel" placeholder="请输入联系电话电话" define="companyInfo.companyTel" class="form-control" style="width:100%"/>
+                        <input type="number" id="editcompanyTel" name="companyTel" placeholder="请输入联系电话电话" define="companyInfo.companyTel" class="form-control" style="width:100%"/>
                     </div>
                 </div>
 
@@ -314,7 +312,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default"
-                            data-dismiss="modal">关闭
+                            data-dismiss="modal" onclick="closeModals('editWindow', 'editForm')">关闭
                     </button>
                     <button id="editButton" type="button" onclick="editSubmit()" class="btn btn-sm btn-success">保存
                     </button>

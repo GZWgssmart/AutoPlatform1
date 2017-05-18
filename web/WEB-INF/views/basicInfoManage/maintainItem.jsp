@@ -111,7 +111,7 @@
                     </div>
                     <div class="modal-footer" style="border: none">
                         <button type="button" class="btn btn-default"
-                                data-dismiss="modal">关闭
+                                data-dismiss="modal" onclick="closeModals('accWindow', 'accForm')">关闭
                         </button>
                         <button id="accButton" type="button" onclick="accaddSubmit()" class="btn btn-success">添加
                         </button>
@@ -164,7 +164,7 @@
 
                     <div class="modal-footer" style="border: none">
                         <button type="button" class="btn btn-default"
-                                data-dismiss="modal">关闭
+                                data-dismiss="modal" onclick="closeModals('accEditWindow', 'accEditForm')">关闭
                         </button>
                         <button id="accEidtButton" type="button" onclick="accEditaddSubmit()" class="btn btn-success">修改
                         </button>
@@ -298,7 +298,7 @@
                         </button>
                     </div>
                     <div class="modal-footer" style="border: none">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" >关闭</button>
                     </div>
                 </form>
             </div>
@@ -352,7 +352,7 @@
                     </div>
                     <div class="form-group">
                         <div class="col-sm-offset-8">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="closeModals('addWindow', 'addForm')">关闭</button>
                             <button id="addButton" type="button" onclick="addSubmit()" class="btn btn-sm btn-success">
                                 添加
                             </button>
@@ -416,7 +416,7 @@
                     </div>
                     <div class="form-group">
                         <div class="col-sm-offset-8">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="closeModals('editWindow', 'editForm')">关闭</button>
                             <button id="editButton" type="button" onclick="editSubmit()" class="btn btn-sm btn-success">
                                 保存
                             </button>

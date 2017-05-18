@@ -24,4 +24,9 @@ public interface CarPlateDAO extends BaseDAO<String, CarPlate>{
 
     //模糊查询记录
     public int countByBlurred(@Param("carPlate")CarPlate carPlate,@Param("user")User user);
+
+    /**
+     * 查询此车牌名称是否已存在
+     */
+    public int queryplateName(String plateName);
  }

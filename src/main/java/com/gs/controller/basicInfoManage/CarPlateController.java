@@ -1,6 +1,8 @@
 package com.gs.controller.basicInfoManage;
 
 import ch.qos.logback.classic.Logger;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gs.bean.CarPlate;
 import com.gs.bean.User;
 import com.gs.common.bean.ComboBox4EasyUI;
@@ -19,9 +21,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 汽车车牌管理
@@ -130,6 +135,33 @@ public class CarPlateController {
             logger.info("请先登录");
             return ControllerResult.getNotLoginResult("登录信息无效，请重新登录");
         }
+    }
+
+    /**
+     * 查询此车牌名称是否已存在
+     */
+    @ResponseBody
+    @RequestMapping(value = "queryplateName", method = RequestMethod.GET)
+    public String queryplateName(HttpServletRequest req) {
+        logger.info("此车牌名称是否已存在此车牌名称");
+        String plateName = (String)req.getParameter("plateName");
+        boolean result = true;
+        String resultString = "";
+        Map<String, Boolean> map = new HashMap<String, Boolean>();
+        ObjectMapper mapper = new ObjectMapper();
+        if (plateName != null && plateName !="") {
+            int count = carPlateService.queryplateName(plateName);
+            if (count > 1 || count == 1) {
+                result = false;
+            }
+        }
+        map.put("valid", result);
+        try {
+            resultString = mapper.writeValueAsString(map);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return resultString;
     }
 
     /**
