@@ -164,18 +164,18 @@ public class SupplyTypeController {
             String roles = "公司超级管理员,公司普通管理员";
             if(RoleUtil.checkRoles(roles)) {
                 User user = (User)session.getAttribute("user");
-                logger.info("添加供应商类型记录");
+                logger.info("添加供应商类型");
                 if (supplyType != null && !supplyType.equals("")) {
                     System.out.println(supplyType.toString());
                     supplyType.setCompanyId(user.getCompanyId());
                     supplyTypeService.insert(supplyType);
-                    logger.info("添加供应商类型记录成功");
-                    return ControllerResult.getSuccessResult("添加供应商类型记录成功");
+                    logger.info("添加供应商类型成功");
+                    return ControllerResult.getSuccessResult("添加供应商类型成功");
                 } else {
-                    return ControllerResult.getFailResult("添加供应商类型记录失败");
+                    return ControllerResult.getFailResult("添加供应商类型失败");
                 }
             }else{
-                logger.info("此用户无拥有添加供应商类型记录角色");
+                logger.info("此用户无拥有添加供应商类型角色");
                 return null;
             }
         }else{
@@ -201,13 +201,13 @@ public class SupplyTypeController {
                     User user = (User)session.getAttribute("user");
                     supplyType.setCompanyId(user.getCompanyId());
                     supplyTypeService.update(supplyType);
-                    logger.info("修改供应商类型记录成功");
-                    return ControllerResult.getSuccessResult("修改供应商类型记录成功");
+                    logger.info("修改供应商类型成功");
+                    return ControllerResult.getSuccessResult("修改供应商类型成功");
                 } else {
-                    return ControllerResult.getFailResult("修改供应商类型记录失败");
+                    return ControllerResult.getFailResult("修改供应商类型失败");
                 }
             }else{
-                logger.info("此用户无拥有修改供应商类型记录角色");
+                logger.info("此用户无拥有修改供应商类型角色");
                 return null;
             }
         }else{
@@ -229,18 +229,18 @@ public class SupplyTypeController {
                 if (id != null && !id.equals("") && status != null && !status.equals("")) {
                     if (status.equals("N")) {
                         supplyTypeService.active(id);
-                        logger.info("供应商记录激活成功");
-                        return ControllerResult.getSuccessResult("供应商类型记录激活成功");
+                        logger.info("激活供应商类型成功");
+                        return ControllerResult.getSuccessResult("激活供应商类型成功");
                     } else {
                         supplyTypeService.inactive(id);
-                        logger.info("供应商记录禁用成功");
-                        return ControllerResult.getSuccessResult("供应商类型记录禁用成功");
+                        logger.info("禁用供应商类型成功");
+                        return ControllerResult.getSuccessResult("禁用供应商类型成功");
                     }
                 } else {
                     return ControllerResult.getFailResult("操作失败");
                 }
             }else{
-                logger.info("此用户无拥有对供应商类型记录状态做激活与禁用的角色");
+                logger.info("此用户无拥有对供应商类型状态做激活与禁用的角色");
                 return null;
             }
 
