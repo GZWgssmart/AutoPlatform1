@@ -115,10 +115,11 @@ public class AccessoriesSaleController {
                     accessoriesSale.setCompanyId(user.getCompanyId());
                     accessoriesSaleService.insert(accessoriesSale);
                     incomingOutgoingService.insert(inconSet(accessoriesSale,session,inTypeId));
-                    logger.info("添加成功");
-                    return ControllerResult.getSuccessResult("添加成功");
+                    logger.info("添加配件销售成功");
+                    return ControllerResult.getSuccessResult("添加配件销售成功");
                 } else {
-                    return ControllerResult.getSuccessResult("添加成功");
+                    logger.info("添加配件销售失败");
+                    return ControllerResult.getSuccessResult("添加配件销售失败");
                 }
             } else {
                 logger.info("此用户无拥有此方法角色");
@@ -157,10 +158,11 @@ public class AccessoriesSaleController {
                 if (accessoriesSale != null && !accessoriesSale.equals("")) {
                     accessoriesSale.setCompanyId(user.getCompanyId());
                     accessoriesSaleService.update(accessoriesSale);
-                    logger.info("更新成功");
-                    return ControllerResult.getSuccessResult("更新成功");
+                    logger.info("修改配件销售成功");
+                    return ControllerResult.getSuccessResult("修改配件销售成功");
                 } else {
-                    return ControllerResult.getFailResult("更新失败");
+                    logger.info("修改配件销售失败");
+                    return ControllerResult.getFailResult("修改配件销售失败");
                 }
             } else {
                 logger.info("此用户无拥有此方法角色");
@@ -215,12 +217,12 @@ public class AccessoriesSaleController {
                 if (accSaleId != null && !accSaleId.equals("") && accSaleStatus != null && !accSaleStatus.equals("")) {
                     if (accSaleStatus.equals("N")) {
                         accessoriesSaleService.active(accSaleId);
-                        logger.info("激活成功");
-                        return ControllerResult.getSuccessResult("激活成功");
+                        logger.info("激活配件销售成功");
+                        return ControllerResult.getSuccessResult("激活配件销售成功");
                     } else {
                         accessoriesSaleService.inactive(accSaleId);
-                        logger.info("禁用成功");
-                        return ControllerResult.getSuccessResult("禁用成功");
+                        logger.info("禁用配件销售成功");
+                        return ControllerResult.getSuccessResult("禁用配件销售成功");
                     }
                 } else {
                     return ControllerResult.getFailResult("操作失败");

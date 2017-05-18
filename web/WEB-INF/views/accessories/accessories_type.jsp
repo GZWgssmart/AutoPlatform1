@@ -47,12 +47,12 @@
         <div id="toolbar" class="btn-group">
             <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,系统超级管理员,系统普通管理员">
                 <button id="btn_available" type="button" class="btn btn-success" onclick="showAvailable();">
-                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>可用配件分类记录
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>可用配件分类
                 </button>
             </shiro:hasAnyRoles>
             <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,系统超级管理员,系统普通管理员">
                 <button id="btn_disable" type="button" class="btn btn-danger" onclick="showDisable();">
-                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>禁用配件分类记录
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>禁用配件分类
                 </button>
             </shiro:hasAnyRoles>
             <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员">
@@ -101,7 +101,7 @@
                       data-dismiss="modal"></span>
                 <form class="form-horizontal" id="addForm" method="post">
                     <div class="modal-header" style="overflow:auto;">
-                        <h4>请填写配件类别信息</h4>
+                        <h4>添加配件分类信息</h4>
                     </div>
                     <br/>
                     <div class="form-group">
@@ -142,7 +142,7 @@
                 <form class="form-horizontal" id="editForm" method="post">
                     <input type="hidden" name="accTypeId" define="AccessoriesType.accTypeId"/>
                     <div class="modal-header" style="overflow:auto;">
-                        <h4>请修改配件类别信息</h4>
+                        <h4>修改配件分类信息</h4>
                     </div>
                     <br/>
                     <div class="form-group">
@@ -165,7 +165,7 @@
                             <button type="button" class="btn btn-default" onclick="closeModals('editWindow','editForm')"
                                     data-dismiss="modal">关闭
                             </button>
-                            <button id="editButton" type="button" onclick="editSubmit()" class="btn btn-success">修改
+                            <button id="editButton" type="button" onclick="editSubmit()" class="btn btn-success">保存
                             </button>
                             <input type="reset" name="reset" style="display: none;"/>
                         </div>

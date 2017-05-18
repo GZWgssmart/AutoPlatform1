@@ -164,10 +164,11 @@ public class AccessoriesInventoryController {
                 if (accessories != null && !accessories.equals("")) {
                     accessories.setCompanyId(user.getCompanyId());
                     accessoriesService.insert(accessories);
-                    logger.info("添加成功");
-                    return ControllerResult.getSuccessResult("添加成功");
+                    logger.info("添加配件库存成功");
+                    return ControllerResult.getSuccessResult("添加配件库存成功");
                 } else {
-                    return ControllerResult.getFailResult("添加失败");
+                    logger.info("添加配件库存失败");
+                    return ControllerResult.getFailResult("添加配件库存失败");
                 }
             } else {
                 logger.info("此用户无拥有此方法角色");
@@ -194,10 +195,11 @@ public class AccessoriesInventoryController {
                 if (accessories != null && !accessories.equals("")) {
                     accessories.setCompanyId(user.getCompanyId());
                     accessoriesService.update(accessories);
-                    logger.info("修改成功");
-                    return ControllerResult.getSuccessResult("修改成功");
+                    logger.info("修改配件库存成功");
+                    return ControllerResult.getSuccessResult("修改配件库存成功");
                 } else {
-                    return ControllerResult.getFailResult("修改失败");
+                    logger.info("修改配件库存失败");
+                    return ControllerResult.getFailResult("修改配件库存失败");
                 }
             } else {
                 logger.info("此用户无拥有此方法角色");
@@ -250,12 +252,12 @@ public class AccessoriesInventoryController {
                 if (accId != null && !accId.equals("") && accStatus != null && !accStatus.equals("")) {
                     if (accStatus.equals("N")) {
                         accessoriesService.active(accId);
-                        logger.info("激活成功");
-                        return ControllerResult.getSuccessResult("激活成功");
+                        logger.info("激活配件库存成功");
+                        return ControllerResult.getSuccessResult("激活配件库存成功");
                     } else {
                         accessoriesService.inactive(accId);
-                        logger.info("禁用成功");
-                        return ControllerResult.getSuccessResult("禁用成功");
+                        logger.info("禁用配件库存成功");
+                        return ControllerResult.getSuccessResult("禁用配件库存成功");
                     }
                 } else {
                     return ControllerResult.getFailResult("操作失败");

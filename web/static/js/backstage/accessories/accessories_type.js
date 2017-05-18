@@ -131,7 +131,7 @@ function showEdit() {
             } else {
                 swal({
                     "title": "",
-                    "text": "请修改配件类别信息",
+                    "text": "请选择配件分类信息",
                     confirmButtonColor: "#DD6B55", // 提示按钮的颜色
                     confirmButtonText: "确定", // 提示按钮上的文本
                     "type": "warning"

@@ -116,9 +116,9 @@ public class AccessoriesTypeController {
                     accessoriesType.setCompanyId(user.getCompanyId());
                     accessoriesTypeService.insert(accessoriesType);
                     logger.info("添加成功");
-                    return ControllerResult.getSuccessResult("添加成功");
+                    return ControllerResult.getSuccessResult("添加配件分类成功");
                 } else {
-                    return ControllerResult.getFailResult("添加失败");
+                    return ControllerResult.getFailResult("添加配件分类失败");
                 }
             } else {
                 logger.info("此用户无拥有此方法角色");
@@ -146,10 +146,11 @@ public class AccessoriesTypeController {
                 if (accessoriesType != null && !accessoriesType.equals("")) {
                     accessoriesType.setCompanyId(user.getCompanyId());
                     accessoriesTypeService.update(accessoriesType);
-                    logger.info("更新成功");
-                    return ControllerResult.getSuccessResult("更新成功");
+                    logger.info("修改配件分类成功");
+                    return ControllerResult.getSuccessResult("修改配件分类成功");
                 } else {
-                    return ControllerResult.getSuccessResult("更新失败");
+                    logger.info("修改配件分类失败");
+                    return ControllerResult.getSuccessResult("修改配件分类失败");
                 }
             } else {
                 logger.info("此用户无拥有此方法角色");
@@ -206,12 +207,12 @@ public class AccessoriesTypeController {
                 if (accTypeId != null && !accTypeId.equals("") && accTypeStatus != null && !accTypeStatus.equals("")) {
                     if (accTypeStatus.equals("N")) {
                         accessoriesTypeService.active(accTypeId);
-                        logger.info("激活成功");
-                        return ControllerResult.getSuccessResult("激活成功");
+                        logger.info("激活配件分类成功");
+                        return ControllerResult.getSuccessResult("激活配件分类成功");
                     } else {
                         accessoriesTypeService.inactive(accTypeId);
-                        logger.info("禁用成功");
-                        return ControllerResult.getSuccessResult("禁用成功");
+                        logger.info("禁用配件分类成功");
+                        return ControllerResult.getSuccessResult("禁用配件分类成功");
                     }
                 } else {
                     return ControllerResult.getFailResult("操作失败");

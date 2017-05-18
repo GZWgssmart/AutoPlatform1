@@ -122,7 +122,7 @@ public class AccessoriesBuyController {
                         accessoriesBuyService.insert(accessoriesBuy);
                         accessoriesService.updateCount(accessoriesBuy.getAccBuyCount(), accessoriesBuy.getAccId());
                         incomingOutgoingService.insert(inconSet(accessoriesBuy,session,outgoingId));
-                        return ControllerResult.getSuccessResult("更新数量成功");
+                        return ControllerResult.getSuccessResult("更新配件数量成功");
                     } else {
                         if (accName != null && !accName.equals("")) {
                             Accessories a = accessoriesService.queryByName(accName);
@@ -133,7 +133,7 @@ public class AccessoriesBuyController {
                                 accessoriesBuyService.insert(accessoriesBuy);
                                 accessoriesService.updateCount(accessoriesBuy.getAccBuyCount(), accessoriesBuy.getAccId());
                                 incomingOutgoingService.insert(inconSet(accessoriesBuy,session,outgoingId));
-                                return ControllerResult.getSuccessResult("更新数量成功");
+                                return ControllerResult.getSuccessResult("更新配件数量成功");
                             } else {
                                 String uuid = UUIDUtil.uuid();
                                 accessoriesService.insert(accSet(accessoriesBuy,accName,uuid));
@@ -141,7 +141,7 @@ public class AccessoriesBuyController {
                                 accessoriesBuy.setCompanyId(user.getCompanyId());
                                 accessoriesBuyService.insert(accessoriesBuy);
                                 incomingOutgoingService.insert(inconSet(accessoriesBuy,session,outgoingId));
-                                return ControllerResult.getSuccessResult("添加成功");
+                                return ControllerResult.getSuccessResult("添加配件采购成功");
                             }
                         }
                     }
@@ -204,10 +204,11 @@ public class AccessoriesBuyController {
                 if (accessoriesBuy != null && !accessoriesBuy.equals("")) {
                     accessoriesBuy.setCompanyId(user.getCompanyId());
                     accessoriesBuyService.update(accessoriesBuy);
-                    logger.info("修改成功");
-                    return ControllerResult.getSuccessResult("修改成功");
+                    logger.info("修改配件采购成功");
+                    return ControllerResult.getSuccessResult("修改配件采购成功");
                 } else {
-                    return ControllerResult.getFailResult("修改失败");
+                    logger.info("修改配件采购失败");
+                    return ControllerResult.getFailResult("修改配件采购失败");
                 }
             } else {
                 logger.info("此用户无法拥有此方法角色");
@@ -261,11 +262,11 @@ public class AccessoriesBuyController {
                     if (accBuyStatus.equals("N")) {
                         accessoriesBuyService.active(accBuyId);
                         logger.info("激活成功");
-                        return ControllerResult.getSuccessResult("激活成功");
+                        return ControllerResult.getSuccessResult("激活配件采购成功");
                     } else {
                         accessoriesBuyService.inactive(accBuyId);
                         logger.info("禁用成功");
-                        return ControllerResult.getSuccessResult("禁用成功");
+                        return ControllerResult.getSuccessResult("禁用配件采购成功");
                     }
                 } else {
                     return ControllerResult.getFailResult("操作失败");
