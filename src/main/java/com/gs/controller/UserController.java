@@ -9,6 +9,7 @@ import com.gs.common.bean.ControllerResult;
 import com.gs.common.util.EncryptUtil;
 import com.gs.common.util.RoleUtil;
 import com.gs.common.util.SessionUtil;
+import com.gs.common.util.UUIDUtil;
 import com.gs.service.UserService;
 import org.apache.ibatis.annotations.Param;
 import org.apache.shiro.SecurityUtils;
@@ -141,6 +142,7 @@ public class UserController {
     @RequestMapping(value = "register", method = RequestMethod.POST)
     public ControllerResult register(User user){
         if(user!=null) {
+            user.setUserId(UUIDUtil.uuid());
             userService.insert(user);
             return ControllerResult.getSuccessResult("注册成功, 正在跳转..");
         }else{

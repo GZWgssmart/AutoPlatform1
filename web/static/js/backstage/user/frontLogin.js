@@ -1,8 +1,8 @@
 var contentPath='';
 var userPhone;
 $(function () {
+    // 监听手机输入的唯一验证
     $('#phone').bind('input propertychange', function() {
-        // $('.msg').html($(this).val().length + ' characters');
         userPhone = $("#phone").val();
     });
     validator('loginForm');
