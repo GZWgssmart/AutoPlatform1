@@ -64,4 +64,8 @@ public class CarColorServiceImpl implements CarColorService {
 		return carColorDAO.countByBlurred(carColor,user);
 	}
 
+	@Override
+	public int querycolorName(String colorName) {
+		return carColorDAO.querycolorName(colorName);
+	}
 }

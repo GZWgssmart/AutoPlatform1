@@ -55,6 +55,13 @@
     ]]>
     </select>
 
+    <!--  查询此颜色名称是否已存在 -->
+    <select id="querycolorName" resultType="int">
+        <![CDATA[
+      select count(colorId) from t_car_color where colorName = #{colorName};
+    ]]>
+    </select>
+
     <!--冻结数据-->
     <update id="inactive" keyProperty="colorId" parameterType="carcolor">
         <![CDATA[

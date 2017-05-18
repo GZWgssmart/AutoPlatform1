@@ -1,3 +1,4 @@
+var brandName;
 $(function () {
     var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师,汽车公司学徒,汽车公司销售人员,汽车公司财务人员,汽车公司采购人员,汽车公司库管人员,汽车公司人力资源管理部";
     $.post("/user/isLogin/"+roles, function (data) {
@@ -35,6 +36,9 @@ function showEdit() {
                 var ceshi = row[0];
                 $("#editForm").fill(ceshi);
                 validator('editForm');
+                $('#editbrandName').bind('input propertychange', function() {
+                    brandName = $("#editbrandName").val();
+                });
             } else {
                 swal({
                     title: "",
@@ -75,6 +79,9 @@ function showAdd() {
         if (data.result == 'success') {
             $("#addWindow").modal('show');
             $("#addButton").removeAttr("disabled");
+            $('#addbrandName').bind('input propertychange', function() {
+                brandName = $("#addbrandName").val();
+            });
             validator('addForm'); // 初始化验证
         }else if (data.result == 'notLogin') {
             swal({
@@ -100,20 +107,6 @@ function showAdd() {
         }
     });
 }
-
-var brandName;
-$(function () {
-    $('#addbrandName').bind('input propertychange', function() {
-        brandName = $("#addbrandName").val();
-    });
-    validator('addForm');
-})
-$(function () {
-    $('#editbrandName').bind('input propertychange', function() {
-        brandName = $("#editbrandName").val();
-    });
-    validator('editForm');
-})
 
 function validator(formId) {
     $('#' + formId).bootstrapValidator({

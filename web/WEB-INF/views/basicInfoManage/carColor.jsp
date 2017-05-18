@@ -77,7 +77,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">颜色命名：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="colorName" placeholder="请输入颜色命名" class="form-control">
+                        <input type="text" id="addcolorName" name="colorName" placeholder="请输入颜色命名" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
@@ -132,7 +132,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">颜色命名：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="colorName" define="carColor.colorName" placeholder="请输入颜色命名" class="form-control">
+                        <input type="text" id="editcolorName" name="colorName" define="carColor.colorName" placeholder="请输入颜色命名" class="form-control">
                     </div>
                 </div>
 

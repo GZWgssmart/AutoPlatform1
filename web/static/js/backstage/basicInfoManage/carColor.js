@@ -1,3 +1,4 @@
+var colorName;
 $(function () {
     var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师,汽车公司学徒,汽车公司销售人员,汽车公司财务人员,汽车公司采购人员,汽车公司库管人员,汽车公司人力资源管理部";
     $.post("/user/isLogin/"+roles, function (data) {
@@ -35,6 +36,9 @@ function showEdit() {
                 var ceshi = row[0];
                 $("#editForm").fill(ceshi);
                 validator('editForm');
+                $('#editcolorName').bind('input propertychange', function() {
+                    colorName = $("#editcolorName").val();
+                });
             } else {
                 swal({
                     title: "",
@@ -92,6 +96,9 @@ function showAdd() {
         if (data.result == 'success') {
             $("#addWindow").modal('show');
             $("#addButton").removeAttr("disabled");
+            $('#addcolorName').bind('input propertychange', function() {
+                colorName = $("#addcolorName").val();
+            });
             validator('addForm'); // 初始化验证
         } else if (data.result == 'notLogin') {
             swal({
@@ -128,15 +135,21 @@ function validator(formId) {
         },
         fields: {
             colorName: {
-                message: '颜色命名验证失败',
+                message: '颜色名称验证失败',
                 validators: {
                     notEmpty: {
-                        message: '颜色命名不能为空'
+                        message: '颜色名称不能为空'
                     },
                     stringLength: {
                         min: 1,
                         max: 5,
-                        message: '颜色命名长度必须在1到5位之间'
+                        message: '颜色名称长度必须在1到5位之间'
+                    },
+                    remote: {
+                        url: '/carColor/querycolorName',
+                        message: '该颜色名称已存在',
+                        delay :  2000,
+                        type: 'GET'
                     }
                 }
             },
@@ -207,7 +220,7 @@ function formSubmit(url, formId, winId){
                     // $('#addForm').data('bootstrapValidator').resetForm(true); // 移除所有验证样式
                     $("#addButton").removeAttr("disabled"); // 移除不可点击
                 }
-                $("#" + formId).data('bootstrapValidator').destroy(); // 销毁此form表单
+                // $("#" + formId).data('bootstrapValidator').destroy(); // 销毁此form表单
                 $('#' + formId).data('bootstrapValidator', null);// 此form表单设置为空
             } else if (data.result == "fail") {
                 swal({

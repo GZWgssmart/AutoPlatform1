@@ -26,4 +26,9 @@ public interface CarColorDAO extends BaseDAO<String, CarColor>{
      * 模糊查询的记录数
      */
     public int countByBlurred(@Param("carColor")CarColor carColor, @Param("user")User user);
+
+    /**
+     * 查询此颜色名称是否已存在
+     */
+    public int querycolorName(String colorName);
 }

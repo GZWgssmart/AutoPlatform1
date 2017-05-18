@@ -1,6 +1,8 @@
 package com.gs.controller.basicInfoManage;
 
 import ch.qos.logback.classic.Logger;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gs.bean.CarColor;
 import com.gs.bean.User;
 import com.gs.common.bean.ComboBox4EasyUI;
@@ -19,9 +21,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 汽车颜色管理
@@ -163,6 +168,34 @@ public class CarColorController {
             return null;
         }
 
+    }
+
+
+    /**
+     * 验证查询此品牌名称是否已存在此品牌名称
+     */
+    @ResponseBody
+    @RequestMapping(value = "querycolorName", method = RequestMethod.GET)
+    public String querycolorName(HttpServletRequest req) {
+        logger.info("此品牌名称是否已存在此品牌名称");
+        String colorName = (String)req.getParameter("colorName");
+        boolean result = true;
+        String resultString = "";
+        Map<String, Boolean> map = new HashMap<String, Boolean>();
+        ObjectMapper mapper = new ObjectMapper();
+        if (colorName != null && colorName !="") {
+            int count = carColorService.querycolorName(colorName);
+            if (count > 1 || count == 1) {
+                result = false;
+            }
+        }
+        map.put("valid", result);
+        try {
+            resultString = mapper.writeValueAsString(map);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return resultString;
     }
 
     /**
