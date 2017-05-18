@@ -33,6 +33,9 @@
     </where>
   </select>
 
+    <select id = "countByPerName" resultType="int">
+       select count(permissionId) from t_permission where permissionZhname = #{permissionZhname} and permissionId != #{permissionId}
+    </select>
 
   <!-- 分页模糊查询 -->
   <select id="blurredQuery" resultMap="permissionMap">

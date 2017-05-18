@@ -98,7 +98,6 @@
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             <form class="form-horizontal" id="appointForm" method="post">
                 <input type="text" name="recordId" define="record.recordId" style="display:none"/>
-                <span  class="close"   data-dismiss="modal">&times;</span>
                 <div class="modal-header" style="overflow:auto;">
                     <h4 class="sd">请选择指定的员工</h4>
                 </div>

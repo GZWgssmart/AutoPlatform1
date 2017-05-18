@@ -20,13 +20,12 @@ import java.util.Map;
 public interface PermissionDAO extends BaseDAO<String, Permission>{
     public List<Permission> queryAll();
 
-
-
     public List<Permission> queryByPager(Map paramsMap);
     public int count(Map paramsMap);
 
     public int updateStatus(Map paramsMap);
 
+    public int countByPerName(@Param("permissionZhname")String permissionZhname,@Param("permissionId")String permissionId);
 
      /**
      * 模糊查询

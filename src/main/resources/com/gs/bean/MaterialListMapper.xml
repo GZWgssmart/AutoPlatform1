@@ -94,9 +94,10 @@
           (select t_material_return.matainRecordId, t_material_return.accId, sum(t_material_return.accCount) 'accCount' from  t_material_return GROUP BY t_material_return.matainRecordId, t_material_return.accId) mare
           on mare.matainRecordId = list.maintainRecordId and mare.accId = list.accId
       left join t_accessories acc on list.accId = acc.accId
+      left join t_accessories_type accType on acc.accTypeId = accType.accTypeId
       where list.maintainRecordId = #{recordId}
       <if test="user.companyId != '' and user.companyId != null">
-          and acc.companyId = #{user.companyId}
+          and accType.companyId = #{user.companyId}
       </if>
       limit #{pager.beginIndex}, #{pager.pageSize}
   </select>
@@ -107,9 +108,10 @@
               from t_material_list lis
               GROUP BY maintainRecordId, accId
             ) a left join t_accessories acc on acc.accId = a.accId
+        left join t_accessories_type accType on acc.accTypeId = accType.accTypeId
         where  a.maintainRecordId = #{recordId}
         <if test="user.companyId != '' and user.companyId != null">
-            and acc.companyId = #{user.companyId}
+            and accType.companyId = #{user.companyId}
         </if>
     </select>
 

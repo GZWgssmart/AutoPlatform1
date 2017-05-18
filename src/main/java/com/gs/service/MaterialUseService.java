@@ -63,4 +63,9 @@ public interface MaterialUseService extends BaseService<String, MaterialUse>{
 
     public Accessories accQueryById(String accId);
     public List accQueryAll(User user);
+
+    public int updRunProInstStartUser(String newUserId, String recordId, String flowName);
+    public String queryUserIdbyRecordId4workInfo(String recordId);
+
+    public List<Company> queryNearCompanys(String count, double longitude, double latitude);
 }

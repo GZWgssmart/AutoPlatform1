@@ -328,13 +328,13 @@ function delModule(el) {
         })
 }
 function showEdit(moduleId) {
-    validator('addForm');
     $("#addModal .modal-header input[data-flag=flag]").val("editForm");
     $("#addModal .modal-header h4[data-tit=title]").text("修改模块管理信息");
     $("#addButton").text("保存");
     $("#addButton").removeAttr("disabled");
     var module = getModule(moduleId);
     $("#addForm").fill(module);
+    validator('addForm');
     $("#addModal").modal('show');
 }
 function closeModal(){
@@ -355,13 +355,9 @@ function validator(formId) {
             moduleDes: {
                 message: '模块描述验证失败',
                 validators: {
-                    notEmpty: {
-                        message: '模块描述不能为空'
-                    },
                     stringLength: {
-                        min: 1,
                         max: 100,
-                        message: "模块描述长度必须在1至100个字符之间"
+                        message: "模块描述长度不能超过100个字符"
                     }
                 }
             },
@@ -377,8 +373,18 @@ function validator(formId) {
                         message: '模块名称必须在1至6个字符之间'
                     },
                     regexp: {
-                        regexp: /^[^$&,""''\s]+$/,
+                        regexp: /^[^$&,""\|''\s]+$/,
                         message: '模块名称不允许存在符号'
+                    },
+                    remote: {
+                        url: '/module/checkModuleName',//验证地址
+                        message: '该模块名称已存在',//提示消息
+                        data: {
+                            moduleId: $("input[name=moduleId]").val(),
+                            moduleName: $("input[name=moduleName]").val()
+                        },
+                        delay :  2000,//每输入一个字符，就发ajax请求，服务器压力还是太大，设置2秒发送一次ajax（默认输入一个字符，提交一次，服务器压力太大）
+                        type: 'POST'//请求方式
                     }
                 }
             }

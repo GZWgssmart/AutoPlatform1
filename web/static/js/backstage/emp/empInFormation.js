@@ -108,14 +108,14 @@ function showAdd(){
 }
 
 //  当选中的角色为系统管理员时,显示底薪的DIV
-function isSalary(value) {
-    alert(eval(document.getElementById('addUserRole')).value);
-    var div = $("#addSalary");
-    if(value != '7ff4f1c5-3205-11e7-bc72-507b9d765567' || value != '80095901-3205-11e7-bc72-507b9d765567') {
-        div.css("display","block");
-    }
-    div.css("display","none");
-}
+// function isSalary(value) {
+//     alert(eval(document.getElementById('addUserRole')).value);
+//     var div = $("#addSalary");
+//     if(value != '7ff4f1c5-3205-11e7-bc72-507b9d765567' || value != '80095901-3205-11e7-bc72-507b9d765567') {
+//         div.css("display","block");
+//     }
+//     div.css("display","none");
+// }
 
 function validator(formId) {
     $('#' + formId).bootstrapValidator({

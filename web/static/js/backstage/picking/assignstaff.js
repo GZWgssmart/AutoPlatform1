@@ -405,7 +405,10 @@ function submitDispatcher() {
                     text: data.message,
                     type:"success"})// 提示窗口, 修改成功
             } else if (data.result == "fail") {
-                $.messager.alert("提示", data.result.message, "info");
+                swal({
+                    title:"",
+                    text: data.message,
+                    type:"error"})
             }
         }, "json"
     );

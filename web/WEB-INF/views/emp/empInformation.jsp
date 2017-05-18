@@ -182,7 +182,7 @@
                             <label class="col-md-3 control-label">角色：</label>
                             <div class="col-md-9">
                                 <select id="addUserRole" name="roleId" class="js-example-tags userRole"
-                                        style="width: 100%;" onchange="isSalary();"></select>
+                                        style="width: 100%;"></select>
                             </div>
                         </div>
                     <%--<shiro:hasAnyRoles name="系统超级管理员,系统普通管理员">--%>

@@ -95,7 +95,7 @@
                     <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司库管人员">
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default"
-                                    onclick = "closeModal('reviewModal','form')">关闭
+                                    onclick = "closeModal('reviewModal','reviewForm')">关闭
                             </button>
                             <button id="subButton1" type="button" onclick="checkReview()" class="btn btn-success">保存</button>
                             <input type="reset" name="reset" style="display: none;"/>

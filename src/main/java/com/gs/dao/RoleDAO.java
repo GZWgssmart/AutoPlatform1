@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 /**
 *由CSWangBin技术支持
@@ -17,7 +18,7 @@ import java.util.List;
 */
 @Repository
 public interface RoleDAO extends BaseDAO<String, Role>{
-    public List<Role> queryAll(@Param("roleStatus") String roleStatus);
+    public List<Role> queryAll(Map paramMap);
 
     public List<Role> queryByPager(@Param("roleStatus")String roleStatus, @Param("pager")Pager pager);
 

@@ -60,4 +60,10 @@ public interface MaterialUseDAO extends BaseDAO<String, MaterialUse>{
 
     public List accQueryAll(User user);
 
+
+    public int updRunProInstStartUser(@Param("newUserId")String newUserId, @Param("recordId")String recordId, @Param("flowName")String flowName);
+
+    public String queryUserIdbyRecordId4workInfo(@Param("recordId")String recordId);
+
+
 }

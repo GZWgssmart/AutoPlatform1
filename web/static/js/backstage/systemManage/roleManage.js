@@ -613,13 +613,9 @@ function validator(formId) {
             roleDes: {
                 message: '角色描述验证失败',
                 validators: {
-                    notEmpty: {
-                        message: '角色描述不能为空'
-                    },
                     stringLength: {
-                        min: 1,
                         max: 100,
-                        message: "角色描述长度必须在1至100个字符之间"
+                        message: "角色描述长度不能超过100字符"
                     }
                 }
             }

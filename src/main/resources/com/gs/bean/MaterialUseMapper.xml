@@ -362,11 +362,11 @@
         <if test="hasEmp!=''" >
             , euser.userName
         </if>
-        from t_checkin checkin
-        left JOIN t_maintain_record record on checkin.checkinId = record.checkinId
+        from  t_work_info workinfo
+        left JOIN t_maintain_record record on workinfo.recordId = record.recordId
+        Left JOIN t_checkin checkin on checkin.checkinId = record.checkinId
         left JOIN t_company com on com.companyId = checkin.companyId
         left join t_car_model model on checkin.modelId = model.modelId
-        left join t_work_info workinfo on workinfo.recordId = record.recordId
         <if test="hasEmp!=''" >
             left join t_user euser on euser.userId = workinfo.userId
         </if>
@@ -386,9 +386,9 @@
 
     <select id="countNoUseRecord" resultType="int">
        select count(record.recordId)
-        from t_checkin checkin
-        left JOIN t_maintain_record record on checkin.checkinId = record.checkinId
-        left join t_work_info workinfo on workinfo.recordId = record.recordId
+        from t_work_info workinfo
+        left JOIN t_maintain_record record on workinfo.recordId = record.recordId
+        left join t_checkin checkin  on  checkin.checkinId = record.checkinId
         where
         record.recordStatus='Y'
         <if test="companyId != null ">
@@ -483,7 +483,7 @@
 
     <select id = "queryWorkInfoByRecordId" resultMap="com.gs.dao.WorkInfoDAO.BaseResultMap">
         select * from t_work_info workinfo left join t_maintain_record record on workinfo.recordId = record.recordId
-        where record.recordId = #{recordId}
+        where record.recordId = #{recordId} and workinfo.userId != null or workinfo.userId != ""
     </select>
 
     <select id="queryDetailsByRecordId" resultMap = "detailFixs">
@@ -508,6 +508,19 @@
         update t_work_info workinfo set userid= #{userId} where workinfo.recordId = #{recordId}
     </update>
 
+    <update id = "updRunProInstStartUser">
+        update act_re_procdef redef
+        left join act_ru_execution ruexe on redef.ID_ = ruexe.proc_def_id_
+        left join act_hi_procinst hipro  on ruexe.proc_inst_id_ = hipro.proc_inst_id_
+        left join act_hi_identitylink hiden  on hipro.proc_inst_id_ = hiden.proc_inst_id_
+        left join act_ru_identitylink ruiden on ruiden.proc_inst_id_ = hiden.proc_inst_id_
+        left join act_ru_variable ruvar on ruvar.PROC_INST_ID_ = ruexe.PROC_INST_ID_
+        set hipro.START_USER_ID_ = #{newUserId}, hiden.USER_ID_= #{newUserId}, ruiden.USER_ID_=#{newUserId}
+        where
+        redef.key_ = #{flowName}
+        and ruvar.name_ = "recordId" and ruvar.text_ =#{recordId}
+    </update>
+
     <select id = "accQueryAll" resultType ="Accessories" parameterType="hashMap" >
             <![CDATA[
             select * FROM auto_platform.t_accessories ac where 1=1 and ac.accStatus = 'Y'
@@ -526,5 +539,9 @@
         </if>
     </select>
 
+
+    <select id = "queryUserIdbyRecordId4workInfo" resultType="string">
+        select userId from t_work_info workInfo where recordId = #{recordId}
+    </select>
 
 </mapper>

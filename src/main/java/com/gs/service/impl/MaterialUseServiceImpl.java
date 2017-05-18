@@ -257,6 +257,22 @@ public class MaterialUseServiceImpl implements MaterialUseService {
 		return materialUseDAO.accQueryAll(user);
 	}
 
+	@Override
+	public int updRunProInstStartUser(String newUserId, String recordId, String flowName) {
+		return materialUseDAO.updRunProInstStartUser(newUserId, recordId, flowName);
+	}
+
+	@Override
+	public String queryUserIdbyRecordId4workInfo(String recordId) {
+		return materialUseDAO.queryUserIdbyRecordId4workInfo(recordId);
+	}
+
+	@Override
+	public List<Company> queryNearCompanys(String count, double longitude, double latitude) {
+
+		return null;
+	}
+
 
 	private class Flag{
 		private  String flag;
