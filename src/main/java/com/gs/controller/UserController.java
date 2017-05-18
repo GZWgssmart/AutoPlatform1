@@ -4,12 +4,14 @@ import ch.qos.logback.classic.Logger;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gs.bean.User;
+import com.gs.bean.UserRole;
 import com.gs.common.Constants;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.util.EncryptUtil;
 import com.gs.common.util.RoleUtil;
 import com.gs.common.util.SessionUtil;
 import com.gs.common.util.UUIDUtil;
+import com.gs.service.UserRoleService;
 import com.gs.service.UserService;
 import org.apache.ibatis.annotations.Param;
 import org.apache.shiro.SecurityUtils;
@@ -41,6 +43,8 @@ public class UserController {
 
     @Resource
     private UserService userService;
+    @Resource
+    private UserRoleService userRoleService;
 
     private Subject subject;
 
@@ -143,12 +147,51 @@ public class UserController {
     public ControllerResult register(User user){
         if(user!=null) {
             user.setUserId(UUIDUtil.uuid());
+            user.setUserPwd(EncryptUtil.md5Encrypt(user.getUserPwd()));
             userService.insert(user);
-            return ControllerResult.getSuccessResult("注册成功, 正在跳转..");
+            UserRole userRole = new UserRole();
+            userRole.setUserId(user.getUserId());
+            userRole.setRoleId("8067fa42-3205-11e7-bc72-507b9d765567");
+            userRoleService.insert(userRole);
+            return ControllerResult.getSuccessResult("注册成功, 确认将直接跳转到我的中心...");
         }else{
             return ControllerResult.getFailResult("注册失败");
         }
     }
+
+    /**
+     * 登陆方法1。
+     *
+     * @param user1
+     * @param session
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "login1", method = RequestMethod.POST)
+    public ControllerResult userLogin1(User user1, HttpSession session, HttpServletRequest req) {
+            subject = SecurityUtils.getSubject();
+            try {
+                subject.login(new UsernamePasswordToken(user1.getUserPhone(), EncryptUtil.md5Encrypt(user1.getUserPwd())));
+               if(subject.hasRole(Constants.role_owner)){
+                    logger.info("登录成功");
+                    User user = userService.queryUser(user1.getUserPhone());
+                    session.setAttribute("frontUser", user);
+                    return ControllerResult.getIsOwnerResult("登录成功");
+                }else {
+                    logger.info("抱歉，你的账号角色并不授权。请联系管理员激活账号！");
+                    return ControllerResult.getFailResult("抱歉，你的账号角色并不授权。请联系管理员激活账号！");
+                }
+            } catch (UnknownAccountException e) {//未知的账号异常
+                logger.info("登陆失败，请检查你的账号是否存在或是否可用！");
+                return ControllerResult.getFailResult("登陆失败，请检查你的账号是否存在或是否可用！");
+            } catch (IncorrectCredentialsException e) {//未知的凭证异常
+                logger.info("登陆失败，请检查你的账号密码是否正确！");
+                return ControllerResult.getFailResult("登陆失败，请检查你的账号密码是否正确！");
+            } catch (LockedAccountException e) {//锁定的账号异常
+                logger.info("登陆失败，你的账号已被冻结，暂时无法使用！");
+                return ControllerResult.getFailResult("登陆失败，你的账号已被冻结，暂时无法使用！");
+            }
+        }
 
     /**
      * 退出登录

@@ -12,7 +12,6 @@ function reg() {
         $(".form-content form input").each(function () {
             $(this).val('');
         });
-        validator2("regform");
         document.title = "注册";
     }else if(reg.css("display") == "block"){
         reg.css("display","none");
@@ -21,7 +20,6 @@ function reg() {
         $(".form-content form input").each(function () {
             $(this).val('');
         });
-        validator("loginForm");
         document.title = "账号登录";
     };
 

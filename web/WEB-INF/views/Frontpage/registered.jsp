@@ -96,7 +96,6 @@
                             <form class="form" id="regform">
                                 <div class="form-group">
                                     <input name="userPhone" type="text" id="phone" class="form-control" placeholder="请输入您的手机号" >
-                                    <span class="caveat" id="phone-caveat">手机号错误</span>
                                 </div>
                                 <%--<div class="form-group">--%>
                                     <%--<div class="row">--%>
@@ -111,14 +110,9 @@
                                 <%--</div>--%>
                                 <div class="form-group">
                                     <input name="userPwd" type="password" id="password1" class="form-control" placeholder="请输入密码" >
-                                    <span class="caveat" id="pwd1-caveat">密码至少六位并且小于十八位</span>
                                 </div>
                                 <div class="form-group">
                                     <input name="password2" type="password" id="password2" class="form-control" placeholder="请再次输入密码" >
-                                    <span class="caveat" id="pwd2-caveat">输入密码不一致</span>
-                                </div>
-                                <div class="form-group">
-                                    <input type="checkbox"  style="position: relative;top:2px;width: 14px;height: 14px;"><a class="surre" href="javaScript:;" style="padding: 3px 3px;font-size: 16px;">  我同意《用户服务协议》</a>
                                 </div>
                                 <div class="form-group">
                                     <button type="submit" id="resbtn" class="btn btn-success btn-block" value="确认注册" onclick="regSubmit()">确认注册</button>

@@ -1,4 +1,3 @@
-var contentPath='';
 var userPhone;
 $(function () {
     // 监听手机输入的唯一验证
@@ -43,7 +42,11 @@ function validator2(formId) {
                     notEmpty: {
                         message: '手机号错误'
                     },
-                    threshold: 11,
+                    stringLength: {
+                        min: 11,
+                        max: 11,
+                        message: '手机号格式必须为11位'
+                    },
                     remote: {
                         url: '/user/queryPhoneByOne',
                         message: '该手机号已存在',
@@ -52,11 +55,19 @@ function validator2(formId) {
                     }
                 }
             },
-            password: {
+            userPwd: {
                 message: '用户密码不能为空',
                 validators: {
                     notEmpty: {
                         message: '用户密码不能为空'
+                    }, identical: {
+                        field: 'password2',
+                        message: '两次输入的密码不一致'
+                    },
+                    stringLength: {
+                        min: 6,
+                        max: 18,
+                        message: '用户密码长度必须在6到18位之间'
                     }
                 }
             },
@@ -65,15 +76,45 @@ function validator2(formId) {
                 validators: {
                     notEmpty: {
                         message: '密码不一致'
+                    },
+                    identical: {
+                        field: 'userPwd',
+                        message: '两次输入的密码不一致'
+                    },
+                    stringLength: {
+                        min: 6,
+                        max: 18,
+                        message: '用户密码长度必须在6到18位之间'
                     }
                 }
             },
         }
     }).on('success.form.bv', function (e) {
-        if (formId == "regform") {
             $.post("/user/register", $("#regform").serialize(), function (data) {
                 if (data.result == "success") {
-
+                    swal({
+                        title: "",
+                        text: data.message,
+                        confirmButtonText: "确认",
+                        type: "success"
+                    }, function (isConfirm) {
+                        $.post("/user/login1",$("#regform").serialize(),function (data) {
+                            if(data.result=="success"){
+                                window.location.href="/backstageIndex";
+                            }else if(data.result == "isOwner"){
+                                window.location.href="/userpage";
+                            }else if(data.result=="fail"){
+                                swal({
+                                    title: "",
+                                    text: data.message,
+                                    confirmButtonText: "确认",
+                                    type: "error"
+                                })
+                                $("#" + formId).removeAttr("disabled");
+                            }
+                        });
+                    })
+                    $("#" + formId).removeAttr("disabled");
                 } else if (data.result == "fail") {
                     swal({
                         title: "",
@@ -84,7 +125,6 @@ function validator2(formId) {
                     $("#" + formId).removeAttr("disabled");
                 }
             })
-        }
     })
 }
 
