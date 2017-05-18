@@ -24,16 +24,15 @@
     --%>
     <div id="main">
         <%--导航栏--%>
-        <nav class="nav navbar-default navbar-fixed-top" role="navigation"  style="background-color:	#F5F5F5  ;">
+        <nav class="nav navbar-default navbar-fixed-top" role="navigation"  style="">
             <div class="container-fluid">
                 <div class="navbar-header">
 
                 </div>
-                <ul class="nav navbar-nav navbar-right" style="background-color:	#F5F5F5  ;">
-                    <li><a href="home">主页</a></li>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="index">主页</a></li>
                     <li class="icon-li"><a href="javaScript:;">关于我们</a></li>
-                    <li id="menu-bg"><a href="javaScript:;">注册</a></li>
-                    <li id="menu-bg2"><a href="javaScript:;">登录</a></li>
+                    <li id="menu-bg"><a href="javaScript:;">汽修公司入驻</a></li>
                 </ul>
             </div>
         </nav>

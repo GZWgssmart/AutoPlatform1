@@ -5,10 +5,15 @@
 }
 .content-main{
     width: 100%;
-    padding: 20px 250px;
+}
+
+@media (max-width: 768px){
+    .content-main{
+        width:100%;
+    }
 }
 .showdata{
-    padding: 15px 40px;
+    /*padding: 15px 40px;*/
     background: rgba(0,0,0,0.2);
     border-radius: 5px;
 }
@@ -27,7 +32,7 @@
     white-space: nowrap;
 }
 .show-left{
-    width: 50%;
+    /*width: 50%;*/
     float: left;
 }
 .show-left div{
@@ -39,6 +44,12 @@
 .show-right{
     margin: 15px 50px;
     float: left;
+}
+
+@media (max-width: 768px){
+    .show-right{
+        float: left;
+    }
 }
 .company-logo img{
     width: 95%;

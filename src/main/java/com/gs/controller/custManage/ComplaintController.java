@@ -156,7 +156,7 @@ public class ComplaintController {
             String roles = "车主";
             if (RoleUtil.checkRoles(roles)) {
                 logger.info("投诉记录添加操作");
-                User user = (User) session.getAttribute("user");
+                User user = (User) session.getAttribute("frontUser");
                 complaint.setComplaintReplyUser(user.getUserId());
                 complaintService.insert(complaint);
                 return ControllerResult.getSuccessResult("添加成功");

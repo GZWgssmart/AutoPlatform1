@@ -30,12 +30,14 @@
                             <c:if test="${sessionScope.frontUser.userName != null}">
                                 <li id="placelogin">欢迎您，${sessionScope.frontUser.userName}</li>
                                 <a href="userpage" class="right-ul"><li>我的中心</li></a>
+                                <a href="index" class="right-ul"><li>主页</li></a>
                                 <a href="outusers"><li>退出</li></a>
                                 <div class="clearfix"></div>
                             </c:if>
                             <c:if test="${sessionScope.frontUser.userName == null}">
                                 <li id="placelogin">欢迎您，${sessionScope.frontUser.userPhone}</li>
                                 <a href="userpage" class="right-ul"><li>我的中心</li></a>
+                                <a href="index" class="right-ul"><li>主页</li></a>
                                 <a href="outusers"><li>退出</li></a>
                                 <div class="clearfix"></div>
                             </c:if>
@@ -45,8 +47,10 @@
                             <li id="placelogin">欢迎您，请登录</li>
                             <a href="reg" id="loginreg"><li>登录/注册</li></a>
                             <a href="javaScript:;" class="right-ul"><li>我的中心</li></a>
+                            <a href="index" class="right-ul"><li>主页</li></a>
                             <div class="clearfix"></div>
                         </c:otherwise>
+
                     </c:choose>
                 </ul>
                 <div class="clearfix"></div>
@@ -247,7 +251,12 @@
                     <div class="factory">
                         <div class="f-img">
                             <a href="factorypage">
-                                <img src="${c.companyLogo}"/>
+                                <c:if test="${c.companyLogo != null}">
+                                    <img src="${c.companyLogo}" alt="公司图片"/>
+                                </c:if>
+                                <c:if test="${c.companyLogo == null}">
+                                    <img src="/static/img/Frontpage/u29.png" alt="logo">
+                                </c:if>
                             </a>
                         </div>
                         <div class="f-des">
@@ -295,7 +304,19 @@
             <div class="content-first">
                 <div class="recent-title">
                     <i class="title-bg"></i>
-                    <h3><a href="javaScript:;" style="text-decoration: none;">最近保养</a></h3>
+                    <h3><a href="javaScript:;" style="text-decoration: none;">最近维修保养</a></h3>
+                </div>
+                <div class="search-box">
+                    <form method="post" name="search">
+                        <div class="form-search" style="text-align: right;">
+                            <input type="text" class="input-text" placeholder="输入手机号，查看维修保养记录"/>
+                            <button type="submit" class="btn">
+                            <span>
+                                发送短信验证码
+                            </span>
+                            </button>
+                        </div>
+                    </form>
                 </div>
                 <div class="con">
                     <div class="acc-head">
@@ -312,50 +333,6 @@
                         <ul style="margin: 0;padding: 0;">
                             <li>
                                 <span style="width:20%;margin-left:19px;padding-right: 15px;">w3rwefsef</span>
-                                <span style="width:33%;padding-right: 15px;">丰田 Alphard(进口) 3.5 手自一体 豪华版 2011款</span>
-                                <span style="width: 20%;">579.00</span>
-                                <span style="width: 16%;">2017-04-24</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="recent-title">
-                    <i class="title-bg"></i>
-                    <h3><a href="javaScript:;" style="text-decoration: none;">最近维修</a></h3>
-                </div>
-                <div class="con">
-                    <div class="acc-head">
-                        <ul>
-                            <li>
-                                <span style="width:20%;margin-left:15px;">维修项目</span>
-                                <span style="width:33%;">车型</span>
-                                <span style="width: 20%;">维修费用</span>
-                                <span style="width: 16%;">维修时间</span>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="acc-content">
-                        <ul style="margin: 0;padding: 0;">
-                            <li>
-                                <span style="width:20%;margin-left:19px;padding-right: 15px;">前档玻璃外压条</span>
-                                <span style="width:33%;padding-right: 15px;">丰田 Alphard(进口) 3.5 手自一体 豪华版 2011款</span>
-                                <span style="width: 20%;">579.00</span>
-                                <span style="width: 16%;">2017-04-24</span>
-                            </li>
-                            <li>
-                                <span style="width:20%;margin-left:19px;padding-right: 15px;">前档玻璃外压条</span>
-                                <span style="width:33%;padding-right: 15px;">丰田 Alphard(进口) 3.5 手自一体 豪华版 2011款</span>
-                                <span style="width: 20%;">579.00</span>
-                                <span style="width: 16%;">2017-04-24</span>
-                            </li>
-                            <li>
-                                <span style="width:20%;margin-left:19px;padding-right: 15px;">前档玻璃外压条</span>
-                                <span style="width:33%;padding-right: 15px;">坎坎坷坷扩扩所所所安慰道丰田 Alphard(进口) 3.5 手自一体 豪华版 2011款</span>
-                                <span style="width: 20%;">579.00</span>
-                                <span style="width: 16%;">2017-04-24</span>
-                            </li>
-                            <li>
-                                <span style="width:20%;margin-left:19px;padding-right: 15px;">前档玻璃外压条</span>
                                 <span style="width:33%;padding-right: 15px;">丰田 Alphard(进口) 3.5 手自一体 豪华版 2011款</span>
                                 <span style="width: 20%;">579.00</span>
                                 <span style="width: 16%;">2017-04-24</span>

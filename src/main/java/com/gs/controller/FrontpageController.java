@@ -75,6 +75,9 @@ FrontpageController {
         return "Frontpage/Factorydeta";
     }
 
+
+
+
     /*预约页面*/
     @RequestMapping(value ="resepage",method=RequestMethod.GET)
     public String resepage(){

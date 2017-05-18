@@ -74,6 +74,12 @@ public class UserIndexController {
         return "Frontpage/Personalcenter/AccountSettings/accountinformation";
     }
 
+    /*公司详情页面*/
+    @RequestMapping(value = "companydeta", method = RequestMethod.GET)
+    public String companydeta() {
+        return "Frontpage/Personalcenter/AccountSettings/companydetails";
+    }
+
     /*修改信息确认*/
     @RequestMapping(value = "editinfo", method = RequestMethod.GET)
     public String editinfocon() {

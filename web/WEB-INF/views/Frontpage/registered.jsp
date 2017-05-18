@@ -115,8 +115,8 @@
                                     <input name="password2" type="password" id="password2" class="form-control" placeholder="请再次输入密码" >
                                 </div>
                                 <div class="form-group">
-                                    <button type="submit" id="resbtn" class="btn btn-success btn-block" value="确认注册" onclick="regSubmit()">确认注册</button>
-                                    <button type="reset" class="btn btn-info btn-block" onclick="reg()" value="登录">登录</button>
+                                    <button type="button" id="resbtn" class="btn btn-success btn-block" onclick="regSubmit()">确认注册</button>
+                                    <button type="reset" class="btn btn-info btn-block" onclick="reg()">登录</button>
                                 </div>
                             </form>
 
