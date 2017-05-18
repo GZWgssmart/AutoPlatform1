@@ -82,7 +82,7 @@
                             <ul class="nav nav-second-level">
                             <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员">
                                 <li>
-                                    <a class="J_menuItem" href="/basicInfo/companyInfo" data-index="0">公司信息管理</a>
+                                    <a class="J_menuItem" href="/basicInfo/companyInfo">公司信息管理</a>
                                 </li>
                             </shiro:hasAnyRoles>
                             <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师,汽车公司学徒,汽车公司销售人员,汽车公司财务人员,汽车公司采购人员,汽车公司库管人员,汽车公司人力资源管理部">

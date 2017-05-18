@@ -140,14 +140,15 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">公司经度：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="companyLongitude" placeholder="请输入公司经度" class="form-control">
+                        <input id="addCompanyLongitudeId" name="companyLongitude" readonly="true" placeholder="请选择公司经度" class="form-control">
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="col-sm-3 control-label">公司纬度：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="companyLatitude" placeholder="请输入公司纬度" class="form-control">
+                        <input id="addCompanyLatitudeId" name="companyLatitude" readonly="true" placeholder="请选择公司纬度" class="form-control">
+                        <button type="button" class="btn btn-primary" onclick="showMap('addWindow')">地图选择</button>
                     </div>
                 </div>
                 <div class="form-group">
@@ -258,15 +259,16 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">公司经度：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="companyLongitude" define="companyInfo.companyLongitude" placeholder="请输入公司经度"
+                        <input type="text" id="editCompanyLongitudeId" name="companyLongitude" define="companyInfo.companyLongitude" placeholder="请输入公司经度"
                                class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">公司纬度：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="companyLatitude" define="companyInfo.companyLatitude" placeholder="请输入公司经度"
+                        <input type="text" id="editCompanyLatitudeId" name="companyLatitude" define="companyInfo.companyLatitude" placeholder="请输入公司经度"
                                class="form-control">
+                        <button type="button" class="btn btn-primary" onclick="showMap('editWindow')">地图选择</button>
                     </div>
                 </div>
                 <div class="form-group">
@@ -306,6 +308,36 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+
+
+<!-- 地图弹窗 -->
+<div class="modal fade" id="mapWindow" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static" keyboard:false>
+    <div class="modal-dialog" style="width: 100%;">
+        <div class="modal-content">
+            <div class="modal-body">
+                <span class="glyphicon glyphicon-remove closeModal"data-dismiss="modal"></span>
+                <div class="form-group row">
+                    <label class="col-sm-1 control-label" style="padding: 5px 0 0 0;margin: 0;">快速定位：</label>
+                    <div class="col-sm-3" style="padding-left: 0;">
+                        <input id="text_" type="text" class="form-control" placeholder="请输入你要查询的地址" onkeypress="if(event.keyCode==13) {searchByStationName();}"/>
+                    </div>
+                    <button type="button" class="btn btn-default"  style="height:35px;" onclick="searchByStationName();">
+                        <span class="glyphicon glyphicon-search" style="padding-bottom: 4px;">查询</span>
+                    </button>
+                </div>
+                    <div id="allmap" style="wdith:100%;height: 100%"></div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default"
+                                data-dismiss="modal">关闭
+                        </button>
+                        <button type="button" class="btn btn-sm btn-success">保存
+                        </button>
+                    </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
     <script src="/static/js/jquery.min.js"></script>
     <script src="/static/js/bootstrap.min.js"></script>
     <script src="/static/js/bootstrap-table/bootstrap-table.js"></script>
@@ -321,6 +353,7 @@
     <script src="/static/js/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.js"></script>
     <script src="/static/js/bootstrap-dateTimePicker/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
     <script src="/static/js/backstage/basicInfoManage/companyInfo.js"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=8vZTXUNkRraY09RFkx0EupdHALhgSzyX"></script>
     <%-- 文件上传 --%>
     <script src="/static/js/fileInput/fileinput.js"></script>
     <script src="/static/js/fileInput/zh.js"></script>

@@ -1,4 +1,6 @@
-
+var map;
+var localSearch;
+var windowId;
 $(function () {
     var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员";
     $.post("/user/isLogin/"+roles, function (data) {
@@ -7,6 +9,19 @@ $(function () {
             //0.初始化fileinput
             var oFileInput = new FileInput();
             oFileInput.Init("file", "/company/addFile");
+            // 初始化地图
+            map = new BMap.Map("allmap",{minZoom:10,maxZoom:18});    // 创建Map实例
+            map.centerAndZoom("赣州", 11);  // 初始化地图,设置中心点坐标和地图级别
+            map.addControl(new BMap.MapTypeControl());   //添加地图类型控件
+            map.setCurrentCity("赣州");          // 设置地图显示的城市 此项是必须设置的
+            map.enableScrollWheelZoom();    //启用滚轮放大缩小，默认禁用
+            map.enableContinuousZoom();    //启用地图惯性拖拽，默认禁用
+            map.addControl(new BMap.NavigationControl());  //添加默认缩放平移控件
+            map.addControl(new BMap.OverviewMapControl()); //添加默认缩略地图控件
+            map.addControl(new BMap.OverviewMapControl({ isOpen: true, anchor: BMAP_ANCHOR_BOTTOM_RIGHT }));   //右下角，打开
+            localSearch = new BMap.LocalSearch(map);
+            localSearch.enableAutoViewport(); //允许自动调节窗体大小
+
         }else if(data.result == 'notLogin'){
             swal({title:"",
                     text:data.message,
@@ -580,6 +595,38 @@ function showDisable(){
     });
 }
 
+function showInfo(e){
+    if(windowId == 'addWindow'){
+        $("#addCompanyLongitudeId").val(e.point.lng);
+        $("#addCompanyLatitudeId").val(e.point.lat);
+    }else{
+        $("#editCompanyLongitudeId").val(e.point.lng);
+        $("#editCompanyLatitudeId").val(e.point.lat);
+    }
+    $("#mapWindow").modal("hide");
+}
+
+function searchByStationName() {
+    map.clearOverlays();//清空原来的标注
+    var keyword = document.getElementById("text_").value;
+    localSearch.setSearchCompleteCallback(function (searchResult) {
+        var poi = searchResult.getPoi(0);
+        map.centerAndZoom(poi.point, 13);
+        var marker = new BMap.Marker(new BMap.Point(poi.point.lng, poi.point.lat));  // 创建标注，为要查询的地方对应的经纬度
+        map.addOverlay(marker);
+        var content = document.getElementById("text_").value + "<br/><br/>经度：" + poi.point.lng + "<br/>纬度：" + poi.point.lat;
+        var infoWindow = new BMap.InfoWindow("<p style='font-size:14px;'>" + content + "</p>");
+        marker.addEventListener("click", function () { this.openInfoWindow(infoWindow); });
+        marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+    });
+    localSearch.search(keyword);
+}
+
+function showMap(winId){
+    $("#mapWindow").modal('show');
+    windowId = winId;
+    map.addEventListener("click", showInfo);
+}
 
 // function formSubmit(url, formId, winId){
 //     $.post(url,
