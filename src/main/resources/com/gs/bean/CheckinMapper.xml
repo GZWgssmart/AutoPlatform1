@@ -229,4 +229,17 @@
         update t_checkin set checkinStatus = 'Y' where checkinId = #{checkinId}
         ]]>
   </update>
+
+    <!-- 根据注册的手机号查询是否有登记记录为此手机号的登记记录 -->
+    <select id="queryByPhone" resultMap="checkinMap">
+        <![CDATA[
+       select ck.* from t_checkin ck where ck.userPhone = #{userPhone}
+    ]]>
+    </select>
+    <!-- 查询出有的登记id进行批量更新 -->
+    <update id="updateUserIds">
+        <![CDATA[
+        update t_checkin set userId=#{userId} where checkinId in (${chIds})
+        ]]>
+    </update>
 </mapper>

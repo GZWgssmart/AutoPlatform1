@@ -30,4 +30,9 @@ public interface AppointmentService extends BaseService<String, Appointment>{
     public int countByOwner(String userId);
 
     public List<Appointment> queryByOwner(Pager pager, String userId);
+
+    // 根据注册的手机号查询是否有预约记录为此手机号的预约记录
+    public List<Appointment> queryByPhone(String userPhone);
+    // 查询出有的预约id进行批量更新
+    public void updateUserIds(String userId, String appIds);
 }

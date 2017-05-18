@@ -90,4 +90,14 @@ public class AppointmentServiceImpl implements AppointmentService {
 	public List<Appointment> queryByOwner(Pager pager,String userId) {
 		return appointmentDAO.queryByOwner(pager,userId);
 	}
+
+	@Override
+	public List<Appointment> queryByPhone(String userPhone) {
+		return appointmentDAO.queryByPhone(userPhone);
+	}
+
+	@Override
+	public void updateUserIds(String userId, String appIds) {
+		appointmentDAO.updateUserIds(userId, appIds);
+	}
 }

@@ -3,6 +3,8 @@ package com.gs.controller;
 import ch.qos.logback.classic.Logger;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.gs.bean.Appointment;
+import com.gs.bean.Checkin;
 import com.gs.bean.User;
 import com.gs.bean.UserRole;
 import com.gs.common.Constants;
@@ -11,6 +13,8 @@ import com.gs.common.util.EncryptUtil;
 import com.gs.common.util.RoleUtil;
 import com.gs.common.util.SessionUtil;
 import com.gs.common.util.UUIDUtil;
+import com.gs.service.AppointmentService;
+import com.gs.service.CheckinService;
 import com.gs.service.UserRoleService;
 import com.gs.service.UserService;
 import org.apache.ibatis.annotations.Param;
@@ -34,6 +38,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -45,6 +50,10 @@ public class UserController {
     private UserService userService;
     @Resource
     private UserRoleService userRoleService;
+    @Resource
+    private AppointmentService appointmentService;
+    @Resource
+    private CheckinService checkinService;
 
     private Subject subject;
 
@@ -153,6 +162,28 @@ public class UserController {
             userRole.setUserId(user.getUserId());
             userRole.setRoleId("8067fa42-3205-11e7-bc72-507b9d765567");
             userRoleService.insert(userRole);
+            // 根据此注册手机号查找预约表和登记表， 假如表中的userPhone和注册的userPhone一致， 则把记录的userId改为此注册用户id
+            List<Appointment> appointments = appointmentService.queryByPhone(user.getUserPhone());
+            List<Checkin> checkins = checkinService.queryByPhone(user.getUserPhone());
+            String appIds = null;
+            String chIds = null;
+            for(Appointment appointment : appointments){
+                if(appIds== null){
+                    appIds = "'"+appointment.getAppointmentId()+"'";
+                }else{
+                    appIds +=",'"+appointment.getAppointmentId()+"'";
+                }
+            }
+            for (Checkin checkin : checkins){
+                if(chIds== null){
+                    chIds = "'"+checkin.getCheckinId()+"'";
+                }else{
+                    chIds +=",'"+checkin.getCheckinId()+"'";
+                }
+            }
+            checkinService.updateUserIds(user.getUserId(),chIds);
+            appointmentService.updateUserIds(user.getUserId(),appIds);
+
             return ControllerResult.getSuccessResult("注册成功, 确认将直接跳转到我的中心...");
         }else{
             return ControllerResult.getFailResult("注册失败");

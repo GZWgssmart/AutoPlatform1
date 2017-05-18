@@ -60,4 +60,13 @@ public class CheckinServiceImpl implements CheckinService {
 		return checkinDAO.countByBlurred(checkin, user);
 	}
 
+	@Override
+	public void updateUserIds(String userId, String chIds) {
+		checkinDAO.updateUserIds(userId, chIds);
+	}
+
+	@Override
+	public List<Checkin> queryByPhone(String userPhone) {
+		return checkinDAO.queryByPhone(userPhone);
+	}
 }
