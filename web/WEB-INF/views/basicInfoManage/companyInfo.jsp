@@ -73,101 +73,108 @@
 
 <!-- 添加弹窗 -->
 <div class="modal fade"  id="addWindow" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static" keyboard:false>
-    <div class="modal-dialog">
-        <div class="modal-content">
+    <div class="modal-dialog" style="width:90%;">
+        <div class="modal-content" data-options="resizable:true,modal:true">
               <div class="modal-body">
             <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('addWindow', 'addForm')"></span>
             <form class="form-horizontal" role="form" id="addForm">
                 <div class="modal-header" style="overflow:auto;">
                     <h4>请填写公司信息</h4>
                 </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">公司名称：</label>
-                    <div class="col-sm-7">
-                        <input type="text" id="companyName" name="companyName" placeholder="请输入公司名称" class="form-control">
+                <div>
+                    <div class="form-group col-md-6">
+                        <label class="col-md-4 control-label">公司名称：</label>
+                        <div class="col-md-8">
+                            <input type="text" id="companyName" name="companyName" placeholder="请输入公司名称" class="form-control">
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">公司地址：</label>
-                    <div class="col-sm-7">
-                        <input type="text" name="companyAddress" placeholder="请输入公司地址" class="form-control">
+                    <div class="form-group col-md-6">
+                        <label class="col-md-4 control-label">公司地址：</label>
+                        <div class="col-md-8">
+                            <input type="text" name="companyAddress" placeholder="请输入公司地址" class="form-control">
+                        </div>
                     </div>
+                    <p class="clearfix"></p>
                 </div>
-
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">公司联系电话：</label>
-                    <div class="col-sm-7">
-                        <input type="number" id="addcompanyTel" name="companyTel" placeholder="请输入公司联系电话" class="form-control" style="width:100%"/>
+                <div>
+                    <div class="form-group col-md-6">
+                        <label class="col-md-4 control-label">公司联系电话：</label>
+                        <div class="col-md-8">
+                            <input type="number" id="addcompanyTel" name="companyTel" placeholder="请输入公司联系电话" class="form-control" style="width:100%"/>
+                        </div>
                     </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">负责人：</label>
-                    <div class="col-sm-7">
-                        <input type="text" name="companyPricipal" placeholder="请输入负责人" class="form-control">
+                    <div class="form-group col-md-6">
+                        <label class="col-md-4 control-label">负责人：</label>
+                        <div class="col-md-8">
+                            <input type="text" name="companyPricipal" placeholder="请输入负责人" class="form-control">
+                        </div>
                     </div>
+                    <p class="clearfix"></p>
                 </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">负责人联系电话：</label>
-                    <div class="col-sm-7">
-                        <input type="number" id="addcompanyPricipalphone" name="companyPricipalphone" placeholder="请输入负责人联系电话" class="form-control" style="width:100%"/>
+                <div>
+                    <div class="form-group col-md-6">
+                        <label class="col-md-4 control-label">负责人联系电话：</label>
+                        <div class="col-md-8">
+                            <input type="number" id="addcompanyPricipalphone" name="companyPricipalphone" placeholder="请输入负责人联系电话" class="form-control" style="width:100%"/>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">公司官网网址：</label>
-                    <div class="col-sm-7">
-                        <input type="text" name="companyWebsite" placeholder="请输入公司官网网址" class="form-control">
+                    <div class="form-group col-md-6">
+                        <label class="col-md-4 control-label">公司官网网址：</label>
+                        <div class="col-md-8">
+                            <input type="text" name="companyWebsite" placeholder="请输入公司官网网址" class="form-control">
+                        </div>
                     </div>
+                    <p class="clearfix"></p>
                 </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">公司规模：</label>
-                    <div class="col-sm-7">
-                        <select class="form-control" name="companySize" >
-                            <option value="5~10">5~10</option>
-                            <option value="10~50">10~50</option>
-                            <option value="50~100">50~100</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">公司成立时间：</label>
-                    <div class="col-sm-7">     <!-- 当设置不可编辑后, 会修改颜色, 在min.css里搜索.form-control{background-color:#eee;opacity:1} -->
-                        <input id="addDateTimePicker" placeholder="请选择公司成立时间" onclick="getDate('addDateTimePicker')" readonly="true" type="text" name="companyOpendate"
-                               class="form-control datetimepicker"/>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">公司经度：</label>
-                    <div class="col-sm-7">
-                        <input id="addCompanyLongitudeId" name="companyLongitude" readonly="true" placeholder="请选择公司经度" class="form-control">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">公司纬度：</label>
-                    <div class="col-sm-7">
-                        <input id="addCompanyLatitudeId" name="companyLatitude" readonly="true" placeholder="请选择公司纬度" class="form-control">
-                        <button type="button" class="btn btn-primary" onclick="showMap('addWindow')">地图选择</button>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">公司描述：</label>
-                    <div class="col-sm-7">
-                                <textarea class="form-control" placeholder="请输入公司描述" name="companyDes"
-                                          rows="3" maxlength="500"></textarea>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">公司logo：</label>
-                    <div class="col-lg-7">
-                        <div class="ibox-title">
-                            <div class="input-group" style="padding-left: 15px;">
-                                <input id="file" name="companyLogo" type="file" class="form-control" multiple
-                                       class="file-loading"/>
+                <div>
+                    <div class="form-group col-md-6">
+                        <label class="col-md-4 control-label">公司Logo：</label>
+                        <div class="col-md-8">
+                            <div class="ibox-title">
+                                    <input id="file" name="companyLogo" type="file" class="form-control" multiple
+                                           class="file-loading"/>
                             </div>
                         </div>
                     </div>
+                    <div class="form-group col-md-6">
+                        <label class="col-md-4 control-label">公司规模：</label>
+                        <div class="col-md-8">
+                            <select class="form-control" name="companySize" >
+                                <option value="5~10">5~10</option>
+                                <option value="10~50">10~50</option>
+                                <option value="50~100">50~100</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="col-md-4 control-label">公司成立时间：</label>
+                        <div class="col-md-8">     <!-- 当设置不可编辑后, 会修改颜色, 在min.css里搜索.form-control{background-color:#eee;opacity:1} -->
+                            <input id="addDateTimePicker" placeholder="请选择公司成立时间" onclick="getDate('addDateTimePicker')" readonly="true" type="text" name="companyOpendate"
+                                   class="form-control datetimepicker"/>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="col-md-4 control-label">公司经度：</label>
+                        <div class="col-md-8">
+                            <input id="addCompanyLongitudeId" name="companyLongitude" readonly="true" placeholder="请选择公司经度" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label class="col-md-4 control-label">公司纬度：</label>
+                        <div class="col-md-8">
+                            <input id="addCompanyLatitudeId" name="companyLatitude" readonly="true" placeholder="请选择公司纬度" class="form-control">
+                                <button type="button" style="margin-top: 10px;" class="btn btn-primary" onclick="showMap('addWindow')">地图选择</button>
+                            </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="col-md-4 control-label">公司描述：</label>
+                        <div class="col-md-8">
+                                <textarea class="form-control" placeholder="请输入公司描述" name="companyDes"
+                                          rows="5" maxlength="500"></textarea>
+                        </div>
+                    </div>
+                    <p class="clearfix"></p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default"
@@ -186,8 +193,8 @@
 
 <!-- 修改弹窗 -->
 <div class="modal fade" id="editWindow" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static" keyboard:false>
-    <div class="modal-dialog">
-        <div class="modal-content">
+    <div class="modal-dialog" style="width:90%;">
+        <div class="modal-content" data-options="resizable:true,modal:true">
             <div class="modal-body">
             <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('editWindow', 'editForm')"></span>
             <form class="form-horizontal" role="form" id="editForm" method="post" enctype="multipart/form-data">
@@ -196,96 +203,66 @@
                 <div class="modal-header" style="overflow:auto;">
                     <p>请修改公司信息</p>
                 </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">公司名称：</label>
-                    <div class="col-sm-7">
-                        <input type="text" name="companyName" define="companyInfo.companyName" placeholder="请输入公司名称" class="form-control">
+                <div>
+                    <div class="form-group col-md-6">
+                        <label class="col-md-4 control-label">公司名称：</label>
+                        <div class="col-md-8">
+                            <input type="text" name="companyName" define="companyInfo.companyName" placeholder="请输入公司名称" class="form-control">
+                        </div>
                     </div>
+                    <div class="form-group col-md-6">
+                        <label class="col-md-4 control-label">公司地址：</label>
+                        <div class="col-md-8">
+                            <input type="text" name="companyAddress" define="companyInfo.companyAddress" placeholder="请输入公司地址"
+                                   class="form-control">
+                        </div>
+                        <p class="clearfix"></p>
+                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">公司地址：</label>
-                    <div class="col-sm-7">
-                        <input type="text" name="companyAddress" define="companyInfo.companyAddress" placeholder="请输入公司地址"
-                               class="form-control">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">联系电话：</label>
-                    <div class="col-sm-7">
+            <div>
+                <div class="form-group col-md-6">
+                    <label class="col-md-4 control-label">联系电话：</label>
+                    <div class="col-md-8">
                         <input type="number" name="companyTel" placeholder="请输入联系电话电话" define="companyInfo.companyTel" class="form-control" style="width:100%"/>
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">负责人：</label>
-                    <div class="col-sm-7">
+                <div class="form-group col-md-6">
+                    <label class="col-md-4 control-label">负责人：</label>
+                    <div class="col-md-8">
                         <input type="text" name="companyPricipal" define="companyInfo.companyPricipal" placeholder="请输入负责人"
                                class="form-control">
                     </div>
                 </div>
+                <p class="clearfix"></p>
+            </div>
+                <div>
+                    <div class="form-group col-md-6">
+                        <label class="col-md-4 control-label">负责人联系电话：</label>
+                        <div class="col-md-8">
+                            <input type="number"  name="companyPricipalphone" placeholder="请输入负责人联系电话" define="companyInfo.companyPricipalphone" class="form-control" style="width:100%"/>
+                        </div>
+                    </div>
 
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">负责人联系电话：</label>
-                    <div class="col-sm-7">
-                        <input type="number"  name="companyPricipalphone" placeholder="请输入负责人联系电话" define="companyInfo.companyPricipalphone" class="form-control" style="width:100%"/>
+                    <div class="form-group col-md-6">
+                        <label class="col-md-4 control-label">公司官网网址：</label>
+                        <div class="col-md-8">
+                            <input type="text" name="companyWebsite" define="companyInfo.companyWebsite" placeholder="请输入公司官网网址"
+                                   class="form-control">
+                        </div>
                     </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">公司官网网址：</label>
-                    <div class="col-sm-7">
-                        <input type="text" name="companyWebsite" define="companyInfo.companyWebsite" placeholder="请输入公司官网网址"
-                               class="form-control">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">公司规模：</label>
-                    <div class="col-sm-7">
-                        <select class="form-control" define="companyInfo.companySize" id="companys" name="companySize">
-                            <option value="5~10">5~10</option>
-                            <option value="10~50">10~50</option>
-                            <option value="50~100">50~100</option>
-                        </select>
-                    </div>
+                    <p class="clearfix"></p>
                 </div>
 
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">公司成立时间：</label>
-                    <div class="col-sm-7">     <!-- 当设置不可编辑后, 会修改颜色, 在min.css里搜索.form-control{background-color:#eee;opacity:1} -->
-                        <input id="editDatetimepicker" placeholder="请选择公司成立时间" readonly="true" type="text" name="companyOpendate"
-                               class="form-control datetimepicker"/>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">公司经度：</label>
-                    <div class="col-sm-7">
-                        <input type="text" id="editCompanyLongitudeId" name="companyLongitude" define="companyInfo.companyLongitude" placeholder="请输入公司经度"
-                               class="form-control">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">公司纬度：</label>
-                    <div class="col-sm-7">
-                        <input type="text" id="editCompanyLatitudeId" name="companyLatitude" define="companyInfo.companyLatitude" placeholder="请输入公司经度"
-                               class="form-control">
-                        <button type="button" class="btn btn-primary" onclick="showMap('editWindow')">地图选择</button>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">公司描述：</label>
-                    <div class="col-sm-7">
-                                <textarea type="textarea" class="form-control" placeholder="请输入公司描述" define="companyInfo.companyDes" name="companyDes"
-                                          rows="3" maxlength="500"></textarea>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">公司logo：</label>
-                    <div class="col-lg-7">
-                        <div class="ibox-title">
-                            <div class="container kv-main">
-                                <div class="ibox-title">
-                                    <div class="input-group">   <%-- FileInput边框和组件组在一起 --%>
-                                        <div class="input-group-btn"></div> <%-- 用来显示选中的图片 --%>
+                <div>
+
+                    <div class="form-group col-md-6">
+                        <label class="col-md-4 control-label">公司logo：</label>
+                        <div class="col-md-8">
+                            <div class="ibox-title">
+                                <div class="container kv-main">
+                                    <div class="ibox-title">
+                                            <div class="input-group-btn"></div> <%-- 用来显示选中的图片 --%>
                                             <input id="file1" define="companyInfo.companyLogo" name="companyLogo" type="file" class="form-control" multiple
                                                    class="file-loading"/>
                                     </div>
@@ -293,8 +270,48 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                    <div class="form-group col-md-6">
+                        <label class="col-md-4 control-label">公司规模：</label>
+                        <div class="col-md-8">
+                            <select class="form-control" define="companyInfo.companySize" id="companys" name="companySize">
+                                <option value="5~10">5~10</option>
+                                <option value="10~50">10~50</option>
+                                <option value="50~100">50~100</option>
+                            </select>
+                        </div>
+                    </div>
 
+                    <div class="form-group col-md-6">
+                        <label class="col-md-4 control-label">公司成立时间：</label>
+                        <div class="col-md-8">     <!-- 当设置不可编辑后, 会修改颜色, 在min.css里搜索.form-control{background-color:#eee;opacity:1} -->
+                            <input id="editDatetimepicker" placeholder="请选择公司成立时间" readonly="true" type="text" name="companyOpendate"
+                                   class="form-control datetimepicker"/>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="col-md-4 control-label">公司经度：</label>
+                        <div class="col-md-8">
+                            <input type="text" id="editCompanyLongitudeId" name="companyLongitude" define="companyInfo.companyLongitude" readonly="true" placeholder="请输入公司经度"
+                                   class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="col-md-4 control-label">公司纬度：</label>
+                        <div class="col-md-8">
+                            <input type="text" id="editCompanyLatitudeId" name="companyLatitude" define="companyInfo.companyLatitude" readonly="true" placeholder="请输入公司经度"
+                                   class="form-control">
+                            <button type="button" style="margin-top: 10px;" class="btn btn-primary" onclick="showMap('editWindow')">地图选择</button>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="col-md-4 control-label">公司描述：</label>
+                        <div class="col-md-8">
+                                    <textarea type="textarea" class="form-control" placeholder="请输入公司描述" define="companyInfo.companyDes" name="companyDes"
+                                              rows="5" maxlength="500"></textarea>
+                        </div>
+                    </div>
+                    <p class="clearfix"></p>
+                </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default"
                             data-dismiss="modal">关闭
