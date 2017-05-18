@@ -138,6 +138,18 @@
         ]]>
   </insert>
 
+
+    <insert id="addInsert">
+        <selectKey resultType="int" keyProperty="inOutId" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into t_incoming_outgoing
+        values
+        <foreach collection="list" item="item" index="index" separator="," >
+            (uuid(), #{item.inTypeId},#{item.outTypeId},#{item.inOutMoney},#{item.inOutCreatedUser},now(),#{item.companyId},'Y')
+        </foreach>
+    </insert>
+
     <update id="update" keyProperty="inOutId" parameterType="incomingOutgoing">
     <![CDATA[
 

@@ -118,6 +118,11 @@ public class IncomingOutgoingServiceImpl implements IncomingOutgoingService {
         return incomingOutgoingDAO.queryByCondition(start, end,inOutType,companyId, type);
     }
 
+    @Override
+    public void addInsert(List<IncomingOutgoing> incomingOutgoings) {
+        incomingOutgoingDAO.addInsert(incomingOutgoings);
+    }
+
     public List<IncomingOutgoing> blurredQuery(Pager pager, IncomingOutgoing incomingOutgoing) {
         return null;
     }

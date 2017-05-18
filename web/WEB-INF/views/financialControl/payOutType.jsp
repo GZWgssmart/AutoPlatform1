@@ -48,12 +48,12 @@
                 </button>
             </shiro:hasAnyRoles>
             <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员">
-                <button id="searchDisable" type="button" class="btn btn-default" onclick="searchDisableStatus();">
+                <button id="searchDisable" type="button" class="btn btn-danger" onclick="searchDisableStatus();">
                     <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询禁用类型
                 </button>
             </shiro:hasAnyRoles>
             <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员">
-                <button id="searchRapid" type="button" class="btn btn-default" onclick="searchRapidStatus();">
+                <button id="searchRapid" type="button" class="btn btn-danger" onclick="searchRapidStatus();">
                     <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询激活类型
                 </button>
             </shiro:hasAnyRoles>

@@ -82,4 +82,14 @@ public class SalaryServiceImpl implements SalaryService {
 		}
 		return flag;
 	}
+
+	@Override
+	public List<Salary> querySalary(Pager pager, String start, String end) {
+		return salaryDAO.querySalary(pager,start, end);
+	}
+
+	@Override
+	public int countSalary(User user, String start, String end) {
+		return salaryDAO.countSalary(user, start, end);
+	}
 }
