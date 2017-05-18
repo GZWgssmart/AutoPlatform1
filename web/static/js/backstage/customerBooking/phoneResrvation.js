@@ -1,5 +1,5 @@
 $(function () {
-    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽修公司接待员,车主";
+    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,车主";
     $.post("/user/isLogin/"+roles, function (data) {
         if(data.result == 'success'){
             initTable('table', '/appointment/queryByPager'); // 初始化表格
@@ -69,7 +69,7 @@ $("#editCarBrand").change(function(){
 
 // 查看全部可用
 function showAvailable() {
-    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽修公司接待员";
+    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员";
     $.post("/user/isLogin/"+roles, function (data) {
         if(data.result == 'success'){
             initTable('table', '/appointment/queryByPager'); // 初始化表格
@@ -96,7 +96,7 @@ function showAvailable() {
 }
 // 查看全部禁用
 function showDisable() {
-    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽修公司接待员";
+    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员";
     $.post("/user/isLogin/"+roles, function (data) {
         if(data.result == 'success'){
             initTable('table', '/appointment/queryByPagerDisable');
@@ -148,7 +148,7 @@ function checkAppointment(combox) {
 
 // 模糊查询
 function blurredQuery(){
-    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽修公司接待员";
+    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员";
     $.post("/user/isLogin/"+roles, function (data) {
         if(data.result == 'success'){
             var button = $("#ulButton");// 获取模糊查询按钮
@@ -191,11 +191,6 @@ function appOnChange() {
         if (user != null && user != "" && user != undefined) {
             setData(user);
         }
-    } else {
-        if (user != null && user != "" && user != undefined) {
-            clearAddForm();
-        }
-
     }
 }
 
@@ -269,7 +264,7 @@ function showEdit(){
 }
 
 function showAdd(){
-    var roles = "公司超级管理员,公司普通管理员,汽修公司接待员";
+    var roles = "公司超级管理员,公司普通管理员,汽车公司接待员";
     $.post("/user/isLogin/"+roles, function (data) {
         if(data.result == 'success'){
             initDateTimePicker('addForm', 'arriveTime','addArriveTime'); // 初始化时间框, 第一参数是form表单id, 第二参数是input的name
@@ -414,7 +409,7 @@ function validator(formId) {
 function formatterImg(value, row, index){
     if(row.userIcon !=null){
         return [
-            '<img style="width:100px;height:40px;" src="/'+ value +'">'
+            '<img style="width:120px;height:40px;" src="/'+ value +'">'
         ]
     }
 }

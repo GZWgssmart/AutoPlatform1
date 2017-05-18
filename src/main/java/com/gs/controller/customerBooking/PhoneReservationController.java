@@ -74,7 +74,7 @@ public class PhoneReservationController {
     @RequestMapping(value="queryByPagerDisable", method = RequestMethod.GET)
     public Pager4EasyUI<Appointment> queryByPagerDisable(HttpSession session,@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
         if (SessionUtil.isLogin(session)) {
-            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽修公司接待员,车主";
+            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,车主";
             if (RoleUtil.checkRoles(roles)) {
                 logger.info("分页查询所有被禁用登记记录");
                 Pager pager = new Pager();
@@ -158,7 +158,7 @@ public class PhoneReservationController {
     @RequestMapping(value = "add",method = RequestMethod.POST)
     public ControllerResult add(Appointment appointment,HttpSession session){
         if(SessionUtil.isLogin(session)){
-            String roles = "公司超级管理员,公司普通管理员,汽修公司接待员,车主";
+            String roles = "公司超级管理员,公司普通管理员,汽车公司接待员,车主";
             if (RoleUtil.checkRoles(roles)) {
                 User user = (User)session.getAttribute("user");
                 logger.info("添加电话预约");
@@ -212,7 +212,7 @@ public class PhoneReservationController {
     @RequestMapping(value = "statusOperate", method = RequestMethod.POST)
     public ControllerResult inactive(String appointmentId, String appoitmentStatus, HttpSession session) {
         if (SessionUtil.isLogin(session)){
-            String roles = "公司超级管理员,公司普通管理员,汽修公司接待员";
+            String roles = "公司超级管理员,公司普通管理员,汽车公司接待员";
             if (RoleUtil.checkRoles(roles)) {
                 if (appointmentId != null && !appointmentId.equals("") && appoitmentStatus != null && !appoitmentStatus.equals("")) {
                     if (appoitmentStatus.equals("N")) {
