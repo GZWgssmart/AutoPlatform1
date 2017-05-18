@@ -113,4 +113,9 @@ public class MaintainScheduleServiceImpl implements MaintainScheduleService {
     public List<MaintainSchedule> queryAll(String status) {
         return null;
     }
+
+    @Override
+    public List<MaintainSchedule> queryScheduleByRecord(String recordId) {
+        return maintainScheduleDAO.queryScheduleByRecord(recordId);
+    }
 }
