@@ -28,6 +28,11 @@ public interface IncomingOutgoingDAO extends BaseDAO<String, IncomingOutgoing>{
      */
     public int countByDisable();
 
+    /*
+  * 批量添加
+  * */
+    public void addInsert(List<IncomingOutgoing> incomingOutgoings);
+
     /**
      * 根据时间段去查找
      */

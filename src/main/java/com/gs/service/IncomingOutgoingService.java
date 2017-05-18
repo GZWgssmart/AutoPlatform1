@@ -36,5 +36,10 @@ public interface IncomingOutgoingService extends BaseService<String, IncomingOut
 * */
     public List<IncomingOutgoing> queryByCondition(String start,String end,String inOutType, String companyId, String type);
 
+    /*
+  * 批量添加
+  * */
+    public void addInsert(List<IncomingOutgoing> incomingOutgoings);
+
 
 }

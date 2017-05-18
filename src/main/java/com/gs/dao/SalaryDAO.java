@@ -24,4 +24,10 @@ public interface SalaryDAO extends BaseDAO<String, Salary>{
     public List<Salary> blurredQuery(@Param("pager") Pager pager, @Param("salary") Salary salary);
 
     public int countByBlurred(@Param("salary") Salary salary, @Param("user") User user);
+
+    public List<Salary> querySalary(@Param("pager") Pager pager, @Param("start")String start, @Param("end")String end);
+
+    public int countSalary(@Param("user")User user, @Param("start") String start, @Param("end") String end);
+
+
 }

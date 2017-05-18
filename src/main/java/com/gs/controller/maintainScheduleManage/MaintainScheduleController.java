@@ -16,10 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -40,6 +37,30 @@ public class    MaintainScheduleController {
     @Resource
     private MaintainScheduleService maintainScheduleService;
     private Logger logger = (Logger) LoggerFactory.getLogger(MaintainScheduleController.class);
+
+    /**
+     * 根据维修保养记录id查询此记录下所有维修保养进度
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "queryScheduleByRecord/{recordId}", method = RequestMethod.POST)
+    public List<MaintainSchedule> queryScheduleByRecord(HttpSession session, @PathVariable("recordId") String recordId){
+        if(SessionUtil.isLogin(session)) {
+            String roles="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,车主,汽车公司接待员";
+            if(RoleUtil.checkRoles(roles)) {
+                logger.info("根据维修保养记录id查询此记录下所有维修保养进度");
+                List<MaintainSchedule> maintainSchedules = maintainScheduleService.queryScheduleByRecord(recordId);
+                return maintainSchedules;
+            }else{
+                logger.info("此用户没有根据维修保养记录id查询此记录下所有维修保养进度的角色");
+                return null;
+            }
+        }else{
+            logger.info("请先登录");
+            return null;
+        }
+    }
+
 
     /**
      * 查询全部维修保养进度管理
@@ -127,7 +148,7 @@ public class    MaintainScheduleController {
     }
 
     /**
-     * 禁用
+     * 分页查看已禁用的维修保养记录
      * @param session
      * @param pageNumber
      * @param pageSize

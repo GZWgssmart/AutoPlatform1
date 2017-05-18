@@ -27,7 +27,7 @@
             <thead>
             <tr>
                 <th data-radio="true" data-field="status"></th>
-                <th data-field="maintainRecord.checkinId">
+                <th data-field="maintainRecord.recordId">
                     保养记录编号
                 </th>
                 <th data-field="user.userNickname">

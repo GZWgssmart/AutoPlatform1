@@ -7,6 +7,7 @@
         <result column="maintainScheduleDes" property="maintainScheduleDes" jdbcType="VARCHAR" />
         <result column="msCreatedTime" property="msCreatedTime" jdbcType="TIMESTAMP" />
         <result column="msStatus" property="msStatus" jdbcType="VARCHAR" />
+        <result column="currentStatus" property="currentStatus" jdbcType="VARCHAR" />
 
         <association property="maintainRecord" javaType="com.gs.bean.MaintainRecord">
             <id column="recordId" property="recordId"></id>
@@ -43,24 +44,31 @@
         </association>
     </resultMap>
 
-    <!--查询全部-->
-    <select id="queryAll" resultMap="MaintainScheduleMap" parameterType="com.gs.bean.User">
-      <![CDATA[
-          select * from auto_platform.t_maintain_schedule where 1=1 and msStatus='Y'
+    <!--计数激活状态-->
+    <select id="count" resultType="int">
+        <![CDATA[
+          select count(maintainScheduleId) from t_maintain_schedule m where msStatus='Y'
         ]]>
-        <if test="user.companyId != '' and user.companyId !=null">
-            and s.companyId = #{user.companyId}
-        </if>
+
     </select>
 
-    <!--计数激活状态-->
-    <select id="count" resultType="int" parameterType="com.gs.bean.User">
+    <!--计数不可用-->
+    <select id="countByDisable" resultType="int">
         <![CDATA[
-          select count(maintainScheduleId) from t_maintain_schedule where msStatus='Y'
+        SELECT count(*) FROM t_maintain_schedule m WHERE 1=1 AND m.msStatus = 'N'
+       ]]>
+
+    </select>
+
+    <!--查询不可用进度-->
+    <select id="queryByPagerDisable" resultMap="MaintainScheduleMap">
+        <![CDATA[
+          select ms.*,c.recordId,c.checkinId
+          from auto_platform.t_maintain_schedule ms
+          LEFT JOIN t_maintain_record c on ms.maintainScheduleId=c.recordId
+          where ms.msStatus = 'N' ORDER BY ms.msCreatedTime DESC
         ]]>
-        <if test="user.companyId != '' and user.companyId !=null">
-            and s.companyId = #{user.companyId}
-        </if>
+        limit #{beginIndex}, #{pageSize};
     </select>
 
     <!--分页查询-->
@@ -69,28 +77,46 @@
           select ms.*,c.recordId,c.checkinId
           from auto_platform.t_maintain_schedule ms
           LEFT JOIN t_maintain_record c on ms.maintainScheduleId=c.recordId
-          where ms.msStatus='Y'
+          where ms.msStatus='Y' order by ms.msCreatedTime Desc
+        ]]>
+        limit #{beginIndex}, #{pageSize};
+    </select>
+
+
+    <!--查询全部-->
+    <select id="queryAll" resultMap="MaintainScheduleMap">
+        <![CDATA[
+          select * from auto_platform.t_maintain_schedule where 1=1 and msStatus='Y'
         ]]>
         <if test="user.companyId != '' and user.companyId !=null">
             and s.companyId = #{user.companyId}
         </if>
-        order by ms.msCreatedTime Desc
-        limit #{beginIndex}, #{pageSize};
     </select>
 
-    <!--添加维修保养进度-->
-    <select id="insert" parameterType="MaintainSchedule">
+    <!--根据id分页查询-->
+    <select id="queryScheduleByRecord" resultMap="MaintainScheduleMap">
         <![CDATA[
-          INSERT JOIN auto_platform.t_maintain_schedule
-          (maintainScheduleId, maintainRecordId, maintainScheduleDes, msCreatedTime,msStatus)
-          VALUES(uuid(),#{maintainRecordId},#{maintainScheduleDes},#{CURRENT_TIMESTAMP},'Y')
+          select ms.*,c.recordId,c.checkinId
+          from auto_platform.t_maintain_schedule ms
+          LEFT JOIN t_maintain_record c on ms.maintainScheduleId=c.recordId
+          where ms.maintainRecordId = #{recordId}
+          ORDER BY ms.msCreatedTime ASC
         ]]>
     </select>
 
-    <select id="update" parameterType="MaintainSchedule">
+    <!--添加维修保养进度-->
+    <insert id="insert" parameterType="maintainSchedule">
+        <![CDATA[
+          INSERT into auto_platform.t_maintain_schedule
+          (maintainScheduleId, maintainRecordId, maintainScheduleDes, msCreatedTime,msStatus,currentStatus)
+          VALUES(uuid(),#{maintainRecordId},#{maintainScheduleDes}, now(),'Y', '未完成')
+        ]]>
+    </insert>
+
+    <update id="update" parameterType="maintainSchedule">
         <![CDATA[
           UPDATE auto_platform.t_maintain_schedule
           SET maintainRecordId = #{maintainRecordId}, maintainScheduleDes = #{maintainScheduleDes} where maintainScheduleId=#{maintainScheduleId}
         ]]>
-    </select>
+    </update>
 </mapper>

@@ -66,41 +66,43 @@
 
 <!-- 添加弹窗 -->
 
-<div id="addWindow" class="modal fade" style="overflow-y:scroll" data-backdrop="static" >
-    <div class="modal-dialog">
+<div id="addWindow" class="modal fade" style="overflow-y:scroll" data-backdrop="static" keyboard:false>
+    <div class="modal-dialog" style="width:60%">
         <div class="modal-content" >
-                <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('addWindow','addForm')" style="padding:10px"></span>
-                <form class="form-horizontal"  role="form" id="addForm" method="post">
-                <div class="modal-header" style="overflow:auto;">
-                    <h4>添加供应商类型信息</h4>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">供应商类型名称：</label>
-                    <div class="col-sm-7">
-                        <input type="text" name="supplyTypeName" id="addSTName" placeholder="请输入供应商类型名称" class="form-control">
+            <div class="modal-body" onkeydown="keydown('addButton')">
+                <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('addWindow','addForm')" ></span>
+                    <form class="form-horizontal"  role="form" id="addForm" method="post">
+                    <div class="modal-header" style="overflow:auto;">
+                        <h4>添加供应商类型信息</h4>
                     </div>
-                </div>
-               <%-- <div class="form-group">
-                    <label class="col-sm-3 control-label">供应商类型所属公司：</label>
-                    <div class="col-sm-7">
-                        <select id="addCompanyName" class="js-example-tags company" name="companyId" style="width:100%">
-                        </select>
-                    </div>
-                </div>--%>
-                 <div class="form-group">
-                        <label class="col-sm-3 control-label">供应商类型描述：</label>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">供应商类型名称：</label>
                         <div class="col-sm-7">
-                        <textarea type="text" name="supplyTypeDes" placeholder="请输入供应商类型描述内容" style="height:100px;"
-                                  class="form-control"></textarea>
+                            <input type="text" name="supplyTypeName" id="addSTName" placeholder="请输入供应商类型名称" class="form-control">
                         </div>
-                  </div>
-                <div class="modal-footer" >
-                    <span id="addError"></span>
-                    <button type="button" class="btn btn-default" onclick="closeModals('addWindow','addForm')">关闭 </button>
-                    <button id="addButton" type="button" onclick="addSubmit()" class="btn btn-success">添加</button>
-                    <input type="reset" name="reset" style="display: none;"/>
-                </div>
-            </form>
+                    </div>
+                   <%-- <div class="form-group">
+                        <label class="col-sm-3 control-label">供应商类型所属公司：</label>
+                        <div class="col-sm-7">
+                            <select id="addCompanyName" class="js-example-tags company" name="companyId" style="width:100%">
+                            </select>
+                        </div>
+                    </div>--%>
+                     <div class="form-group">
+                            <label class="col-sm-3 control-label">供应商类型描述：</label>
+                            <div class="col-sm-7">
+                            <textarea type="text" name="supplyTypeDes" placeholder="请输入供应商类型描述内容" style="height:100px;"
+                                      class="form-control"></textarea>
+                            </div>
+                      </div>
+                    <div class="modal-footer" >
+                        <span id="addError"></span>
+                        <button type="button" class="btn btn-default" onclick="closeModals('addWindow','addForm')">关闭 </button>
+                        <button id="addButton" type="button" onclick="addSubmit()" class="btn btn-success">添加</button>
+                        <input type="reset" name="reset" style="display: none;"/>
+                    </div>
+                </form>
+            </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
@@ -108,40 +110,42 @@
 
 <!-- 修改弹窗 -->
 <div id="editWindow" class="modal fade" style="overflow-y:scroll" data-backdrop="static">
-    <div class="modal-dialog">
+    <div class="modal-dialog" style="width:60%">
         <div class="modal-content">
-            <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('editWindow','editForm')" style="padding:10px"></span>
-            <form  class="form-horizontal"  id="editForm" method="post">
-                <input type="hidden" name="supplyTypeId" define="supplyType.supplyTypeId"/>
-                <div class="modal-header" style="overflow:auto;">
-                    <h4>修改供应商类型信息</h4>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">供应商类型：</label>
-                    <div class="col-sm-7">
-                        <input type="text" id="editSTName" name="supplyTypeName"  define="supplyType.supplyTypeName"  placeholder="请输入供应商类型" class="form-control">
+            <div class="modal-body" onkeydown="keydown('addButton')">
+                <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('editWindow','editForm')"></span>
+                <form  class="form-horizontal"  id="editForm" method="post">
+                    <input type="hidden" name="supplyTypeId" define="supplyType.supplyTypeId"/>
+                    <div class="modal-header" style="overflow:auto;">
+                        <h4>修改供应商类型信息</h4>
                     </div>
-                </div>
-               <%-- <div class="form-group">
-                    <label class="col-sm-3 control-label">供应商类型所属公司：</label>
-                    <div class="col-sm-7">
-                        <select id="editCompanyName" class="js-example-tags company" define="supply.companyId" name="companyId" style="width:100%">
-                        </select>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">供应商类型名称：</label>
+                        <div class="col-sm-7">
+                            <input type="text" id="editSTName" name="supplyTypeName"  define="supplyType.supplyTypeName"  placeholder="请输入供应商类型" class="form-control">
+                        </div>
                     </div>
-                </div>--%>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">供应商类型描述：</label>
-                    <div class="col-sm-7">
-                        <input type="text" name="supplyTypeDes" define="supplyType.supplyTypeDes" placeholder="请输入供应商类型描述内容"
-                               style="height:100px;" class="form-control">
+                   <%-- <div class="form-group">
+                        <label class="col-sm-3 control-label">供应商类型所属公司：</label>
+                        <div class="col-sm-7">
+                            <select id="editCompanyName" class="js-example-tags company" define="supply.companyId" name="companyId" style="width:100%">
+                            </select>
+                        </div>
+                    </div>--%>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">供应商类型描述：</label>
+                        <div class="col-sm-7">
+                            <input type="text" name="supplyTypeDes" define="supplyType.supplyTypeDes" placeholder="请输入供应商类型描述内容"
+                                   style="height:100px;" class="form-control">
+                        </div>
                     </div>
-                </div>
-                <div class="modal-footer" >
-                    <span id="editError"></span>
-                    <button type="button" class="btn btn-default" onclick="closeModals('editWindow','editForm')">关闭</button>
-                    <button id="editButton" type="button" onclick="editSubmit()" class="btn btn-success">保存</button>
-                </div>
-            </form>
+                    <div class="modal-footer" >
+                        <span id="editError"></span>
+                        <button type="button" class="btn btn-default" onclick="closeModals('editWindow','editForm')">关闭</button>
+                        <button id="editButton" type="button" onclick="editSubmit()" class="btn btn-success">保存</button>
+                    </div>
+                </form>
+            </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->

@@ -142,136 +142,138 @@
 
 <!-- 添加弹窗 -->
 
-<div id="addWindow" class="modal fade" style="overflow-y:scroll" data-backdrop="static" >
+<div id="addWindow" class="modal fade" style="overflow-y:scroll" data-backdrop="static" keyboard:false>
     <div class="modal-dialog" style="width:90%">
         <div class="modal-content" >
-            <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('addWindow','addForm')" style="padding:10px"></span>
-            <form role="form" class="form-horizontal" id="addForm">
-                <div class="modal-header" style="overflow:auto;">
-                    <h4>添加供应商信息</h4>
-                </div>
-                <div>
-                    <div>
-                        <div class="form-group col-md-6 pull-left">
-                            <label class="col-md-4 control-label">供应商类型：</label>
-                            <div class="col-md-8">
-                                <select id="addSupplyType" class="js-example-tags supplyType" name="supplyTypeId" style="width:100%"></select>
-                            </div>
-                        </div>
-                        <div class="form-group col-md-6 pull-left" >
-                            <label class="col-md-4 control-label">供应商名称：</label>
-                            <div class="col-md-8">
-                                <input id="addSupplyName" name="supplyName" type="text" placeholder="请输入供应商名称" class="form-control">
-                            </div>
-                        </div>
-                        <p class="clearfix"></p>
+            <div class="modal-body" onkeydown="keydown('addButton')">
+                <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('addWindow','addForm')"></span>
+                <form role="form" class="form-horizontal" id="addForm">
+                    <div class="modal-header" style="overflow:auto;">
+                        <h4>添加供应商信息</h4>
                     </div>
                     <div>
-                        <div class="form-group col-md-6 pull-left">
-                            <label class="col-md-4 control-label">联系电话：</label>
-                            <div class="col-md-8">
-                                <input type="number" id="addSupplyTel" placeholder="请输入联系电话" name="supplyTel" class="form-control" style="width:100%"/>
+                        <div>
+                            <div class="form-group col-md-6 pull-left">
+                                <label class="col-md-4 control-label">供应商类型：</label>
+                                <div class="col-md-8">
+                                    <select id="addSupplyType" class="js-example-tags supplyType" name="supplyTypeId" style="width:100%"></select>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group col-md-6 pull-left">
-                            <label class="col-md-4 control-label">供应商负责人：</label>
-                            <div class="col-md-8">
-                                <input type="text"  name="supplyPricipal" placeholder="请输入供应商负责人" class="form-control">
+                            <div class="form-group col-md-6 pull-left" >
+                                <label class="col-md-4 control-label">供应商名称：</label>
+                                <div class="col-md-8">
+                                    <input id="addSupplyName" name="supplyName" type="text" placeholder="请输入供应商名称" class="form-control">
+                                </div>
                             </div>
+                            <p class="clearfix"></p>
                         </div>
-                        <p class="clearfix"></p>
-                    </div>
-                    <div>
-                        <div class="form-group col-md-6 pull-left">
-                            <label class="col-md-4 control-label">供应商微信号：</label>
-                            <div class="col-md-8">
-                                <input type="text"  name="supplyWeChat" placeholder="请输入供应商微信号" class="form-control">
+                        <div>
+                            <div class="form-group col-md-6 pull-left">
+                                <label class="col-md-4 control-label">联系电话：</label>
+                                <div class="col-md-8">
+                                    <input type="number" id="addSupplyTel" placeholder="请输入联系电话" name="supplyTel" class="form-control" style="width:100%"/>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group col-md-6 pull-left">
-                            <label class="col-md-4 control-label">支付宝账号：</label>
-                            <div class="col-md-8">
-                                <input type="number"  name="supplyAlipay" placeholder="请输入支付宝账号" class="form-control">
+                            <div class="form-group col-md-6 pull-left">
+                                <label class="col-md-4 control-label">供应商负责人：</label>
+                                <div class="col-md-8">
+                                    <input type="text"  name="supplyPricipal" placeholder="请输入供应商负责人" class="form-control">
+                                </div>
                             </div>
+                            <p class="clearfix"></p>
                         </div>
-                        <p class="clearfix"></p>
-                    </div>
-                    <div>
-                        <div class="form-group col-md-6 pull-left">
-                            <label class="col-md-4 control-label">开户银行全称：</label>
-                            <div class="col-md-8">
-                                <select class="js-example-tags form-control" name="supplyBank" placeholder="请选择开户银行全称" class="form-control">
-                                    <option value="中国银行">中国银行</option>
-                                    <option value="交通银行">交通银行</option>
-                                    <option value="招商银行">招商银行</option>
-                                    <option value="广发银行">广发银行</option>
-                                    <option value="浦发银行">浦发银行</option>
-                                    <option value="中信银行">中信银行</option>
-                                    <option value="华夏银行">华夏银行</option>
-                                    <option value="汇丰银行">汇丰银行</option>
-                                    <option value="光大银行">光大银行</option>
-                                    <option value="平安银行">平安银行</option>
-                                    <option value="浙商银行">浙商银行</option>
-                                    <option value="上海银行">上海银行</option>
-                                    <option value="北京银行">北京银行</option>
-                                    <option value="中信银行">中信银行</option>
-                                    <option value="温州银行">温州银行</option>
-                                    <option value="民生银行">民生银行</option>
-                                    <option value="中国建设银行">中国建设银行</option>
-                                    <option value="中国农业银行">中国农业银行</option>
-                                    <option value="中国工商银行">中国工商银行</option>
-                                    <option value="中国农业银行">中国农业银行</option>
-                                    <option value="杭州联合银行">杭州联合银行</option>
-                                    <option value="深圳发展银行">深圳发展银行</option>
-                                    <option value="中国邮政储蓄银行">中国邮政储蓄银行</option>
-                                </select>
+                        <div>
+                            <div class="form-group col-md-6 pull-left">
+                                <label class="col-md-4 control-label">供应商微信号：</label>
+                                <div class="col-md-8">
+                                    <input type="text"  name="supplyWeChat" placeholder="请输入供应商微信号" class="form-control">
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group col-md-6 pull-left">
-                            <label class="col-md-4 control-label">开户银行卡号：</label>
-                            <div class="col-md-8">
-                                <input type="number" placeholder="请输入开户银行卡号" name="supplyBankNo"  class="form-control">
+                            <div class="form-group col-md-6 pull-left">
+                                <label class="col-md-4 control-label">支付宝账号：</label>
+                                <div class="col-md-8">
+                                    <input type="number"  name="supplyAlipay" placeholder="请输入支付宝账号" class="form-control">
+                                </div>
                             </div>
+                            <p class="clearfix"></p>
                         </div>
-                       <p class="clearfix"></p>
-                    </div>
-                    <div>
-                        <div class="form-group col-md-6">
-                            <label class="col-md-4 control-label">开户人姓名：</label>
-                            <div class="col-md-8">
-                                <input type="text" placeholder="请输入开户人姓名"  name="supplyBankAccount"  class="form-control" style="width: 100%;">
+                        <div>
+                            <div class="form-group col-md-6 pull-left">
+                                <label class="col-md-4 control-label">开户银行全称：</label>
+                                <div class="col-md-8">
+                                    <select class="js-example-tags form-control" name="supplyBank" placeholder="请选择开户银行全称" class="form-control">
+                                        <option value="中国银行">中国银行</option>
+                                        <option value="交通银行">交通银行</option>
+                                        <option value="招商银行">招商银行</option>
+                                        <option value="广发银行">广发银行</option>
+                                        <option value="浦发银行">浦发银行</option>
+                                        <option value="中信银行">中信银行</option>
+                                        <option value="华夏银行">华夏银行</option>
+                                        <option value="汇丰银行">汇丰银行</option>
+                                        <option value="光大银行">光大银行</option>
+                                        <option value="平安银行">平安银行</option>
+                                        <option value="浙商银行">浙商银行</option>
+                                        <option value="上海银行">上海银行</option>
+                                        <option value="北京银行">北京银行</option>
+                                        <option value="中信银行">中信银行</option>
+                                        <option value="温州银行">温州银行</option>
+                                        <option value="民生银行">民生银行</option>
+                                        <option value="中国建设银行">中国建设银行</option>
+                                        <option value="中国农业银行">中国农业银行</option>
+                                        <option value="中国工商银行">中国工商银行</option>
+                                        <option value="中国农业银行">中国农业银行</option>
+                                        <option value="杭州联合银行">杭州联合银行</option>
+                                        <option value="深圳发展银行">深圳发展银行</option>
+                                        <option value="中国邮政储蓄银行">中国邮政储蓄银行</option>
+                                    </select>
+                                </div>
                             </div>
+                            <div class="form-group col-md-6 pull-left">
+                                <label class="col-md-4 control-label">开户银行卡号：</label>
+                                <div class="col-md-8">
+                                    <input type="number" placeholder="请输入开户银行卡号" name="supplyBankNo"  class="form-control">
+                                </div>
+                            </div>
+                           <p class="clearfix"></p>
                         </div>
-                        <p class="clearfix"></p>
-                    </div>
-                    <div>
-                       <div class="form-group col-md-12">
-                               <label class="col-md-2 control-label" style="top:3px;right:5px">供应商地址：</label>
-                               <div class="col-md-10">
-                                   <fieldset id="city_china">
-                                       <div class="form-group col-md-4">
-                                           <select class="province js-example-tags form-control" disabled="disabled" name="province"></select>
-                                       </div>
-                                       <div class="form-group col-md-4">
-                                           <select class="city js-example-tags form-control" disabled="disabled" name="city"></select>
-                                       </div>
-                                       <div class="form-group col-md-4">
-                                           <select class="area js-example-tags form-control" disabled="disabled" name="area"></select>
-                                       </div>
-                                   </fieldset>
+                        <div>
+                            <div class="form-group col-md-6">
+                                <label class="col-md-4 control-label">开户人姓名：</label>
+                                <div class="col-md-8">
+                                    <input type="text" placeholder="请输入开户人姓名"  name="supplyBankAccount"  class="form-control" style="width: 100%;">
+                                </div>
+                            </div>
+                            <p class="clearfix"></p>
+                        </div>
+                        <div>
+                           <div class="form-group col-md-12">
+                                   <label class="col-md-2 control-label" style="top:3px;right:5px">供应商地址：</label>
+                                   <div class="col-md-10">
+                                       <fieldset id="city_china">
+                                           <div class="form-group col-md-4">
+                                               <select class="province js-example-tags form-control" disabled="disabled" name="province"></select>
+                                           </div>
+                                           <div class="form-group col-md-4">
+                                               <select class="city js-example-tags form-control" disabled="disabled" name="city"></select>
+                                           </div>
+                                           <div class="form-group col-md-4">
+                                               <select class="area js-example-tags form-control" disabled="disabled" name="area"></select>
+                                           </div>
+                                       </fieldset>
+                                   </div>
                                </div>
-                           </div>
+                            <p class="clearfix"></p>
+                        </div>
                         <p class="clearfix"></p>
+                        <div class="modal-footer" >
+                             <span id="addError"></span>
+                             <button type="button" class="btn btn-default" onclick="closeModals('addWindow','addForm')">关闭 </button>
+                             <button id="addButton" type="button" onclick="addSubmit()" class="btn btn-success">添加</button>
+                             <input type="reset" name="reset" style="display: none;"/>
+                        </div>
                     </div>
-                    <p class="clearfix"></p>
-                    <div class="modal-footer" >
-                         <span id="addError"></span>
-                         <button type="button" class="btn btn-default" onclick="closeModals('addWindow','addForm')">关闭 </button>
-                         <button id="addButton" type="button" onclick="addSubmit()" class="btn btn-success">添加</button>
-                         <input type="reset" name="reset" style="display: none;"/>
-                    </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
@@ -281,137 +283,139 @@
 <div id="editWindow" class="modal fade" style="overflow-y:scroll" data-backdrop="static" >
     <div class="modal-dialog"  style="width:90%">
         <div class="modal-content">
-            <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('editWindow','editForm')" style="padding:10px"></span>
-            <form role="form" class="form-horizontal" id="editForm">
-                <input type="hidden" name="supplyId" define="supply.supplyId"/>
-                <input type="hidden"name="supplyStatus" define="supply.supplyStatus">
-                <div class="modal-header" style="overflow:auto;">
-                    <h4>修改供应商信息</h4>
-                </div>
-                <div>
-                    <div>
-                        <div class="form-group col-md-6 pull-left">
-                            <label class="col-md-4 control-label">供应商类型：</label>
-                            <div class="col-md-8">
-                                <select id="editSupplyType" class="js-example-tags supplyType" name="supplyTypeId" style="width:100%"></select>
-                            </div>
-                        </div>
-                        <div class="form-group col-md-6 pull-left">
-                            <label class="col-md-4 control-label">供应商名称：</label>
-                            <div class="col-md-8">
-                                <input type="text" name="supplyName" define="supply.supplyName" placeholder="请输入供应商名称"  class="form-control">
-                            </div>
-                        </div>
-                        <p class="clearfix"></p>
+            <div class="modal-body" onkeydown="keydown('addButton')">
+                <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('editWindow','editForm')" style="padding:10px"></span>
+                <form role="form" class="form-horizontal" id="editForm">
+                    <input type="hidden" name="supplyId" define="supply.supplyId"/>
+                    <input type="hidden"name="supplyStatus" define="supply.supplyStatus">
+                    <div class="modal-header" style="overflow:auto;">
+                        <h4>修改供应商信息</h4>
                     </div>
                     <div>
-                        <div class="form-group col-md-6 pull-left">
-                            <label class="col-md-4 control-label">联系电话：</label>
-                            <div class="col-md-8">
-                                <input type="number" define="supply.supplyTel" placeholder="请输入联系电话" name="supplyTel" class="form-control" style="width:100%"/>
+                        <div>
+                            <div class="form-group col-md-6 pull-left">
+                                <label class="col-md-4 control-label">供应商类型：</label>
+                                <div class="col-md-8">
+                                    <select id="editSupplyType" class="js-example-tags supplyType" name="supplyTypeId" style="width:100%"></select>
+                                </div>
                             </div>
+                            <div class="form-group col-md-6 pull-left">
+                                <label class="col-md-4 control-label">供应商名称：</label>
+                                <div class="col-md-8">
+                                    <input type="text" name="supplyName" define="supply.supplyName" placeholder="请输入供应商名称"  class="form-control">
+                                </div>
+                            </div>
+                            <p class="clearfix"></p>
                         </div>
-                        <div class="form-group col-md-6 pull-left">
-                            <label class="col-md-4 control-label">供应商负责人：</label>
-                            <div class="col-md-8">
-                                <input type="text" define="supply.supplyPricipal"   name="supplyPricipal" class="form-control">
+                        <div>
+                            <div class="form-group col-md-6 pull-left">
+                                <label class="col-md-4 control-label">联系电话：</label>
+                                <div class="col-md-8">
+                                    <input type="number" define="supply.supplyTel" placeholder="请输入联系电话" name="supplyTel" class="form-control" style="width:100%"/>
+                                </div>
                             </div>
+                            <div class="form-group col-md-6 pull-left">
+                                <label class="col-md-4 control-label">供应商负责人：</label>
+                                <div class="col-md-8">
+                                    <input type="text" define="supply.supplyPricipal"   name="supplyPricipal" class="form-control">
+                                </div>
+                            </div>
+                            <p class="clearfix"></p>
+                        </div>
+                        <div>
+                            <div class="form-group col-md-6 pull-left">
+                                <label class="col-md-4 control-label">供应商微信号：</label>
+                                <div class="col-md-8">
+                                    <input type="text" define="supply.supplyWeChat" name="supplyWeChat"  class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6 pull-left">
+                                <label class="col-md-4 control-label">支付宝账号：</label>
+                                <div class="col-md-8">
+                                    <input type="number" define="supply.supplyAlipay"  name="supplyAlipay"  class="form-control">
+                                </div>
+                            </div>
+                            <p class="clearfix"></p>
+                        </div>
+                        <div>
+                            <div class="form-group col-md-6 pull-left">
+                                <label class="col-md-4 control-label">开户银行全称：</label>
+                                <div class="col-md-8">
+                                    <select class="js-example-tags form-control" define="supply.supplyBank" class="form-control" name="supplyBank">
+                                        <option value="中国银行">中国银行</option>
+                                        <option value="交通银行">交通银行</option>
+                                        <option value="招商银行">招商银行</option>
+                                        <option value="广发银行">广发银行</option>
+                                        <option value="浦发银行">浦发银行</option>
+                                        <option value="中信银行">中信银行</option>
+                                        <option value="华夏银行">华夏银行</option>
+                                        <option value="汇丰银行">汇丰银行</option>
+                                        <option value="光大银行">光大银行</option>
+                                        <option value="平安银行">平安银行</option>
+                                        <option value="浙商银行">浙商银行</option>
+                                        <option value="上海银行">上海银行</option>
+                                        <option value="北京银行">北京银行</option>
+                                        <option value="中信银行">中信银行</option>
+                                        <option value="温州银行">温州银行</option>
+                                        <option value="民生银行">民生银行</option>
+                                        <option value="中国建设银行">中国建设银行</option>
+                                        <option value="中国农业银行">中国农业银行</option>
+                                        <option value="中国工商银行">中国工商银行</option>
+                                        <option value="中国农业银行">中国农业银行</option>
+                                        <option value="杭州联合银行">杭州联合银行</option>
+                                        <option value="深圳发展银行">深圳发展银行</option>
+                                        <option value="中国邮政储蓄银行">中国邮政储蓄银行</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6 pull-left">
+                                <label class="col-md-4 control-label">开户银行卡号：</label>
+                                <div class="col-md-8">
+                                    <input type="number" define="supply.supplyBankNo" name="supplyBankNo"  class="form-control">
+                                </div>
+                            </div>
+                            <p class="clearfix"></p>
+                        </div>
+                        <div>
+                            <div class="form-group col-md-6 pull-left">
+                                <label class="col-md-4 control-label">开户人姓名：</label>
+                                <div class="col-md-8">
+                                    <input type="text" define="supply.supplyBankAccount"  name="supplyBankAccount"  class="form-control" style="width: 100%;">
+                                </div>
+                            </div>
+                            <p class="clearfix"></p>
+                        </div>
+                        <div>
+                            <div class="form-group col-md-12 pull-right">
+                                <label class="col-md-2 control-label" style="bottom: 6px;right:5px">供应商地址：</label>
+                                <div class="col-md-9" id="address" style="bottom:3px;display: block;">
+                                    <input type="text" define="supply.supplyAddress" class="form-control">
+                                </div>
+                                <div class="col-md-9" id="supplyAddress" style="display: none;">
+                                    <fieldset id="editCity_china">
+                                        <div class="pull-left">
+                                            省份：<select class="province" disabled="disabled" id="editProvince" name="editProvince"></select>
+                                        </div>
+                                        <div class="pull-left">
+                                            &nbsp;&nbsp;&nbsp;城市：<select class="city" disabled="disabled" id="editCity" name="editCity"></select>
+                                        </div>
+                                        <div class="pull-left">
+                                            &nbsp;&nbsp;&nbsp;地区：<select class="area" disabled="disabled" id="editArea" name="editArea"></select>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            </div>
+                            <p class="clearfix"></p>
                         </div>
                         <p class="clearfix"></p>
+                        <div class="modal-footer" >
+                             <span id="editError"></span>
+                             <button type="button" class="btn btn-default" onclick="closeModals('editWindow','editForm')">关闭</button>
+                             <button id="editButton" type="button" onclick="editSubmit()" class="btn btn-success">保存</button>
+                         </div>
                     </div>
-                    <div>
-                        <div class="form-group col-md-6 pull-left">
-                            <label class="col-md-4 control-label">供应商微信号：</label>
-                            <div class="col-md-8">
-                                <input type="text" define="supply.supplyWeChat" name="supplyWeChat"  class="form-control">
-                            </div>
-                        </div>
-                        <div class="form-group col-md-6 pull-left">
-                            <label class="col-md-4 control-label">支付宝账号：</label>
-                            <div class="col-md-8">
-                                <input type="number" define="supply.supplyAlipay"  name="supplyAlipay"  class="form-control">
-                            </div>
-                        </div>
-                        <p class="clearfix"></p>
-                    </div>
-                    <div>
-                        <div class="form-group col-md-6 pull-left">
-                            <label class="col-md-4 control-label">开户银行全称：</label>
-                            <div class="col-md-8">
-                                <select class="js-example-tags form-control" define="supply.supplyBank" class="form-control" name="supplyBank">
-                                    <option value="中国银行">中国银行</option>
-                                    <option value="交通银行">交通银行</option>
-                                    <option value="招商银行">招商银行</option>
-                                    <option value="广发银行">广发银行</option>
-                                    <option value="浦发银行">浦发银行</option>
-                                    <option value="中信银行">中信银行</option>
-                                    <option value="华夏银行">华夏银行</option>
-                                    <option value="汇丰银行">汇丰银行</option>
-                                    <option value="光大银行">光大银行</option>
-                                    <option value="平安银行">平安银行</option>
-                                    <option value="浙商银行">浙商银行</option>
-                                    <option value="上海银行">上海银行</option>
-                                    <option value="北京银行">北京银行</option>
-                                    <option value="中信银行">中信银行</option>
-                                    <option value="温州银行">温州银行</option>
-                                    <option value="民生银行">民生银行</option>
-                                    <option value="中国建设银行">中国建设银行</option>
-                                    <option value="中国农业银行">中国农业银行</option>
-                                    <option value="中国工商银行">中国工商银行</option>
-                                    <option value="中国农业银行">中国农业银行</option>
-                                    <option value="杭州联合银行">杭州联合银行</option>
-                                    <option value="深圳发展银行">深圳发展银行</option>
-                                    <option value="中国邮政储蓄银行">中国邮政储蓄银行</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group col-md-6 pull-left">
-                            <label class="col-md-4 control-label">开户银行卡号：</label>
-                            <div class="col-md-8">
-                                <input type="number" define="supply.supplyBankNo" name="supplyBankNo"  class="form-control">
-                            </div>
-                        </div>
-                        <p class="clearfix"></p>
-                    </div>
-                    <div>
-                        <div class="form-group col-md-6 pull-left">
-                            <label class="col-md-4 control-label">开户人姓名：</label>
-                            <div class="col-md-8">
-                                <input type="text" define="supply.supplyBankAccount"  name="supplyBankAccount"  class="form-control" style="width: 100%;">
-                            </div>
-                        </div>
-                        <p class="clearfix"></p>
-                    </div>
-                    <div>
-                        <div class="form-group col-md-12 pull-right">
-                            <label class="col-md-2 control-label" style="bottom: 6px;right:5px">供应商地址：</label>
-                            <div class="col-md-9" id="address" style="bottom:3px;display: block;">
-                                <input type="text" define="supply.supplyAddress" class="form-control">
-                            </div>
-                            <div class="col-md-9" id="supplyAddress" style="display: none;">
-                                <fieldset id="editCity_china">
-                                    <div class="pull-left">
-                                        省份：<select class="province" disabled="disabled" id="editProvince" name="editProvince"></select>
-                                    </div>
-                                    <div class="pull-left">
-                                        &nbsp;&nbsp;&nbsp;城市：<select class="city" disabled="disabled" id="editCity" name="editCity"></select>
-                                    </div>
-                                    <div class="pull-left">
-                                        &nbsp;&nbsp;&nbsp;地区：<select class="area" disabled="disabled" id="editArea" name="editArea"></select>
-                                    </div>
-                                </fieldset>
-                            </div>
-                        </div>
-                        <p class="clearfix"></p>
-                    </div>
-                    <p class="clearfix"></p>
-                    <div class="modal-footer" >
-                         <span id="editError"></span>
-                         <button type="button" class="btn btn-default" onclick="closeModals('editWindow','editForm')">关闭</button>
-                         <button id="editButton" type="button" onclick="editSubmit()" class="btn btn-success">保存</button>
-                     </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
@@ -420,7 +424,7 @@
 <div id="detailWindow" class="modal fade" style="overflow-y:scroll" data-backdrop="static" >
     <div class="modal-dialog"  style="width:90%">
         <div class="modal-content">
-            <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('detailWindow','detailForm')" style="padding:10px"></span>
+            <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('detailWindow','detailForm')"></span>
             <div class="modal-header" style="overflow:auto;">
                 <h4>供应商详细信息</h4>
             </div>

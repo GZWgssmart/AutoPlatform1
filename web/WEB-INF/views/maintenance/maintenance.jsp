@@ -29,12 +29,17 @@
                 <th data-field="maintainRecord.checkin.company.companyName">汽修公司</th>
                 <th data-field="maintainRecord.checkin.model.modelName">汽车车型</th>
                 <th data-field="maintainRecord.checkin.carPlate">车牌名称</th>
+                <th data-field="maintainRecord.checkin.maintainOrFix">维修|保养</th>
+                <th data-field="maintainRecord.checkin.intactDegrees">车身完好度</th>
+                <th data-field="maintainRecord.checkin.carThings">车上物品</th>
+                <th data-field="maintainRecord.checkin.userRequests">用户要求描述</th>
+                <%--<th data-field="maintainRecord.checkin.checkinCreatedTime">用户登记时间</th>--%>
                 <%--<th data-field="maintainRecord.startTime" data-formatter="formatterDateTime">保养开始时间</th>--%>
                 <%--<th data-field="maintainRecord.actualEndTime" data-formatter="formatterDateTime">保养结束时间</th>--%>
                 <%--<th data-field="maintainRecord.pickupTime" data-formatter="formatterDateTime">车主提车时间</th>--%>
                 <%--<th data-field="maintainRecord.recordDes">维修保养记录描述</th>--%>
 
-                <th data-field="workStatus">维修保养状态</th>
+                <%--<th data-field="workStatus">维修保养状态</th>--%>
             </tr>
             </thead>
         </table>
@@ -66,7 +71,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">进度描述：</label>
                         <div class="col-sm-7">
-                            <textarea class="form-control" row="8" name="maintainScheduleDes" placeholder="请输入保养进度描述"></textarea>
+                            <input class="form-control" row="8" name="maintainScheduleDes" placeholder="请输入保养进度描述"></input>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -80,7 +85,6 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-
 
 <!-- 修改弹窗 -->
 <div class="modal fade" id="editWindow" aria-hidden="true" style="overflow:auto; ">
@@ -159,7 +163,7 @@
                         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增进度描述
                     </button>
                     <button id="btn_edit" type="button" class="btn btn-default" onclick="showEdit();">
-                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改进度描述
+                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>确认完成
                     </button>
                 </div>
                 <hr>

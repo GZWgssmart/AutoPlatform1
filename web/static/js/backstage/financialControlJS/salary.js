@@ -33,14 +33,109 @@ $(function () {
 
 
 function importData() {
-    $("#import").modal('show');
+    $("#exceWin").modal('show');
+    initTableNotTollbar("exceTable", "/outGoingType/queryByPager");
+}
+
+/** 关闭支出类型 */
+function exceCloseOutTypeWin() {
+    $("input[type=reset]").trigger("click");
+    $("#exceWin").modal('hide');
+}
+
+var outId;
+/** 选择支出类型 */
+function exceCheckOutType () {
+    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员";
+    $.post("/user/isLogin/"+roles, function (data) {
+        if(data.result == 'success'){
+            var selectRow = $("#exceTable").bootstrapTable('getSelections');
+            if (selectRow.length != 1) {
+                swal('选择失败', "只能选择一条数据", "error");
+                return false;
+            } else {
+                $("#exceWin").modal('hide');
+                var outType = selectRow[0];
+                console.log(outType.outTypeId + "aaaaaaaaaaaaaaaaaaa")
+                $("#outId").val(outType.outTypeId);
+                $("#exceWin").modal('hide');
+                $("#import").modal('show');
+            }
+        }else if(data.result == 'notLogin'){
+            swal({title:"",
+                    text:data.message,
+                    confirmButtonText:"确认",
+                    type:"error"}
+                ,function(isConfirm){
+                    if(isConfirm){
+                        top.location = "/user/loginPage";
+                    }else{
+                        top.location = "/user/loginPage";
+                    }
+                })
+        }else if(data.result == 'notRole'){
+            swal({title:"",
+                text:data.message,
+                confirmButtonText:"确认",
+                type:"error"})
+        }
+    });
+
 }
 
 $(function () {
     //0.初始化fileinput
     var oFileInput = new FileInput();
-    oFileInput.Init("txt_file", "/salary/readExcel");
+    oFileInput.Init("txt_file", "");
 });
+
+
+function fileCloseModals() {
+    $("#import").modal('hide');
+}
+
+function fileSubmit() {
+    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员";
+    $.post("/user/isLogin/"+roles, function (data) {
+        if(data.result == 'success'){
+            var outId = $("#outId").val();
+            var formData = new FormData();
+            var txt_file = document.getElementById("txt_file").files[0];
+            console.log(outId + "outId")
+            formData.append("outId", outId);
+            formData.append("txt_file", txt_file);
+            $.ajax({
+                url: "/salary/readExcel",
+                type: "POST",
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (data1) {
+                    $("#import").modal('hide');
+                    initTable("table", "/salary/queryByPager"); // 初始化表格
+                }
+            })
+        }else if(data.result == 'notLogin'){
+            swal({title:"",
+                    text:data.message,
+                    confirmButtonText:"确认",
+                    type:"error"}
+                ,function(isConfirm){
+                    if(isConfirm){
+                        top.location = "/user/loginPage";
+                    }else{
+                        top.location = "/user/loginPage";
+                    }
+                })
+        }else if(data.result == 'notRole'){
+            swal({title:"",
+                text:data.message,
+                confirmButtonText:"确认",
+                type:"error"})
+        }
+    });
+
+}
 
 //初始化fileinput
 var FileInput = function () {
@@ -51,9 +146,9 @@ var FileInput = function () {
         //初始化上传控件的样式
         control.fileinput({
             language: 'zh', //设置语言
-            uploadUrl: uploadUrl, //上传的地址
+            uploadUrl: "/salary/readExcel?outId="+outId, //上传的地址
             allowedFileExtensions: ['xls', 'xlsx'],//接收的文件后缀
-            showUpload: true, //是否显示上传按钮
+            showUpload: false, //是否显示上传按钮
             showCaption: false,//是否显示标题
             browseClass: "btn btn-primary", //按钮样式
             dropZoneEnabled: true,//是否显示拖拽区域
@@ -218,6 +313,7 @@ function checkPersonnel() {
         var user = selectRow[0];
         $("#userName").val(user.userName);
         $("#userId").val(user.userId);
+        $("#userSalary").val(user.userSalary);
         $("#addWin").modal('show');
     }
 }
@@ -275,6 +371,71 @@ function blurredQuery() {
 }
 
 /**
+ * 根据工资查询
+ */
+function selectSalary() {
+    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员";
+    $.post("/user/isLogin/" + roles, function (data) {
+        if (data.result == "success") {
+            var start = $("#startSalary");// 获取模糊查询按钮
+            var end = $("#endSalary").val();// 获取模糊查询输入框文本
+            console.log(start + end)
+            initTable('table', '/salary/selectSalary?start=' + start + '&end=' + end);
+        } else if (data.result == "notLogin") {
+            swal({title:"",
+                    text:data.message,
+                    confirmButtonText:"确认",
+                    type:"error"}
+                ,function(isConfirm){
+                    if(isConfirm){
+                        top.location = "/user/loginPage";
+                    }else{
+                        top.location = "/user/loginPage";
+                    }
+                })
+        } else if (data.result = "notRole") {
+            swal({
+                title:"",
+                text: data.message,
+                confirmButtonText: "确认", // 提示按钮上的文本
+                type: "error"
+            })
+        }
+    })
+}
+
+/**
+ * 还原
+ */
+function returnSalary() {
+    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员";
+    $.post("/user/isLogin/" + roles, function (data) {
+        if (data.result == "success") {
+            initTable("table", "/salary/queryByPager"); // 初始化表格
+        } else if (data.result == "notLogin") {
+            swal({title:"",
+                    text:data.message,
+                    confirmButtonText:"确认",
+                    type:"error"}
+                ,function(isConfirm){
+                    if(isConfirm){
+                        top.location = "/user/loginPage";
+                    }else{
+                        top.location = "/user/loginPage";
+                    }
+                })
+        } else if (data.result = "notRole") {
+            swal({
+                title:"",
+                text: data.message,
+                confirmButtonText: "确认", // 提示按钮上的文本
+                type: "error"
+            })
+        }
+    })
+}
+
+/**
  * 前台验证
  * @param formId
  */
@@ -288,7 +449,6 @@ function validator(formId) {
         fields: {
             userName: {
                 message: '人员不能为空',
-
                 validators: {
                     notEmpty: {
                         message: '请点击选择人员',
@@ -335,7 +495,33 @@ function validator(formId) {
 
         .on('success.form.bv', function (e) {
             if (formId == "addForm") {
-                formSubmit("/salary/add", formId, "add");
+                var userSalary = 0;
+                var minusSalary = 0;
+                var prizeSalary = 0;
+
+                userSalary = $("#userSalary").val();
+                minusSalary = $("#minusSalary").val();
+                prizeSalary = $("#prizeSalary").val();
+
+                if ($("#prizeSalary").val() == '') {
+                    prizeSalary = 0;
+                }
+                if ($("#minusSalary").val() == '') {
+                    minusSalary = 0;
+                }
+
+
+                var totalSalary = (parseInt(userSalary) + parseInt(prizeSalary)) - parseInt(minusSalary);
+                console.log(totalSalary + "aaaaaaaaaaaaaaaaa")
+                if (totalSalary >= 0) {
+                    $("#outWin").modal('show');
+                    initTableNotTollbar("outTable", "/outGoingType/queryByPager");
+                    $("#addWin").modal('hide');
+                } else {
+                    $("#inWin").modal('show');
+                    initTableNotTollbar("inTable", "/incomingType/queryByPager");
+                    $("#addWin").modal('hide');
+                }
 
             } else if (formId == "editForm") {
                 formSubmit("/salary/update", formId, "edit");
@@ -345,13 +531,63 @@ function validator(formId) {
 
 }
 
-function addSubmit() {
-    $("#addForm").data('bootstrapValidator').validate();
-    if ($("#addForm").data('bootstrapValidator').isValid()) {
-        $("#addButton").attr("disabled", "disabled");
+
+/** 关闭支出类型 */
+function closeOutTypeWin() {
+    $("input[type=reset]").trigger("click");
+    $("#outWin").modal('hide');
+    $("#addWin").modal('show')
+}
+
+
+/** 选择支出类型 */
+function checkOutType () {
+    var selectRow = $("#outTable").bootstrapTable('getSelections');
+    if (selectRow.length != 1) {
+        swal('选择失败', "只能选择一条数据", "error");
+        return false;
     } else {
-        $("#addButton").removeAttr("disabled");
+        $("#outWin").modal('hide');
+        var outType = selectRow[0];
+        $("#inoutId").val(outType.outTypeId);
+        console.log(outType.outTypeId);
+        $("#addWin").modal('hide');
+        formSubmit("/salary/add?outId="+outType.outTypeId, "addForm", "add");
     }
+}
+
+
+
+/** 选择收入类型 */
+function inCheckInType () {
+    var selectRow = $("#inTable").bootstrapTable('getSelections');
+    if (selectRow.length != 1) {
+        swal('选择失败', "只能选择一条数据", "error");
+        return false;
+    } else {
+        $("#inWin").modal('hide');
+        var inType = selectRow[0];
+        $("#inoutId").val(inType.inTypeId);
+        console.log(inType.inTypeId);
+        $("#addWin").modal('hide');
+        formSubmit("/salary/add?inId="+inType.inTypeId, "addForm", "add");
+    }
+}
+
+/** 关闭收入类型 */
+function inCloseInTypeWin() {
+    $("input[type=reset]").trigger("click");
+    $("#inWin").modal('hide');
+    $("#addWin").modal('show')
+}
+
+
+
+
+
+function addSubmit() {
+
+    $("#addForm").data('bootstrapValidator').validate();
 }
 
 function editSubmit() {

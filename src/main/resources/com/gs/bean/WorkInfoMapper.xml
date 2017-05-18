@@ -12,7 +12,7 @@
     <result column="week" property="week" jdbcType="VARCHAR" />
 
     <association property="maintainRecord" javaType="com.gs.bean.MaintainRecord">
-        <id column="checkinId" property="checkinId"/>
+        <id column="recordId" property="recordId"/>
         <result column="startTime" property="startTime"/>
         <result column="endTime" property="endTime"/>
         <result column="actualEndTime" property="actualEndTime"/>

@@ -74,7 +74,7 @@ function showEdit(){
             } else {
                 swal({
                     title: "",
-                    text: "请选择要修改的供应商记录", // 主要文本
+                    text: "请先选择要修改的供应商", // 主要文本
                     confirmButtonColor: "#DD6B55", // 提示按钮的颜色
                     confirmButtonText: "确定", // 提示按钮上的文本
                     type: "warning"
@@ -338,13 +338,14 @@ function formSubmit(url, formId, winId) {
                 })// 提示窗口, 修改成功
                 $('#table').bootstrapTable('refresh');
                 if (formId == 'addForm') {
-                   /* $("input[type=reset]").trigger("click"); // 移除表单中填的值
-                    $('#addForm').data('bootstrapValidator').resetForm(true); // 移除所有验证样式
-                    $("#addButton").removeAttr("disabled"); // 移除不可点击*/
+                    $("input[type=reset]").trigger("click"); // 移除表单中填的值
+                    $("#addButton").removeAttr("disabled"); // 移除不可点击
                     // 设置select2的值为空
                     $("#addSupplyType").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
                     $("#addCompanyName").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
                 }
+                $("#" + formId).data('bootstrapValidator').destroy(); // 销毁此form表单
+                $('#' + formId).data('bootstrapValidator', null);// 此form表单设置为空
             } else if (data.result == "fail") {
                 swal({
                     title: "",
@@ -493,5 +494,12 @@ function showDetail() {
 
         console.log(formatterDateTime(supply.supplyCreatedTime));
         console.log(supply);
+    }
+}
+
+/*回车登录*/
+function keydown(buttonId){
+    if(event.keyCode == 13){
+        document.getElementById(buttonId).click();
     }
 }

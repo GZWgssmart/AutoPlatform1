@@ -93,6 +93,27 @@
     limit #{pager.beginIndex}, #{pager.pageSize}
   </select>
 
+  <!-- 分页模糊查询工资 -->
+  <select id="querySalary" resultMap="salaryMap">
+    <![CDATA[
+        select s.*, u.userId,u.userName from t_salary s, t_user u where 1 =1 and u.userId = s.userId and totalSalary between #{start} and #{end}
+        ]]>
+    <if test="pager.user.companyId != '' and pager.user.companyId != null">
+      and u.companyId = #{pager.user.companyId}
+    </if>
+    limit #{pager.beginIndex}, #{pager.pageSize}
+  </select>
+
+  <!-- 分页模糊查询工资个数-->
+  <select id="countSalary" resultType="int">
+    <![CDATA[
+        select count(*) from t_salary s, t_user u where 1 =1 and u.userId = s.userId and totalSalary between #{start} and #{end}
+        ]]>
+    <if test="user.companyId != '' and user.companyId != null">
+      and u.companyId = #{user.companyId}
+    </if>
+  </select>
+
   <!-- 分页模糊查询个数 -->
   <select id="countByBlurred" resultType="int">
     <![CDATA[

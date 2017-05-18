@@ -14,6 +14,15 @@ public class MaintainSchedule {
     private String maintainScheduleDes;//维修保养进度描述
     private Date msCreatedTime;//维修保养创建时间
     private String msStatus;//维修保养进度状态
+    private String currentStatus;//维修保养当前状态
+
+    public String getCurrentStatus() {
+        return currentStatus;
+    }
+
+    public void setCurrentStatus(String currentStatus) {
+        this.currentStatus = currentStatus;
+    }
 
     private MaintainRecord maintainRecord;//维修保养记录表
 

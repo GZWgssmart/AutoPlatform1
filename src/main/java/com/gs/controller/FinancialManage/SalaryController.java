@@ -7,6 +7,7 @@ import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
 import com.gs.common.util.*;
+import com.gs.service.IncomingOutgoingService;
 import com.gs.service.SalaryService;
 import org.apache.commons.io.FileUtils;
 import org.apache.ibatis.annotations.Param;
@@ -44,10 +45,13 @@ public class SalaryController {
     private Logger logger = (Logger) LoggerFactory.getLogger(SalaryController.class);
 
     /**
-     * 收入Service
+     * 工资Service
      */
     @Resource
     public SalaryService salaryService;
+
+    @Resource
+    public IncomingOutgoingService incomingOutgoingService;
 
 
     @ResponseBody
@@ -85,13 +89,42 @@ public class SalaryController {
 
     @ResponseBody
     @RequestMapping(value = "add", method = RequestMethod.POST)
-    public ControllerResult add(HttpSession session,Salary salary) {
+    public ControllerResult add(HttpSession session, Salary salary, String inId, String outId) {
         if (SessionUtil.isLogin(session)) {
             String roles = "公司超级管理员,公司普通管理员,汽车公司财务人员";
             if (RoleUtil.checkRoles(roles)) {
                 logger.info("添加工资信息");
                 User user = (User) session.getAttribute("user");
+                double prize = 0.d;
+                double minus = 0.d;
+                if (salary.getPrizeSalary() != null) {
+                    prize = salary.getPrizeSalary();
+                }
+                if (salary.getMinusSalay() != null) {
+                    minus = salary.getMinusSalay();
+                }
+                if (salary.getPrizeSalary() == null) {
+                    prize = 0d;
+                }
+                if (salary.getMinusSalay() == null) {
+                    minus = 0d;
+                }
+                salary.setTotalSalary(user.getUserSalary() + prize - minus);
                 salary.setUser(user);
+                IncomingOutgoing incomingOutgoing = new IncomingOutgoing();
+                if (inId != null) {
+                    incomingOutgoing.setInTypeId(inId);
+                    incomingOutgoing.setInOutMoney(minus - prize - user.getUserSalary());
+                } else if (outId != null) {
+                    incomingOutgoing.setInTypeId(outId);
+                    incomingOutgoing.setInOutMoney(salary.getTotalSalary());
+                } else {
+                    incomingOutgoing.setInTypeId(null);
+                    incomingOutgoing.setInTypeId(null);
+                }
+                incomingOutgoing.setInOutCreatedUser(user.getUserId());
+                incomingOutgoing.setCompanyId(user.getCompanyId());
+                incomingOutgoingService.insert(incomingOutgoing);
                 salaryService.insert(salary);
                 return ControllerResult.getSuccessResult("添加成功");
             } else {
@@ -125,6 +158,7 @@ public class SalaryController {
                 logger.info("修改工资信息");
                 User user = (User) session.getAttribute("user");
                 salary.setUser(user);
+                salary.setTotalSalary(user.getUserSalary() + salary.getPrizeSalary() - salary.getMinusSalay());
                 salaryService.update(salary);
                 return ControllerResult.getSuccessResult("修改成功");
             } else {
@@ -136,7 +170,7 @@ public class SalaryController {
             return null;
         }
 
-}
+    }
 
     @RequestMapping(value = "exportExcel")
     public ModelAndView exportExcel(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
@@ -157,8 +191,17 @@ public class SalaryController {
                         objs[0] = salary1.getSalaryId();
                         objs[1] = salary1.getUserId();
                         objs[2] = salary1.getUser().getUserName();
-                        objs[3] = salary1.getPrizeSalary();
-                        objs[4] = salary1.getMinusSalay();
+                        if (salary.getPrizeSalary() != null) {
+                            objs[3] = salary1.getPrizeSalary();
+                        } else {
+                            objs[3] = 0;
+                        }
+                        if (salary1.getMinusSalay() != null) {
+                            objs[4] = salary1.getMinusSalay();
+                        } else {
+                            objs[4] = 0;
+                        }
+
                         objs[5] = salary1.getTotalSalary();
                         objs[6] = salary1.getSalaryDes();
                         if (salary1.getSalaryTime() != null) {
@@ -168,7 +211,7 @@ public class SalaryController {
                         }
 
                         if (salary1.getSalaryCreatedTime() != null) {
-                            objs[8] =java.sql.Timestamp.valueOf(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(salary1.getSalaryCreatedTime()));
+                            objs[8] = java.sql.Timestamp.valueOf(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(salary1.getSalaryCreatedTime()));
                         } else {
                             objs[8] = null;
                         }
@@ -228,13 +271,35 @@ public class SalaryController {
         }
     }
 
-
+    @ResponseBody
+    @RequestMapping(value = "selectSalary", method = RequestMethod.GET)
+    public Pager4EasyUI<Salary> querySalary(HttpSession session, HttpServletRequest request, String start, String end, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
+        if (SessionUtil.isLogin(session)) {
+            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员";
+            if (RoleUtil.checkRoles(roles)) {
+                logger.info("根据工资段查询");
+                Pager pager = new Pager();
+                pager.setPageNo(Integer.valueOf(pageNumber));
+                pager.setPageSize(Integer.valueOf(pageSize));
+                pager.setUser((User) session.getAttribute("user"));
+                pager.setTotalRecords(salaryService.countSalary((User)session.getAttribute("user"), start,end));
+                List<Salary> salaries = salaryService.querySalary(pager,start,end);
+                return new Pager4EasyUI<Salary>(pager.getTotalRecords(), salaries);
+            } else {
+                logger.info("此用户无拥有工资信息分页查询的角色");
+                return null;
+            }
+        } else {
+            logger.info("请先登录");
+            return null;
+        }
+    }
 
 
 
     @ResponseBody
-    @RequestMapping(value="readExcel",method=RequestMethod.POST)
-    public ControllerResult readExcel(HttpSession session, MultipartFile txt_file) throws IOException {
+    @RequestMapping(value = "readExcel", method = RequestMethod.POST)
+    public ControllerResult readExcel(HttpSession session, MultipartFile txt_file, String outId) throws IOException {
         if (SessionUtil.isLogin(session)) {
             String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员";
             if (RoleUtil.checkRoles(roles)) {
@@ -261,18 +326,35 @@ public class SalaryController {
                     salary = new Salary();
                     try {
                         salary.setUserId(arr.get(1));
-                        salary.setPrizeSalary(Double.valueOf(arr.get(3)));
-                        salary.setMinusSalay(Double.valueOf(arr.get(4)));
+
+                        if (Double.valueOf(arr.get(3)) == null) {
+                            salary.setPrizeSalary(0.d);
+                        } else {
+                            salary.setPrizeSalary(Double.valueOf(arr.get(3)));
+                        }
+                        if (Double.valueOf(arr.get(4)) == null) {
+                            salary.setMinusSalay(0.d);
+                        } else {
+                            salary.setMinusSalay(Double.valueOf(arr.get(4)));
+                        }
                         salary.setTotalSalary(Double.valueOf(arr.get(5)));
                         salary.setSalaryDes(arr.get(6));
                         salary.setSalaryTime(dateFormat(arr.get(7)));
                     } catch (NullPointerException e) {
                         return ControllerResult.getFailResult("导入工资失败");
                     }
+                    User user = (User)session.getAttribute("user");
+                    IncomingOutgoing incomingOutgoing = new IncomingOutgoing();
+                    incomingOutgoing.setOutTypeId(outId);
+                    incomingOutgoing.setInTypeId(null);
+                    incomingOutgoing.setCompanyId(user.getCompanyId());
+                    incomingOutgoing.setInOutCreatedUser(user.getUserId());
+                    incomingOutgoing.setInOutMoney(salary.getTotalSalary());
+                    incomingOutgoings.add(incomingOutgoing);
                     salaries.add(salary);
                 }
                 if (salaryService.addInsert(salaries)) {
-                  /*  incomingOutgoingService.addInsert(incomingOutgoings);*/
+                    incomingOutgoingService.addInsert(incomingOutgoings);
                     return ControllerResult.getSuccessResult("导入工资成功");
                 } else {
                     return ControllerResult.getFailResult("导入工资失败,没有该权限");
@@ -285,8 +367,8 @@ public class SalaryController {
         }
     }
 
-    public Date dateFormat(String str){
-        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    public Date dateFormat(String str) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {
             return sdf.parse(str);
         } catch (ParseException e) {

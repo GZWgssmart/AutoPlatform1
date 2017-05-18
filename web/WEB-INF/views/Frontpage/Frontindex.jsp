@@ -307,14 +307,16 @@
                     <h3><a href="javaScript:;" style="text-decoration: none;">最近维修保养</a></h3>
                 </div>
                 <div class="search-box">
-                    <form method="post" name="search">
+                    <form method="" name="search">
                         <div class="form-search" style="text-align: right;">
-                            <input type="text" class="input-text" placeholder="输入手机号，查看维修保养记录"/>
-                            <button type="submit" class="btn">
+                            <input id="phone" type="text" class="input-text" placeholder="输入手机号，查看维修保养记录"/>
+                            <button type="button" class="btn" id="sendbutton">
                             <span>
                                 发送短信验证码
                             </span>
                             </button>
+                            <span id="codeprompt" style="font-size: 20px;color: red;display: none;margin-left: 15px;">手机号错误</span>
+                            <input id="phonecodeinput" type="text" class="input-text" onchange="" placeholder="输入短信验证码" style="margin-left: 15px;width: 200px;display:none;">
                         </div>
                     </form>
                 </div>
@@ -497,7 +499,27 @@
                 }
             });
         });
+        $("#sendbutton").click(function () {
+            var phone = document.getElementById("phone");
+            var prompt = document.getElementById("codeprompt");
+            var phonecodeinput = document.getElementById("phonecodeinput");
+            if(phone.value == null || phone.value == ""){
+                prompt.innerHTML = "手机号为空";
+                prompt.style.display ="inline-block";
+            }else if(!(/^1[34578]\d{9}$/).test(phone.value)){
+                prompt.innerHTML = "手机号错误";
 
+            }else{
+                prompt.style.display = "none";
+                phonecodeinput.style.display = "inline-block";
+            }
+        })
+
+        $(document).keydown(function () {
+            if(event.keyCode == 13){
+                $("#sendbutton").click();
+            }
+        });
     });
 </script>
 

@@ -146,10 +146,10 @@ public class SupplyController {
                     String area = request.getParameter("area");
                     supply.setSupplyAddress(province + "-" + city + "-" + area);
                     supplyService.insert(supply);
-                    logger.info("添加供应商记录成功");
-                    return ControllerResult.getSuccessResult("添加供应商记录成功");
+                    logger.info("添加供应商成功");
+                    return ControllerResult.getSuccessResult("添加供应商成功");
                 } else {
-                    return ControllerResult.getFailResult("添加供应商记录失败");
+                    return ControllerResult.getFailResult("添加供应商失败");
                 }
             }else {
                 logger.info("此用户无拥有添加供应商记录角色");
@@ -182,13 +182,13 @@ public class SupplyController {
                     String area = request.getParameter("editArea");
                     supply.setSupplyAddress(province + "-" + city + "-" + area);
                     supplyService.update(supply);
-                    logger.info("修改供应商记录成功");
-                    return ControllerResult.getSuccessResult("修改供应商记录成功");
+                    logger.info("修改供应商成功");
+                    return ControllerResult.getSuccessResult("修改供应商成功");
                 } else {
-                    return ControllerResult.getFailResult("修改供应商记录失败");
+                    return ControllerResult.getFailResult("修改供应商失败");
                 }
             }else {
-                logger.info("此用户无拥有修改供应商记录角色");
+                logger.info("此用户无拥有修改供应商角色");
                 return null;
             }
         }else{
@@ -210,18 +210,18 @@ public class SupplyController {
                 if (id != null && !id.equals("") && status != null && !status.equals("")) {
                     if (status.equals("N")) {
                         supplyService.active(id);
-                        logger.info("供应商记录激活成功");
-                        return ControllerResult.getSuccessResult("供应商记录激活成功");
+                        logger.info("激活供应商成功");
+                        return ControllerResult.getSuccessResult("激活供应商成功");
                     } else {
                         supplyService.inactive(id);
-                        logger.info("供应商记录禁用成功");
-                        return ControllerResult.getSuccessResult("供应商记录禁用成功");
+                        logger.info("禁用供应商成功");
+                        return ControllerResult.getSuccessResult("禁用供应商成功");
                     }
                 } else {
                     return ControllerResult.getFailResult("操作失败");
                 }
             }else {
-                logger.info("此用户无拥有对供应商记录状态做激活与禁用的角色");
+                logger.info("此用户无拥有对供应商状态做激活与禁用的角色");
                 return null;
             }
         }else{
@@ -241,7 +241,7 @@ public class SupplyController {
         if(SessionUtil.isLogin(session)) {
             String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员";
             if (RoleUtil.checkRoles(roles)) {
-                logger.info("供应商记录模糊查询");
+                logger.info("供应商模糊查询");
                 Pager pager = new Pager();
                 pager.setPageNo(Integer.valueOf(pageNumber));
                 pager.setPageSize(Integer.valueOf(pageSize));
@@ -272,7 +272,7 @@ public class SupplyController {
                     return new Pager4EasyUI<Supply>(pager.getTotalRecords(), supplys);
                 }
             }else {
-                logger.info("此用户无拥有供应商记录模糊查询角色");
+                logger.info("此用户无拥有供应商模糊查询角色");
                 return null;
             }
         }else{
