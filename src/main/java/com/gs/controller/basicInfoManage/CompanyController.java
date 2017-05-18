@@ -11,6 +11,9 @@ import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
 import com.gs.common.util.*;
 import com.gs.service.CompanyService;
+import com.gs.service.RoleService;
+import com.gs.service.UserRoleService;
+import com.gs.service.UserService;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -44,11 +47,20 @@ public class CompanyController {
     @Resource
     private CompanyService companyService;
 
+    @Resource
+    private UserService userService;
+
+    @Resource
+    private RoleService roleService;
+
+    @Resource
+    private UserRoleService userRoleService;
+
     @ResponseBody
     @RequestMapping(value = "queryAllCompany",method = RequestMethod.GET)
     public List<ComboBox4EasyUI> queryAll(HttpSession session){
         if (SessionUtil.isLogin(session)) {
-            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员";
+            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,车主";
             if (RoleUtil.checkRoles(roles)) {
                 logger.info("查询所有公司信息");
                 List<Company> companys = companyService.queryAll((User) session.getAttribute("user"));
