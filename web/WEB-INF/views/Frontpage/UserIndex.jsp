@@ -61,7 +61,8 @@
 			<dt><i class="Hui-iconfont">&#xe6b4;</i> 我的预约<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
-					<li><a data-href="myrese" data-title="查看预约" href="javascript:void(0)">查看预约</a></li>
+					<li><a data-href="myrese" data-title="查看我的预约" href="javascript:void(0)">查看我的预约</a></li>
+					<li><a data-href="appointmenting" data-title="我要预约" href="javascript:void(0)">我要预约</a></li>
 				</ul>
 			</dd>
 		</dl>
@@ -95,7 +96,7 @@
 		<div class="Hui-tabNav-wp">
 			<ul id="min_title_list" class="acrossTab cl">
 				<li class="active">
-					<span title="欢迎页面" data-href="welcome.html">欢迎页面</span>
+					<span title="主页" data-href="welcome">主页</span>
 					<em></em></li>
 		</ul>
 	</div>
@@ -114,14 +115,9 @@
 		<li id="closeall">关闭全部 </li>
 </ul>
 </div>
-<!--_footer 作为公共模版分离出去-->
 <script type="text/javascript" src="/static/h-ui/js/jquery.min.js"></script>
-<%--<script type="text/javascript" src="/static/h-ui/js/layer.js"></script>--%>
 <script type="text/javascript" src="/static/h-ui/js/H-ui.min.js"></script>
 <script type="text/javascript" src="/static/h-ui/js/H-ui.admin.js"></script>
-<!--/_footer 作为公共模版分离出去-->
-
-<!--请在下方写此页面业务相关的脚本-->
 <script type="text/javascript" src="/static/h-ui/js/jquery.contextmenu.r2.js"></script>
 <script src="/static/js/sweetalert/sweetalert.min.js"></script>
 <script type="text/javascript">
@@ -134,8 +130,8 @@ $(function() {
             alert(data.message);
             window.location = "home";
         }
-
     });
+
 })
 
 </script>

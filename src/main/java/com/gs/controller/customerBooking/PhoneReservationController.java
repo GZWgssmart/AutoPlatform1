@@ -158,7 +158,7 @@ public class PhoneReservationController {
     @RequestMapping(value = "add",method = RequestMethod.POST)
     public ControllerResult add(Appointment appointment,HttpSession session){
         if(SessionUtil.isLogin(session)){
-            String roles = "公司超级管理员,公司普通管理员,汽修公司接待员";
+            String roles = "公司超级管理员,公司普通管理员,汽修公司接待员,车主";
             if (RoleUtil.checkRoles(roles)) {
                 User user = (User)session.getAttribute("user");
                 logger.info("添加电话预约");

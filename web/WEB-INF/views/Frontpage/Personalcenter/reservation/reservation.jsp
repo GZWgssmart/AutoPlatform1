@@ -56,11 +56,6 @@
                 <th data-width="180" data-field="appCreatedTime" data-formatter="formatterDate">
                     登记时间
                 </th>
-                <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员">
-                    <th data-width="100"  data-field="company.companyName">
-                        汽修公司
-                    </th>
-                </shiro:hasAnyRoles>
                 <th data-width="100" data-field="currentStatus">
                     当前状态
                 </th>

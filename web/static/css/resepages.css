@@ -6,7 +6,6 @@
 .form-box{
     height: 100%;
     margin: 0px 90px;
-    padding-top: 100px;
     text-align: center;
 
 }
@@ -21,8 +20,8 @@
 .form-box2{
     width: 650px;
     float: left;
-    padding: 15px 35px;
-    background: rgba(0,0,0,0.6);
+    padding: 35px 35px;
+    background: rgba(0,0,0,0.8);
 }
 .form-control{
     height: 40px;
@@ -33,9 +32,6 @@ input[type=date]{
 input[type=time]{
     width: 235px;
     margin-right: 0;
-}
-.form-group{
-    height: 75px;
 }
 .form-group label{
     color: white;

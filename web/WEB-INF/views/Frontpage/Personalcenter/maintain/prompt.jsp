@@ -42,8 +42,13 @@
             </tr>
             </thead>
         </table>
+
     </div>
 </div>
+
+
+
+
 
 
 <script src="/static/js/jquery.min.js"></script>
@@ -53,12 +58,14 @@
 <script src="/static/js/jquery.formFill.js"></script>
 <script src="/static/js/select2/select2.js"></script>
 <script src="/static/js/sweetalert/sweetalert.min.js"></script>
+<script src="/static/js/backstage/custManage/maintainremind.js"></script>
 <script src="/static/js/bootstrap-validate/bootstrapValidator.js"></script>
-<script src="/static/js/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.js"></script>
-<script src="/static/js/bootstrap-dateTimePicker/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+<script src="/static/js/plugins/layui/layui.js" charset="utf-8"></script>
 <script src="/static/js/backstage/main.js"></script>
-<script src="/static/js/backstage/basicInfoManage/maintenance.js"></script>
 <script>
+    $(function () {
+        initTable('table','/maintainRemind/queryByPagerUser');
+    })
 </script>
 </body>
 </html>

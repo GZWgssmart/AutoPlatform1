@@ -29,7 +29,8 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/")
-public class FrontpageController {
+public class
+FrontpageController {
 
     private Logger logger = (Logger) LoggerFactory.getLogger(PhoneReservationController.class);
 

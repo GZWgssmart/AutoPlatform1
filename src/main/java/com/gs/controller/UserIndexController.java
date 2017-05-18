@@ -2,12 +2,14 @@ package com.gs.controller;
 
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.Appointment;
+import com.gs.bean.Company;
 import com.gs.bean.User;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.util.EncryptUtil;
 import com.gs.common.util.RoleUtil;
 import com.gs.common.util.SessionUtil;
 import com.gs.service.AppointmentService;
+import com.gs.service.CompanyService;
 import com.gs.service.UserService;
 import org.apache.ibatis.annotations.Param;
 import org.apache.shiro.SecurityUtils;
@@ -17,12 +19,15 @@ import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by 不曾有黑夜 on 2017/5/9.
@@ -43,12 +48,25 @@ public class UserIndexController {
     @Resource
     private UserService userService;
 
+    @Resource
+    private CompanyService companyService;
+
+
     /*欢迎页面*/
-    @RequestMapping(value = "welcome", method = RequestMethod.GET)
-    public String welcome() {
-        return "Frontpage/Personalcenter/AccountSettings/welcome";
+    @RequestMapping(value ="welcome",method = RequestMethod.GET)
+    public ModelAndView welcome(HttpServletRequest request, HttpSession session){
+        List<Company> companys = companyService.queryAll((User)session.getAttribute("frontUser"));
+        System.out.print(companys);
+        request.setAttribute("companys", companys);
+        ModelAndView mav = new ModelAndView("Frontpage/Personalcenter/AccountSettings/welcome");
+        return mav;
     }
 
+    /*预约页面*/
+    @RequestMapping(value = "appointmenting", method = RequestMethod.GET)
+    public String appointmenting() {
+        return "Frontpage/Personalcenter/reservation/appointmenting";
+    }
 
     /*账号信息页面*/
     @RequestMapping(value = "accountinfo", method = RequestMethod.GET)

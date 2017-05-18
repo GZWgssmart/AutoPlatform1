@@ -295,7 +295,7 @@
             <div class="content-first">
                 <div class="recent-title">
                     <i class="title-bg"></i>
-                    <h3><a href="javaScript:;" style="text-decoration: none;">最近预约保养</a></h3>
+                    <h3><a href="javaScript:;" style="text-decoration: none;">最近保养</a></h3>
                 </div>
                 <div class="con">
                     <div class="acc-head">
@@ -321,7 +321,7 @@
                 </div>
                 <div class="recent-title">
                     <i class="title-bg"></i>
-                    <h3><a href="javaScript:;" style="text-decoration: none;">最近预约维修</a></h3>
+                    <h3><a href="javaScript:;" style="text-decoration: none;">最近维修</a></h3>
                 </div>
                 <div class="con">
                     <div class="acc-head">
