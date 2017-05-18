@@ -13,6 +13,8 @@ public class Company {
 
     private String companyPricipal;//公司负责人
 
+    private String companyPricipalphone;//公司负责人电话
+
     private String companyWebsite;//公司官网URL
 
     private String companyLogo;//公司logo图片
@@ -26,6 +28,14 @@ public class Company {
     private Double companyLatitude;//公司纬度
 
     private String companyDes;//公司描述
+
+    public String getCompanyPricipalphone() {
+        return companyPricipalphone;
+    }
+
+    public void setCompanyPricipalphone(String companyPricipalphone) {
+        this.companyPricipalphone = companyPricipalphone;
+    }
 
     private String companyStatus;//公司状态
 

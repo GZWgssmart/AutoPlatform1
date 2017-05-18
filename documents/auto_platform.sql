@@ -1,4 +1,4 @@
-/**
+﻿/**
 公司表
 */
 DROP TABLE IF EXISTS `t_company`;
@@ -8,6 +8,7 @@ CREATE TABLE `t_company` (
   `companyAddress` varchar(150) NOT NULL COMMENT '公司地址,not null',
   `companyTel` varchar(11) NOT NULL COMMENT '公司联系方式, not null',
   `companyPricipal` varchar(20) DEFAULT NULL COMMENT '公司负责人',
+  `companyPricipalphone` varchar(11) DEFAULT NULL COMMENT '公司负责人联系电话',
   `companyWebsite` varchar(100) DEFAULT NULL COMMENT '公司官网URL',
   `companyLogo` varchar(200) DEFAULT NULL COMMENT '公司logo图片，使用默认值',
   `companyOpenDate` date DEFAULT NULL COMMENT '公司成立时间',

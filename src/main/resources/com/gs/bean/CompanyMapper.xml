@@ -7,6 +7,7 @@
     <result column="companyAddress" property="companyAddress" jdbcType="VARCHAR" />
     <result column="companyTel" property="companyTel" jdbcType="VARCHAR" />
     <result column="companyPricipal" property="companyPricipal" jdbcType="VARCHAR" />
+    <result column="companyPricipalphone" property="companyPricipalphone" jdbcType="VARCHAR"/>
     <result column="companyWebsite" property="companyWebsite" jdbcType="VARCHAR" />
     <result column="companyLogo" property="companyLogo" jdbcType="VARCHAR" />
     <result column="companyOpendate" property="companyOpendate" jdbcType="DATE" />
@@ -51,15 +52,15 @@
   <!--添加公司-->
   <insert id="insert"  parameterType="company">
     <![CDATA[
-			INSERT into t_company(companyId, companyName, companyAddress, companyTel,companyPricipal,companyWebsite,companyLogo,companyOpendate,companySize,companyLongitude,companyLatitude,companyDes,companyStatus)
-			values(#{companyId}, #{companyName}, #{companyAddress}, #{companyTel}, #{companyPricipal}, #{companyWebsite}, #{companyLogo}, #{companyOpendate}, #{companySize}, #{companyLongitude}, #{companyLatitude}, #{companyDes},'Y')
+			INSERT into t_company(companyId, companyName, companyAddress, companyTel,companyPricipal,companyPricipalphone,companyWebsite,companyLogo,companyOpendate,companySize,companyLongitude,companyLatitude,companyDes,companyStatus)
+			values(#{companyId}, #{companyName}, #{companyAddress}, #{companyTel}, #{companyPricipal}, #{companyPricipalphone}, #{companyWebsite}, #{companyLogo}, #{companyOpendate}, #{companySize}, #{companyLongitude}, #{companyLatitude}, #{companyDes},'Y')
      ]]>
   </insert>
 
   <!--修改公司-->
   <update id="update" parameterType="company">
     <![CDATA[
-			update t_company set companyName = #{companyName},companyAddress = #{companyAddress},companyTel = #{companyTel},companyPricipal = #{companyPricipal},companyWebsite = #{companyWebsite},companyLogo = #{companyLogo},companyOpendate = #{companyOpendate},companySize = #{companySize},companyLongitude = #{companyLongitude},companyLatitude = #{companyLatitude},companyDes = #{companyDes}where companyId = #{companyId}
+			update t_company set companyName = #{companyName},companyAddress = #{companyAddress},companyTel = #{companyTel},companyPricipal = #{companyPricipal},companyPricipalphone = #{companyPricipalphone},companyWebsite = #{companyWebsite},companyLogo = #{companyLogo},companyOpendate = #{companyOpendate},companySize = #{companySize},companyLongitude = #{companyLongitude},companyLatitude = #{companyLatitude},companyDes = #{companyDes}where companyId = #{companyId}
      ]]>
   </update>
 

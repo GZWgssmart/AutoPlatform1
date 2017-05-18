@@ -272,6 +272,23 @@ function validator(formId) {
                     },
                 }
             },
+            companyPricipalphone: {
+                message: '负责人联系电话验证失败',
+                    validators: {
+                    notEmpty: {
+                        message: '负责人联系电话不能为空'
+                    },
+                    stringLength: {
+                        min: 11,
+                            max: 11,
+                            message: '负责人联系电话必须为11位'
+                    },
+                    regexp: {
+                        regexp: /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/,
+                            message: '请输入正确的手机号'
+                    }
+                }
+            },
             companySize: {
                 message: '公司规模验证失败',
                 validators: {

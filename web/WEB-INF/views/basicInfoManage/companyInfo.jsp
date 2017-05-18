@@ -21,24 +21,25 @@
 
 <div class="container">
     <div class="panel-body" style="padding-bottom:0px;">
-        <table id="table">
+        <table id="table" style="table-layout: fixed">
             <thead>
                 <tr>
                     <th data-radio="true"></th>
-                    <th data-field="companyName">公司名称</th>
-                    <th data-field="companyAddress">公司地址</th>
-                    <th data-field="companyTel">联系电话</th>
-                    <th data-field="companyPricipal">负责人</th>
-                    <th data-field="companyWebsite">公司官网网址</th>
-                    <th data-field="companyLogo" data-formatter="formatterImg">公司LOGO</th>
-                    <th data-field="companyOpendate" data-formatter="formatterDate">公司成立时间</th>
-                    <th data-field="companySize">公司规模</th>
-                    <th data-field="companyLongitude">公司经度</th>
-                    <th data-field="companyLatitude">公司纬度</th>
-                    <th data-field="companyDes">公司描述</th>
-                    <th data-field="companyStatus" data-formatter="showStatusFormatter">公司状态</th>
+                    <th data-width="120" data-field="companyName">公司名称</th>
+                    <th data-width="150" data-field="companyAddress">公司地址</th>
+                    <th data-width="120" data-field="companyTel">联系电话</th>
+                    <th data-width="100" data-field="companyPricipal">负责人</th>
+                    <th data-width="130" data-field="companyPricipalphone">负责人联系电话</th>
+                    <th data-width="170" data-field="companyWebsite">公司官网网址</th>
+                    <th data-width="120" data-field="companyLogo" data-formatter="formatterImg">公司LOGO</th>
+                    <th data-width="150" data-field="companyOpendate" data-formatter="formatterDate">公司成立时间</th>
+                    <th data-width="120" data-field="companySize">公司规模</th>
+                    <th data-width="120" data-field="companyLongitude">公司经度</th>
+                    <th data-width="120" data-field="companyLatitude">公司纬度</th>
+                    <th data-width="150" data-field="companyDes">公司描述</th>
+                    <th data-width="100" data-field="companyStatus" data-formatter="showStatusFormatter">公司状态</th>
                     <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员">
-                        <th data-field="companyStatus" data-formatter="statusFormatter">
+                        <th data-width="100" data-field="companyStatus" data-formatter="statusFormatter">
                             操作
                         </th>
                     </shiro:hasAnyRoles>
@@ -106,21 +107,18 @@
                         <input type="text" name="companyPricipal" placeholder="请输入负责人" class="form-control">
                     </div>
                 </div>
-
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">负责人联系电话：</label>
+                    <div class="col-sm-7">
+                        <input type="number" id="addcompanyPricipalphone" name="companyPricipalphone" placeholder="请输入负责人联系电话" class="form-control" style="width:100%"/>
+                    </div>
+                </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">公司官网网址：</label>
                     <div class="col-sm-7">
                         <input type="text" name="companyWebsite" placeholder="请输入公司官网网址" class="form-control">
                     </div>
                 </div>
-
-                <%--<div class="form-group">--%>
-                    <%--<label class="col-sm-3 control-label">公司规模：</label>--%>
-                    <%--<div class="col-sm-7">--%>
-                        <%--<input type="text" name="companySize" placeholder="请输入公司规模" class="form-control">--%>
-                    <%--</div>--%>
-                <%--</div>--%>
-
                 <div class="form-group">
                     <label class="col-sm-3 control-label">公司规模：</label>
                     <div class="col-sm-7">
@@ -213,7 +211,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">联系电话：</label>
                     <div class="col-sm-7">
-                        <input type="number" name="companyTel" placeholder="联系电话电话" define="companyInfo.companyTel" class="form-control" style="width:100%"/>
+                        <input type="number" name="companyTel" placeholder="请输入联系电话电话" define="companyInfo.companyTel" class="form-control" style="width:100%"/>
                     </div>
                 </div>
 
@@ -224,6 +222,14 @@
                                class="form-control">
                     </div>
                 </div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">负责人联系电话：</label>
+                    <div class="col-sm-7">
+                        <input type="number"  name="companyPricipalphone" placeholder="请输入负责人联系电话" define="companyInfo.companyPricipalphone" class="form-control" style="width:100%"/>
+                    </div>
+                </div>
+
                 <div class="form-group">
                     <label class="col-sm-3 control-label">公司官网网址：</label>
                     <div class="col-sm-7">
@@ -231,13 +237,6 @@
                                class="form-control">
                     </div>
                 </div>
-                <%--<div class="form-group">--%>
-                    <%--<label class="col-sm-3 control-label">公司规模：</label>--%>
-                    <%--<div class="col-sm-7">--%>
-                        <%--<input type="text" name="companySize" define="companyInfo.companySize" placeholder="请输入公司规模"--%>
-                               <%--class="form-control">--%>
-                    <%--</div>--%>
-                <%--</div>--%>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">公司规模：</label>
                     <div class="col-sm-7">
@@ -277,21 +276,6 @@
                                           rows="3" maxlength="500"></textarea>
                     </div>
                 </div>
-
-                <%--<div class="form-group">--%>
-                    <%--<label class="col-sm-3 control-label">公司logo：</label>--%>
-                    <%--<div class="col-lg-7">--%>
-                        <%--<div class="ibox-title">--%>
-                            <%--<div class="input-group" style="padding-left: 15px;">--%>
-                                <%--<input id="edit_companyLogo" define="companyInfo.companyLogo" name="txt_file"--%>
-                                       <%--type="file" class="form-control" multiple--%>
-                                       <%--class="file-loading"--%>
-                                       <%--placeholder="请选择或输入一个你想上传的相册类型,默认当天日期为类型!"/>--%>
-                            <%--</div>--%>
-                        <%--</div>--%>
-                    <%--</div>--%>
-                <%--</div>--%>
-
                 <div class="form-group">
                     <label class="col-sm-3 control-label">公司logo：</label>
                     <div class="col-lg-7">
