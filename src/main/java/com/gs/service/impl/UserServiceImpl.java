@@ -183,4 +183,9 @@ public class UserServiceImpl implements UserService {
     public int countNO(User user) {
         return userDAO.countNO(user);
     }
+
+    @Override
+    public int queryPhoneByOne(String userPhone) {
+        return userDAO.queryPhoneByOne(userPhone);
+    }
 }

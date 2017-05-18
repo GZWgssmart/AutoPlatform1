@@ -57,6 +57,14 @@ public class CarRemindController {
     private UserService userService;
 
     /**
+     * 测试发送短信
+     */
+    @RequestMapping(value="sms", method = RequestMethod.GET)
+    public void sms(){
+
+    }
+
+    /**
      * 提车提醒
      * @return
      */

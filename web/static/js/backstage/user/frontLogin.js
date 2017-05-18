@@ -1,6 +1,10 @@
 var contentPath='';
-
+var userPhone;
 $(function () {
+    $('#phone').bind('input propertychange', function() {
+        // $('.msg').html($(this).val().length + ' characters');
+        userPhone = $("#phone").val();
+    });
     validator('loginForm');
     validator2('regform');
 })
@@ -33,22 +37,21 @@ function validator2(formId) {
             validating: 'glyphicon glyphicon-refresh'
         },
         fields: {
-            phone: {
+            userPhone: {
                 message: '手机号错误',
                 validators: {
                     notEmpty: {
                         message: '手机号错误'
+                    },
+                    threshold: 11,
+                    remote: {
+                        url: '/user/queryPhoneByOne',
+                        message: '该手机号已存在',
+                        delay :  2000,
+                        type: 'GET'
                     }
                 }
             },
-            // phonecode: {
-            //     message: '验证码不能为空',
-            //     validators: {
-            //         notEmpty: {
-            //             message: '验证码不能为空'
-            //         }
-            //     }
-            // },
             password: {
                 message: '用户密码不能为空',
                 validators: {

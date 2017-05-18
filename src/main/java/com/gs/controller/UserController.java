@@ -1,6 +1,8 @@
 package com.gs.controller;
 
 import ch.qos.logback.classic.Logger;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gs.bean.User;
 import com.gs.common.Constants;
 import com.gs.common.bean.ControllerResult;
@@ -28,6 +30,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/user")
@@ -103,6 +107,36 @@ public class UserController {
         }
     }
 
+    /**
+     * 验证手机号是否存在
+     */
+    @ResponseBody
+    @RequestMapping(value = "queryPhoneByOne", method = RequestMethod.GET)
+    public String queryPhoneByOne(HttpServletRequest req) {
+        logger.info("验证手机号是否已经存在");
+            String userPhone = (String)req.getParameter("userPhone");
+            boolean result = true;
+            String resultString = "";
+            Map<String, Boolean> map = new HashMap<String, Boolean>();
+            ObjectMapper mapper = new ObjectMapper();
+            if (userPhone != null && userPhone !="") {
+                int count = userService.queryPhoneByOne(userPhone);
+                if (count > 1 || count == 1) {
+                    result = false;
+                }
+            }
+            map.put("valid", result);
+            try {
+                resultString = mapper.writeValueAsString(map);
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
+            return resultString;
+    }
+
+    /**
+     * 注册
+     */
     @ResponseBody
     @RequestMapping(value = "register", method = RequestMethod.POST)
     public ControllerResult register(User user){

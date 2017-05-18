@@ -219,6 +219,13 @@
     ]]>
   </select>
 
+  <!-- 根据手机号查询是否当前数据库已经存在此手机号 -->
+  <select id="queryPhoneByOne" resultType="int">
+    <![CDATA[
+      select count(userId) from t_user where userPhone = #{userPhone};
+    ]]>
+  </select>
+
   <select id="queryByEmail" resultMap="userBasicManageMap">
     <![CDATA[
           SELECT *FROM auto_platform.t_user WHERE userStatus = 'Y' and userEmail=#{email} OR userPhone=#{email}

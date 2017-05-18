@@ -72,6 +72,9 @@
                     <%--<li>--%>
                         <%--<a class="J_menuItem" href="/error/serverError">500</a>--%>
                     <%--</li>--%>
+                    <li>
+                    <a class="J_menuItem" href="/carRemind/sms">测试发送短信</a>
+                    </li>
                     <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师,汽车公司学徒,汽车公司销售人员,汽车公司财务人员,汽车公司采购人员,汽车公司库管人员,汽车公司人力资源管理部">
                         <li>
                             <a href="#">

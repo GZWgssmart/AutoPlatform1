@@ -75,4 +75,8 @@ public interface UserService extends BaseService<String, User> {
      */
     public int countNO(User user);
 
+    /**
+     * 查询此手机号是否已存在此手机
+     */
+    public int queryPhoneByOne(String phone);
 }

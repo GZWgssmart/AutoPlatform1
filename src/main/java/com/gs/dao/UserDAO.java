@@ -76,5 +76,8 @@ public interface UserDAO extends BaseDAO<String, User>{
      * @return
      */
     public int countNO(User user);
-
+    /**
+     * 查询此手机号是否已存在此手机
+     */
+    public int queryPhoneByOne(String phone);
 }
