@@ -102,12 +102,7 @@
                     <h4>请填写汽车车型的相关信息</h4>
                 </div>
                 <br/>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">车型名称：</label>
-                    <div class="col-sm-7">
-                        <input type="text" name="modelName" placeholder="请输入该车型名称" class="form-control">
-                    </div>
-                </div>
+
                 <div class="form-group">
                     <label class="col-sm-3 control-label">汽车品牌：</label>
                     <div class="col-sm-7">
@@ -115,7 +110,12 @@
                         </select>
                     </div>
                 </div>
-
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">车型名称：</label>
+                    <div class="col-sm-7">
+                        <input type="text" name="modelName" placeholder="请输入该车型名称" class="form-control">
+                    </div>
+                </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">车型描述：</label>
                     <div class="col-sm-7">
@@ -149,17 +149,17 @@
                 </div>
                 <input type="hidden" name="modelId" define="carModel.modelId">
                 <input type="hidden" name="modelStaus" define="carModel.modelStaus">
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">车型命名：</label>
-                    <div class="col-sm-7">
-                        <input type="text" name="modelName" define="carModel.modelName" placeholder="请输入该车型名字" class="form-control">
-                    </div>
-                </div>
                 <div id="editModelDiv" class="form-group">
                     <label class="col-sm-3 control-label">品牌名称：</label>
                     <div class="col-sm-7">
                         <select id="editCarBrand" class="js-example-tags carBrand" name="brandId" style="width:100%">
                         </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">车型命名：</label>
+                    <div class="col-sm-7">
+                        <input type="text" name="modelName" define="carModel.modelName" placeholder="请输入该车型名字" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">

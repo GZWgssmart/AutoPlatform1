@@ -248,9 +248,22 @@ function validator(formId) {
                 validators: {
                     notEmpty: {
                         message: '负责人不能为空'
-                    },
+                    }
                 }
             },
+            companyWebsite: {
+                message: '公司官网网址验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '公司官网网址不能为空'
+                    },
+                    regexp: {
+                        regexp: /^(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?$/,
+                            message: '请输入正确公司官网网址'
+                    }
+                }
+            },
+
             companyPricipal: {
                 message: '负责人验证失败',
                 validators: {
