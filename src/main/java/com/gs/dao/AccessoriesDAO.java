@@ -31,6 +31,8 @@ public interface AccessoriesDAO extends BaseDAO<String, Accessories>{
 
     public int updateCount(@Param("accCount") int accCount,@Param("accId") String accId);
 
+    public int reduceCount(@Param("accCount") int accCount,@Param("accId") String accId);
+
     public Accessories queryByName(@Param("accName") String accName);
 
     public int countByBlurred(@Param("accessories") Accessories accessories, @Param("user") User user);
@@ -40,3 +42,4 @@ public interface AccessoriesDAO extends BaseDAO<String, Accessories>{
      */
     public List<Accessories> queryByCondition(@Param("start")String start, @Param("end")String end, @Param("companyId")String companyId, @Param("accTypeId") String accTypeId,@Param("type")String type);
 }
+

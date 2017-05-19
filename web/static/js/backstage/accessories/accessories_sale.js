@@ -1,5 +1,7 @@
 var contentPath = '';
 var roles = "公司超级管理员,公司普通管理员,汽车公司销售人员,系统超级管理员,系统普通管理员";
+
+var countNum;
 //初始化表格
 $(function () {
     $.post(contentPath + "/user/isLogin/" + roles, function (data) {
@@ -8,29 +10,33 @@ $(function () {
             initSelect2("company", "请选择所属公司", "/company/queryAllCompany");
             initSelect2("accInv", "请选择配件", "/accInv/queryAllAccInv");
             initSelect2("incoming", "请选择收入类型", "/incomingType/queryAllIncoming");
-        } else if(data.result == 'notLogin'){
-            swal({title:"",
-                    text:data.message,
-                    confirmButtonText:"确认",
-                    type:"error"}
-                ,function(isConfirm){
-                    if(isConfirm){
+        } else if (data.result == 'notLogin') {
+            swal({
+                    title: "",
+                    text: data.message,
+                    confirmButtonText: "确认",
+                    type: "error"
+                }
+                , function (isConfirm) {
+                    if (isConfirm) {
                         top.location = "/user/loginPage";
-                    }else{
+                    } else {
                         top.location = "/user/loginPage";
                     }
                 })
-        }else if(data.result == 'notRole'){
-            swal({title:"",
-                text:data.message,
-                confirmButtonText:"确认",
-                type:"error"})
+        } else if (data.result == 'notRole') {
+            swal({
+                title: "",
+                text: data.message,
+                confirmButtonText: "确认",
+                type: "error"
+            })
         }
     })
 });
 
 // 查看全部可用
-function showAvailable(){
+function showAvailable() {
     $.post(contentPath + "/user/isLogin/" + roles, function (data) {
         if (data.result == "success") {
             initTable('table', '/accSale/queryByPage');
@@ -57,7 +63,7 @@ function showAvailable(){
 
 }
 // 查看全部禁用
-function showDisable(){
+function showDisable() {
     $.post(contentPath + "/user/isLogin/" + roles, function (data) {
         if (data.result == "success") {
             initTable('table', '/accSale/queryByPagerDisable');
@@ -84,13 +90,13 @@ function showDisable(){
 }
 
 // 模糊查询
-function blurredQuery(){
+function blurredQuery() {
     $.post(contentPath + "/user/isLogin/" + roles, function (data) {
         if (data.result == "success") {
             var button = $("#ulButton");// 获取模糊查询按钮
             var text = button.text();// 获取模糊查询按钮文本
             var vaule = $("#ulInput").val();// 获取模糊查询输入框文本
-            initTable('table', '/accSale/blurredQuery?text='+text+'&value='+vaule);
+            initTable('table', '/accSale/blurredQuery?text=' + text + '&value=' + vaule);
         } else if (data.result == "notLogin") {
             swal({
                 text: data.message,
@@ -132,7 +138,7 @@ function showEdit() {
                     "title": "",
                     "text": "请选择配件销售信息",
                     confirmButtonColor: "#DD6B55", // 提示按钮的颜色
-                    confirmButtonText:"确定", // 提示按钮上的文本
+                    confirmButtonText: "确定", // 提示按钮上的文本
                     "type": "warning"
                 })
             }
@@ -198,10 +204,10 @@ function formatterStatus(value) {
 
 // 激活或禁用
 function statusFormatter(value, row, index) {
-    if(value == 'Y') {
-        return "&nbsp;&nbsp;<button type='button' class='btn btn-danger' onclick='inactive(\""+'/accSale/statusOperate?accSaleId='+row.accSaleId+'&accSaleStatus=Y'+"\")'>禁用</a>";
+    if (value == 'Y') {
+        return "&nbsp;&nbsp;<button type='button' class='btn btn-danger' onclick='inactive(\"" + '/accSale/statusOperate?accSaleId=' + row.accSaleId + '&accSaleStatus=Y' + "\")'>禁用</a>";
     } else {
-        return "&nbsp;&nbsp;<button type='button' class='btn btn-success' onclick='active(\""+'/accSale/statusOperate?accSaleId='+ row.accSaleId+'&accSaleStatus=N'+ "\")'>激活</a>";
+        return "&nbsp;&nbsp;<button type='button' class='btn btn-success' onclick='active(\"" + '/accSale/statusOperate?accSaleId=' + row.accSaleId + '&accSaleStatus=N' + "\")'>激活</a>";
     }
 }
 
@@ -274,7 +280,7 @@ $('#editDateTimePicker').datetimepicker({
 function addSubmit() {
     $("#addForm").data('bootstrapValidator').validate();
     if ($("#addForm").data('bootstrapValidator').isValid()) {
-        $("#addButton").attr("disabled", "disabled");
+        $("#addButton").removeAttr("disabled");
     } else {
         $("#addButton").removeAttr("disabled");
     }
@@ -316,7 +322,7 @@ function formSubmit(url, formId, winId) {
                     } else if (data.result == "fail") {
                         swal({
                             title: "",
-                            text: "添加失败",
+                            text: data.message,
                             confirmButtonText: "确认",
                             type: "error"
                         })
@@ -353,7 +359,7 @@ function validator(formId) {
             validating: 'glyphicon glyphicon-refresh'
         },
         fields: {
-            inTypeId:{
+            inTypeId: {
                 message: '收入类型不能为空',
                 validators: {
                     notEmpty: {
@@ -385,14 +391,14 @@ function validator(formId) {
                     }
                 }
             },
-            // accSaleCount: {
-            //     message: '配件销售数量不能为空',
-            //     validators: {
-            //         notEmpty: {
-            //             message: '配件销售数量不能为空'
-            //         }
-            //     }
-            // },
+            accSaleCount: {
+                message: '配件销售数量不能为空',
+                validators: {
+                    notEmpty: {
+                        message: '配件销售数量不能为空'
+                    }
+                }
+            },
             accSalePrice: {
                 message: '配件销售单价不能为空',
                 validators: {
@@ -412,27 +418,25 @@ function validator(formId) {
         }
     }).on('success.form.bv', function (e) {
         if (formId == "addForm") {
-            formSubmit(contentPath+"/accSale/addAccSale", formId, "addWindow");
-
+            formSubmit(contentPath + "/accSale/addAccSale", formId, "addWindow");
         } else if (formId == "editForm") {
-            formSubmit(contentPath+"/accSale/updateAccSale", formId, "editWindow");
-
+            formSubmit(contentPath + "/accSale/updateAccSale", formId, "editWindow");
         }
     })
 }
 
 function Addcalculate() {
-    //购买数量
+    //销售数量
     var countNum = document.getElementById("addCountNum").value;
-    //购买单价
+    //销售单价
     var buyPrice = document.getElementById("addSalePrice").value;
-    //购买折扣
+    //销售折扣
     var buyDiscount = document.getElementById("addSaleDiscount").value;
-    //购买总价
+    //销售总价
     var addBuyTotal = document.getElementById("addSaleTotal");
-    //如果有折扣，则加入折扣进行计算，如果没有最终价格为购买总价。
+    //如果有折扣，则加入折扣进行计算，如果没有最终价格为销售总价。
     var addBuyMoney = document.getElementById("addSaleMoney");
-    if (countNum != null && buyPrice != null && countNum != "" && buyPrice != "") {
+    if (countNum != null && countNum != "" && buyPrice != null && buyPrice != "") {
         //计算出的总价需要进行四舍五入计算。
         var totalPrice = Math.floor(parseFloat(buyPrice * 100 * countNum)) / 100;
         //把计算后的值，填入购买总价中。
@@ -442,19 +446,20 @@ function Addcalculate() {
         } else {
             addBuyMoney.value = totalPrice;
         }
+
     }
 }
 
 function Editcalculate() {
-    //购买数量
+    //销售数量
     var countNum = document.getElementById("editSaleNum").value;
-    //购买单价
+    //销售单价
     var buyPrice = document.getElementById("editSalePrice").value;
-    //购买折扣
+    //销售折扣
     var buyDiscount = document.getElementById("editSaleDiscount").value;
-    //购买总价
+    //销售总价
     var addBuyTotal = document.getElementById("editSaleTotal");
-    //如果有折扣，则加入折扣进行计算，如果没有最终价格为购买总价。
+    //如果有折扣，则加入折扣进行计算，如果没有最终价格为销售总价。
     var addBuyMoney = document.getElementById("editSaleMoney");
     if (countNum != null && buyPrice != null && countNum != "" && buyPrice != "") {
         //计算出的总价需要进行四舍五入计算。
@@ -467,14 +472,4 @@ function Editcalculate() {
             addBuyMoney.value = totalPrice;
         }
     }
-}
-
-function limitIdle() {
-    var accId=document.getElementById("addAccInv").value;
-    alert(accId)
-    $.post(contentPath+"/accInv/queryAccInvById?accId="+accId,function (data) {
-        if(data.accIdle!=null&&data.accIdle>0){
-            $("#addCountNum").attr("max",data.accIdle);
-        }
-    }, "json")
 }

@@ -9,6 +9,7 @@ import com.gs.common.bean.Pager4EasyUI;
 import com.gs.common.util.RoleUtil;
 import com.gs.common.util.SessionUtil;
 import com.gs.service.AccessoriesSaleService;
+import com.gs.service.AccessoriesService;
 import com.gs.service.IncomingOutgoingService;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
@@ -43,13 +44,16 @@ public class AccessoriesSaleController {
     private AccessoriesSaleService accessoriesSaleService;
 
     @Resource
+    private AccessoriesService accessoriesService;
+
+    @Resource
     public IncomingOutgoingService incomingOutgoingService;
 
     @ResponseBody
     @RequestMapping(value = "queryAllAccSale", method = RequestMethod.GET)
     public List<ComboBox4EasyUI> queryAllAccSale(HttpSession session) {
         if (SessionUtil.isLogin(session)) {
-            String roles="公司超级管理员,公司普通管理员,汽车公司销售人员,系统超级管理员,系统普通管理员";
+            String roles = "公司超级管理员,公司普通管理员,汽车公司销售人员,系统超级管理员,系统普通管理员";
             if (RoleUtil.checkRoles(roles)) {
                 logger.info("所有配件销售信息");
                 List<AccessoriesSale> accessoriesSales = accessoriesSaleService.queryAll((User) session.getAttribute("user"));
@@ -79,7 +83,7 @@ public class AccessoriesSaleController {
     @RequestMapping(value = "queryByPage", method = RequestMethod.GET)
     public Pager4EasyUI<AccessoriesSale> queryByPager(HttpSession session, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
         if (SessionUtil.isLogin(session)) {
-            String roles="公司超级管理员,公司普通管理员,汽车公司销售人员,系统超级管理员,系统普通管理员";
+            String roles = "公司超级管理员,公司普通管理员,汽车公司销售人员,系统超级管理员,系统普通管理员";
             if (RoleUtil.checkRoles(roles)) {
                 Pager pager = new Pager();
                 pager.setPageNo(Integer.valueOf(pageNumber));
@@ -106,15 +110,20 @@ public class AccessoriesSaleController {
      */
     @ResponseBody
     @RequestMapping(value = "addAccSale", method = RequestMethod.POST)
-    public ControllerResult addAccSale(HttpSession session, AccessoriesSale accessoriesSale,@Param("inTypeId")String inTypeId) {
+    public ControllerResult addAccSale(HttpSession session, AccessoriesSale accessoriesSale, @Param("inTypeId") String inTypeId) {
         if (SessionUtil.isLogin(session)) {
-            User user= (User) session.getAttribute("user");
-            String roles="公司超级管理员,公司普通管理员,汽车公司销售人员";
+            User user = (User) session.getAttribute("user");
+            String roles = "公司超级管理员,公司普通管理员,汽车公司销售人员";
             if (RoleUtil.checkRoles(roles)) {
                 if (accessoriesSale != null && !accessoriesSale.equals("")) {
+                    Accessories accessories = accessoriesService.queryById(accessoriesSale.getAccId());
+                    if (accessoriesSale.getAccSaleCount() > accessories.getAccIdle()) {
+                        return ControllerResult.getFailResult("配件销售数量需要在1至" + accessories.getAccIdle() + "之间!");
+                    }
                     accessoriesSale.setCompanyId(user.getCompanyId());
                     accessoriesSaleService.insert(accessoriesSale);
-                    incomingOutgoingService.insert(inconSet(accessoriesSale,session,inTypeId));
+                    accessoriesService.reduceCount(accessoriesSale.getAccSaleCount(), accessoriesSale.getAccId());
+                    incomingOutgoingService.insert(inconSet(accessoriesSale, session, inTypeId));
                     logger.info("添加配件销售成功");
                     return ControllerResult.getSuccessResult("添加配件销售成功");
                 } else {
@@ -131,10 +140,10 @@ public class AccessoriesSaleController {
         }
     }
 
-    public IncomingOutgoing inconSet(AccessoriesSale accessoriesSale, HttpSession session, String inTypeId){
-        if(accessoriesSale!=null&&!accessoriesSale.equals("")){
-            User user=(User)session.getAttribute("user");
-            IncomingOutgoing incomingOutgoing=new IncomingOutgoing();
+    public IncomingOutgoing inconSet(AccessoriesSale accessoriesSale, HttpSession session, String inTypeId) {
+        if (accessoriesSale != null && !accessoriesSale.equals("")) {
+            User user = (User) session.getAttribute("user");
+            IncomingOutgoing incomingOutgoing = new IncomingOutgoing();
             incomingOutgoing.setInOutMoney(accessoriesSale.getAccSaleMoney());
             incomingOutgoing.setInOutCreatedUser(user.getUserId());
             incomingOutgoing.setInTypeId(inTypeId);
@@ -152,8 +161,8 @@ public class AccessoriesSaleController {
     @RequestMapping(value = "updateAccSale", method = RequestMethod.POST)
     public ControllerResult updateAccSale(HttpSession session, AccessoriesSale accessoriesSale) {
         if (SessionUtil.isLogin(session)) {
-            User user= (User) session.getAttribute("user");
-            String roles="公司超级管理员,公司普通管理员,汽车公司销售人员";
+            User user = (User) session.getAttribute("user");
+            String roles = "公司超级管理员,公司普通管理员,汽车公司销售人员";
             if (RoleUtil.checkRoles(roles)) {
                 if (accessoriesSale != null && !accessoriesSale.equals("")) {
                     accessoriesSale.setCompanyId(user.getCompanyId());
@@ -184,14 +193,14 @@ public class AccessoriesSaleController {
     @RequestMapping(value = "queryByPagerDisable", method = RequestMethod.GET)
     public Pager4EasyUI<AccessoriesSale> queryByPagerDisable(HttpSession session, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
         if (SessionUtil.isLogin(session)) {
-            String roles="公司超级管理员,公司普通管理员,汽车公司销售人员,系统超级管理员,系统普通管理员";
+            String roles = "公司超级管理员,公司普通管理员,汽车公司销售人员,系统超级管理员,系统普通管理员";
             if (RoleUtil.checkRoles(roles)) {
                 logger.info("分页查询所有被禁用登记记录");
                 Pager pager = new Pager();
                 pager.setPageNo(Integer.valueOf(pageNumber));
                 pager.setPageSize(Integer.valueOf(pageSize));
                 pager.setUser((User) session.getAttribute("user"));
-                pager.setTotalRecords(accessoriesSaleService.countByDisable((User)session.getAttribute("user")));
+                pager.setTotalRecords(accessoriesSaleService.countByDisable((User) session.getAttribute("user")));
                 List<AccessoriesSale> accessoriesSales = accessoriesSaleService.queryByPagerDisable(pager);
                 return new Pager4EasyUI<AccessoriesSale>(pager.getTotalRecords(), accessoriesSales);
             } else {
@@ -212,7 +221,7 @@ public class AccessoriesSaleController {
     @RequestMapping(value = "statusOperate", method = RequestMethod.POST)
     public ControllerResult inactive(HttpSession session, String accSaleId, String accSaleStatus) {
         if (SessionUtil.isLogin(session)) {
-            String roles="公司超级管理员,公司普通管理员,汽车公司销售人员";
+            String roles = "公司超级管理员,公司普通管理员,汽车公司销售人员";
             if (RoleUtil.checkRoles(roles)) {
                 if (accSaleId != null && !accSaleId.equals("") && accSaleStatus != null && !accSaleStatus.equals("")) {
                     if (accSaleStatus.equals("N")) {
@@ -249,13 +258,13 @@ public class AccessoriesSaleController {
     @RequestMapping(value = "blurredQuery", method = RequestMethod.GET)
     public Pager4EasyUI<AccessoriesSale> blurredQuery(HttpSession session, HttpServletRequest request, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
         if (SessionUtil.isLogin(session)) {
-            String roles="公司超级管理员,公司普通管理员,汽车公司销售人员,系统超级管理员,系统普通管理员";
+            String roles = "公司超级管理员,公司普通管理员,汽车公司销售人员,系统超级管理员,系统普通管理员";
             if (RoleUtil.checkRoles(roles)) {
                 logger.info("配件销售记录模糊查询");
                 Pager pager = new Pager();
                 pager.setPageNo(Integer.valueOf(pageNumber));
                 pager.setPageSize(Integer.valueOf(pageSize));
-                pager.setUser((User)session.getAttribute("user"));
+                pager.setUser((User) session.getAttribute("user"));
                 String text = request.getParameter("text");
                 String value = request.getParameter("value");
                 if (text != null && !text.equals("") && value != null && !value.equals("")) {

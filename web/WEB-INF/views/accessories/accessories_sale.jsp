@@ -120,7 +120,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">配件：</label>
                         <div class="col-sm-7">
-                            <select id="addAccInv" onchange="limitIdle();" class="js-example-tags accInv" name="accId" style="width:100%">
+                            <select id="addAccInv" class="js-example-tags accInv" name="accId" style="width:100%">
                             </select>
                         </div>
                     </div>
@@ -135,7 +135,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">配件销售数量：</label>
                         <div class="col-sm-7">
-                            <input type="number" id="addCountNum" name="accSaleCount" max="100" onchange="Addcalculate();"
+                            <input type="number" id="addCountNum" min="1" name="accSaleCount" onchange="Addcalculate();"
                                    placeholder="请输入配件销售数量" class="form-control">
                         </div>
                     </div>
@@ -269,27 +269,6 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-
-<!-- 删除弹窗 -->
-<div class="modal fade" id="del" aria-hidden="true">
-    <div class="modal-dialog" style="overflow:hidden;">
-        <form action="/table/edit" method="post">
-            <div class="modal-content">
-                <input type="hidden" id="delNoticeId"/>
-                <div class="modal-footer" style="text-align: center;">
-                    <h2>确认删除吗?</h2>
-                    <button type="button" class="btn btn-default"
-                            data-dismiss="modal">关闭
-                    </button>
-                    <button type="sumbit" class="btn btn-primary" onclick="del()">
-                        确认
-                    </button>
-                </div>
-            </div><!-- /.modal-content -->
-        </form>
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
 <!-- 提示弹窗 -->
 <div class="modal fade" id="tanchuang" aria-hidden="true">
     <div class="modal-dialog">

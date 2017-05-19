@@ -42,7 +42,7 @@
 -->
   <select id="queryAll" resultMap="AccessoriesMap" parameterType="com.gs.bean.User">
     <![CDATA[
-            select ac.accName,ac.accId FROM auto_platform.t_accessories ac where 1=1 and ac.accStatus = 'Y'
+            select ac.accName,ac.accId FROM auto_platform.t_accessories ac where 1=1 and ac.accStatus = 'Y' and ac.accTotal > 0 and ac.accIdle > 0
         ]]>
     <if test="companyId != '' and companyId !=null">
       and ac.companyId = #{companyId}
@@ -239,6 +239,12 @@
   <update id="updateCount">
     <![CDATA[
         UPDATE auto_platform.t_accessories SET accTotal = accTotal + #{accCount} WHERE accId = #{accId}
+        ]]>
+  </update>
+
+  <update id="reduceCount">
+    <![CDATA[
+        UPDATE auto_platform.t_accessories SET accIdle = accIdle - #{accCount}, accTotal = accTotal - #{accCount} WHERE accId = #{accId}
         ]]>
   </update>
 

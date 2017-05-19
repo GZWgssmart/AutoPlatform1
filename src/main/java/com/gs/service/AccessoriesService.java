@@ -19,6 +19,8 @@ public interface AccessoriesService extends BaseService<String, Accessories>{
 
     public int updateCount(@Param("accCount") int accCount,@Param("accId") String accId);
 
+    public int reduceCount(@Param("accCount") int accCount,@Param("accId") String accId);
+
     public Accessories queryByName(@Param("accName") String accName);
 
     /**

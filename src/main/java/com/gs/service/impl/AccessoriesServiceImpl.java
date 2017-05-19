@@ -113,6 +113,11 @@ public class AccessoriesServiceImpl implements AccessoriesService {
     }
 
     @Override
+    public int reduceCount(@Param("accCount") int accCount, @Param("accId") String accId) {
+        return accessoriesDAO.reduceCount(accCount,accId);
+    }
+
+    @Override
     public Accessories queryByName(@Param("accName") String accName) {
         return accessoriesDAO.queryByName(accName);
     }
