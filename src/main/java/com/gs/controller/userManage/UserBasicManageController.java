@@ -245,7 +245,7 @@ public class UserBasicManageController {
     @RequestMapping(value="queryByPager", method = RequestMethod.GET)
     public Pager4EasyUI queryByPager(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize, HttpSession session) {
         if(SessionUtil.isLogin(session)) {
-            String roles = "公司超级管理员,公司普通管理员,汽车公司人力资源管理部,系统超级管理员,系统普通管理员";
+            String roles = "公司超级管理员,公司普通管理员,汽车公司人力资源管理部, 系统超级管理员,系统普通管理员";
             if (RoleUtil.checkRoles(roles)) {
                 Pager pager = new Pager();
                 pager.setPageNo(Integer.valueOf(pageNumber));
@@ -364,6 +364,19 @@ public class UserBasicManageController {
         int countEmail = userService.queryIsEmailByOne(user.getUserEmail(), user.getUserId());
         Map<String, Boolean> map = new HashMap<String, Boolean>();
         if(countEmail > 0)
+            map.put("valid", false);
+        else
+            map.put("valid", true);
+
+        return map;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "queryIsIdentityByOne")
+    public Map queryIsIdentityByOne(User user, HttpSession session) {
+        int countIdentity = userService.queryIsIdentityByOne(user.getUserIdentity(), user.getUserId());
+        Map<String, Boolean> map = new HashMap<String, Boolean>();
+        if(countIdentity > 0)
             map.put("valid", false);
         else
             map.put("valid", true);

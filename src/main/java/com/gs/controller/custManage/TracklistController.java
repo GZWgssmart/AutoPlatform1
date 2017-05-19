@@ -185,7 +185,7 @@ public class TracklistController {
                 User user = (User) session.getAttribute("user");
                 trackList.setCompanyId(user.getCompanyId());
                 trackListService.insert(trackList);
-                return ControllerResult.getSuccessResult("添加成功");
+                return ControllerResult.getSuccessResult("添加回访记录成功");
             } else {
                 logger.info("此用户无拥有此方法");
                 return null;
@@ -204,7 +204,7 @@ public class TracklistController {
             if (RoleUtil.checkRoles(roles)) {
                 logger.info("跟踪回访记录修改操作");
                 trackListService.update(trackList);
-                return ControllerResult.getSuccessResult("修改成功");
+                return ControllerResult.getSuccessResult("修改回访记录成功");
             } else {
                 logger.info("此用户无拥有此方法");
                 return null;

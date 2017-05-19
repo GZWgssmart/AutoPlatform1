@@ -1,15 +1,14 @@
 package com.gs.controller;
 
 import ch.qos.logback.classic.Logger;
-import com.gs.bean.*;
+import com.gs.bean.Appointment;
+import com.gs.bean.Company;
+import com.gs.bean.User;
 import com.gs.common.bean.ControllerResult;
-import com.gs.common.util.RoleUtil;
-import com.gs.common.util.SessionUtil;
 import com.gs.controller.customerBooking.PhoneReservationController;
 import com.gs.service.AppointmentService;
 import com.gs.service.CompanyService;
 import com.gs.service.MaintainDetailService;
-import com.gs.service.MaintainRecordService;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -75,6 +74,12 @@ FrontpageController {
         return "Frontpage/Factorydeta";
     }
 
+    /*商家入驻*/
+    @RequestMapping(value = "factoryreg",method = RequestMethod.GET)
+    public String factoryreg(){
+
+        return "user/login";
+    }
 
 
 

@@ -61,9 +61,8 @@
 
   <select id="queryById" resultMap="incomingTypeMap">
     <![CDATA[
-        select *  from t_incoming_type where  inTypeName = #{inTypeName};
+        select *  from t_incoming_type where inTypeName = #{inTypeName} and inTypeStatus = 'Y';;
     ]]>
-
   </select>
 
   <select id="queryAll" resultMap="incomingTypeMap" parameterType="com.gs.bean.User">

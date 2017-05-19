@@ -68,4 +68,14 @@ public class CompanyServiceImpl implements CompanyService {
 	public int updLogo(String userId, String companyLogo) {
 		return companyDAO.updLogo(userId,companyLogo);
 	}
+
+	@Override
+	public int querycompanyName(String companyName) {
+		return companyDAO.querycompanyName(companyName);
+	}
+
+	@Override
+	public int querycompanyPricipalphone(String companyPricipalphone) {
+		return companyDAO.querycompanyPricipalphone(companyPricipalphone);
+	}
 }

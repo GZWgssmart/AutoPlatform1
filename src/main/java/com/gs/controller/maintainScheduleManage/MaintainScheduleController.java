@@ -211,6 +211,7 @@ public class    MaintainScheduleController {
         }
     }
 
+    //修改进度
     @ResponseBody
     @RequestMapping(value = "updateSchedule", method = RequestMethod.POST)
     public ControllerResult updateSchedule(HttpSession session, MaintainSchedule maintainSchedule){

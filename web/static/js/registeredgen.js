@@ -24,17 +24,17 @@ function reg() {
     };
 
 };
-/*回车登录*/
+ /*回车登录*/
 function keydown(){
-    if(event.keyCode == 13){
-        document.getElementById("loginButton").click();
+     if(event.keyCode == 13){
+         document.getElementById("loginButton").click();
+     }
+ }
+ function keydownres(){
+     if(event.keyCode == 13){
+         document.getElementById("resbtn").click();
     }
-}
-function keydownres(){
-    if(event.keyCode == 13){
-        document.getElementById("resbtn").click();
-    }
-}
+ }
 
 
 $(function () {

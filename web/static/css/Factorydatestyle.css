@@ -2,6 +2,7 @@
     background: url(/static/img/Frontpage/xc-bg.jpg)30% 0;
     height:650px;
     width: 100%;
+    padding-top: 20px;
 }
 .content-main{
     width: 100%;
@@ -13,7 +14,6 @@
     }
 }
 .showdata{
-    /*padding: 15px 40px;*/
     background: rgba(0,0,0,0.2);
     border-radius: 5px;
 }

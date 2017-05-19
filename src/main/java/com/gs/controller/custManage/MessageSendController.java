@@ -1,12 +1,15 @@
 package com.gs.controller.custManage;
 
 import ch.qos.logback.classic.Logger;
+import com.gs.bean.Mail;
 import com.gs.bean.MessageSend;
 import com.gs.bean.User;
+import com.gs.common.Methods;
 import com.gs.common.bean.ComboBox4EasyUI;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
+import com.gs.common.mail.MailConfig;
 import com.gs.common.util.RoleUtil;
 import com.gs.common.util.SessionUtil;
 import com.gs.service.MessageSendService;
@@ -23,8 +26,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.mail.BodyPart;
+import javax.mail.Multipart;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMultipart;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -92,7 +100,7 @@ public class MessageSendController {
                     list.add(m);
                 }
                 messageSendService.batchInsert(list);
-                return ControllerResult.getSuccessResult("添加成功");
+                return ControllerResult.getSuccessResult("添加短信提醒成功");
             } else {
                 logger.info("此用户无拥有此方法");
                 return null;
@@ -103,6 +111,23 @@ public class MessageSendController {
         }
 
     }
+
+//    Mail mail = new Mail();
+//                        mail.setSubject("维修保养记录完工提醒"); // 设置标题
+//    // 设置接收者
+//    // mail.setRecipients(u.getUserEmail()); 收件人
+//    // mail.setCcRecipients(); // 抄送
+//                        mail.setBccRecipients(emails); // 密送
+//                        logger.info(emails);
+//    Multipart multipart = new MimeMultipart();
+//    BodyPart part1 = new MimeBodyPart(); // 邮件内容
+//    // 设置邮件内容
+//                        part1.setContent("尊敬的车主你好, 你的车辆在本店进行的维修保养现已完工好了, 请前来开走车辆","text/html;charset=utf-8");
+//                        multipart.addBodyPart(part1); // 把此邮件内容添加到实例化好的邮件中
+//                        mail.setMultinart(multipart); // 把此邮件对象添加进邮箱
+//    File file = new File(Methods.getRootPath(req) + "WEB-INF/config/mail.properties");
+//                        MailConfig.sendMail(file,mail);
+
 
     @ResponseBody
     @RequestMapping(value = "queryCombox", method = RequestMethod.GET)
@@ -139,7 +164,7 @@ public class MessageSendController {
      */
     @InitBinder
     public void initBinder(WebDataBinder binder) {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         dateFormat.setLenient(false);
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
     }

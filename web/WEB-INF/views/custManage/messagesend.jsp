@@ -32,11 +32,11 @@
         <table id="table">
             <thead>
             <tr>
-                <th data-checkbox="true"></th>
+                <th data-radio="true"></th>
                 <th data-field="checkin.userName">用户名</th>
+                <th data-field="sendMsg">发送内容</th>
                 <th data-field="sendTime" data-formatter="formatterDate">发送时间</th>
                 <th data-field="sendCreatedTime" data-formatter="formatterDate">发送记录创建时间</th>
-                <th data-field="sendMsg">发送内容</th>
             </tr>
             </thead>
         </table>
@@ -55,7 +55,7 @@
             <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('addWindow', 'addForm')"></span>
             <form class="form-horizontal" id="addForm" method="post">
                 <div class="modal-header" style="overflow:auto;">
-                    <h4>请填写短信发送提醒信息</h4>
+                    <h4>添加短信发送提醒的信息</h4>
                 </div>
                 <br/>
                 <div class="form-group">

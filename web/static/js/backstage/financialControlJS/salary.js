@@ -261,6 +261,7 @@ function showAdd() {
     var roles = "公司超级管理员,公司普通管理员,汽车公司财务人员";
     $.post("/user/isLogin/"+roles, function (data) {
         if(data.result == 'success'){
+            initDateTimePicker('addForm', 'salaryTime', 'addDateTimePicker'); // 初始化时间框, 第一参数是form表单id, 第二参数是input的name, 第三个参数为input的id
             $("input[type=reset]").trigger("click");
             $("#add").modal('show');
             $("#addButton").removeAttr("disabled");
@@ -311,6 +312,7 @@ function checkPersonnel() {
         $("#personnelWin").modal('hide');
         $("#add").modal('show');
         var user = selectRow[0];
+        console.log(user.userName + "useName")
         $("#userName").val(user.userName);
         $("#userId").val(user.userId);
         $("#userSalary").val(user.userSalary);
@@ -456,40 +458,15 @@ function validator(formId) {
 
                 }
             },
-            minusSalay: {
-                validators: {
-                    numeric: {message: '请输入合法的数字'}
-                }
-            },
-            prizeSalary: {
-                validators: {
-                    numeric: {message: '请输入合法的数字'}
-                }
-            },
-
-            totalSalary: {
-                message: '请输入总工资',
-                number: true,
-                validators: {
-                    notEmpty: {
-                        message: '请输入总工资',
-                        number: '请输入合法的数字'
-                    }
-
-                }
-            },
-
             salaryTime: {
                 message: '请选择工资发放时间',
-                data: true,
                 validators: {
                     notEmpty: {
-                        message: '请选择工资发放时间',
-                        data: '请选择正确的时间格式'
+                        message: '请选择工资发放时间'
                     }
-
                 }
             }
+
         }
     })
 
@@ -586,8 +563,13 @@ function inCloseInTypeWin() {
 
 
 function addSubmit() {
-
     $("#addForm").data('bootstrapValidator').validate();
+    if ($("#addForm").data('bootstrapValidator').isValid()) {
+        $("#addButton").attr("disabled", "disabled");
+    } else {
+        $("#addButton").removeAttr("disabled");
+    }
+
 }
 
 function editSubmit() {

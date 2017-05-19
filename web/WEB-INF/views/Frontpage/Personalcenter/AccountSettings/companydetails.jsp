@@ -13,7 +13,6 @@
 </head>
 <link rel="stylesheet" href="/static/css/bootstrap.css">
 <link rel="stylesheet" href="/static/css/animate.css">
-<%--<link rel="stylesheet" href="/static/css/TopBtm.css">--%>
 <link rel="stylesheet" href="/static/css/Factorydatestyle.css">
 <body>
 <%--厂家详情页面--%>

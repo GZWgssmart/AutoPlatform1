@@ -50,6 +50,15 @@
     limit #{beginIndex}, #{pageSize}
   </select>
 
+  <select id="countqueryByPagerAll" resultType="int" parameterType="com.gs.bean.User">
+    <![CDATA[
+        select count(maintainStatus) from t_maintain_fix  mf where mf.maintainStatus = 'Y'
+         ]]>
+    <if test="companyId != '' and companyId !=null">
+      and mf.companyId = #{companyId}
+    </if>
+  </select>
+
   <!--分页查询维修项目-->
   <select id="queryByPager" resultType="list" resultMap="MaintainFixMap" parameterType="com.gs.common.bean.Pager">
     <![CDATA[

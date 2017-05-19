@@ -253,22 +253,6 @@ function validator(formId) {
                     }
                 }
             },
-            maintainDes :{
-                message: '维修项目描述验证失败',
-                validators: {
-                    notEmpty: {
-                        message: '维修项目描述不能为空'
-                    }
-                }
-            },
-            companyId: {
-                message: '维修项目所属公司证失败',
-                validators: {
-                    notEmpty: {
-                        message: '维修项目所属公司不能为空'
-                    }
-                }
-            },
             accCount: {
                 message: '配件个数验证失败',
                 validators: {
@@ -397,8 +381,8 @@ function formSubmit(url, formId, winId){
                 $('#table').bootstrapTable('refresh');
                 if(formId == 'addForm'){
                     $("input[type=reset]").trigger("click"); // 移除表单中填的值
-                    // $('#addForm').data('bootstrapValidator').resetForm(true); // 移除所有验证样式
-                    $("#addButton").removeAttr("disabled"); // 移除不可点击
+                    // $('#addForm').data('bootstrapValidator').resetForm(true); //
+                    $("#addButton").removeAttr("disabled"); // 移除不可点击移除所有验证样式
 
                     $("#addCompany").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
                 } else if(formId == 'accForm'){

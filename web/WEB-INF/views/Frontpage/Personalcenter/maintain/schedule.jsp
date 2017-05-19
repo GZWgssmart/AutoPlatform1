@@ -52,21 +52,8 @@
 <script src="/static/js/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.js"></script>
 <script src="/static/js/bootstrap-dateTimePicker/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
 <script src="/static/js/backstage/main.js"></script>
-<script src="/static/js/backstage/basicInfoManage/maintenance.js"></script>
 <script>
-    function showInfo() {
-        var row = $('table').bootstrapTable('getSelections');
-        if (row.length > 0) {
-            /*显示窗口*/
-            alert("好棒棒哦！");
-        } else {
-            swal({
-                "title": "",
-                "text": "请先选择一条数据",
-                "type": "warning"
-            })
-        }
-    }
+
 </script>
 </body>
 </html>

@@ -1,6 +1,8 @@
 package com.gs.controller.basicInfoManage;
 
 import ch.qos.logback.classic.Logger;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gs.bean.Company;
 import com.gs.bean.Role;
 import com.gs.bean.User;
@@ -61,7 +63,7 @@ public class CompanyController {
     @ResponseBody
     @RequestMapping(value = "queryAllCompany",method = RequestMethod.GET)
     public List<ComboBox4EasyUI> queryAll(HttpSession session){
-        if (SessionUtil.isLogin(session)) {
+        if (SessionUtil.isLogin(session) || SessionUtil.isOwnerLogin(session)) {
             String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,车主";
             if (RoleUtil.checkRoles(roles)) {
                 logger.info("查询所有公司信息");
@@ -179,6 +181,62 @@ public class CompanyController {
             }
     }
 
+
+
+    /**
+     * 查询此公司名称是否已存在
+     */
+    @ResponseBody
+    @RequestMapping(value = "querycompanyName", method = RequestMethod.GET)
+    public String querycompanyName(HttpServletRequest req) {
+        logger.info("此公司名称是否已存在此公司名称");
+        String companyName = (String)req.getParameter("companyName");
+        boolean result = true;
+        String resultString = "";
+        Map<String, Boolean> map = new HashMap<String, Boolean>();
+        ObjectMapper mapper = new ObjectMapper();
+        if (companyName != null && companyName !="") {
+            int count = companyService.querycompanyName(companyName);
+            if (count > 1 || count == 1) {
+                result = false;
+            }
+        }
+        map.put("valid", result);
+        try {
+            resultString = mapper.writeValueAsString(map);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return resultString;
+    }
+
+    /**
+     * 查询此公司联系电话是否已存在
+     */
+    @ResponseBody
+    @RequestMapping(value = "querycompanyPricipalphone", method = RequestMethod.GET)
+    public String querycompanyPricipalphone(HttpServletRequest req) {
+        logger.info("此公司联系电话是否已存在此公司联系电话");
+        String companyPricipalphone = (String)req.getParameter("companyPricipalphone");
+        boolean result = true;
+        String resultString = "";
+        Map<String, Boolean> map = new HashMap<String, Boolean>();
+        ObjectMapper mapper = new ObjectMapper();
+        if (companyPricipalphone != null && companyPricipalphone !="") {
+            int count = companyService.querycompanyPricipalphone(companyPricipalphone);
+            if (count > 1 || count == 1) {
+                result = false;
+            }
+        }
+        map.put("valid", result);
+        try {
+            resultString = mapper.writeValueAsString(map);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return resultString;
+    }
+
     @ResponseBody
     @RequestMapping(value = "updateCompany",method = RequestMethod.POST)
     public Object update(HttpSession session,Company company){
@@ -187,10 +245,10 @@ public class CompanyController {
             if (RoleUtil.checkRoles(roles)) {
                 Map map = new HashMap();
                 if (company != null && !company.equals("")) {
-                    logger.info("修改公司信息");
-                    companyService.update(company);
-                    map.put("company",company);
-                    map.put("controllerResult",ControllerResult.getSuccessResult("修改公司信息成功"));
+                        logger.info("修改公司信息");
+                        companyService.update(company);
+                        map.put("company",company);
+                        map.put("controllerResult",ControllerResult.getSuccessResult("修改公司信息成功"));
                     return map;
                 } else {
                     map.put("controllerResult",ControllerResult.getFailResult("修改公司信息失败"));
@@ -289,18 +347,23 @@ public class CompanyController {
     @ResponseBody
     @RequestMapping(value = "afterUpdIcon", method = RequestMethod.POST)
     public Map afterSubForm(@RequestParam("companyLogo") MultipartFile file, @RequestParam("companyId") String userId, HttpServletRequest request){
-        String fileName = file.getOriginalFilename();
-        HttpSession session = request.getSession();
+        Map map = new HashMap();
+        if(file != null) {
+            String fileName = file.getOriginalFilename();
+            HttpSession session = request.getSession();
 
-        String savePath = Constants.UPLOAD_HEAD + Methods.createNewFolder() + "/";
-        Map map= new HashMap();
-        System.out.println(fileName);
-        if(fileSave(file, savePath,userId,session)) {
-            companyService.updLogo(userId,savePath+userId+".jpg");   // 设置头像
-            map.put("controllerResult", ControllerResult.getSuccessResult("提交成功"));
-            map.put("imgPath", savePath);
-        } else {
-            map.put("controllerResult", ControllerResult.getFailResult("提交失败"));
+            String savePath = Constants.UPLOAD_HEAD + Methods.createNewFolder() + "/";
+            System.out.println(fileName);
+            if (fileSave(file, savePath, userId, session)) {
+                companyService.updLogo(userId, savePath + userId + ".jpg");   // 设置头像
+                map.put("controllerResult", ControllerResult.getSuccessResult("添加成功"));
+                map.put("imgPath", savePath);
+            } else {
+                map.put("controllerResult", ControllerResult.getFailResult("添加失败"));
+            }
+            return map;
+        }else{
+            map.put("controllerResult", ControllerResult.getFailResult("添加失败"));
         }
         return map;
     }
@@ -323,31 +386,34 @@ public class CompanyController {
     }
 
     private boolean fileSave(MultipartFile sourceFile, String savePath,String userId, HttpSession session) {
-        byte[] temp = new byte[1024];
-        int len = -1;
-        String rootPath = session.getServletContext().getRealPath("/");
-        System.out.println("文件保存根路径: -------------------------------" + rootPath);
-        savePath =rootPath + "/"+ savePath ;
-        try {
-            File saveDir = new File(savePath);
-            if(!saveDir.isDirectory()) {
-                saveDir.mkdirs();
-            }
+        if(sourceFile != null) {
+            byte[] temp = new byte[1024];
+            int len = -1;
+            String rootPath = session.getServletContext().getRealPath("/");
+            System.out.println("文件保存根路径: -------------------------------" + rootPath);
+            savePath = rootPath + "/" + savePath;
+            try {
+                File saveDir = new File(savePath);
+                if (!saveDir.isDirectory()) {
+                    saveDir.mkdirs();
+                }
 
-            File saveFile = new File(savePath + userId + ".jpg");
-            InputStream fis = sourceFile.getInputStream();
-            OutputStream fos = new FileOutputStream(saveFile);
-            while((len = fis.read(temp)) != -1) {
-                fos.write(temp, 0 ,len);
+                File saveFile = new File(savePath + userId + ".jpg");
+                InputStream fis = sourceFile.getInputStream();
+                OutputStream fos = new FileOutputStream(saveFile);
+                while ((len = fis.read(temp)) != -1) {
+                    fos.write(temp, 0, len);
+                }
+                System.out.println(saveFile.getAbsolutePath());
+                fis.close();
+                fos.flush();
+                fos.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+                return false;
             }
-            System.out.println(saveFile.getAbsolutePath());
-            fis.close();
-            fos.flush();
-            fos.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
+            return true;
         }
-        return true;
+        return false;
     }
 }

@@ -51,7 +51,7 @@
             <div id="addCompanyBox" class="form-group">
                 <label class="col-sm-3 control-label">选择公司：</label>
                 <div class="col-sm-7">
-                    <select   id="addCompany"class="js-example-tags company" name="companyId" style="width:100%">
+                    <select id="addCompany"class="js-example-tags company" name="companyId" style="width:100%">
                     </select>
                 </div>
             </div>
@@ -62,10 +62,10 @@
                     </select>
                 </div>
             </div>
-            <div id="addModelDiv" style="display: none" class="form-group">
+            <div id="addModelDiv" class="form-group">
                 <label class="col-sm-3 control-label">汽车车型：</label>
                 <div class="col-sm-7">
-                    <select   id="addCarModel"class="js-example-tags carModel" name="modelId" style="width:100%">
+                    <select id="addCarModel"class="js-example-tags carModel" name="modelId" style="width:100%">
                     </select>
                 </div>
             </div>
@@ -83,6 +83,7 @@
                     </select>
                 </div>
             </div>
+
             <div class="form-group">
                 <label class="col-sm-3 control-label">车牌号码：</label>
                 <div class="col-sm-7">
@@ -126,10 +127,13 @@
 <script>
     $(function () {
         validator('addForm'); // 初始化验证
+        initDateTimePicker('addForm', 'arriveTime', 'addArriveTime'); // 初始化时间框, 第一参数是form表单id, 第二参数是input的name, 第三个参数为input的id
         initSelect2("company", "请选择公司", "/company/queryAllCompany");
         initSelect2("carBrand", "请选择品牌", "/carBrand/queryAllCarBrand");
         initSelect2("carColor", "请选择颜色", "/carColor/queryAllCarColor");
         initSelect2("carPlate", "请选择车牌", "/carPlate/queryAllCarPlate");
+        initSelect2("carModel", "请选择车型", "/carModel/queryAllCarBrand");
+
     })
 
     function validator(formId) {
@@ -234,7 +238,7 @@
         })
             .on('success.form.bv', function (e) {
                 if (formId == "addForm") {
-                    formSubmit("/appointment/add", formId);
+                    formSubmit("/appointmentAdd", formId);
 
                 }
             })

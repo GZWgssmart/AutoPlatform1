@@ -70,13 +70,13 @@
             <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('addWindow', 'addForm')"></span>
             <form role="form" class="form-horizontal" id="addForm">
                 <div class="modal-header" style="overflow:auto;">
-                    <h4>请填写汽车车牌的相关信息</h4>
+                    <h4>添加汽车车牌的信息</h4>
                 </div>
                 <br/>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">车牌名称：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="plateName" placeholder="请输入该车牌的名称" class="form-control">
+                        <input type="text" id="addplateName" name="plateName" placeholder="请输入该车牌的名称" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
@@ -88,7 +88,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default"
-                            data-dismiss="modal">关闭
+                            data-dismiss="modal" onclick="closeModals('addWindow', 'addForm')">关闭
                     </button>
                     <button id="addButton" type="button" onclick="addSubmit()" class="btn btn-sm btn-success">添加
                     </button>
@@ -110,13 +110,13 @@
                 <input type="hidden"name="plateId" define="carPlate.plateId">
                 <input type="hidden"name="plateStatus" define="carPlate.brandStatus">
                 <div class="modal-header" style="overflow:auto;">
-                    <h4>请修改汽车车牌的相关信息</h4>
+                    <h4>修改汽车车牌的信息</h4>
                 </div>
                 <br/>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">车牌名称：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="plateName" define="carPlate.plateName" placeholder="请输入该车牌的名称" class="form-control">
+                        <input type="text" id="editplateName" name="plateName" define="carPlate.plateName" placeholder="请输入该车牌的名称" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
@@ -128,7 +128,7 @@
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-8">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" onclick="closeModals('editWindow', 'editForm')">关闭</button>
                         <button id="editButton" type="button" onclick="editSubmit()" class="btn btn-sm btn-success">保存</button>
                     </div>
                 </div>

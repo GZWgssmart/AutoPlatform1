@@ -9,6 +9,7 @@ import com.gs.bean.User;
 import com.gs.bean.UserRole;
 import com.gs.common.Constants;
 import com.gs.common.bean.ControllerResult;
+import com.gs.common.mes.IndustrySMS;
 import com.gs.common.util.EncryptUtil;
 import com.gs.common.util.RoleUtil;
 import com.gs.common.util.SessionUtil;
@@ -153,38 +154,46 @@ public class UserController {
      */
     @ResponseBody
     @RequestMapping(value = "register", method = RequestMethod.POST)
-    public ControllerResult register(User user){
+    public ControllerResult register(User user, HttpSession session){
         if(user!=null) {
-            user.setUserId(UUIDUtil.uuid());
-            user.setUserPwd(EncryptUtil.md5Encrypt(user.getUserPwd()));
-            userService.insert(user);
-            UserRole userRole = new UserRole();
-            userRole.setUserId(user.getUserId());
-            userRole.setRoleId("8067fa42-3205-11e7-bc72-507b9d765567");
-            userRoleService.insert(userRole);
-            // 根据此注册手机号查找预约表和登记表， 假如表中的userPhone和注册的userPhone一致， 则把记录的userId改为此注册用户id
-            List<Appointment> appointments = appointmentService.queryByPhone(user.getUserPhone());
-            List<Checkin> checkins = checkinService.queryByPhone(user.getUserPhone());
-            String appIds = null;
-            String chIds = null;
-            for(Appointment appointment : appointments){
-                if(appIds== null){
-                    appIds = "'"+appointment.getAppointmentId()+"'";
-                }else{
-                    appIds +=",'"+appointment.getAppointmentId()+"'";
+            int code = (Integer) session.getAttribute("phonecode");
+            if(user.getPhonecode() == code) {
+                user.setUserId(UUIDUtil.uuid());
+                user.setUserPwd(EncryptUtil.md5Encrypt(user.getUserPwd()));
+                userService.insert(user);
+                UserRole userRole = new UserRole();
+                userRole.setUserId(user.getUserId());
+                userRole.setRoleId("8067fa42-3205-11e7-bc72-507b9d765567");// 设置为车主角色
+                userRoleService.insert(userRole);
+                // 根据此注册手机号查找预约表和登记表， 假如表中的userPhone和注册的userPhone一致， 则把记录的userId改为此注册用户id
+                List<Appointment> appointments = appointmentService.queryByPhone(user.getUserPhone());
+                List<Checkin> checkins = checkinService.queryByPhone(user.getUserPhone());
+                String appIds = null;
+                String chIds = null;
+                for (Appointment appointment : appointments) {
+                    if (appIds == null) {
+                        appIds = "'" + appointment.getAppointmentId() + "'";
+                    } else {
+                        appIds += ",'" + appointment.getAppointmentId() + "'";
+                    }
                 }
-            }
-            for (Checkin checkin : checkins){
-                if(chIds== null){
-                    chIds = "'"+checkin.getCheckinId()+"'";
-                }else{
-                    chIds +=",'"+checkin.getCheckinId()+"'";
+                for (Checkin checkin : checkins) {
+                    if (chIds == null) {
+                        chIds = "'" + checkin.getCheckinId() + "'";
+                    } else {
+                        chIds += ",'" + checkin.getCheckinId() + "'";
+                    }
                 }
+                if(chIds != null && chIds != "") {
+                    checkinService.updateUserIds(user.getUserId(), chIds);
+                }
+                if(appIds != null && appIds != "") {
+                    appointmentService.updateUserIds(user.getUserId(), appIds);
+                }
+                return ControllerResult.getSuccessResult("注册成功, 确认将直接跳转到我的中心...");
+            }else{
+                return ControllerResult.getNotPhoneCodeResult("短信验证码输入错误");
             }
-            checkinService.updateUserIds(user.getUserId(),chIds);
-            appointmentService.updateUserIds(user.getUserId(),appIds);
-
-            return ControllerResult.getSuccessResult("注册成功, 确认将直接跳转到我的中心...");
         }else{
             return ControllerResult.getFailResult("注册失败");
         }
@@ -242,8 +251,8 @@ public class UserController {
     /**
      * 验证是否登录
      */
-    @RequestMapping(value="isLogin/{roles}",method=RequestMethod.POST)
     @ResponseBody
+    @RequestMapping(value="isLogin/{roles}",method=RequestMethod.POST)
     public ControllerResult isLogin(@PathVariable("roles") String roles, HttpSession session) {
         if(SessionUtil.isLogin(session)) {
             if(RoleUtil.checkRoles(roles)){
@@ -256,5 +265,23 @@ public class UserController {
             logger.info("请先登录");
             return ControllerResult.getNotLoginResult("登录信息无效，请重新登录");
         }
+    }
+
+    /**
+     * 发送短信
+     */
+    @ResponseBody
+    @RequestMapping(value="sendSms",method=RequestMethod.GET)
+    public ControllerResult sendSms(HttpServletRequest req, HttpSession session) {
+        String phone = req.getParameter("phone");
+        if(phone!= null && phone!= "") {
+            logger.info("发送短信验证码");
+            int code = (int)((Math.random()*9+1)*100000);
+            session.setAttribute("phonecode", code);
+            IndustrySMS i = new IndustrySMS(phone, "【汽车之家】您的验证码为" +code+"，请于30分钟内正确输入，如非本人操作，请忽略此短信。");
+            i.execute();
+            return ControllerResult.getSuccessResult("发送短信验证码成功");
+        }
+       return ControllerResult.getFailResult("发送短信验证码失败");
     }
 }

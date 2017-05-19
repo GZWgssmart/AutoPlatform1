@@ -60,14 +60,13 @@
 
 <!-- 添加弹窗 -->
 <div id="addWindow" class="modal fade" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static" keyboard:false>
-
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
             <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('addWindow', 'addForm')"></span>
             <form role="form" class="form-horizontal" id="addForm">
                 <div class="modal-header" style="overflow:auto;">
-                    <h4>请填写汽车品牌的相关信息</h4>
+                    <h4>添加汽车品牌的信息</h4>
                 </div>
                 <br/>
                 <div class="form-group">
@@ -84,7 +83,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default"
-                            data-dismiss="modal">关闭
+                            data-dismiss="modal" onclick="closeModals('addWindow', 'addForm')">关闭
                     </button>
                     <button id="addButton" type="button" onclick="addSubmit()" class="btn btn-sm btn-success">添加
                     </button>
@@ -107,7 +106,7 @@
                 <input type="hidden"name="brandId" define="carBrand.brandId">
                 <input type="hidden"name="brandStatus" define="carBrand.brandStatus">
                 <div class="modal-header" style="overflow:auto;">
-                    <p>请修改该品牌的相关信息</p>
+                    <h4>修改汽车品牌的信息</h4>
                 </div>
                 <br/>
                 <div class="form-group">
@@ -124,7 +123,7 @@
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-8">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" onclick="closeModals('editWindow', 'editForm')">关闭</button>
                         <button id="editButton" type="button" onclick="editSubmit()" class="btn btn-sm btn-success">保存</button>
                     </div>
                 </div>

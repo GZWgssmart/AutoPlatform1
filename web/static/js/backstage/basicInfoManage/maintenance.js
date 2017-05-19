@@ -27,17 +27,27 @@ $(function(){
     });
 });
 
-
-
 // 显示所有进度
 function showSchedule(){
     var row =  $('#table').bootstrapTable('getSelections');
     if(row.length >0) {
         $("#ScheduleWindow").modal('show');
-        // 查询出此记录所有明细进行forEach
-        var htmlDiv = "<button class='btn btn-info btn-circle btn-lg' type='button' style='border-radius:45px;height:45px;'>1</button>" +
-        "<div style='border-bottom: 1px solid black;display:inline;'>&nbsp;&nbsp;维修保养进度描述&nbsp;&nbsp;</div>"
-        $("#maintenance").html(htmlDiv);
+        $.post("/maintainSchedule/queryScheduleByRecord/" + row[0].recordId, function (data) {
+            // 查询出此记录所有明细进行forEach
+            var htmlDiv = "";
+            $.each(data, function(index, value, item) {
+                if(row[0].maintainRecord.currenStatus != '已登记' || row[0].maintainRecord.currenStatus != '维修保养中') {
+                    if (htmlDiv == "") {// 假如这个字符串刚开始设置,
+                        htmlDiv = "<button class='btn btn-info btn-circle btn-lg' type='button' style='border-radius:45px;height:45px;'>" + (index + 1) + "</button>" +
+                            "<div id='id1' style='border-bottom: 5px solid red;display:inline;'onclick='edit(this)'>&nbsp;&nbsp;" + data[index].maintainScheduleDes + "&nbsp;&nbsp;</div>"
+                    } else {
+                        htmlDiv += "<button class='btn btn-info btn-circle btn-lg' type='button' style='border-radius:45px;height:45px;'>" + (index + 1) + "</button>" +
+                            "<div id='id2' style='border-bottom: 5px solid red;display:inline;' onclick='edit(this)'>&nbsp;&nbsp;" + data[index].maintainScheduleDes + "&nbsp;&nbsp;</div>";// 否则就加上逗号把rows里所有的id都赋给ids
+                    }
+                }
+                $("#maintenance").html(htmlDiv);
+            });
+        });
     }else{
         swal({
             title:"",
@@ -47,6 +57,16 @@ function showSchedule(){
             type:"warning"}) // 提示类型
     }
 }
+
+// 点击修改
+   function edit(obj){
+    if(obj == "id1"){
+        var n=document.getElementById("id1").innerText;
+    }else{
+        var n= document.getElementById("id2").innerText;
+    }
+}
+
 function statusFormatter(index, row) {
     /*处理数据*/
     if (row.workStatus == 'Y') {
@@ -55,6 +75,15 @@ function statusFormatter(index, row) {
         return "&nbsp;&nbsp;未完成";
     }
 
+}
+
+function openStatusFormatter(index, row) {
+    /*处理数据*/
+    if (row.workStatus == 'Y') {
+        return "&nbsp;&nbsp;<button type='button' class='btn btn-danger' onclick='active(\""+'/maintainSchedule/statusOperate?id='+row.workId+'&status=Y'+"\")'>未完成</a>";
+    } else {
+        return "&nbsp;&nbsp;<button type='button' class='btn btn-danger' onclick='inactive(\""+'/maintainSchedule/statusOperate?id='+row.workId+'&status=N'+"\")'>已完成</a>";
+    }
 }
 
 //显示添加
@@ -75,7 +104,6 @@ function showAdd() {
             type:"warning"}) // 提示类型
     }
 }
-
 
 //显示修改
 function showEdit() {
@@ -145,9 +173,9 @@ function validator(formId) {
         }
     }).on('success.form.bv', function (e) {
         if (formId == "addForm") {
-            formSubmit(contentPath + "/maintainSchedule/addSchedule", formId, "addWindow");
+            formSubmit("/maintainSchedule/addSchedule", formId, "addWindow");
         } else if (formId == "editForm") {
-            formSubmit(contentPath + "/maintainSchedule/updateSchedule", formId, "editWindow");
+            formSubmit("/maintainSchedule/updateSchedule", formId, "editWindow");
 
         }
     })
@@ -155,7 +183,7 @@ function validator(formId) {
 
 function addSubmit(){
     $("#addForm").data('bootstrapValidator').validate();
-    if(("#addForm").data('bootstrapValidator').isValid()){
+    if($("#addForm").data('bootstrapValidator').isValid()){
         $("#addButton").attr("disabled","disabled");
     }else{
         $("#addButton").removeAttr("disabled");//按钮只能点击一次
@@ -164,7 +192,7 @@ function addSubmit(){
 
 function editSubmit(){
     $("#editForm").data('bootstrapValidator').validate();
-    if(("#editForm").data('bootstrapValidator').isValid()){
+    if($("#editForm").data('bootstrapValidator').isValid()){
         $("#editButton").attr("disabled","disabled");
     }else{
         $("#editButton").removeAttr("disabled");//按钮只能点击一次
@@ -185,61 +213,63 @@ function checkEdit() {
                     type: "success"
                 })// 提示窗口, 修改成功
             } else if (data.result == "fail") {
-                //$.messager.alert("提示", data.result.message, "info");
             }
         }, "json"
     );
 }
 
 function formSubmit(url, formId, winId) {
-    $.post(url,
-        $("#" + formId).serialize(),
-        function (data) {
-            if (data.result == "success") {
-                $('#' + winId).modal('hide');
-                swal({
-                    title: "",
-                    text: data.message,
-                    confirmButtonText: "确定", // 提示按钮上的文本
-                    type: "success"
-                })// 提示窗口, 修改成功
-                $('#table').bootstrapTable('refresh');
-                if (formId == 'addForm') {
-                    /*  $("input[type=reset]").trigger("click"); // 移除表单中填的值
-                     $('#addForm').data('bootstrapValidator').resetForm(true); // 移除所有验证样式
-                     $("#addButton").removeAttr("disabled"); // 移除不可点击*/
-                    // 设置select2的值为空
-                   // $("#addCompanyName").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
-                }
-            } else if (data.result == "fail") {
-                swal({
-                    title: "",
-                    text: "添加失败",
-                    confirmButtonText: "确认",
-                    type: "error"
-                })
-                if(formId == 'addForm') {
-                    $("#addButton").removeAttr("disabled");
-                }else if(formId == 'editForm'){
-                    $("#editButton").removeAttr("disabled");
-                }
-            }else if (data.result == "notLogin") {
-                swal({title:"",
-                        text:data.message,
-                        confirmButtonText:"确认",
-                        type:"error"}
-                    ,function(isConfirm){
-                        if(isConfirm){
-                            top.location = "/user/loginPage";
-                        }else{
-                            top.location = "/user/loginPage";
+    $.post(contentPath + "/user/isLogin/" + roles, function (data) {
+        if (data.result == "success") {
+            $.post(url,
+                $("#" + formId).serialize(),
+                function (data) {
+                    if (data.result == "success") {
+                        $('#' + winId).modal('hide');
+                        swal({
+                            title: "",
+                            text: data.message,
+                            confirmButtonText: "确定", // 提示按钮上的文本
+                            type: "success"
+                        })// 提示窗口, 修改成功
+                        $('#table').bootstrapTable('refresh');
+                        if (formId == 'addForm') {
+                            // $("input[type=reset]").trigger("click"); // 移除表单中填的值
+                            // $("#addButton").removeAttr("disabled"); // 移除不可点击
+                            // $("#addCompany").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
+                            // $("#addSupply").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
+                            // $("#addAccType").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
                         }
-                    })
-                if(formId == 'addForm') {
-                    $("#addButton").removeAttr("disabled");
-                }else if(formId == 'editForm'){
-                    $("#editButton").removeAttr("disabled");
+                        // $("#" + formId).data('bootstrapValidator').destroy(); // 销毁此form表单
+                        // $('#' + formId).data('bootstrapValidator', null);// 此form表单设置为空
+                    } else if (data.result == "fail") {
+                        swal({
+                            title: "",
+                            text: "添加失败",
+                            confirmButtonText: "确认",
+                            type: "error"
+                        })
+                        $("#" + formId).removeAttr("disabled");
+                    }
+                }, "json");
+        } else if (data.result == "notLogin") {
+            swal({
+                text: data.message,
+                confirmButtonText: "确认", // 提示按钮上的文本
+                type: "error"
+            }, function (isConfirm) {
+                if (isConfirm) {
+                    top.location = "/user/loginPage";
+                } else {
+                    top.location = "/user/loginPage";
                 }
-            }
-        }, "json");
+            })
+        } else if (data.result = "notRole") {
+            swal({
+                text: data.message,
+                confirmButtonText: "确认", // 提示按钮上的文本
+                type: "error"
+            })
+        }
+    })
 }

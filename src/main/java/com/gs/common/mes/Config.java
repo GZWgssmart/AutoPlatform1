@@ -1,4 +1,4 @@
-package com.gs.common.com.miaodiyun.httpApiDemo.common;
+package com.gs.common.mes;
 
 /**
  * 系统常量

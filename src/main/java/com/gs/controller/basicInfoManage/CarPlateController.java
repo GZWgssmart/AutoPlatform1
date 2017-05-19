@@ -1,6 +1,8 @@
 package com.gs.controller.basicInfoManage;
 
 import ch.qos.logback.classic.Logger;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gs.bean.CarPlate;
 import com.gs.bean.User;
 import com.gs.common.bean.ComboBox4EasyUI;
@@ -19,9 +21,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 汽车车牌管理
@@ -40,7 +45,7 @@ public class CarPlateController {
     @RequestMapping(value = "queryByPagerCarPlate", method = RequestMethod.GET)
     public Pager4EasyUI<CarPlate> queryByPager(HttpSession session, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
         if (SessionUtil.isLogin(session)) {
-            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师,汽车公司学徒,汽车公司销售人员,汽车公司财务人员,汽车公司采购人员,汽车公司库管人员,汽车公司人力资源管理部";
+            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师,汽车公司学徒,汽车公司销售人员,汽车公司财务人员,汽车公司采购人员,汽车公司库管人员,汽车公司人力资源管理部,车主";
             if (RoleUtil.checkRoles(roles)) {
                 logger.info("分页查询所有车牌");
                 Pager pager = new Pager();
@@ -63,7 +68,7 @@ public class CarPlateController {
     @ResponseBody
     @RequestMapping(value = "queryAllCarPlate", method = RequestMethod.GET)
     public List<ComboBox4EasyUI> queryAll(HttpSession session) {
-        if (SessionUtil.isLogin(session)) {
+        if (SessionUtil.isLogin(session) || SessionUtil.isOwnerLogin(session)) {
             String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师,汽车公司学徒,汽车公司销售人员,汽车公司财务人员,汽车公司采购人员,汽车公司库管人员,汽车公司人力资源管理部,车主";
             if (RoleUtil.checkRoles(roles)) {
                 logger.info("查询所有车牌");
@@ -130,6 +135,33 @@ public class CarPlateController {
             logger.info("请先登录");
             return ControllerResult.getNotLoginResult("登录信息无效，请重新登录");
         }
+    }
+
+    /**
+     * 查询此车牌名称是否已存在
+     */
+    @ResponseBody
+    @RequestMapping(value = "queryplateName", method = RequestMethod.GET)
+    public String queryplateName(HttpServletRequest req) {
+        logger.info("此车牌名称是否已存在此车牌名称");
+        String plateName = (String)req.getParameter("plateName");
+        boolean result = true;
+        String resultString = "";
+        Map<String, Boolean> map = new HashMap<String, Boolean>();
+        ObjectMapper mapper = new ObjectMapper();
+        if (plateName != null && plateName !="") {
+            int count = carPlateService.queryplateName(plateName);
+            if (count > 1 || count == 1) {
+                result = false;
+            }
+        }
+        map.put("valid", result);
+        try {
+            resultString = mapper.writeValueAsString(map);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return resultString;
     }
 
     /**

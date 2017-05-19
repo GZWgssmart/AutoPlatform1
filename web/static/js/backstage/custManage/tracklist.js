@@ -77,9 +77,10 @@ function showEdit() {
                 $("#editButton").removeAttr("disabled"); // 移除不可点击
                 var TrackList = row[0];
                 $("#editForm").fill(TrackList);
-                $("#editTrackCreatedTime").val(formatterDate(TrackList.trackCreatedTime));
-                $('#editAdminName').html('<option value="' + TrackList.user.userId + '">' + TrackList.user.userName + '</option>').trigger("change");
-                $('#editUserName').html('<option value="' + TrackList.checkin.userId + '">' + TrackList.checkin.userName + '</option>').trigger("change");
+                // $("#editTrackCreatedTime").val(formatterDate(TrackList.trackCreatedTime));
+                // $('#editAdminName').html('<option value="' + TrackList.user.userId + '">' + TrackList.user.userName + '</option>').trigger("change");
+                // $('#editUserName').html('<option value="' + TrackList.checkin.userId + '">' + TrackList.checkin.userName + '</option>').trigger("change");
+                $("#editUserName").val(TrackList.checkin.userName);
                 validator('editForm');
             } else {
                 swal({
@@ -145,6 +146,33 @@ function showAdd() {
             })
         }
     });
+}
+
+function closeUserWin() {
+    $("#showRemindWindow").modal('hide');
+    // $("#addWindow").modal('show');
+}
+
+function showRemindUser() {
+    $("#showRemindWindow").modal('show');
+    initTableNotTollbar("addRemindTable", "/maintainRecord/queryByPagerSuccess");
+}
+
+function checkRemind() {
+    var row = $('#addRemindTable').bootstrapTable('getSelections');
+    if (row.length != 1) {
+        swal({
+            "title": "",
+            "text": "只能选择一条数据",
+            "type": "warning"
+        })
+    } else {
+        alert(row[0].recordId);
+        alert(row[0].checkin.userName);
+        $("#addTrackUser").val([0].checkin.userName);
+        $("#addTrackUserId").val([0].checkin.userId);
+        $("#showRemindWindow").modal('hide');
+    }
 }
 
 

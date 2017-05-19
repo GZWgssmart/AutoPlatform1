@@ -85,6 +85,19 @@
     </if>
   </select>
 
+  <!--  查询此公司名称是否已存在 -->
+  <select id="querycompanyName" resultType="int">
+    <![CDATA[
+      select count(companyId) from t_company where companyName = #{companyName};
+    ]]>
+  </select>
+
+  <!--  查询此公司负责人联系电话是否已存在 -->
+  <select id="querycompanyPricipalphone" resultType="int">
+    <![CDATA[
+      select count(companyId) from t_company where companyPricipalphone = #{companyPricipalphone};
+    ]]>
+  </select>
 
   <!--冻结数据-->
   <update id="inactive" keyProperty="companyId" parameterType="company">

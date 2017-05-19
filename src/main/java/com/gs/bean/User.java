@@ -45,8 +45,18 @@ public class User {
 
     private String roleId;
 
+    private int phonecode; // 短信验证码;
+
     private Company company;    // 汽修公司
     private Role role;        // 角色
+
+    public int getPhonecode() {
+        return phonecode;
+    }
+
+    public void setPhonecode(int phonecode) {
+        this.phonecode = phonecode;
+    }
 
     public String getUserId() {
         return userId;

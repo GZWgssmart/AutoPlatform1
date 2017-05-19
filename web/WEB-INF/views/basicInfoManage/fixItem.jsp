@@ -85,7 +85,7 @@
                     <input type="hidden" name="maintainId" define="MaintainFixMap.maintainId">
                     <input type="hidden" id="addaccId" name="accId">
                     <div class="modal-header" style="overflow:auto;">
-                        <h3>请选择配件</h3>
+                        <h4>选择配件</h4>
                     </div>
                     <hr>
                     <div class="form-group">
@@ -108,7 +108,7 @@
                     </div>
                     <div class="modal-footer" style="border: none">
                         <button type="button" class="btn btn-default"
-                                data-dismiss="modal">关闭
+                                data-dismiss="modal" onclick="closeModals('accWindow', 'accForm')">关闭
                         </button>
                         <button id="accButton" type="button" onclick="accaddSubmit()" class="btn btn-success">添加
                         </button>
@@ -129,7 +129,7 @@
                     <input type="hidden" id="editmaintainId" name="mainAccId">
                     <input type="hidden" id="editaccId" name="accId">
                     <div class="modal-header" style="overflow:auto;">
-                        <h3>请选择配件</h3>
+                        <h4>选择配件</h4>
                     </div>
                     <hr>
                     <div class="form-group">
@@ -152,7 +152,7 @@
                     </div>
                     <div class="modal-footer" style="border: none">
                         <button type="button" class="btn btn-default"
-                                data-dismiss="modal">关闭
+                                data-dismiss="modal" onclick="closeModals('accEditWindow', 'accEditForm')">关闭
                         </button>
                         <button id="accEidtButton" type="button" onclick="accEditaddSubmit()" class="btn btn-success">修改
                         </button>
@@ -170,7 +170,7 @@
             <div class="modal-body">
                 <span class="glyphicon glyphicon-remove closeModal" onclick="closeWindow()"></span>
                 <div class="modal-header" style="overflow:auto;">
-                    <h3>请选择配件</h3>
+                    <h4>选择配件</h4>
                 </div>
                     <hr>
                 <div class="form-group">
@@ -214,7 +214,7 @@
             <div class="modal-body">
                 <span class="glyphicon glyphicon-remove closeModal" onclick="closeEidtWindow()"></span>
                 <div class="modal-header" style="overflow:auto;">
-                    <h3>请选择配件</h3>
+                    <h4>选择配件</h4>
                 </div>
                 <hr>
                 <div class="form-group">
@@ -259,7 +259,7 @@
             <div class="modal-body">
                 <span class="glyphicon glyphicon-remove closeModal" onclick="closeModalsdetailWindow()"></span>
                 <form role="form" class="form-horizontal" id="detailForm">
-                <h3 class="m-t-none m-b">此维修保养记录下的所有明细</h3>
+                <h4 class="m-t-none m-b">此维修项目记录下的所有配件</h4>
                 <hr>
                 <table class="table table-hover" id="detailTable">
                     <thead>
@@ -297,7 +297,7 @@
             <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('addWindow', 'addForm')"></span>
             <form role="form" class="form-horizontal" id="addForm">
             <div class="modal-header" style="overflow:auto;">
-                    <h4>请填写该维修项目的相关信息</h4>
+                    <h4>添加维修项目的信息</h4>
                 </div>
                 <hr>
                 <div class="form-group">
@@ -334,7 +334,7 @@
                 </div>
                 <div class="modal-footer" style="border: none">
                     <button type="button" class="btn btn-default"
-                            data-dismiss="modal">关闭
+                            data-dismiss="modal" onclick="closeModals('addWindow', 'addForm')">关闭
                     </button>
                     <button id="addButton" type="button" onclick="addSubmit()" class="btn btn-sm btn-success">添加
                     </button>
@@ -355,7 +355,7 @@
             <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('editWindow', 'editForm')"></span>
             <form form role="form" class="form-horizontal" id="editForm">
                 <div class="modal-header" style="overflow:auto;">
-                    <h4>请填写该维修项目的相关信息</h4>
+                    <h4>修改维修项目的信息</h4>
                 </div>
                 <input type="hidden" name="maintainId" define="MaintainFixMap.maintainId">
                 <input type="hidden" name="maintainStatus" define="MaintainFixMap.maintainStatus">
@@ -393,7 +393,7 @@
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-8">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" onclick="closeModals('editWindow', 'editForm')">关闭</button>
                         <button id="editButton" type="button" onclick="editSubmit()" class="btn btn-sm btn-success">保存</button>
                     </div>
                 </div>

@@ -16,13 +16,13 @@ import java.util.List;
 */
 public interface MaintainRemindService extends BaseService<String, MaintainRemind>{
 
-    public List<MaintainRemind> queryByPagerNull(@Param("pager") Pager pager);
+    public List<MaintainRemind> queryByPagerNull(Pager pager);
 
-    public int countNull(@Param("user") User user);
+    public int countNull(User user);
 
     public void insertBatch(List<MaintainRemind> maintainReminds);
 
-    public List<MaintainRemind> queryByPagerUser(@Param("pager") Pager pager, @Param("userId") String userId);
+    public List<MaintainRemind> queryByPagerUser(Pager pager, String userId);
 
-    public int countUser(@Param("userId") String userId);
+    public int countUser(String userId);
 }

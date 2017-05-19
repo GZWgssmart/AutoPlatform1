@@ -34,7 +34,7 @@
         <table id="table">
             <thead>
             <tr>
-                <th data-checkbox="true"></th>
+                <th data-radio="true"></th>
                 <th data-field="checkin.userName">用户名</th>
                 <th data-field="lastMaintainTime" data-formatter="formatterDate">上次维修保养时间</th>
                 <th data-field="lastMaintainMileage">上次汽车行驶里程</th>
@@ -66,11 +66,12 @@
             <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('addWindow', 'addForm')"></span>
             <form class="form-horizontal" id="addForm" method="post">
                 <%--<input id="addRemindId" type="text" name="remindId">--%>
-                <input id="addLastMaintainTime" type="text" name="lastMaintainTime" >
-                <input id="addLastMaintainMileage" type="text" name="lastMaintainMileage" >
+                <input id="addLastMaintainTime" type="text" name="lastMaintainTime">
+                <input id="addLastMaintainMileage" type="text" name="lastMaintainMileage">
                 <input id="addUserId" type="text" name="userId">
+                <input id="addUserEmail" type="text" name="checkin.user.userEmail">
                 <div class="modal-header" style="overflow:auto;">
-                    <h4>请填写维修维修保养提醒信息</h4>
+                    <h4>添加维修维修保养提醒的信息</h4>
                 </div>
                 <br/>
                 <div class="form-group">
@@ -136,7 +137,7 @@
                 <input id="editLastMaintainMileage" type="hidden" name="lastMaintainMileage" define="MaintainRemind.lastMaintainMileage">
                 <input id="editUserId" type="hidden" name="userId" define="MaintainRemind.user.userId">
                 <div class="modal-header" style="overflow:auto;">
-                    <h4>请修改维修维修保养提醒信息</h4>
+                    <h4>修改维修维修保养提醒的信息</h4>
                 </div>
                 <br/>
                 <div class="form-group">
@@ -192,7 +193,7 @@
         <div class="modal-content">
             <div class="modal-body">
                 <span class="glyphicon glyphicon-remove closeModal" onclick="closeUserWin()"></span>
-                <h3>选择车主</h3>
+                <h3>请选择车主</h3>
                 <table class="table table-hover" id="addUserTable" style="table-layout: fixed">
                     <thead>
                     <tr>

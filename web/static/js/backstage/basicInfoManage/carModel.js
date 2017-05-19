@@ -1,3 +1,4 @@
+var modelName;
 $(function () {
     var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师,汽车公司学徒,汽车公司销售人员,汽车公司财务人员,汽车公司采购人员,汽车公司库管人员,汽车公司人力资源管理部";
     $.post("/user/isLogin/"+roles, function (data) {
@@ -26,22 +27,6 @@ $(function () {
 });
 
 function showEdit() {
-    // var row = $('table').bootstrapTable('getSelections');
-    // if (row.length > 0) {
-    //     $("#editWindow").modal('show'); // 显示弹窗
-    //     $("#editButton").removeAttr("disabled");
-    //     var carModel = row[0];
-    //     $('#editCarBrand').html('<option value="' + carModel.carBrand.brandId + '">' + carModel.carBrand.brandName + '</option>').trigger("change");
-    //     $("#editForm").fill(carModel);
-    //     validator('editForm');
-    // } else {
-    //     swal({
-    //         title:"",
-    //         text: "请先选择要修改的汽车车型的相关信息", // 主要文本
-    //         confirmButtonColor: "#DD6B55", // 提示按钮的颜色
-    //         confirmButtonText:"确定", // 提示按钮上的文本
-    //         type:"warning"}) // 提示类型
-    // }
     var roles = "系统超级管理员,系统普通管理员";
     $.post("/user/isLogin/"+roles, function (data) {
         if (data.result == 'success') {
@@ -53,6 +38,9 @@ function showEdit() {
                 $('#editCarBrand').html('<option value="' + carModel.carBrand.brandId + '">' + carModel.carBrand.brandName + '</option>').trigger("change");
                 $("#editForm").fill(carModel);
                 validator('editForm');
+                $('#editmodelName').bind('input propertychange', function() {
+                    colorName = $("#editmodelName").val();
+                });
             } else {
                 swal({
                     title: "",
@@ -96,6 +84,9 @@ function showAdd() {
         if (data.result == 'success') {
             $("#addWindow").modal('show');
             $("#addButton").removeAttr("disabled");
+            $('#addmodelName').bind('input propertychange', function() {
+                colorName = $("#addmodelName").val();
+            });
             validator('addForm'); // 初始化验证
         } else if (data.result == 'notLogin') {
             swal({
@@ -141,6 +132,12 @@ function validator(formId) {
                             min: 1,
                             max: 6,
                             message: '车型名称长度必须在1到6位之间'
+                        },
+                        remote: {
+                            url: '/carModel/querymodelName',
+                            message: '该车型名称已存在',
+                            delay :  2000,
+                            type: 'GET'
                         }
                     }
                 },
@@ -149,14 +146,6 @@ function validator(formId) {
                 validators: {
                     notEmpty: {
                         message: '汽车品牌不能为空'
-                    }
-                }
-            },
-                modelDes: {
-                message: '车型描述验证失败',
-                validators: {
-                    notEmpty: {
-                        message: '车型描述不能为空'
                     }
                 }
             },

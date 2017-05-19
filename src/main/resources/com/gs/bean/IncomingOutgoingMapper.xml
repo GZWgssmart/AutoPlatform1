@@ -176,5 +176,49 @@
         ]]>
   </update>
 
+    <!-- 分页模糊查询 -->
+    <select id="blurredQuery" resultMap="incomingOutgoingMap">
+        <![CDATA[
+               select io.*,i.inTypeId, i.inTypeName,o.outTypeId,o.outTypeName,u.userId ,u.userName from t_incoming_outgoing io
+				LEFT JOIN t_incoming_type i on io.inTypeId = i.inTypeId
+				LEFT JOIN t_outgoing_type o on io.outTypeId = o.outTypeId
+				LEFT JOIN  t_user u on io.inOutCreatedUser = u.userId
+				where  io.inOutStatus = 'Y'
+        ]]>
+        <if test="pager.user.companyId != '' and pager.user.companyId != null">
+            and u.companyId = #{pager.user.companyId}
+        </if>
+        and(
+        <if test="incomingOutgoing.inTypeId != '' and incomingOutgoing.inTypeId != null">
+            i.inTypeName like '%${incomingOutgoing.inTypeId}%'
+        </if>
+        <if test="incomingOutgoing.outTypeId != '' and incomingOutgoing.outTypeId != null">
+            o.outTypeName like '%${incomingOutgoing.outTypeId}%'
+        </if>)
+        limit #{pager.beginIndex}, #{pager.pageSize}
+    </select>
+
+    <!-- 分页模糊查询个数 -->
+    <select id="countByBlurred" resultType="int">
+        <![CDATA[
+               select count(io.inOutId) from t_incoming_outgoing io
+				LEFT JOIN t_incoming_type i on io.inTypeId = i.inTypeId
+				LEFT JOIN t_outgoing_type o on io.outTypeId = o.outTypeId
+				LEFT JOIN  t_user u on io.inOutCreatedUser = u.userId
+				where  io.inOutStatus = 'Y'
+        ]]>
+        <if test="user.companyId != '' and user.companyId != null">
+            and u.companyId = #{user.companyId}
+        </if>
+        and(
+        <if test="incomingOutgoing.inTypeId != '' and incomingOutgoing.inTypeId != null">
+            i.inTypeName like '%${incomingOutgoing.inTypeId}%'
+        </if>
+        <if test="incomingOutgoing.outTypeId != '' and incomingOutgoing.outTypeId != null">
+            o.outTypeName like '%${incomingOutgoing.outTypeId}%'
+        </if>)
+    </select>
+
+
 
 </mapper>

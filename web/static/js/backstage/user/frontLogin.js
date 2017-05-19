@@ -3,11 +3,13 @@ $(function () {
     // 监听手机输入的唯一验证
     $('#phone').bind('input propertychange', function() {
         userPhone = $("#phone").val();
+        $("#phonecode-caveat").css("display","none");
     });
     validator('loginForm');
     validator2('regform');
 })
 
+// 登录按钮
 function loginSubmit() {
     $("#loginForm").data('bootstrapValidator').validate();
     if ($("#loginForm").data('bootstrapValidator').isValid()) {
@@ -17,7 +19,7 @@ function loginSubmit() {
     }
 }
 
-
+// 注册按钮
 function regSubmit() {
     $("#regform").data('bootstrapValidator').validate();
     if ($("#regform").data('bootstrapValidator').isValid()) {
@@ -27,7 +29,60 @@ function regSubmit() {
     }
 }
 
-/*用户注册*/
+// 点击发送短信
+var wait = 60;
+function  sendCode(button) {
+    time(button);
+}
+
+function time(o) {
+    if (wait == 0) {
+        $("#phonecode-caveat").css("display","none");
+        o.removeAttribute("disabled");
+        o.innerHTML = "获取短信验证码";
+        wait = 60;
+    } else {
+        var phone = $("#phone").val();
+        if(phone!= null && phone != ""){
+            if(phone.length != 11){
+            }else{
+                $.get("/user/sendSms?phone="+phone, function (data) {
+                    if(data.result == "success"){
+                        o.setAttribute("disabled", true);
+                        o.innerHTML = wait + "秒后可以重新发送";
+                        wait--;
+                        setTimeout(function () {
+                                time1(o, phone)
+                        }, 1000)
+                    }else if(data.result == "fail"){
+                        o.innerHTML = "发送失败"
+                    }
+                });
+            }
+        }else{
+            $("#phonecode-caveat").html("请先输入手机号码");
+            $("#phonecode-caveat").css("display","block");
+        }
+    }
+}
+
+function time1(o, phone) {
+    if (wait == 0) {
+        $("#phonecode-caveat").css("display","none");
+        o.removeAttribute("disabled");
+        o.innerHTML = "获取短信验证码";
+        wait = 60;
+    } else {
+           o.setAttribute("disabled", true);
+           o.innerHTML = wait + "秒后可以重新发送";
+           wait--;
+           setTimeout(function () {
+               time1(o, phone)
+           }, 1000)
+    }
+}
+
+/*用户注册验证*/
 function validator2(formId) {
     $('#' + formId).bootstrapValidator({
         feedbackIcons: {
@@ -40,18 +95,26 @@ function validator2(formId) {
                 message: '手机号错误',
                 validators: {
                     notEmpty: {
-                        message: '手机号错误'
+                        message: '请先输入手机号码'
                     },
                     stringLength: {
                         min: 11,
                         max: 11,
-                        message: '手机号格式必须为11位'
+                        message: '手机号码格式错误'
                     },
                     remote: {
                         url: '/user/queryPhoneByOne',
                         message: '该手机号已存在',
                         delay :  2000,
                         type: 'GET'
+                    }
+                }
+            },
+            phonecode: {
+                message: '验证码验证错误',
+                validators: {
+                    notEmpty: {
+                        message: '请先输入验证码'
                     }
                 }
             },
@@ -123,11 +186,20 @@ function validator2(formId) {
                         type: "error"
                     })
                     $("#" + formId).removeAttr("disabled");
+                }else if(data.result == "notPhoneCode"){
+                    swal({
+                        title: "",
+                        text: data.message,
+                        confirmButtonText: "确认",
+                        type: "error"
+                    })
+                    $("#" + formId).removeAttr("disabled");
                 }
             })
     })
 }
 
+// 登录验证
 function validator(formId) {
     $('#' + formId).bootstrapValidator({
         feedbackIcons: {

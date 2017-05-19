@@ -362,10 +362,27 @@ public class MaterialsController {
         }
     }
 
-
-    public List<Company> newarCompany(@RequestParam("longitude")double longitude, @RequestParam("latitude")double latitude) {
-        return null;
+    @ResponseBody
+    @RequestMapping(value = "nearCompanys")
+    public List<Company> nearCompanys( HttpServletRequest req ) {
+        Map pointsMap = new HashMap();
+        double maxLng = str2dou(req.getParameter("maxLng"));
+        double maxLat = str2dou(req.getParameter("maxLat"));
+        double minLng = str2dou(req.getParameter("minLng"));
+        double minLat = str2dou(req.getParameter("minLat"));
+        pointsMap.put("maxLng", maxLng);
+        pointsMap.put("maxLat", maxLat);
+        pointsMap.put("minLng", minLng);
+        pointsMap.put("minLat", minLat);
+        return materialUseService.queryNearCompanys(pointsMap);
     }
+    private double str2dou(String str) {
+        try {
+            return Double.parseDouble(str);
+        } catch(Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
 
-
+    }
 }

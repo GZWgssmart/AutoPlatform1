@@ -79,8 +79,15 @@ public class PermissionServiceImpl implements PermissionService {
 	public List<Permission> queryByStatus(String status) { return permissionDAO.queryAll(status); }
 	public Permission query(Permission permission) { return permissionDAO.query(permission); }
 	public Permission queryById(String id) { return permissionDAO.queryById(id); }
-	public List<Permission> queryByPager(Pager pager) { return permissionDAO.queryByPager(pager); }
-	public int count(User user) { return permissionDAO.count(user); }
+	public List<Permission> queryByPager(Pager pager) { return queryByPager("", pager); }
+	public int count(User user) {
+		Map map = new HashMap();
+		map.put("user",user);
+		return permissionDAO.count(user);
+	}
+	public int count() {
+		return count("");
+	}
 	public int inactive(String id) { return permissionDAO.inactive(id); }
 	public int active(String id) { return permissionDAO.active(id); }
 

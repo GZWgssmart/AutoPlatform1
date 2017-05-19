@@ -24,7 +24,9 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by GZWangBin on 2017/4/18.
@@ -145,14 +147,24 @@ public class OutGoingTypeController {
     }
 
 
+
+
+    /**
+     * 验证支出类型名称
+     * @param outTypeName
+     * @return
+     */
     @ResponseBody
-    @RequestMapping(value = "checkOutTypeName", method = RequestMethod.GET)
-    public boolean checkOutTypeName(String outTypeName) {
+    @RequestMapping(value = "checkOutTypeName",method = RequestMethod.POST)
+    public Map checkOutTypeName(String outTypeName) {
         OutgoingType outgoingType = outgoingTypeService.queryById(outTypeName);
-        if (outgoingType != null) {
-            return true;
-        }
-        return false;
+        Map<String, Boolean> map = new HashMap<String, Boolean>();
+        if(outgoingType != null)
+            map.put("valid", false);
+        else
+            map.put("valid", true);
+
+        return map;
     }
 
     @ResponseBody

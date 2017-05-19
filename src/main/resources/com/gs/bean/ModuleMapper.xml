@@ -36,7 +36,11 @@
 
 
   <select id="countByModuleName" resultType="int">
-    select count(moduleId) from t_module where moduleName = #{moduleName} and moduleId!=#{moduleId} and moduleStatus = "Y"
+    select count(moduleId) from t_module where moduleName = #{moduleName}
+     <if test="moduleId!=null">
+      and moduleId!=#{moduleId}
+     </if>
+     and moduleStatus = "Y"
   </select>
 
 </mapper>

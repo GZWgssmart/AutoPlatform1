@@ -78,8 +78,6 @@
                             <li><a onclick="onclikLi(this)">车型名称</a></li>
                             <li class="divider"></li>
                             <li><a onclick="onclikLi(this)">品牌名称</a></li>
-                            <li class="divider"></li>
-                            <li><a onclick="onclikLi(this)"></a></li>
                         </ul>
                     </div><!-- /btn-group -->
                     <input id="ulInput" class="form-control" onkeypress="if(event.keyCode==13) {blurredQuery();}">
@@ -99,7 +97,7 @@
             <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('addWindow', 'addForm')"></span>
             <form class="form-horizontal" role="form" id="addForm" method="post">
                 <div class="modal-header" style="overflow:auto;">
-                    <h4>请填写汽车车型的相关信息</h4>
+                    <h4>添加汽车车型信息</h4>
                 </div>
                 <br/>
 
@@ -113,7 +111,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">车型名称：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="modelName" placeholder="请输入该车型名称" class="form-control">
+                        <input type="text" id="addmodelName" name="modelName" placeholder="请输入该车型名称" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
@@ -125,7 +123,7 @@
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-8">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" onclick="closeModals('addWindow', 'addForm')">关闭</button>
                         <button id="addButton" type="button" onclick="addSubmit()" class="btn btn-sm btn-success">添加</button>
                         <input type="reset" name="reset" style="display: none;"/>
                     </div>
@@ -145,7 +143,7 @@
             <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('editWindow', 'editForm')"></span>
             <form class="form-horizontal" role="form" id="editForm">
                 <div class="modal-header" style="overflow:auto;">
-                    <h4>请修改汽车车型的相关信息</h4>
+                    <h4>修改汽车车型的信息</h4>
                 </div>
                 <input type="hidden" name="modelId" define="carModel.modelId">
                 <input type="hidden" name="modelStaus" define="carModel.modelStaus">
@@ -157,9 +155,9 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">车型命名：</label>
+                    <label class="col-sm-3 control-label">车型名称：</label>
                     <div class="col-sm-7">
-                        <input type="text" name="modelName" define="carModel.modelName" placeholder="请输入该车型名字" class="form-control">
+                        <input type="text" id="editmodelName" name="modelName" define="carModel.modelName" placeholder="请输入该车型名字" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
@@ -171,7 +169,7 @@
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-8">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" onclick="closeModals('editWindow', 'editForm')">关闭</button>
                         <button id="editButton" type="button" onclick="editSubmit()" class="btn btn-sm btn-success">保存</button>
                     </div>
                 </div>

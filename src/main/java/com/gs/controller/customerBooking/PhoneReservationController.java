@@ -27,7 +27,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * 电话预约controller，杨健勇
+ * 电话预约controller，杨健勇appointment
  */
 @Controller
 @RequestMapping("/appointment")
@@ -157,7 +157,7 @@ public class PhoneReservationController {
     @ResponseBody
     @RequestMapping(value = "add",method = RequestMethod.POST)
     public ControllerResult add(Appointment appointment,HttpSession session){
-        if(SessionUtil.isLogin(session)){
+        if(SessionUtil.isLogin(session) || SessionUtil.isOwnerLogin(session)){
             String roles = "公司超级管理员,公司普通管理员,汽车公司接待员,车主";
             if (RoleUtil.checkRoles(roles)) {
                 User user = (User)session.getAttribute("user");
@@ -166,9 +166,9 @@ public class PhoneReservationController {
                     appointment.setCompanyId(user.getCompanyId());
                     appointment.setCurrentStatus("已预约");
                     appointmentService.insert(appointment);
-                    return ControllerResult.getSuccessResult("添加电话预约成功");
+                    return ControllerResult.getSuccessResult("添加预约成功");
                 } else {
-                    return ControllerResult.getFailResult("添加电话预约失败");
+                    return ControllerResult.getFailResult("添加预约失败");
                 }
             } else {
                 logger.info("此用户无拥有添加电话预约记录的角色");
@@ -176,7 +176,7 @@ public class PhoneReservationController {
             }
         }else {
             logger.info("请先登录");
-            return ControllerResult.getNotLoginResult("添加电话预约无效，请重新登录");
+            return ControllerResult.getNotLoginResult("添加预约无效，请重新登录");
         }
     }
     /**

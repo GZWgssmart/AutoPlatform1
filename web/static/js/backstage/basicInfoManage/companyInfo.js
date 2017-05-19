@@ -1,6 +1,8 @@
 var map;
 var localSearch;
 var windowId;
+var companyName;
+var companyPricipalphone;
 $(function () {
     var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员";
     $.post("/user/isLogin/"+roles, function (data) {
@@ -45,10 +47,13 @@ $(function () {
 
 //初始化fileinput
 var FileInput = function () {
+
     var oFile = new Object();
     //初始化fileinput控件（第一次初始化）
     oFile.Init = function (ctrlName, uploadUrl) {
         var control = $('#' + ctrlName);
+        $('#' + ctrlName).parent().css('width','90%');
+        $('#' + ctrlName).parent().css('height','70%');
         //初始化上传控件的样式
         control.fileinput({
             language: 'zh', //设置语言
@@ -62,12 +67,12 @@ var FileInput = function () {
             minImageHeight: 50,//图片的最小高度
 //                maxImageWidth: 350,//图片的最大宽度
 //                maxImageHeight: 350,//图片的最大高度
-            maxFileSize: 0,//单位为kb，如果为0表示不限制文件大小
-            maxFileCount: 1, //表示允许同时上传的最大文件个数
+//             maxFileSize: 0,//单位为kb，如果为0表示不限制文件大小
+//             maxFileCount: 1, //表示允许同时上传的最大文件个数
             enctype: 'multipart/form-data',
             validateInitialCount: true,
             previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
-            msgFilesTooMany: "选择上传的文件数量({n}) 超过允许的最大数值{m}！",
+            // msgFilesTooMany: "选择上传的文件数量({n}) 超过允许的最大数值{m}！",
         }).on("fileuploaded", function (event, data) {
             // data 为controller返回的json
             var resp= data.response;
@@ -98,6 +103,12 @@ function showEdit() {
                 $('#editDatetimepicker').val(formatterDate(ceshi.companyOpendate));
                 $("#editForm").fill(ceshi);
                 validator('editForm');
+                $('#editcompanyName').bind('input propertychange', function() {
+                    companyName = $("#editcompanyName").val();
+                });
+                $('#editcompanyPricipalphone').bind('input propertychange', function() {
+                    companyPricipalphone = $("#editcompanyPricipalphone").val();
+                });
             } else {
                 swal({
                     title: "",
@@ -181,14 +192,17 @@ function statusFormatter(value, row, index) {
 function showAdd(){
     // 初始化时间框, 第一参数是form表单id, 第二参数是input的name, 第三个参数为input的id
     initDatePicker('addForm', 'companyOpendate','addDateTimePicker');
-    // $("#addWindow").modal('show');
-    // $("#addButton").removeAttr("disabled");
-    // validator('addForm'); // 初始化验证
     var roles = "系统超级管理员,系统普通管理员";
     $.post("/user/isLogin/"+roles, function (data) {
         if (data.result == 'success') {
             $("#addWindow").modal('show');
             $("#addButton").removeAttr("disabled");
+            $('#addcompanyName').bind('input propertychange', function() {
+                companyName = $("#addcompanyName").val();
+            });
+            $('#addcompanyPricipalphone').bind('input propertychange', function() {
+                companyPricipalphone = $("#addcompanyPricipalphone").val();
+            });
             validator('addForm'); // 初始化验证
         } else if (data.result == 'notLogin') {
             swal({
@@ -233,6 +247,12 @@ function validator(formId) {
                         min: 1,
                         max: 10,
                         message: '公司名称长度必须在1到10位之间'
+                    },
+                    remote: {
+                        url: '/company/querycompanyName',
+                        message: '该公司名称已存在',
+                        delay :  2000,
+                        type: 'GET'
                     }
                 }
             },
@@ -301,7 +321,13 @@ function validator(formId) {
                     regexp: {
                         regexp: /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/,
                             message: '请输入正确的手机号'
-                    }
+                    },
+                        remote: {
+                            url: '/company/querycompanyPricipalphone',
+                            message: '该负责人联系电话已存在',
+                            delay :  2000,
+                            type: 'GET'
+                        }
                 }
             },
             companySize: {
@@ -336,11 +362,11 @@ function validator(formId) {
                     }
                 }
             },
-            companyDes:{
-                message: '公司描述验证失败',
+            companyLogo:{
+                message: '公司Logo失败',
                 validators: {
                     notEmpty: {
-                        message: '公司描述不能为空'
+                        message: '公司Logo不能为空'
                     }
                 }
             }
@@ -460,36 +486,31 @@ function formSubmit(url, formId, winId, fileId) {
         if (data.result == "success") {
             $.post(url, $("#"+formId).serialize(),
                 function (data) {
-                    if (data.controllerResult.result == "success") {
-
                         if(data.company) {
                             console.log(data);
                             var fileData = document.getElementById(fileId).files[0];
-                            var formData = new FormData();
-                            formData.append("companyLogo", fileData);
-                            formData.append("companyId", data.company.companyId);
-                            $.ajax({
-                                url: "/company/afterUpdIcon",
-                                type: "POST",
-                                data: formData,
-                                processData: false,
-                                contentType: false,
-                                success: function (data1) {
-                                    endSuc(data1, winId, formId);
-                                }
-                            })
+                            if(fileData) {
+                                var formData = new FormData();
+                                formData.append("companyLogo", fileData);
+                                formData.append("companyId", data.company.companyId);
+
+                                $.ajax({
+                                    url: "/company/afterUpdIcon",
+                                    type: "POST",
+                                    data: formData,
+                                    processData: false,
+                                    contentType: false,
+                                    success: function (data1) {
+                                        if (data1.controllerResult.result == "success") {
+                                            endSuc(data, winId, formId);
+                                        }
+                                    }
+                                })
+                            } else {endSuc(data, winId, formId);}
                         } else{
                             endSuc(data, winId, formId);
                         }
-                    } else if (data.result == "fail") {
-                        swal({title:"",
-                            text:"操作失败",
-                            confirmButtonText:"确认",
-                            type:"error"})
-                        $("#"+formId).removeAttr("disabled");
-                    }
-                }, "json"
-            );
+                    }, "json");
         } else if (data.result == "notLogin") {
             swal({
                 text: data.message,
@@ -517,7 +538,7 @@ function endSuc(data, winId, formId) {
     if (controllerResult.result == "success") {
         swal({
             title:"",
-            text: "修改公司信息成功",
+            text: data.controllerResult.message,
             confirmButtonText:"确定", // 提示按钮上的文本
             type:"success"
         })
@@ -532,12 +553,18 @@ function endSuc(data, winId, formId) {
         } else if (controllerResult.result == "fail") {
             swal({
                 title: "",
-                text: "修改公司信息失败",
+                text: data.controllerResult.message,
                 confirmButtonText: "确认",
                 type: "error"
             })
             $("#" + formId).removeAttr("disabled");
         }
+    }else if (data.result == "fail") {
+        swal({title:"",
+            text:"操作失败",
+            confirmButtonText:"确认",
+            type:"error"})
+        $("#"+formId).removeAttr("disabled");
     }
 
 }

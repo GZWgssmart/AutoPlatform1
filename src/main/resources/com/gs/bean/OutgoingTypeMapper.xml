@@ -55,9 +55,9 @@
      limit #{beginIndex}, #{pageSize}
   </select>
 
-  <select id="queryById" parameterType="string" resultMap="outGoingTypeMap">
+  <select id="queryById" resultMap="outGoingTypeMap">
     <![CDATA[
-        select *  from t_outgoing_type where outTypeName = #{outTypeName}
+        select * from t_outgoing_type where outTypeName = #{outTypeName} and outTypeStatus = 'Y';
     ]]>
 
   </select>

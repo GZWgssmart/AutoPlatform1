@@ -77,17 +77,22 @@ public interface UserDAO extends BaseDAO<String, User>{
      */
     public int countNO(User user);
     /**
-     * 查询此手机号是否已存在此手机
+     * 查询此手机号是否已存在此手机 用于注册验证
      */
     public int queryPhoneByOne(String phone);
 
     /**
-     * 查询此手机号是否已存在此手机
+     * 查询此手机号是否已存在此手机   后台增，改验证
      */
-    public int queryIsPhoneByOne(String phone, String userId);
+    public int queryIsPhoneByOne(@Param("userPhone") String phone, @Param("userId") String userId);
 
     /**
-     * 查询此email是否已存在此email
+     * 查询此email是否已存在此email  后台增，改验证
      */
-    public int queryIsEmailByOne(String userEmail, String userId);
+    public int queryIsEmailByOne(@Param("userEmail") String userEmail, @Param("userId") String userId);
+
+    /**
+     * 查询此identity是否已存在此identity
+     */
+    public int queryIsIdentityByOne(@Param("userIdentity") String userIdentity, @Param("userId") String userId);
 }

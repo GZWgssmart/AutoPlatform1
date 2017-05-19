@@ -17,7 +17,7 @@
   <select id="queryByPager" resultMap="permissionMap" parameterType="hashmap">
     select * from t_permission p left join t_module m on p.moduleId = m.moduleId
     <where>
-      <if test="status != null">
+      <if test="status != null and status != ''">
         permissionStatus = #{status}
       </if>
     </where>
@@ -27,14 +27,18 @@
   <select id = "count" resultType="int" parameterType="hashmap">
     select count(permissionId) from t_permission
     <where>
-      <if test="status != null">
+      <if test="status != null and status != ''">
         permissionStatus = #{status}
       </if>
     </where>
   </select>
 
     <select id = "countByPerName" resultType="int">
-       select count(permissionId) from t_permission where permissionZhname = #{permissionZhname} and permissionId != #{permissionId}
+       select count(permissionId) from t_permission where
+        permissionZhname = #{permissionZhname}
+        <if test="permissionId!=null and permissionId != ''">
+          and permissionId != #{permissionId}
+        </if>
     </select>
 
   <!-- 分页模糊查询 -->

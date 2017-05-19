@@ -276,7 +276,8 @@ function blurredQuery(){
 };
 // 表格
 function formatterfun(element, row ,index){
-    return element!=null? element.moduleName: "<p style='color:#aaa'>暂无模块</p>";
+    console.log(row);
+    return (row.moduleId!=null&& row.moduleId!= "")? element.moduleName: "<p style='color:#aaa'>暂无模块</p>";
 }
 
 function formatterstatus(element, row, index) {

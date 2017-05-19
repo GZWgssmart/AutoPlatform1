@@ -1,4 +1,4 @@
-package com.gs.common.com.miaodiyun.httpApiDemo.common;
+package com.gs.common.mes;
 
 import java.io.BufferedReader;
 import java.io.IOException;

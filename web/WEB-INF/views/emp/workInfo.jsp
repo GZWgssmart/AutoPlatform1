@@ -27,9 +27,6 @@
             <thead>
             <tr>
                 <th data-radio="true" data-field="status"></th>
-                <th data-field="maintainRecord.recordId">
-                    保养记录编号
-                </th>
                 <th data-field="user.userNickname">
                     指派用户
                 </th>
@@ -52,14 +49,14 @@
             </thead>
         </table>
         <div id="toolbar" class="btn-group">
-            <button id="btn_edit" type="button" class="btn btn-default" onclick="showEdit();">
-                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>指派员工
-            </button>
+            <%--<button id="btn_edit" type="button" class="btn btn-default" onclick="showEdit();">--%>
+                <%--<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>指派员工--%>
+            <%--</button>--%>
+                <button id="searchRapid" type="button" class="btn btn-success" onclick="showComplete();">
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>已完成工单记录
+                </button>
             <button id="searchDisable" type="button" class="btn btn-danger" onclick="showDisable();">
-                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询未完成工单
-            </button>
-            <button id="searchRapid" type="button" class="btn btn-success" onclick="showComplete();">
-                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询已完成工单
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>未完成工单记录
             </button>
         </div>
     </div>
@@ -83,13 +80,6 @@
                         <select id="editUserId" class="js-example-tags user" define="user.userNickname" name="userId" style="width:100%;"></select>
                     </div>
                 </div>
-               <%-- <div class="form-group">
-                    <label class="col-sm-3 control-label">工单指派时间：</label>
-                    <div class="col-sm-7">
-                        <input type="text" name="workAssignTime" onclick="getDate('editDateTimePicker')" placeholder="请输入工单指派时间" id="editDateTimePicker" class="form-control">
-                        &lt;%&ndash;<input type="text" name="workAssignTime" readonly="true" id="editworkAssignTime" onclick="getDate('editworkAssignTime');" placeholder="请输入工单指派时间" class="form-control datetimepicker">&ndash;%&gt;
-                    </div>
-                </div>--%>
                 <div class="modal-footer">
                     <div class="col-sm-offset-8">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
@@ -102,41 +92,7 @@
     </div>
 </div><!-- /.modal -->
 
-<%--
-&lt;%&ndash;edit工单指派用户弹窗&ndash;%&gt;
-<div id="editUserWindow" class="modal fade" aria-hidden="true" style="overflow:scroll" data-backdrop="static" keyboard:false>
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-sm-12 b-r">
-                        <h3 class="m-t-none m-b">工单指派用户信息</h3>
-                        <table class="table table-hover" id="editUserTable" data-height="550">
-                            <thead>
-                            <tr>
-                                <th data-radio="true" data-field="status"></th>
-                                <th data-feild="userName">
-                                    用户名字
-                                </th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
-                        <div class="modal-footer" style="overflow:hidden;">
-                            <button type="button" class="btn btn-default" onclick="closeEditUser();">关闭
-                            </button>
-                            <input type="button" class="btn btn-primary" onclick="" value="确定">
-                            </input>
-                        </div>
-                    </div>
 
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
---%>
 <!-- 提示弹窗 -->
 <div class="modal fade" id="tanchuang" aria-hidden="true">
     <div class="modal-dialog">

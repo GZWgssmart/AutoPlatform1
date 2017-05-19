@@ -15,7 +15,7 @@
 
   <select id="queryAll" resultMap="carmodelMap" parameterType="com.gs.bean.User">
       <![CDATA[
-           select m.*,b.brandName from t_car_model m,t_car_brand b where 1=1 and m.modelStaus = 'Y' m.brandId=b.brandId
+           select m.*,b.brandName from t_car_model m,t_car_brand b where 1=1 and m.modelStaus = 'Y' and m.brandId=b.brandId
         ]]>
   </select>
 
@@ -68,6 +68,12 @@
     ]]>
     </select>
 
+    <!--  查询此车型名称是否已存在 -->
+    <select id="querymodelName" resultType="int">
+        <![CDATA[
+      select count(modelId) from t_car_model where modelName = #{modelName};
+    ]]>
+    </select>
 
     <!--冻结数据-->
     <update id="inactive" keyProperty="modelId" parameterType="carmodel">

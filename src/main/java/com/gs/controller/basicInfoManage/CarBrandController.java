@@ -71,8 +71,8 @@ public class CarBrandController {
     @ResponseBody
     @RequestMapping(value = "queryAllCarBrand", method = RequestMethod.GET)
     public List<ComboBox4EasyUI> queryAll(HttpSession session) {
-        if (SessionUtil.isLogin(session)) {
-            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员";
+        if (SessionUtil.isLogin(session) || SessionUtil.isOwnerLogin(session)) {
+            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,车主";
             if (RoleUtil.checkRoles(roles)) {
                 logger.info("查询所有汽车品牌");
                 List<CarBrand> carBrands = carBrandService.queryAll((User) session.getAttribute("user"));

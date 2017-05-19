@@ -15,20 +15,17 @@ $(function () {
                 size:"small",
                 onSwitchChange:function(event,state){
                     if(state==true){
-                        app = true;
                         initTableNotTollbar("appTable", "/userBasicManage/queryByPager");
+                        $('#addForm').data('bootstrapValidator').resetForm();
                         $("#appWindow").modal('show');
+                        $("#addWindow").modal("hide");
                     }else if(state==false){
-                        app = false;
+                        $("#addUserName").attr("readOnly",false);
+                        $("#addUserPhone").attr("readOnly",false);
+                        clearAddForm();
                     }
-
                 }
-
             })
-            $("#appWindow").on("hide.bs.modal", function () {
-                $("#addWindow").modal('show')
-                $('#app').bootstrapSwitch('state', false);
-            });
         }else if(data.result == 'notLogin'){
             swal({title:"",
                     text:data.message,
@@ -178,63 +175,49 @@ function blurredQuery(){
 
 // 关闭预约
 function closeAppWin() {
+    user = null;
+    $('#app').bootstrapSwitch('state', false);
     $("#appWindow").modal('hide');
     $("#addWindow").modal('show')
 }
 
 var user;
 
-
-/** 监听switch的监听事件 */
-function appOnChange() {
-    if ($('#app').bootstrapSwitch('state')) {
-        if (user != null && user != "" && user != undefined) {
-            setData(user);
-        }
-    }
-}
-
 // 选择预约记录
 function checkApp() {
     var row = $("#appTable").bootstrapTable('getSelections');
     if (row.length != 1) {
         swal({title:"",
-            text:"请选择一条预约记录",
+            text:"请先选择一位本店车主记录",
             confirmButtonText:"确认",
             type:"error"})
         return false;
     } else {
         user = row[0];
-        setData(user);
-        $("#appWindow").on("hide.bs.modal", function () {
-            $('#app').bootstrapSwitch('state', true);
-        });
-        $("#appWindow").modal('hide');
+        if(user.userName != null && user.userName != "" && user.userPhone != null && user.userPhone != "") {
+            setData(user);
+            $("#appWindow").modal('hide');
+            $("#addWindow").modal("show");
+        }else{
+            swal({title:"",
+                text:"请先将此本店车主信息完善",
+                confirmButtonText:"确认",
+                type:"error"})
+        }
     }
 }
 
-function setData(user) {
-    $("#addUserId").val(user.userId);
-    $("#addUserName").val(user.userName);
-    $("#addUserPhone").val(user.userPhone);
-   /**$("#addUserName").val(appointment.userName);
-    $("#addUserPhone").val(appointment.userPhone);
-    $("#addUserId").val(appointment.userId);
-    $("#addPlate").val(appointment.carPlate);
-    $('#addArriveTime').val(formatterDate(appointment.arriveTime));
-    $('#addCarBrand').html('<option value="' + appointment.brand.brandId + '">' + appointment.brand.brandName + '</option>').trigger("change");
-    $('#addCarColor').html('<option value="' + appointment.color.colorId + '">' + appointment.color.colorName + '</option>').trigger("change");
-    $('#addCarModel').html('<option value="' + appointment.model.modelId + '">' + appointment.model.modelName + '</option>').trigger("change");
-    $('#addCarPlate').html('<option value="' + appointment.plate.plateId + '">' + appointment.plate.plateName + '</option>').trigger("change");
-    $("#addMaintainOrFix").val(appointment.maintainOrFix);**/
+function setData(user1) {
+    user = null;
+    $("#addUserName").attr("readOnly",true);
+    $("#addUserPhone").attr("readOnly",true);
+    $("#addUserId").val(user1.userId);
+    $("#addUserName").val(user1.userName);
+    $("#addUserPhone").val(user1.userPhone);
 }
 
 /** 清除添加的form表单信息 */
 function clearAddForm() {
-    $('#addCarBrand').html('').trigger("change");
-    $('#addCarColor').html('').trigger("change");
-    $('#addCarModel').html('').trigger("change");
-    $('#addCarPlate').html('').trigger("change");
     $("input[type=reset]").trigger("click");
 }
 

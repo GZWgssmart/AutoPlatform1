@@ -29,4 +29,9 @@ public interface CarModelDAO extends BaseDAO<String, CarModel>{
      * 模糊查询的记录数
      */
     public int countByBlurred(@Param("carModel")CarModel carModel, @Param("user")User user);
+
+    /**
+     * 查询此车型名称是否已存在
+     */
+    public int querymodelName(String modelName);
 }

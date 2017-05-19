@@ -145,13 +145,13 @@
                         <h3>生成维修保养收费单据</h3>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">收费总金额：</label>
+                        <label class="col-sm-3 control-label">收费总金额(元)：</label>
                         <div class="col-sm-7">
                             <input id="money" class="form-control" readonly="true" style="width:100%"/>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">折扣后总金额：</label>
+                        <label class="col-sm-3 control-label">折扣后总金额(元)：</label>
                         <div class="col-sm-7">
                             <input id="disCountMoney" name="chargeBillMoney" class="form-control" readonly="true" style="width:100%"/>
                         </div>
@@ -163,7 +163,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">实际付款金额：</label>
+                        <label class="col-sm-3 control-label">实际付款金额(元)：</label>
                         <div class="col-sm-7">
                             <input type="number" name="actualPayment" min="1"
                                    placeholder="请输入实际付款金额" class="form-control" style="width:100%"/>

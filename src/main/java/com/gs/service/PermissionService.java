@@ -19,8 +19,10 @@ public interface PermissionService extends BaseService<String, Permission>{
     public List<Permission> queryAll();
     public List<Permission> queryByPager(String status, Pager pager) ;
     public int count(String status);
+    public int count();
 
     public int updateStatus(List permissionIds,String status );
 
     public int countByPerName(String permissionZhname, String permissionId);
+
 }

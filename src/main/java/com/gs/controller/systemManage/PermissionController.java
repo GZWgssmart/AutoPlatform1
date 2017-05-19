@@ -113,9 +113,9 @@ public class PermissionController {
                     pager.setTotalRecords(permissionService.countByBlurred(permission,(User)session.getAttribute("user")));
                     return new Pager4EasyUI<Permission>(pager.getTotalRecords(), permissions);
                 }else{ // 当在模糊查询输入框中输入的值为空时, 使它查询全部
-                    pager.setTotalRecords(permissionService.count((User)session.getAttribute("user")));
-                    List<Permission> checkins = permissionService.queryByPager(pager);
-                    return new Pager4EasyUI<Permission>(pager.getTotalRecords(), checkins);
+                    pager.setTotalRecords(permissionService.count());
+                    List<Permission> permissions = permissionService.queryByPager(pager);
+                    return new Pager4EasyUI<Permission>(pager.getTotalRecords(), permissions);
                 }
             }else{
                 logger.info("此用户无拥有查看登记记录模糊查询方法的角色");

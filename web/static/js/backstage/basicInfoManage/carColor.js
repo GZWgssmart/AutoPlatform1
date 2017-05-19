@@ -161,14 +161,6 @@ function validator(formId) {
                     }
                 }
             },
-            colorDes :{
-                message: '颜色的描述验证失败',
-                validators: {
-                    notEmpty: {
-                        message: '颜色的描述不能为空'
-                    }
-                }
-            },
         }
     })
         .on('success.form.bv', function (e) {
@@ -220,7 +212,7 @@ function formSubmit(url, formId, winId){
                     // $('#addForm').data('bootstrapValidator').resetForm(true); // 移除所有验证样式
                     $("#addButton").removeAttr("disabled"); // 移除不可点击
                 }
-                // $("#" + formId).data('bootstrapValidator').destroy(); // 销毁此form表单
+                $("#" + formId).data('bootstrapValidator').destroy(); // 销毁此form表单
                 $('#' + formId).data('bootstrapValidator', null);// 此form表单设置为空
             } else if (data.result == "fail") {
                 swal({

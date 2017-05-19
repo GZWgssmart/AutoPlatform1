@@ -14,4 +14,9 @@ import java.util.List;
 public interface CarModelService extends BaseService<String, CarModel>{
 
  public List<CarModel> queryByBrandId(String id);
+
+ /**
+  * 查询此车型名称是否已存在
+  */
+ public int querymodelName(String modelName);
 }

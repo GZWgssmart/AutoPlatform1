@@ -59,6 +59,13 @@
     ]]>
     </select>
 
+    <!--  查询此汽车车牌名称是否已存在 -->
+    <select id="queryplateName" resultType="int">
+        <![CDATA[
+      select count(plateId) from t_car_plate where plateName = #{plateName};
+    ]]>
+    </select>
+
     <!--冻结数据-->
     <update id="inactive" keyProperty="plateId" parameterType="carplate">
         <![CDATA[

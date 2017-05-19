@@ -10,11 +10,13 @@ public class ControllerResult {
     public static final int NOT_LOGIN_CODE = 102;
     public static final int NOT_ROLE_CODE = 103;
     public static final int IS_OWNER_CODE = 104;
+    public static final int NOT_PHONE_CODE = 105;
     public static final String SUCCESS_RESULT = "success";
     public static final String FAIL_RESULT = "fail";
     public static final String NOT_LOGIN_RESULT = "notLogin";
     public static final String NOT_ROLE_RESULT = "notRole";
     public static final String IS_OWNER_RESULT = "isOwner";
+    public static final String NOT_PHONE_RESULT = "notPhoneCode";
 
     private int code;
     private String result;
@@ -81,5 +83,9 @@ public class ControllerResult {
 
     public static ControllerResult getIsOwnerResult(String message){
         return new ControllerResult(ControllerResult.IS_OWNER_CODE, ControllerResult.IS_OWNER_RESULT, message);
+    }
+
+    public static ControllerResult getNotPhoneCodeResult(String message){
+        return new ControllerResult(ControllerResult.NOT_PHONE_CODE, ControllerResult.NOT_PHONE_RESULT, message);
     }
 }

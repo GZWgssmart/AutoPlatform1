@@ -48,6 +48,11 @@ public class CarModelServiceImpl implements CarModelService {
 	public int active(String id) { return carModelDAO.active(id); }
 	public List<CarModel> queryByBrandId(String id) { return carModelDAO.queryByBrandId(id); }
 
+	@Override
+	public int querymodelName(String modelName) {
+		return carModelDAO.querymodelName(modelName);
+	}
+
 	public List<CarModel> queryByPagerDisable(Pager pager) {
 		return carModelDAO.queryByPagerDisable(pager);
 	}

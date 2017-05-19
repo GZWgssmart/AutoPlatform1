@@ -61,7 +61,8 @@ public class CarRemindController {
      */
     @RequestMapping(value="sms", method = RequestMethod.GET)
     public void sms(){
-
+        //IndustrySMS i = new IndustrySMS("15570102341", "【创意科技】您的验证码为123456，请于30分钟内正确输入，如非本人操作，请忽略此短信。");
+       // i.execute();
     }
 
     /**
@@ -75,9 +76,11 @@ public class CarRemindController {
             String roles = "公司超级管理员,公司普通管理员,汽车公司接待员";
             if(RoleUtil.checkRoles(roles)) {
                 logger.info("提车提醒");
-                if(ids != null && ids != "") {
+                if(ids != null && ids != "" && phones != null && phones != "") {
                     // 直接把用户手机传过来, 根据手机发送短信
                     // 发送短信
+//                    IndustrySMS i = new IndustrySMS("", "【汽车之家】您的验证码为123456，请于30分钟内正确输入，如非本人操作，请忽略此短信。");
+//                    i.execute();
                     List<User> users = userService.queryEmail(ids);// 根据维修保养记录id查出所有的用户, 拿到用户的email;
                     String emails = "";
                     for (User u : users) { // 设置邮箱

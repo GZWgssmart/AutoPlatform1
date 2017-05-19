@@ -1,3 +1,5 @@
+var plateName;
+
 $(function () {
     var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师,汽车公司学徒,汽车公司销售人员,汽车公司财务人员,汽车公司采购人员,汽车公司库管人员,汽车公司人力资源管理部";
     $.post("/user/isLogin/"+roles, function (data) {
@@ -35,6 +37,9 @@ function showEdit() {
                 var ceshi = row[0];
                 $("#editForm").fill(ceshi);
                 validator('editForm');
+                $('#editplateName').bind('input propertychange', function() {
+                    plateName = $("#editplateName").val();
+                });
             } else {
                 swal({
                     title: "",
@@ -67,21 +72,6 @@ function showEdit() {
             })
         }
     });
-
-    // var row = $('#table').bootstrapTable('getSelections');
-    // if (row.length > 0) {
-    //     $("#editWindow").modal('show'); // 显示弹窗
-    //     $("#editButton").removeAttr("disabled");
-    //     var ceshi = row[0];
-    //     $("#editForm").fill(ceshi);
-    //     validator('editForm');
-    // } else {
-    //     swal({
-    //         "title": "",
-    //         "text": "请先选择一条数据",
-    //         "type": "warning"
-    //     })
-    // }
 }
 
 function showAdd() {
@@ -90,6 +80,9 @@ function showAdd() {
         if (data.result == 'success') {
             $("#addWindow").modal('show');
             $("#addButton").removeAttr("disabled");
+            $('#addplateName').bind('input propertychange', function() {
+                plateName = $("#addplateName").val();
+            });
             validator('addForm'); // 初始化验证
         } else if (data.result == 'notLogin') {
             swal({
@@ -137,14 +130,12 @@ function validator(formId) {
                         min: 1,
                         max: 2,
                         message: '车牌名称必须在1到2位之间'
-                    }
-                }
-            },
-            plateDes: {
-                message: '车牌描述验证失败',
-                validators: {
-                    notEmpty: {
-                        message: '车牌描述不能为空'
+                    },
+                    remote: {
+                        url: '/carPlate/queryplateName',
+                        message: '该车牌名称已存在',
+                        delay :  2000,
+                        type: 'GET'
                     }
                 }
             },
@@ -197,7 +188,6 @@ function formSubmit(url, formId, winId){
                     $("input[type=reset]").trigger("click"); // 移除表单中填的值
                     // $('#addForm').data('bootstrapValidator').resetForm(true); // 移除所有验证样式
                     $("#addButton").removeAttr("disabled"); // 移除不可点击
-
                     // 设置select2的值为空
                 }
                 $("#" + formId).data('bootstrapValidator').destroy(); // 销毁此form表单
@@ -238,32 +228,6 @@ function formSubmit(url, formId, winId){
                     type:"error"})
             }
         }, "json");
-    // $.post(url,
-    //     $("#" + formId).serialize(),
-    //     function (data) {
-    //         if (data.result == "success") {
-    //             $('#' + winId).modal('hide');
-    //             swal({
-    //                 title:"",
-    //                 text: data.message,
-    //                 confirmButtonText:"确定", // 提示按钮上的文本
-    //                 type:"success"})// 提示窗口, 修改成功
-    //             $('#table').bootstrapTable('refresh');
-    //             if(formId == 'addForm'){
-    //                 $("input[type=reset]").trigger("click"); // 移除表单中填的值
-    //                 $('#addForm').data('bootstrapValidator').resetForm(true); // 移除所有验证样式
-    //                 $("#addButton").removeAttr("disabled"); // 移除不可点击
-    //                 $("#" + formId).data('bootstrapValidator').destroy(); // 销毁此form表单
-    //                 $('#' + formId).data('bootstrapValidator', null);// 此form表单设置为空
-    //             }
-    //         } else if (data.result == "fail") {
-    //             swal({title:"",
-    //                 text:"添加失败",
-    //                 confirmButtonText:"确认",
-    //                 type:"error"})
-    //             $("#"+formId).removeAttr("disabled");
-    //         }
-    //     }, "json");
 }
 
 // 激活或禁用

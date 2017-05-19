@@ -284,7 +284,7 @@
     <div class="modal-dialog"  style="width:90%">
         <div class="modal-content">
             <div class="modal-body" onkeydown="keydown('addButton')">
-                <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('editWindow','editForm')" style="padding:10px"></span>
+                <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('editWindow','editForm')"></span>
                 <form role="form" class="form-horizontal" id="editForm">
                     <input type="hidden" name="supplyId" define="supply.supplyId"/>
                     <input type="hidden"name="supplyStatus" define="supply.supplyStatus">
@@ -424,7 +424,7 @@
 <div id="detailWindow" class="modal fade" style="overflow-y:scroll" data-backdrop="static" >
     <div class="modal-dialog"  style="width:90%">
         <div class="modal-content">
-            <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('detailWindow','detailForm')"></span>
+            <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('detailWindow','detailForm')" style="padding:10px"></span>
             <div class="modal-header" style="overflow:auto;">
                 <h4>供应商详细信息</h4>
             </div>

@@ -33,36 +33,6 @@ $(function () {
     });
 });
 
-
-
-    // initSelect2("record","请选择保养记录","/maintainRecord/queryByPager");
-     //initSelect2("user","请选择用户","/userBasicManage/queryAll");
-   /* initSelect2("editRecordTable","/maintainRecord/queryByPager");
-    initSelect2("editUserTable","/userBasicManage/queryByPager");*/
-
-
-
-
-/*/!*edit选择用户弹窗*!/
-function openEditUser(){
-    initTableNotTollbar("editUserTable","/userBasicManage/queryByPager");
-    $("#editWindow").modal('hide');
-    $("#editUserWindow").modal('show');
-}
-/!*edit用户弹窗关闭*!/
-function closeEditUser(){
-    $("#editUserWindow").modal('hide');
-    $("#editWindow").modal('show');
-}
-
-//添加
-function showAdd(){
-    initDateTimePicker('addForm', 'workAssignTime'); // 初始化时间框, 第一参数是form表单id, 第二参数是input的name
-    $("#addWindow").modal('show');
-    $("#addButton").removeAttr("disabled");
-    validator('addForm'); // 初始化验证
-}*/
-
 /*表格验证*/
 function validator(formId) {
     $('#' + formId).bootstrapValidator({
@@ -121,17 +91,7 @@ function validator(formId) {
 
             }*/
         })
-
 }
-
-/*function addSubmit(){
-    $("#addForm").data('bootstrapValidator').validate();
-    if($("#addForm").data('bootstrapValidator').isvalid()){//已验证
-        $("#addButton").attr("disbled","disabled");
-    }else{
-        $("#addButton").removeAttr("disabled");
-    }
-}*/
 
 function editSubmit(){
     $("#editForm").data('bootstrapValidator').validate();
@@ -303,11 +263,11 @@ function formatterDate(value) {
     }
 }
 
-// 查看全部已完成
+// 查看全部激活
 function showComplete() {
     initTable('table', '/Order/queryByPager');
 }
-// 查看全部未完成
+// 查看全部禁用
 function showDisable() {
     initTable('table', '/Order/queryByPagerDisable');
 }
@@ -339,9 +299,9 @@ function statusFormatter(index, row) {
 function openStatusFormatter(index, row) {
     /*处理数据*/
     if (row.workStatus == 'Y') {
-        return "&nbsp;&nbsp;<button type='button' class='btn btn-danger' onclick='active(\""+'/Order/statusOperate?id='+row.workId+'&status=Y'+"\")'>未完成</a>";
+        return "&nbsp;&nbsp;<button type='button' class='btn btn-danger' onclick='active(\""+'/Order/statusOperate?id='+row.workId+'&status=Y'+"\")'>禁用</a>";
     } else {
-        return "&nbsp;&nbsp;<button type='button' class='btn btn-danger' onclick='inactive(\""+'/Order/statusOperate?id='+row.workId+'&status=N'+"\")'>已完成</a>";
+        return "&nbsp;&nbsp;<button type='button' class='btn btn-danger' onclick='inactive(\""+'/Order/statusOperate?id='+row.workId+'&status=N'+"\")'>激活</a>";
     }
 
 }

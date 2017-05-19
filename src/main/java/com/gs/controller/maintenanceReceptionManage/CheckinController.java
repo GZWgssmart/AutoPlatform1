@@ -2,10 +2,8 @@ package com.gs.controller.maintenanceReceptionManage;
 
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.Checkin;
-import com.gs.bean.Company;
 import com.gs.bean.MaintainRecord;
 import com.gs.bean.User;
-import com.gs.common.bean.ComboBox4EasyUI;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
@@ -30,7 +28,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -130,9 +127,9 @@ public class CheckinController {
                     maintainRecord.setRecordDes(checkin.getUserRequests());
                     maintainRecord.setIfConfirm("N");
                     maintainRecordService.insert(maintainRecord);
-                    return ControllerResult.getSuccessResult("添加成功");
+                    return ControllerResult.getSuccessResult("添加登记记录成功");
                 }else{
-                    return ControllerResult.getFailResult("添加失败");
+                    return ControllerResult.getFailResult("添加登记记录失败");
                 }
             }else{
                 logger.info("此用户无拥有添加登记记录的角色");
@@ -152,8 +149,11 @@ public class CheckinController {
             if(RoleUtil.checkRoles(roles)) {
                 logger.info("修改登记记录");
                 User user = (User)session.getAttribute("user");
+                if(checkin.getCheckinStatus().equals("N")){
+                    checkin.setCheckinStatus("Y");
+                }
                 checkinService.update(checkin);
-                return ControllerResult.getSuccessResult("修改成功");
+                return ControllerResult.getSuccessResult("修改登记记录成功");
             }else{
                 logger.info("此用户无拥有修改登记记录的角色");
                 return ControllerResult.getNotRoleResult("权限不足");
@@ -177,11 +177,11 @@ public class CheckinController {
                     if (status.equals("N")) {
                         checkinService.active(id);
                         logger.info("激活成功");
-                        return ControllerResult.getSuccessResult("激活成功");
+                        return ControllerResult.getSuccessResult("激活登记记录成功");
                     } else {
                         checkinService.inactive(id);
                         logger.info("禁用成功");
-                        return ControllerResult.getSuccessResult("禁用成功");
+                        return ControllerResult.getSuccessResult("禁用登记记录成功");
                     }
                 } else {
                     return ControllerResult.getFailResult("操作失败");

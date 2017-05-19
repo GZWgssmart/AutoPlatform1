@@ -15,6 +15,11 @@
 <link rel="stylesheet" href="/static/css/bootstrap.css">
 <link rel="stylesheet" href="/static/css/animate.css">
 <link rel="stylesheet" href="/static/css/FrontHome.css">
+<style>
+    /* 地图 开始 */
+    #nearCompMap {width:100%; height:70%; overflow:hidden; margin:0;font-family:"微软雅黑";}
+    /* 地图 结束 */
+</style>
 <body>
     <%--
 
@@ -442,88 +447,109 @@
                 <span style="font-size: 19px;">© 2011-2016 赣州宏图预科班 版权所有 ｜ 赣ICP备11018683-3</span>
             </div>
         </div>
+        <%-- 地图开始 --%>
+        <div class="show-map"><div></div></div>
+        <%-- 地图结束--%>
         <a href="#top" class="go-top" id="backtop" style="display:none;"></a>
     </div>
 
 
+    <!-- 地图 开始-->
+    <div class="modal fade" id="mapModal" aria-hidden="true" data-backdrop="static" keyboard="false">
+        <div class="modal-dialog" style="heigth:70%">
+            <div class="modal-content" style="heigth:100%">
+                <div class="modal-header" style="overflow:auto;">
+                    <span  class="close" data-dismiss="modal">&times;</span>
+                    <h4 data-tit = "title">附近的汽修公司</h4>
+                </div>
+                <div class="modal-content" style="overflow:auto;" style="heigth:80%">
+                    <div id="nearCompMap" style="display:none"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--   地图 结束 -->
 
-<script src="/static/js/jquery.min.js"></script>
-<script src="/static/js/bootstrap.min.js"></script>
-<script src="/static/js/jquery.cxselect.min.js"></script>
-<script>
+  <script src="/static/js/jquery.min.js"></script>
+  <script src="/static/js/bootstrap.min.js"></script>
+  <script src="/static/js/jquery.cxselect.min.js"></script>
+  <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=51SKZww5ttdlF6C387IPRh2tmHllmwm7"></script>
+  <script type="text/javascript" src="/static/js/backstage/systemManage/nearCompMap.js"></script>
+  <script>
 
-    $(document).ready(function(){
-        $(".nav-two-ul a li").each(function(){
-            $this = $(this);
-            if($this[0].href==String(window.location)){
-                $this.addClass("actives");
-            }
-        });
+      $(document).ready(function(){
+          $(".nav-two-ul a li").each(function(){
+              $this = $(this);
+              if($this[0].href==String(window.location)){
+                  $this.addClass("actives");
+              }
+          });
 
-        $(function () {
-            var navbar = $("#navbar-two");
-            $(window).scroll(function () {
-                if($(window).scrollTop() > 21){
-                    if(navbar.css("position") !="fixed"){
-                        navbar.css({ 'position': 'fixed',top:0,width:1349,zIndex:9999})
-                    };
-                }else if(navbar.css("position") != "static"){
-                    navbar.css("position","static");
-                }
-            }) ;
-        });
+          $(function () {
+              var navbar = $("#navbar-two");
+              $(window).scroll(function () {
+                  if($(window).scrollTop() > 21){
+                      if(navbar.css("position") !="fixed"){
+                          navbar.css({ 'position': 'fixed',top:0,width:1349,zIndex:9999})
+                      };
+                  }else if(navbar.css("position") != "static"){
+                      navbar.css("position","static");
+                  }
+              }) ;
+          });
 
-        $(function(){
-            var backtop = document.getElementById("backtop");
-            $(window).scroll(function () {
-                if($(window).scrollTop() >= 500){
-                    backtop.style.display = "block";
-                }else if($(window).scrollTop() <500){
-                    backtop.style.display = "none";
-                }
-            });
-        });
-        $(function(){
-            $('a[href*=#],area[href*=#]').click(function() {
-                if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
-                    var $target = $(this.hash);
-                    $target = $target.length && $target || $('[name=' + this.hash.slice(1) + ']');
-                    if ($target.length) {
-                        var targetOffset = $target.offset().top;
-                        $('html,body').animate({
-                                    scrollTop: targetOffset
-                                },
-                                1000);
-                        return false;
-                    }
-                }
-            });
-        });
-        $("#sendbutton").click(function () {
-            var phone = document.getElementById("phone");
-            var prompt = document.getElementById("codeprompt");
-            var phonecodeinput = document.getElementById("phonecodeinput");
-            if(phone.value == null || phone.value == ""){
-                prompt.innerHTML = "手机号为空";
-                prompt.style.display ="inline-block";
-            }else if(!(/^1[34578]\d{9}$/).test(phone.value)){
-                prompt.innerHTML = "手机号错误";
+          $(function(){
+              var backtop = document.getElementById("backtop");
+              $(window).scroll(function () {
+                  if($(window).scrollTop() >= 500){
+                      backtop.style.display = "block";
+                  }else if($(window).scrollTop() <500){
+                      backtop.style.display = "none";
+                  }
+              });
+          });
+          $(function(){
+              $('a[href*=#],area[href*=#]').click(function() {
+                  if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
+                      var $target = $(this.hash);
+                      $target = $target.length && $target || $('[name=' + this.hash.slice(1) + ']');
+                      if ($target.length) {
+                          var targetOffset = $target.offset().top;
+                          $('html,body').animate({
+                                      scrollTop: targetOffset
+                                  },
+                                  1000);
+                          return false;
+                      }
+                  }
+              });
+          });
+          $("#sendbutton").click(function () {
+              var phone = document.getElementById("phone");
+              var prompt = document.getElementById("codeprompt");
+              var phonecodeinput = document.getElementById("phonecodeinput");
+              if(phone.value == null || phone.value == ""){
+                  prompt.innerHTML = "手机号为空";
+                  prompt.style.display ="inline-block";
+              }else if(!(/^1[34578]\d{9}$/).test(phone.value)){
+                  prompt.innerHTML = "手机号错误";
 
-            }else{
-                prompt.style.display = "none";
-                phonecodeinput.style.display = "inline-block";
-            }
-        })
+              }else{
+                  prompt.style.display = "none";
+                  phonecodeinput.style.display = "inline-block";
+              }
+          })
 
-        $(document).keydown(function () {
-            if(event.keyCode == 13){
-                $("#sendbutton").click();
-            }
-        });
-    });
-</script>
+          $(document).keydown(function () {
+              if(event.keyCode == 13){
+                  $("#sendbutton").click();
+              }
+          });
+      });
+
+  </script>
 
 
-</body>
-</html>
+  </body>
+  </html>
 

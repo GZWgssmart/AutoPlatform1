@@ -229,15 +229,31 @@
   <!-- 根据手机号查询是否当前数据库已经存在此手机号 人员管理添加和修改时验证 -->
   <select id="queryIsPhoneByOne" resultType="int">
     <![CDATA[
-      select count(userId) from t_user where userPhone = #{userPhone} and userId != #{userId};
+      select count(userPhone) from t_user where userPhone = #{userPhone}
     ]]>
+    <if test="userId != null and userId != ''">
+      and userId != #{userId}
+    </if>
   </select>
 
   <!-- 根据email查询是否当前数据库已经存在此email 人员管理添加和修改时验证 -->
   <select id="queryIsEmailByOne" resultType="int">
     <![CDATA[
-      select count(userId) from t_user where userEmail = #{userEmail} and userId != #{userId};
+      select count(userEmail) from t_user where userEmail = #{userEmail}
     ]]>
+    <if test="userId != null and userId != ''">
+      and userId != #{userId}
+    </if>
+  </select>
+
+  <!-- 根据email查询是否当前数据库已经存在此email 人员管理添加和修改时验证 -->
+  <select id="queryIsIdentityByOne" resultType="int">
+    <![CDATA[
+      select count(userIdentity) from t_user where userIdentity = #{userIdentity}
+    ]]>
+    <if test="userId != null and userId != ''">
+      and userId != #{userId}
+    </if>
   </select>
 
   <select id="queryByEmail" resultMap="userBasicManageMap">

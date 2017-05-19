@@ -157,11 +157,11 @@ public class MaintainRecordController {
                     if (status.equals("N")) {
                         maintainRecordService.active(id);
                         logger.info("激活成功");
-                        return ControllerResult.getSuccessResult("激活成功");
+                        return ControllerResult.getSuccessResult("激活维修保养记录成功");
                     } else {
                         maintainRecordService.inactive(id);
                         logger.info("禁用成功");
-                        return ControllerResult.getSuccessResult("禁用成功");
+                        return ControllerResult.getSuccessResult("禁用维修保养记录成功");
                     }
                 } else {
                     return ControllerResult.getFailResult("操作失败");
@@ -189,7 +189,7 @@ public class MaintainRecordController {
                 maintainRecord.setPickupTime(new Date());
                 maintainRecord.setActualEndTime(new Date());
                 maintainRecordService.insert(maintainRecord);
-                return ControllerResult.getSuccessResult("添加成功");
+                return ControllerResult.getSuccessResult("添加维修保养记录成功");
             }else{
                 logger.info("此用户无拥有更改维修保养的角色");
                 return ControllerResult.getNotRoleResult("权限不足");
@@ -207,8 +207,11 @@ public class MaintainRecordController {
             String roles = "公司超级管理员,公司普通管理员,汽车公司接待员";
             if(RoleUtil.checkRoles(roles)) {
                 logger.info("维修保养记录修改操作");
+                if(maintainRecord.getRecordStatus().equals("N")){
+                    maintainRecord.setRecordStatus("Y");
+                }
                 maintainRecordService.update(maintainRecord);
-                return ControllerResult.getSuccessResult("修改成功");
+                return ControllerResult.getSuccessResult("修改维修保养记录成功");
             }else{
                 logger.info("此用户无拥有更改维修保养的角色");
                 return ControllerResult.getNotRoleResult("权限不足");

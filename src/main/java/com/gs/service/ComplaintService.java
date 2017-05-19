@@ -16,7 +16,7 @@ import java.util.List;
 */
 public interface ComplaintService extends BaseService<String, Complaint>{
 
-    public List<Complaint> queryByPagerName(@Param("pager") Pager pager, @Param("complaint") Complaint complaint);
+    public List<Complaint> queryByPagerName(Pager pager, Complaint complaint);
 
-    public int countName(@Param("complaint") Complaint complaint, @Param("user") User user);
+    public int countName(Complaint complaint, User user);
 }

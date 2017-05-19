@@ -221,14 +221,19 @@ function validator(formId) {
         fields: {
             inTypeName: {
                 message: '类型名称不能为空',
-                remote:{                         //自带远程验证存在的方法
-                    url:'/incomingType/checkInTypeName',
-                    message: '用户已存在',//提示消息
-                },
                 validators: {
                     notEmpty: {
                         message: '类型名称不能为空',
                         remote:'此类型已经存在'
+                    },
+                    remote: {
+                        url: '/incomingType/checkInTypeName',//验证收入类型名称
+                        message: '该类型已存在',//提示消息
+                        data: {
+                            inTypeName: $("#" + formId + " input[name=inTypeName]").val()
+                        },
+                        delay :  2000,//每输入一个字符，就发ajax请求，服务器压力还是太大，设置2秒发送一次ajax（默认输入一个字符，提交一次，服务器压力太大）
+                        type: 'POST'//请求方式
                     }
 
                 }

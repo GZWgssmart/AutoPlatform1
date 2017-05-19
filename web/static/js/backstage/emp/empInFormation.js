@@ -167,6 +167,16 @@ function validator(formId) {
                         min:18,
                         max: 18,
                         message: '身份证长度为18位'
+                    },
+                    remote: {
+                        url: '/userBasicManage/queryIsIdentityByOne',//验证身份证
+                        message: '该身份证已存在',//提示消息
+                        data: {
+                            userId: $("#" + formId + " input[name=userId]").val(),
+                            userIdentity: $("#" + formId + " input[name=userIdentity]").val()
+                        },
+                        delay :  2000,//每输入一个字符，就发ajax请求，服务器压力还是太大，设置2秒发送一次ajax（默认输入一个字符，提交一次，服务器压力太大）
+                        type: 'POST'//请求方式
                     }
                 }
             },

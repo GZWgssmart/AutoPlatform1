@@ -58,7 +58,7 @@
 <body>
 <%@include file="../backstage/contextmenu.jsp"%>
 <div class="container">
-    <div class="nav">
+  <%-- <div class="nav" >
         <ul id="myTab" class="nav nav-tabs">
             <li class="pull-right" onclick="initHistory()">
                 <a href="#historyPanel" data-toggle="tab">
@@ -70,13 +70,14 @@
                     <h4>审核中</h4>
                 </a>
             </li>
-            <li class="active pull-right">
+            <li class="active pull-right" >
                 <a href="#workInfoPanel" data-toggle="tab">
                     <h4>我的工单</h4>
                 </a>
             </li>
         </ul>
-    </div>
+    </div>--%>
+
     <div  class="tab-content">
         <div id="workInfoPanel" class="tab-pane fade in active panel-body " data-toggle="tab" style="padding-bottom:0px;"  >
             <table id="materialsTable" style="table-layout: fixed" data-search=true>
@@ -110,6 +111,18 @@
                 </tr>
                 </thead>
             </table>
+            <div id ="toolbar1">
+                <button type="button" class="btn btn-default" onclick = "mySelfRecord()">
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>我的工单
+                </button>
+                <button type="button" class="btn btn-default" onclick="initReviewing()">
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>审核中
+                </button>
+
+                <button type="button" class="btn btn-default" onclick="initHistory()">
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>历史记录
+                </button>
+            </div>
         </div>
 
         <div id="reviewingPanel" class="tab-pane fade" data-toggle="tab" style="padding-bottom:0px;"  >
@@ -127,6 +140,18 @@
                 </tr>
                 </thead>
             </table>
+            <div id ="toolbar2">
+                <button type="button" class="btn btn-default" onclick = "mySelfRecord()">
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>我的工单
+                </button>
+                <button type="button" class="btn btn-default" onclick="initReviewing()">
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>审核中
+                </button>
+
+                <button type="button" class="btn btn-default" onclick="initHistory()">
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>历史记录
+                </button>
+            </div>
         </div>
 
         <div id="historyPanel" class="tab-pane fade" data-toggle="tab">
@@ -143,13 +168,23 @@
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
                 </tr>
             </table>
+            <div id ="toolbar3">
+                <button type="button" class="btn btn-default" onclick = "mySelfRecord()">
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>我的工单
+                </button>
+                <button type="button" class="btn btn-default" onclick="initReviewing()">
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>审核中
+                </button>
+
+                <button type="button" class="btn btn-default" onclick="initHistory()">
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>历史记录
+                </button>
+            </div>
         </div>
     </div>
 </div>
-<div id="toolbar" >
-    </div>
 
-</div>
+
 
 <!-- 零件明细弹窗 -->
 <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师,汽车公司学徒,汽车公司销售人员,汽车公司财务人员,汽车公司采购人员,汽车公司库管人员,汽车公司人力资源管理部">

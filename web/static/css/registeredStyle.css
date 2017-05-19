@@ -90,8 +90,8 @@ li{
     display: none;
 }
 .caveat{
-    font-size: 16px;
-    color: red;
+    color: #a94442;
+    font-size: 85%;
 }
 .caveat{
     display:none;

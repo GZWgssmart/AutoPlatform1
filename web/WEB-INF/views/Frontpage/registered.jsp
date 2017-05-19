@@ -96,18 +96,18 @@
                             <form class="form" id="regform">
                                 <div class="form-group">
                                     <input name="userPhone" type="text" id="phone" class="form-control" placeholder="请输入您的手机号" >
+                                    <span class="caveat" id="phonecode-caveat"></span>
                                 </div>
-                                <%--<div class="form-group">--%>
-                                    <%--<div class="row">--%>
-                                        <%--<div class="col-xs-7 col-md-8">--%>
-                                            <%--<input name="phonecode" style="width: 105%" type="text" id="phone-code" class="form-control" placeholder="请输入验证码" >--%>
-                                        <%--</div>--%>
-                                        <%--<div class="col-xs-5 col-md-4">--%>
-                                            <%--<a class="btn btn-info" style="margin-bottom: 0;">发送验证码</a>--%>
-                                        <%--</div>--%>
-                                    <%--</div>--%>
-                                    <%--<span class="caveat" id="phonecode-caveat">验证码错误</span>--%>
-                                <%--</div>--%>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-xs-7 col-md-6">
+                                            <input name="phonecode"  type="text" id="phone-code" class="form-control" style="width: 110%;" placeholder="请输入验证码" >
+                                        </div>
+                                        <div class="col-xs-5 col-md-5">
+                                            <a id="codeId" class="btn btn-info" style="margin-bottom: 0;width:123%;" onclick="sendCode(this);">获取短信验证码</a>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="form-group">
                                     <input name="userPwd" type="password" id="password1" class="form-control" placeholder="请输入密码" >
                                 </div>

@@ -66,4 +66,5 @@ public interface MaterialUseDAO extends BaseDAO<String, MaterialUse>{
     public String queryUserIdbyRecordId4workInfo(@Param("recordId")String recordId);
 
 
+    public List<Company> queryNearCompanys(Map pointsMap);
 }
