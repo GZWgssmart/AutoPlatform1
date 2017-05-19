@@ -95,9 +95,9 @@ function getCompanyMsgContent(company){
     companyHtml.push("<span class='infoTitle'>联系方式: </span><span class='msg'>" + company.companyTel+ "</span>");
     companyHtml.push("</div>");
 
-    companyHtml.push("<div>");
-    companyHtml.push("<a style='float:right;'><span class='glyphicon glyphicon-edit'></span><span style='margin-left:10px'>预约</span></a>");
-    companyHtml.push("</div>");
+    // companyHtml.push("<div>");
+    // companyHtml.push("<a style='float:right;'><span class='glyphicon glyphicon-edit'></span><span style='margin-left:10px'>预约</span></a>");
+    // companyHtml.push("</div>");
 
     companyHtml.push("</div>");
     return companyHtml.join("");
