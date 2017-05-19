@@ -297,10 +297,9 @@ public class AccessoriesBuyController {
                 if (text != null && !text.equals("") && value != null && !value.equals("")) {
                     List<AccessoriesBuy> accessoriesBuys = null;
                     AccessoriesBuy accessoriesBuy = new AccessoriesBuy();
-                    if (text.equals("汽车公司/配件名称")) {
+                    if (text.equals("配件名称/汽车公司")) {
                         accessoriesBuy.setCompanyId(value);
                         accessoriesBuy.setAccId(value);
-
                     } else if (text.equals("汽车公司")) {
                         accessoriesBuy.setCompanyId(value);
                     } else if (text.equals("配件名称")) {

@@ -270,7 +270,7 @@ public class AccessoriesSaleController {
                 if (text != null && !text.equals("") && value != null && !value.equals("")) {
                     List<AccessoriesSale> accessoriesSales = null;
                     AccessoriesSale accessoriesSale = new AccessoriesSale();
-                    if (text.equals("汽车公司/配件名称")) {
+                    if (text.equals("配件名称/汽车公司")) {
                         accessoriesSale.setCompanyId(value);
                         accessoriesSale.setAccId(value);
                     } else if (text.equals("汽车公司")) {

@@ -69,9 +69,9 @@
                 <div class="input-group" style="width:350px;float:left;padding:0;margin:0 0 0 -1px;">
                     <div class="input-group-btn">
                         <button type="button" id="ulButton" class="btn btn-default" style="border-radius:0px;"
-                                data-toggle="dropdown">汽车公司/配件分类名称<span class="caret"></span></button>
+                                data-toggle="dropdown">配件分类名称<shiro:hasAnyRoles name="系统超级管理员,系统普通管理员">/汽车公司</shiro:hasAnyRoles><span class="caret"></span></button>
                         <ul class="dropdown-menu pull-right">
-                            <li><a onclick="onclikLi(this)">汽车公司/配件分类名称</a></li>
+                            <li><a onclick="onclikLi(this)">配件分类名称<shiro:hasAnyRoles name="系统超级管理员,系统普通管理员">/汽车公司</shiro:hasAnyRoles></a></li>
                             <li class="divider"></li>
                             <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员">
                                 <li><a onclick="onclikLi(this)">汽车公司</a></li>

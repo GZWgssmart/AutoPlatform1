@@ -246,7 +246,7 @@ public class AccessoriesTypeController {
                 if (text != null && !text.equals("") && value != null && !value.equals("")) {
                     List<AccessoriesType> accessoriesTypes = null;
                     AccessoriesType accType = new AccessoriesType();
-                    if (text.equals("汽车公司/配件分类名称")) {
+                    if (text.equals("配件分类名称/汽车公司")) {
                         accType.setCompanyId(value);
                         accType.setAccTypeName(value);
                     } else if (text.equals("汽车公司")) {

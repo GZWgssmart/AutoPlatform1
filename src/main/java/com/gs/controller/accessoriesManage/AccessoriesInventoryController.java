@@ -288,7 +288,7 @@ public class AccessoriesInventoryController {
                 if (text != null && !text.equals("") && value != null && !value.equals("")) {
                     List<Accessories> accessoriesList = null;
                     Accessories accessories = new Accessories();
-                    if (text.equals("汽车公司/配件名称/供应商/配件类型")) {
+                    if (text.equals("配件名称/供应商/配件类型/汽车公司")) {
                         accessories.setCompanyId(value);
                         accessories.setAccName(value);
                         accessories.setSupplyId(value);
