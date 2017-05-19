@@ -262,12 +262,15 @@ public class UserController {
     /**
      * 发送短信
      */
-    @RequestMapping(value="sendSms/{phone}",method=RequestMethod.GET)
-    public void sendSms(@PathVariable("phone") String phone) {
+    @ResponseBody
+    @RequestMapping(value="sendSms",method=RequestMethod.GET)
+    public ControllerResult sendSms(HttpServletRequest req) {
+        String phone = req.getParameter("phone");
         if(phone!= null && phone!= "") {
             logger.info("发送短信验证码");
             IndustrySMS i = new IndustrySMS(phone, "【汽车之家】您的验证码为" +(int)((Math.random()*9+1)*100000)+"，请于30分钟内正确输入，如非本人操作，请忽略此短信。");
-        }else{
+            return ControllerResult.getSuccessResult("发送短信验证码成功");
         }
+       return ControllerResult.getFailResult("发送短信验证码失败");
     }
 }

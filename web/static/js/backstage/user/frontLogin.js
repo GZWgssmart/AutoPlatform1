@@ -35,10 +35,6 @@ function  sendCode(button) {
     time(button);
 }
 
-function  sendCode1(button) {
-    //time(button);
-}
-
 function time(o) {
     if (wait == 0) {
         $("#phonecode-caveat").css("display","none");
@@ -46,22 +42,43 @@ function time(o) {
         o.innerHTML = "获取短信验证码";
         wait = 60;
     } else {
-        if($("#phone").val()!= null && $("#phone").val() != ""){
-            if($("#phone").val().length != 11){
+        var phone = $("#phone").val();
+        if(phone!= null && phone != ""){
+            if(phone.length != 11){
             }else{
-                $.get("/user/sendSms/"+$("#phone").val(), function () {
-                       o.setAttribute("disabled", true);
-                       o.innerHTML = wait + "秒后可以重新发送";
-                       wait--;
-                       setTimeout(function () {
-                           time(o)
-                       }, 1000)
-                })
+                $.get("/user/sendSms?phone="+phone, function (data) {
+                    if(data.result == "success"){
+                        o.setAttribute("disabled", true);
+                        o.innerHTML = wait + "秒后可以重新发送";
+                        wait--;
+                        setTimeout(function () {
+                                time1(o, phone)
+                        }, 1000)
+                    }else if(data.result == "fail"){
+                        o.innerHTML = "发送失败"
+                    }
+                });
             }
         }else{
             $("#phonecode-caveat").html("请先输入手机号码");
             $("#phonecode-caveat").css("display","block");
         }
+    }
+}
+
+function time1(o, phone) {
+    if (wait == 0) {
+        $("#phonecode-caveat").css("display","none");
+        o.removeAttribute("disabled");
+        o.innerHTML = "获取短信验证码";
+        wait = 60;
+    } else {
+           o.setAttribute("disabled", true);
+           o.innerHTML = wait + "秒后可以重新发送";
+           wait--;
+           setTimeout(function () {
+               time1(o, phone)
+           }, 1000)
     }
 }
 
