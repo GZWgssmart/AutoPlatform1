@@ -108,7 +108,8 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div id="addModelDiv" style="display: none" class="form-group">
+
+                                <div id="addModelDiv" class="form-group">
                                     <label class="col-sm-3 control-label">汽车车型：</label>
                                     <div class="col-sm-7">
                                         <select   id="addCarModel"class="js-example-tags carModel" name="modelId" style="width:100%">
@@ -199,10 +200,12 @@
     }
     $(function () {
         validator('addForm'); // 初始化验证
+        initDateTimePicker('addForm', 'arriveTime', 'addArriveTime'); // 初始化时间框, 第一参数是form表单id, 第二参数是input的name, 第三个参数为input的id
         initSelect2("company", "请选择公司", "/company/queryAllCompany");
         initSelect2("carBrand", "请选择品牌", "/carBrand/queryAllCarBrand");
         initSelect2("carColor", "请选择颜色", "/carColor/queryAllCarColor");
         initSelect2("carPlate", "请选择车牌", "/carPlate/queryAllCarPlate");
+        initSelect2("carModel", "请选择车型", "/carModel/queryAllCarBrand");
     })
 
     function validator(formId) {
@@ -307,7 +310,7 @@
         })
                 .on('success.form.bv', function (e) {
                     if (formId == "addForm") {
-                        formSubmit("/appointment/add", formId);
+                        formSubmit("/appointmentAdd", formId);
 
                     }
                 })
@@ -327,9 +330,27 @@
                 $("#" + formId).serialize(),
                 function (data) {
                     if (data.result == "success") {
-                        alert("添加成功！");
+                        $("input[type=reset]").trigger("click"); // 移除表单中填的值
+                        $("#addButton").removeAttr("disabled"); // 移除不可点击
+                        // 设置select2的值为空
+                        $("#addCompany").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
+                        $("#addCarBrand").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
+                        $("#addCarModel").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
+                        $("#addCarColor").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
+                        $("#addCarPlate").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
+                        swal({
+                            title: "",
+                            text: data.message,
+                            confirmButtonText: "确认",
+                            type: "success"
+                        })
                     } else if (data.result == "fail" ) {
-                        alert("添加失败");
+                        swal({
+                            title: "",
+                            text: data.message,
+                            confirmButtonText: "确认",
+                            type: "error"
+                        })
                     }
                 }, "json");
     }
