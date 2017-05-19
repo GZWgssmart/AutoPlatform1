@@ -90,7 +90,7 @@
             <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('addWindow', 'addForm')"></span>
             <form class="form-horizontal" role="form" id="addForm" method="post">
                 <div class="modal-header" style="overflow:auto;">
-                    <h4>请填写投诉信息</h4>
+                    <h4>添加投诉的信息</h4>
                 </div>
                 <br/>
                 <div class="form-group">
@@ -139,7 +139,7 @@
                 <%--<input id="start2" type="text" name="complaintCreatedTime" define="Complaint.complaintCreatedTime" />--%>
                 <%--<input type="hidden" name="complaintContent" define="Complaint.complaintContent" />--%>
                 <div class="modal-header" style="overflow:auto;">
-                    <h4>请填写回复信息</h4>
+                    <h4>回复投诉的信息</h4>
                 </div>
                 <br/>
                 <%--<div class="form-group">--%>
@@ -190,7 +190,7 @@
                 <%--<input id="start3" type="text" name="complaintCreatedTime" define="Complaint.complaintCreatedTime" />--%>
                 <%--<input type="text" name="complaintContent" define="Complaint.complaintContent" />--%>
                 <div class="modal-header" style="overflow:auto;">
-                    <h4>请修改投诉管理信息</h4>
+                    <h4>修改投诉的信息</h4>
                 </div>
                 <br/>
                 <%--<div class="form-group">--%>

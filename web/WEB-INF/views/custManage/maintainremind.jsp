@@ -71,7 +71,7 @@
                 <input id="addUserId" type="text" name="userId">
                 <input id="addUserEmail" type="text" name="checkin.user.userEmail">
                 <div class="modal-header" style="overflow:auto;">
-                    <h4>请填写维修维修保养提醒信息</h4>
+                    <h4>添加维修维修保养提醒的信息</h4>
                 </div>
                 <br/>
                 <div class="form-group">
@@ -137,7 +137,7 @@
                 <input id="editLastMaintainMileage" type="hidden" name="lastMaintainMileage" define="MaintainRemind.lastMaintainMileage">
                 <input id="editUserId" type="hidden" name="userId" define="MaintainRemind.user.userId">
                 <div class="modal-header" style="overflow:auto;">
-                    <h4>请修改维修维修保养提醒信息</h4>
+                    <h4>修改维修维修保养提醒的信息</h4>
                 </div>
                 <br/>
                 <div class="form-group">
@@ -193,7 +193,7 @@
         <div class="modal-content">
             <div class="modal-body">
                 <span class="glyphicon glyphicon-remove closeModal" onclick="closeUserWin()"></span>
-                <h3>选择车主</h3>
+                <h3>请选择车主</h3>
                 <table class="table table-hover" id="addUserTable" style="table-layout: fixed">
                     <thead>
                     <tr>

@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.mail.BodyPart;
+import javax.mail.MessagingException;
 import javax.mail.Multipart;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMultipart;
@@ -143,7 +144,7 @@ public class MaintainRemindController {
 
     @ResponseBody
     @RequestMapping(value = "insert", method = RequestMethod.POST)
-    public ControllerResult insert(HttpSession session, MaintainRemind maintainRemind, MessageSend messageSend) {
+    public ControllerResult insert(HttpSession session, MaintainRemind maintainRemind, MessageSend messageSend) throws MessagingException {
         if (SessionUtil.isLogin(session)) {
             String roles = "公司超级管理员,公司普通管理员,汽车公司接待员";
             if (RoleUtil.checkRoles(roles)) {
@@ -154,7 +155,8 @@ public class MaintainRemindController {
                 User user = (User) session.getAttribute("user");
                 maintainRemind.setCompanyId(user.getCompanyId());
                 maintainRemindService.insert(maintainRemind);
-                String emails = "";
+                String emails = req.getParameter("checkin.user.userEmail");
+                System.out.print("车主的邮箱为："+emails);
                 if(remindType.equals("短信提醒")) {
                     messageSend.setMessageId(maintainRemind.getRemindId());
                     messageSend.setUserId(maintainRemind.getUserId());
@@ -164,9 +166,20 @@ public class MaintainRemindController {
                     messageSend.setCompanyId(user.getCompanyId());
                     messageSendService.insertRemind(messageSend);
                 } else if(remindType.equals("邮箱提醒")) {
-
+                    Mail mail = new Mail();
+                    mail.setSubject("维修保修提醒");
+                    mail.setBccRecipients(emails); // 密送
+                    logger.info(emails);
+                    Multipart multipart = new MimeMultipart();
+                    BodyPart part1 = new MimeBodyPart();
+                    // 设置邮件内容
+                    part1.setContent(maintainRemind.getRemindMsg(), "text/html;charset=utf-8");
+                    multipart.addBodyPart(part1); // 把此邮件内容添加到实例化好的邮件中
+                    mail.setMultinart(multipart); // 把此邮件对象添加进邮箱
+                    File file = new File(Methods.getRootPath(req) + "WEB-INF/config/mail.properties");
+                    MailConfig.sendMail(file, mail);
                 }
-                return ControllerResult.getSuccessResult("添加成功");
+                return ControllerResult.getSuccessResult("添加保养提醒成功");
             } else {
                 logger.info("此用户无拥有此方法");
                 return null;
@@ -225,7 +238,7 @@ public class MaintainRemindController {
                 messageSend.setSendMsg(maintainRemind.getRemindMsg());
                 messageSend.setSendCreatedTime(maintainRemind.getRemindCreatedTime());
                 messageSendService.update(messageSend);
-                return ControllerResult.getSuccessResult("修改成功");
+                return ControllerResult.getSuccessResult("修改保养提醒成功");
             } else {
                 logger.info("此用户无拥有此方法");
                 return null;

@@ -152,14 +152,12 @@ public class ComplaintController {
     @ResponseBody
     @RequestMapping(value = "insert", method = RequestMethod.POST)
     public ControllerResult insert(HttpSession session, Complaint complaint) {
-        if (SessionUtil.isLogin(session)) {
+        if (SessionUtil.isOwnerLogin(session)) {
             String roles = "车主";
             if (RoleUtil.checkRoles(roles)) {
                 logger.info("投诉记录添加操作");
-                User user = (User) session.getAttribute("frontUser");
-                complaint.setComplaintReplyUser(user.getUserId());
                 complaintService.insert(complaint);
-                return ControllerResult.getSuccessResult("添加成功");
+                return ControllerResult.getSuccessResult("添加投诉信息成功");
             } else {
                 logger.info("此用户无拥有此方法");
                 return null;
@@ -177,10 +175,8 @@ public class ComplaintController {
             String roles = "汽修公司管理员,汽修公司接待员";
             if (RoleUtil.checkRoles(roles)) {
                 logger.info("投诉记录回复操作");
-                User user = (User) session.getAttribute("user");
-                complaint.setComplaintReplyUser(user.getUserId());
                 complaintService.update(complaint);
-                return ControllerResult.getSuccessResult("回复成功");
+                return ControllerResult.getSuccessResult("回复车主成功");
             } else {
                 logger.info("此用户无拥有此方法");
                 return null;
@@ -199,7 +195,7 @@ public class ComplaintController {
             if (RoleUtil.checkRoles(roles)) {
                 logger.info("投诉记录修改操作");
                 complaintService.update(complaint);
-                return ControllerResult.getSuccessResult("修改成功");
+                return ControllerResult.getSuccessResult("修改投诉成功");
             } else {
                 logger.info("此用户无拥有此方法");
                 return null;

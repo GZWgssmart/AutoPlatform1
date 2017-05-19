@@ -88,7 +88,7 @@
             <form class="form-horizontal" id="addForm" method="post">
                 <input id="addTrackUserId" type="text" name="trackUser" />
                 <div class="modal-header" style="overflow:auto;">
-                    <h4>请填写跟踪回访管理信息</h4>
+                    <h4>赶回跟踪回访的信息</h4>
                 </div>
                 <br/>
                 <%--<div class="form-group">--%>
@@ -157,7 +157,7 @@
             <form class="form-horizontal" id="editForm" method="post">
                 <input type="text" name="trackId" define="TrackList.trackId"/>
                 <div class="modal-header" style="overflow:auto;">
-                    <h4>请修改跟踪回访管理信息</h4>
+                    <h4>修改跟踪回访的信息</h4>
                 </div>
                 <br/>
                 <%--<div class="form-group">--%>
@@ -222,7 +222,7 @@
         <div class="modal-content">
             <div class="modal-body">
                 <span class="glyphicon glyphicon-remove closeModal" onclick="closeUserWin()"></span>
-                <h3>选择车主</h3>
+                <h3>请选择车主</h3>
                 <table class="table table-hover" id="addRemindTable" style="table-layout: fixed">
                     <thead>
                     <tr>

@@ -100,7 +100,7 @@ public class MessageSendController {
                     list.add(m);
                 }
                 messageSendService.batchInsert(list);
-                return ControllerResult.getSuccessResult("添加成功");
+                return ControllerResult.getSuccessResult("添加短信提醒成功");
             } else {
                 logger.info("此用户无拥有此方法");
                 return null;
