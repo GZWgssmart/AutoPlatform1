@@ -8,8 +8,9 @@ var outPanelBaseOpts = {
 var iconSize ;
 var companyIcon ;
 $(function () {
-    if(!window.BMap) {
+    if(window.BMap) {
         showMap();
+    } else {
         hasErrorRemoveSomething();
     }
 })
@@ -144,6 +145,7 @@ function addMapEvent() {
 }
 
 function showMap() {
+    console.log("shoMap");
     $(".show-map").on("click",clicFun);
 }
 function clicFun(){
