@@ -12,7 +12,7 @@ public class Test
 		// AccountInfo.execute();
 
 		// 验证码通知短信接口
-		IndustrySMS.execute();
+		//IndustrySMS.execute();
 
 		// 会员营销短信接口
 		// AffMarkSMS.execute();

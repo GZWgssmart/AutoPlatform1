@@ -28,6 +28,26 @@ $(function () {
                 $("#addWindow").modal('show')
                 $('#app').bootstrapSwitch('state', false);
             });
+            $("#customer").bootstrapSwitch({
+                onText:"是",
+                offText:"否",
+                onColor:"success",
+                offColor:"danger",
+                size:"small",
+                onSwitchChange:function(event,state){
+                    if(state==true){
+                        customer = true;
+                        initTableNotTollbar("customerTable", "/userBasicManage/queryByPager");
+                        $("#customerWindow").modal('show');
+                    }else if(state==false){
+                        customer = false;
+                    }
+                }
+            })
+            $("#customerWindow").on("hide.bs.modal", function () {
+                $("#customerWindow").modal('show')
+                $('#customer').bootstrapSwitch('state', false);
+            });
         }else if(data.result == 'notLogin'){
             swal({title:"",
                     text:data.message,
@@ -164,10 +184,17 @@ function closeAppWin() {
     $("#addWinow").modal('show')
 }
 
+
+// 关闭预约
+function closeCustomerWin() {
+    $("#customerWindow").modal('hide');
+    $("#addWindow").modal('show')
+}
+
 var appointment;
+var user;
 
-
-/** 监听switch的监听事件 */
+//监听switch的监听事件
 function appOnChange() {
     if ($('#app').bootstrapSwitch('state')) {
         if (appointment != null && appointment != "" && appointment != undefined) {
@@ -177,7 +204,19 @@ function appOnChange() {
         if (appointment != null && appointment != "" && appointment != undefined) {
             clearAddForm();
         }
+    }
+}
 
+// 监听switch的监听事件
+function appOnChange1() {
+    if ($('#customer').bootstrapSwitch('state')) {
+        if (user != null && user != "" && user != undefined) {
+            setData1(user);
+        }
+    }else {
+        if (user != null && user != "" && user != undefined) {
+            clearAddForm1();
+        }
     }
 }
 
@@ -200,7 +239,27 @@ function checkApp() {
     }
 }
 
+// 选择车主记录
+function checkCustomer() {
+    var row = $("#customerTable").bootstrapTable('getSelections');
+    if (row.length != 1) {
+        swal({title:"",
+            text:"请先选择一位本店车主记录",
+            confirmButtonText:"确认",
+            type:"error"})
+        return false;
+    } else {
+        user = row[0];
+        setData1(user);
+        $("#customerWindow").on("hide.bs.modal", function () {
+            $('#customer').bootstrapSwitch('state', true);
+        });
+        $("#customerWindow").modal('hide');
+    }
+}
+
 function setData(appointment) {
+    alert("set");
     $("#addUserName").val(appointment.userName);
     $("#addUserPhone").val(appointment.userPhone);
     $("#addUserId").val(appointment.userId);
@@ -213,12 +272,23 @@ function setData(appointment) {
     $("#addMaintainOrFix").val(appointment.maintainOrFix);
 }
 
+function setData1(user) {
+    $("#addUserName").val(user.userName);
+    $("#addUserPhone").val(user.userPhone);
+    $("#addUserId").val(user.userId);
+}
+
 /** 清除添加的form表单信息 */
 function clearAddForm() {
     $('#addCarBrand').html('').trigger("change");
     $('#addCarColor').html('').trigger("change");
     $('#addCarModel').html('').trigger("change");
     $('#addCarPlate').html('').trigger("change");
+    $("input[type=reset]").trigger("click");
+}
+
+/** 清除添加的form表单信息 */
+function clearAddForm1() {
     $("input[type=reset]").trigger("click");
 }
 

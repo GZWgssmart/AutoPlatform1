@@ -15,13 +15,17 @@ public class IndustrySMS
 	private static String operation = "/industrySMS/sendSMS";
 
 	private static String accountSid = Config.ACCOUNT_SID;
-	private static String to = "15570102341";
-	private static String smsContent = "【汽车之家】您的验证码为123456，请于30分钟内正确输入，如非本人操作，请忽略此短信。";
+	private String to;
+	private String smsContent;
 
+	public IndustrySMS(String to, String smsContent) {
+		this.to = to;
+		this.smsContent = smsContent;
+	}
 	/**
 	 * 验证码通知短信
 	 */
-	public static void execute()
+	public void execute()
 	{
 		String url = Config.BASE_URL + operation;
 		String body = "accountSid=" + accountSid + "&to=" + to + "&smsContent=" + smsContent

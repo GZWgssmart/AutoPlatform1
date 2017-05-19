@@ -207,6 +207,9 @@ public class MaintainRecordController {
             String roles = "公司超级管理员,公司普通管理员,汽车公司接待员";
             if(RoleUtil.checkRoles(roles)) {
                 logger.info("维修保养记录修改操作");
+                if(maintainRecord.getRecordStatus().equals("N")){
+                    maintainRecord.setRecordStatus("Y");
+                }
                 maintainRecordService.update(maintainRecord);
                 return ControllerResult.getSuccessResult("修改成功");
             }else{

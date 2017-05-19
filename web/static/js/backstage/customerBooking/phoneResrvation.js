@@ -191,6 +191,10 @@ function appOnChange() {
         if (user != null && user != "" && user != undefined) {
             setData(user);
         }
+    }else {
+        if (user != null && user != "" && user != undefined) {
+            clearAddForm();
+        }
     }
 }
 
@@ -199,7 +203,7 @@ function checkApp() {
     var row = $("#appTable").bootstrapTable('getSelections');
     if (row.length != 1) {
         swal({title:"",
-            text:"请选择一条预约记录",
+            text:"请先选择一位本店车主记录",
             confirmButtonText:"确认",
             type:"error"})
         return false;
@@ -217,24 +221,10 @@ function setData(user) {
     $("#addUserId").val(user.userId);
     $("#addUserName").val(user.userName);
     $("#addUserPhone").val(user.userPhone);
-   /**$("#addUserName").val(appointment.userName);
-    $("#addUserPhone").val(appointment.userPhone);
-    $("#addUserId").val(appointment.userId);
-    $("#addPlate").val(appointment.carPlate);
-    $('#addArriveTime').val(formatterDate(appointment.arriveTime));
-    $('#addCarBrand').html('<option value="' + appointment.brand.brandId + '">' + appointment.brand.brandName + '</option>').trigger("change");
-    $('#addCarColor').html('<option value="' + appointment.color.colorId + '">' + appointment.color.colorName + '</option>').trigger("change");
-    $('#addCarModel').html('<option value="' + appointment.model.modelId + '">' + appointment.model.modelName + '</option>').trigger("change");
-    $('#addCarPlate').html('<option value="' + appointment.plate.plateId + '">' + appointment.plate.plateName + '</option>').trigger("change");
-    $("#addMaintainOrFix").val(appointment.maintainOrFix);**/
 }
 
 /** 清除添加的form表单信息 */
 function clearAddForm() {
-    $('#addCarBrand').html('').trigger("change");
-    $('#addCarColor').html('').trigger("change");
-    $('#addCarModel').html('').trigger("change");
-    $('#addCarPlate').html('').trigger("change");
     $("input[type=reset]").trigger("click");
 }
 

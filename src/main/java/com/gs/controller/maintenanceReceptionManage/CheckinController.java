@@ -2,10 +2,8 @@ package com.gs.controller.maintenanceReceptionManage;
 
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.Checkin;
-import com.gs.bean.Company;
 import com.gs.bean.MaintainRecord;
 import com.gs.bean.User;
-import com.gs.common.bean.ComboBox4EasyUI;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
@@ -30,7 +28,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -152,6 +149,9 @@ public class CheckinController {
             if(RoleUtil.checkRoles(roles)) {
                 logger.info("修改登记记录");
                 User user = (User)session.getAttribute("user");
+                if(checkin.getCheckinStatus().equals("N")){
+                    checkin.setCheckinStatus("Y");
+                }
                 checkinService.update(checkin);
                 return ControllerResult.getSuccessResult("修改成功");
             }else{

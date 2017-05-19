@@ -9,6 +9,7 @@ import com.gs.bean.User;
 import com.gs.bean.UserRole;
 import com.gs.common.Constants;
 import com.gs.common.bean.ControllerResult;
+import com.gs.common.mes.IndustrySMS;
 import com.gs.common.util.EncryptUtil;
 import com.gs.common.util.RoleUtil;
 import com.gs.common.util.SessionUtil;
@@ -160,7 +161,7 @@ public class UserController {
             userService.insert(user);
             UserRole userRole = new UserRole();
             userRole.setUserId(user.getUserId());
-            userRole.setRoleId("8067fa42-3205-11e7-bc72-507b9d765567");
+            userRole.setRoleId("8067fa42-3205-11e7-bc72-507b9d765567");// 设置为车主角色
             userRoleService.insert(userRole);
             // 根据此注册手机号查找预约表和登记表， 假如表中的userPhone和注册的userPhone一致， 则把记录的userId改为此注册用户id
             List<Appointment> appointments = appointmentService.queryByPhone(user.getUserPhone());
@@ -242,8 +243,8 @@ public class UserController {
     /**
      * 验证是否登录
      */
-    @RequestMapping(value="isLogin/{roles}",method=RequestMethod.POST)
     @ResponseBody
+    @RequestMapping(value="isLogin/{roles}",method=RequestMethod.POST)
     public ControllerResult isLogin(@PathVariable("roles") String roles, HttpSession session) {
         if(SessionUtil.isLogin(session)) {
             if(RoleUtil.checkRoles(roles)){
@@ -255,6 +256,18 @@ public class UserController {
         }else{
             logger.info("请先登录");
             return ControllerResult.getNotLoginResult("登录信息无效，请重新登录");
+        }
+    }
+
+    /**
+     * 发送短信
+     */
+    @RequestMapping(value="sendSms/{phone}",method=RequestMethod.GET)
+    public void sendSms(@PathVariable("phone") String phone) {
+        if(phone!= null && phone!= "") {
+            logger.info("发送短信验证码");
+            IndustrySMS i = new IndustrySMS(phone, "【汽车之家】您的验证码为" +(int)((Math.random()*9+1)*100000)+"，请于30分钟内正确输入，如非本人操作，请忽略此短信。");
+        }else{
         }
     }
 }

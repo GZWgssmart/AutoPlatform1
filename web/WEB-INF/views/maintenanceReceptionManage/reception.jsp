@@ -151,6 +151,12 @@
                         <h4>添加登记记录信息</h4>
                     </div>
                     <div class="form-group">
+                        <label class="col-sm-3 control-label">是否为本店用户：</label>
+                        <div class="col-sm-7">
+                            <input id="customer" type="checkbox" onchange="appOnChange1()"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label class="col-sm-3 control-label">是否预约：</label>
                         <div class="col-sm-7">
                             <input id="app" type="checkbox" onchange="appOnChange()"/>
@@ -191,7 +197,7 @@
 
                     <div class="form-group">
                         <label class="col-sm-3 control-label">汽车品牌：</label>
-                        <div class="col-sm-7">
+                        <div class="col-sm-7" id="carBrandSpan" readonly="true">
                             <select id="addCarBrand" class="js-example-tags carBrand" name="brandId" style="width:100%">
                             </select>
                         </div>
@@ -420,7 +426,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default"
-                                onclick="closeModals('edutWindow', 'editForm')">关闭
+                                onclick="closeModals('editWindow', 'editForm')">关闭
                         </button>
                         <button id="editButton" type="button" onclick="editSubmit()" class="btn btn-success">保存
                         </button>
@@ -491,6 +497,88 @@
     </div>
 </div>
 </div>
+</div>
+
+<!--本店用户弹窗-->
+<div id="customerWindow" class="modal fade" aria-hidden="true" style="overflow-y:scroll" data-backdrop="static" keyboard:false>
+    <div class="modal-dialog"style="width: 90%">
+        <div class="modal-content">
+            <div class="modal-body">
+                <span class="glyphicon glyphicon-remove closeModal" onclick="closeCustomerWin()"></span>
+                <h3>选择用户记录</h3>
+                <table class="table table-hover" id="customerTable"style="table-layout: fixed">
+                    <thead>
+                    <tr>
+                        <th data-radio="true"></th>
+                        <th data-width="90" data-field="userName">
+                            用户姓名
+                        </th>
+                        <th data-width="90" data-field="userEmail">
+                            用户邮箱
+                        </th>
+                        <th data-width="90" data-field="userPhone">
+                            用户电话
+                        </th>
+                        <th data-width="90" data-field="userIdentity">
+                            用户身份证
+                        </th>
+                        <th data-width="90" data-field="userNickname">
+                            用户昵称
+                        </th>
+                        <th data-width="90" data-field="userGender">
+                            用户性别
+                        </th>
+                        <th data-width="90" data-field="userBirthday"data-formatter="formatterDate">
+                            用户生日
+                        </th>
+                        <th data-width="90" data-field="userAddress">
+                            用户地址
+                        </th>
+                        <th data-width="90" data-field="qqOpenId">
+                            用户qq
+                        </th>
+                        <th data-width="90" data-field="weiboOpenId">
+                            用户微博
+                        </th>
+                        <th data-width="90"data-field="wechatOpenId">
+                            用户微信
+                        </th>
+                        <th data-width="90" data-field="userIcon"data-formatter="formatterImg">
+                            用户头像
+                        </th>
+                        <th data-width="90" data-field="userDes">
+                            用户描叙
+                        </th>
+                        <th data-width="90" data-field="companyId">
+                            用户所属公司
+                        </th>
+                        <th data-width="90" data-field="userSalary">
+                            用户基本工资
+                        </th>
+                        <th data-width="90" data-field="userCreatedTime"data-formatter="formatterDate">
+                            用户创建时间
+                        </th>
+                        <th data-width="90"data-field="userLoginedTime"data-formatter="formatterDate">
+                            用户最近一次登录时间
+                        </th>
+                        <th data-width="90" data-field="userStatus">
+                            用户状态
+                        </th>
+                    </thead>
+                    <tbody>
+                    </tbody>
+
+                </table>
+                <div style="height: 100px;"></div>
+                <div class="modal-footer" style="overflow:hidden;">
+                    <button type="button" class="btn btn-default" onclick="closeCustomerWin()">关闭
+                    </button>
+                    <input type="button" class="btn btn-success" onclick="checkCustomer()" value="确定">
+                    </input>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <script src="/static/js/jquery.min.js"></script>
 <script src="/static/js/bootstrap.min.js"></script>
