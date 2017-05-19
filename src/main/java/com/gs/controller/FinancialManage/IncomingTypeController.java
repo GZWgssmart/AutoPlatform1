@@ -25,7 +25,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by GZWangBin on 2017/4/18.
@@ -150,16 +152,17 @@ public class IncomingTypeController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "checkInTypeName", method = RequestMethod.GET)
-    public boolean checkInTypeName(String inTypeName) {
-        System.out.printf("lllll", inTypeName + "dgdsgfdgfdg");
+    @RequestMapping(value = "checkInTypeName",method = RequestMethod.POST)
+    public Map checkInTypeName(String inTypeName) {
         IncomingType incomingType = incomingTypeService.queryById(inTypeName);
-        if(incomingType != null){
-            return true;
-        }
-        return false;
-    }
+        Map<String, Boolean> map = new HashMap<String, Boolean>();
+        if(incomingType != null)
+            map.put("valid", false);
+        else
+            map.put("valid", true);
 
+        return map;
+    }
 
     @ResponseBody
     @RequestMapping(value = "update", method = RequestMethod.POST)

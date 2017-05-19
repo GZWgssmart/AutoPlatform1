@@ -1,6 +1,8 @@
 package com.gs.service.impl;
 
 import com.gs.bean.IncomingOutgoing;
+import com.gs.bean.IncomingType;
+import com.gs.bean.OutgoingType;
 import com.gs.bean.User;
 import com.gs.common.bean.Pager;
 import com.gs.dao.IncomingOutgoingDAO;
@@ -123,13 +125,16 @@ public class IncomingOutgoingServiceImpl implements IncomingOutgoingService {
         incomingOutgoingDAO.addInsert(incomingOutgoings);
     }
 
-    public List<IncomingOutgoing> blurredQuery(Pager pager, IncomingOutgoing incomingOutgoing) {
-        return null;
+
+
+    public List<IncomingOutgoing> blurredQuery(Pager pager, IncomingOutgoing incomingOutgoing)
+    {
+        return incomingOutgoingDAO.blurredQuery(pager,incomingOutgoing);
     }
 
     @Override
     public int countByBlurred(IncomingOutgoing incomingOutgoing, User user) {
-        return 0;
+        return incomingOutgoingDAO.countByBlurred(user,incomingOutgoing);
     }
 
     public int countByBlurred(IncomingOutgoing incomingOutgoing)

@@ -157,9 +157,9 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label" for="userName">员工姓名：</label>
                             <div class="col-sm-7">
-                                <input type="hidden" id="userSalary" readonly="true" name="userSalary">
-                                <input type="hidden" id="userId" readonly="true" name="userId">
-                                <input onclick="checkAppointment();" type="text" readonly="true" name="userName"
+                                <input type="hidden" id="userSalary" name="userSalary">
+                                <input type="hidden" id="userId" name="userId">
+                                <input readonly="true"  onclick="checkAppointment();" type="text" name="userName"
                                        id="userName" placeholder="请点击选择员工" class="form-control">
                             </div>
 
@@ -189,9 +189,10 @@
                             <div class="col-sm-7">
                                 <input  readonly="true" type="text" name="salaryTime"
                                        onclick="getDate('addDateTimePicker')" placeholder="请点击选择工资发放时间" id="addDateTimePicker"
-                                       class="form-control">
+                                       class="form-control datetimepicker">
                             </div>
                         </div>
+
 
                         <div class="modal-footer">
                             <span id="addError"></span>
@@ -287,7 +288,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 b-r">
-                        <h3 class="m-t-none m-b">选择支出类型</h3>
+                        <h3 class="m-t-none m-b">请选择你导入工资记录的所属类型</h3>
                         <table class="table table-hover" id="exceTable"
                                data-height="550">
                             <thead>

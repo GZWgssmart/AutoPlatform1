@@ -77,6 +77,28 @@
                     <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询激活类型
                 </button>
             </shiro:hasAnyRoles>
+            <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员">
+                <div class="input-group" style="width:350px;float:left;padding:0;margin:0 0 0 -1px;">
+                    <div class="input-group-btn">
+                        <button type="button" id="ulButton" class="btn btn-default" style="border-radius:0px;"
+                                data-toggle="dropdown">收入类型<span class="caret"></span></button>
+                        <ul class="dropdown-menu pull-right">
+                            <li><a onclick="onclikLi(this)">收入类型</a></li>
+                            <li class="divider"></li>
+                            <li><a onclick="onclikLi(this)">支出类型</a></li>
+                            <li class="divider"></li>
+                        </ul>
+                    </div><!-- /btn-group -->
+                    <input id="ulInput" class="form-control" onkeypress="if(event.keyCode==13) {blurredQuery();}">
+                    <a href="javaScript:;" onclick="blurredQuery()"><span
+                            class="glyphicon glyphicon-search search-style"></span></a>
+                    </input>
+                </div>
+                <!-- /input-group -->
+            </shiro:hasAnyRoles>
+            <button id="searchRapid" type="button" class="btn btn-success" onclick="returnButton();">
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>还原
+            </button>
         </div>
     </div>
 </div>

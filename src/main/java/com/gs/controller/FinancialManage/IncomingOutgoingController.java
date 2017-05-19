@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.*;
 
@@ -86,6 +87,43 @@ public class IncomingOutgoingController {
             }
         } else {
             logger.info("请先登录");
+            return null;
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "blurredQuery", method = RequestMethod.GET)
+    public Pager4EasyUI<IncomingOutgoing> blurredQuery(HttpSession session, HttpServletRequest request, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
+        if (SessionUtil.isLogin(session)) {
+            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员";
+            if (RoleUtil.checkRoles(roles)) {
+                logger.info("工资分类模糊查询");
+                Pager pager = new Pager();
+                pager.setUser((User) session.getAttribute("user"));
+                pager.setPageNo(Integer.parseInt(pageNumber));
+                pager.setPageSize(Integer.parseInt(pageSize));
+                String text = request.getParameter("text");
+                String value = request.getParameter("value");
+                if (text != null && !text.equals("") && value != null && !value.equals("")) {
+                    List<IncomingOutgoing> salaries = null;
+                    IncomingOutgoing incomingOutgoing = new IncomingOutgoing();
+                    if (text.equals("收入类型")) {
+                        incomingOutgoing.setInTypeId(value);
+                    } else if (text.equals("支出类型")) {
+                        incomingOutgoing.setOutTypeId(value);
+                    }
+                    salaries = incomingOutgoingService.blurredQuery(pager, incomingOutgoing);
+                    pager.setTotalRecords(incomingOutgoingService.countByBlurred(incomingOutgoing, (User) session.getAttribute("user")));
+                    return new Pager4EasyUI<IncomingOutgoing>(pager.getTotalRecords(), salaries);
+                } else {
+                    return null;
+                }
+            } else {
+                logger.info("此用户无拥有模糊查询支出类型和收入类型的角色");
+                return null;
+            }
+        } else {
+            logger.info("请先登陆");
             return null;
         }
     }

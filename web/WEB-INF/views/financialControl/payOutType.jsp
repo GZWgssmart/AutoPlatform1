@@ -57,6 +57,7 @@
                     <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询激活类型
                 </button>
             </shiro:hasAnyRoles>
+
         </div>
 
     </div>
@@ -69,28 +70,31 @@
         <div class="modal-content">
             <div class="container">
                 <div class="modal-body">
-                    <span class="glyphicon glyphicon-remove closeModal"  onclick="closeModals('add', 'addForm')"></span>
-                <form class="form-horizontal" role="form" id="addForm" method="post">
-                    <div class="modal-header" style="overflow:auto;">
-                        <h4>添加支出类型</h4>
-                    </div>
-                    <br/>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">名称：</label>
-                        <div class="col-sm-7">
-                            <input type="text" id="outTypeName" name="outTypeName" placeholder="请输入支出类型名称"
-                                   class="form-control">
+                    <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('add', 'addForm')"></span>
+                    <form class="form-horizontal" role="form" id="addForm" method="post">
+                        <div class="modal-header" style="overflow:auto;">
+                            <h4>添加支出类型</h4>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-sm-offset-8">
-                            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="closeModals('add', 'addForm')">关闭</button>
-                            <button id="addButton" class="btn btn-sm btn-success" onclick="addSubmit()" type="button">保
-                                存
-                            </button>
+                        <br/>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">名称：</label>
+                            <div class="col-sm-7">
+                                <input type="text" id="outTypeName" name="outTypeName" placeholder="请输入支出类型名称"
+                                       class="form-control">
+                            </div>
                         </div>
-                    </div>
-                </form>
+                        <div class="form-group">
+                            <div class="col-sm-offset-8">
+                                <button type="button" class="btn btn-default" data-dismiss="modal"
+                                        onclick="closeModals('add', 'addForm')">关闭
+                                </button>
+                                <button id="addButton" class="btn btn-sm btn-success" onclick="addSubmit()"
+                                        type="button">保
+                                    存
+                                </button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div><!-- /.modal-content -->
@@ -104,30 +108,34 @@
         <div class="modal-content">
             <div class="container">
                 <div class="modal-body">
-                    <span class="glyphicon glyphicon-remove closeModal"  onclick="closeModals('edit', 'editForm')"></span>
-                <form class="form-horizontal" id="editForm">
-                    <input type="hidden" name="outTypeId" define="outGoingType.outTypeId">
-                    <input type="hidden" name="outTypeStatus" define="outGoingType.outTypeStatus">
-                    <div class="modal-header" style="overflow:auto;">
-                        <h4>修改支出类型</h4>
-                    </div>
-                    <br/>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">名称：</label>
-                        <div class="col-sm-7">
-                            <input type="text" id="outUpdateTypeName" define="outGoingType.outTypeName"
-                                   name="outTypeName" class="form-control">
+                    <span class="glyphicon glyphicon-remove closeModal"
+                          onclick="closeModals('edit', 'editForm')"></span>
+                    <form class="form-horizontal" id="editForm">
+                        <input type="hidden" name="outTypeId" define="outGoingType.outTypeId">
+                        <input type="hidden" name="outTypeStatus" define="outGoingType.outTypeStatus">
+                        <div class="modal-header" style="overflow:auto;">
+                            <h4>修改支出类型</h4>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-sm-offset-8">
-                            <button type="button" class="btn btn-default" data-dismiss="modal"  onclick="closeModals('edit', 'editForm')">关闭</button>
-                            <button id="editButton" class="btn btn-sm btn-success" onclick="editSubmit()" type="button">
-                                保 存
-                            </button>
+                        <br/>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">名称：</label>
+                            <div class="col-sm-7">
+                                <input type="text" id="outUpdateTypeName" define="outGoingType.outTypeName"
+                                       name="outTypeName" class="form-control">
+                            </div>
                         </div>
-                    </div>
-                </form>
+                        <div class="form-group">
+                            <div class="col-sm-offset-8">
+                                <button type="button" class="btn btn-default" data-dismiss="modal"
+                                        onclick="closeModals('edit', 'editForm')">关闭
+                                </button>
+                                <button id="editButton" class="btn btn-sm btn-success" onclick="editSubmit()"
+                                        type="button">
+                                    保 存
+                                </button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div><!-- /.modal-content -->
