@@ -27,9 +27,6 @@
             <thead>
             <tr>
                 <th data-radio="true" data-field="status"></th>
-                <th data-field="user.userNickname">
-                    指派用户
-                </th>
                 <th data-field="workAssignTime" data-formatter="formatterDate">
                     工单指派时间
                 </th>
