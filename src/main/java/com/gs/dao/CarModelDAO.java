@@ -33,5 +33,5 @@ public interface CarModelDAO extends BaseDAO<String, CarModel>{
     /**
      * 查询此车型名称是否已存在
      */
-    public int querymodelName(String modelName);
+    public int querymodelName(@Param("modelName")String modelName,@Param("modelId")String modelId);
 }

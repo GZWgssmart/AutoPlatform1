@@ -21,9 +21,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * 保养项目管理
@@ -125,6 +123,42 @@ public class MaintainController {
         }
 
 
+    }
+
+    /**
+     * 查询此维修保养名称是否已存在
+     */
+    @ResponseBody
+    @RequestMapping(value = "querymaintainName", method = RequestMethod.POST)
+    public Map querymaintainName(MaintainFix maintainFix) {
+        logger.info("此维修保养名称是否已存在此维修保养名称");
+        int countmaintainName = maintainFixService.querymaintainName(maintainFix.getMaintainName(),maintainFix.getMaintainId());
+        Map<String, Boolean> map = new HashMap<String, Boolean>();
+        if(countmaintainName > 0)
+            map.put("valid", false);
+        else
+            map.put("valid", true);
+
+        return map;
+    }
+
+
+
+    /**
+     * 查询此维修保养名称是否已存在
+     */
+    @ResponseBody
+    @RequestMapping(value = "querymaintainNameMaintain", method = RequestMethod.POST)
+    public Map querymaintainNameMaintain(MaintainFix maintainFix) {
+        logger.info("此维修保养名称是否已存在此维修保养名称");
+        int countmaintainName = maintainFixService.querymaintainName(maintainFix.getMaintainName(),maintainFix.getMaintainId());
+        Map<String, Boolean> map = new HashMap<String, Boolean>();
+        if(countmaintainName > 0)
+            map.put("valid", false);
+        else
+            map.put("valid", true);
+
+        return map;
     }
 
     @ResponseBody

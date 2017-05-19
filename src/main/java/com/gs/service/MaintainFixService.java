@@ -25,6 +25,11 @@ public interface MaintainFixService extends BaseService<String, MaintainFix>{
      */
     public int countByDisable(User user);
 
+
+    public int querymaintainName(String maintainName,String maintainId);
+
+    public int querymaintainNameMaintain(String maintainName,String maintainId);
+
     public List<MaintainFix> queryByPagerMaintain(Pager pager);
 
     //    分页查询保养项目总数

@@ -106,6 +106,18 @@ public class MaintainFixServiceImpl implements MaintainFixService {
 		return maintainFixDAO.countByDisable(user);
 	}
 
+
+//	保养名称唯一验证
+	@Override
+	public int querymaintainName(String maintainName, String maintainId) {
+		return maintainFixDAO.querymaintainName(maintainName,maintainId);
+	}
+//维修名称唯一验证
+	@Override
+	public int querymaintainNameMaintain(String maintainName, String maintainId) {
+		return maintainFixDAO.querymaintainNameMaintain(maintainName,maintainId);
+	}
+
 	public List<MaintainFix> blurredQuery(Pager pager, MaintainFix maintainFix) {
 		return null;
 	}

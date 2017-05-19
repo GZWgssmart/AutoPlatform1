@@ -28,5 +28,5 @@ public interface CarPlateDAO extends BaseDAO<String, CarPlate>{
     /**
      * 查询此车牌名称是否已存在
      */
-    public int queryplateName(String plateName);
+    public int queryplateName(@Param("plateName")String plateName,@Param("plateId")String plateId);
  }

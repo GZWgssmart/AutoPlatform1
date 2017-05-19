@@ -49,8 +49,8 @@ public class CarModelServiceImpl implements CarModelService {
 	public List<CarModel> queryByBrandId(String id) { return carModelDAO.queryByBrandId(id); }
 
 	@Override
-	public int querymodelName(String modelName) {
-		return carModelDAO.querymodelName(modelName);
+	public int querymodelName(String modelName,String modelId) {
+		return carModelDAO.querymodelName(modelName,modelId);
 	}
 
 	public List<CarModel> queryByPagerDisable(Pager pager) {

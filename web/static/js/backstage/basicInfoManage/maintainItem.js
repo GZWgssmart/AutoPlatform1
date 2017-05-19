@@ -226,6 +226,16 @@ function validator(formId) {
                         min: 1,
                         max: 10,
                         message: '保养项目名称长度必须在1到10位之间'
+                    },
+                    remote: {
+                        url: '/maintain/querymaintainName',
+                        message: '该保养项目名称已存在',
+                        delay :  2000,
+                        type: 'POST',
+                        data: {
+                            maintainId: $("#"+formId + " input[name=maintainId]").val(),
+                            maintainName: $("#" + formId + " input[name=maintainName]").val()
+                        }
                     }
                 }
             },

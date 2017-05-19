@@ -39,6 +39,27 @@
     </if>
   </select>
 
+
+  <!--  查询此保养名称是否已存在 -->
+  <select id="querymaintainName" resultType="int">
+    <![CDATA[
+      select count(maintainName) from t_maintain_fix where maintainName = #{maintainName} and maintainOrFix = '保养'
+    ]]>
+    <if test="maintainId != null and maintainId != ''">
+      and maintainId != #{maintainId}
+    </if>
+  </select>
+
+  <!--  查询此维修名称是否已存在 -->
+  <select id="querymaintainNameMaintain" resultType="int">
+    <![CDATA[
+      select count(maintainName) from t_maintain_fix where maintainName = #{maintainName} and maintainOrFix = '维修'
+    ]]>
+    <if test="maintainId != null and maintainId != ''">
+      and maintainId != #{maintainId}
+    </if>
+  </select>
+
   <!--分页查询所有维修保养项目-->
   <select id="queryByPagerAll" resultType="list" resultMap="MaintainFixMap" parameterType="com.gs.common.bean.Pager">
      <![CDATA[

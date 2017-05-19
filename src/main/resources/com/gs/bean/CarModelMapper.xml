@@ -71,8 +71,11 @@
     <!--  查询此车型名称是否已存在 -->
     <select id="querymodelName" resultType="int">
         <![CDATA[
-      select count(modelId) from t_car_model where modelName = #{modelName};
+      select count(modelName) from t_car_model where modelName = #{modelName}
     ]]>
+    <if test="modelId != null and modelId != ''">
+        and modelId != #{modelId}
+    </if>
     </select>
 
     <!--冻结数据-->

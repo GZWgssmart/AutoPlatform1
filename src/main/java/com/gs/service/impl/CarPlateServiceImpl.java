@@ -68,7 +68,7 @@ public class CarPlateServiceImpl implements CarPlateService {
 	}
 
 	@Override
-	public int queryplateName(String plateName) {
-		return carPlateDAO.queryplateName(plateName);
+	public int queryplateName(String plateName,String plateId) {
+		return carPlateDAO.queryplateName(plateName,plateId);
 	}
 }

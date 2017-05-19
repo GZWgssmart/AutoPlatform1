@@ -1,4 +1,3 @@
-var plateName;
 
 $(function () {
     var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师,汽车公司学徒,汽车公司销售人员,汽车公司财务人员,汽车公司采购人员,汽车公司库管人员,汽车公司人力资源管理部";
@@ -37,9 +36,9 @@ function showEdit() {
                 var ceshi = row[0];
                 $("#editForm").fill(ceshi);
                 validator('editForm');
-                $('#editplateName').bind('input propertychange', function() {
-                    plateName = $("#editplateName").val();
-                });
+                // $('#editplateName').bind('input propertychange', function() {
+                //     plateName = $("#editplateName").val();
+                // });
             } else {
                 swal({
                     title: "",
@@ -80,9 +79,9 @@ function showAdd() {
         if (data.result == 'success') {
             $("#addWindow").modal('show');
             $("#addButton").removeAttr("disabled");
-            $('#addplateName').bind('input propertychange', function() {
-                plateName = $("#addplateName").val();
-            });
+            // $('#addplateName').bind('input propertychange', function() {
+            //     plateName = $("#addplateName").val();
+            // });
             validator('addForm'); // 初始化验证
         } else if (data.result == 'notLogin') {
             swal({
@@ -135,7 +134,11 @@ function validator(formId) {
                         url: '/carPlate/queryplateName',
                         message: '该车牌名称已存在',
                         delay :  2000,
-                        type: 'GET'
+                        type: 'POST',
+                        data: {
+                            plateId: $("#"+formId + " input[name=plateId]").val(),
+                            plateName: $("#" + formId + " input[name=plateName]").val()
+                        }
                     }
                 }
             },

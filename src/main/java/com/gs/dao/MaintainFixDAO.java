@@ -29,6 +29,9 @@ public interface MaintainFixDAO extends BaseDAO<String, MaintainFix>{
      */
     public int countByDisable(User user);
 
+    public int querymaintainName(@Param("maintainName")String maintainName,@Param("maintainId")String maintainId);
+
+    public int querymaintainNameMaintain(@Param("maintainName")String maintainName,@Param("maintainId")String maintainId);
 
 //    分页查询保养项目
     public List<MaintainFix> queryByPagerMaintain(Pager pager);

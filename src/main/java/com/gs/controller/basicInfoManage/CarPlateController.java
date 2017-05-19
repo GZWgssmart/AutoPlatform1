@@ -141,27 +141,17 @@ public class CarPlateController {
      * 查询此车牌名称是否已存在
      */
     @ResponseBody
-    @RequestMapping(value = "queryplateName", method = RequestMethod.GET)
-    public String queryplateName(HttpServletRequest req) {
+    @RequestMapping(value = "queryplateName", method = RequestMethod.POST)
+    public Map queryplateName(CarPlate carPlate) {
         logger.info("此车牌名称是否已存在此车牌名称");
-        String plateName = (String)req.getParameter("plateName");
-        boolean result = true;
-        String resultString = "";
+        int countplateName = carPlateService.queryplateName(carPlate.getPlateName(),carPlate.getPlateId());
         Map<String, Boolean> map = new HashMap<String, Boolean>();
-        ObjectMapper mapper = new ObjectMapper();
-        if (plateName != null && plateName !="") {
-            int count = carPlateService.queryplateName(plateName);
-            if (count > 1 || count == 1) {
-                result = false;
-            }
-        }
-        map.put("valid", result);
-        try {
-            resultString = mapper.writeValueAsString(map);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-        return resultString;
+        if(countplateName > 0)
+            map.put("valid", false);
+        else
+            map.put("valid", true);
+
+        return map;
     }
 
     /**

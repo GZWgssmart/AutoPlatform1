@@ -62,8 +62,11 @@
     <!--  查询此汽车车牌名称是否已存在 -->
     <select id="queryplateName" resultType="int">
         <![CDATA[
-      select count(plateId) from t_car_plate where plateName = #{plateName};
+      select count(plateName) from t_car_plate where plateName = #{plateName}
     ]]>
+        <if test="plateId != null and plateId != ''">
+            and plateId != #{plateId}
+        </if>
     </select>
 
     <!--冻结数据-->
