@@ -202,4 +202,11 @@ public class UserServiceImpl implements UserService {
     public int queryIsEmailByOne(String userEmail, String userId) {
         return userDAO.queryIsEmailByOne(userEmail, userId);
     }
+
+    /**
+     * 查询此identity是否已存在此identity
+     */
+    public int queryIsIdentityByOne(String userIdentity, String userId) {
+        return userDAO.queryIsIdentityByOne(userIdentity, userId);
+    }
 }
