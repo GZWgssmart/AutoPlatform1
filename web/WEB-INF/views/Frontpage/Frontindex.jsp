@@ -448,7 +448,7 @@
             </div>
         </div>
         <%-- 地图开始 --%>
-        <div class="show-map"><div></div></div>
+        <div class="show-map" title="附近汽修公司"><div></div></div>
         <%-- 地图结束--%>
         <a href="#top" class="go-top" id="backtop" style="display:none;"></a>
     </div>

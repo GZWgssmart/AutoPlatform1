@@ -102,6 +102,7 @@
 
                 <button id="addButton" style="width: 200px;" type="button" onclick="addSubmit()" class="btn btn-success">添加
                 </button>
+                <input type="reset" name="reset" style="display: none;"/>
             </div>
         </form>
     </div>
@@ -258,9 +259,27 @@
                 $("#" + formId).serialize(),
                 function (data) {
                     if (data.result == "success") {
-                        alert("添加成功！");
+                        $("input[type=reset]").trigger("click"); // 移除表单中填的值
+                        $("#addButton").removeAttr("disabled"); // 移除不可点击
+                        // 设置select2的值为空
+                        $("#addCompany").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
+                        $("#addCarBrand").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
+                        $("#addCarModel").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
+                        $("#addCarColor").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
+                        $("#addCarPlate").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
+                        swal({
+                            title: "",
+                            text: data.message,
+                            confirmButtonText: "确认",
+                            type: "success"
+                        })
                     } else if (data.result == "fail" ) {
-                        alert("添加失败");
+                        swal({
+                            title: "",
+                            text: data.message,
+                            confirmButtonText: "确认",
+                            type: "error"
+                        })
                     }
                 }, "json");
     }

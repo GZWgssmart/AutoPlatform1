@@ -28,8 +28,6 @@
 
 <div class="container">
     <div class="panel-body" style="padding-bottom:0px;">
-        <!--show-refresh, show-toggle的样式可以在bootstrap-table.js的948行修改-->
-        <!-- table里的所有属性在bootstrap-table.js的240行-->
         <table id="table">
             <thead>
             <tr>
@@ -49,27 +47,7 @@
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
                 </button>
             </shiro:hasAnyRoles>
-            <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,车主">
-                <div class="input-group" style="width:350px;float:left;padding:0;margin:0 0 0 -1px;">
-                    <div class="input-group-btn">
-                        <button type="button" id="ulButton" class="btn btn-default" style="border-radius:0px;"
-                                data-toggle="dropdown">投诉人<span class="caret"></span></button>
-                        <ul class="dropdown-menu pull-right">
-                            <li><a onclick="onclikLi(this)">投诉人</a></li>
-                            <li class="divider"></li>
-                            <li><a onclick="onclikLi(this)">投诉内容</a></li>
-                            <li class="divider"></li>
-                            <li><a onclick="onclikLi(this)">投诉回复人</a></li>
-                            <li class="divider"></li>
-                            <li><a onclick="onclikLi(this)">投诉回复内容</a></li>
-                        </ul>
-                    </div><!-- /btn-group -->
-                    <input id="ulInput" class="form-control" onkeypress="if(event.keyCode==13) {blurredQuery();}">
-                    <a href="javascript:;" onclick="blurredQuery()"><span
-                            class="glyphicon glyphicon-search search-style"></span></a>
-                    </input>
-                </div>
-            </shiro:hasAnyRoles>
+
         </div>
     </div>
 </div>
@@ -121,52 +99,6 @@
 
 
 
-<!-- 修改弹窗 -->
-<div class="modal fade" id="editWindow" aria-hidden="true" data-backdrop="static" keyboard:false>
-    <div class="modal-dialog" style="width: 780px;height: auto;">
-        <div class="modal-content">
-            <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('editWindow', 'editForm')"></span>
-            <form class="form-horizontal" id="editForm" method="post">
-                <input type="text" name="complaintId" define="Complaint.complaintId" />
-                <%--<input type="text" name="userId" define="Complaint.user.userId" />--%>
-                <%--<input id="start3" type="text" name="complaintCreatedTime" define="Complaint.complaintCreatedTime" />--%>
-                <%--<input type="text" name="complaintContent" define="Complaint.complaintContent" />--%>
-                <div class="modal-header" style="overflow:auto;">
-                    <h4>请修改投诉管理信息</h4>
-                </div>
-                <br/>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">投诉回复人：</label>
-                    <div class="col-sm-7">
-                        <select id="editAdminName" name="complaintReplyUser" class="form-control js-data-example-ajax admin" style="width:100%">
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">投诉回复时间：</label>
-                    <div class="col-sm-7">
-                        <input id="editComplaintReplyTime" name="complaintReplyTime" readonly  define="Complaint.complaintReplyTime" onclick="getDate('editComplaintReplyTime')" class="form-control datetimepicker"/>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">投诉回复内容：</label>
-                    <div class="col-sm-7">
-                        <textarea type="text"  name="complaintReply" define="Complaint.complaintReply" placeholder="请输入投诉回复内容" style="height: 100px;"
-                                  class="form-control"></textarea>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-offset-8">
-                        <button type="button" class="btn btn-default"
-                                onclick="closeModals('editWindow', 'editForm')">关闭
-                        </button>
-                        <button id="editButton" class="btn btn-sm btn-success" type="button" onclick="editSubmit()">保 存</button>
-                    </div>
-                </div>
-            </form>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
 
 <script src="/static/js/jquery.min.js"></script>
 <script src="/static/js/bootstrap.min.js"></script>
@@ -175,62 +107,20 @@
 <script src="/static/js/jquery.formFill.js"></script>
 <script src="/static/js/select2/select2.js"></script>
 <script src="/static/js/sweetalert/sweetalert.min.js"></script>
-<script src="/static/js/contextmenu.js"></script>
-<script src="/static/js/backstage/custManage/complaint.js"></script>
 <script src="/static/js/bootstrap-validate/bootstrapValidator.js"></script>
 <script src="/static/js/plugins/layui/layui.js" charset="utf-8"></script>
 <script src="/static/js/backstage/main.js"></script>
 <script src="/static/js/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.js"></script>
 <script src="/static/js/bootstrap-dateTimePicker/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
-<%--<script>--%>
-<%--$(function() {--%>
-<%--layui.use('laydate', function () {--%>
+<script>
 
-<%--var laydate = layui.laydate;--%>
-
-<%--//日期范围限制--%>
-<%--var addComplaintCreatedTime = {--%>
-<%--format: 'yyyy-MM-dd hh:mm:ss',--%>
-<%--min: laydate.now(), //设定最小日期为当前日期--%>
-<%--max: '2099-12-30 23:59:59', //最大日期--%>
-<%--istime: true,--%>
-<%--istoday: false,--%>
-<%--festival: true--%>
-<%--};--%>
-
-<%--var addReplyComplaintReplyTime = {--%>
-<%--format: 'yyyy-MM-dd hh:mm:ss',--%>
-<%--min: laydate.now(),--%>
-<%--max: '2099-12-30 23:59:59',--%>
-<%--istime: true,--%>
-<%--istoday: false,--%>
-<%--festival: true--%>
-<%--};--%>
-
-<%--document.getElementById('addComplaintCreatedTime').onclick = function () {--%>
-<%--addComplaintCreatedTime.elem = this;--%>
-<%--laydate(addComplaintCreatedTime);--%>
-<%--}--%>
-
-<%--document.getElementById('addReplyComplaintReplyTime').onclick = function () {--%>
-<%--addReplyComplaintReplyTime.elem = this;--%>
-<%--laydate(addReplyComplaintReplyTime);--%>
-<%--}--%>
+    $(function () {
+        initTable('table', '/UserqueryByPager'); // 初始化表格
+        initSelect2("user", "请选择用户", "/complaint/queryCombox");
+        initSelect2("admin", "请选择回复人", "/complaint/queryCombox");
+    });
 
 
-<%--var editComplaintReplyTime = {--%>
-<%--format: 'yyyy-MM-dd hh:mm:ss',--%>
-<%--max: '2099-12-30 23:59:59',--%>
-<%--istime: true,--%>
-<%--istoday: false,--%>
-<%--};--%>
-
-<%--document.getElementById('editComplaintReplyTime').onclick = function () {--%>
-<%--editComplaintReplyTime.elem = this;--%>
-<%--laydate(editComplaintReplyTime);--%>
-<%--}--%>
-<%--});--%>
-<%--});--%>
-<%--</script>--%>
+</script>
 </body>
 </html>

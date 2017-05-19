@@ -47,8 +47,8 @@ public class    MaintainScheduleController {
     @ResponseBody
     @RequestMapping(value = "queryScheduleByRecord/{recordId}", method = RequestMethod.POST)
     public List<MaintainSchedule> queryScheduleByRecord(HttpSession session, @PathVariable("recordId") String recordId){
-        if(SessionUtil.isLogin(session)) {
-            String roles="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,车主,汽车公司接待员";
+        if(SessionUtil.isLogin(session) || SessionUtil.isOwnerLogin(session)) {
+            String roles="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,车主,汽车公司接待员,车主";
             if(RoleUtil.checkRoles(roles)) {
                 logger.info("根据维修保养记录id查询此记录下所有维修保养进度");
                 List<MaintainSchedule> maintainSchedules = maintainScheduleService.queryScheduleByRecord(recordId);

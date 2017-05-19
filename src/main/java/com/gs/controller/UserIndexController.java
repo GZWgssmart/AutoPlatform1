@@ -3,13 +3,17 @@ package com.gs.controller;
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.Appointment;
 import com.gs.bean.Company;
+import com.gs.bean.Complaint;
 import com.gs.bean.User;
 import com.gs.common.bean.ControllerResult;
+import com.gs.common.bean.Pager;
+import com.gs.common.bean.Pager4EasyUI;
 import com.gs.common.util.EncryptUtil;
 import com.gs.common.util.RoleUtil;
 import com.gs.common.util.SessionUtil;
 import com.gs.service.AppointmentService;
 import com.gs.service.CompanyService;
+import com.gs.service.ComplaintService;
 import com.gs.service.UserService;
 import org.apache.ibatis.annotations.Param;
 import org.apache.shiro.SecurityUtils;
@@ -51,6 +55,8 @@ public class UserIndexController {
     @Resource
     private CompanyService companyService;
 
+    @Resource
+    private ComplaintService complaintService;
 
     /*欢迎页面*/
     @RequestMapping(value ="welcome",method = RequestMethod.GET)
@@ -273,7 +279,6 @@ public class UserIndexController {
                 User user = (User)session.getAttribute("frontUser");
                 logger.info("添加电话预约");
                 if (appointment != null) {
-                    appointment.setCompanyId(user.getCompanyId());
                     appointment.setUserId(user.getUserId());
                     appointment.setCurrentStatus("已预约");
                     appointmentService.insert(appointment);
@@ -290,5 +295,34 @@ public class UserIndexController {
             return ControllerResult.getNotLoginResult("添加预约无效，请重新登录");
         }
     }
+
+    /*查询所有投诉*/
+    @ResponseBody
+    @RequestMapping(value = "UserqueryByPager", method = RequestMethod.GET)
+    public Pager4EasyUI<Complaint> queryByPager(HttpSession session, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
+        if (SessionUtil.isOwnerLogin(session)) {
+            String roles = "车主";
+            if (RoleUtil.checkRoles(roles)) {
+                logger.info("分页查看投诉记录");
+                Pager pager = new Pager();
+                pager.setPageNo(Integer.valueOf(pageNumber));
+                pager.setPageSize(Integer.valueOf(pageSize));
+                User user = (User) session.getAttribute("frontUser");
+                int count = complaintService.count(user);
+                pager.setTotalRecords(count);
+                pager.setUser((User) session.getAttribute("frontUser"));
+                List<Complaint> queryList = complaintService.queryByPager(pager);
+                return new Pager4EasyUI<Complaint>(pager.getTotalRecords(), queryList);
+            } else {
+                logger.info("此用户无拥有此方法");
+                return null;
+            }
+        } else {
+            logger.info("请先登录");
+            return null;
+        }
+    }
+
+
 }
 
