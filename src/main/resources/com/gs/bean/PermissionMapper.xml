@@ -34,7 +34,11 @@
   </select>
 
     <select id = "countByPerName" resultType="int">
-       select count(permissionId) from t_permission where permissionZhname = #{permissionZhname} and permissionId != #{permissionId}
+       select count(permissionId) from t_permission where
+        permissionZhname = #{permissionZhname}
+        <if test="permissionId!=null">
+          and permissionId != #{permissionId}
+        </if>
     </select>
 
   <!-- 分页模糊查询 -->

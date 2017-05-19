@@ -171,13 +171,10 @@ public class ModuleController {
     @ResponseBody
     @RequestMapping(value = "checkModuleName")
     public Map checkModuleName(Module module, HttpSession session) {
-        // TODO 超级管理员可以
         int countModuleName = moduleService.countByModuleName(module.getModuleName(), module.getModuleId());
         Map<String, Boolean> map = new HashMap<String, Boolean>();
-
         if(countModuleName >0)  map.put("valid", false);
         else  map.put("valid", true);
-
         return map;
     }
 

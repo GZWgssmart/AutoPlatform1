@@ -431,6 +431,7 @@ function formSubmit(url, modalId ,formId, flag) {
                             }
                         }
                         var moduleTemp = getModule(module.moduleId);
+                        moduleTemp.moduleName =module.moduleName;
                         moduleTemp.moduleDes = textarea.val();
                         updBodyModulePanel(moduleTemp);
                         updateLeftNavTitle(moduleTemp);
