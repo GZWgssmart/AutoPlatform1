@@ -153,13 +153,13 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">是否为本店用户：</label>
                         <div class="col-sm-7">
-                            <input id="customer" type="checkbox" onchange="appOnChange1()"/>
+                            <input id="customer" type="checkbox" />
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">是否预约：</label>
                         <div class="col-sm-7">
-                            <input id="app" type="checkbox" onchange="appOnChange()"/>
+                            <input id="app" type="checkbox" />
                         </div>
                     </div>
                     <div class="form-group">
@@ -239,14 +239,14 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">汽车行驶里程(km)：</label>
+                        <label class="col-sm-3 control-label">行驶里程(km)：</label>
                         <div class="col-sm-7">
                             <input type="number" name="carMileage" placeholder="请输入汽车行驶里程" min="1" class="form-control"
                                    style="width:100%"/>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">汽车当前油量(L)：</label>
+                        <label class="col-sm-3 control-label">当前油量(L)：</label>
                         <div class="col-sm-7">
                             <input type="number" name="nowOil" placeholder="请输入汽车当前油量" min="1" class="form-control"
                                    style="width:100%"/>
@@ -325,14 +325,14 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">车主姓名：</label>
                         <div class="col-sm-7">
-                            <input type="text" name="userName" placeholder="车主姓名" define="checkin.userName"
+                            <input type="text" id="editUserName" name="userName" placeholder="车主姓名" define="checkin.userName"
                                    class="form-control"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">车主电话：</label>
                         <div class="col-sm-7">
-                            <input type="number" name="userPhone" placeholder="车主电话" define="checkin.userPhone"
+                            <input type="number" id="editUserPhone" name="userPhone" placeholder="车主电话" define="checkin.userPhone"
                                    class="form-control" style="width:100%"/>
                         </div>
                     </div>
@@ -387,14 +387,14 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">汽车行驶里程(km)：</label>
+                        <label class="col-sm-3 control-label">行驶里程(km)：</label>
                         <div class="col-sm-7">
                             <input type="number" name="carMileage" placeholder="请输入汽车行驶里程" min="1"
                                    define="checkin.carMileage" class="form-control" style="width:100%"/>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">汽车当前油量(L)：</label>
+                        <label class="col-sm-3 control-label">当前油量(L)：</label>
                         <div class="col-sm-7">
                             <input type="number" name="nowOil" placeholder="请输入汽车当前油量" min="1" define="checkin.nowOil"
                                    class="form-control" style="width:100%"/>
@@ -489,7 +489,7 @@
                 <div class="modal-footer" style="overflow:hidden;">
                     <button type="button" class="btn btn-default" onclick="closeAppWin()">关闭
                     </button>
-                    <input type="button" class="btn btn-primary" onclick="checkApp()" value="确定">
+                    <input type="button" class="btn btn-success" onclick="checkApp()" value="确定">
                     </input>
                 </div>
             </div>

@@ -132,7 +132,7 @@ function showAddDetail(){
             }else{
                 swal({
                     title:"",
-                    text: "请选择要生成明细的维修保养记录", // 主要文本
+                    text: "请先选择要生成明细的维修保养记录", // 主要文本
                     confirmButtonColor: "#DD6B55", // 提示按钮的颜色
                     confirmButtonText:"确定", // 提示按钮上的文本
                     type:"warning"}) // 提示类型
@@ -219,7 +219,7 @@ function showDetail(){
             }else{
                 swal({
                     title:"",
-                    text: "请选择要查看明细的维修保养记录", // 主要文本
+                    text: "请选择要查看所有明细的维修保养记录", // 主要文本
                     confirmButtonColor: "#DD6B55", // 提示按钮的颜色
                     confirmButtonText:"确定", // 提示按钮上的文本
                     type:"warning"}) // 提示类型

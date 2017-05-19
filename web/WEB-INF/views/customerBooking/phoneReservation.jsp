@@ -140,7 +140,7 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">是否为本店用户：</label>
                             <div class="col-sm-7">
-                                <input id="app" type="checkbox" onchange="appOnChange()"/>
+                                <input id="app" type="checkbox"/>
                             </div>
                         </div>
                         <div class="form-group">

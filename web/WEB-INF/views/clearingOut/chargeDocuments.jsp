@@ -136,13 +136,13 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">总金额：</label>
+                        <label class="col-sm-3 control-label">总金额(元)：</label>
                         <div class="col-sm-7">
                             <input type="number" name="chargeBillMoney" min="1" define="chargeBill.chargeBillMoney" placeholder="请输入总金额" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">实际付款：</label>
+                        <label class="col-sm-3 control-label">实际付款(元)：</label>
                         <div class="col-sm-7">
                             <input type="number" name="actualPayment" min="1" define="chargeBill.actualPayment" placeholder="请输入实际付款" class="form-control">
                         </div>
@@ -187,7 +187,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">收入金额：</label>
+                        <label class="col-sm-3 control-label">收入金额(元)：</label>
                         <div class="col-sm-7">
                             <input type="text" id="inOutMoneyId" name="inOutMoney" readonly="true" class="form-control">
                         </div>

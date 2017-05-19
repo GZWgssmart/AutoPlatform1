@@ -16,18 +16,17 @@ $(function () {
                 size:"small",
                 onSwitchChange:function(event,state){
                     if(state==true){
-                        app = true;
                         initTableNotTollbar("appTable", "/appointment/queryByCurrentStatus");
+                        $('#addForm').data('bootstrapValidator').resetForm();
                         $("#appWindow").modal('show');
+                        $("#addWindow").modal("hide");
                     }else if(state==false){
-                        app = false;
+                        $("#addUserName").attr("readOnly",false);
+                        $("#addUserPhone").attr("readOnly",false);
+                        clearAddForm();
                     }
                 }
             })
-            $("#appWindow").on("hide.bs.modal", function () {
-                $("#addWindow").modal('show')
-                $('#app').bootstrapSwitch('state', false);
-            });
             $("#customer").bootstrapSwitch({
                 onText:"是",
                 offText:"否",
@@ -36,18 +35,18 @@ $(function () {
                 size:"small",
                 onSwitchChange:function(event,state){
                     if(state==true){
-                        customer = true;
+                        // 点击开关, 开关为开时, 显示所有本店用户
                         initTableNotTollbar("customerTable", "/userBasicManage/queryByPager");
+                        $('#addForm').data('bootstrapValidator').resetForm();
+                        $("#addWindow").modal("hide");
                         $("#customerWindow").modal('show');
                     }else if(state==false){
-                        customer = false;
+                        $("#addUserName").attr("readOnly",false);
+                        $("#addUserPhone").attr("readOnly",false);
+                        clearAddForm1();
                     }
                 }
             })
-            $("#customerWindow").on("hide.bs.modal", function () {
-                $("#customerWindow").modal('show')
-                $('#customer').bootstrapSwitch('state', false);
-            });
         }else if(data.result == 'notLogin'){
             swal({title:"",
                     text:data.message,
@@ -180,62 +179,46 @@ function blurredQuery(){
 
 // 关闭预约
 function closeAppWin() {
+    appointment = null;
+    $('#app').bootstrapSwitch('state', false);
     $("#appWindow").modal('hide');
-    $("#addWinow").modal('show')
+    $("#addWindow").modal('show')
 }
 
 
-// 关闭预约
+// 关闭用户
 function closeCustomerWin() {
+    customer = null;
+    $('#customer').bootstrapSwitch('state', false);
     $("#customerWindow").modal('hide');
     $("#addWindow").modal('show')
 }
 
 var appointment;
 var user;
-
-//监听switch的监听事件
-function appOnChange() {
-    if ($('#app').bootstrapSwitch('state')) {
-        if (appointment != null && appointment != "" && appointment != undefined) {
-            setData(appointment);
-        }
-    } else {
-        if (appointment != null && appointment != "" && appointment != undefined) {
-            clearAddForm();
-        }
-    }
-}
-
-// 监听switch的监听事件
-function appOnChange1() {
-    if ($('#customer').bootstrapSwitch('state')) {
-        if (user != null && user != "" && user != undefined) {
-            setData1(user);
-        }
-    }else {
-        if (user != null && user != "" && user != undefined) {
-            clearAddForm1();
-        }
-    }
-}
+var userPhone;
 
 // 选择预约记录
 function checkApp() {
     var row = $("#appTable").bootstrapTable('getSelections');
     if (row.length != 1) {
         swal({title:"",
-            text:"请选择一条预约记录",
+            text:"请先选择一条预约记录",
             confirmButtonText:"确认",
             type:"error"})
         return false;
     } else {
         appointment = row[0];
-        setData(appointment);
-        $("#appWindow").on("hide.bs.modal", function () {
-            $('#app').bootstrapSwitch('state', true);
-        });
-        $("#appWindow").modal('hide');
+        if(appointment.userName != null && appointment.userName != "" && appointment.userPhone != null && appointment.userPhone != "") {
+            setData(appointment);
+            $("#appWindow").modal('hide');
+            $("#addWindow").modal("show");
+        }else{
+            swal({title:"",
+                text:"请先将此预约记录车主信息完善",
+                confirmButtonText:"确认",
+                type:"error"})
+        }
     }
 }
 
@@ -250,32 +233,47 @@ function checkCustomer() {
         return false;
     } else {
         user = row[0];
-        setData1(user);
-        $("#customerWindow").on("hide.bs.modal", function () {
-            $('#customer').bootstrapSwitch('state', true);
-        });
-        $("#customerWindow").modal('hide');
+        if(user.userName != null && user.userName != "" && user.userPhone != null && user.userPhone != ""){
+            setData1(user);
+            $("#customerWindow").modal('hide');
+            $("#addWindow").modal("show");
+        }else{
+            swal({title:"",
+                text:"请先将此本店车主信息完善",
+                confirmButtonText:"确认",
+                type:"error"})
+        }
     }
 }
 
-function setData(appointment) {
-    alert("set");
-    $("#addUserName").val(appointment.userName);
-    $("#addUserPhone").val(appointment.userPhone);
-    $("#addUserId").val(appointment.userId);
-    $("#addPlate").val(appointment.carPlate);
-    $("#addAppointmentId").val(appointment.appointmentId);
-    $('#addCarBrand').html('<option value="' + appointment.brand.brandId + '">' + appointment.brand.brandName + '</option>').trigger("change");
-    $('#addCarColor').html('<option value="' + appointment.color.colorId + '">' + appointment.color.colorName + '</option>').trigger("change");
-    $('#addCarModel').html('<option value="' + appointment.model.modelId + '">' + appointment.model.modelName + '</option>').trigger("change");
-    $('#addCarPlate').html('<option value="' + appointment.plate.plateId + '">' + appointment.plate.plateName + '</option>').trigger("change");
-    $("#addMaintainOrFix").val(appointment.maintainOrFix);
+function setData(app) {
+    appointment = null;
+    $("#addUserName").attr("readOnly",true);
+    $("#addUserPhone").attr("readOnly",true);
+    $("#addUserName").val(app.userName);
+    $("#addUserPhone").val(app.userPhone);
+    $("#addUserId").val(app.userId);
+    $("#addPlate").val(app.carPlate);
+    $("#addAppointmentId").val(app.appointmentId);
+    $('#addCarBrand').html('<option value="' + app.brand.brandId + '">' + app.brand.brandName + '</option>').trigger("change");
+    $('#addCarColor').html('<option value="' + app.color.colorId + '">' + app.color.colorName + '</option>').trigger("change");
+    $('#addCarModel').html('<option value="' + app.model.modelId + '">' + app.model.modelName + '</option>').trigger("change");
+    $('#addCarPlate').html('<option value="' + app.plate.plateId + '">' + app.plate.plateName + '</option>').trigger("change");
+    $('#addDatetimepicker').val(formatterDate(app.arriveTime))
+    $("#addMaintainOrFix").val(app.maintainOrFix);
+    $("#addUserName").attr("readOnly",true);
+    $("#addUserPhone").attr("readOnly",true);
 }
 
 function setData1(user) {
+    userPhone = null;
+    $("#addUserName").attr("readOnly",true);
+    $("#addUserPhone").attr("readOnly",true);
     $("#addUserName").val(user.userName);
     $("#addUserPhone").val(user.userPhone);
     $("#addUserId").val(user.userId);
+    $("#addUserName").attr("readOnly",true);
+    $("#addUserPhone").attr("readOnly",true);
 }
 
 /** 清除添加的form表单信息 */
@@ -299,6 +297,10 @@ function showEdit(){
             initDateTimePicker('editForm', 'arriveTime', 'editDatetimepicker'); // 初始化时间框
             var row =  $('#table').bootstrapTable('getSelections');
             if(row.length >0) {
+                if(row[0].userId != null && row[0].userId != "" && row[0].appointmentId != null && row[0].appointmentId != ""){
+                    $("#editUserName").attr("readOnly",true);
+                    $("#editUserPhone").attr("readOnly",true);
+                }
                 $("#editWindow").modal('show'); // 显示弹窗
                 $("#editButton").removeAttr("disabled");
                 var checkin = row[0];
@@ -313,7 +315,7 @@ function showEdit(){
             }else{
                 swal({
                     title:"",
-                    text: "请选择要修改的登记记录", // 主要文本
+                    text: "请先选择要修改的登记记录", // 主要文本
                     confirmButtonColor: "#DD6B55", // 提示按钮的颜色
                     confirmButtonText:"确定", // 提示按钮上的文本
                     type:"warning"}) // 提示类型
@@ -347,6 +349,9 @@ function showAdd(){
             $("#addWindow").modal('show');
             $("#addButton").removeAttr("disabled");
             validator('addForm'); // 初始化验证
+            $('#addUserPhone').bind('input propertychange', function() {
+                userPhone = $("#addUserPhone").val();
+            });
         }else if(data.result == 'notLogin'){
             swal({title:"",
                     text:data.message,
@@ -403,6 +408,12 @@ function validator(formId) {
                     regexp: {
                         regexp: /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/,
                         message: '请输入正确的手机号'
+                    },
+                    remote: {
+                        url: '/user/queryPhoneByOne',
+                        message: '该手机号车主为本店车主, 请根据上方开关选择本店车主',
+                        delay :  2000,
+                        type: 'GET'
                     }
                 }
             },

@@ -15,20 +15,17 @@ $(function () {
                 size:"small",
                 onSwitchChange:function(event,state){
                     if(state==true){
-                        app = true;
                         initTableNotTollbar("appTable", "/userBasicManage/queryByPager");
+                        $('#addForm').data('bootstrapValidator').resetForm();
                         $("#appWindow").modal('show');
+                        $("#addWindow").modal("hide");
                     }else if(state==false){
-                        app = false;
+                        $("#addUserName").attr("readOnly",false);
+                        $("#addUserPhone").attr("readOnly",false);
+                        clearAddForm();
                     }
-
                 }
-
             })
-            $("#appWindow").on("hide.bs.modal", function () {
-                $("#addWindow").modal('show')
-                $('#app').bootstrapSwitch('state', false);
-            });
         }else if(data.result == 'notLogin'){
             swal({title:"",
                     text:data.message,
@@ -178,25 +175,13 @@ function blurredQuery(){
 
 // 关闭预约
 function closeAppWin() {
+    user = null;
+    $('#app').bootstrapSwitch('state', false);
     $("#appWindow").modal('hide');
     $("#addWindow").modal('show')
 }
 
 var user;
-
-
-/** 监听switch的监听事件 */
-function appOnChange() {
-    if ($('#app').bootstrapSwitch('state')) {
-        if (user != null && user != "" && user != undefined) {
-            setData(user);
-        }
-    }else {
-        if (user != null && user != "" && user != undefined) {
-            clearAddForm();
-        }
-    }
-}
 
 // 选择预约记录
 function checkApp() {
@@ -209,18 +194,26 @@ function checkApp() {
         return false;
     } else {
         user = row[0];
-        setData(user);
-        $("#appWindow").on("hide.bs.modal", function () {
-            $('#app').bootstrapSwitch('state', true);
-        });
-        $("#appWindow").modal('hide');
+        if(user.userName != null && user.userName != "" && user.userPhone != null && user.userPhone != "") {
+            setData(user);
+            $("#appWindow").modal('hide');
+            $("#addWindow").modal("show");
+        }else{
+            swal({title:"",
+                text:"请先将此本店车主信息完善",
+                confirmButtonText:"确认",
+                type:"error"})
+        }
     }
 }
 
-function setData(user) {
-    $("#addUserId").val(user.userId);
-    $("#addUserName").val(user.userName);
-    $("#addUserPhone").val(user.userPhone);
+function setData(user1) {
+    user = null;
+    $("#addUserName").attr("readOnly",true);
+    $("#addUserPhone").attr("readOnly",true);
+    $("#addUserId").val(user1.userId);
+    $("#addUserName").val(user1.userName);
+    $("#addUserPhone").val(user1.userPhone);
 }
 
 /** 清除添加的form表单信息 */

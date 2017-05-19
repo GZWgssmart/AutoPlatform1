@@ -127,9 +127,9 @@ public class CheckinController {
                     maintainRecord.setRecordDes(checkin.getUserRequests());
                     maintainRecord.setIfConfirm("N");
                     maintainRecordService.insert(maintainRecord);
-                    return ControllerResult.getSuccessResult("添加成功");
+                    return ControllerResult.getSuccessResult("添加登记记录成功");
                 }else{
-                    return ControllerResult.getFailResult("添加失败");
+                    return ControllerResult.getFailResult("添加登记记录失败");
                 }
             }else{
                 logger.info("此用户无拥有添加登记记录的角色");
@@ -153,7 +153,7 @@ public class CheckinController {
                     checkin.setCheckinStatus("Y");
                 }
                 checkinService.update(checkin);
-                return ControllerResult.getSuccessResult("修改成功");
+                return ControllerResult.getSuccessResult("修改登记记录成功");
             }else{
                 logger.info("此用户无拥有修改登记记录的角色");
                 return ControllerResult.getNotRoleResult("权限不足");
@@ -177,11 +177,11 @@ public class CheckinController {
                     if (status.equals("N")) {
                         checkinService.active(id);
                         logger.info("激活成功");
-                        return ControllerResult.getSuccessResult("激活成功");
+                        return ControllerResult.getSuccessResult("激活登记记录成功");
                     } else {
                         checkinService.inactive(id);
                         logger.info("禁用成功");
-                        return ControllerResult.getSuccessResult("禁用成功");
+                        return ControllerResult.getSuccessResult("禁用登记记录成功");
                     }
                 } else {
                     return ControllerResult.getFailResult("操作失败");

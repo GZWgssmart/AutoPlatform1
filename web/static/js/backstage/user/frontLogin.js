@@ -186,6 +186,14 @@ function validator2(formId) {
                         type: "error"
                     })
                     $("#" + formId).removeAttr("disabled");
+                }else if(data.result == "notPhoneCode"){
+                    swal({
+                        title: "",
+                        text: data.message,
+                        confirmButtonText: "确认",
+                        type: "error"
+                    })
+                    $("#" + formId).removeAttr("disabled");
                 }
             })
     })
