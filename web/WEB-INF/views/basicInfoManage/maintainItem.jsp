@@ -89,7 +89,7 @@
                     <input type="hidden" name="maintainId" define="MaintainFixMap.maintainId">
                     <input type="hidden" id="addaccId" name="accId">
                     <div class="modal-header" style="overflow:auto;">
-                        <h3>请选择配件</h3>
+                        <h4>选择配件</h4>
                     </div>
                     <hr>
                     <div class="form-group">
@@ -134,7 +134,7 @@
                     <input type="hidden" id="editmaintainId" name="mainAccId">
                     <input type="hidden" id="editaccId" name="accId">
                     <div class="modal-header" style="overflow:auto;">
-                        <h3>请选择配件</h3>
+                        <h4>选择配件</h4>
                     </div>
                     <hr>
                     <div class="form-group">
@@ -178,7 +178,7 @@
             <div class="modal-body">
                 <span class="glyphicon glyphicon-remove closeModal" onclick="closeWindow()"></span>
                 <div class="modal-header" style="overflow:auto;">
-                    <h3>请选择配件</h3>
+                    <h4>选择配件</h4>
                 </div>
                 <hr>
                 <div class="form-group">
@@ -224,7 +224,7 @@
             <div class="modal-body">
                 <span class="glyphicon glyphicon-remove closeModal" onclick="closeEidtWindow()"></span>
                 <div class="modal-header" style="overflow:auto;">
-                    <h3>请选择配件</h3>
+                    <h4>选择配件</h4>
                 </div>
                 <hr>
                 <div class="form-group">
@@ -270,7 +270,7 @@
             <div class="modal-body">
                 <span class="glyphicon glyphicon-remove closeModal" onclick="closedetailWindow()"></span>
                 <form role="form" class="form-horizontal" id="detailForm">
-                    <h3 class="m-t-none m-b">此维修保养记录下的所有明细</h3>
+                    <h3 class="m-t-none m-b">此维修项目记录下的所有配件</h3>
                     <hr>
                     <table class="table table-hover" id="detailTable">
                         <thead>
@@ -309,7 +309,7 @@
                       onclick="closeModals('addWindow', 'addForm')"></span>
                 <form role="form" class="form-horizontal" id="addForm">
                     <div class="modal-header" style="overflow:auto;">
-                        <h4>请填写该保养项目的信息</h4>
+                        <h4>添加保养项目的信息</h4>
                     </div>
                     <br/>
                     <div class="form-group">
@@ -367,7 +367,7 @@
                 <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('editWindow', 'editForm')"></span>
                 <form form role="form" class="form-horizontal" id="editForm">
                     <div class="modal-header" style="overflow:auto;">
-                        <h4>请填写该维修项目的相关信息</h4>
+                        <h4>修改保养项目的信息</h4>
                     </div>
                     <input type="hidden" name="maintainId" define="MaintainFixMap.maintainId">
                     <input type="hidden" name="maintainStatus" define="MaintainFixMap.maintainStatus">

@@ -149,14 +149,6 @@ function validator(formId) {
                     }
                 }
             },
-                modelDes: {
-                message: '车型描述验证失败',
-                validators: {
-                    notEmpty: {
-                        message: '车型描述不能为空'
-                    }
-                }
-            },
 
         }
     })

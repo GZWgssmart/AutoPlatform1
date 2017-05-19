@@ -26,10 +26,13 @@ public interface MaintainFixService extends BaseService<String, MaintainFix>{
     public int countByDisable(User user);
 
     public List<MaintainFix> queryByPagerMaintain(Pager pager);
+
     //    分页查询保养项目总数
     public int countMaintain(User user);
 
     public List<MaintainFix> queryByPagerAll(Pager pager);
+
+    public int countqueryByPagerAll(User user);
 
     public List<MaintainFix> queryByPagerDisableService(Pager pager);
 

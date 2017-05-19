@@ -79,7 +79,7 @@
             <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('addWindow', 'addForm')"></span>
             <form class="form-horizontal" role="form" id="addForm">
                 <div class="modal-header" style="overflow:auto;">
-                    <h4>请填写公司信息</h4>
+                    <h4>添加公司的信息</h4>
                 </div>
                 <div>
                     <div class="form-group col-md-6">
@@ -100,7 +100,7 @@
                     <div class="form-group col-md-6">
                         <label class="col-md-4 control-label">公司联系电话：</label>
                         <div class="col-md-8">
-                            <input type="number" id="addcompanyTel" name="companyTel" placeholder="请输入公司联系电话" class="form-control" style="width:100%"/>
+                            <input type="number" name="companyTel" placeholder="请输入公司联系电话" class="form-control" style="width:100%"/>
                         </div>
                     </div>
                     <div class="form-group col-md-6">
@@ -126,16 +126,33 @@
                     </div>
                     <p class="clearfix"></p>
                 </div>
+
                 <div>
                     <div class="form-group col-md-6">
                         <label class="col-md-4 control-label">公司Logo：</label>
                         <div class="col-md-8">
                             <div class="ibox-title">
+                                <div class="input-group">
                                     <input id="file" name="companyLogo" type="file" class="form-control" multiple
                                            class="file-loading"/>
+                                </div>
                             </div>
                         </div>
                     </div>
+                        <%--<div class="form-group col-md-6">--%>
+                            <%--<label class="col-md-4 control-label">公司Logo：</label>--%>
+                            <%--<div class="col-md-8" style="margin-left: 30px;">--%>
+                                <%--<div class="container kv-main">--%>
+                                    <%--<div class="ibox-title">--%>
+                                        <%--<div class="input-group">   &lt;%&ndash; FileInput边框和组件组在一起 &ndash;%&gt;--%>
+                                            <%--&lt;%&ndash;<div class="input-group-btn"></div> &lt;%&ndash; 用来显示选中的图片 &ndash;%&gt;&ndash;%&gt;--%>
+                                            <%--<input id="file" name="companyLogo" type="file" class="form-control" multiple class="file-loading"/>--%>
+                                        <%--</div>--%>
+                                    <%--</div>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+
                     <div class="form-group col-md-6">
                         <label class="col-md-4 control-label">公司规模：</label>
                         <div class="col-md-8">
@@ -199,7 +216,7 @@
                 <input type="hidden"name="companyId" define="company.companyId">
                 <input type="hidden"name="companyStatus" define="company.companyStatus">
                 <div class="modal-header" style="overflow:auto;">
-                    <p>请修改公司信息</p>
+                    <h4>修改公司的信息</h4>
                 </div>
                 <div>
                     <div class="form-group col-md-6">
@@ -221,7 +238,7 @@
                 <div class="form-group col-md-6">
                     <label class="col-md-4 control-label">联系电话：</label>
                     <div class="col-md-8">
-                        <input type="number" id="editcompanyTel" name="companyTel" placeholder="请输入联系电话电话" define="companyInfo.companyTel" class="form-control" style="width:100%"/>
+                        <input type="number" name="companyTel" placeholder="请输入联系电话电话" define="companyInfo.companyTel" class="form-control" style="width:100%"/>
                     </div>
                 </div>
 
@@ -238,7 +255,7 @@
                     <div class="form-group col-md-6">
                         <label class="col-md-4 control-label">负责人联系电话：</label>
                         <div class="col-md-8">
-                            <input type="number"  name="companyPricipalphone" placeholder="请输入负责人联系电话" define="companyInfo.companyPricipalphone" class="form-control" style="width:100%"/>
+                            <input type="number" id="editcompanyPricipalphone" name="companyPricipalphone" placeholder="请输入负责人联系电话" define="companyInfo.companyPricipalphone" class="form-control" style="width:100%"/>
                         </div>
                     </div>
 
@@ -253,17 +270,27 @@
                 </div>
 
                 <div>
-
+                    <%--<div class="form-group col-md-6">--%>
+                        <%--<label class="col-md-4 control-label">公司logo：</label>--%>
+                        <%--<div class="col-md-8">--%>
+                            <%--<div class="ibox-title">--%>
+                                <%--<div class="container kv-main">--%>
+                                    <%--<div class="ibox-title">--%>
+                                            <%--<div class="input-group-btn"></div> &lt;%&ndash; 用来显示选中的图片 &ndash;%&gt;--%>
+                                            <%--<input id="file1" define="companyInfo.companyLogo" name="companyLogo" type="file" class="form-control" multiple--%>
+                                                   <%--class="file-loading"/>--%>
+                                    <%--</div>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                    <%--</div>--%>
                     <div class="form-group col-md-6">
-                        <label class="col-md-4 control-label">公司logo：</label>
+                        <label class="col-md-4 control-label">公司Logo：</label>
                         <div class="col-md-8">
                             <div class="ibox-title">
-                                <div class="container kv-main">
-                                    <div class="ibox-title">
-                                            <div class="input-group-btn"></div> <%-- 用来显示选中的图片 --%>
-                                            <input id="file1" define="companyInfo.companyLogo" name="companyLogo" type="file" class="form-control" multiple
-                                                   class="file-loading"/>
-                                    </div>
+                                <div class="input-group">
+                                    <input id="file1" name="companyLogo" type="file" class="form-control" multiple
+                                           class="file-loading"/>
                                 </div>
                             </div>
                         </div>

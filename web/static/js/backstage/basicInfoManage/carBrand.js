@@ -134,15 +134,7 @@ function validator(formId) {
                         type: 'GET'
                     }
                 }
-            },
-            brandDes :{
-                message: '汽车品牌描述验证失败',
-                validators: {
-                    notEmpty: {
-                        message: '汽车品牌描述不能为空'
-                    }
-                }
-            },
+            }
         }
     })
         .on('success.form.bv', function (e) {

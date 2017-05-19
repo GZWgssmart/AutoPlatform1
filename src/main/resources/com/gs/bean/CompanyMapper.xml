@@ -92,10 +92,10 @@
     ]]>
   </select>
 
-  <!--  查询此公司联系电话是否已存在 -->
-  <select id="querycompanyTel" resultType="int">
+  <!--  查询此公司负责人联系电话是否已存在 -->
+  <select id="querycompanyPricipalphone" resultType="int">
     <![CDATA[
-      select count(companyId) from t_company where companyTel = #{companyTel};
+      select count(companyId) from t_company where companyPricipalphone = #{companyPricipalphone};
     ]]>
   </select>
 

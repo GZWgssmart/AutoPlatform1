@@ -71,7 +71,7 @@
             <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('addWindow', 'addForm')"></span>
             <form role="form" class="form-horizontal" id="addForm">
                 <div class="modal-header" style="overflow:auto;">
-                    <h4>请填写汽车颜色的相关信息</h4>
+                    <h4>添加汽车颜色的信息</h4>
                 </div>
                 <br/>
                 <div class="form-group">
@@ -126,7 +126,7 @@
                 <input type="hidden" name="colorId" define="carColor.colorId">
                 <input type="hidden" name="colorStatus" define="carColor.colorStatus">
                 <div class="modal-header" style="overflow:auto;">
-                    <h4>请填写汽车颜色的相关信息</h4>
+                    <h4>修改汽车颜色的信息</h4>
                 </div>
                 <br/>
                 <div class="form-group">

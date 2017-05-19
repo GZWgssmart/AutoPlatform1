@@ -139,14 +139,6 @@ function validator(formId) {
                     }
                 }
             },
-            plateDes: {
-                message: '车牌描述验证失败',
-                validators: {
-                    notEmpty: {
-                        message: '车牌描述不能为空'
-                    }
-                }
-            },
         }
     })
         .on('success.form.bv', function (e) {

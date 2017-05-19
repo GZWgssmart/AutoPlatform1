@@ -161,14 +161,6 @@ function validator(formId) {
                     }
                 }
             },
-            colorDes :{
-                message: '颜色的描述验证失败',
-                validators: {
-                    notEmpty: {
-                        message: '颜色的描述不能为空'
-                    }
-                }
-            },
         }
     })
         .on('success.form.bv', function (e) {

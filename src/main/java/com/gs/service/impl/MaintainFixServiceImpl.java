@@ -26,6 +26,11 @@ public class MaintainFixServiceImpl implements MaintainFixService {
 	}
 
 	@Override
+	public int countqueryByPagerAll(User user) {
+		return maintainFixDAO.countqueryByPagerAll(user);
+	}
+
+	@Override
 	public List<MaintainFix> queryByPagerDisableService(Pager pager) {
 		return maintainFixDAO.queryByPagerDisableService(pager);
 	}
@@ -107,10 +112,6 @@ public class MaintainFixServiceImpl implements MaintainFixService {
 
 	@Override
 	public int countByBlurred(MaintainFix maintainFix, User user) {
-		return 0;
-	}
-
-	public int countByBlurred(MaintainFix maintainFix) {
 		return 0;
 	}
 

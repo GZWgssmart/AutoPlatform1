@@ -253,22 +253,6 @@ function validator(formId) {
                     }
                 }
             },
-            maintainDes :{
-                message: '维修项目描述验证失败',
-                validators: {
-                    notEmpty: {
-                        message: '维修项目描述不能为空'
-                    }
-                }
-            },
-            companyId: {
-                message: '维修项目所属公司证失败',
-                validators: {
-                    notEmpty: {
-                        message: '维修项目所属公司不能为空'
-                    }
-                }
-            },
             accCount: {
                 message: '配件个数验证失败',
                 validators: {

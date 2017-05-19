@@ -66,7 +66,7 @@
             <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('addWindow', 'addForm')"></span>
             <form role="form" class="form-horizontal" id="addForm">
                 <div class="modal-header" style="overflow:auto;">
-                    <h4>请填写汽车品牌的相关信息</h4>
+                    <h4>添加汽车品牌的信息</h4>
                 </div>
                 <br/>
                 <div class="form-group">
@@ -106,7 +106,7 @@
                 <input type="hidden"name="brandId" define="carBrand.brandId">
                 <input type="hidden"name="brandStatus" define="carBrand.brandStatus">
                 <div class="modal-header" style="overflow:auto;">
-                    <p>请修改该品牌的相关信息</p>
+                    <h4>修改汽车品牌的信息</h4>
                 </div>
                 <br/>
                 <div class="form-group">
