@@ -83,23 +83,43 @@ public class MessageSendController {
         }
     }
 
+//    @ResponseBody
+//    @RequestMapping(value = "insert", method = RequestMethod.POST)
+//    public ControllerResult batchInsert(HttpSession session) {
+//        if (SessionUtil.isLogin(session)) {
+//            String roles = "公司超级管理员,公司普通管理员,汽车公司接待员";
+//            if (RoleUtil.checkRoles(roles)) {
+//                logger.info("短信提醒记录添加操作");
+//                List<MessageSend> list = new ArrayList<MessageSend>();
+//                for (MessageSend ms : list) {
+//                    MessageSend m = new MessageSend();
+//                    m.setUserId(ms.getUserId());
+//                    m.setSendMsg(ms.getSendMsg());
+//                    m.setSendTime(ms.getSendTime());
+//                    m.setSendCreatedTime(ms.getSendCreatedTime());
+//                    list.add(m);
+//                }
+//                messageSendService.batchInsert(list);
+//                return ControllerResult.getSuccessResult("添加短信提醒成功");
+//            } else {
+//                logger.info("此用户无拥有此方法");
+//                return null;
+//            }
+//        } else {
+//            logger.info("请先登录");
+//            return null;
+//        }
+//
+//    }
+
     @ResponseBody
     @RequestMapping(value = "insert", method = RequestMethod.POST)
-    public ControllerResult batchInsert(HttpSession session) {
+    public ControllerResult insert(HttpSession session, MessageSend messageSend) {
         if (SessionUtil.isLogin(session)) {
             String roles = "公司超级管理员,公司普通管理员,汽车公司接待员";
             if (RoleUtil.checkRoles(roles)) {
                 logger.info("短信提醒记录添加操作");
-                List<MessageSend> list = new ArrayList<MessageSend>();
-                for (MessageSend ms : list) {
-                    MessageSend m = new MessageSend();
-                    m.setUserId(ms.getUserId());
-                    m.setSendMsg(ms.getSendMsg());
-                    m.setSendTime(ms.getSendTime());
-                    m.setSendCreatedTime(ms.getSendCreatedTime());
-                    list.add(m);
-                }
-                messageSendService.batchInsert(list);
+                messageSendService.insert(messageSend);
                 return ControllerResult.getSuccessResult("添加短信提醒成功");
             } else {
                 logger.info("此用户无拥有此方法");
@@ -112,21 +132,6 @@ public class MessageSendController {
 
     }
 
-//    Mail mail = new Mail();
-//                        mail.setSubject("维修保养记录完工提醒"); // 设置标题
-//    // 设置接收者
-//    // mail.setRecipients(u.getUserEmail()); 收件人
-//    // mail.setCcRecipients(); // 抄送
-//                        mail.setBccRecipients(emails); // 密送
-//                        logger.info(emails);
-//    Multipart multipart = new MimeMultipart();
-//    BodyPart part1 = new MimeBodyPart(); // 邮件内容
-//    // 设置邮件内容
-//                        part1.setContent("尊敬的车主你好, 你的车辆在本店进行的维修保养现已完工好了, 请前来开走车辆","text/html;charset=utf-8");
-//                        multipart.addBodyPart(part1); // 把此邮件内容添加到实例化好的邮件中
-//                        mail.setMultinart(multipart); // 把此邮件对象添加进邮箱
-//    File file = new File(Methods.getRootPath(req) + "WEB-INF/config/mail.properties");
-//                        MailConfig.sendMail(file,mail);
 
 
     @ResponseBody

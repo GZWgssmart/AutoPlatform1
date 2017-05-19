@@ -249,3 +249,87 @@ function formSubmit(url, formId, winId) {
             }
         }, "json");
 }
+
+function showMessageSend() {
+    $("#showMessageSendWindow").modal('show');
+    initTableMessageNotTollbar("showMessageSendTable", "/maintainRecord/queryByPagerSuccess");
+}
+
+function closeMessageSend() {
+    $("#addWindow").modal('hide');
+    $("#showMessageSendWindow").modal('show');
+    $("#addForm").data('bootstrapValidator').destroy(); // 销毁此form表单
+    $("#addForm").data('bootstrapValidator', null);// 此form表单设置为空
+}
+
+
+function showMessageSendUser() {
+    var row = $('#showMessageSendTable').bootstrapTable('getSelections');
+    if (row.length < 1) {
+        swal({
+            "title": "",
+            "text": "只能选择一条数据",
+            "type": "warning"
+        })
+    } else if(row.length >= 1) {
+        var ids = "";
+        $.each(row, function (index, value, item) {
+            if (ids == "") {
+                ids = row[index].checkin.user.userId;
+            } else {
+                ids += "," + row[index].checkin.user.userId
+            }
+            alert(row[index].checkin.user.userId);
+
+        });
+        // alert(row[0].checkin.user.userId);
+        // alert(row[0].checkin.user.userName);
+        // $("#addUserId").val(ids);
+        $("#showMessageSendWindow").modal('hide');
+        $("#addWindow").modal('show');
+        $("#addButton").removeAttr("disabled");
+        // validator('addForm'); // 初始化验证
+    }
+}
+
+function closeMessageSendUserWin() {
+    $("#showMessageSendWindow").modal('hide');
+}
+
+function initTableMessageNotTollbar(tableId, url) {
+    //先销毁表格
+    $('#' + tableId).bootstrapTable('destroy');
+    //初始化表格,动态从服务器加载数据
+    $("#" + tableId).bootstrapTable({
+        method: "get",  //使用get请求到服务器获取数据
+        url: url, //获取数据的Servlet地址
+        striped: false,  //表格显示条纹
+        pagination: true, //启动分页
+        pageSize: 10,  //每页显示的记录数
+        pageNumber: 1, //当前第几页
+        pageList: [10, 15, 20, 25, 30],  //记录数可选列表
+        showColumns: true,  //显示下拉框勾选要显示的列
+        showRefresh: true,  //显示刷新按钮
+        showToggle: true, // 显示详情
+        strictSearch: true,
+        clickToSelect: true,  //是否启用点击选中行
+        uniqueId: "id",                     //每一行的唯一标识，一般为主键列
+        sortable: true,                     //是否启用排序
+        sortOrder: "asc",
+        toolbar: "#messageSendToolbar",//排序方式
+        sidePagination: "server", //表示服务端请求
+
+
+        //设置为undefined可以获取pageNumber，pageSize，searchText，sortName，sortOrder
+        //设置为limit可以获取limit, offset, search, sort, order
+        queryParamsType: "undefined",
+        queryParams: function queryParams(params) {   //设置查询参数
+            var param = {
+                pageNumber: params.pageNumber,
+                pageSize: params.pageSize,
+                orderNum: $("#orderNum").val()
+            };
+            return param;
+        },
+    });
+}

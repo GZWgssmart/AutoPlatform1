@@ -17,15 +17,24 @@
 
     <association property="company" javaType="com.gs.bean.Company">
       <id column="company_id" property="companyId"></id>
-      <result column="company_name" property="companyName"></result>
-      <result column="company_address" property="companyAddress"></result>
-      <result column="company_tel" property="companyTel"></result>
+      <result column="companyName" property="companyName"></result>
+      <result column="companyAddress" property="companyAddress"></result>
+      <result column="companyTel" property="companyTel"></result>
+    </association>
+
+    <association property="user" javaType="com.gs.bean.User">
+      <id column="user_ids" property="userId"/>
+      <result column="user_name" property="userName"/>
+      <result column="userEmail" property="userEmail"/>
+      <result column="userPhone" property="userPhone"/>
     </association>
   </resultMap>
 
   <select id="queryByPager" resultMap="BaseResultMap" parameterType="com.gs.common.bean.Pager">
-    SELECT m.*,c.userId as user_id,c.userName,c.checkinId  FROM t_message_send m
-    LEFT JOIN t_checkin c ON m.userId = c.userId
+    SELECT m.*,c.userId as user_id,c.userName,c.checkinId,
+    u.userPhone,u.userEmail,u.userName as user_name,u.userId as user_ids
+    FROM t_message_send m, t_checkin c, t_user u
+    where  m.userId = c.userId and c.userId = u.userId
     <if test="user.companyId != null and user.companyId != ''">
       and m.companyId = #{user.companyId}
     </if>
@@ -33,7 +42,8 @@
   </select>
 
   <select id="count" resultType="int" parameterType="com.gs.bean.User" >
-    select count(m.messageId) from t_message_send m where 1=1
+    select count(m.messageId) FROM t_message_send m, t_checkin c, t_user u
+    where  m.userId = c.userId and c.userId = u.userId
     <if test="companyId != null and companyId != ''">
       and m.companyId = #{companyId}
     </if>
@@ -44,13 +54,13 @@
   </insert>
 
   <insert id="insert" parameterType="messageSend">
-    insert into t_message_send(messageId,userId,sendMsg,sendTime,sendCreatedTime,companyId) values(uuid(),#{userId},#{sendMsg},now(),now(),companyId)
+    insert into t_message_send(messageId,userId,sendMsg,sendTime,sendCreatedTime,companyId) values(uuid(),#{userId},#{sendMsg},now(),now(),#{companyId})
   </insert>
 
   <insert id="batchInsert"  parameterType="java.util.List">
     insert into t_message_send (messageId,userId,sendMsg,sendTime, sendCreatedTime)values
     <foreach collection="list" item="item" index="index" separator="," >
-      (uuid(),#{item.userId},#{item.sendMsg},#{item.sendTime}, #{item.sendCreatedTime})
+      (uuid(),#{item.userId},#{item.sendMsg},now(),now(),#{item.companyId})
     </foreach>
   </insert>
 

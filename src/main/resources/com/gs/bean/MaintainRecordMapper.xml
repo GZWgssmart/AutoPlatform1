@@ -59,7 +59,7 @@
                 <id property="userId" column="userId"/>
                 <result property="userName" column="userName"/>
                 <result property="userEmail" column="userEmail"/>
-                <result property="userPhone" column="userPhone"/>
+                <result property="userPhone" column="user_phone"/>
             </association>
 
             <association property="company" javaType="com.gs.bean.Company">
@@ -477,7 +477,7 @@
     </select>
 
     <select id="queryByPagerSix" resultMap="MaintainRecordMap">
-        SELECT m.*, ck.*,ck.userId as user_id,u.userEmail,u.userPhone
+        SELECT m.*, ck.*,ck.userId as user_id,u.userEmail,u.userPhone as user_phone
         FROM t_maintain_record m, t_checkin ck,t_user u
         WHERE m.checkinId = ck.checkinId and ck.userId = u.userId
         AND m.recordStatus = 'Y' AND #{actualEndTime} >= m.actualEndTime
@@ -499,7 +499,7 @@
     </select>
 
     <select id="queryByPagerSuccess" resultMap="MaintainRecordMap" parameterType="com.gs.common.bean.Pager">
-        SELECT m.*, ck.*,ck.userId as user_id,u.userEmail,u.userPhone
+        SELECT m.*, ck.*,ck.userId as user_id,u.userEmail,u.userPhone as user_phone
         FROM t_maintain_record m, t_checkin ck,t_user u
         WHERE m.checkinId = ck.checkinId and ck.userId = u.userId
         AND m.recordStatus = 'Y'

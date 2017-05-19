@@ -57,7 +57,7 @@ public class ComplaintController {
     @ResponseBody
     @RequestMapping(value = "queryByPager", method = RequestMethod.GET)
     public Pager4EasyUI<Complaint> queryByPager(HttpSession session, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
-        if (SessionUtil.isLogin(session)) {
+        if (SessionUtil.isLogin(session) || SessionUtil.isOwnerLogin(session)) {
             String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,车主";
             if (RoleUtil.checkRoles(roles)) {
                 logger.info("分页查看投诉记录");

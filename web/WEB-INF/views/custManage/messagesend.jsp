@@ -21,6 +21,8 @@
     <link rel="stylesheet" href="/static/css/sweetalert.css">
     <link rel="stylesheet" href="/static/css/table/table.css">
     <link rel="stylesheet" href="/static/js/plugins/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet/less" href="/static/css/bootstrap-dateTimePicker/datetimepicker.less">
 </head>
 <body>
 <%@include file="../backstage/contextmenu.jsp" %>
@@ -42,7 +44,8 @@
         </table>
         <div id="toolbar" class="btn-group">
             <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司接待员">
-                <button type="button" class="btn btn-w-m btn-info" onclick="showAdd();">发送短信提醒</button>
+                <%--<button type="button" class="btn btn-w-m btn-info" onclick="showAdd();">发送短信提醒</button>--%>
+                <button type="button" class="btn btn-w-m btn-info" onclick="showMessageSend()">发送短信提醒</button>
             </shiro:hasAnyRoles>
         </div>
     </div>
@@ -54,31 +57,32 @@
         <div class="modal-content" style="overflow:hidden;">
             <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('addWindow', 'addForm')"></span>
             <form class="form-horizontal" id="addForm" method="post">
+                <input id="addUserId" type="text" name="userId" width="100px">
                 <div class="modal-header" style="overflow:auto;">
                     <h4>添加短信发送提醒的信息</h4>
                 </div>
                 <br/>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">用户名：</label>
-                    <div class="col-sm-7">
-                        <%--<input type="text" name="userId" placeholder="请选择用户" class="form-control">--%>
-                        <select id="addUserName" name="userId" class="form-control js-example-basic-multiple messageSend"
-                                multiple="multiple" style="width:100%">
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">发送时间：</label>
-                    <div class="col-sm-7">
-                        <input id="addSendTime" name="sendTime" readonly class="layui-input">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">发送记录创建时间：</label>
-                    <div class="col-sm-7">
-                        <input id="addSendCreatedTime" name="sendCreatedTime" readonly class="layui-input">
-                    </div>
-                </div>
+                <%--<div class="form-group">--%>
+                    <%--<label class="col-sm-3 control-label">用户名：</label>--%>
+                    <%--<div class="col-sm-7">--%>
+                        <%--&lt;%&ndash;<input type="text" name="userId" placeholder="请选择用户" class="form-control">&ndash;%&gt;--%>
+                        <%--<select id="addUserName" name="userId" class="form-control js-example-basic-multiple messageSend"--%>
+                                <%--multiple="multiple" style="width:100%">--%>
+                        <%--</select>--%>
+                    <%--</div>--%>
+                <%--</div>--%>
+                <%--<div class="form-group">--%>
+                    <%--<label class="col-sm-3 control-label">发送时间：</label>--%>
+                    <%--<div class="col-sm-7">--%>
+                        <%--<input id="addSendTime" name="sendTime" readonly class="layui-input">--%>
+                    <%--</div>--%>
+                <%--</div>--%>
+                <%--<div class="form-group">--%>
+                    <%--<label class="col-sm-3 control-label">发送记录创建时间：</label>--%>
+                    <%--<div class="col-sm-7">--%>
+                        <%--<input id="addSendCreatedTime" name="sendCreatedTime" readonly class="layui-input">--%>
+                    <%--</div>--%>
+                <%--</div>--%>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">发送内容：</label>
                     <div class="col-sm-7">
@@ -89,7 +93,7 @@
                 <div class="form-group">
                     <div class="col-sm-offset-8">
                         <button type="button" class="btn btn-default"
-                                onclick="closeModals('addWindow', 'addForm')">关闭
+                                onclick="closeMessageSend()">关闭
                         </button>
                         <button id="addButton" class="btn btn-sm btn-success" type="button" onclick="addSubmit()">保 存</button>
                         <input type="reset" name="reset" style="display: none;"/>
@@ -147,6 +151,34 @@
         <%--</div><!-- /.modal-content -->--%>
     <%--</div><!-- /.modal-dialog -->--%>
 <%--</div><!-- /.modal -->--%>
+<div id="showMessageSendWindow" class="modal fade" aria-hidden="true" style="overflow-y:scroll" data-backdrop="static"
+     keyboard:false>
+    <div class="modal-dialog" style="width: 80%">
+        <div class="modal-content">
+            <div class="modal-body">
+                <span class="glyphicon glyphicon-remove closeModal" onclick="closeMessageSendUserWin()"></span>
+                <h3>请选择车主</h3>
+                <table class="table table-hover" id="showMessageSendTable" style="table-layout: fixed">
+                    <thead>
+                    <tr>
+                        <th data-checkbox="true"></th>
+                        <th data-field="checkin.userName" data-width="100">维修保养登记人</th>
+                        <th data-field="checkin.user.userEmail">车主邮箱</th>
+                        <th data-field="checkin.user.userPhone">车主电话号码</th>
+                    </tr>
+                    </thead>
+                </table>
+                <div id="messageSendToolbar" class="btn-group">
+                    <button type="button" class="btn btn-w-m btn-info" onclick="showMessageSendUser();">短信提醒车主</button>
+                </div>
+                <div class="modal-footer" style="overflow:hidden;">
+                    <button type="button" class="btn btn-default" onclick="closeMessageSendUserWin()">关闭
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script src="/static/js/jquery.min.js"></script>
 <script src="/static/js/bootstrap.min.js"></script>
@@ -160,39 +192,41 @@
 <script src="/static/js/bootstrap-validate/bootstrapValidator.js"></script>
 <script src="/static/js/plugins/layui/layui.js" charset="utf-8"></script>
 <script src="/static/js/backstage/main.js"></script>
-<script>
-    layui.use('laydate', function(){
+<script src="/static/js/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.js"></script>
+<script src="/static/js/bootstrap-dateTimePicker/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+<%--<script>--%>
+    <%--layui.use('laydate', function(){--%>
 
-        var laydate = layui.laydate;
+        <%--var laydate = layui.laydate;--%>
 
-        var addSendTime = {
-            format: 'yyyy-MM-dd hh:mm:ss',
-            min: laydate.now(), //设定最小日期为当前日期
-            max: '2099-12-30 23:59:59', //最大日期
-            istime: true,
-            istoday: false,
-            festival: true
-        };
+        <%--var addSendTime = {--%>
+            <%--format: 'yyyy-MM-dd hh:mm:ss',--%>
+            <%--min: laydate.now(), //设定最小日期为当前日期--%>
+            <%--max: '2099-12-30 23:59:59', //最大日期--%>
+            <%--istime: true,--%>
+            <%--istoday: false,--%>
+            <%--festival: true--%>
+        <%--};--%>
 
-        document.getElementById('addSendTime').onclick = function () {
-            addSendTime.elem = this;
-            laydate(addSendTime);
-        }
+        <%--document.getElementById('addSendTime').onclick = function () {--%>
+            <%--addSendTime.elem = this;--%>
+            <%--laydate(addSendTime);--%>
+        <%--}--%>
 
-        var addSendCreatedTime = {
-            format: 'yyyy-MM-dd hh:mm:ss',
-            max: '2099-12-30 23:59:59', //最大日期
-            istime: true,
-            istoday: false,
-            festival: true
-        };
+        <%--var addSendCreatedTime = {--%>
+            <%--format: 'yyyy-MM-dd hh:mm:ss',--%>
+            <%--max: '2099-12-30 23:59:59', //最大日期--%>
+            <%--istime: true,--%>
+            <%--istoday: false,--%>
+            <%--festival: true--%>
+        <%--};--%>
 
-        document.getElementById('addSendCreatedTime').onclick = function () {
-            addSendCreatedTime.elem = this;
-            laydate(addSendCreatedTime);
-        }
+        <%--document.getElementById('addSendCreatedTime').onclick = function () {--%>
+            <%--addSendCreatedTime.elem = this;--%>
+            <%--laydate(addSendCreatedTime);--%>
+        <%--}--%>
 
-    });
-</script>
+    <%--});--%>
+<%--</script>--%>
 </body>
 </html>

@@ -169,8 +169,8 @@ function checkRemind() {
     } else {
         alert(row[0].recordId);
         alert(row[0].checkin.userName);
-        $("#addTrackUser").val([0].checkin.userName);
-        $("#addTrackUserId").val([0].checkin.userId);
+        $("#addTrackUser").val(row[0].checkin.userName);
+        $("#addTrackUserId").val(row[0].checkin.userId);
         $("#showRemindWindow").modal('hide');
     }
 }
