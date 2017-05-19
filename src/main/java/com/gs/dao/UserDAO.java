@@ -95,4 +95,10 @@ public interface UserDAO extends BaseDAO<String, User>{
      * 查询此identity是否已存在此identity
      */
     public int queryIsIdentityByOne(@Param("userIdentity") String userIdentity, @Param("userId") String userId);
+
+    /**
+     * 模糊查询
+     */
+    public List<User> queryByPagerLike(Pager pager);
+
 }

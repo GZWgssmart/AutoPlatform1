@@ -163,24 +163,84 @@ public class RoleController {
         // TODO 所有人
         if(SessionUtil.isLogin(session)) {
             User user = (User)session.getAttribute("user");
-            List<Role> roles = null;
-            String roless = "车主";
-            if(RoleUtil.checkRoles(roless)) {
-                return null;
-            } else {
-                if(user.getCompanyId()!=null  && !user.getCompanyId().equals("")) {
-                    roles = roleService.queryCompManager("Y");
-                } else {
-                    roles = roleService.querySysManager("Y");
-                }
-                List<ComboBox4EasyUI> comboBoxes = new ArrayList<ComboBox4EasyUI>();
-                for (Role role : roles) {
-                    ComboBox4EasyUI comboBox4EasyUI = new ComboBox4EasyUI();
-                    comboBox4EasyUI.setId(role.getRoleId());
-                    comboBox4EasyUI.setText(role.getRoleDes());
-                    comboBoxes.add(comboBox4EasyUI);
-                }
+            List<ComboBox4EasyUI> comboBoxes = new ArrayList<ComboBox4EasyUI>();
+            String roles1 = "汽车公司人力资源管理部";
+            String roles2 = "系统超级管理员,系统普通管理员";
+            String roles3 = "公司超级管理员,公司普通管理员";
+            ComboBox4EasyUI comboBox4EasyUI1 = new ComboBox4EasyUI();
+            comboBox4EasyUI1.setId("7ff4f1c5-3205-11e7-bc72-507b9d765567");
+            comboBox4EasyUI1.setText("系统超级管理员");
+            ComboBox4EasyUI comboBox4EasyUI2 = new ComboBox4EasyUI();
+            comboBox4EasyUI2.setId("80095901-3205-11e7-bc72-507b9d765567");
+            comboBox4EasyUI2.setText("系统普通管理员");
+            ComboBox4EasyUI comboBox4EasyUI3 = new ComboBox4EasyUI();
+            comboBox4EasyUI3.setId("8010cecf-3205-11e7-bc72-507b9d765567");
+            comboBox4EasyUI3.setText("公司超级管理员");
+            ComboBox4EasyUI comboBox4EasyUI4 = new ComboBox4EasyUI();
+            comboBox4EasyUI4.setId("80195a53-3205-11e7-bc72-507b9d765567");
+            comboBox4EasyUI4.setText("公司普通管理员");
+            ComboBox4EasyUI comboBox4EasyUI5 = new ComboBox4EasyUI();
+            comboBox4EasyUI5.setId("8020abdc-3205-11e7-bc72-507b9d765567");
+            comboBox4EasyUI5.setText("汽车公司接待员");
+            ComboBox4EasyUI comboBox4EasyUI6 = new ComboBox4EasyUI();
+            comboBox4EasyUI6.setId("802895f4-3205-11e7-bc72-507b9d765567");
+            comboBox4EasyUI6.setText("汽车公司总技师");
+            ComboBox4EasyUI comboBox4EasyUI7 = new ComboBox4EasyUI();
+            comboBox4EasyUI7.setId("802fd749-3205-11e7-bc72-507b9d765567");
+            comboBox4EasyUI7.setText("汽车公司技师");
+            ComboBox4EasyUI comboBox4EasyUI8 = new ComboBox4EasyUI();
+            comboBox4EasyUI8.setId("80360abc-3205-11e7-bc72-507b9d765567");
+            comboBox4EasyUI8.setText("汽车公司学徒");
+            ComboBox4EasyUI comboBox4EasyUI9 = new ComboBox4EasyUI();
+            comboBox4EasyUI9.setId("803f0384-3205-11e7-bc72-507b9d765567");
+            comboBox4EasyUI9.setText("汽车公司销售人员");
+            ComboBox4EasyUI comboBox4EasyUI10 = new ComboBox4EasyUI();
+            comboBox4EasyUI10.setId("804532c4-3205-11e7-bc72-507b9d765567");
+            comboBox4EasyUI10.setText("汽车公司财务人员");
+            ComboBox4EasyUI comboBox4EasyUI11 = new ComboBox4EasyUI();
+            comboBox4EasyUI11.setId("804cc69c-3205-11e7-bc72-507b9d765567");
+            comboBox4EasyUI11.setText("汽车公司采购人员");
+            ComboBox4EasyUI comboBox4EasyUI12 = new ComboBox4EasyUI();
+            comboBox4EasyUI12.setId("8052af73-3205-11e7-bc72-507b9d765567");
+            comboBox4EasyUI12.setText("汽车公司库管人员");
+            ComboBox4EasyUI comboBox4EasyUI13 = new ComboBox4EasyUI();
+            comboBox4EasyUI13.setId("805a2613-3205-11e7-bc72-507b9d765567");
+            comboBox4EasyUI13.setText("汽车公司人力资源管理部");
+            ComboBox4EasyUI comboBox4EasyUI14 = new ComboBox4EasyUI();
+            comboBox4EasyUI14.setId("8067fa42-3205-11e7-bc72-507b9d765567");
+            comboBox4EasyUI14.setText("车主");
+            if(RoleUtil.checkRoles(roles1)) {
+                    comboBoxes.add(comboBox4EasyUI5);
+                    comboBoxes.add(comboBox4EasyUI6);
+                    comboBoxes.add(comboBox4EasyUI7);
+                    comboBoxes.add(comboBox4EasyUI8);
+                    comboBoxes.add(comboBox4EasyUI9);
+                    comboBoxes.add(comboBox4EasyUI10);
+                    comboBoxes.add(comboBox4EasyUI11);
+                    comboBoxes.add(comboBox4EasyUI12);
+                    comboBoxes.add(comboBox4EasyUI13);
+                    comboBoxes.add(comboBox4EasyUI14);
+                    return comboBoxes;
+            }else if (RoleUtil.checkRoles(roles2)){
+                comboBoxes.add(comboBox4EasyUI1);
+                comboBoxes.add(comboBox4EasyUI2);
                 return comboBoxes;
+            }else if (RoleUtil.checkRoles(roles3)){
+                comboBoxes.add(comboBox4EasyUI3);
+                comboBoxes.add(comboBox4EasyUI4);
+                comboBoxes.add(comboBox4EasyUI5);
+                comboBoxes.add(comboBox4EasyUI6);
+                comboBoxes.add(comboBox4EasyUI7);
+                comboBoxes.add(comboBox4EasyUI8);
+                comboBoxes.add(comboBox4EasyUI9);
+                comboBoxes.add(comboBox4EasyUI10);
+                comboBoxes.add(comboBox4EasyUI11);
+                comboBoxes.add(comboBox4EasyUI12);
+                comboBoxes.add(comboBox4EasyUI13);
+                comboBoxes.add(comboBox4EasyUI14);
+                return comboBoxes;
+            }else {
+               return null;
             }
         } else {
             logger.info("请先登录");

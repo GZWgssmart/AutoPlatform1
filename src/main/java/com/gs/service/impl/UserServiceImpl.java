@@ -210,5 +210,10 @@ public class UserServiceImpl implements UserService {
         return userDAO.queryIsIdentityByOne(userIdentity, userId);
     }
 
-
+    /**
+     * 模糊查询
+     */
+    public List<User> queryByPagerLike(Pager pager) {
+        return userDAO.queryByPagerLike(pager);
+    }
 }

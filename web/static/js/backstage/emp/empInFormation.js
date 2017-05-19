@@ -9,7 +9,6 @@ $(function () {
 
             // 初始化select2, 第一个参数是class的名字, 第二个参数是select2的提示语, 第三个参数是select2的查询url
             initSelect2("userRole", "请选择角色", "/role/role2CheckBox");
-            initSelect2("userCompany", "请选择所属公司", "/company/queryAllCompany");
 
             //0.初始化fileinput
             var oFileInput = new FileInput();
@@ -34,6 +33,15 @@ $(function () {
             })
         }
     })
+});
+
+// 这个方法别看
+$("#addUserRole").change(function() {
+    var div = $("#addSalary");
+    var select = $("#addUserRole").select2('data')[0].text
+    if (select != '系统超级管理员' || select != '系统普通管理员'){
+    div.css("display", "block");
+}
 });
 
 //初始化fileinput
@@ -107,16 +115,6 @@ function showAdd(){
     })
 }
 
-//  当选中的角色为系统管理员时,显示底薪的DIV
-// function isSalary(value) {
-//     alert(eval(document.getElementById('addUserRole')).value);
-//     var div = $("#addSalary");
-//     if(value != '7ff4f1c5-3205-11e7-bc72-507b9d765567' || value != '80095901-3205-11e7-bc72-507b9d765567') {
-//         div.css("display","block");
-//     }
-//     div.css("display","none");
-// }
-
 function validator(formId) {
     $('#' + formId).bootstrapValidator({
         feedbackIcons: {
@@ -125,6 +123,14 @@ function validator(formId) {
             validating: 'glyphicon glyphicon-refresh'
         },
         fields: {
+            userIconTemp: {
+                message: '用户头像验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '头像不能为空'
+                    }
+                }
+            },
             userName: {
                 message: '用户名验证失败',
                 validators: {
@@ -141,9 +147,6 @@ function validator(formId) {
             userEmail: {
                 message: '邮箱验证失败',
                 validators: {
-                    notEmpty: {
-                        message: '邮箱不能为空'
-                    },
                     remote: {
                         url: '/userBasicManage/queryIsEmailByOne',//验证邮箱
                         message: '该邮箱已存在',//提示消息
@@ -154,8 +157,7 @@ function validator(formId) {
                         delay :  2000,//每输入一个字符，就发ajax请求，服务器压力还是太大，设置2秒发送一次ajax（默认输入一个字符，提交一次，服务器压力太大）
                         type: 'POST'//请求方式
                     }
-                },
-
+                }
             },
             userIdentity: {
                 message: '身份证验证失败',
@@ -262,16 +264,17 @@ function validator(formId) {
         }
     })
         .on('success.form.bv', function (e) {
+            console.log(e);
             if (formId == "addForm") {
                 formSubmit("/userBasicManage/addUser", formId, "addWindow");
             } else if (formId == "editForm") {
+                console.log("editForM")
                 formSubmit("/userBasicManage/updateUser", formId, "editWindow");
             }
         })
 }
-
 function formSubmit(url, formId, winId) {
-    $.post(contentPath + "/user/isLogin/" + roles, function (data) {
+    $.post("/user/isLogin/" + roles, function (data) {
         if (data.result == "success") {
             var birthdayDate = new Date(parseInt($("#editDatetimepicker").val()));
             var userBirthday = formatterDate(birthdayDate);
@@ -282,31 +285,37 @@ function formSubmit(url, formId, winId) {
                         if(data.user) {
                             var fileData = document.getElementById("file").files[0];
                             var formData = new FormData();
-                            formData.append("userIcon", fileData);
                             formData.append("userId", data.user.userId);
-                            $.ajax({
-                                url: "/userBasicManage/afterUpdIcon",
-                                type: "POST",
-                                data: formData,
-                                processData: false,
-                                contentType: false,
-                                success: function (data1) {
-                                    iconUpldSuc(data1, winId, formId);
-                                }
-                            })
+                            console.log("success")
+                            if(fileData != null && fileData != undefined && fileData != '') {
+                                formData.append("userIcon", fileData);
+                                $.ajax({
+                                    url: "/userBasicManage/afterUpdIcon",
+                                    type: "POST",
+                                    data: formData,
+                                    processData: false,
+                                    contentType: false,
+                                    success: function (data1) {
+                                        iconUpldSuc(data1, winId, formId);
+                                    }
+                                })
+                            }
                         } else{
                             iconUpldSuc(data, winId, formId);
                         }
                     } else if (data.result == "fail") {
                         swal({title:"",
-                            text:"操作失败",
+                            text:data.message,
                             confirmButtonText:"确认",
                             type:"error"})
                         $("#"+formId).removeAttr("disabled");
+                    } else {
+                        console.log("else")
                     }
                 }, "json"
             );
         } else if (data.result == "notLogin") {
+            console.log("noLogin")
             swal({
                 text: data.message,
                 confirmButtonText: "确认", // 提示按钮上的文本
@@ -319,11 +328,14 @@ function formSubmit(url, formId, winId) {
                 }
             })
         } else if (data.result = "notRole") {
+            console.log("noRole")
             swal({
                 text: data.message,
                 confirmButtonText: "确认", // 提示按钮上的文本
                 type: "error"
             })
+        } else{
+            console.log("other")
         }
     })
 }
@@ -333,7 +345,7 @@ function iconUpldSuc(data, winId, formId) {
     if (controllerResult.result == "success") {
         swal({
             title:"提示",
-            text: "操作成功",
+            text: data.controllerResult.message,
             confirmButtonText:"确定", // 提示按钮上的文本
             type:"success"
         })// 提示窗口, 修改成功
@@ -432,10 +444,12 @@ function showEdit(){
 }
 
 function editSubmit() {
+    console.log("editSubmit")
     $("#editForm").data('bootstrapValidator').validate();
     if ($("#editForm").data('bootstrapValidator').isValid()) {
         $("#editButton").attr("disabled","disabled");
     } else {
+        console.log("noVali");
         $("#editButton").removeAttr("disabled");
     }
 }
@@ -502,6 +516,35 @@ function editSubmit() {
 //         }
 //     })
 // }
+
+// 模糊查询
+function blurredQuery(){
+    $.post("/user/isLogin/"+roles, function (data) {
+        if(data.result == 'success'){
+            var button = $("#ulButton");// 获取模糊查询按钮
+            var text = button.text();// 获取模糊查询按钮文本
+            var vaule = $("#ulInput").val();// 获取模糊查询输入框文本
+            initTable('table', '/userBasicManage/queryByPagerLike?text='+text+'&value='+vaule);
+        }else if(data.result == 'notLogin'){
+            swal({title:"",
+                    text:data.message,
+                    confirmButtonText:"确认",
+                    type:"error"}
+                ,function(isConfirm){
+                    if(isConfirm){
+                        top.location = "/user/loginPage";
+                    }else{
+                        top.location = "/user/loginPage";
+                    }
+                })
+        }else if(data.result == 'notRole'){
+            swal({title:"",
+                text:data.message,
+                confirmButtonText:"确认",
+                type:"error"})
+        }
+    });
+}
 
 // 点击显示详细信息
 function showDetail() {

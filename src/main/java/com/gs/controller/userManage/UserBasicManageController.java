@@ -63,7 +63,7 @@ public class UserBasicManageController {
         System.out.println(fileName);
         if(fileSave(file, savePath,userId,session)) {
             userService.updIcon(userId,savePath+userId+".jpg");   // 设置头像
-            map.put("controllerResult", ControllerResult.getSuccessResult("提交成功"));
+            map.put("controllerResult", ControllerResult.getSuccessResult("添加成功,默认密码为123123"));
             map.put("imgPath", savePath);
         } else {
             map.put("controllerResult", ControllerResult.getFailResult("提交失败"));
@@ -87,6 +87,12 @@ public class UserBasicManageController {
                 String area = request.getParameter("area");
                 user.setUserAddress(province + "-" + city + "-" + area);
                 user.setUserPwd(EncryptUtil.md5Encrypt("123123"));
+                String nickName = request.getParameter("userNickname");
+                if(nickName != null) {
+                    user.setUserNickname(nickName);
+                } else {
+                    user.setUserNickname(request.getParameter("userEmail"));
+                }
                 User u = (User) session.getAttribute("user");
                 user.setCompanyId(u.getCompanyId());    // 设置为session获取的user对象的CompanyId
                 user.setUserId(UUIDUtil.uuid());
@@ -97,7 +103,7 @@ public class UserBasicManageController {
                 userRole.setUserId(userTemp.getUserId());
                 userRole.setRoleId(user.getRoleId());
                 userRoleService.insert(userRole);
-                map.put("controllerResult", ControllerResult.getSuccessResult("添加成功"));
+                map.put("controllerResult", ControllerResult.getSuccessResult("添加成功,默认密码为123123"));
                 return map;
             } else {
                 logger.info("此用户没有该操作所属的角色");
@@ -252,7 +258,7 @@ public class UserBasicManageController {
                 pager.setPageSize(Integer.valueOf(pageSize));
                 pager.setUser((User) session.getAttribute("user"));
                 pager.setTotalRecords(userService.countOK((User) session.getAttribute("user")));
-                logger.info("分页查询分页查询状态为可用的人员基本信息成功");
+                logger.info("分页查询状态为可用的人员基本信息成功");
                 List<User> users = userService.queryByPager(pager);
                 return new Pager4EasyUI<User>(pager.getTotalRecords(), users);
             } else {
@@ -279,7 +285,7 @@ public class UserBasicManageController {
                 pager.setPageSize(Integer.valueOf(pageSize));
                 pager.setUser((User) session.getAttribute("user"));
                 pager.setTotalRecords(userService.countNO((User) session.getAttribute("user")));
-                logger.info("分页查询分页查询状态为不可用的人员基本信息成功");
+                logger.info("分页查询状态为不可用的人员基本信息成功");
                 List<User> users = userService.queryByPagerDisable(pager);
                 return new Pager4EasyUI<User>(pager.getTotalRecords(), users);
             } else {
@@ -382,6 +388,59 @@ public class UserBasicManageController {
             map.put("valid", true);
 
         return map;
+    }
+
+    /**
+     * 模糊查询
+    */
+    @ResponseBody
+    @RequestMapping(value="queryByPagerLike", method = RequestMethod.GET)
+    public Pager4EasyUI queryByPagerLike(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize, HttpSession session, HttpServletRequest request) {
+        if (SessionUtil.isLogin(session)) {
+            String roles = "公司超级管理员,公司普通管理员,汽车公司人力资源管理部,系统超级管理员,系统普通管理员";
+            if (RoleUtil.checkRoles(roles)) {
+                Pager pager = new Pager();
+                pager.setPageNo(Integer.valueOf(pageNumber));
+                pager.setPageSize(Integer.valueOf(pageSize));
+
+
+                String text = request.getParameter("text");
+                String value = request.getParameter("value");
+                if (text != null && text != "" && value != null && value != "") {
+                    List<User> users = null;
+                    User user = new User();
+                    if (text.equals("姓名/手机号/角色名称/所属公司")) {
+                        user.setUserName(value);
+                        user.setUserPhone(value);
+                        user.setRoleId(value);
+                        user.setCompanyId(value);
+                    } else if (text.equals("姓名")) {
+                        user.setUserName(value);
+                    } else if (text.equals("手机号")) {
+                        user.setUserPhone(value);
+                    } else if (text.equals("角色名称")) {
+                        user.setRoleId(value);
+                    } else if (text.equals("所属公司")) {
+                        user.setCompanyId(value);
+                    }
+                    pager.setUser(user);
+                    users = userService.queryByPagerLike(pager);
+                    pager.setTotalRecords(userService.countOK((User) session.getAttribute("user")));
+                    System.out.print(users);
+                    return new Pager4EasyUI<User>(pager.getTotalRecords(), users);
+                } else {
+                    pager.setTotalRecords(userService.countOK((User) session.getAttribute("user")));
+                    List<User> users = userService.queryByPagerAll(pager);
+                    return new Pager4EasyUI<User>(pager.getTotalRecords(), users);
+                }
+            }else {
+                logger.info("此用户无人员基本信息模糊查询角色");
+                return null;
+            }
+        }else{
+            logger.info("请先登录");
+            return null;
+        }
     }
 
 }

@@ -95,5 +95,8 @@ public interface UserService extends BaseService<String, User> {
      */
     public int queryIsIdentityByOne(String userIdentity, String userId);
 
-
+    /**
+     * 模糊查询
+     */
+    public List<User> queryByPagerLike(Pager pager);
 }

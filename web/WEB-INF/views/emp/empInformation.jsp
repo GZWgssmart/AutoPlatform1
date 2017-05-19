@@ -97,7 +97,7 @@
             <button id="searchDisable" type="button" class="btn btn-danger" onclick="searchDisableStatus();">
                 <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询不可用的记录
             </button>
-        <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司人力资源管理部">
+        <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司人力资源管理部">
             <button id="btn_add" type="button" class="btn btn-default" onclick="showAdd();">
                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
             </button>
@@ -108,6 +108,34 @@
                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>辞退
             </button>--%>
         </shiro:hasAnyRoles>
+        <div class="input-group" style="width:300px;float:left;padding:0;margin:0 0 0 -1px;">
+            <div class="input-group-btn">
+                <button type="button" id="ulButton" class="btn btn-default" style="border-radius:0px;" data-toggle="dropdown">
+                    姓名/手机号/角色名称
+                <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员">
+                    /所属公司
+                </shiro:hasAnyRoles>
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu pull-right">
+                    <li><a onclick="onclikLi(this)">姓名</a></li>
+                    <li class="divider"></li>
+                    <li><a onclick="onclikLi(this)">手机号</a></li>
+                    <li class="divider"></li>
+                    <li><a onclick="onclikLi(this)">角色名称</a></li>
+                    <li class="divider"></li>
+                <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员">
+                    <li><a onclick="onclikLi(this)">所属公司</a></li>
+                    <li class="divider"></li>
+                </shiro:hasAnyRoles>
+                    <li><a onclick="onclikLi(this)"></a></li>
+                </ul>
+            </div>
+            <input id="ulInput" class="form-control" onkeypress="if(event.keyCode==13) {blurredQuery();}">
+                <a href="javaScript:;" onclick="blurredQuery()">
+                    <span class="glyphicon glyphicon-search search-style"></span>
+                </a>
+            </input>
         </div>
     </div>
 </div>
@@ -141,8 +169,15 @@
                         <div class="form-group">
                             <label class="col-md-3 control-label">姓名：</label>
                             <div class="col-md-9">
-                                <input type="text" id="addUsername" name="userName" placeholder="请输入姓名"
+                                <input type="text" name="userName" placeholder="请输入姓名"
                                    class="form-control userName">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">昵称：</label>
+                            <div class="col-md-9">
+                                <input type="text" name="userNickname" placeholder="请输入昵称"
+                                       class="form-control userNickname">
                             </div>
                         </div>
                         <div class="form-group">
@@ -185,7 +220,7 @@
                                         style="width: 100%;"></select>
                             </div>
                         </div>
-                    <%--<shiro:hasAnyRoles name="系统超级管理员,系统普通管理员">--%>
+                    <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司人力资源管理部">
                         <div class="form-group" id="addSalary" style="display: none;">
                             <label class="col-md-3 control-label">底薪：</label>
                             <div class="col-md-9">
@@ -193,7 +228,7 @@
                                        placeholder="请输入底薪" class="form-control">
                             </div>
                         </div>
-                    <%--</shiro:hasAnyRoles>--%>
+                    </shiro:hasAnyRoles>
                     </div>
                     <div>
                         <div class="form-group col-md-6">
@@ -357,7 +392,7 @@
                     <div class="modal-footer">
                         <span id="editError"></span>
                         <button type="button" class="btn btn-default" onclick="closeModals('editWindow', 'editForm')">关闭</button>
-                        <button id="editButton" onclick="editSubmit();" type="submit" class="btn btn-primary btn-sm">
+                        <button id="editButton" onclick="editSubmit();" type="button" class="btn btn-primary btn-sm" title="双击我">
                             保存
                         </button>
                     </div>
@@ -449,7 +484,7 @@
                             <p class="clearfix"></p>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-default" onclick="closeModals('detailWindow','detailForm')">关闭</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                         </div>
                     </div>
                 </form>
