@@ -187,54 +187,34 @@ public class CompanyController {
      * 查询此公司名称是否已存在
      */
     @ResponseBody
-    @RequestMapping(value = "querycompanyName", method = RequestMethod.GET)
-    public String querycompanyName(HttpServletRequest req) {
+    @RequestMapping(value = "querycompanyName", method = RequestMethod.POST)
+    public Map querycompanyName(Company company) {
         logger.info("此公司名称是否已存在此公司名称");
-        String companyName = (String)req.getParameter("companyName");
-        boolean result = true;
-        String resultString = "";
+        int countcompany = companyService.querycompanyName(company.getCompanyName(), company.getCompanyId());
         Map<String, Boolean> map = new HashMap<String, Boolean>();
-        ObjectMapper mapper = new ObjectMapper();
-        if (companyName != null && companyName !="") {
-            int count = companyService.querycompanyName(companyName);
-            if (count > 1 || count == 1) {
-                result = false;
-            }
-        }
-        map.put("valid", result);
-        try {
-            resultString = mapper.writeValueAsString(map);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-        return resultString;
+        if(countcompany > 0)
+            map.put("valid", false);
+        else
+            map.put("valid", true);
+
+        return map;
     }
 
     /**
      * 查询此公司联系电话是否已存在
      */
     @ResponseBody
-    @RequestMapping(value = "querycompanyPricipalphone", method = RequestMethod.GET)
-    public String querycompanyPricipalphone(HttpServletRequest req) {
+    @RequestMapping(value = "querycompanyPricipalphone", method = RequestMethod.POST)
+    public Map querycompanyPricipalphone(Company company) {
         logger.info("此公司联系电话是否已存在此公司联系电话");
-        String companyPricipalphone = (String)req.getParameter("companyPricipalphone");
-        boolean result = true;
-        String resultString = "";
+        int countcompanyPricipalphone = companyService.querycompanyPricipalphone(company.getCompanyPricipalphone(),company.getCompanyId());
         Map<String, Boolean> map = new HashMap<String, Boolean>();
-        ObjectMapper mapper = new ObjectMapper();
-        if (companyPricipalphone != null && companyPricipalphone !="") {
-            int count = companyService.querycompanyPricipalphone(companyPricipalphone);
-            if (count > 1 || count == 1) {
-                result = false;
-            }
-        }
-        map.put("valid", result);
-        try {
-            resultString = mapper.writeValueAsString(map);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-        return resultString;
+        if(countcompanyPricipalphone > 0)
+            map.put("valid", false);
+        else
+            map.put("valid", true);
+
+        return map;
     }
 
     @ResponseBody

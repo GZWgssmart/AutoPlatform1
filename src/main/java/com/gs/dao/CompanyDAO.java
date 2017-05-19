@@ -34,11 +34,11 @@ public interface CompanyDAO extends BaseDAO<String, Company>{
     /**
      * 查询此公司名称是否已存在
      */
-    public int querycompanyName(String companyName);
+    public int querycompanyName(@Param("companyName")String companyName,@Param("companyId")String companyId);
 
     /**
      * 查询此公司联系方式是否已存在
      */
-    public int querycompanyPricipalphone(String companyPricipalphone);
+    public int querycompanyPricipalphone(@Param("companyPricipalphone")String companyPricipalphone,@Param("companyId")String companyId);
 
 }

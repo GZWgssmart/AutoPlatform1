@@ -58,8 +58,11 @@
     <!--  查询此颜色名称是否已存在 -->
     <select id="querycolorName" resultType="int">
         <![CDATA[
-      select count(colorId) from t_car_color where colorName = #{colorName};
+      select count(colorName) from t_car_color where colorName = #{colorName}
     ]]>
+        <if test="colorId != null and colorId != ''">
+            and colorId != #{colorId}
+        </if>
     </select>
 
     <!--冻结数据-->

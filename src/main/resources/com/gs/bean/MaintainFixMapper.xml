@@ -108,7 +108,7 @@
   <!--修改维修保养项目-->
   <update id="update" parameterType="MaintainFix">
     <![CDATA[
-			update t_maintain_fix set maintainName = #{maintainName} , maintainHour = #{maintainHour} , maintainMoney = #{maintainMoney} , maintainManHourFee = #{maintainManHourFee} , maintainDes = #{maintainDes} , companyId = #{companyId} , maintainStatus = 'Y' where maintainId = #{maintainId}
+			update t_maintain_fix set maintainName = #{maintainName} , maintainHour = #{maintainHour} , maintainMoney = #{maintainMoney} , maintainManHourFee = #{maintainManHourFee} , maintainDes = #{maintainDes} , companyId = #{companyId} where maintainId = #{maintainId}
 		]]>
   </update>
 

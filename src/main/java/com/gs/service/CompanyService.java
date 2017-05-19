@@ -17,10 +17,10 @@ public interface CompanyService extends BaseService<String, Company>{
     /**
      * 查询此公司名称是否已存在
      */
-    public int querycompanyName(String companyName);
+    public int querycompanyName(String companyName,String companyId);
 
     /**
      * 查询此公司联系方式是否已存在
      */
-    public int querycompanyPricipalphone(String companyPricipalphone);
+    public int querycompanyPricipalphone(String companyPricipalphone,String companyId);
 }

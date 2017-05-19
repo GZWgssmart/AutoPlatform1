@@ -65,7 +65,7 @@ public class CarBrandServiceImpl implements CarBrandService {
 	}
 
 	@Override
-	public int querybrandName(String brandName) {
-		return carBrandDAO.querybrandName(brandName);
+	public int querybrandName(String brandName,String brandId) {
+		return carBrandDAO.querybrandName(brandName,brandId);
 	}
 }

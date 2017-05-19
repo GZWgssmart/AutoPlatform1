@@ -270,18 +270,18 @@
             <div class="modal-body">
                 <span class="glyphicon glyphicon-remove closeModal" onclick="closedetailWindow()"></span>
                 <form role="form" class="form-horizontal" id="detailForm">
-                    <h3 class="m-t-none m-b">此维修项目记录下的所有配件</h3>
+                    <h3 class="m-t-none m-b">此保养项目记录下的所有配件</h3>
                     <hr>
                     <table class="table table-hover" id="detailTable">
                         <thead>
                         <tr>
                             <th data-radio="true" data-field="status"></th>
-                            <th data-field="maintainFix.maintainName">维修项目名称</th>
-                            <th data-field="maintainFix.maintainHour">维修项目工时</th>
-                            <th data-field="maintainFix.maintainMoney">维修项目基础费用</th>
-                            <th data-field="maintainFix.maintainManHourFee">维修项目工时费</th>
-                            <th data-field="maintainFix.maintainDes">维修项目描述</th>
-                            <th data-field="company.companyName">维修项目所属公司</th>
+                            <th data-field="maintainFix.maintainName">保养项目名称</th>
+                            <th data-field="maintainFix.maintainHour">保养项目工时</th>
+                            <th data-field="maintainFix.maintainMoney">保养项目基础费用</th>
+                            <th data-field="maintainFix.maintainManHourFee">保养项目工时费</th>
+                            <th data-field="maintainFix.maintainDes">保养项目描述</th>
+                            <th data-field="company.companyName">保养项目所属公司</th>
                             <th data-field="accessories.accName">配件名称</th>
                             <th data-field="accCount">配件数量</th>
                         </thead>

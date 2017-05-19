@@ -1,8 +1,6 @@
 var map;
 var localSearch;
 var windowId;
-var companyName;
-var companyPricipalphone;
 $(function () {
     var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员";
     $.post("/user/isLogin/"+roles, function (data) {
@@ -103,12 +101,12 @@ function showEdit() {
                 $('#editDatetimepicker').val(formatterDate(ceshi.companyOpendate));
                 $("#editForm").fill(ceshi);
                 validator('editForm');
-                $('#editcompanyName').bind('input propertychange', function() {
-                    companyName = $("#editcompanyName").val();
-                });
-                $('#editcompanyPricipalphone').bind('input propertychange', function() {
-                    companyPricipalphone = $("#editcompanyPricipalphone").val();
-                });
+                // $('#editcompanyName').bind('input propertychange', function() {
+                //     companyName = $("#editcompanyName").val();
+                // });
+                // $('#editcompanyPricipalphone').bind('input propertychange', function() {
+                //     companyPricipalphone = $("#editcompanyPricipalphone").val();
+                // });
             } else {
                 swal({
                     title: "",
@@ -197,12 +195,12 @@ function showAdd(){
         if (data.result == 'success') {
             $("#addWindow").modal('show');
             $("#addButton").removeAttr("disabled");
-            $('#addcompanyName').bind('input propertychange', function() {
-                companyName = $("#addcompanyName").val();
-            });
-            $('#addcompanyPricipalphone').bind('input propertychange', function() {
-                companyPricipalphone = $("#addcompanyPricipalphone").val();
-            });
+            // $('#addcompanyName').bind('input propertychange', function() {
+            //     companyName = $("#addcompanyName").val();
+            // });
+            // $('#addcompanyPricipalphone').bind('input propertychange', function() {
+            //     companyPricipalphone = $("#addcompanyPricipalphone").val();
+            // });
             validator('addForm'); // 初始化验证
         } else if (data.result == 'notLogin') {
             swal({
@@ -252,7 +250,11 @@ function validator(formId) {
                         url: '/company/querycompanyName',
                         message: '该公司名称已存在',
                         delay :  2000,
-                        type: 'GET'
+                        type: 'POST',
+                        data: {
+                            companyId: $("#"+formId + " input[name=companyId]").val(),
+                            companyName: $("#" + formId + " input[name=companyName]").val()
+                        }
                     }
                 }
             },
@@ -326,7 +328,11 @@ function validator(formId) {
                             url: '/company/querycompanyPricipalphone',
                             message: '该负责人联系电话已存在',
                             delay :  2000,
-                            type: 'GET'
+                            type: 'POST',
+                            data: {
+                                companyId: $("#"+formId + " input[name=companyId]").val(),
+                                companyPricipalphone: $("#" + formId + " input[name=companyPricipalphone]").val()
+                            }
                         }
                 }
             },

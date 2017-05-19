@@ -88,15 +88,21 @@
   <!--  查询此公司名称是否已存在 -->
   <select id="querycompanyName" resultType="int">
     <![CDATA[
-      select count(companyId) from t_company where companyName = #{companyName};
+      select count(companyName) from t_company where companyName = #{companyName}
     ]]>
+    <if test="companyId != null and companyId != ''">
+      and companyId != #{companyId}
+    </if>
   </select>
 
   <!--  查询此公司负责人联系电话是否已存在 -->
   <select id="querycompanyPricipalphone" resultType="int">
     <![CDATA[
-      select count(companyId) from t_company where companyPricipalphone = #{companyPricipalphone};
+      select count(companyPricipalphone) from t_company where companyPricipalphone = #{companyPricipalphone}
     ]]>
+    <if test="companyId != null and companyId != ''">
+      and companyId != #{companyId}
+    </if>
   </select>
 
   <!--冻结数据-->

@@ -14,5 +14,5 @@ public interface CarBrandService extends BaseService<String, CarBrand>{
     /**
      * 查询此品牌名称是否已存在此品牌名称
      */
-    public int querybrandName(String brandName);
+    public int querybrandName(String brandName,String brandId);
 }

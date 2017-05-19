@@ -175,27 +175,17 @@ public class CarBrandController {
      * 验证查询此品牌名称是否已存在此品牌名称
      */
     @ResponseBody
-    @RequestMapping(value = "querybrandName", method = RequestMethod.GET)
-    public String querybrandName(HttpServletRequest req) {
+    @RequestMapping(value = "querybrandName", method = RequestMethod.POST)
+    public Map querybrandName(CarBrand carBrand) {
         logger.info("此品牌名称是否已存在此品牌名称");
-        String brandName = (String)req.getParameter("brandName");
-        boolean result = true;
-        String resultString = "";
+        int countbrandName = carBrandService.querybrandName(carBrand.getBrandName(),carBrand.getBrandId());
         Map<String, Boolean> map = new HashMap<String, Boolean>();
-        ObjectMapper mapper = new ObjectMapper();
-        if (brandName != null && brandName !="") {
-            int count = carBrandService.querybrandName(brandName);
-            if (count > 1 || count == 1) {
-                result = false;
-            }
-        }
-        map.put("valid", result);
-        try {
-            resultString = mapper.writeValueAsString(map);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-        return resultString;
+        if(countbrandName > 0)
+            map.put("valid", false);
+        else
+            map.put("valid", true);
+
+        return map;
     }
 
     /**

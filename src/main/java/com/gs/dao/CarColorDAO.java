@@ -30,5 +30,5 @@ public interface CarColorDAO extends BaseDAO<String, CarColor>{
     /**
      * 查询此颜色名称是否已存在
      */
-    public int querycolorName(String colorName);
+    public int querycolorName(@Param("colorName")String colorName,@Param("colorId")String colorId);
 }

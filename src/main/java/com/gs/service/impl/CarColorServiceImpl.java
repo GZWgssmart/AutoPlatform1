@@ -65,7 +65,7 @@ public class CarColorServiceImpl implements CarColorService {
 	}
 
 	@Override
-	public int querycolorName(String colorName) {
-		return carColorDAO.querycolorName(colorName);
+	public int querycolorName(String colorName,String colorId) {
+		return carColorDAO.querycolorName(colorName,colorId);
 	}
 }

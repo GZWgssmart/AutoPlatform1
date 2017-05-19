@@ -61,8 +61,11 @@
   <!--  查询此品牌名称是否已存在此品牌名称 -->
   <select id="querybrandName" resultType="int">
     <![CDATA[
-      select count(brandId) from t_car_brand where brandName = #{brandName};
+      select count(brandName) from t_car_brand where brandName = #{brandName}
     ]]>
+    <if test="brandId != null and brandId != ''">
+      and brandId != #{brandId}
+    </if>
   </select>
 
   <!--冻结数据-->

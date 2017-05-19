@@ -102,9 +102,9 @@
         <div class="modal-content">
             <div class="modal-body">
             <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('editWindow', 'editForm')"></span>
-            <form form role="form" class="form-horizontal" id="editForm">
-                <input type="hidden"name="brandId" define="carBrand.brandId">
-                <input type="hidden"name="brandStatus" define="carBrand.brandStatus">
+            <form role="form" class="form-horizontal" id="editForm">
+                <input type="hidden" name="brandId" define="carBrand.brandId">
+                <input type="hidden" name="brandStatus" define="carBrand.brandStatus">
                 <div class="modal-header" style="overflow:auto;">
                     <h4>修改汽车品牌的信息</h4>
                 </div>

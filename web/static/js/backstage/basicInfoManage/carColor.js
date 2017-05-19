@@ -1,4 +1,4 @@
-var colorName;
+
 $(function () {
     var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师,汽车公司学徒,汽车公司销售人员,汽车公司财务人员,汽车公司采购人员,汽车公司库管人员,汽车公司人力资源管理部";
     $.post("/user/isLogin/"+roles, function (data) {
@@ -36,9 +36,10 @@ function showEdit() {
                 var ceshi = row[0];
                 $("#editForm").fill(ceshi);
                 validator('editForm');
-                $('#editcolorName').bind('input propertychange', function() {
-                    colorName = $("#editcolorName").val();
-                });
+                // $('#editButton').trigger("click");
+                // $('#editcolorName').bind('input propertychange', function() {
+                //     colorName = $("#editcolorName").val();
+                // });
             } else {
                 swal({
                     title: "",
@@ -96,9 +97,9 @@ function showAdd() {
         if (data.result == 'success') {
             $("#addWindow").modal('show');
             $("#addButton").removeAttr("disabled");
-            $('#addcolorName').bind('input propertychange', function() {
-                colorName = $("#addcolorName").val();
-            });
+            // $('#addcolorName').bind('input propertychange', function() {
+            //     colorName = $("#addcolorName").val();
+            // });
             validator('addForm'); // 初始化验证
         } else if (data.result == 'notLogin') {
             swal({
@@ -149,7 +150,11 @@ function validator(formId) {
                         url: '/carColor/querycolorName',
                         message: '该颜色名称已存在',
                         delay :  2000,
-                        type: 'GET'
+                        type: 'POST',
+                        data: {
+                            colorId: $("#"+formId + " input[name=colorId]").val(),
+                            colorName: $("#" + formId + " input[name=colorName]").val()
+                        }
                     }
                 }
             },
@@ -185,10 +190,12 @@ function addSubmit(){
 }
 
 function editSubmit(){
+    console.log("editSub");
     $("#editForm").data('bootstrapValidator').validate();
     if ($("#editForm").data('bootstrapValidator').isValid()) {
         $("#editButton").attr("disabled","disabled");
     } else {
+
         $("#editButton").removeAttr("disabled");
     }
 }

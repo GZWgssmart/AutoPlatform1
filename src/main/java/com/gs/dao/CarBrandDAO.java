@@ -31,5 +31,5 @@ public interface CarBrandDAO extends BaseDAO<String, CarBrand>{
     /**
      * 查询此品牌名称是否已存在此品牌名称
      */
-    public int querybrandName(String brandName);
+    public int querybrandName(@Param("brandName")String brandName,@Param("brandId")String brandId);
 }

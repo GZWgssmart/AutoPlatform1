@@ -175,27 +175,17 @@ public class CarColorController {
      * 验证查询此品牌名称是否已存在此品牌名称
      */
     @ResponseBody
-    @RequestMapping(value = "querycolorName", method = RequestMethod.GET)
-    public String querycolorName(HttpServletRequest req) {
+    @RequestMapping(value = "querycolorName", method = RequestMethod.POST)
+    public Map querycolorName(CarColor carColor) {
         logger.info("此品牌名称是否已存在此品牌名称");
-        String colorName = (String)req.getParameter("colorName");
-        boolean result = true;
-        String resultString = "";
+        int countcolorName = carColorService.querycolorName(carColor.getColorName(),carColor.getColorId());
         Map<String, Boolean> map = new HashMap<String, Boolean>();
-        ObjectMapper mapper = new ObjectMapper();
-        if (colorName != null && colorName !="") {
-            int count = carColorService.querycolorName(colorName);
-            if (count > 1 || count == 1) {
-                result = false;
-            }
-        }
-        map.put("valid", result);
-        try {
-            resultString = mapper.writeValueAsString(map);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-        return resultString;
+        if(countcolorName > 0)
+            map.put("valid", false);
+        else
+            map.put("valid", true);
+
+        return map;
     }
 
     /**

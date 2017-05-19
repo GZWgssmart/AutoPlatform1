@@ -70,12 +70,12 @@ public class CompanyServiceImpl implements CompanyService {
 	}
 
 	@Override
-	public int querycompanyName(String companyName) {
-		return companyDAO.querycompanyName(companyName);
+	public int querycompanyName(String companyName,String companyId) {
+		return companyDAO.querycompanyName(companyName,companyId);
 	}
 
 	@Override
-	public int querycompanyPricipalphone(String companyPricipalphone) {
-		return companyDAO.querycompanyPricipalphone(companyPricipalphone);
+	public int querycompanyPricipalphone(String companyPricipalphone,String companyId) {
+		return companyDAO.querycompanyPricipalphone(companyPricipalphone,companyId);
 	}
 }

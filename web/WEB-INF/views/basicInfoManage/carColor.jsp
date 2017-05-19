@@ -122,7 +122,7 @@
         <div class="modal-content">
             <div class="modal-body">
             <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('editWindow', 'editForm')"></span>
-            <form form role="form" class="form-horizontal" id="editForm">
+            <form  role="form" class="form-horizontal" id="editForm">
                 <input type="hidden" name="colorId" define="carColor.colorId">
                 <input type="hidden" name="colorStatus" define="carColor.colorStatus">
                 <div class="modal-header" style="overflow:auto;">

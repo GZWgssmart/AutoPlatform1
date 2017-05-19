@@ -14,5 +14,5 @@ public interface CarColorService extends BaseService<String, CarColor>{
     /**
      * 查询此颜色名称是否已存在
      */
-    public int querycolorName(String colorName);
+    public int querycolorName(String colorName,String colorId);
 }
