@@ -94,4 +94,6 @@ public interface UserService extends BaseService<String, User> {
      * 查询此identity是否已存在此identity
      */
     public int queryIsIdentityByOne(String userIdentity, String userId);
+
+
 }

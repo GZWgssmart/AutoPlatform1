@@ -9,6 +9,7 @@ import com.gs.common.bean.Pager4EasyUI;
 import com.gs.common.util.*;
 import com.gs.service.IncomingOutgoingService;
 import com.gs.service.SalaryService;
+import com.gs.service.UserService;
 import org.apache.commons.io.FileUtils;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
@@ -31,9 +32,7 @@ import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by GZWangBin on 2017/4/20.
@@ -53,6 +52,8 @@ public class SalaryController {
     @Resource
     public IncomingOutgoingService incomingOutgoingService;
 
+    @Resource
+    public UserService userService;
 
     @ResponseBody
     @RequestMapping(value = "queryByPager", method = RequestMethod.GET)
@@ -116,7 +117,7 @@ public class SalaryController {
                     incomingOutgoing.setInTypeId(inId);
                     incomingOutgoing.setInOutMoney(minus - prize - user.getUserSalary());
                 } else if (outId != null) {
-                    incomingOutgoing.setInTypeId(outId);
+                    incomingOutgoing.setOutTypeId(outId);
                     incomingOutgoing.setInOutMoney(salary.getTotalSalary());
                 } else {
                     incomingOutgoing.setInTypeId(null);
@@ -126,7 +127,7 @@ public class SalaryController {
                 incomingOutgoing.setCompanyId(user.getCompanyId());
                 incomingOutgoingService.insert(incomingOutgoing);
                 salaryService.insert(salary);
-                return ControllerResult.getSuccessResult("添加成功");
+                return ControllerResult.getSuccessResult("添加工资信息成功，并自动生成一条收支记录");
             } else {
                 logger.info("此用户无拥有添加工资信息的角色");
                 return null;
@@ -136,16 +137,6 @@ public class SalaryController {
             return null;
         }
 
-    }
-
-    @ResponseBody
-    @RequestMapping(value = "checkUserId", method = RequestMethod.GET)
-    public boolean checkUserId(String userId) {
-        Salary salary1 = salaryService.queryById(userId);
-        if (salary1 != null) {
-            return true;
-        }
-        return false;
     }
 
 

@@ -238,7 +238,7 @@ function showEdit(){
             }else{
                 swal({
                     title:"",
-                    text:"请先选择一行数据",
+                    text:"请先选择要修改的收支记录",
                     type:"warning"})
             }
         }else if(data.result == 'notLogin'){
@@ -336,6 +336,7 @@ $("#editIOForm").submit(function(){
 /** 选择支出类型窗体 */
 function openCheckOutType() {
     initTableNotTollbar("outTable", "/outGoingType/queryByPager");
+    $('#addOutForm').data('bootstrapValidator').resetForm();
     $("#addOutWin").modal('hide');
     $("#outWin").modal('show');
 }
@@ -344,6 +345,7 @@ function openCheckOutType() {
 /** 关闭支出类型 */
 function closeOutTypeWin() {
     $("input[type=reset]").trigger("click");
+
     $("#outWin").modal('hide');
     $("#addOutWin").modal('show')
 }
@@ -398,6 +400,7 @@ function checkPersonnel () {
 /** 选择收入类型窗体 */
 function inOpenCheckInType() {
     initTableNotTollbar("inTable", "/incomingType/queryByPager");
+    $('#addInForm').data('bootstrapValidator').resetForm();
     $("#addInWin").modal('hide');
     $("#inWin").modal('show');
 }
@@ -465,6 +468,7 @@ function inCheckPersonnel () {
 /** 选择支出类型窗体 */
 function updateOpenCheckOutType() {
     initTableNotTollbar("updateOutTable", "/outGoingType/queryByPager");
+
     $("#editIOWin").modal('hide');
     $("#updateOutWin").modal('show');
 }

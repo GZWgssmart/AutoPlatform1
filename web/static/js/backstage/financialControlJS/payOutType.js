@@ -145,7 +145,7 @@ function showEdit() {
             } else {
                 swal({
                     title: "",
-                    text: "请先选择一行数据",
+                    text: "请先选择要修改的支出类型",
                     type: "warning"
                 })
             }

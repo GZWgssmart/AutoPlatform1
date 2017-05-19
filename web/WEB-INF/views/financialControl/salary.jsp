@@ -127,7 +127,7 @@
                         <button type="button" class="btn btn-default" onclick="fileCloseModals()">关闭
                         </button>
                         <button type="button" id="fileButton" onclick="fileSubmit()" class="btn btn-success btn-sm">
-                            保存
+                          添加
                         </button>
                     </div>
                     </form>
@@ -152,14 +152,14 @@
                     <form class="form-horizontal" role="form" id="addForm">
                         <input type="hidden" id="inOutId" readonly="true" name="inoutId">
                         <div class="modal-header" style="overflow:auto;">
-                            <p>员工工资录入</p>
+                            <p>添加员工工资录入的信息</p>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label" for="userName">员工姓名：</label>
                             <div class="col-sm-7">
                                 <input type="hidden" id="userSalary" name="userSalary">
                                 <input type="hidden" id="userId" name="userId">
-                                <input readonly="true"  onclick="checkAppointment();" type="text" name="userName"
+                                <input  onclick="checkAppointment();" type="text" name="userName"
                                        id="userName" placeholder="请点击选择员工" class="form-control">
                             </div>
 
@@ -167,13 +167,13 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">罚款：</label>
                             <div class="col-sm-7">
-                                <input type="text" id="minusSalary" name="minusSalay" placeholder="请输入罚款" class="form-control">
+                                <input type="number" id="minusSalary" name="minusSalay" placeholder="请输入罚款" class="form-control">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">奖金：</label>
                             <div class="col-sm-7">
-                                <input type="text" id="prizeSalary" name="prizeSalary" placeholder="请输入奖金" class="form-control">
+                                <input type="number" id="prizeSalary" name="prizeSalary" placeholder="请输入奖金" class="form-control">
                             </div>
                         </div>
 
@@ -370,7 +370,7 @@
                     <form class="form-horizontal" role="form" id="editForm" method="post">
                         <input type="hidden" define="salary.salaryId" name="salaryId">
                         <div class="modal-header" style="overflow:auto;">
-                            <p>修改员工工资录入</p>
+                            <p>修改员工工资录入的信息</p>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label" for="userName">员工姓名：</label>
@@ -382,13 +382,13 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">罚款：</label>
                             <div class="col-sm-7">
-                                <input type="text" define="salary.minusSalay" name="minusSalay" class="form-control">
+                                <input type="number" define="salary.minusSalay" name="minusSalay" class="form-control">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">奖金：</label>
                             <div class="col-sm-7">
-                                <input type="text" define="salary.prizeSalary" name="prizeSalary" class="form-control">
+                                <input type="number" define="salary.prizeSalary" name="prizeSalary" class="form-control">
                             </div>
                         </div>
 

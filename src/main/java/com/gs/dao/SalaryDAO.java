@@ -29,5 +29,5 @@ public interface SalaryDAO extends BaseDAO<String, Salary>{
 
     public int countSalary(@Param("user")User user, @Param("start") String start, @Param("end") String end);
 
-
+    public User queryBySalary(String userId);
 }

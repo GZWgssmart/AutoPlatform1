@@ -51,12 +51,12 @@
             </shiro:hasAnyRoles>
             <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员">
                 <button id="searchDisable" type="button" class="btn btn-danger" onclick="searchDisableStatus();">
-                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询禁用类型
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询禁用收入类型
                 </button>
             </shiro:hasAnyRoles>
             <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员">
-                <button id="searchRapid" type="button" class="btn btn-danger" onclick="searchRapidStatus();">
-                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询激活类型
+                <button id="searchRapid" type="button" class="btn btn-success" onclick="searchRapidStatus();">
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询启用收入类型
                 </button>
             </shiro:hasAnyRoles>
         </div>
@@ -73,7 +73,7 @@
                     <span class="glyphicon glyphicon-remove closeModal"  onclick="closeModals('add', 'addForm')"></span>
                 <form class="form-horizontal" role="form" id="addForm">
                     <div class="modal-header" style="overflow:auto;">
-                        <h4>收入类型添加</h4>
+                        <h4>添加收入类型的信息</h4>
                     </div>
                     <br/>
                     <div class="form-group">
@@ -86,8 +86,7 @@
                     <div class="form-group">
                         <div class="col-sm-offset-8">
                             <button type="button" class="btn btn-default" data-dismiss="modal"onclick="closeModals('add', 'addForm')">关闭</button>
-                            <button id="addButton" class="btn btn-sm btn-success" onclick="addSubmit();" type="button">保
-                                存
+                            <button id="addButton" class="btn btn-sm btn-success" onclick="addSubmit();" type="button">添加
                             </button>
                         </div>
                     </div>
@@ -110,7 +109,7 @@
                     <input type="hidden" name="inTypeId" define="inTypeName.inTypeId">
                     <input type="hidden" name="inTypeStatus" define="inTypeName.inTypeStatus">
                     <div class="modal-header" style="overflow:auto;">
-                        <h4>修改收入类型</h4>
+                        <h4>修改收入类型的信息</h4>
                     </div>
                     <br/>
                     <div class="form-group">

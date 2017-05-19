@@ -92,4 +92,9 @@ public class SalaryServiceImpl implements SalaryService {
 	public int countSalary(User user, String start, String end) {
 		return salaryDAO.countSalary(user, start, end);
 	}
+
+	@Override
+	public User queryBySalary(String userId) {
+		return salaryDAO.queryBySalary(userId);
+	}
 }

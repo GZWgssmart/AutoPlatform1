@@ -49,7 +49,7 @@
         </table>
         <div id="toolbar" class="btn-group">
             <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员">
-                <button id="btn_available" type="button" class="btn btn-danger" onclick="showAvailable();">
+                <button id="btn_available" type="button" class="btn btn-success" onclick="showAvailable();">
                     <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询可用收费单据
                 </button>
             </shiro:hasAnyRoles>

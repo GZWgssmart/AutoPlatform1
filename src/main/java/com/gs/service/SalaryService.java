@@ -21,5 +21,10 @@ public interface SalaryService extends BaseService<String, Salary>{
 
     public int countSalary(User user, String start,String end);
 
-
+    /**
+     * 根据userId查询用户是否有工资
+     * @param userId
+     * @return
+     */
+    public User queryBySalary(String userId);
 }

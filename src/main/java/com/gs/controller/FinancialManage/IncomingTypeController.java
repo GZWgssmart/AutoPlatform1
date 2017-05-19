@@ -102,12 +102,12 @@ public class IncomingTypeController {
                 if (id != null && !id.equals("") && status != null && !status.equals("")) {
                     if (status.equals("N")) {
                         incomingTypeService.active(id);
-                        logger.info("激活成功");
-                        return ControllerResult.getSuccessResult("激活成功");
+                        logger.info("激活收入类型成功");
+                        return ControllerResult.getSuccessResult("激活收入类型成功");
                     } else {
                         incomingTypeService.inactive(id);
-                        logger.info("禁用成功");
-                        return ControllerResult.getSuccessResult("禁用成功");
+                        logger.info("禁用收入类型成功");
+                        return ControllerResult.getSuccessResult("禁用收入类型成功");
                     }
                 } else {
                     return ControllerResult.getFailResult("操作失败");
@@ -134,7 +134,7 @@ public class IncomingTypeController {
                 User user = (User)session.getAttribute("user");
                 incomingType.setCompanyId(user.getCompanyId());
                 incomingTypeService.insert(incomingType);
-                return ControllerResult.getSuccessResult("添加成功");
+                return ControllerResult.getSuccessResult("添加收入类型成功");
             } else {
                 logger.info("此用户无拥有添加收入类型的角色");
                 return null;
@@ -174,7 +174,7 @@ public class IncomingTypeController {
                 User user = (User)session.getAttribute("user");
                 incomingType.setCompanyId(user.getCompanyId());
                 incomingTypeService.update(incomingType);
-                return ControllerResult.getSuccessResult("修改成功");
+                return ControllerResult.getSuccessResult("修改收入类型成功");
 
             } else {
                 logger.info("此用户无拥有修改收入类型的角色");

@@ -140,12 +140,12 @@ public class IncomingOutgoingController {
                 if (id != null && !id.equals("") && status != null && !status.equals("")) {
                     if (status.equals("N")) {
                         incomingOutgoingService.active(id);
-                        logger.info("激活成功");
-                        return ControllerResult.getSuccessResult("激活成功");
+                        logger.info("激活收支记录成功");
+                        return ControllerResult.getSuccessResult("激活收支记录成功");
                     } else {
                         incomingOutgoingService.inactive(id);
-                        logger.info("禁用成功");
-                        return ControllerResult.getSuccessResult("禁用成功");
+                        logger.info("禁用收支记录成功");
+                        return ControllerResult.getSuccessResult("禁用收支记录成功");
                     }
                 } else {
                     return ControllerResult.getFailResult("操作失败");
@@ -172,7 +172,7 @@ public class IncomingOutgoingController {
                 incomingOutgoing.setInOutCreatedUser(user.getUserId());
                 incomingOutgoing.setCompanyId(user.getCompanyId());
                 incomingOutgoingService.insert(incomingOutgoing);
-                return ControllerResult.getSuccessResult("添加成功");
+                return ControllerResult.getSuccessResult("添加收支记录成功");
             } else {
                 logger.info("此用户无拥添加收支记录的角色");
                 return null;
@@ -200,7 +200,7 @@ public class IncomingOutgoingController {
                     incomingOutgoing.setOutTypeId("");
                 }
                 incomingOutgoingService.update(incomingOutgoing);
-                return ControllerResult.getSuccessResult("修改成功");
+                return ControllerResult.getSuccessResult("修改收支记录成功");
             } else {
                 logger.info("此用户无拥有修改收支记录的角色");
                 return null;

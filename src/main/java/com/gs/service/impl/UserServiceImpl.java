@@ -209,4 +209,6 @@ public class UserServiceImpl implements UserService {
     public int queryIsIdentityByOne(String userIdentity, String userId) {
         return userDAO.queryIsIdentityByOne(userIdentity, userId);
     }
+
+
 }

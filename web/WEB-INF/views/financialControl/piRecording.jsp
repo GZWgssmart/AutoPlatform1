@@ -54,12 +54,12 @@
         <div id="toolbar" class="btn-group">
             <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司财务人员">
                 <button id="o_add" type="button" class="btn btn-default" onclick="outAddWin();">
-                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>其它支出信息添加
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>其它支出记录添加
                 </button>
             </shiro:hasAnyRoles>
             <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司财务人员">
                 <button id="i_add" type="button" class="btn btn-default" onclick="inAddWin();">
-                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>其它收入信息添加
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>其它收入记录添加
                 </button>
             </shiro:hasAnyRoles>
 <%--            <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司财务人员">
@@ -69,12 +69,12 @@
             </shiro:hasAnyRoles>--%>
             <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员">
                 <button id="searchDisable" type="button" class="btn btn-danger" onclick="searchDisableStatus();">
-                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询禁用类型
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询禁用收支记录
                 </button>
             </shiro:hasAnyRoles>
             <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员">
-                <button id="searchRapid" type="button" class="btn btn-danger" onclick="searchRapidStatus();">
-                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询激活类型
+                <button id="searchRapid" type="button" class="btn btn-success" onclick="searchRapidStatus();">
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询启用收支记录
                 </button>
             </shiro:hasAnyRoles>
             <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员">
@@ -113,7 +113,7 @@
                     <span class="glyphicon glyphicon-remove closeModal"  onclick="closeModals('addOutWin', 'addOutForm')"></span>
                 <form class="form-horizontal" role="form" id="addOutForm" method="post">
                     <div class="modal-header" style="overflow:auto;">
-                        <h4>其它支出添加</h4>
+                        <h4>其它支出添加的信息</h4>
                     </div>
                     <br/>
                     <div class="form-group">
@@ -142,7 +142,7 @@
                         <div class="col-sm-offset-8">
                             <button type="button" class="btn btn-default" onclick="closeModals('addOutWin', 'addOutForm')">关闭</button>
                             <button class="btn btn-sm btn-success" id="addOutButton" onclick="addOutSubmit()"
-                                    type="button">保 存
+                                    type="button">添加
                             </button>
                         </div>
                     </div>
@@ -310,7 +310,7 @@
                 <form class="form-horizontal" id="addInForm" method="post">
                     <input type="reset" name="reset" style="display: none;"/>
                     <div class="modal-header" style="overflow:auto;">
-                        <h4>其它收入添加</h4>
+                        <h4>其它收入添加的信息</h4>
                     </div>
                     <br/>
                     <div class="form-group">
@@ -340,7 +340,7 @@
                         <div class="col-sm-offset-8">
                             <button type="button" class="btn btn-default" data-dismiss="modal" onclick="closeModals('addInWin', 'addInForm')">关闭</button>
                             <button class="btn btn-sm btn-success" type="button" id="addInButton"
-                                    onclick="addInSubmit()">保 存
+                                    onclick="addInSubmit()">添加
                             </button>
                         </div>
                     </div>
@@ -476,7 +476,7 @@
                     <input type="hidden" define="io.inOutCreatedUser" name="inOutCreatedUser">
                     <input type="hidden" define="io.companyId" name="companyId">
                     <div class="modal-header" style="overflow:auto;">
-                        <p>修改收支记录</p>
+                        <p>修改收支记录的信息</p>
                     </div>
 
                     <div id="inTypeDiv" class="form-group">

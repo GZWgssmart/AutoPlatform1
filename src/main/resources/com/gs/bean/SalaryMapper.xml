@@ -54,6 +54,13 @@
     ]]>
   </select>
 
+
+  <select id="queryBySalary" resultMap="salaryMap">
+    <![CDATA[
+        select * from t_user where userId = #{userId} and not ISNULL(userSalary)
+    ]]>
+  </select>
+
   <insert id="insert" useGeneratedKeys="true" keyProperty="salaryId" parameterType="salary">
     <![CDATA[
         insert into t_salary(salaryId, userId, prizeSalary,minusSalay,totalSalary,salaryDes,salaryTime,salaryCreatedTime) values(uuid(), #{userId}, #{prizeSalary}, #{minusSalay}, #{totalSalary}, #{salaryDes}, #{salaryTime}, now())

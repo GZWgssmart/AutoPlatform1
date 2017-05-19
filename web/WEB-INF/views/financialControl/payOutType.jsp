@@ -49,12 +49,12 @@
             </shiro:hasAnyRoles>
             <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员">
                 <button id="searchDisable" type="button" class="btn btn-danger" onclick="searchDisableStatus();">
-                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询禁用类型
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询禁用支出类型
                 </button>
             </shiro:hasAnyRoles>
             <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员">
-                <button id="searchRapid" type="button" class="btn btn-danger" onclick="searchRapidStatus();">
-                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询激活类型
+                <button id="searchRapid" type="button" class="btn btn-success" onclick="searchRapidStatus();">
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询可用支出类型
                 </button>
             </shiro:hasAnyRoles>
 
@@ -73,7 +73,7 @@
                     <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('add', 'addForm')"></span>
                     <form class="form-horizontal" role="form" id="addForm" method="post">
                         <div class="modal-header" style="overflow:auto;">
-                            <h4>添加支出类型</h4>
+                            <h4>添加支出类型的信息</h4>
                         </div>
                         <br/>
                         <div class="form-group">
@@ -89,8 +89,7 @@
                                         onclick="closeModals('add', 'addForm')">关闭
                                 </button>
                                 <button id="addButton" class="btn btn-sm btn-success" onclick="addSubmit()"
-                                        type="button">保
-                                    存
+                                        type="button">添加
                                 </button>
                             </div>
                         </div>
@@ -114,7 +113,7 @@
                         <input type="hidden" name="outTypeId" define="outGoingType.outTypeId">
                         <input type="hidden" name="outTypeStatus" define="outGoingType.outTypeStatus">
                         <div class="modal-header" style="overflow:auto;">
-                            <h4>修改支出类型</h4>
+                            <h4>修改支出类型的信息</h4>
                         </div>
                         <br/>
                         <div class="form-group">

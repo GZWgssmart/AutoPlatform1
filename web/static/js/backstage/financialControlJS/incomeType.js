@@ -148,7 +148,7 @@ function showEdit(){
             }else{
                 swal({
                     title:"",
-                    text:"请先选择一行数据",
+                    text:"请先选择要修改的收入类型",
                     type:"warning"})
             }
         }else if(data.result == 'notLogin'){

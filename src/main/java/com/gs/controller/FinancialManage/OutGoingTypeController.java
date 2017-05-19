@@ -104,11 +104,11 @@ public class OutGoingTypeController {
                     if (status.equals("N")) {
                         outgoingTypeService.active(id);
                         logger.info("激活成功");
-                        return ControllerResult.getSuccessResult("激活成功");
+                        return ControllerResult.getSuccessResult("激活支出类型成功");
                     } else {
                         outgoingTypeService.inactive(id);
                         logger.info("禁用成功");
-                        return ControllerResult.getSuccessResult("禁用成功");
+                        return ControllerResult.getSuccessResult("禁用支出类型成功");
                     }
                 } else {
                     return ControllerResult.getFailResult("操作失败");
@@ -134,7 +134,7 @@ public class OutGoingTypeController {
                 User user = (User) session.getAttribute("user");
                 outgoingType.setCompanyId(user.getCompanyId());
                 outgoingTypeService.insert(outgoingType);
-                return ControllerResult.getSuccessResult("添加成功");
+                return ControllerResult.getSuccessResult("添加支出类型成功");
             } else {
                 logger.info("此用户无拥有添加支出类型的角色");
                 return null;
@@ -178,7 +178,7 @@ public class OutGoingTypeController {
                 User user = (User) session.getAttribute("user");
                 outgoingType.setCompanyId(user.getCompanyId());
                 outgoingTypeService.update(outgoingType);
-                return ControllerResult.getSuccessResult("修改成功");
+                return ControllerResult.getSuccessResult("修改支出类型成功");
             } else {
                 logger.info("此用户无拥有修改支出类型的角色");
                 return null;

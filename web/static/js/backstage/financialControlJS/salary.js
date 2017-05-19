@@ -216,7 +216,7 @@ function showEdit() {
             } else {
                 swal({
                     title: "",
-                    text: "请先选择一行数据",
+                    text: "请先选择要修改的工资信息",
                     type: "warning"
                 })
             }
@@ -291,6 +291,7 @@ function showAdd() {
 /** 选择人员 */
 function checkAppointment() {
     initTableNotTollbar("appTable", "/userBasicManage/queryByPager");
+    $('#addForm').data('bootstrapValidator').resetForm();
     $("#add").modal('hide');
     $("#personnelWin").modal('show');
 }
@@ -309,14 +310,19 @@ function checkPersonnel() {
         swal('选择失败', "只能选择一条数据", "error");
         return false;
     } else {
-        $("#personnelWin").modal('hide');
-        $("#add").modal('show');
         var user = selectRow[0];
-        console.log(user.userName + "useName")
-        $("#userName").val(user.userName);
-        $("#userId").val(user.userId);
-        $("#userSalary").val(user.userSalary);
-        $("#addWin").modal('show');
+        if (user.userSalary != null) {
+            $("#personnelWin").modal('hide');
+            $("#add").modal('show');
+            $("#userName").val(user.userName);
+            $("#userId").val(user.userId);
+            $("#userSalary").val(user.userSalary);
+            $("#addWin").modal('show');
+        } else {
+            swal('选择失败', "此用户没底薪，请去人员管理为用户设置底薪", "error");
+            return false;
+        }
+
     }
 }
 
