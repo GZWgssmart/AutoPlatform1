@@ -44,7 +44,7 @@
 <body>
 <%@include file="../backstage/contextmenu.jsp"%>
 <div class="container">
-    <div class="nav">
+ <%--   <div class="nav">
         <ul id="myTab" class="nav nav-tabs">
             <li class="pull-right" onclick = "hasDispatcher()">
                 <a  data-toggle="tab" >
@@ -57,7 +57,9 @@
                 </a>
             </li>
         </ul>
-    </div>
+    </div>--%>
+
+
 
     <div class="panel-body" style="padding-bottom:0px;"  >
         <table id="recordTable" style="table-layout: fixed" data-search=true>
@@ -86,7 +88,14 @@
             </tr>
             </thead>
         </table>
-        <div id="toolbar" class="btn-group"></div>
+        <div id="toolbar" class="btn-group">
+            <button type="button" class="btn btn-default" onclick="noDispatcher()">
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>未指定
+            </button>
+            <button type="button" class="btn btn-default" onclick="hasDispatcher()">
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>进行中
+            </button>
+        </div>
     </div>
 </div>
 

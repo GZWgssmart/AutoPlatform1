@@ -88,7 +88,7 @@ $(function(){
     $.post("/user/isLogin/"+roles, function (data) {
         if(data.result == 'success') {
             $(".materialsCombobox").select2({ language: 'zh-CN'});
-            initTableNotTollbar('materialsTable', '/dispatching/userWorksByPager'); // 初始化表格
+            mySelfRecord();
         } else if(data.result == 'notLogin'){
             swal({title:"",
                     text:data.message,
@@ -112,6 +112,43 @@ $(function(){
 });
 
 
+
+function initTable(tableId, url, toolbar) {
+    //先销毁表格
+    $('#' + tableId).bootstrapTable('destroy');
+    //初始化表格,动态从服务器加载数据
+    $("#" + tableId).bootstrapTable({
+        method: "get",  //使用get请求到服务器获取数据
+        url: url, //获取数据的Servlet地址
+        striped: false,  //表格显示条纹
+        pagination: true, //启动分页
+        pageSize: 10,  //每页显示的记录数
+        pageNumber:1, //当前第几页
+        pageList: [10, 15, 20, 25, 30],  //记录数可选列表
+        showColumns: true,  //显示下拉框勾选要显示的列
+        showRefresh: true,  //显示刷新按钮
+        showToggle: true, // 显示详情
+        strictSearch: true,
+        clickToSelect: true,  //是否启用点击选中行
+        uniqueId: "checkinId",                     //每一行的唯一标识，一般为主键列
+        sortable: true,                     //是否启用排序
+        sortOrder: "asc",                   //排序方式
+        toolbar : "#" + toolbar,// 指定工具栏
+        sidePagination: "server", //表示服务端请求
+
+        //设置为undefined可以获取pageNumber，pageSize，searchText，sortName，sortOrder
+        //设置为limit可以获取limit, offset, search, sort, order
+        queryParamsType : "undefined",
+        queryParams: function queryParams(params) {   //设置查询参数
+            var param = {
+                pageNumber: params.pageNumber,
+                pageSize: params.pageSize,
+                orderNum : $("#orderNum").val()
+            };
+            return param;
+        }
+    });
+}
 
 
 //未知
@@ -176,18 +213,37 @@ function showAppend(){
     $("#accsInfo").modal('hide'); // 关闭指定的窗口
 }
 function showWorkInfoDetail(recordId){
-    initTableNotTollbar('workInfoAccDetailTable',"/materials/recordAccsByPager?recordId="+recordId);
+    initTable('workInfoAccDetailTable',"/materials/recordAccsByPager?recordId="+recordId);
     $("#accsInfo").modal("show");
     $("#seachRecordId").val(recordId);
 }
 
 // 表格数据初始一块
 function initHistory(){
-    initTableNotTollbar('historyTable', '/materials/history'); // 初始化表格
+    // historyPanel
+    initTable('historyTable', '/materials/history', "toolbar3"); // 初始化表格
+    $("#reviewingPanel").removeClass(" panel-body active in");
+    $("#workInfoPanel").removeClass(" panel-body active in");
+    $("#historyPanel").addClass(" panel-body active in");
 }
 function initReviewing() {
-    initTable("reviewingTable","/flow/queryUserFlowing")
+    // reviewingPanel
+    initTable("reviewingTable","/flow/queryUserFlowing","toolbar2");
+    $("#workInfoPanel").removeClass(" panel-body active in");
+    $("#historyPanel").removeClass(" panel-body active in");
+    $("#reviewingPanel").addClass(" panel-body active in");
+
 }
+
+
+function mySelfRecord() {
+    // workInfoPanel
+    initTable('materialsTable', '/dispatching/userWorksByPager',"toolbar1"); // 初始化表格
+    $("#historyPanel").removeClass(" panel-body active in");
+    $("#reviewingPanel").removeClass(" panel-body active in");
+    $("#workInfoPanel").addClass(" panel-body active in");
+}
+
 // 初始表格用得到的基本方法
 function abcd(tableId, url) {
     //先销毁表格
