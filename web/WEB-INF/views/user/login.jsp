@@ -19,6 +19,8 @@
     <link href="/static/css/style.min.css?v=4.1.0" rel="stylesheet">
     <link rel="stylesheet" href="/static/css/sweetalert.css">
     <link rel="stylesheet" href="/static/css/bootstrap-validate/bootstrapValidator.min.css">
+    <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet/less" href="/static/css/bootstrap-dateTimePicker/datetimepicker.less">
 </head>
 <style>
     body{
@@ -52,45 +54,45 @@
             <div class="ibox-content" style="background: rgba(0,0,0,0.7);">
                 <form class="form-horizontal" id="loginForm">
                     <div class="form-group">
-                        <label class="col-sm-5  col-md-5 control-label">公司名称<span>（必填）</span></label>
+                        <label class="col-sm-4  col-md-4 control-label">公司名称</label>
                         <div class="col-sm-7 col-md-7">
-                            <input type="text" name="companyName" placeholder="公司名称" class="form-control" >
+                            <input type="text" name="companyName" placeholder="请输入公司名称" class="form-control" >
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-5  col-md-5 control-label">公司地址<span>（必填）</span></label>
+                        <label class="col-sm-4  col-md-4 control-label">公司地址</label>
                         <div class="col-sm-7 col-md-7">
-                            <input type="text" name="companyAddress" placeholder="公司地址" class="form-control" >
+                            <input type="text" name="companyAddress" placeholder="请输入公司地址" class="form-control" >
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-5  col-md-5 control-label">公司联系方式<span>（必填）</span></label>
+                        <label class="col-sm-4  col-md-4 control-label">公司联系方式</label>
                         <div class="col-sm-7 col-md-7">
-                            <input type="number" name="companyTel" placeholder="公司联系方式" class="form-control" >
+                            <input type="number" name="companyTel" placeholder="请输入公司联系方式" class="form-control" >
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-5  col-md-5 control-label">公司负责人<span>（选填）</span></label>
+                        <label class="col-sm-4  col-md-4 control-label">公司负责人</label>
                         <div class="col-sm-7 col-md-7">
-                            <input type="text" name="companyPricipal" placeholder="公负责人" class="form-control" >
+                            <input type="text" name="companyPricipal" placeholder="请输入公司负责人" class="form-control" >
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-5 col-md-5 control-label">公司官网URL<span>（选填）</span></label>
+                        <label class="col-sm-4  col-md-4 control-label">公司负责人电话</label>
                         <div class="col-sm-7 col-md-7">
-                            <input type="text" name="companyWebsite" placeholder="公司官网URL" class="form-control" >
+                            <input type="number" name="companyPricipalPhone" placeholder="请输入公司负责人电话" class="form-control" >
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-5 col-md-5 control-label">公司成立时间<span>（选填）</span></label>
+                        <label class="col-sm-4  col-md-4 control-label">公司成立时间</label>
                         <div class="col-sm-7 col-md-7">
-                            <input type="date" name="companyOpenDate" placeholder="公司成立时间" class="form-control" >
+                            <input type="text" id="addDatetimepicker" name="companyOpenDate" readonly="true" onclick="getDate('addDatetimepicker')" placeholder="请选择公司成立时间" class="form-control" >
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-5 col-md-5 control-label">公司规模<span>（选填）</span></label>
+                        <label class="col-sm-4  col-md-4 control-label">公司规模</label>
                         <div class="col-sm-7 col-md-7">
-                            <select type="date" name="companySize" placeholder="公司规模" class="form-control" >
+                            <select type="date" name="companySize" placeholder="请选择公司规模" class="form-control" >
                                 <option>10人以下</option>
                                 <option>11-50人</option>
                                 <option>51-100人</option>
@@ -121,9 +123,13 @@
 <script src="/static/js/contabs.min.js"></script>
 <script src="/static/js/plugins/pace/pace.min.js"></script>
 <script src="/static/js/backstage/user/backstageLogin.js"></script>
+<script src="/static/js/backstage/main.js"></script>
 <script src="/static/js/bootstrap-validate/bootstrapValidator.js"></script>
+<script src="/static/js/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.js"></script>
+<script src="/static/js/bootstrap-dateTimePicker/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
 <script>
     $(function () {
+        initDateTimePicker('loginForm', 'companyOpenDate', 'addDatetimepicker'); // 初始化时间框, 第一参数是form表单id, 第二参数是input的name, 第三个参数为input的id
         function bodyScroll(event) {
             event.preventDefault();
         }

@@ -258,5 +258,37 @@ public class UserIndexController {
         dateFormat.setLenient(false);
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
     }
+
+    /**
+     *
+     * 添加电话预约
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "appointmentAdd",method = RequestMethod.POST)
+    public ControllerResult add(Appointment appointment,HttpSession session){
+        if(SessionUtil.isOwnerLogin(session)){
+            String roles = "车主";
+            if (RoleUtil.checkRoles(roles)) {
+                User user = (User)session.getAttribute("frontUser");
+                logger.info("添加电话预约");
+                if (appointment != null) {
+                    appointment.setCompanyId(user.getCompanyId());
+                    appointment.setUserId(user.getUserId());
+                    appointment.setCurrentStatus("已预约");
+                    appointmentService.insert(appointment);
+                    return ControllerResult.getSuccessResult("添加预约成功");
+                } else {
+                    return ControllerResult.getFailResult("添加预约失败");
+                }
+            } else {
+                logger.info("此用户无拥有添加电话预约记录的角色");
+                return ControllerResult.getNotRoleResult("权限不足");
+            }
+        }else {
+            logger.info("请先登录");
+            return ControllerResult.getNotLoginResult("添加预约无效，请重新登录");
+        }
+    }
 }
 

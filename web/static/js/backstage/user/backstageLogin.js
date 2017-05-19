@@ -43,13 +43,43 @@ function validator(formId) {
                 validators: {
                     notEmpty: {
                         message: '公司电话不能为空'
+                    },
+                    regexp: {
+                        regexp: /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/,
+                        message: '请输入正确的手机号'
                     }
-                },
-                regexp: {
-                    regexp: /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/,
-                    message: '请输入正确的手机号'
+                }
+
+            },
+            companyPricipal: {
+                message: '公司负责人验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '公司负责人不能为空'
+                    }
                 }
             },
+            companyPricipalPhone: {
+                    message: '公司负责人电话不能为空',
+                        validators: {
+                        notEmpty: {
+                            message: '公司负责人电话不能为空'
+                        },
+                        regexp: {
+                            regexp: /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/,
+                            message: '请输入正确的手机号'
+                        }
+                    }
+
+                },
+            companyOpenDate: {
+                message: '公司成立时间验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '公司成立时间不能为空'
+                    }
+                }
+            }
         }
     }).on('success.form.bv', function (e) {
         if (formId == "loginForm") {

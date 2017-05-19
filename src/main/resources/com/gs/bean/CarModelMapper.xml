@@ -15,7 +15,7 @@
 
   <select id="queryAll" resultMap="carmodelMap" parameterType="com.gs.bean.User">
       <![CDATA[
-           select m.*,b.brandName from t_car_model m,t_car_brand b where 1=1 and m.modelStaus = 'Y' m.brandId=b.brandId
+           select m.*,b.brandName from t_car_model m,t_car_brand b where 1=1 and m.modelStaus = 'Y' and m.brandId=b.brandId
         ]]>
   </select>
 
