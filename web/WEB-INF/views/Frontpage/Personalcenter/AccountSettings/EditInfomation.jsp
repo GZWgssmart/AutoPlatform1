@@ -102,8 +102,9 @@
     function edit() {
         $.post("/editinfomation",$("#form2").serialize(),function (data) {
             if(data.result=="success"){
-                window.location.href=window.location.href;
+                window.location.href="accountinfo";
                 window.location.reload;
+                alert("更新成功");
             }else{
                 alert("更新失败");
             }
