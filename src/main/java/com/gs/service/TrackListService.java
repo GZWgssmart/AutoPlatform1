@@ -16,7 +16,7 @@ import java.util.List;
 */
 public interface TrackListService extends BaseService<String, TrackList>{
 
-    public List<TrackList> queryByPagerName(@Param("pager") Pager pager, @Param("trackList") TrackList trackList);
+    public List<TrackList> queryByPagerName(Pager pager, TrackList trackList);
 
-    public int countName(@Param("trackList") TrackList trackList, @Param("user") User user);
+    public int countName(TrackList trackList, User user);
 }

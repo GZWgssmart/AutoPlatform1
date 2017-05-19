@@ -33,7 +33,7 @@
         <table id="table">
             <thead>
             <tr>
-                <th data-checkbox="true" data-field="status" ></th>
+                <th data-radio="true" data-field="status" ></th>
                 <th data-field="checkin.userName" data-width="50">维修保养登记人</th>
                 <th data-field="startTime" data-formatter="formatterDate">维修保养开始时间</th>
                 <th data-field="endTime" data-formatter="formatterDate">维修保养预估结束时间</th>
@@ -46,10 +46,10 @@
             </thead>
         </table>
         <div id="toolbar" class="btn-group">
-            <button id="btn_available" type="button" class="btn btn-default" onclick="showAvailable();">
+            <button id="btn_available" type="button" class="btn btn-success" onclick="showAvailable();">
                 <span class="glyphicon glyphicon-search" aria-hidden="true"></span>可用保养记录
             </button>
-            <button id="btn_disable" type="button" class="btn btn-default" onclick="showDisable();">
+            <button id="btn_disable" type="button" class="btn btn-danger" onclick="showDisable();">
                 <span class="glyphicon glyphicon-search" aria-hidden="true"></span>禁用保养记录
             </button>
             <%--<button id="btn_add" type="button" class="btn btn-default" onclick="showAdd();">--%>

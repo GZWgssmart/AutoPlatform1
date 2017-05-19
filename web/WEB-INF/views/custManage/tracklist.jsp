@@ -34,9 +34,9 @@
         <table id="table">
             <thead>
             <tr>
-                <th data-checkbox="true"></th>
+                <th data-radio="true"></th>
                 <th data-field="user.userName">回访人</th>
-                <th data-field="checkin.userName">跟踪的回访用户</th>
+                <th data-field="checkin.userName">跟踪回访的用户</th>
                 <th data-field="trackContent">回访问题</th>
                 <th data-field="serviceEvaluate">本次服务评价</th>
                 <th data-field="trackCreatedTime" data-formatter="formatterDate">跟踪回访创建时间</th>
@@ -86,7 +86,7 @@
         <div class="modal-content" style="overflow:hidden;">
             <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('addWindow', 'addForm')"></span>
             <form class="form-horizontal" id="addForm" method="post">
-                <input type="hidden" name="userId" value="${sessionScope.user.userId}">
+                <input id="addTrackUserId" type="text" name="trackUser" />
                 <div class="modal-header" style="overflow:auto;">
                     <h4>请填写跟踪回访管理信息</h4>
                 </div>
@@ -103,9 +103,13 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">跟踪回访的用户：</label>
                     <div class="col-sm-7">
-                        <select id="addUserName" name="trackUser" class="form-control js-data-example-ajax user"
-                                style="width:100%">
-                        </select>
+                        <%--<select id="addUserName" name="trackUser" class="form-control js-data-example-ajax user"--%>
+                        <%--style="width:100%">--%>
+                        <%--</select>--%>
+                        <input id="addTrackUser" type="text" readonly class="form-control" style="width:70%">
+                        <button type="button" class="btn btn-default" onclick="showRemindUser()">
+                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>请选择用户
+                        </button>
                     </div>
                 </div>
                 <div class="form-group">
@@ -115,13 +119,13 @@
                                   class="form-control"></textarea>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">跟踪回访创建时间：</label>
-                    <div class="col-sm-7">
-                        <input id="addTrackCreatedTime" name="trackCreatedTime" readonly onclick="getDate('addTrackCreatedTime')" class="form-control datetimepicker"/>
-                        <%--onclick="layui.laydate({elem: this, min: laydate.now(), format: 'yyyy-MM-dd hh:mm:ss', max: '2099-06-16 23:59:59'})"--%>
-                    </div>
-                </div>
+                <%--<div class="form-group">--%>
+                    <%--<label class="col-sm-3 control-label">跟踪回访创建时间：</label>--%>
+                    <%--<div class="col-sm-7">--%>
+                        <%--<input id="addTrackCreatedTime" name="trackCreatedTime" readonly onclick="getDate('addTrackCreatedTime')" class="form-control datetimepicker"/>--%>
+                        <%--&lt;%&ndash;onclick="layui.laydate({elem: this, min: laydate.now(), format: 'yyyy-MM-dd hh:mm:ss', max: '2099-06-16 23:59:59'})"&ndash;%&gt;--%>
+                    <%--</div>--%>
+                <%--</div>--%>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">本次服务评价：</label>
                     <div class="col-sm-7">
@@ -151,27 +155,28 @@
         <div class="modal-content">
             <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('editWindow', 'editForm')"></span>
             <form class="form-horizontal" id="editForm" method="post">
-                <input type="hidden" name="trackId" define="TrackList.trackId"/>
+                <input type="text" name="trackId" define="TrackList.trackId"/>
                 <div class="modal-header" style="overflow:auto;">
                     <h4>请修改跟踪回访管理信息</h4>
                 </div>
                 <br/>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">回访人：</label>
-                    <div class="col-sm-7">
-                        <%--<select id="editAdminName" name="userId" class="form-control js-data-example-ajax admin"--%>
-                        <%--style="width:100%">--%>
-                        <%--</select>--%>
-                        <input type="text" name="userId" readonly define="TrackList.userId" class="form-control"
-                               value="${sessionScope.user.userName}">
-                    </div>
-                </div>
+                <%--<div class="form-group">--%>
+                    <%--<label class="col-sm-3 control-label">回访人：</label>--%>
+                    <%--<div class="col-sm-7">--%>
+                        <%--&lt;%&ndash;<select id="editAdminName" name="userId" class="form-control js-data-example-ajax admin"&ndash;%&gt;--%>
+                        <%--&lt;%&ndash;style="width:100%">&ndash;%&gt;--%>
+                        <%--&lt;%&ndash;</select>&ndash;%&gt;--%>
+                        <%--<input type="text" name="userId" readonly define="TrackList.userId" class="form-control"--%>
+                               <%--value="${sessionScope.user.userName}">--%>
+                    <%--</div>--%>
+                <%--</div>--%>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">跟踪回访的用户：</label>
                     <div class="col-sm-7">
-                        <select id="editUserName" name="trackUser" class="form-control js-data-example-ajax user"
-                                style="width:100%">
-                        </select>
+                        <%--<select id="editUserName" name="trackUser" class="form-control js-data-example-ajax user"--%>
+                                <%--style="width:100%">--%>
+                        <%--</select>--%>
+                            <input id="editUserName" type="text" name="trackUser" define="TrackList.trackUser" readonly class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
@@ -182,13 +187,13 @@
                                   class="form-control"></textarea>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">跟踪回访创建时间：</label>
-                    <div class="col-sm-7">
-                        <input id="editTrackCreatedTime" name="trackCreatedTime" readonly
-                               define="TrackList.trackCreatedTime" class="form-control datetimepicker">
-                    </div>
-                </div>
+                <%--<div class="form-group">--%>
+                    <%--<label class="col-sm-3 control-label">跟踪回访创建时间：</label>--%>
+                    <%--<div class="col-sm-7">--%>
+                        <%--<input id="editTrackCreatedTime" name="trackCreatedTime" readonly--%>
+                               <%--define="TrackList.trackCreatedTime" class="form-control datetimepicker">--%>
+                    <%--</div>--%>
+                <%--</div>--%>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">本次服务评价：</label>
                     <div class="col-sm-7">
@@ -210,6 +215,36 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+<div id="showRemindWindow" class="modal fade" aria-hidden="true" style="overflow-y:scroll" data-backdrop="static"
+     keyboard:false>
+    <div class="modal-dialog" style="width: 80%">
+        <div class="modal-content">
+            <div class="modal-body">
+                <span class="glyphicon glyphicon-remove closeModal" onclick="closeUserWin()"></span>
+                <h3>选择车主</h3>
+                <table class="table table-hover" id="addRemindTable" style="table-layout: fixed">
+                    <thead>
+                    <tr>
+                        <th data-radio="true"></th>
+                        <th data-field="checkin.userName" data-width="100">维修保养登记人</th>
+                        <th data-field="startTime" data-formatter="formatterDate">维修保养开始时间</th>
+                        <th data-field="actualEndTime" data-formatter="formatterDate">维修保养实际结束时间</th>
+                        <th data-field="pickupTime" data-formatter="formatterDate">维修保养车主提车时间</th>
+                        <th data-field="recordDes">维修保养记录描述</th>
+                    </tr>
+                    </thead>
+                </table>
+                <div class="modal-footer" style="overflow:hidden;">
+                    <button type="button" class="btn btn-default" onclick="closeUserWin()">关闭
+                    </button>
+                    <input type="button" class="btn btn-primary" onclick="checkRemind()" value="确定">
+                    </input>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script src="/static/js/jquery.min.js"></script>
 <script src="/static/js/bootstrap.min.js"></script>

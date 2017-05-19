@@ -69,12 +69,12 @@ public class TrackListServiceImpl implements TrackListService {
 	}
 
 	@Override
-	public List<TrackList> queryByPagerName(@Param("pager") Pager pager, @Param("trackList") TrackList trackList) {
+	public List<TrackList> queryByPagerName(Pager pager, TrackList trackList) {
 		return trackListDAO.queryByPagerName(pager,trackList);
 	}
 
 	@Override
-	public int countName(@Param("trackList") TrackList trackList, @Param("user") User user) {
+	public int countName(TrackList trackList, User user) {
 		return trackListDAO.countName(trackList,user);
 	}
 }

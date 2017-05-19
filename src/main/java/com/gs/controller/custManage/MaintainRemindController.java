@@ -2,10 +2,12 @@ package com.gs.controller.custManage;
 
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.*;
+import com.gs.common.Methods;
 import com.gs.common.bean.ComboBox4EasyUI;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
+import com.gs.common.mail.MailConfig;
 import com.gs.common.util.RoleUtil;
 import com.gs.common.util.SessionUtil;
 import com.gs.common.util.UUIDUtil;
@@ -20,8 +22,13 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.mail.BodyPart;
+import javax.mail.Multipart;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMultipart;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -147,6 +154,7 @@ public class MaintainRemindController {
                 User user = (User) session.getAttribute("user");
                 maintainRemind.setCompanyId(user.getCompanyId());
                 maintainRemindService.insert(maintainRemind);
+                String emails = "";
                 if(remindType.equals("短信提醒")) {
                     messageSend.setMessageId(maintainRemind.getRemindId());
                     messageSend.setUserId(maintainRemind.getUserId());
@@ -155,6 +163,8 @@ public class MaintainRemindController {
 //                messageSend.setSendCreatedTime(new Date());
                     messageSend.setCompanyId(user.getCompanyId());
                     messageSendService.insertRemind(messageSend);
+                } else if(remindType.equals("邮箱提醒")) {
+
                 }
                 return ControllerResult.getSuccessResult("添加成功");
             } else {

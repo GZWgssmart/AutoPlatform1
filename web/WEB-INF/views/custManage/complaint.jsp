@@ -34,7 +34,7 @@
         <table id="table">
             <thead>
             <tr>
-                <th data-checkbox="true"></th>
+                <th data-radio="true"></th>
                 <th data-field="user.userName">投诉人</th>
                 <th data-field="company.companyName">投诉人所属公司</th>
                 <th data-field="complaintCreatedTime" data-formatter="formatterDate">投诉时间</th>

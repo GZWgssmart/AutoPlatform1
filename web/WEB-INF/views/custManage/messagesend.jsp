@@ -32,7 +32,7 @@
         <table id="table">
             <thead>
             <tr>
-                <th data-checkbox="true"></th>
+                <th data-radio="true"></th>
                 <th data-field="checkin.userName">用户名</th>
                 <th data-field="sendTime" data-formatter="formatterDate">发送时间</th>
                 <th data-field="sendCreatedTime" data-formatter="formatterDate">发送记录创建时间</th>

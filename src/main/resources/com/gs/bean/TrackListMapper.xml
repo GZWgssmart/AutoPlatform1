@@ -22,17 +22,19 @@
 
     <association property="company" javaType="com.gs.bean.Company">
       <id column="company_id" property="companyId"></id>
-      <result column="company_name" property="companyName"></result>
-      <result column="company_address" property="companyAddress"></result>
-      <result column="company_tel" property="companyTel"></result>
+      <result column="companyName" property="companyName"></result>
+      <result column="companyAddress" property="companyAddress"></result>
+      <result column="companyTel" property="companyTel"></result>
     </association>
   </resultMap>
 
   <select id="queryByPager" resultMap="BaseResultMap" parameterType="com.gs.common.bean.Pager">
     select t.*,u.userId AS user_id,u.userName AS user_name,
-    c.userId AS checkin_id,c.userName AS checkin_name from t_track_list t,
+    c.userId AS checkin_id,c.userName AS checkin_name,
+    com.companyId as company_id, com.companyName,com.companyAddress,com.companyTel
+    from t_track_list t,t_company com,
     t_checkin c, t_user u where u.userId = t.userId and t.trackUser = c.userId
-    and c.checkinStatus = 'Y'
+    and c.checkinStatus = 'Y' and t.companyId = com.companyId
     <if test="user.companyId != null and user.companyId != ''">
     and t.companyId = #{user.companyId}
     </if>
@@ -40,29 +42,32 @@
   </select>
 
   <select id="count" resultType="int" parameterType="com.gs.bean.User" >
-    select count(t.trackId) FROM t_track_list t,
+    select count(t.trackId)
+    from t_track_list t,t_company com,
     t_checkin c, t_user u where u.userId = t.userId and t.trackUser = c.userId
-    and c.checkinStatus = 'Y'
+    and c.checkinStatus = 'Y' and t.companyId = com.companyId
     <if test="companyId != null and companyId != ''">
       and t.companyId = #{companyId}
     </if>
   </select>
 
   <update id="update" parameterType="trackList">
-    update t_track_list set trackContent=#{trackContent},serviceEvaluate=#{serviceEvaluate},trackUser=#{trackUser} where trackId = #{trackId}
+    update t_track_list set trackContent=#{trackContent},serviceEvaluate=#{serviceEvaluate} where trackId = #{trackId}
   </update>
 
   <insert id="insert" parameterType="trackList">
     insert into t_track_list(trackId,userId,trackContent,serviceEvaluate,trackUser,trackCreatedTime,companyId) values(uuid(),#{userId},#{trackContent},#{serviceEvaluate},#{trackUser},now(),#{companyId})
   </insert>
 
-  <select id="queryByPagerName" resultMap="BaseResultMap" parameterType="com.gs.common.bean.Pager">
-    SELECT t.*,u.userId AS user_id,u.userName AS user_name,
-    c.userId AS checkin_id,c.userName AS checkin_name FROM t_track_list t,
+  <select id="queryByPagerName" resultMap="BaseResultMap">
+    select t.*,u.userId AS user_id,u.userName AS user_name,
+    c.userId AS checkin_id,c.userName AS checkin_name,
+    com.companyId as company_id, com.companyName,com.companyAddress,com.companyTel
+    from t_track_list t,t_company com,
     t_checkin c, t_user u where u.userId = t.userId and t.trackUser = c.userId
-    and c.checkinStatus = 'Y'
-    <if test="user.companyId != null and user.companyId != ''">
-      and t.companyId = #{user.companyId}
+    and c.checkinStatus = 'Y' and t.companyId = com.companyId
+    <if test="pager.user.companyId != null and pager.user.companyId != ''">
+      and t.companyId = #{pager.user.companyId}
     </if>
     <if test="trackList.userId != null and trackList.userId != ''">
       and u.userName like concat('%',#{trackList.userId},'%')
@@ -79,12 +84,15 @@
     limit #{pager.beginIndex}, #{pager.pageSize}
   </select>
 
-  <select id="countName"  resultType="int" parameterType="com.gs.bean.User">
-    SELECT count(*) FROM t_track_list t,
+  <select id="countName"  resultType="int">
+    select t.*,u.userId AS user_id,u.userName AS user_name,
+    c.userId AS checkin_id,c.userName AS checkin_name,
+    com.companyId as company_id, com.companyName,com.companyAddress,com.companyTel
+    from t_track_list t,t_company com,
     t_checkin c, t_user u where u.userId = t.userId and t.trackUser = c.userId
-    and c.checkinStatus = 'Y'
-    <if test="companyId != null and companyId != ''">
-      and t.companyId = #{companyId}
+    and c.checkinStatus = 'Y' and t.companyId = com.companyId
+    <if test="user.companyId != null and user.companyId != ''">
+      and t.companyId = #{user.companyId}
     </if>
     <if test="trackList.userId != null and trackList.userId != ''">
       and u.userName like concat('%',#{trackList.userId},'%')

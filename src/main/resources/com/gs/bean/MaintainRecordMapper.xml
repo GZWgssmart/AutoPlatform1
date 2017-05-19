@@ -17,6 +17,7 @@
 
         <association property="checkin" javaType="com.gs.bean.Checkin">
             <id column="checkinId" property="checkinId"></id>
+            <result column="user_id" property="userId" jdbcType="VARCHAR"/>
             <result column="userName" property="userName" jdbcType="VARCHAR"/>
             <result column="userPhone" property="userPhone" jdbcType="VARCHAR"/>
             <result column="brandId" property="brandId" jdbcType="VARCHAR"/>
@@ -57,6 +58,8 @@
             <association property="user" javaType="com.gs.bean.User">
                 <id property="userId" column="userId"/>
                 <result property="userName" column="userName"/>
+                <result property="userEmail" column="userEmail"/>
+                <result property="userPhone" column="userPhone"/>
             </association>
 
             <association property="company" javaType="com.gs.bean.Company">
@@ -474,9 +477,9 @@
     </select>
 
     <select id="queryByPagerSix" resultMap="MaintainRecordMap">
-        SELECT m.*, ck.*, u.userId, u.userName
-        FROM t_maintain_record m, t_checkin ck, t_user u
-        WHERE m.checkinId = ck.checkinId AND ck.userId=u.userId
+        SELECT m.*, ck.*,ck.userId as user_id,u.userEmail,u.userPhone
+        FROM t_maintain_record m, t_checkin ck,t_user u
+        WHERE m.checkinId = ck.checkinId and ck.userId = u.userId
         AND m.recordStatus = 'Y' AND #{actualEndTime} >= m.actualEndTime
         <if test="pager.user.companyId != '' and pager.user.companyId != null">
             and ck.companyId = #{pager.user.companyId}
@@ -488,7 +491,7 @@
     <select id="countSix" resultType="int">
         SELECT count(m.recordId)
         FROM t_maintain_record m, t_checkin ck, t_user u
-        WHERE m.checkinId = ck.checkinId AND ck.userId=u.userId
+        WHERE m.checkinId = ck.checkinId and ck.userId = u.userId
         AND m.recordStatus = 'Y' AND #{actualEndTime} >= m.actualEndTime
         <if test="user.companyId != '' and user.companyId != null">
             and ck.companyId = #{user.companyId}
@@ -496,9 +499,9 @@
     </select>
 
     <select id="queryByPagerSuccess" resultMap="MaintainRecordMap" parameterType="com.gs.common.bean.Pager">
-        SELECT m.*, ck.*, u.userId, u.userName
-        FROM t_maintain_record m, t_checkin ck, t_user u
-        WHERE m.checkinId = ck.checkinId AND ck.userId=u.userId
+        SELECT m.*, ck.*,ck.userId as user_id,u.userEmail,u.userPhone
+        FROM t_maintain_record m, t_checkin ck,t_user u
+        WHERE m.checkinId = ck.checkinId and ck.userId = u.userId
         AND m.recordStatus = 'Y'
         <if test="user.companyId != '' and user.companyId != null">
             and ck.companyId = #{user.companyId}
@@ -510,7 +513,7 @@
     <select id="countSuccess" resultType="int" parameterType="com.gs.bean.User">
         SELECT count(m.recordId)
         FROM t_maintain_record m, t_checkin ck, t_user u
-        WHERE m.checkinId = ck.checkinId AND ck.userId=u.userId
+        WHERE m.checkinId = ck.checkinId and ck.userId = u.userId
         AND m.recordStatus = 'Y'
         <if test="companyId != '' and companyId != null">
             and ck.companyId = #{companyId}

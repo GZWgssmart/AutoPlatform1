@@ -211,6 +211,7 @@ function showAddRemindUser() {
                 $("#addLastMaintainMileage").val(row[0].checkin.carMileage);
                 $('#addUserId').val(row[0].checkin.user.userId);
                 $('#addUserName').val(row[0].checkin.user.userName);
+                $("#addUserEmail").val(row[0].checkin.user.userEmail);
                 $("#RemindUserWindow").modal('hide');
                 $("#addWindow").modal('show');
                 $("#addButton").removeAttr("disabled");

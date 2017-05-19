@@ -74,7 +74,7 @@ public class MaintainRemindServiceImpl implements MaintainRemindService {
 	}
 
 	@Override
-	public int countNull(@Param("user")User user) {
+	public int countNull(User user) {
 		return maintainRemindDAO.countNull(user);
 	}
 

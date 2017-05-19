@@ -80,7 +80,7 @@
   </insert>
 
   <select id="queryByPagerUser" resultMap="BaseResultMap" parameterType="com.gs.common.bean.Pager">
-    select mr.*,u.userId as user_id,u.userName as user_name
+    select mr.*,c.userId,c.userName,c.checkinId
     from t_maintain_remind mr,t_checkin c where mr.userId = c.userId
     and mr.userId = #{userId}
     limit #{pager.beginIndex}, #{pager.pageSize}

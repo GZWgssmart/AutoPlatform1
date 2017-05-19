@@ -34,7 +34,7 @@
         <table id="table">
             <thead>
             <tr>
-                <th data-checkbox="true"></th>
+                <th data-radio="true"></th>
                 <th data-field="checkin.userName">用户名</th>
                 <th data-field="lastMaintainTime" data-formatter="formatterDate">上次维修保养时间</th>
                 <th data-field="lastMaintainMileage">上次汽车行驶里程</th>
@@ -66,9 +66,10 @@
             <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('addWindow', 'addForm')"></span>
             <form class="form-horizontal" id="addForm" method="post">
                 <%--<input id="addRemindId" type="text" name="remindId">--%>
-                <input id="addLastMaintainTime" type="text" name="lastMaintainTime" >
-                <input id="addLastMaintainMileage" type="text" name="lastMaintainMileage" >
+                <input id="addLastMaintainTime" type="text" name="lastMaintainTime">
+                <input id="addLastMaintainMileage" type="text" name="lastMaintainMileage">
                 <input id="addUserId" type="text" name="userId">
+                <input id="addUserEmail" type="text" name="checkin.user.userEmail">
                 <div class="modal-header" style="overflow:auto;">
                     <h4>请填写维修维修保养提醒信息</h4>
                 </div>
