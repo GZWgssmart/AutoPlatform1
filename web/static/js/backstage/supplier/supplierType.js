@@ -45,9 +45,9 @@ function showEdit(){
                 $('#editCompanyName').html('<option value="' + supplyType.company.companyId + '">' + supplyType.company.companyName + '</option>').trigger("change");
                 $("#editForm").fill(supplyType);
                 validator('editForm');
-                $('#editSTName').bind('input propertychange', function() {
+                /*$('#editSTName').bind('input propertychange', function() {
                     userPhone = $("#editSTName").val();
-                });
+                });*/
             } else {
                 swal({
                     title: "",
@@ -88,9 +88,6 @@ function showAdd(){
         if (data.result == 'success') {
             $("#addWindow").modal('show');
             $("#addButton").removeAttr("disabled");
-            $('#addSTName').bind('input propertychange', function() {
-                userPhone = $("#addSTName").val();
-            });
             validator('addForm'); // 初始化验证
         }else if (data.result == 'notLogin') {
             swal({
@@ -140,7 +137,11 @@ function validator(formId) {
                     remote: {
                         url: '/supplyType/queryNameByOne',
                         message: '该供应商类型名称已存在',
-                        delay :  2000,
+                        data: {
+                            supplyTypeId: $("#" + formId + " input[name=supplyTypeId]").val(),
+                            supplyTypeName: $("#" + formId + " input[name=supplyTypeName]").val()
+                        },
+                        delay :  2000,//每输入一个字符，就发ajax请求，服务器压力还是太大，设置2秒发送一次ajax（默认输入一个字符，提交一次，服务器压力太大）
                         type: 'GET'
                     }
                 }

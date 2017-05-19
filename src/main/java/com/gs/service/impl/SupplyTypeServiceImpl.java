@@ -37,9 +37,10 @@ public class SupplyTypeServiceImpl implements SupplyTypeService {
 	}
 
 	@Override
-	public int queryNameByOne(String supplyTypeName) {
-		return supplyTypeDAO.queryNameByOne(supplyTypeName);
+	public int queryNameByOne(String supplyTypeName, String supplyTypeId) {
+		return supplyTypeDAO.queryNameByOne(supplyTypeName,supplyTypeId);
 	}
+
 
 	public int deleteById(String id) {
         return supplyTypeDAO.deleteById(id);

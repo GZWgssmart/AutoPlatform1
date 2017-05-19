@@ -103,7 +103,20 @@ public class SupplyTypeController {
     /**
      * 验证供应商类型名称是否存在
      */
-    @ResponseBody
+     @ResponseBody
+     @RequestMapping(value = "queryNameByOne")
+     public Map queryNameByOne(SupplyType supplyType, HttpSession session) {
+     int countName = supplyTypeService.queryNameByOne(supplyType.getSupplyTypeName(), supplyType.getSupplyTypeId());
+     Map<String, Boolean> map = new HashMap<String, Boolean>();
+     if(countName > 0)
+     map.put("valid", false);
+     else
+     map.put("valid", true);
+
+     return map;
+     }
+
+   /* @ResponseBody
     @RequestMapping(value = "queryNameByOne", method = RequestMethod.GET)
     public String queryNameByOne(HttpServletRequest req) {
         logger.info("验证供应商类型名称是否已经存在");
@@ -125,7 +138,7 @@ public class SupplyTypeController {
             e.printStackTrace();
         }
         return resultString;
-    }
+    }*/
 
 
     @ResponseBody

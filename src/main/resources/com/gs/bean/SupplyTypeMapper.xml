@@ -18,8 +18,11 @@
   <!-- 根据供应商类型名称查询是否当前数据库已经存在此名称 -->
   <select id="queryNameByOne" resultType="int">
     <![CDATA[
-      select count(supplyTypeId) from t_supply_type where supplyTypeName = #{supplyTypeName};
+      select count(supplyTypeName) from t_supply_type where supplyTypeName = #{supplyTypeName}
     ]]>
+    <if test="supplyTypeId != null and supplyTypeId != ''">
+      and supplyTypeId != #{supplyTypeId}
+    </if>
   </select>
 
   <select id="queryAll" resultMap="supplyTypeMap" parameterType="com.gs.bean.User">
