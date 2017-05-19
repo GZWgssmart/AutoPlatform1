@@ -46,5 +46,5 @@ public interface AccessoriesTypeDAO extends BaseDAO<String, AccessoriesType>{
      * @param accTypeName
      * @return
      */
-    public AccessoriesType queryAccTypeNameOne(String accTypeName);
+    public int queryAccTypeNameOne(@Param("accTypeName") String accTypeName,@Param("accTypeId") String accTypeId);
 }

@@ -5,6 +5,7 @@ import com.gs.bean.Checkin;
 import com.gs.bean.User;
 import com.gs.dao.AccessoriesTypeDAO;
 import com.gs.service.AccessoriesTypeService;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -109,8 +110,8 @@ public class AccessoriesTypeServiceImpl implements AccessoriesTypeService {
     }
 
     @Override
-    public AccessoriesType queryAccTypeNameOne(String accTypeName) {
-        return accessoriesTypeDAO.queryAccTypeNameOne(accTypeName);
+    public int queryAccTypeNameOne(@Param("accTypeName") String accTypeName, @Param("accTypeId") String accTypeId) {
+        return accessoriesTypeDAO.queryAccTypeNameOne(accTypeName,accTypeId);
     }
 
     public List<AccessoriesType> blurredQuery(Pager pager, AccessoriesType accessoriesType) {

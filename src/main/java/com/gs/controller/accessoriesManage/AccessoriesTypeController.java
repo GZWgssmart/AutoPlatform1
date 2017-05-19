@@ -313,25 +313,18 @@ public class AccessoriesTypeController {
      * 验证手机号是否存在
      */
     @ResponseBody
-    @RequestMapping(value = "queryNameByOne", method = RequestMethod.GET)
-    public String queryNameByOne(String accTypeName) {
-        boolean result = true;
-        String resultString = "";
-        Map<String, Boolean> map=new HashMap<String,Boolean>();
-        ObjectMapper mapper = new ObjectMapper();
-        if (accTypeName != null && !accTypeName.equals("")) {
-            AccessoriesType accessoriesType = accessoriesTypeService.queryAccTypeNameOne(accTypeName);
-            if (accessoriesType != null) {
-                result=false;
-            }
-        }
-        map.put("valid",result);
-        try{
-            resultString=mapper.writeValueAsString(map);
-        }catch (JsonProcessingException e){
-            e.printStackTrace();
-        }
-        return resultString;
+    @RequestMapping(value = "queryNameByOne", method = RequestMethod.POST)
+    public Map queryNameByOne(AccessoriesType accessoriesType) {
+        logger.info("此品牌名称是否已存在此品牌名称");
+        int countbrandName = accessoriesTypeService.queryAccTypeNameOne(accessoriesType.getAccTypeName(),accessoriesType.getAccTypeId());
+        Map<String, Boolean> map = new HashMap<String, Boolean>();
+        if(countbrandName > 0)
+            map.put("valid", false);
+        else
+            map.put("valid", true);
+
+        return map;
     }
+
 
 }

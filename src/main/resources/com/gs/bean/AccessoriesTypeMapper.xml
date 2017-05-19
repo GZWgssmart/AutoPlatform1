@@ -169,10 +169,13 @@
     </select>
 
     <!--查询配件分类name值是否唯一-->
-    <select id="queryAccTypeNameOne" resultMap="AccessoriesTypeMap">
+    <select id="queryAccTypeNameOne" resultType="int">
         <![CDATA[
-          select ac.accTypeName from auto_platform.t_accessories_type ac where ac.accTypeName=#{accTypeName}
+          select count(accTypeName) from auto_platform.t_accessories_type where accTypeName = #{accTypeName}
         ]]>
+        <if test="accTypeId != null and accTypeId != ''">
+            and accTypeId != #{accTypeId}
+        </if>
     </select>
 
 </mapper>

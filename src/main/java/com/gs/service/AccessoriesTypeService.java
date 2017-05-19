@@ -24,5 +24,5 @@ public interface AccessoriesTypeService extends BaseService<String, AccessoriesT
      */
     public List<AccessoriesType> queryTypeName(String companyId);
 
-    public AccessoriesType queryAccTypeNameOne(String accTypeName);
+    public int queryAccTypeNameOne(@Param("accTypeName") String accTypeName,@Param("accTypeId") String accTypeId);
 }
