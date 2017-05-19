@@ -33,13 +33,9 @@
                 <th data-field="maintainRecord.checkin.intactDegrees">车身完好度</th>
                 <th data-field="maintainRecord.checkin.carThings">车上物品</th>
                 <th data-field="maintainRecord.checkin.userRequests">用户要求描述</th>
-                <%--<th data-field="maintainRecord.checkin.checkinCreatedTime">用户登记时间</th>--%>
-                <%--<th data-field="maintainRecord.startTime" data-formatter="formatterDateTime">保养开始时间</th>--%>
-                <%--<th data-field="maintainRecord.actualEndTime" data-formatter="formatterDateTime">保养结束时间</th>--%>
-                <%--<th data-field="maintainRecord.pickupTime" data-formatter="formatterDateTime">车主提车时间</th>--%>
-                <%--<th data-field="maintainRecord.recordDes">维修保养记录描述</th>--%>
-
-                <%--<th data-field="workStatus">维修保养状态</th>--%>
+                <th data-width="90" data-field="workStatus" data-formatter="showStatusFormatter1">
+                    工单状态
+                </th>
             </tr>
             </thead>
         </table>
@@ -87,13 +83,16 @@
             <div class="modal-body">
                 <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('editWindow','editForm')"></span>
                 <form class="form-horizontal" role="form" id="editForm" method="post">
+                    <input type="hidden" id="editMaintainScheduleId" name="maintainScheduleId"/>
+                    <input type="hidden" id="editMaintainRecordId" name="maintainRecordId"/>
+                    <input type="hidden" id="editMsCreatedTime" name="msCreatedTime"/>
                     <div class="modal-header" style="overflow:auto;">
                         <h4>修改车辆维修保养进度描述</h4>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">进度描述：</label>
                         <div class="col-sm-7">
-                            <textarea name="maintainScheduleDes" define="MaintainSchedule.maintainScheduleDes" placeholder="请输入保养进度描述" row="50" class="form-control" ></textarea>
+                            <textarea id="editMaintainScheduleDes" name="maintainScheduleDes" placeholder="请输入保养进度描述" row="50" class="form-control" ></textarea>
                             <%--                        <input type="text" name="maintainScheduleDes" placeholder="请输入保养进度描述" class="form-control">--%>
                         </div>
                     </div>
@@ -150,18 +149,18 @@
     <div class="modal-dialog" style="width: 90%;">
         <div class="modal-content">
             <div class="modal-body">
+                <div id="ifConfirm" style="background: url('/static/img/materialsFlag1.png')-50px -50px no-repeat;position: absolute;z-index:999;width: 200px;height: 200px;background-size:200px;display: none"></div>
                 <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
                 <h3 class="m-t-none m-b">车辆维修保养进度</h3>
-                <div id="toolbars" class="btn-group">
+                <div id="toolbars" class="btn-group" style="padding-top: 10px;display: block">
                     <button id="btn_add" type="button" class="btn btn-default" onclick="showAdd();">
                         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增进度描述
                     </button>
-                    <button id="btn_edit" type="button" class="btn btn-default" onclick="showEdit();">
+                    <button id="btn_edit" type="button" class="btn btn-default" onclick="showOk();">
                         <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>确认完成
                     </button>
                 </div>
-                <hr>
-                <div id="maintenance"></div>
+                <div id="maintenance" style="padding-top:60px;"></div>
                 <div class="modal-footer" style="border: none">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                 </div>

@@ -126,7 +126,6 @@
               where wi.recordId = m.recordId and m.checkinId = ck.checkinId and ck.brandId = cb.brandId
               and ck.colorId = cc.colorId and ck.modelId = cm.modelId
              and ck.plateId = cp.plateId and ck.companyId = company.companyId
-             and wi.workStatus = 'Y'
         ]]>
         <if test="user.companyId != '' and user.companyId !=null">
             and ck.companyId = #{user.companyId}

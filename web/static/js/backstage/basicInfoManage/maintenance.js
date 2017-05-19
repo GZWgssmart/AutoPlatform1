@@ -27,27 +27,62 @@ $(function(){
     });
 });
 
+// 激活或禁用
+function showStatusFormatter1(value) {
+    if(value == 'Y') {
+        return "已完成";
+    } else {
+        return "未完成";
+    }
+}
+
 // 显示所有进度
 function showSchedule(){
     var row =  $('#table').bootstrapTable('getSelections');
     if(row.length >0) {
-        $("#ScheduleWindow").modal('show');
         $.post("/maintainSchedule/queryScheduleByRecord/" + row[0].recordId, function (data) {
             // 查询出此记录所有明细进行forEach
             var htmlDiv = "";
-            $.each(data, function(index, value, item) {
-                if(row[0].maintainRecord.currenStatus != '已登记' || row[0].maintainRecord.currenStatus != '维修保养中') {
-                    if (htmlDiv == "") {// 假如这个字符串刚开始设置,
-                        htmlDiv = "<button class='btn btn-info btn-circle btn-lg' type='button' style='border-radius:45px;height:45px;'>" + (index + 1) + "</button>" +
-                            "<div id='id1' style='border-bottom: 5px solid red;display:inline;'onclick='edit(this)'>&nbsp;&nbsp;" + data[index].maintainScheduleDes + "&nbsp;&nbsp;</div>"
-                    } else {
-                        htmlDiv += "<button class='btn btn-info btn-circle btn-lg' type='button' style='border-radius:45px;height:45px;'>" + (index + 1) + "</button>" +
-                            "<div id='id2' style='border-bottom: 5px solid red;display:inline;' onclick='edit(this)'>&nbsp;&nbsp;" + data[index].maintainScheduleDes + "&nbsp;&nbsp;</div>";// 否则就加上逗号把rows里所有的id都赋给ids
-                    }
+            if(data.length > 0){
+                if(row[0].workStatus != 'Y') {
+                    $("#ifConfirm").css("display", "none");
+                    $("#toolbars").css("display", "block");
+                    $.each(data, function(index, value, item) {
+                            if (htmlDiv == "") {// 假如这个字符串刚开始设置,
+                                htmlDiv = "<button class='btn btn-info btn-circle btn-lg' type='button' onclick='edit(\""+data[index].maintainScheduleId+','+ data[index].maintainRecordId+','+data[index].maintainScheduleDes+','+data[index].msCreatedTime+"\")' style='border-radius:45px;height:45px;'>" + (index + 1) + "</button>" +
+                                    "<div style='border-bottom: 1px solid black;display:inline;'>&nbsp;&nbsp;" + data[index].maintainScheduleDes + "&nbsp;&nbsp;</div>"
+                            } else {
+                                htmlDiv += "<button class='btn btn-info btn-circle btn-lg' type='button' onclick='edit(\""+data[index].maintainScheduleId+','+ data[index].maintainRecordId+','+data[index].maintainScheduleDes+','+data[index].msCreatedTime+"\")' style='border-radius:45px;height:45px;'>" + (index + 1) + "</button>" +
+                                    "<div style='border-bottom: 1px solid black;display:inline;' >&nbsp;&nbsp;" + data[index].maintainScheduleDes + "&nbsp;&nbsp;</div>";
+                            }
+                    });
+                }else{
+                    $("#ifConfirm").css("display", "block");
+                    $("#toolbars").css("display", "none");
+                    $.each(data, function(index, value, item) {
+                        if (htmlDiv == "") {// 假如这个字符串刚开始设置,
+                            htmlDiv = "<button class='btn btn-info btn-circle btn-lg' type='button' style='border-radius:45px;height:45px;' disabled='disabled'>" + (index + 1) + "</button>" +
+                                "<div style='border-bottom: 1px solid black;display:inline;'>&nbsp;&nbsp;" + data[index].maintainScheduleDes + "&nbsp;&nbsp;</div>"
+                        } else {
+                            htmlDiv += "<button class='btn btn-info btn-circle btn-lg' type='button' style='border-radius:45px;height:45px;' disabled='disabled'>" + (index + 1) + "</button>" +
+                                "<div style='border-bottom: 1px solid black;display:inline;'>&nbsp;&nbsp;" + data[index].maintainScheduleDes + "&nbsp;&nbsp;</div>";
+                        }
+                    });
                 }
-                $("#maintenance").html(htmlDiv);
-            });
+                htmlDiv+= "<button class='btn btn-info btn-circle btn-lg' type='button' style='border-radius:45px;height:45px;' disabled='disabled'>"+(data.length+1)+"</button>";
+            }else{
+                if(row[0].workStatus != 'Y') {
+                    $("#ifConfirm").css("display", "none");
+                    $("#toolbars").css("display", "block");
+                }else{
+                    $("#ifConfirm").css("display", "block");
+                    $("#toolbars").css("display", "none");
+                }
+                htmlDiv = "<h4>此维修保养记录暂无维修保养进度</h4>";
+            }
+            $("#maintenance").html(htmlDiv);
         });
+        $("#ScheduleWindow").modal('show');
     }else{
         swal({
             title:"",
@@ -59,12 +94,13 @@ function showSchedule(){
 }
 
 // 点击修改
-   function edit(obj){
-    if(obj == "id1"){
-        var n=document.getElementById("id1").innerText;
-    }else{
-        var n= document.getElementById("id2").innerText;
-    }
+   function edit(maintainScheduleId,maintainRecordId,maintainScheduleDes,msCreatedTime){
+    $("#ScheduleWindow").modal("hide");
+    $("#editWindow").modal("show");
+    $("#editMaintainScheduleId").val(maintainScheduleId);
+    $("#editMaintainRecordId").val(maintainRecordId);
+    $("#editMaintainScheduleDes").val(maintainScheduleDes);
+    $("#editMsCreatedTime").val(msCreatedTime);
 }
 
 function statusFormatter(index, row) {
@@ -122,6 +158,48 @@ function showEdit() {
             "type": "warning"
         })
     }
+}
+
+function showOk(){
+    swal({
+        title: "",
+        text: "确定确认完成此工单吗?",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "我确定",
+        cancelButtonText: "再考虑一下",
+        closeOnConfirm: false,
+        closeOnCancel: false
+    },function(ifCor){
+        var row =$('table').bootstrapTable('getSelections');
+        $.post("/Order/statusOperate/"+row[0].workId +"/"+row[0].recordId, function (data) {
+            if(data.result == "success"){
+                $("#ifConfirm").css("display", "block");
+                $("#toolbars").css("display", "none");
+                swal({
+                    title: "",
+                    text: data.message,
+                    confirmButtonText: "确认",
+                    type: "success"
+                })
+            }else if (data.result == "fail") {
+                swal({
+                    title: "",
+                    text: data.message,
+                    confirmButtonText: "确认",
+                    type: "error"
+                })
+            }else if (data.result == "notRole") {
+                swal({
+                    title: "",
+                    text: data.message,
+                    confirmButtonText: "确认",
+                    type: "error"
+                })
+            }
+        })
+    });
 }
 
  function openAddSchedule(){
@@ -245,7 +323,7 @@ function formSubmit(url, formId, winId) {
                     } else if (data.result == "fail") {
                         swal({
                             title: "",
-                            text: "添加失败",
+                            text: data.message,
                             confirmButtonText: "确认",
                             type: "error"
                         })
@@ -254,6 +332,7 @@ function formSubmit(url, formId, winId) {
                 }, "json");
         } else if (data.result == "notLogin") {
             swal({
+                title: "",
                 text: data.message,
                 confirmButtonText: "确认", // 提示按钮上的文本
                 type: "error"
@@ -266,6 +345,7 @@ function formSubmit(url, formId, winId) {
             })
         } else if (data.result = "notRole") {
             swal({
+                title: "",
                 text: data.message,
                 confirmButtonText: "确认", // 提示按钮上的文本
                 type: "error"

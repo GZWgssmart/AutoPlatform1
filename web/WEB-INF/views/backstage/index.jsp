@@ -72,9 +72,6 @@
                     <%--<li>--%>
                         <%--<a class="J_menuItem" href="/error/serverError">500</a>--%>
                     <%--</li>--%>
-                    <li>
-                    <a class="J_menuItem" href="/carRemind/sms">测试发送短信</a>
-                    </li>
                     <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师,汽车公司学徒,汽车公司销售人员,汽车公司财务人员,汽车公司采购人员,汽车公司库管人员,汽车公司人力资源管理部">
                         <li>
                             <a href="#">
@@ -180,7 +177,7 @@
                     </shiro:hasAnyRoles>
                     <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师">
                     <li>
-                        <a href="#"><i class="fa fa-car"></i> <span class="nav-label">维修保养接待</span><span class="fa arrow"></span></a>
+                        <a href="#"><i class="fa fa-car"></i> <span class="nav-label">维修保养接待管理</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员">
                                 <li><a class="J_menuItem" href="/maintenanceReception/reception">接待登记管理</a></li>
@@ -207,7 +204,7 @@
                     </shiro:hasAnyRoles>
                     <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师">
                         <li>
-                            <a href="#"><i class="fa fa-wrench"></i> <span class="nav-label">车辆维修保养</span><span class="fa arrow"></span></a>
+                            <a href="#"><i class="fa fa-wrench"></i> <span class="nav-label">维修保养进度管理</span><span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li><a class="J_menuItem" href="maintenanceController/maintenanceIndex">维修保养进度管理</a>
                                 </li>

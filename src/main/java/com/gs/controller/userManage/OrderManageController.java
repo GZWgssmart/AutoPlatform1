@@ -9,22 +9,22 @@ import com.gs.common.bean.*;
 import com.gs.common.util.DateFormatUtil;
 import com.gs.common.util.RoleUtil;
 import com.gs.common.util.SessionUtil;
+import com.gs.service.MaintainRecordService;
 import com.gs.service.WorkInfoService;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**订单查询
  * Created by jyy on 2017/4/20.
@@ -39,6 +39,8 @@ OrderManageController {
 
     @Resource
     private WorkInfoService workInfoService;
+    @Resource
+    private MaintainRecordService maintainRecordService;
     //private MaintainRecordService maintainRecordService
 
     @ResponseBody
@@ -183,30 +185,22 @@ OrderManageController {
         }
     }
 
-    /**
-     * 对状态的激活和启用，只使用一个方法进行切换。
-     */
     @ResponseBody
-    @RequestMapping(value = "statusOperate",method = RequestMethod.POST)
-    public ControllerResult inactive(HttpSession session,String id,String status){
+    @RequestMapping(value = "statusOperate/{workId}/{recordId}",method = RequestMethod.POST)
+    public ControllerResult inactive(HttpSession session, @PathVariable("workId")String workId, @PathVariable("recordId")String recordId){
         if(SessionUtil.isLogin(session)) {
             String roles="汽车公司总技师,公司超级管理员";
             if(RoleUtil.checkRoles(roles)) {
-                if (id != null && !id.equals("") && status != null && !status.equals("")) {
-                    if (status.equals("N")) {
-                        workInfoService.active(id);
-                        logger.info("激活成功");
-                        return ControllerResult.getSuccessResult("激活成功");
-                    } else {
-                        workInfoService.inactive(id);
-                        logger.info("禁用成功");
-                        return ControllerResult.getSuccessResult("禁用成功");
-                    }
+                if (workId != null && !workId.equals("") && recordId!=null && !recordId.equals("")) {
+                        workInfoService.active(workId);
+                        maintainRecordService.updateCurrentStatus("待提醒", "'"+recordId+"'");
+                        logger.info("确认完成工单成功");
+                        return ControllerResult.getSuccessResult("确认完成工单成功");
                 } else {
-                    return ControllerResult.getFailResult("操作失败");
+                    return ControllerResult.getFailResult("确认完成工单失败");
                 }
             }else{
-                logger.info("此用户无拥有工单更改状态角色");
+                logger.info("此用户无拥有确认完成工单的角色");
                 return ControllerResult.getNotRoleResult("权限不足");
             }
         }else{
@@ -215,6 +209,8 @@ OrderManageController {
         }
 
     }
+
+
 
     /**
      *日期格式

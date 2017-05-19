@@ -12,4 +12,5 @@ import java.util.List;
 @Repository
 public interface MaintainScheduleDAO extends BaseDAO<String, MaintainSchedule>{
     public List<MaintainSchedule> queryScheduleByRecord(String recordId);
+    public void updateById(String maintainScheduleId);
 }

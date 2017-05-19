@@ -7,7 +7,6 @@
         <result column="maintainScheduleDes" property="maintainScheduleDes" jdbcType="VARCHAR" />
         <result column="msCreatedTime" property="msCreatedTime" jdbcType="TIMESTAMP" />
         <result column="msStatus" property="msStatus" jdbcType="VARCHAR" />
-        <result column="currentStatus" property="currentStatus" jdbcType="VARCHAR" />
 
         <association property="maintainRecord" javaType="com.gs.bean.MaintainRecord">
             <id column="recordId" property="recordId"></id>
@@ -108,8 +107,8 @@
     <insert id="insert" parameterType="maintainSchedule">
         <![CDATA[
           INSERT into auto_platform.t_maintain_schedule
-          (maintainScheduleId, maintainRecordId, maintainScheduleDes, msCreatedTime,msStatus,currentStatus)
-          VALUES(uuid(),#{maintainRecordId},#{maintainScheduleDes}, now(),'Y', '未完成')
+          (maintainScheduleId, maintainRecordId, maintainScheduleDes, msCreatedTime,msStatus)
+          VALUES(uuid(),#{maintainRecordId},#{maintainScheduleDes}, now(),'Y')
         ]]>
     </insert>
 
@@ -117,6 +116,12 @@
         <![CDATA[
           UPDATE auto_platform.t_maintain_schedule
           SET maintainRecordId = #{maintainRecordId}, maintainScheduleDes = #{maintainScheduleDes} where maintainScheduleId=#{maintainScheduleId}
+        ]]>
+    </update>
+
+    <update id="updateById" >
+        <![CDATA[
+          UPDATE auto_platform.t_maintain_schedule SET msStatus='Y' where maintainScheduleId=#{maintainScheduleId}
         ]]>
     </update>
 </mapper>

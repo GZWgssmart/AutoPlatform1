@@ -1,7 +1,6 @@
 package com.gs.controller.maintainScheduleManage;
 
 import ch.qos.logback.classic.Logger;
-import com.gs.bean.MaintainRecord;
 import com.gs.bean.MaintainSchedule;
 import com.gs.bean.User;
 import com.gs.common.bean.ComboBox4EasyUI;
@@ -10,6 +9,7 @@ import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
 import com.gs.common.util.RoleUtil;
 import com.gs.common.util.SessionUtil;
+import com.gs.service.MaintainRecordService;
 import com.gs.service.MaintainScheduleService;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
@@ -33,10 +33,12 @@ import java.util.List;
 @Controller
 @RequestMapping("/maintainSchedule")
 public class    MaintainScheduleController {
+    private Logger logger = (Logger) LoggerFactory.getLogger(MaintainScheduleController.class);
 
     @Resource
     private MaintainScheduleService maintainScheduleService;
-    private Logger logger = (Logger) LoggerFactory.getLogger(MaintainScheduleController.class);
+    @Resource
+    private MaintainRecordService maintainRecordService;
 
     /**
      * 根据维修保养记录id查询此记录下所有维修保养进度
@@ -234,6 +236,7 @@ public class    MaintainScheduleController {
             return null;
         }
     }
+
 
     /**
      * 日期格式
