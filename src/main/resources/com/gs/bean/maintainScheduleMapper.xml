@@ -17,6 +17,7 @@
             <result column="actualEndTime" property="actualEndTime"/>
             <result column="recordCreatedTime" property="recordCreatedTime"/>
             <result column="pickupTime" property="pickupTime"/>
+            <result column="recordStatus" property="recordStatus"/>
 
             <association property="checkin" javaType="com.gs.bean.Checkin">
                 <id column="checkinId" property="checkinId" jdbcType="VARCHAR" />
@@ -81,7 +82,6 @@
         ]]>
         limit #{beginIndex}, #{pageSize};
     </select>
-
 
     <!--查询全部-->
     <select id="queryAll" resultMap="MaintainScheduleMap">

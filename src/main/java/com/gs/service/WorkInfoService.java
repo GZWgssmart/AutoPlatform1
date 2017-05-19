@@ -18,4 +18,5 @@ public interface WorkInfoService extends BaseService<String, WorkInfo>{
 
     public List<WorkInfo> queryByPagerschelude(Pager pager);
 
+
 }

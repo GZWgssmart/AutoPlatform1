@@ -24,9 +24,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**订单查询
  * Created by jyy on 2017/4/20.
@@ -128,18 +126,6 @@ OrderManageController {
         }
     }
 
-/*    @ResponseBody
-    @RequestMapping(value="queryByUserId/{id}",method="RequestMethod.GET")
-    public List<ComboBox4EasyUI> queryUserId(@PathVariable ("id") String id){
-        List<WorkInfo> workinfos = workInfoService.queryByUserId(id);
-        List<ComboBox4EasyUI> comboxs = new ArrayList<ComboBox4EasyUI>();
-        for(WorkInfo w : workinfos){
-            ComboBox4EasyUI comboBox4EasyUI = new ComboBox4EasyUI();
-            comboBox4EasyUI.setId(work.getUserId());
-            comboBox4EasyUI.setText(work.getUserNickname());
-            comboxs.add(comboBox4EasyUI);
-        }
-    }*/
     /**
      * 查询所有未完成工单
      *
@@ -168,22 +154,6 @@ OrderManageController {
             return null;
         }
     }
-
-/*    *//**
-     *添加订单
-     * @param workInfo
-     * @return
-     *//*
-    @ResponseBody
-    @RequestMapping(value = "add",method = RequestMethod.GET)
-    public ControllerResult addWork(WorkInfo workInfo) {
-        logger.info("添加订单");
-        workInfo.setUserId(UUIDUtil.uuid());
-        workInfo.setWorkStatus("Y");
-        workInfoService.insert(workInfo);
-        return ControllerResult.getSuccessResult("添加成功");
-    }*/
-
     /**
      * 修改订单
      * @param workInfo
@@ -212,7 +182,6 @@ OrderManageController {
             return ControllerResult.getNotLoginResult("登录信息无效，请重新登录");
         }
     }
-
 
     /**
      * 对状态的激活和启用，只使用一个方法进行切换。
@@ -466,8 +435,5 @@ OrderManageController {
             logger.info("请先登录");
             return null;
         }
-
-
-
     }
 }

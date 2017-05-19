@@ -86,4 +86,5 @@ public class WorkInfoServiceImpl implements WorkInfoService {
 	public int countByBlurred(WorkInfo workInfo, User user) {
 		return 0;
 	}
+
 }

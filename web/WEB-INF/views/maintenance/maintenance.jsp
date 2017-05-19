@@ -44,12 +44,6 @@
             </thead>
         </table>
         <div id="toolbar" class="btn-group">
-            <button id="btn_available" type="button" class="btn btn-success" onclick="showAvailable();">
-                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>可用进度记录
-            </button>
-            <button id="btn_disable" type="button" class="btn btn-danger" onclick="showDisable();">
-                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>禁用进度记录
-            </button>
             <button id="btn_editAcc" type="button" class="btn btn-default" onclick="showSchedule();">
                 <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查看维修保养进度
             </button>
