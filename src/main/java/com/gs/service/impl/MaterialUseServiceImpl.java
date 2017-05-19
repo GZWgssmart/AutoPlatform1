@@ -268,9 +268,8 @@ public class MaterialUseServiceImpl implements MaterialUseService {
 	}
 
 	@Override
-	public List<Company> queryNearCompanys(String count, double longitude, double latitude) {
-
-		return null;
+	public List<Company> queryNearCompanys(Map pointsMap) {
+		return materialUseDAO.queryNearCompanys(pointsMap);
 	}
 
 

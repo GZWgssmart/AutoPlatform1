@@ -544,4 +544,13 @@
         select userId from t_work_info workInfo where recordId = #{recordId}
     </select>
 
+
+    <select id = "queryNearCompanys" parameterType="hashMap" resultType="company">
+        select * from t_company comp
+        where comp.companyStatus = "Y"
+        <![CDATA[ and comp.companyLongitude >  ]]> #{minLng}
+        <![CDATA[ and comp.companyLongitude <  ]]> #{maxLng}
+        <![CDATA[ and comp.companyLatitude  >  ]]> #{minLat}
+        <![CDATA[ and comp.companyLatitude  <  ]]> #{maxLat}
+    </select>
 </mapper>
