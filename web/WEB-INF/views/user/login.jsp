@@ -11,7 +11,7 @@
 %>
 <html>
 <head>
-    <title>用户登陆</title>
+    <title>公司入驻</title>
     <link rel="shortcut icon" href="favicon.ico">
     <link href="/static/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
     <link href="/static/css/font-awesome.min.css?v=4.4.0" rel="stylesheet">
@@ -33,43 +33,76 @@
         color: white;
         font-size: 17px;
     }
+    .form-group .control-label span{
+        font-size: 13px;
+    }
+    #backindex:hover{
+        color: white;
+    }
 </style>
 <body class="gray-bg">
 <div class="row">
-    <div class="col-sm-5 col-md-5" style="margin: 50px 30%;">
+    <div class="col-sm-5 col-md-5" style="margin: 10px 30%;">
+        <span style="font-size: 20px"><a id="backindex" href="/index">返回主页</a></span>
         <div class="ibox float-e-margins">
             <div class="ibox-title" style="padding:15px 0;background:black;text-align: center;border-color: black;">
-                <span style="font-size: 30px;color: #fff;">登 录</span>
-
+                <span style="font-size: 30px;color: #fff;">公司入驻</span>
             </div>
+
             <div class="ibox-content" style="background: rgba(0,0,0,0.7);">
                 <form class="form-horizontal" id="loginForm">
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">帐号：</label>
-                        <div class="col-sm-8">
-                            <input type="text" name="userEmail" placeholder="邮箱/手机号/用户名" class="form-control" onkeypress="if(event.keyCode==13) {loginSubmit();}">
+                        <label class="col-sm-5  col-md-5 control-label">公司名称<span>（必填）</span></label>
+                        <div class="col-sm-7 col-md-7">
+                            <input type="text" name="companyName" placeholder="公司名称" class="form-control" >
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">密码：</label>
-
-                        <div class="col-sm-8">
-                            <input type="password" name="userPwd" placeholder="密码" class="form-control" onkeypress="if(event.keyCode==13) {loginSubmit();}">
+                        <label class="col-sm-5  col-md-5 control-label">公司地址<span>（必填）</span></label>
+                        <div class="col-sm-7 col-md-7">
+                            <input type="text" name="companyAddress" placeholder="公司地址" class="form-control" >
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">验证码：</label>
-                        <div class="col-sm-8">
-                            <input style="width: 64%;float: right;" type="text" name="checkCode" placeholder="验证码" class="form-control" onkeypress="if(event.keyCode==13) {loginSubmit();}">
-                            <a href="javascript:;"><img style=" margin:0px 0 0 0; vertical-align:middle; height:35px;"
-                                                        src="<%=path %>/captcha"
-                                                        onclick="this.src='<%=path %>/captcha?time=Math.random();'"></a>
+                        <label class="col-sm-5  col-md-5 control-label">公司联系方式<span>（必填）</span></label>
+                        <div class="col-sm-7 col-md-7">
+                            <input type="number" name="companyTel" placeholder="公司联系方式" class="form-control" >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-5  col-md-5 control-label">公司负责人<span>（选填）</span></label>
+                        <div class="col-sm-7 col-md-7">
+                            <input type="text" name="companyPricipal" placeholder="公负责人" class="form-control" >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-5 col-md-5 control-label">公司官网URL<span>（选填）</span></label>
+                        <div class="col-sm-7 col-md-7">
+                            <input type="text" name="companyWebsite" placeholder="公司官网URL" class="form-control" >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-5 col-md-5 control-label">公司成立时间<span>（选填）</span></label>
+                        <div class="col-sm-7 col-md-7">
+                            <input type="date" name="companyOpenDate" placeholder="公司成立时间" class="form-control" >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-5 col-md-5 control-label">公司规模<span>（选填）</span></label>
+                        <div class="col-sm-7 col-md-7">
+                            <select type="date" name="companySize" placeholder="公司规模" class="form-control" >
+                                <option>10人以下</option>
+                                <option>11-50人</option>
+                                <option>51-100人</option>
+                                <option>101-150人</option>
+                                <option>150人以上</option>
+                            </select>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-sm-offset-3 col-sm-8">
                             <button class="btn btn-block btn-success " type="button" id="loginButton" onclick="loginSubmit()">
-                                登 录
+                                入驻
                             </button>
                         </div>
                     </div>

@@ -505,12 +505,14 @@
             var phonecodeinput = document.getElementById("phonecodeinput");
             if(phone.value == null || phone.value == ""){
                 prompt.innerHTML = "手机号为空";
+                prompt.style.color = "red";
                 prompt.style.display ="inline-block";
             }else if(!(/^1[34578]\d{9}$/).test(phone.value)){
                 prompt.innerHTML = "手机号错误";
-
+                prompt.style.color = "red";
             }else{
-                prompt.style.display = "none";
+                prompt.innerHTML = "已发送";
+                prompt.style.color = "green";
                 phonecodeinput.style.display = "inline-block";
             }
         })

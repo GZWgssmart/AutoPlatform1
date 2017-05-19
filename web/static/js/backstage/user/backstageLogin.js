@@ -22,34 +22,38 @@ function validator(formId) {
             validating: 'glyphicon glyphicon-refresh'
         },
         fields: {
-            userEmail: {
-                message: '邮箱/手机号',
+            companyName: {
+                message: '公司名称',
                 validators: {
                     notEmpty: {
-                        message: '邮箱/手机号'
+                        message: '公司名称'
                     }
                 }
             },
-            userPwd: {
-                message: '用户密码不能为空',
+            companyAddress: {
+                message: '公司地址不能为空',
                 validators: {
                     notEmpty: {
-                        message: '用户密码不能为空'
+                        message: '公司地址不能为空'
                     }
                 }
             },
-            checkCode: {
-                message: '验证码不能为空',
+            companyTel: {
+                message: '公司电话不能为空',
                 validators: {
                     notEmpty: {
-                        message: '验证码不能为空'
+                        message: '公司电话不能为空'
                     }
+                },
+                regexp: {
+                    regexp: /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/,
+                    message: '请输入正确的手机号'
                 }
             },
         }
     }).on('success.form.bv', function (e) {
         if (formId == "loginForm") {
-            $.post("/user/login",$("#loginForm").serialize(),function (data) {
+            $.post("/company/addCompany",$("#loginForm").serialize(),function (data) {
                 if(data.result=="success"){
                     window.location.href="/backstageIndex";
                 }else{

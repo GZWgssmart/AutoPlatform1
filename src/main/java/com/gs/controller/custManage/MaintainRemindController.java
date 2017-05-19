@@ -97,10 +97,10 @@ public class MaintainRemindController {
         Pager pager = new Pager();
         pager.setPageNo(Integer.valueOf(pageNumber));
         pager.setPageSize(Integer.valueOf(pageSize));
-        User user = (User) session.getAttribute("user");
+        User user = (User) session.getAttribute("frontUser");
         int count = maintainRemindService.countUser(user.getUserId());
         pager.setTotalRecords(count);
-        pager.setUser((User) session.getAttribute("user"));
+        pager.setUser((User) session.getAttribute("frontUser"));
         List<MaintainRemind> queryList = maintainRemindService.queryByPagerUser(pager,user.getUserId());
         return new Pager4EasyUI<MaintainRemind>(pager.getTotalRecords(), queryList);
     }

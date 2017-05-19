@@ -32,7 +32,6 @@
             <thead>
             <tr>
                 <th data-checkbox="true"></th>
-                <th data-field="user.userName">用户名</th>
                 <th data-field="lastMaintainTime" data-formatter="formatterDate">上次维修保养时间</th>
                 <th data-field="lastMaintainMileage">上次汽车行驶里程</th>
                 <th data-field="remindMsg">维修保养提醒消息</th>
@@ -58,7 +57,6 @@
 <script src="/static/js/jquery.formFill.js"></script>
 <script src="/static/js/select2/select2.js"></script>
 <script src="/static/js/sweetalert/sweetalert.min.js"></script>
-<script src="/static/js/backstage/custManage/maintainremind.js"></script>
 <script src="/static/js/bootstrap-validate/bootstrapValidator.js"></script>
 <script src="/static/js/plugins/layui/layui.js" charset="utf-8"></script>
 <script src="/static/js/backstage/main.js"></script>

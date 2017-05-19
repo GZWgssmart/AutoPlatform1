@@ -74,6 +74,12 @@ FrontpageController {
         return "Frontpage/Factorydeta";
     }
 
+    /*商家入驻*/
+    @RequestMapping(value = "factoryreg",method = RequestMethod.GET)
+    public String factoryreg(){
+
+        return "user/login";
+    }
 
 
 
