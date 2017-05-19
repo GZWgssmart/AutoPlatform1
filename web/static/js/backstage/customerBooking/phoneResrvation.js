@@ -224,8 +224,11 @@ function clearAddForm() {
 function showEdit(){
     initDateTimePicker('editForm', 'arriveTime','editArriveTime');
     var row =  $('#table').bootstrapTable('getSelections');
-    //alert(row)
     if(row.length >0) {
+        if(row[0].userId != null && row[0].userId !=""){
+            $("#editUserName").attr("readOnly",true);
+            $("#editUserPhone").attr("readOnly",true);
+        }
         $("#editWindow").modal('show'); // 显示弹窗
         $("#editButton").removeAttr("disabled");
         var appointment = row[0];

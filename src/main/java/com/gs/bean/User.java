@@ -49,6 +49,15 @@ public class User {
 
     private Company company;    // 汽修公司
     private Role role;        // 角色
+    private UserRole userRole;
+
+    public UserRole getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(UserRole userRole) {
+        this.userRole = userRole;
+    }
 
     public int getPhonecode() {
         return phonecode;

@@ -246,13 +246,13 @@
                 <div class="form-group ">
                     <label class="col-sm-3 control-label">车主姓名：</label>
                     <div class="col-sm-7">
-                        <input type="text"  name="userName" placeholder="车主姓名" define="appointment.userName" class="form-control"/>
+                        <input type="text" id="editUserName"  name="userName" placeholder="车主姓名" define="appointment.userName" class="form-control"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">车主电话：</label>
                     <div class="col-sm-7">
-                        <input type="number" name="userPhone" placeholder="车主电话" define="appointment.userPhone" class="form-control" style="width:100%"/>
+                        <input type="number" id="editUserPhone" name="userPhone" placeholder="车主电话" define="appointment.userPhone" class="form-control" style="width:100%"/>
                     </div>
                 </div>
 
@@ -399,6 +399,7 @@
 <script src="/static/js/bootstrap-table/bootstrap-table-zh-CN.js"></script>
 <script src="/static/js/jquery.formFill.js"></script>
 <script src="/static/js/select2/select2.js"></script>
+<script src="/static/js/contextmenu.js"></script>
 <script src="/static/js/sweetalert/sweetalert.min.js"></script>
 <script src="/static/js/bootstrap-select/bootstrap-select.js"></script>
 <script src="/static/js/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.js"></script>

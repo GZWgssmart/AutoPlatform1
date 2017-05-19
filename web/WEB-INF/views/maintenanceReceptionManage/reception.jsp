@@ -478,11 +478,11 @@
                         <th data-width="190" data-field="appCreatedTime" data-formatter="formatterDate">
                             预约创建时间
                         </th>
-                        <th data-width="130" data-field="company.companyName">
-                            汽修公司
+                        <th data-width="100" data-field="currentStatus">
+                            当前状态
                         </th>
                         <th data-width="100" data-field="appoitmentStatus" data-formatter="showStatusFormatter">
-                            预约状态
+                            记录状态
                         </th>
                     </thead>
                 </table>

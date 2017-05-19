@@ -317,6 +317,7 @@ function formSubmit(url, formId, winId) {
         } else if (data.result == "notLogin") {
             console.log("noLogin")
             swal({
+                title:"",
                 text: data.message,
                 confirmButtonText: "确认", // 提示按钮上的文本
                 type: "error"
@@ -330,6 +331,7 @@ function formSubmit(url, formId, winId) {
         } else if (data.result = "notRole") {
             console.log("noRole")
             swal({
+                title:"",
                 text: data.message,
                 confirmButtonText: "确认", // 提示按钮上的文本
                 type: "error"
@@ -344,7 +346,7 @@ function iconUpldSuc(data, winId, formId) {
     var controllerResult= data.controllerResult;
     if (controllerResult.result == "success") {
         swal({
-            title:"提示",
+            title:"",
             text: data.controllerResult.message,
             confirmButtonText:"确定", // 提示按钮上的文本
             type:"success"
@@ -396,7 +398,7 @@ function showEdit(){
                         validator('editForm');
                     } else {
                         swal({
-                            title:"警告",
+                            title:"",
                             text: "此员工已被辞退，不能再对其进行操作", // 主要文本
                             confirmButtonColor: "#DD6B55", // 提示按钮的颜色
                             confirmButtonText:"确定", // 提示按钮上的文本
@@ -414,8 +416,8 @@ function showEdit(){
                 }
             } else {
                 swal({
-                    title:"警告",
-                    text: "请选中一条数据", // 主要文本
+                    title:"",
+                    text: "请先选中一条人员信息", // 主要文本
                     confirmButtonColor: "#DD6B55", // 提示按钮的颜色
                     confirmButtonText:"确定", // 提示按钮上的文本
                     type:"warning"
@@ -423,6 +425,7 @@ function showEdit(){
             }
         } else if (data.result == "notLogin") {
             swal({
+                title:"",
                 text: data.message,
                 confirmButtonText: "确认", // 提示按钮上的文本
                 type: "error"
@@ -435,6 +438,7 @@ function showEdit(){
             })
         } else if (data.result == "notRole") {
             swal({
+                title:"",
                 text: data.message,
                 confirmButtonText: "确认", // 提示按钮上的文本
                 type: "error"
@@ -591,6 +595,7 @@ function searchDisableStatus() {
             initTable('table', '/userBasicManage/queryByPagerDisable');
         } else if (data.result == "notLogin") {
             swal({
+                title:"",
                 text: data.message,
                 confirmButtonText: "确认", // 提示按钮上的文本
                 type: "error"
@@ -603,6 +608,7 @@ function searchDisableStatus() {
             })
         } else if (data.result = "notRole") {
             swal({
+                title:"",
                 text: data.message,
                 confirmButtonText: "确认", // 提示按钮上的文本
                 type: "error"
@@ -618,6 +624,7 @@ function searchRapidStatus() {
             initTable('table', '/userBasicManage/queryByPager');
         } else if (data.result == "notLogin") {
             swal({
+                title:"",
                 text: data.message,
                 confirmButtonText: "确认", // 提示按钮上的文本
                 type: "error"
@@ -630,6 +637,7 @@ function searchRapidStatus() {
             })
         } else if (data.result = "notRole") {
             swal({
+                title:"",
                 text: data.message,
                 confirmButtonText: "确认", // 提示按钮上的文本
                 type: "error"

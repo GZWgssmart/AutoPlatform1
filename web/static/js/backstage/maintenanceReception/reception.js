@@ -408,12 +408,6 @@ function validator(formId) {
                     regexp: {
                         regexp: /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/,
                         message: '请输入正确的手机号'
-                    },
-                    remote: {
-                        url: '/user/queryPhoneByOne',
-                        message: '该手机号车主为本店车主, 请根据上方开关选择本店车主',
-                        delay :  2000,
-                        type: 'GET'
                     }
                 }
             },
