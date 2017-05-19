@@ -165,7 +165,7 @@ public class CompanyController {
                     userRoleService.insert(userRole);
                     companyService.insert(company);
                     map.put("company",company);
-                    map.put("controllerResult",ControllerResult.getSuccessResult("添加公司信息成功"));
+                    map.put("controllerResult",ControllerResult.getSuccessResult("账号:" + company.getCompanyPricipalphone() + " " + "初始密码为:123456"));
                     return map;
                 } else {
                     map.put("controllerResult",ControllerResult.getFailResult("添加公司信息失败"));
@@ -201,15 +201,16 @@ public class CompanyController {
     }
 
     /**
-     * 查询此公司联系电话是否已存在
+     * 查询此公司负责人电话是否已存在
      */
     @ResponseBody
     @RequestMapping(value = "querycompanyPricipalphone", method = RequestMethod.POST)
     public Map querycompanyPricipalphone(Company company) {
         logger.info("此公司联系电话是否已存在此公司联系电话");
         int countcompanyPricipalphone = companyService.querycompanyPricipalphone(company.getCompanyPricipalphone(),company.getCompanyId());
+        int userphone = userService.queryPhoneByOne(company.getCompanyPricipalphone());
         Map<String, Boolean> map = new HashMap<String, Boolean>();
-        if(countcompanyPricipalphone > 0)
+        if(countcompanyPricipalphone > 0 || userphone > 0)
             map.put("valid", false);
         else
             map.put("valid", true);

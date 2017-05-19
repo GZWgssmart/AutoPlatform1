@@ -171,21 +171,26 @@ function validator(formId) {
 
 
 function addSubmit(){
-    $("#addForm").data('bootstrapValidator').validate();
-    if ($("#addForm").data('bootstrapValidator').isValid()) {
-        $("#addButton").attr("disabled","disabled");
-    } else {
-        $("#addButton").removeAttr("disabled");
-    }
+    setTimeout(function () {
+        $("#addForm").data('bootstrapValidator').validate();
+        if ($("#addForm").data('bootstrapValidator').isValid()) {
+            $("#addButton").attr("disabled","disabled");
+        } else {
+            $("#addButton").removeAttr("disabled");
+        }
+    },100)
+
 }
 
 function editSubmit(){
+    setTimeout(function () {
     $("#editForm").data('bootstrapValidator').validate();
     if ($("#editForm").data('bootstrapValidator').isValid()) {
         $("#editButton").attr("disabled","disabled");
     } else {
         $("#editButton").removeAttr("disabled");
     }
+    },100)
 }
 
 function formSubmit(url, formId, winId){

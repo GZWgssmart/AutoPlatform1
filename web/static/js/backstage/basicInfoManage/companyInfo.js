@@ -185,7 +185,6 @@ function statusFormatter(value, row, index) {
         return "&nbsp;&nbsp;<button type='button' class='btn btn-success' onclick='active(\""+'/company/statusOperate?id='+ row.companyId+'&status=N'+ "\")'>激活</a>";
     }
 }
-
 //显示添加
 function showAdd(){
     // 初始化时间框, 第一参数是form表单id, 第二参数是input的name, 第三个参数为input的id
@@ -292,7 +291,7 @@ function validator(formId) {
                 message: '公司官网网址验证失败',
                 validators: {
                     notEmpty: {
-                        message: '公司官网网址不能为空'
+                        message: '公司官网网址格式为http|ftp|https://www'
                     },
                     regexp: {
                         regexp: /^(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?$/,
@@ -367,7 +366,8 @@ function validator(formId) {
                         message: '公司成立时间不能为空'
                     }
                 }
-            },
+            }
+            ,
             companyLogo:{
                 message: '公司Logo失败',
                 validators: {
@@ -384,7 +384,9 @@ function validator(formId) {
                 formSubmit("/company/addCompany", formId, "addWindow", "file");
 
             } else if (formId == "editForm") {
+
                 formSubmit("/company/updateCompany", formId, "editWindow", "file1");
+
 
             }
         })
@@ -469,21 +471,27 @@ function formatterImg(value, row, index){
 // };
 
 function addSubmit(){
-    $("#addForm").data('bootstrapValidator').validate();
-    if ($("#addForm").data('bootstrapValidator').isValid()) {
-        $("#addButton").attr("disabled","disabled");
-    } else {
-        $("#addButton").removeAttr("disabled");
-    }
+    setTimeout(function () {
+        $("#addForm").data('bootstrapValidator').validate();
+        if ($("#addForm").data('bootstrapValidator').isValid()) {
+            $("#addButton").attr("disabled","disabled");
+        } else {
+            $("#addButton").removeAttr("disabled");
+        }
+    },100)
+
 }
 
 function editSubmit(){
-    $("#editForm").data('bootstrapValidator').validate();
-    if ($("#editForm").data('bootstrapValidator').isValid()) {
-        $("#editButton").attr("disabled","disabled");
-    } else {
-        $("#editButton").removeAttr("disabled");
-    }
+    setTimeout(function () {
+        $("#editForm").data('bootstrapValidator').validate();
+        if ($("#editForm").data('bootstrapValidator').isValid()) {
+            $("#editButton").attr("disabled","disabled");
+        } else {
+            $("#editButton").removeAttr("disabled");
+        }
+    },100)
+
 }
 
 function formSubmit(url, formId, winId, fileId) {
@@ -494,12 +502,12 @@ function formSubmit(url, formId, winId, fileId) {
                 function (data) {
                         if(data.company) {
                             console.log(data);
+                            $('#table').bootstrapTable('refresh');
                             var fileData = document.getElementById(fileId).files[0];
                             if(fileData) {
                                 var formData = new FormData();
                                 formData.append("companyLogo", fileData);
                                 formData.append("companyId", data.company.companyId);
-
                                 $.ajax({
                                     url: "/company/afterUpdIcon",
                                     type: "POST",
@@ -512,7 +520,8 @@ function formSubmit(url, formId, winId, fileId) {
                                         }
                                     }
                                 })
-                            } else {endSuc(data, winId, formId);}
+                            } else {
+                                endSuc(data, winId, formId);}
                         } else{
                             endSuc(data, winId, formId);
                         }
@@ -543,7 +552,7 @@ function endSuc(data, winId, formId) {
     var controllerResult= data.controllerResult;
     if (controllerResult.result == "success") {
         swal({
-            title:"",
+            title:"添加公司信息成功",
             text: data.controllerResult.message,
             confirmButtonText:"确定", // 提示按钮上的文本
             type:"success"
@@ -556,6 +565,8 @@ function endSuc(data, winId, formId) {
             $("#addButton").removeAttr("disabled"); // 移除不可点击
             $("#" + formId).data('bootstrapValidator').destroy(); // 销毁此form表单
             $('#' + formId).data('bootstrapValidator', null);// 此form表单设置为空
+        }else if(formId =='editForm'){
+            $("#editButton").removeAttr("disabled");
         } else if (controllerResult.result == "fail") {
             swal({
                 title: "",
@@ -660,66 +671,3 @@ function showMap(winId){
     windowId = winId;
     map.addEventListener("click", showInfo);
 }
-
-// function formSubmit(url, formId, winId){
-//     $.post(url,
-//         $("#" + formId).serialize(),
-//         function (data) {
-//             if (data.result == "success") {
-//                 swal({
-//                     title: "",
-//                     text: data.message,
-//                     confirmButtonText: "确定", // 提示按钮上的文本
-//                     type: "success"
-//                 })// 提示窗口, 修改成功
-//                 if(data.company) {
-//                     var fileData = document.getElementById("file").files[0];
-//                     var formData = new FormData();
-//                     formData.append("userIcon", fileData);
-//                     formData.append("userId", data.user.userId);
-//                     $.ajax({
-//                         url: "/company/afterUpdIcon",
-//                         type: "POST",
-//                         data: formData,
-//                         processData: false,
-//                         contentType: false,
-//                         success: function (data1) {
-//                             endSuc(data1, winId, formId);
-//                         }
-//                     })
-//                 } else{
-//                     endSuc(data, winId, formId);
-//                 }
-//             } else if (data.result == "fail") {
-//
-//                 if(formId == 'addForm') {
-//                     $("#addButton").removeAttr("disabled");
-//                 }else if(formId == 'editForm'){
-//                     $("#editButton").removeAttr("disabled");
-//                 }
-//             }else if (data.result == "notLogin") {
-//                 swal({title:"",
-//                         text:data.message,
-//                         confirmButtonText:"确认",
-//                         type:"error"}
-//                     ,function(isConfirm){
-//                         if(isConfirm){
-//                             top.location = "/user/loginPage";
-//                         }else{
-//                             top.location = "/user/loginPage";
-//                         }
-//                     })
-//                 if(formId == 'addForm') {
-//                     $("#addButton").removeAttr("disabled");
-//                 }else if(formId == 'editForm'){
-//                     $("#editButton").removeAttr("disabled");
-//                 }
-//             }else if(data.result == 'notRole'){
-//                 swal({title:"",
-//                     text:data.message,
-//                     confirmButtonText:"确认",
-//                     type:"error"})
-//             }
-//         }, "json");
-// }
-//

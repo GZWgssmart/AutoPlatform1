@@ -181,15 +181,19 @@ function validator(formId) {
 }
 
 function addSubmit(){
-    $("#addForm").data('bootstrapValidator').validate();
-    if ($("#addForm").data('bootstrapValidator').isValid()) {
-        $("#addButton").attr("disabled","disabled");
-    } else {
-        $("#addButton").removeAttr("disabled");
-    }
+    setTimeout(function () {
+        $("#addForm").data('bootstrapValidator').validate();
+        if ($("#addForm").data('bootstrapValidator').isValid()) {
+            $("#addButton").attr("disabled","disabled");
+        } else {
+            $("#addButton").removeAttr("disabled");
+        }
+    },100)
+
 }
 
 function editSubmit(){
+    setTimeout(function () {
     console.log("editSub");
     $("#editForm").data('bootstrapValidator').validate();
     if ($("#editForm").data('bootstrapValidator').isValid()) {
@@ -198,6 +202,7 @@ function editSubmit(){
 
         $("#editButton").removeAttr("disabled");
     }
+    },100)
 }
 
 function formSubmit(url, formId, winId){
@@ -291,7 +296,7 @@ function formSubmit(url, formId, winId){
 function showAddHex() {
     var a = document.getElementById("addColor").value;
     if (a.substr(0, 1) == "#") a = a.substring(1);
-    if (a.length != 6)return alert("请输入正确的十六进制颜色码！")
+    // if (a.length != 6)return alert("请输入正确的十六进制颜色码！")
     a = a.toLowerCase()
     b = new Array();
     for (x = 0; x < 3; x++) {
@@ -310,7 +315,7 @@ function showAddHex() {
 function showEditHex() {
     var a = document.getElementById("editColor").value;
     if (a.substr(0, 1) == "#") a = a.substring(1);
-    if (a.length != 6)return alert("请输入正确的十六进制颜色码！")
+    // if (a.length != 6)return alert("请输入正确的十六进制颜色码！")
     a = a.toLowerCase()
     b = new Array();
     for (x = 0; x < 3; x++) {
