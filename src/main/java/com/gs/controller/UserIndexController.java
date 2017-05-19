@@ -220,6 +220,18 @@ public class UserIndexController {
         currentUser.logout();
         return "Frontpage/Frontindex";
     }
+    /*切换账号*/
+    @RequestMapping(value = "changeaccount", method = RequestMethod.GET)
+    public String changeacc(HttpSession session) {
+        Subject currentUser = SecurityUtils.getSubject();
+        if (SessionUtil.isOwnerLogin(session)) {
+            User user = (User) session.getAttribute("frontUser");
+            user.setUserLoginedTime((Date) session.getAttribute("userLoginedTime"));
+            userService.update(user);
+        }
+        currentUser.logout();
+        return "Frontpage/registered";
+    }
 
     /**
      * 验证是否登录

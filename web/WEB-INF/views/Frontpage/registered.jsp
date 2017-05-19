@@ -41,7 +41,6 @@
                         <c:otherwise>
                             <li id="placelogin">欢迎您，请登录</li>
                             <a href="home" id="loginreg"><li>返回首页</li></a>
-                            <a href="javaScript:;" class="right-ul"><li>我的中心</li></a>
                             <div class="clearfix"></div>
                         </c:otherwise>
                     </c:choose>
