@@ -474,30 +474,6 @@ function validator(formId) {
                         message: '汽车当前油量不能为空'
                     }
                 }
-            },
-            carThings: {
-                message: '汽车物品描述验证失败',
-                validators: {
-                    notEmpty: {
-                        message: '汽车物品描述不能为空'
-                    }
-                }
-            },
-            intactDegrees :{
-                message: '汽车完好度描述验证失败',
-                validators: {
-                    notEmpty: {
-                        message: '汽车完好度描述不能为空'
-                    }
-                }
-            },
-            userRequests:{
-                message: '用户要求描述验证失败',
-                validators: {
-                    notEmpty: {
-                        message: '用户要求描述不能为空'
-                    }
-                }
             }
         }
     })

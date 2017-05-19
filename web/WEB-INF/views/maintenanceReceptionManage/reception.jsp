@@ -239,14 +239,14 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">汽车行驶里程：</label>
+                        <label class="col-sm-3 control-label">汽车行驶里程(km)：</label>
                         <div class="col-sm-7">
                             <input type="number" name="carMileage" placeholder="请输入汽车行驶里程" min="1" class="form-control"
                                    style="width:100%"/>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">汽车当前油量：</label>
+                        <label class="col-sm-3 control-label">汽车当前油量(L)：</label>
                         <div class="col-sm-7">
                             <input type="number" name="nowOil" placeholder="请输入汽车当前油量" min="1" class="form-control"
                                    style="width:100%"/>
@@ -387,14 +387,14 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">汽车行驶里程：</label>
+                        <label class="col-sm-3 control-label">汽车行驶里程(km)：</label>
                         <div class="col-sm-7">
                             <input type="number" name="carMileage" placeholder="请输入汽车行驶里程" min="1"
                                    define="checkin.carMileage" class="form-control" style="width:100%"/>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">汽车当前油量：</label>
+                        <label class="col-sm-3 control-label">汽车当前油量(L)：</label>
                         <div class="col-sm-7">
                             <input type="number" name="nowOil" placeholder="请输入汽车当前油量" min="1" define="checkin.nowOil"
                                    class="form-control" style="width:100%"/>

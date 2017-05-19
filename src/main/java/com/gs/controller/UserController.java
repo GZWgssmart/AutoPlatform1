@@ -184,9 +184,12 @@ public class UserController {
                         chIds += ",'" + checkin.getCheckinId() + "'";
                     }
                 }
-                checkinService.updateUserIds(user.getUserId(), chIds);
-                appointmentService.updateUserIds(user.getUserId(), appIds);
-
+                if(chIds != null && chIds != "") {
+                    checkinService.updateUserIds(user.getUserId(), chIds);
+                }
+                if(appIds != null && appIds != "") {
+                    appointmentService.updateUserIds(user.getUserId(), appIds);
+                }
                 return ControllerResult.getSuccessResult("注册成功, 确认将直接跳转到我的中心...");
             }else{
                 return ControllerResult.getNotPhoneCodeResult("短信验证码输入错误");
