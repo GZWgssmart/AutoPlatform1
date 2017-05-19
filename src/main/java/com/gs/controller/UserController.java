@@ -154,38 +154,43 @@ public class UserController {
      */
     @ResponseBody
     @RequestMapping(value = "register", method = RequestMethod.POST)
-    public ControllerResult register(User user){
+    public ControllerResult register(User user, HttpSession session){
         if(user!=null) {
-            user.setUserId(UUIDUtil.uuid());
-            user.setUserPwd(EncryptUtil.md5Encrypt(user.getUserPwd()));
-            userService.insert(user);
-            UserRole userRole = new UserRole();
-            userRole.setUserId(user.getUserId());
-            userRole.setRoleId("8067fa42-3205-11e7-bc72-507b9d765567");// 设置为车主角色
-            userRoleService.insert(userRole);
-            // 根据此注册手机号查找预约表和登记表， 假如表中的userPhone和注册的userPhone一致， 则把记录的userId改为此注册用户id
-            List<Appointment> appointments = appointmentService.queryByPhone(user.getUserPhone());
-            List<Checkin> checkins = checkinService.queryByPhone(user.getUserPhone());
-            String appIds = null;
-            String chIds = null;
-            for(Appointment appointment : appointments){
-                if(appIds== null){
-                    appIds = "'"+appointment.getAppointmentId()+"'";
-                }else{
-                    appIds +=",'"+appointment.getAppointmentId()+"'";
+            int code = (Integer) session.getAttribute("phonecode");
+            if(user.getPhonecode() == code) {
+                user.setUserId(UUIDUtil.uuid());
+                user.setUserPwd(EncryptUtil.md5Encrypt(user.getUserPwd()));
+                userService.insert(user);
+                UserRole userRole = new UserRole();
+                userRole.setUserId(user.getUserId());
+                userRole.setRoleId("8067fa42-3205-11e7-bc72-507b9d765567");// 设置为车主角色
+                userRoleService.insert(userRole);
+                // 根据此注册手机号查找预约表和登记表， 假如表中的userPhone和注册的userPhone一致， 则把记录的userId改为此注册用户id
+                List<Appointment> appointments = appointmentService.queryByPhone(user.getUserPhone());
+                List<Checkin> checkins = checkinService.queryByPhone(user.getUserPhone());
+                String appIds = null;
+                String chIds = null;
+                for (Appointment appointment : appointments) {
+                    if (appIds == null) {
+                        appIds = "'" + appointment.getAppointmentId() + "'";
+                    } else {
+                        appIds += ",'" + appointment.getAppointmentId() + "'";
+                    }
                 }
-            }
-            for (Checkin checkin : checkins){
-                if(chIds== null){
-                    chIds = "'"+checkin.getCheckinId()+"'";
-                }else{
-                    chIds +=",'"+checkin.getCheckinId()+"'";
+                for (Checkin checkin : checkins) {
+                    if (chIds == null) {
+                        chIds = "'" + checkin.getCheckinId() + "'";
+                    } else {
+                        chIds += ",'" + checkin.getCheckinId() + "'";
+                    }
                 }
-            }
-            checkinService.updateUserIds(user.getUserId(),chIds);
-            appointmentService.updateUserIds(user.getUserId(),appIds);
+                checkinService.updateUserIds(user.getUserId(), chIds);
+                appointmentService.updateUserIds(user.getUserId(), appIds);
 
-            return ControllerResult.getSuccessResult("注册成功, 确认将直接跳转到我的中心...");
+                return ControllerResult.getSuccessResult("注册成功, 确认将直接跳转到我的中心...");
+            }else{
+                return ControllerResult.getNotPhoneCodeResult("短信验证码输入错误");
+            }
         }else{
             return ControllerResult.getFailResult("注册失败");
         }
@@ -264,11 +269,14 @@ public class UserController {
      */
     @ResponseBody
     @RequestMapping(value="sendSms",method=RequestMethod.GET)
-    public ControllerResult sendSms(HttpServletRequest req) {
+    public ControllerResult sendSms(HttpServletRequest req, HttpSession session) {
         String phone = req.getParameter("phone");
         if(phone!= null && phone!= "") {
             logger.info("发送短信验证码");
-            IndustrySMS i = new IndustrySMS(phone, "【汽车之家】您的验证码为" +(int)((Math.random()*9+1)*100000)+"，请于30分钟内正确输入，如非本人操作，请忽略此短信。");
+            int code = (int)((Math.random()*9+1)*100000);
+            session.setAttribute("phonecode", code);
+            IndustrySMS i = new IndustrySMS(phone, "【汽车之家】您的验证码为" +code+"，请于30分钟内正确输入，如非本人操作，请忽略此短信。");
+            i.execute();
             return ControllerResult.getSuccessResult("发送短信验证码成功");
         }
        return ControllerResult.getFailResult("发送短信验证码失败");
