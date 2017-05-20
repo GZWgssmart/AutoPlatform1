@@ -106,7 +106,7 @@
             u.userId,u.userNickname FROM t_work_info w
             Left JOIN t_maintain_Record tmR on w.recordId = tmR.recordId
             Left JOIN t_user u on w.userId = u.userId
-            where w.workStatus = 'Y'
+            where w.workStatus = 'N'
         ]]>
         <if test="user.companyId != '' and user.companyId !=null">
             and u.companyId = #{user.companyId}
@@ -142,7 +142,7 @@
             u.userNickname FROM t_work_info w
             Left JOIN t_maintain_Record tmR on w.recordId = tmR.recordId
             Left JOIN t_user u on u.userId = w.userId
-            where w.workStatus = 'N'
+            where w.workStatus = 'Y'
         ]]>
         <if test="user.companyId != '' and user.companyId !=null">
             and u.companyId = #{user.companyId}
@@ -222,6 +222,69 @@
             group by date(workCreatedTime) ORDER BY wi.workCreatedTime ASC;
         </if>
 
+    </select>
+
+
+    <!--分页所有完成查询全部-->
+    <select id="blurredQuery" resultMap="BaseResultMap">
+        <![CDATA[
+            select w.*,tmR.recordId,tmR.checkinId,tmR.pickupTime,
+            u.userId,u.userNickname FROM t_work_info w
+            Left JOIN t_maintain_Record tmR on w.recordId = tmR.recordId
+            Left JOIN t_user u on w.userId = u.userId
+            LEFT JOIN t_company comp on u.companyId = comp.companyId
+            where 1 = 1
+        ]]>
+        <if test="pager.user.companyId != null and pager.user.companyId != ''">
+            and comp.companyId = #{pager.user.companyId}
+        </if>
+        and(
+        <if test="workInfo.user.company.companyName != null and workInfo.user.company.companyName != '' ">
+            comp.companyName like "%${workInfo.user.company.companyName}%"
+        </if>
+        <if test="workInfo.user.company.companyName != null and workInfo.user.company.companyName != ''
+              and workInfo.user.userNickname != null and workInfo.user.userNickname != '' ">
+            or
+        </if>
+        <if test="workInfo.user.userNickname != null and workInfo.user.userNickname != '' " >
+            u.userNickname  like "%${workInfo.user.userNickname}%"
+        </if>
+        )
+        <if test="workInfo.workStatus != null and workInfo.workStatus != '' ">
+            and w.workStatus = #{workInfo.workStattus}
+        </if>
+
+        order by w.workCreatedTime Desc
+        limit #{pager.beginIndex}, #{pager.pageSize}
+    </select>
+
+
+    <select id="countByBlurred" resultType="int" >
+        <![CDATA[
+             select count(workId) FROM t_work_info w
+            Left JOIN t_maintain_Record tmR on w.recordId = tmR.recordId
+            Left JOIN t_user u on w.userId = u.userId
+            LEFT JOIN t_company comp on u.companyId = comp.companyId
+            where 1 = 1
+        ]]>
+        <if test="user.companyId != null and user.companyId != ''">
+            and comp.companyId = #{user.companyId}
+        </if>
+        and(
+        <if test="workInfo.user.company.companyName != null and workInfo.user.company.companyName != '' ">
+            comp.companyName like "%${workInfo.user.company.companyName}%"
+        </if>
+        <if test="workInfo.user.company.companyName != null and workInfo.user.company.companyName != ''
+              and workInfo.user.userNickname != null and workInfo.user.userNickname != '' ">
+            or
+        </if>
+        <if test="workInfo.user.userNickname != null and workInfo.user.userNickname != '' " >
+            u.userNickname  like "%${workInfo.user.userNickname}%"
+        </if>
+        )
+        <if test="workInfo.workStatus != null and workInfo.workStatus != '' ">
+            and w.workStatus = #{workInfo.workStattus}
+        </if>
     </select>
 
 </mapper>

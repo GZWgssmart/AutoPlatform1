@@ -48,8 +48,7 @@ public class WorkInfoServiceImpl implements WorkInfoService {
 
 	@Override
 	public List<WorkInfo> blurredQuery(Pager pager, WorkInfo workInfo) {
-//		return workInfoDAO.blurredQuery(pager,workInfo);
-		return null;
+		return workInfoDAO.blurredQuery(pager,workInfo);
 	}
 
 	@Override
@@ -84,7 +83,7 @@ public class WorkInfoServiceImpl implements WorkInfoService {
 
 	@Override
 	public int countByBlurred(WorkInfo workInfo, User user) {
-		return 0;
+		return workInfoDAO.countByBlurred(workInfo,user);
 	}
 
 }

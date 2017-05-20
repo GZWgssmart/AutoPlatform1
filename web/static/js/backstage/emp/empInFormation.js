@@ -253,7 +253,7 @@ function validator(formId) {
                 message: '确认密码失败',
                 validators: {
                     notEmpty: {
-                        message: '确认密码不能为空'
+                        message: '请再次输入密码'
                     },
                     identical: {
                         field: 'userPwd',
@@ -264,15 +264,14 @@ function validator(formId) {
         }
     })
         .on('success.form.bv', function (e) {
-            console.log(e);
             if (formId == "addForm") {
                 formSubmit("/userBasicManage/addUser", formId, "addWindow");
             } else if (formId == "editForm") {
-                console.log("editForM")
                 formSubmit("/userBasicManage/updateUser", formId, "editWindow");
             }
         })
 }
+
 function formSubmit(url, formId, winId) {
     $.post("/user/isLogin/" + roles, function (data) {
         if (data.result == "success") {
@@ -286,7 +285,6 @@ function formSubmit(url, formId, winId) {
                             var fileData = document.getElementById("file").files[0];
                             var formData = new FormData();
                             formData.append("userId", data.user.userId);
-                            console.log("success")
                             if(fileData != null && fileData != undefined && fileData != '') {
                                 formData.append("userIcon", fileData);
                                 $.ajax({
@@ -309,13 +307,10 @@ function formSubmit(url, formId, winId) {
                             confirmButtonText:"确认",
                             type:"error"})
                         $("#"+formId).removeAttr("disabled");
-                    } else {
-                        console.log("else")
                     }
                 }, "json"
             );
         } else if (data.result == "notLogin") {
-            console.log("noLogin")
             swal({
                 title:"",
                 text: data.message,
@@ -329,15 +324,12 @@ function formSubmit(url, formId, winId) {
                 }
             })
         } else if (data.result = "notRole") {
-            console.log("noRole")
             swal({
                 title:"",
                 text: data.message,
                 confirmButtonText: "确认", // 提示按钮上的文本
                 type: "error"
             })
-        } else{
-            console.log("other")
         }
     })
 }
@@ -387,8 +379,11 @@ function showEdit(){
             var row =  $('table').bootstrapTable('getSelections');
             if(row.length >0) {
                 var emp = row[0];
-                if(emp.userStatus == 'N') {
-                    if(emp.role.roleName == '车主') {
+                console.log(loginName)
+                console.log(userId)
+                //如果登录的是系统的管理员就只能对系统的管理员进行操作
+                if(loginName == '系统超级管理员' || loginName == '系统普通管理员' ) {
+                    if(emp.role.roleName == '系统超级管理员' || emp.role.roleName == '系统普通管理员') {
                         $("#editWindow").modal('show'); // 显示弹窗
                         $("#editButton").removeAttr("disabled");
                         $('#editUserRole').html('<option value="' + emp.role.roleId + '">' + emp.role.roleName + '</option>').trigger("change");
@@ -398,21 +393,41 @@ function showEdit(){
                         validator('editForm');
                     } else {
                         swal({
-                            title:"",
-                            text: "此员工已被辞退，不能再对其进行操作", // 主要文本
+                            title: "",
+                            text: "您只能对系统的管理员进行操作", // 主要文本
                             confirmButtonColor: "#DD6B55", // 提示按钮的颜色
-                            confirmButtonText:"确定", // 提示按钮上的文本
-                            type:"warning"
+                            confirmButtonText: "确定", // 提示按钮上的文本
+                            type: "warning"
                         }) // 提示类型
                     }
                 } else {
-                    $("#editWindow").modal('show'); // 显示弹窗
-                    $("#editButton").removeAttr("disabled");
-                    $('#editUserRole').html('<option value="' + emp.role.roleId + '">' + emp.role.roleName + '</option>').trigger("change");
-                    $('#editDatetimepicker').val(formatterDate(emp.userBirthday));
-                    $('#editCity_china').val(formatterAddress(emp.userAddress));
-                    $("#editForm").fill(emp);
-                    validator('editForm');
+                    if (emp.userStatus == 'N') {
+                        if (emp.role.roleName == '车主') {
+                            $("#editWindow").modal('show'); // 显示弹窗
+                            $("#editButton").removeAttr("disabled");
+                            $('#editUserRole').html('<option value="' + emp.role.roleId + '">' + emp.role.roleName + '</option>').trigger("change");
+                            $('#editDatetimepicker').val(formatterDate(emp.userBirthday));
+                            $('#editCity_china').val(formatterAddress(emp.userAddress));
+                            $("#editForm").fill(emp);
+                            validator('editForm');
+                        } else {
+                            swal({
+                                title: "",
+                                text: "此员工已被辞退，不能再对其进行操作", // 主要文本
+                                confirmButtonColor: "#DD6B55", // 提示按钮的颜色
+                                confirmButtonText: "确定", // 提示按钮上的文本
+                                type: "warning"
+                            }) // 提示类型
+                        }
+                    } else {
+                        $("#editWindow").modal('show'); // 显示弹窗
+                        $("#editButton").removeAttr("disabled");
+                        $('#editUserRole').html('<option value="' + emp.role.roleId + '">' + emp.role.roleName + '</option>').trigger("change");
+                        $('#editDatetimepicker').val(formatterDate(emp.userBirthday));
+                        $('#editCity_china').val(formatterAddress(emp.userAddress));
+                        $("#editForm").fill(emp);
+                        validator('editForm');
+                    }
                 }
             } else {
                 swal({
@@ -448,12 +463,10 @@ function showEdit(){
 }
 
 function editSubmit() {
-    console.log("editSubmit")
     $("#editForm").data('bootstrapValidator').validate();
     if ($("#editForm").data('bootstrapValidator').isValid()) {
         $("#editButton").attr("disabled","disabled");
     } else {
-        console.log("noVali");
         $("#editButton").removeAttr("disabled");
     }
 }
@@ -583,7 +596,6 @@ function showDetail() {
         // 将获取到的userIcon 的值 赋给img的src  attr=>属性 val=>值
         $('#detailUserIcon').attr("src", "/" + emp.userIcon);
 
-        console.log(formatterDateTime(emp.userCreatedTime));
         console.log(emp);
     }
 }
@@ -735,9 +747,13 @@ function formatterDateTime(value) {
 // 激活或禁用
 function formatterStatus(value, row, index) {
     if (value == 'Y') {
-        return "&nbsp;<button type='button' class='btn btn-danger' " +
-            "onclick='inactive(\"" + '/userBasicManage/updateStatus?id=' + row.userId + '&status=Y' + "\")'>禁用</button>&nbsp;&nbsp;"
-            + "<a onclick='showDetail()' class='btn btn-info btn-sm'><span class='glyphicon glyphicon-fullscreen'></span>详细信息</a>";
+        if(userId != row.userId) {
+            return "&nbsp;<button type='button' class='btn btn-danger' " +
+                "onclick='inactive(\"" + '/userBasicManage/updateStatus?id=' + row.userId + '&status=Y' + "\")'>禁用</button>&nbsp;&nbsp;"
+                + "<a onclick='showDetail()' class='btn btn-info btn-sm'><span class='glyphicon glyphicon-fullscreen'></span>详细信息</a>";
+        }
+        return "&nbsp;&nbsp;<a onclick='showDetail()' style='margin-left: 60px;' class='btn btn-info btn-sm'>" +
+            "<span class='glyphicon glyphicon-fullscreen'></span>详细信息</a>";
     } else {
         if(row.role.roleName == '车主') {
             return "&nbsp;<button type='button' class='btn btn-success' " +
