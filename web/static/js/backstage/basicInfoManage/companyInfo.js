@@ -275,7 +275,7 @@ function validator(formId) {
                     stringLength: {
                         min: 6,
                         max: 11,
-                        message: '公司联系电话长度必须在1到11位之间'
+                        message: '公司联系电话长度必须在6到11位之间'
                     }
                 }
             },
@@ -287,17 +287,30 @@ function validator(formId) {
                     }
                 }
             },
+            // companyWebsite: {
+            //     message: '公司官网网址验证失败',
+            //     validators: {
+            //         notEmpty: {
+            //             message: '公司官网网址格式为http|ftp|https://www'
+            //         },
+            //         regexp: {
+            //             regexp: /^(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?$/,
+            //                 message: '请输入正确公司官网网址'
+            //         }
+            //     }
+            // },
             companyWebsite: {
-                message: '公司官网网址验证失败',
+                message: '公司官网URL验证失败',
                 validators: {
-                    notEmpty: {
-                        message: '公司官网网址格式为http|ftp|https://www'
-                    },
                     regexp: {
                         regexp: /^(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?$/,
-                            message: '请输入正确公司官网网址'
-                    }
+                        message: '请输入正确公司官网网址（http://开头）'
+                    },
+                    notEmpty: {
+                        message: '公司官网URL不能为空'
+                    },
                 }
+
             },
 
             companyPricipal: {
@@ -667,7 +680,9 @@ function searchByStationName() {
 }
 
 function showMap(winId){
+
     $("#mapWindow").modal('show');
+    $('#addForm').data('bootstrapValidator').resetForm();
     windowId = winId;
     map.addEventListener("click", showInfo);
 }

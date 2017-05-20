@@ -208,9 +208,9 @@ public class CompanyController {
     public Map querycompanyPricipalphone(Company company) {
         logger.info("此公司联系电话是否已存在此公司联系电话");
         int countcompanyPricipalphone = companyService.querycompanyPricipalphone(company.getCompanyPricipalphone(),company.getCompanyId());
-        int userphone = userService.queryPhoneByOne(company.getCompanyPricipalphone());
+//        int userphone = userService.queryPhoneByOne(company.getCompanyPricipalphone());
         Map<String, Boolean> map = new HashMap<String, Boolean>();
-        if(countcompanyPricipalphone > 0 || userphone > 0)
+        if(countcompanyPricipalphone > 0)
             map.put("valid", false);
         else
             map.put("valid", true);
