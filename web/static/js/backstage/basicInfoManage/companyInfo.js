@@ -99,6 +99,7 @@ function showEdit() {
                 $("#editButton").removeAttr("disabled");
                 var ceshi = row[0];
                 $('#editDatetimepicker').val(formatterDate(ceshi.companyOpendate));
+                $('#editCity_china').val(formatterAddress(ceshi.companyAddress));
                 $("#editForm").fill(ceshi);
                 validator('editForm');
                 // $('#editcompanyName').bind('input propertychange', function() {
@@ -324,10 +325,10 @@ function validator(formId) {
             },
 
             companyPricipal: {
-                message: '负责人验证失败',
+                message: '公司负责人验证失败',
                 validators: {
                     notEmpty: {
-                        message: '负责人不能为空'
+                        message: '公司负责人不能为空'
                     },
                 }
             },
@@ -688,6 +689,20 @@ function searchByStationName() {
     });
     localSearch.search(keyword);
 }
+
+// 格式化地址
+function formatterAddress(val) {
+    var address = val.split('-');
+    $("#editProvince").val(address[0]);
+    $("#editCity").val(address[1]);
+    $("#editArea").val(address[2]);
+}
+//  修改时，点击地址的文本框后，文本框隐藏，地址下拉选择显示
+var address = $("#address");
+address.click(function () {
+    address.css('display', 'none');
+    $('#companyAddress').css('display', 'block');
+})
 
 function showMap(winId){
 

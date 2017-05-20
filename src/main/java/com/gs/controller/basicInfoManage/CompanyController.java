@@ -141,7 +141,7 @@ public class CompanyController {
 
     @ResponseBody
     @RequestMapping(value = "addCompany",method = RequestMethod.POST)
-    public Object add(HttpSession session,Company company){
+    public Object add(HttpSession session,HttpServletRequest request,Company company){
         if (SessionUtil.isLogin(session)) {
             String roles = "系统超级管理员,系统普通管理员";
             if (RoleUtil.checkRoles(roles)) {
@@ -151,6 +151,10 @@ public class CompanyController {
 //                    company.setCompanyId(UUIDUtil.uuid());
                     String companyId = UUIDUtil.uuid();
                     company.setCompanyId(companyId);
+                    String province = request.getParameter("province");
+                    String city = request.getParameter("city");
+                    String area = request.getParameter("area");
+                    company.setCompanyAddress(province + "-" + city + "-" + area);
                     User user = new User();
                     user.setUserId(UUIDUtil.uuid());
                     user.setUserPhone(company.getCompanyPricipalphone());
@@ -237,13 +241,17 @@ public class CompanyController {
 
     @ResponseBody
     @RequestMapping(value = "updateCompany",method = RequestMethod.POST)
-    public Object update(HttpSession session,Company company){
+    public Object update(HttpSession session,HttpServletRequest request,Company company){
         if (SessionUtil.isLogin(session)) {
             String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员";
             if (RoleUtil.checkRoles(roles)) {
                 Map map = new HashMap();
                 if (company != null && !company.equals("")) {
                         logger.info("修改公司信息");
+                        String province = request.getParameter("editProvince");
+                        String city = request.getParameter("editCity");
+                        String area = request.getParameter("editArea");
+                        company.setCompanyAddress(province + "-" + city + "-" + area);
                         companyService.update(company);
                         map.put("company",company);
                         map.put("controllerResult",ControllerResult.getSuccessResult("修改公司信息成功"));

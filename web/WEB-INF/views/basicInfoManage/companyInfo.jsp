@@ -26,7 +26,7 @@
                 <tr>
                     <th data-radio="true"></th>
                     <th data-width="120" data-field="companyName">公司名称</th>
-                    <th data-width="150" data-field="companyAddress">公司地址</th>
+                    <th data-width="180" data-field="companyAddress">公司地址</th>
                     <th data-width="120" data-field="companyTel">联系电话</th>
                     <th data-width="100" data-field="companyPricipal">负责人</th>
                     <th data-width="130" data-field="companyPricipalphone">负责人联系电话</th>
@@ -89,13 +89,14 @@
                         </div>
                     </div>
                     <div class="form-group col-md-6">
-                        <label class="col-md-4 control-label">公司地址：</label>
+                        <label class="col-md-4 control-label">公司官网网址：</label>
                         <div class="col-md-8">
-                            <input type="text" name="companyAddress" placeholder="请输入公司地址" class="form-control">
+                            <input type="text" name="companyWebsite" placeholder="请输入公司官网网址" class="form-control">
                         </div>
                     </div>
                     <p class="clearfix"></p>
                 </div>
+
                 <div>
                     <div class="form-group col-md-6">
                         <label class="col-md-4 control-label">公司联系电话：</label>
@@ -104,24 +105,26 @@
                         </div>
                     </div>
                     <div class="form-group col-md-6">
-                        <label class="col-md-4 control-label">负责人：</label>
-                        <div class="col-md-8">
-                            <input type="text" name="companyPricipal" placeholder="请输入负责人" class="form-control">
+                        <label class="col-md-4 control-label">公司成立时间：</label>
+                        <div class="col-md-8">     <!-- 当设置不可编辑后, 会修改颜色, 在min.css里搜索.form-control{background-color:#eee;opacity:1} -->
+                            <input id="addDateTimePicker" placeholder="请选择公司成立时间" onclick="getDate('addDateTimePicker')" readonly="true" type="text" name="companyOpendate"
+                                   class="form-control datetimepicker"/>
                         </div>
                     </div>
                     <p class="clearfix"></p>
                 </div>
+
                 <div>
+                    <div class="form-group col-md-6">
+                        <label class="col-md-4 control-label">公司负责人：</label>
+                        <div class="col-md-8">
+                            <input type="text" name="companyPricipal" placeholder="请输入公司负责人" class="form-control">
+                        </div>
+                    </div>
                     <div class="form-group col-md-6">
                         <label class="col-md-4 control-label">负责人联系电话：</label>
                         <div class="col-md-8">
                             <input type="number" id="addcompanyPricipalphone" name="companyPricipalphone" placeholder="请输入负责人联系电话" class="form-control" style="width:100%"/>
-                        </div>
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label class="col-md-4 control-label">公司官网网址：</label>
-                        <div class="col-md-8">
-                            <input type="text" name="companyWebsite" placeholder="请输入公司官网网址" class="form-control">
                         </div>
                     </div>
                     <p class="clearfix"></p>
@@ -163,13 +166,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="form-group col-md-6">
-                        <label class="col-md-4 control-label">公司成立时间：</label>
-                        <div class="col-md-8">     <!-- 当设置不可编辑后, 会修改颜色, 在min.css里搜索.form-control{background-color:#eee;opacity:1} -->
-                            <input id="addDateTimePicker" placeholder="请选择公司成立时间" onclick="getDate('addDateTimePicker')" readonly="true" type="text" name="companyOpendate"
-                                   class="form-control datetimepicker"/>
-                        </div>
-                    </div>
+
                     <div class="form-group col-md-6">
                         <label class="col-md-4 control-label">公司经度：</label>
                         <div class="col-md-8">
@@ -193,6 +190,27 @@
                     </div>
                     <p class="clearfix"></p>
                 </div>
+
+                <div>
+                    <div class="form-group col-md-12">
+                        <label class="col-md-2 control-label" style="top:3px;right:5px">公司地址：</label>
+                        <div class="col-md-10">
+                            <fieldset id="city_china">
+                                <div class="form-group col-md-4">
+                                    <select class="province js-example-tags form-control" disabled="disabled" name="province"></select>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <select class="city js-example-tags form-control" disabled="disabled" name="city"></select>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <select class="area js-example-tags form-control" disabled="disabled" name="area"></select>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+                    <p class="clearfix"></p>
+                </div>
+
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal" onclick="closeModals('addWindow', 'addForm')">关闭</button>
                     <button id="addButton" type="button" onclick="addSubmit()" class="btn btn-sm btn-success">添加
@@ -226,40 +244,6 @@
                         </div>
                     </div>
                     <div class="form-group col-md-6">
-                        <label class="col-md-4 control-label">公司地址：</label>
-                        <div class="col-md-8">
-                            <input type="text" name="companyAddress" define="companyInfo.companyAddress" placeholder="请输入公司地址"
-                                   class="form-control">
-                        </div>
-                        <p class="clearfix"></p>
-                     </div>
-                </div>
-            <div>
-                <div class="form-group col-md-6">
-                    <label class="col-md-4 control-label">联系电话：</label>
-                    <div class="col-md-8">
-                        <input type="number" name="companyTel" placeholder="请输入联系电话电话" define="companyInfo.companyTel" class="form-control" style="width:100%"/>
-                    </div>
-                </div>
-
-                <div class="form-group col-md-6">
-                    <label class="col-md-4 control-label">负责人：</label>
-                    <div class="col-md-8">
-                        <input type="text" name="companyPricipal" define="companyInfo.companyPricipal" placeholder="请输入负责人"
-                               class="form-control">
-                    </div>
-                </div>
-                <p class="clearfix"></p>
-            </div>
-                <div>
-                    <div class="form-group col-md-6">
-                        <label class="col-md-4 control-label">负责人联系电话：</label>
-                        <div class="col-md-8">
-                            <input type="number" id="editcompanyPricipalphone" name="companyPricipalphone" placeholder="请输入负责人联系电话" define="companyInfo.companyPricipalphone" class="form-control" style="width:100%"/>
-                        </div>
-                    </div>
-
-                    <div class="form-group col-md-6">
                         <label class="col-md-4 control-label">公司官网网址：</label>
                         <div class="col-md-8">
                             <input type="text" name="companyWebsite" define="companyInfo.companyWebsite" placeholder="请输入公司官网网址"
@@ -269,6 +253,39 @@
                     <p class="clearfix"></p>
                 </div>
 
+                <div>
+                    <div class="form-group col-md-6">
+                        <label class="col-md-4 control-label">公司联系电话：</label>
+                        <div class="col-md-8">
+                            <input type="number" name="companyTel" placeholder="请输入公司联系电话电话" define="companyInfo.companyTel" class="form-control" style="width:100%"/>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="col-md-4 control-label">公司成立时间：</label>
+                        <div class="col-md-8">     <!-- 当设置不可编辑后, 会修改颜色, 在min.css里搜索.form-control{background-color:#eee;opacity:1} -->
+                            <input id="editDatetimepicker" placeholder="请选择公司成立时间" readonly="true" type="text" name="companyOpendate"
+                                   class="form-control datetimepicker"/>
+                        </div>
+                    </div>
+                    <p class="clearfix"></p>
+                </div>
+
+                <div>
+                    <div class="form-group col-md-6">
+                        <label class="col-md-4 control-label">公司负责人：</label>
+                        <div class="col-md-8">
+                            <input type="text" name="companyPricipal" define="companyInfo.companyPricipal" placeholder="请输入公司负责人"
+                                   class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="col-md-4 control-label">负责人联系电话：</label>
+                        <div class="col-md-8">
+                            <input type="number" id="editcompanyPricipalphone" name="companyPricipalphone" placeholder="请输入负责人联系电话" define="companyInfo.companyPricipalphone" class="form-control" style="width:100%"/>
+                        </div>
+                    </div>
+                    <p class="clearfix"></p>
+                </div>
                 <div>
                     <%--<div class="form-group col-md-6">--%>
                         <%--<label class="col-md-4 control-label">公司logo：</label>--%>
@@ -305,14 +322,6 @@
                             </select>
                         </div>
                     </div>
-
-                    <div class="form-group col-md-6">
-                        <label class="col-md-4 control-label">公司成立时间：</label>
-                        <div class="col-md-8">     <!-- 当设置不可编辑后, 会修改颜色, 在min.css里搜索.form-control{background-color:#eee;opacity:1} -->
-                            <input id="editDatetimepicker" placeholder="请选择公司成立时间" readonly="true" type="text" name="companyOpendate"
-                                   class="form-control datetimepicker"/>
-                        </div>
-                    </div>
                     <div class="form-group col-md-6">
                         <label class="col-md-4 control-label">公司经度：</label>
                         <div class="col-md-8">
@@ -337,6 +346,30 @@
                     </div>
                     <p class="clearfix"></p>
                 </div>
+
+                <div>
+                    <div class="form-group col-md-12 pull-right">
+                        <label class="col-md-2 control-label" style="bottom: 6px;right:5px">公司地址：</label>
+                        <div class="col-md-9" id="address" style="bottom:3px;display: block;">
+                            <input type="text" define="companyInfo.companyAddress" class="form-control">
+                        </div>
+                        <div class="col-md-9" id="companyAddress" style="display: none;">
+                            <fieldset id="editCity_china">
+                                <div class="pull-left">
+                                    省份：<select class="province" disabled="disabled" id="editProvince" name="editProvince"></select>
+                                </div>
+                                <div class="pull-left">
+                                    &nbsp;&nbsp;&nbsp;城市：<select class="city" disabled="disabled" id="editCity" name="editCity"></select>
+                                </div>
+                                <div class="pull-left">
+                                    &nbsp;&nbsp;&nbsp;地区：<select class="area" disabled="disabled" id="editArea" name="editArea"></select>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+                    <p class="clearfix"></p>
+                </div>
+
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default"
                             data-dismiss="modal" onclick="closeModals('editWindow', 'editForm')">关闭
@@ -399,5 +432,24 @@
     <%-- 文件上传 --%>
     <script src="/static/js/fileInput/fileinput.js"></script>
     <script src="/static/js/fileInput/zh.js"></script>
+    <%-- 地址选择 --%>
+    <script src="/static/js/jquery.cxselect.min.js"></script>
+
 </body>
+<script>
+
+
+    $.cxSelect.defaults.url = '/static/js/cityData.json';
+    $('#city_china').cxSelect({
+        selects: ['province', 'city', 'area']
+    });
+    $('#editCity_china').cxSelect({
+        selects: ['province', 'city', 'area']
+    });
+    $('#city_china_val').cxSelect({
+        selects: ['province', 'city', 'area'],
+        nodata: 'none'
+    });
+
+</script>
 </html>
