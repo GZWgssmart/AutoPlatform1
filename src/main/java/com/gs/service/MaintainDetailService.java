@@ -25,4 +25,9 @@ public interface MaintainDetailService extends BaseService<String, MaintainDetai
     public int countByOwner(String recordId, String userId);
 
     public List<MaintainDetail> queryByOwner(Pager pager, String recordId, String userId);
+    /**
+     * 前台查询最新的十条维修保养记录
+     */
+    public List<MaintainDetail> queryByFrontpage(Pager pager);
+
 }

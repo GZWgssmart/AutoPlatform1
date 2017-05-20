@@ -79,6 +79,22 @@ public class MaintainDetailController {
     }
 
     /**
+     * 前台查询最新的十条维修保养记录
+     */
+    @ResponseBody
+    @RequestMapping("queryByFrontpage")
+    public Pager4EasyUI<MaintainDetail> queryByFrontpage(HttpSession session, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
+        logger.info("前台分布查看最新的十条维修保养记录");
+        Pager pager = new Pager();
+        pager.setPageNo(Integer.valueOf(pageNumber));
+        pager.setPageSize(Integer.valueOf(pageSize));
+        int count = 10;
+        pager.setTotalRecords(count);
+        List<MaintainDetail> queryList = maintainDetailService.queryByFrontpage(pager);
+        return new Pager4EasyUI<MaintainDetail>(pager.getTotalRecords(), queryList);
+    }
+
+    /**
      * 根据维修保养记录查询此记录下所有明细
      * @return
      */
@@ -230,7 +246,7 @@ public class MaintainDetailController {
                         logger.info("明细个数转换异常");
                     }
                     int maintainHour=0;// 工时
-                    if(maintainFixAccs.size() > length && maintainFixAccs.size() >0) {
+                    if(maintainFixAccs.size() >= length && maintainFixAccs.size() >0) {
                             List<MaterialList> materialLists = new ArrayList<MaterialList>();
                             for (MaintainFixAcc m : maintainFixAccs) {
                                 MaterialList materialList = new MaterialList();

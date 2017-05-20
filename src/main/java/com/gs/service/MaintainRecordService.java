@@ -3,7 +3,6 @@ package com.gs.service;
 import com.gs.bean.MaintainRecord;
 import com.gs.bean.User;
 import com.gs.common.bean.Pager;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -64,4 +63,10 @@ public interface MaintainRecordService extends BaseService<String, MaintainRecor
     public int countSuccess(User user);
 
     public List<MaintainRecord> queryCheckinAll(String userIds);
+
+    /**
+     * 后台首页查询最新的十条维修保养记录
+     */
+    public List<MaintainRecord> queryByBackstage(Pager pager);
+
 }

@@ -18,6 +18,8 @@ public class MaintainDetail {
 
     private MaintainFix maintainFix;
 
+    private MaintainRecord maintainRecord;
+
     /**
      * 根据维修项目名字统计维修记录数
      */
@@ -33,6 +35,14 @@ public class MaintainDetail {
 
     // 打印需要字段
     private String disCount; // 折扣
+
+    public MaintainRecord getMaintainRecord() {
+        return maintainRecord;
+    }
+
+    public void setMaintainRecord(MaintainRecord maintainRecord) {
+        this.maintainRecord = maintainRecord;
+    }
 
     public String getDisCount() {
         return disCount;

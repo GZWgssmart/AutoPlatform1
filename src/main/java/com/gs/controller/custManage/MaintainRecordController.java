@@ -64,6 +64,33 @@ public class MaintainRecordController {
     }
 
     /**
+     * 后台首页查询最新的维修保养记录
+     */
+    @ResponseBody
+    @RequestMapping("queryByBackstage")
+    public Pager4EasyUI<MaintainRecord> queryByBackstage(HttpSession session, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
+        if(SessionUtil.isLogin(session)) {
+            String roles = "公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师,汽车公司学徒,汽车公司销售人员,汽车公司财务人员,汽车公司采购人员,汽车公司库管人员,汽车公司人力资源管理部";
+            if(RoleUtil.checkRoles(roles)) {
+                logger.info("后台首页查看最新的十条维修保养记录");
+                Pager pager = new Pager();
+                pager.setPageNo(Integer.valueOf(pageNumber));
+                pager.setPageSize(Integer.valueOf(pageSize));
+                int count = 10;
+                pager.setTotalRecords(count);
+                List<MaintainRecord> queryList = maintainRecordService.queryByBackstage(pager);
+                return new Pager4EasyUI<MaintainRecord>(pager.getTotalRecords(), queryList);
+            }else{
+                logger.info("此用户无拥有后台首页查询最新的维修保养记录的角色");
+                return null;
+            }
+        }else{
+            logger.info("请先登录");
+            return null;
+        }
+    }
+
+    /**
      * 提车提醒分页查询未提醒维修保养记录
      */
     @ResponseBody
