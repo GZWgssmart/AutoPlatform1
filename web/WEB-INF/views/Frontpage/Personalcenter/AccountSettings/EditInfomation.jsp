@@ -92,6 +92,7 @@
     </div>
     <script src="/static/js/jquery.min.js"></script>
     <script src="/static/js/jquery.cxselect.js"></script>
+    <script src="/static/js/sweetalert/sweetalert.min.js"></script>
 </body>
 <script>
     $.cxSelect.defaults.url = '/static/js/cityData.min.json';
