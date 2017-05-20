@@ -240,55 +240,5 @@
 <script src="/static/js/backstage/main.js"></script>
 <script src="/static/js/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.js"></script>
 <script src="/static/js/bootstrap-dateTimePicker/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
-<%--<script>--%>
-    <%--$(function() {--%>
-        <%--layui.use('laydate', function () {--%>
-
-            <%--var laydate = layui.laydate;--%>
-
-            <%--//日期范围限制--%>
-            <%--var addComplaintCreatedTime = {--%>
-                <%--format: 'yyyy-MM-dd hh:mm:ss',--%>
-                <%--min: laydate.now(), //设定最小日期为当前日期--%>
-                <%--max: '2099-12-30 23:59:59', //最大日期--%>
-                <%--istime: true,--%>
-                <%--istoday: false,--%>
-                <%--festival: true--%>
-            <%--};--%>
-
-            <%--var addReplyComplaintReplyTime = {--%>
-                <%--format: 'yyyy-MM-dd hh:mm:ss',--%>
-                <%--min: laydate.now(),--%>
-                <%--max: '2099-12-30 23:59:59',--%>
-                <%--istime: true,--%>
-                <%--istoday: false,--%>
-                <%--festival: true--%>
-            <%--};--%>
-
-            <%--document.getElementById('addComplaintCreatedTime').onclick = function () {--%>
-                <%--addComplaintCreatedTime.elem = this;--%>
-                <%--laydate(addComplaintCreatedTime);--%>
-            <%--}--%>
-
-            <%--document.getElementById('addReplyComplaintReplyTime').onclick = function () {--%>
-                <%--addReplyComplaintReplyTime.elem = this;--%>
-                <%--laydate(addReplyComplaintReplyTime);--%>
-            <%--}--%>
-
-
-            <%--var editComplaintReplyTime = {--%>
-                <%--format: 'yyyy-MM-dd hh:mm:ss',--%>
-                <%--max: '2099-12-30 23:59:59',--%>
-                <%--istime: true,--%>
-                <%--istoday: false,--%>
-            <%--};--%>
-
-            <%--document.getElementById('editComplaintReplyTime').onclick = function () {--%>
-                <%--editComplaintReplyTime.elem = this;--%>
-                <%--laydate(editComplaintReplyTime);--%>
-            <%--}--%>
-        <%--});--%>
-    <%--});--%>
-<%--</script>--%>
 </body>
 </html>

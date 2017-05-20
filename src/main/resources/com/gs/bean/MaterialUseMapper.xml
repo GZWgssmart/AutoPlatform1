@@ -483,7 +483,7 @@
 
     <select id = "queryWorkInfoByRecordId" resultMap="com.gs.dao.WorkInfoDAO.BaseResultMap">
         select * from t_work_info workinfo left join t_maintain_record record on workinfo.recordId = record.recordId
-        where record.recordId = #{recordId} and workinfo.userId != null or workinfo.userId != ""
+        where record.recordId = #{recordId} and ( workinfo.userId is not null or workinfo.userId != "" )
     </select>
 
     <select id="queryDetailsByRecordId" resultMap = "detailFixs">

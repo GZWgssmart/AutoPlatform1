@@ -169,35 +169,41 @@ function validator(formId) {
         }
     })
         .on('success.form.bv', function (e) {
+            alert("123213213")
             if (formId == "addForm") {
                 formSubmit("/carColor/addCarColor", formId, "addWindow");
 
             } else if (formId == "editForm") {
+
                 formSubmit("/carColor/updateCarColor", formId, "editWindow");
 
             }
         })
-
 }
 
 function addSubmit(){
-    $("#addForm").data('bootstrapValidator').validate();
-    if ($("#addForm").data('bootstrapValidator').isValid()) {
-        $("#addButton").attr("disabled","disabled");
-    } else {
-        $("#addButton").removeAttr("disabled");
-    }
+    setTimeout(function () {
+        $("#addForm").data('bootstrapValidator').validate();
+        if ($("#addForm").data('bootstrapValidator').isValid()) {
+            $("#addButton").attr("disabled","disabled");
+        } else {
+            $("#addButton").removeAttr("disabled");
+        }
+    },100)
+
 }
 
 function editSubmit(){
-    console.log("editSub");
-    $("#editForm").data('bootstrapValidator').validate();
-    if ($("#editForm").data('bootstrapValidator').isValid()) {
-        $("#editButton").attr("disabled","disabled");
-    } else {
+    setTimeout(function () {
+        console.log("editSub");
+        $("#editForm").data('bootstrapValidator').validate();
+        if ($("#editForm").data('bootstrapValidator').isValid()) {
+            $("#editButton").attr("disabled","disabled");
+        } else {
 
-        $("#editButton").removeAttr("disabled");
-    }
+            $("#editButton").removeAttr("disabled");
+        }
+    },100)
 }
 
 function formSubmit(url, formId, winId){
@@ -291,7 +297,7 @@ function formSubmit(url, formId, winId){
 function showAddHex() {
     var a = document.getElementById("addColor").value;
     if (a.substr(0, 1) == "#") a = a.substring(1);
-    if (a.length != 6)return alert("请输入正确的十六进制颜色码！")
+    // if (a.length != 6)return alert("请输入正确的十六进制颜色码！")
     a = a.toLowerCase()
     b = new Array();
     for (x = 0; x < 3; x++) {
@@ -310,7 +316,7 @@ function showAddHex() {
 function showEditHex() {
     var a = document.getElementById("editColor").value;
     if (a.substr(0, 1) == "#") a = a.substring(1);
-    if (a.length != 6)return alert("请输入正确的十六进制颜色码！")
+    // if (a.length != 6)return alert("请输入正确的十六进制颜色码！")
     a = a.toLowerCase()
     b = new Array();
     for (x = 0; x < 3; x++) {

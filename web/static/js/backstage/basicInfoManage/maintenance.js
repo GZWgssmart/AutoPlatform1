@@ -175,6 +175,7 @@ function showOk(){
         var row =$('table').bootstrapTable('getSelections');
         $.post("/Order/statusOperate/"+row[0].workId +"/"+row[0].recordId, function (data) {
             if(data.result == "success"){
+                $('#table').bootstrapTable("refresh");
                 $("#ifConfirm").css("display", "block");
                 $("#toolbars").css("display", "none");
                 swal({
@@ -312,14 +313,16 @@ function formSubmit(url, formId, winId) {
                         })// 提示窗口, 修改成功
                         $('#table').bootstrapTable('refresh');
                         if (formId == 'addForm') {
-                            // $("input[type=reset]").trigger("click"); // 移除表单中填的值
-                            // $("#addButton").removeAttr("disabled"); // 移除不可点击
+                            $("input[type=reset]").trigger("click"); // 移除表单中填的值
+                            $("#addButton").removeAttr("disabled"); // 移除不可点击
                             // $("#addCompany").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
                             // $("#addSupply").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
                             // $("#addAccType").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
+                        }else{
+                            $("#editButton").removeAttr("disabled"); // 移除不可点击
                         }
-                        // $("#" + formId).data('bootstrapValidator').destroy(); // 销毁此form表单
-                        // $('#' + formId).data('bootstrapValidator', null);// 此form表单设置为空
+                        $("#" + formId).data('bootstrapValidator').destroy(); // 销毁此form表单
+                        $('#' + formId).data('bootstrapValidator', null);// 此form表单设置为空
                     } else if (data.result == "fail") {
                         swal({
                             title: "",
@@ -327,7 +330,6 @@ function formSubmit(url, formId, winId) {
                             confirmButtonText: "确认",
                             type: "error"
                         })
-                        $("#" + formId).removeAttr("disabled");
                     }
                 }, "json");
         } else if (data.result == "notLogin") {

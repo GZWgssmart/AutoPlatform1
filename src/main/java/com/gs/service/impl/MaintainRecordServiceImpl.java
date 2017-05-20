@@ -136,4 +136,14 @@ public class MaintainRecordServiceImpl implements MaintainRecordService {
 	public int countSuccess(User user) {
 		return maintainRecordDAO.countSuccess(user);
 	}
+
+	@Override
+	public List<MaintainRecord> queryCheckinAll(String userIds) {
+		return maintainRecordDAO.queryCheckinAll(userIds);
+	}
+
+	@Override
+	public List<MaintainRecord> queryByBackstage(Pager pager) {
+		return null;
+	}
 }

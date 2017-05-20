@@ -162,18 +162,25 @@ function showAddDetail(){
 function showPrint(){
     var roles = "公司超级管理员,公司普通管理员,汽车公司接待员";
     $.post("/user/isLogin/"+roles, function (data) {
-        if(data.result == 'success'){
-            var row =  $('#table').bootstrapTable('getSelections'); // 选中的维修保养记录
+        if(data.result == 'success') {
+            var row = $('#table').bootstrapTable('getSelections'); // 选中的维修保养记录
             var ids = "";// 设置一个字符串
             var tableData = $("#detailTable").bootstrapTable('getData');//获取表格的所有内容行
-            $.each(tableData, function(index, value, item) {
-                if(ids == ""){// 假如这个字符串刚开始设置,
-                    ids = "'"+tableData[index].maintainItemId+"'";// 则直接赋上0索引上的id属性
-                }else {
-                    ids += ",'" + tableData[index].maintainItemId+"'"// 否则就加上逗号把rows里所有的id都赋给ids
-                }
-            });
-            window.parent.addRecordPrint(row[0].recordId, ids);
+            if (tableData.length > 0) {
+                $.each(tableData, function (index, value, item) {
+                    if (ids == "") {// 假如这个字符串刚开始设置,
+                        ids = "'" + tableData[index].maintainItemId + "'";// 则直接赋上0索引上的id属性
+                    } else {
+                        ids += ",'" + tableData[index].maintainItemId + "'"// 否则就加上逗号把rows里所有的id都赋给ids
+                    }
+                });
+                window.parent.addRecordPrint(row[0].recordId, ids);
+            }else{
+                swal({title:"",
+                    text:"请先生成维修保养明细",
+                    confirmButtonText:"确认",
+                    type:"error"})
+            }
         }else if(data.result == 'notLogin'){
             swal({title:"",
                     text:data.message,
@@ -378,7 +385,7 @@ function userConfirm(){
                 if (data.result == "success") {
                     $("#ifConfirm").css("display","block");
                     $("#detailToolbar").css("display","none");
-
+                    $('#table').bootstrapTable('refresh');
                     swal({
                         title: "",
                         text: data.message,

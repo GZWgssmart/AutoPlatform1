@@ -91,4 +91,9 @@ public class MaintainDetailServiceImpl implements MaintainDetailService {
 	public List<MaintainDetail> queryByOwner(Pager pager, String recordId, String userId) {
 		return maintainDetailDAO.queryByOwner(pager, recordId, userId);
 	}
+
+	@Override
+	public List<MaintainDetail> queryByFrontpage(Pager pager) {
+		return maintainDetailDAO.queryByFrontpage(pager);
+	}
 }

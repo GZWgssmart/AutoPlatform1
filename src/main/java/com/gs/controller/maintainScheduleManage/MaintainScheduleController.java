@@ -141,11 +141,11 @@ public class    MaintainScheduleController {
                 }
             }else{
                 logger.info("此用户无拥有添加进度方法的角色");
-                return null;
+                return ControllerResult.getNotRoleResult("权限不足");
             }
         }else{
             logger.info("请先登录");
-            return null;
+            return ControllerResult.getNotLoginResult("登录信息无效，请重新登录");
         }
     }
 
@@ -229,11 +229,11 @@ public class    MaintainScheduleController {
                 }
             }else{
                 logger.info("此用户无拥有更新方法的角色");
-                return null;
+                return ControllerResult.getNotRoleResult("权限不足");
             }
         }else{
             logger.info("请先登录");
-            return null;
+            return ControllerResult.getNotLoginResult("登录信息无效，请重新登录");
         }
     }
 

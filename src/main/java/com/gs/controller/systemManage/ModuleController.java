@@ -175,6 +175,7 @@ public class ModuleController {
         Map<String, Boolean> map = new HashMap<String, Boolean>();
         if(countModuleName >0)  map.put("valid", false);
         else  map.put("valid", true);
+
         return map;
     }
 

@@ -69,6 +69,7 @@
                             <button type="button" class="btn btn-default" onclick="closeModals('addWindow','addForm')">关闭</button>
                             <button id="addButton" type="button" onclick="addSubmit()" class="btn btn-success">保存</button>
                         </div>
+                        <input type="reset" name="reset" style="display: none;"/>
                     </div>
                 </form>
             </div>

@@ -88,7 +88,7 @@
             <form class="form-horizontal" id="addForm" method="post">
                 <input id="addTrackUserId" type="text" name="trackUser" />
                 <div class="modal-header" style="overflow:auto;">
-                    <h4>赶回跟踪回访的信息</h4>
+                    <h4>跟踪回跟踪回访的信息</h4>
                 </div>
                 <br/>
                 <%--<div class="form-group">--%>

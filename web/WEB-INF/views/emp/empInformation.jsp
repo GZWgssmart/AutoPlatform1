@@ -1,5 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
+<%@page import="com.gs.bean.User"%>
+
 <html>
 <head>
     <meta charset="utf-8">
@@ -70,6 +72,11 @@
 <body>
 <%@include file="../backstage/contextmenu.jsp" %>
 
+<%
+    String name =((User)session.getAttribute("user")).getRole().getRoleName();
+    String userId =((User)session.getAttribute("user")).getUserId();
+%>
+
 <div class="container">
     <div class="panel-body" style="padding-bottom:0px;">
         <!--show-refresh, show-toggle的样式可以在bootstrap-table.js的948行修改-->
@@ -92,10 +99,10 @@
         </table>
         <div id="toolbar" class="btn-group">
             <button id="searchRapid" type="button" class="btn btn-success" onclick="searchRapidStatus();">
-                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询可用记录
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>可用人员记录
             </button>
             <button id="searchDisable" type="button" class="btn btn-danger" onclick="searchDisableStatus();">
-                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询不可用的记录
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>禁用人员记录
             </button>
         <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司人力资源管理部">
             <button id="btn_add" type="button" class="btn btn-default" onclick="showAdd();">
@@ -493,26 +500,6 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<!-- 删除弹窗 -->
-<div class="modal fade" id="del" aria-hidden="true" data-backdrop="static" keyboard:false>
-    <div class="modal-dialog">
-        <form action="/table/edit" method="post">
-            <div class="modal-content">
-                <input type="hidden" id="delNoticeId"/>
-                <div class="modal-footer" style="text-align: center;">
-                    <h2>确认删除吗?</h2>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">
-                        关闭
-                    </button>
-                    <button type="sumbit" class="btn btn-primary" onclick="del()">
-                        确认
-                    </button>
-                </div>
-            </div><!-- /.modal-content -->
-        </form>
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
 
 <script src="/static/js/jquery.min.js"></script>
 <script src="/static/js/bootstrap.min.js"></script>
@@ -550,6 +537,9 @@
         selects: ['province', 'city', 'area'],
         nodata: 'none'
     });
+
+    var loginName = "<%= name %>";
+    var userId = "<%= userId %>";
 
 </script>
 </html>

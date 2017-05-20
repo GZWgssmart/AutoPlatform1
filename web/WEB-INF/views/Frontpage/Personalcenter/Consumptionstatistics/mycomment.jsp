@@ -42,12 +42,9 @@
             </thead>
         </table>
         <div id="toolbar" class="btn-group">
-            <shiro:hasAnyRoles name="车主">
-                <button id="btn_add" type="button" class="btn btn-default" onclick="showAdd();">
-                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
-                </button>
-            </shiro:hasAnyRoles>
-
+            <button id="btn_add" type="button" class="btn btn-default" onclick="showAdd();">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
+            </button>
         </div>
     </div>
 </div>
@@ -115,10 +112,18 @@
 <script>
 
     $(function () {
-        initTable('table', '/UserqueryByPager'); // 初始化表格
+        initTable('table', '/complaint/queryByPagerComplaintUser'); // 初始化表格
         initSelect2("user", "请选择用户", "/complaint/queryCombox");
         initSelect2("admin", "请选择回复人", "/complaint/queryCombox");
+
     });
+    function showAdd(){
+        initDateTimePicker('addForm', 'complaintCreatedTime', 'addComplaintCreatedTime');
+        $("#addWindow").modal('show');
+        $("#addButton").removeAttr("disabled");
+        validator('addForm'); // 初始化验证
+    }
+
 
 
 </script>

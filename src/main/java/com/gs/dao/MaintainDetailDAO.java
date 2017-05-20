@@ -36,4 +36,8 @@ public interface MaintainDetailDAO extends BaseDAO<String, MaintainDetail>{
     public int countByOwner(@Param("recordId")String recordId, @Param("userId")String userId);
 
     public List<MaintainDetail> queryByOwner(@Param("pager")Pager pager, @Param("recordId")String recordId, @Param("userId")String userId);
+    /**
+     * 前台查询最新的十条维修保养记录
+     */
+    public List<MaintainDetail> queryByFrontpage(Pager pager);
 }

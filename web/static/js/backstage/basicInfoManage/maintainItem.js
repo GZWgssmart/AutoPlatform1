@@ -291,21 +291,26 @@ function validator(formId) {
 }
 
 function addSubmit() {
-    $("#addForm").data('bootstrapValidator').validate();
-    if ($("#addForm").data('bootstrapValidator').isValid()) {
-        $("#addButton").attr("disabled", "disabled");
-    } else {
-        $("#addButton").removeAttr("disabled");
-    }
+    setTimeout(function () {
+        $("#addForm").data('bootstrapValidator').validate();
+        if ($("#addForm").data('bootstrapValidator').isValid()) {
+            $("#addButton").attr("disabled", "disabled");
+        } else {
+            $("#addButton").removeAttr("disabled");
+        }
+    },100)
+
 }
 
 function accaddSubmit(){
+    setTimeout(function () {
     $("#accForm").data('bootstrapValidator').validate();
     if ($("#accForm").data('bootstrapValidator').isValid()) {
         $("#accButton").attr("disabled","disabled");
     } else {
         $("#accButton").removeAttr("disabled");
     }
+    },100)
 }
 
 function accEditaddSubmit(){

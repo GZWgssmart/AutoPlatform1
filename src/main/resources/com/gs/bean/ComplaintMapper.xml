@@ -95,7 +95,11 @@
   </select>
 
   <select id="count" resultType="int" parameterType="com.gs.bean.User">
-    select count(c.complaintId) from t_complaint c where 1=1
+    select count(c.complaintId)
+    FROM t_company co,t_complaint c
+    LEFT JOIN t_user u ON c.userId = u.userId
+    LEFT  JOIN t_user u2 ON c.complaintReplyUser = u2.userId
+    WHERE u.companyId = co.companyId
     <if test="companyId != null and companyId != ''">
       and c.companyId = #{companyId}
     </if>
@@ -108,5 +112,25 @@
   <insert id="insert" parameterType="complaint">
     insert into t_complaint(complaintId,userId,complaintContent,complaintCreatedTime,companyId) values(uuid(),#{userId},#{complaintContent},now(),#{companyId})
   </insert>
+
+  <select id="queryByPagerComplaintUser" resultMap="BaseResultMap">
+    SELECT c.*,u.userId AS user_id,u.userName AS user_name,
+    u2.userId AS admin_id,u2.userName AS admin_name,
+    co.companyId AS company_id,co.companyName AS company_name,
+    co.companyAddress AS company_address,co.companyTel AS company_tel
+    FROM t_company co,t_complaint c
+    LEFT JOIN t_user u ON c.userId = u.userId
+    LEFT  JOIN t_user u2 ON c.complaintReplyUser = u2.userId
+    WHERE c.companyId = co.companyId and u.userId = #{userId}
+    limit #{pager.beginIndex}, #{pager.pageSize}
+  </select>
+
+  <select id="countComplaintUser" resultType="int">
+    select count(c.complaintId)
+    FROM t_company co,t_complaint c
+    LEFT JOIN t_user u ON c.userId = u.userId
+    LEFT  JOIN t_user u2 ON c.complaintReplyUser = u2.userId
+    WHERE c.companyId = co.companyId and u.userId = #{userId}
+  </select>
 
 </mapper>

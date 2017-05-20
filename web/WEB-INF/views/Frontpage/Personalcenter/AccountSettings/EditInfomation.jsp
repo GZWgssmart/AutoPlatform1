@@ -92,6 +92,7 @@
     </div>
     <script src="/static/js/jquery.min.js"></script>
     <script src="/static/js/jquery.cxselect.js"></script>
+    <script src="/static/js/sweetalert/sweetalert.min.js"></script>
 </body>
 <script>
     $.cxSelect.defaults.url = '/static/js/cityData.min.json';
@@ -102,8 +103,9 @@
     function edit() {
         $.post("/editinfomation",$("#form2").serialize(),function (data) {
             if(data.result=="success"){
-                window.location.href=window.location.href;
+                window.location.href="accountinfo";
                 window.location.reload;
+                alert("更新成功");
             }else{
                 alert("更新失败");
             }

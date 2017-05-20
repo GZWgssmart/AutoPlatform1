@@ -9,25 +9,27 @@ import com.gs.common.bean.ComboBox4EasyUI;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
-import com.gs.common.util.*;
+import com.gs.common.util.EncryptUtil;
+import com.gs.common.util.RoleUtil;
+import com.gs.common.util.SessionUtil;
+import com.gs.common.util.UUIDUtil;
 import com.gs.service.UserRoleService;
 import com.gs.service.UserService;
-import org.activiti.engine.impl.Page;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import sun.plugin.util.UIUtil;
 
 import javax.annotation.Resource;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.io.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -63,7 +65,7 @@ public class UserBasicManageController {
         System.out.println(fileName);
         if(fileSave(file, savePath,userId,session)) {
             userService.updIcon(userId,savePath+userId+".jpg");   // 设置头像
-            map.put("controllerResult", ControllerResult.getSuccessResult("添加成功,默认密码为123123"));
+            map.put("controllerResult", ControllerResult.getSuccessResult("添加成功,默认密码为123456"));
             map.put("imgPath", savePath);
         } else {
             map.put("controllerResult", ControllerResult.getFailResult("提交失败"));
@@ -86,7 +88,7 @@ public class UserBasicManageController {
                 String city = request.getParameter("city");
                 String area = request.getParameter("area");
                 user.setUserAddress(province + "-" + city + "-" + area);
-                user.setUserPwd(EncryptUtil.md5Encrypt("123123"));
+                user.setUserPwd(EncryptUtil.md5Encrypt("123456"));
                 String nickName = request.getParameter("userNickname");
                 if(nickName != null) {
                     user.setUserNickname(nickName);
@@ -103,7 +105,7 @@ public class UserBasicManageController {
                 userRole.setUserId(userTemp.getUserId());
                 userRole.setRoleId(user.getRoleId());
                 userRoleService.insert(userRole);
-                map.put("controllerResult", ControllerResult.getSuccessResult("添加成功,默认密码为123123"));
+                map.put("controllerResult", ControllerResult.getSuccessResult("添加成功,默认密码为123456"));
                 return map;
             } else {
                 logger.info("此用户没有该操作所属的角色");

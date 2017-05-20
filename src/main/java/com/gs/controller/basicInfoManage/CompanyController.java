@@ -141,7 +141,7 @@ public class CompanyController {
 
     @ResponseBody
     @RequestMapping(value = "addCompany",method = RequestMethod.POST)
-    public Object add(HttpSession session,Company company){
+    public Object add(HttpSession session,HttpServletRequest request,Company company){
         if (SessionUtil.isLogin(session)) {
             String roles = "系统超级管理员,系统普通管理员";
             if (RoleUtil.checkRoles(roles)) {
@@ -151,6 +151,10 @@ public class CompanyController {
 //                    company.setCompanyId(UUIDUtil.uuid());
                     String companyId = UUIDUtil.uuid();
                     company.setCompanyId(companyId);
+                    String province = request.getParameter("province");
+                    String city = request.getParameter("city");
+                    String area = request.getParameter("area");
+                    company.setCompanyAddress(province + "-" + city + "-" + area);
                     User user = new User();
                     user.setUserId(UUIDUtil.uuid());
                     user.setUserPhone(company.getCompanyPricipalphone());
@@ -165,7 +169,7 @@ public class CompanyController {
                     userRoleService.insert(userRole);
                     companyService.insert(company);
                     map.put("company",company);
-                    map.put("controllerResult",ControllerResult.getSuccessResult("添加公司信息成功"));
+                    map.put("controllerResult",ControllerResult.getSuccessResult("添加公司信息成功" + "\n" + "账号:" + company.getCompanyPricipalphone() + " " + "初始密码为:123456"));
                     return map;
                 } else {
                     map.put("controllerResult",ControllerResult.getFailResult("添加公司信息失败"));
@@ -201,13 +205,31 @@ public class CompanyController {
     }
 
     /**
-     * 查询此公司联系电话是否已存在
+     * 查询此公司URL是否已存在
+     */
+    @ResponseBody
+    @RequestMapping(value = "querycompanyWebsite", method = RequestMethod.POST)
+    public Map querycompanyWebsite(Company company) {
+        logger.info("此公司URL是否已存在此公司URL");
+        int countcompanyWebsite = companyService.querycompanyWebsite(company.getCompanyWebsite(),company.getCompanyId());
+        Map<String, Boolean> map = new HashMap<String, Boolean>();
+        if(countcompanyWebsite > 0)
+            map.put("valid", false);
+        else
+            map.put("valid", true);
+
+        return map;
+    }
+
+    /**
+     * 查询此公司负责人电话是否已存在
      */
     @ResponseBody
     @RequestMapping(value = "querycompanyPricipalphone", method = RequestMethod.POST)
     public Map querycompanyPricipalphone(Company company) {
         logger.info("此公司联系电话是否已存在此公司联系电话");
         int countcompanyPricipalphone = companyService.querycompanyPricipalphone(company.getCompanyPricipalphone(),company.getCompanyId());
+//        int userphone = userService.queryPhoneByOne(company.getCompanyPricipalphone());
         Map<String, Boolean> map = new HashMap<String, Boolean>();
         if(countcompanyPricipalphone > 0)
             map.put("valid", false);
@@ -219,13 +241,17 @@ public class CompanyController {
 
     @ResponseBody
     @RequestMapping(value = "updateCompany",method = RequestMethod.POST)
-    public Object update(HttpSession session,Company company){
+    public Object update(HttpSession session,HttpServletRequest request,Company company){
         if (SessionUtil.isLogin(session)) {
             String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员";
             if (RoleUtil.checkRoles(roles)) {
                 Map map = new HashMap();
                 if (company != null && !company.equals("")) {
                         logger.info("修改公司信息");
+                        String province = request.getParameter("editProvince");
+                        String city = request.getParameter("editCity");
+                        String area = request.getParameter("editArea");
+                        company.setCompanyAddress(province + "-" + city + "-" + area);
                         companyService.update(company);
                         map.put("company",company);
                         map.put("controllerResult",ControllerResult.getSuccessResult("修改公司信息成功"));

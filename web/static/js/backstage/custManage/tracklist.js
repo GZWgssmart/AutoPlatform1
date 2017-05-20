@@ -208,14 +208,14 @@ function validator(formId) {
                     }
                 }
             },
-            trackUser: {
-                message: '跟踪回访用户验证失败',
-                validators: {
-                    notEmpty: {
-                        message: '跟踪回访用户不能为空'
-                    }
-                }
-            },
+            // trackUser: {
+            //     message: '跟踪回访用户验证失败',
+            //     validators: {
+            //         notEmpty: {
+            //             message: '跟踪回访用户不能为空'
+            //         }
+            //     }
+            // },
             trackCreatedTime: {
                 message: '维修跟踪回访创建时间验证失败',
                 validators: {
@@ -229,6 +229,7 @@ function validator(formId) {
 
         .on('success.form.bv', function (e) {
             if (formId == "addForm") {
+
                 formSubmit("/tracklist/insert", formId, "addWindow");
 
             } else if (formId == "editForm") {

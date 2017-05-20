@@ -19,4 +19,8 @@ public interface ComplaintService extends BaseService<String, Complaint>{
     public List<Complaint> queryByPagerName(Pager pager, Complaint complaint);
 
     public int countName(Complaint complaint, User user);
+
+    public List<Complaint> queryByPagerComplaintUser(Pager pager, String userId);
+
+    public int countComplaintUser(String userId);
 }

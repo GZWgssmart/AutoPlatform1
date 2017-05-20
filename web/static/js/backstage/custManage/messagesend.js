@@ -132,7 +132,7 @@ function showAdd() {
     });
 }
 
-function validator(formId) {
+function validator(formId,userIds, userPhone) {
     $('#' + formId).bootstrapValidator({
         feedbackIcons: {
             valid: 'glyphicon glyphicon-ok',
@@ -177,7 +177,7 @@ function validator(formId) {
 
         .on('success.form.bv', function (e) {
             if (formId == "addForm") {
-                formSubmit("/messageSend/insert", formId, "addWindow");
+                formSubmit("/messageSend/insert/"+ userIds+"/"+userPhone, formId, "addWindow");
 
             } else if (formId == "editForm") {
                 formSubmit("/messageSend/update", formId, "editWindow");
@@ -272,23 +272,24 @@ function showMessageSendUser() {
             "type": "warning"
         })
     } else if(row.length >= 1) {
-        var ids = "";
+        var userIds = "";
+        var userPhone = "";
         $.each(row, function (index, value, item) {
-            if (ids == "") {
-                ids = row[index].checkin.user.userId;
+            if (userIds == "") {
+                userIds = row[index].checkin.user.userId;
             } else {
-                ids += "," + row[index].checkin.user.userId
+                userIds += "," + row[index].checkin.user.userId
             }
-            alert(row[index].checkin.user.userId);
-
+            if (userPhone == "") {
+                userPhone = row[index].checkin.user.userPhone;
+            } else {
+                userPhone += "," + row[index].checkin.user.userPhone;
+            }
         });
-        // alert(row[0].checkin.user.userId);
-        // alert(row[0].checkin.user.userName);
-        // $("#addUserId").val(ids);
         $("#showMessageSendWindow").modal('hide');
         $("#addWindow").modal('show');
         $("#addButton").removeAttr("disabled");
-        // validator('addForm'); // 初始化验证
+        validator('addForm',userIds, userPhone); // 初始化验证
     }
 }
 

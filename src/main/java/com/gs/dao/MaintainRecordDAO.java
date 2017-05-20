@@ -74,4 +74,11 @@ public interface MaintainRecordDAO extends BaseDAO<String, MaintainRecord>{
     public List<MaintainRecord> queryByPagerSuccess(Pager pager);
 
     public int countSuccess(User user);
+
+    public List<MaintainRecord> queryCheckinAll(String userIds);
+
+    /**
+     * 后台首页查询最新的十条维修保养记录
+     */
+    public List<MaintainRecord> queryByBackstage(Pager pager);
 }

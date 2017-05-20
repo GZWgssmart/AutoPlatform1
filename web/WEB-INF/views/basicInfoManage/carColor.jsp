@@ -92,7 +92,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">颜色的RGB值：</label>
                     <div class="col-sm-7">
-                        <input id="addrgbColor" name="colorRgb" type="text" placeholder="请输入颜色的RGB值" value="" class="form-control">
+                        <input id="addrgbColor" name="colorRgb"  readonly="true" type="text" placeholder="请输入颜色的RGB值" value="" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
@@ -148,7 +148,8 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">颜色的RGB值：</label>
                     <div class="col-sm-7">
-                        <input id="editrgbColor" name="colorRgb" define="carColor.colorRgb" type="text" placeholder="请输入颜色的RGB值" value="" class="form-control">
+                        <input id="editrgbColor" name="colorRgb" define="carColor.colorRgb" readonly="true" type="text" placeholder="请输入颜色的RGB值" value="" class="form-control">
+                        </input>
                     </div>
                 </div>
                 <div class="form-group">

@@ -32,12 +32,31 @@
                 <ul class="nav" id="side-menu">
                     <li class="nav-header" style="padding-top: 20px;">
                         <div class="dropdown profile-element" style="margin-left:30px;">
-                            <span><img alt="image" class="img-circle m-t-xs img-responsive" style="height:90px;width:90px;" src=/${user.userIcon} /></span>
+                            <span>
+                                <c:choose>
+                                    <c:when test="${user.userIcon != null}">
+                                        <img alt="image" class="img-circle m-t-xs img-responsive" style="height:90px;width:90px;" src=/${user.userIcon} />
+                                    </c:when>
+                                    <c:otherwise>
+                                        <img alt="image" class="img-circle m-t-xs img-responsive" style="height:90px;width:90px;" src="/static/img/default.png" />
+                                    </c:otherwise>
+                                </c:choose>
+                            </span>
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                                 <span class="clear">
-                               <span class="block m-t-xs"><strong class="font-bold">${user.userNickname}</strong></span>
-                                <%--<span class="text-muted text-xs block">超级管理员<b class="caret"></b></span>--%>
-                                <%--</span>--%>
+                               <span class="block m-t-xs"><strong class="font-bold">
+                                   <c:choose>
+                                       <c:when test="${user.userNickname != null}">
+                                           ${user.userNickname}
+                                       </c:when>
+                                       <c:otherwise>
+                                           ${user.userName}
+                                       </c:otherwise>
+                                   </c:choose>
+
+                               </strong></span>
+                                <span class="text-muted text-xs block">${user.role.roleName}<b class="caret"></b></span>
+                                </span>
                             </a>
                             <ul class="dropdown-menu animated fadeInRight m-t-xs">
                                 <li><a class="J_menuItem" href="/edit">修改头像</a>

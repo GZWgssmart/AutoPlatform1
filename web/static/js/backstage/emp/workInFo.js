@@ -1,5 +1,6 @@
 var contentPath = ''
 var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司总技师,汽车公司技师"
+var userId;
 /**
  *初始化表格
  * @type {string}
@@ -8,7 +9,6 @@ $(function () {
     $.post(contentPath + "/user/isLogin/" + roles, function (data){
         if(data.result == "success"){
             initTable("table","/Order/queryByPager");//初始化表格
-
            // initSelect2("maintainRecord","请选择维修保养记录","/Order/queryByPager");
             //initSelect2("user","请选择员工","/Order/queryByPager");
             initSelect2("user","请选择员工","/userBasicManage/queryAll");
@@ -282,9 +282,9 @@ function showDisable() {
 function statusFormatter(index, row) {
     /*处理数据*/
     if (row.workStatus == 'Y') {
-        return "&nbsp;&nbsp;已完成";
-    } else {
         return "&nbsp;&nbsp;未完成";
+    } else {
+        return "&nbsp;&nbsp;已完成";
     }
 
 }
@@ -298,14 +298,58 @@ function statusFormatter(index, row) {
  */
 function openStatusFormatter(index, row) {
     /*处理数据*/
-    if (row.workStatus == 'Y') {
-        return "&nbsp;&nbsp;<button type='button' class='btn btn-danger' onclick='active(\""+'/Order/statusOperate?id='+row.workId+'&status=Y'+"\")'>禁用</a>";
+    if(row.userId == userId) {
+        if (row.workStatus == 'Y') {
+            return "&nbsp;&nbsp;<button type='button' class='btn btn-danger' onclick='active(\""+'/Order/statusOperate?id='+row.workId+'&status=Y'+"\")'>点击完成</a>";
+        } else {
+            return "&nbsp;&nbsp;<button type='button' class='btn btn-danger' onclick='inactive(\""+'/Order/statusOperate?id='+row.workId+'&status=N'+"\")'>已完成</a>";
+        }
     } else {
-        return "&nbsp;&nbsp;<button type='button' class='btn btn-danger' onclick='inactive(\""+'/Order/statusOperate?id='+row.workId+'&status=N'+"\")'>激活</a>";
+        if (row.workStatus == 'Y') {
+            return "&nbsp;&nbsp;<span style='color:#aaa'>进行中</span>"
+        } else {
+            return "&nbsp;&nbsp;<span style='color:#aaa'>已完成</span>"
+        }
     }
 
 }
 
+function setUserId() {
+    $.get("/order/userId", function (data) {
+        if(data) {
+            userId = data.userId
+        }
+    })
+}
+
+function blurredQuery() {
+    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员";
+    $.post("/user/isLogin/"+roles, function (data) {
+        if(data.result == 'success'){
+            var button = $("#ulButton");// 获取模糊查询按钮
+            var text = button.text();// 获取模糊查询按钮文本
+            var vaule = $("#ulInput").val();// 获取模糊查询输入框文本
+            initTable('table', '/Order/blurredQuery?text='+text+'&value='+vaule);
+        }else if(data.result == 'notLogin'){
+            swal({title:"",
+                    text:data.message,
+                    confirmButtonText:"确认",
+                    type:"error"}
+                ,function(isConfirm){
+                    if(isConfirm){
+                        top.location = "/user/loginPage";
+                    }else{
+                        top.location = "/user/loginPage";
+                    }
+                })
+        }else if(data.result == 'notRole'){
+            swal({title:"",
+                text:data.message,
+                confirmButtonText:"确认",
+                type:"error"})
+        }
+    });
+}
 
 
 

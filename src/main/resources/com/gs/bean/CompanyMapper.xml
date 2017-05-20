@@ -31,7 +31,7 @@
   <!--分页查询所有公司-->
   <select id="queryByPager" resultMap="companyMap" parameterType="com.gs.common.bean.Pager">
     <![CDATA[
-       select * from t_company tc  where tc.companyStatus = 'Y'
+       select * from t_company tc  where 1=1 and tc.companyStatus = 'Y'
      ]]>
     <if test="user.companyId != '' and user.companyId != null">
       and tc.companyId = #{user.companyId}
@@ -42,7 +42,7 @@
   <!--分页查询公司总数-->
   <select id="count" resultType="int" parameterType="com.gs.bean.User">
     <![CDATA[
-      select count(companyId) from t_company tc where tc.companyStatus = 'Y'
+      select count(companyId) from t_company tc where 1=1 and tc.companyStatus = 'Y'
     ]]>
     <if test="companyId !='' and companyId != null" >
       and tc.companyId = #{companyId}
@@ -89,6 +89,16 @@
   <select id="querycompanyName" resultType="int">
     <![CDATA[
       select count(companyName) from t_company where companyName = #{companyName}
+    ]]>
+    <if test="companyId != null and companyId != ''">
+      and companyId != #{companyId}
+    </if>
+  </select>
+
+  <!--  查询此公司URL是否有已存在 -->
+  <select id="querycompanyWebsite" resultType="int">
+    <![CDATA[
+      select count(companyWebsite) from t_company where companyWebsite = #{companyWebsite}
     ]]>
     <if test="companyId != null and companyId != ''">
       and companyId != #{companyId}
