@@ -230,7 +230,7 @@ public class MaintainDetailController {
                         logger.info("明细个数转换异常");
                     }
                     int maintainHour=0;// 工时
-                    if(maintainFixAccs.size() == length && maintainFixAccs.size() >0) {
+                    if(maintainFixAccs.size() > length && maintainFixAccs.size() >0) {
                             List<MaterialList> materialLists = new ArrayList<MaterialList>();
                             for (MaintainFixAcc m : maintainFixAccs) {
                                 MaterialList materialList = new MaterialList();
