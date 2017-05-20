@@ -303,6 +303,11 @@ function validator(formId) {
             accCommodityCode: {
                 message: '配件商品条形码不能为空',
                 validators: {
+                    stringLength:{
+                        max:8,
+                        min:8,
+                        message:"条形码必须为8位"
+                    },
                     notEmpty: {
                         message: '配件商品条形码不能为空'
                     }

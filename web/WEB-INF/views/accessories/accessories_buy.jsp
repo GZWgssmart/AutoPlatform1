@@ -158,7 +158,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">购买数量：</label>
                         <div class="col-sm-7">
-                            <input type="number" name="accBuyCount" onchange="Addcalculate();" id="addCountNum"
+                            <input type="number" name="accBuyCount" min="1" onchange="Addcalculate();" id="addCountNum"
                                    placeholder="请输入购买数量" class="form-control">
                         </div>
                     </div>
@@ -253,14 +253,14 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">购买数量：</label>
                         <div class="col-sm-7">
-                            <input type="number" name="accBuyCount" onchange="Editcalculate();" id="editBuyNum"
+                            <input type="number" name="accBuyCount" min="1" onchange="Editcalculate();" id="editBuyNum"
                                    define="AccessoriesBuy.accBuyCount" placeholder="请输入购买数量" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">购买单价：</label>
                         <div class="col-sm-7">
-                            <input type="number" name="accBuyPrice" onchange="Editcalculate();" id="editBuyPrice"
+                            <input type="number" min="1" name="accBuyPrice" onchange="Editcalculate();" id="editBuyPrice"
                                    define="AccessoriesBuy.accBuyPrice" placeholder="请输入购买单价" class="form-control">
                         </div>
                     </div>

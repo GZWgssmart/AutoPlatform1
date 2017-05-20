@@ -146,25 +146,25 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">配件价格：</label>
                         <div class="col-sm-7">
-                            <input type="number" name="accPrice" placeholder="请输入配件价格" class="form-control">
+                            <input type="number" min="0" name="accPrice" placeholder="请输入配件价格" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">配件售价：</label>
                         <div class="col-sm-7">
-                            <input type="number" name="accSalePrice" placeholder="请输入配件售价" class="form-control">
+                            <input type="number" min="0" name="accSalePrice" placeholder="请输入配件售价" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">配件数量：</label>
                         <div class="col-sm-7">
-                            <input type="number" name="accTotal" placeholder="请输入配件数量" class="form-control">
+                            <input type="number" min="0" name="accTotal" placeholder="请输入配件数量" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">配件可用数量：</label>
                         <div class="col-sm-7">
-                            <input type="number" name="accIdle" placeholder="请输入配件可用数量" class="form-control">
+                            <input type="number" min="0" name="accIdle" placeholder="请输入配件可用数量" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
@@ -236,14 +236,14 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">配件价格：</label>
                         <div class="col-sm-7">
-                            <input type="number" name="accPrice" define="Accessories.accPrice" placeholder="请输入配件价格"
+                            <input type="number" min="0" name="accPrice" define="Accessories.accPrice" placeholder="请输入配件价格"
                                    class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">配件售价：</label>
                         <div class="col-sm-7">
-                            <input type="number" name="accSalePrice" define="Accessories.accSalePrice"
+                            <input type="number" min="0" name="accSalePrice" define="Accessories.accSalePrice"
                                    placeholder="请输入配件售价"
                                    class="form-control">
                         </div>
@@ -251,14 +251,14 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">配件数量：</label>
                         <div class="col-sm-7">
-                            <input type="number" name="accTotal" define="Accessories.accTotal" placeholder="请输入配件数量"
+                            <input type="number" min="0" name="accTotal" define="Accessories.accTotal" placeholder="请输入配件数量"
                                    class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">配件可用数量：</label>
                         <div class="col-sm-7">
-                            <input type="number" name="accIdle" define="Accessories.accIdle" placeholder="请输入配件可用数量"
+                            <input type="number" min="0" name="accIdle" define="Accessories.accIdle" placeholder="请输入配件可用数量"
                                    class="form-control">
                         </div>
                     </div>
