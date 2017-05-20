@@ -95,6 +95,16 @@
     </if>
   </select>
 
+  <!--  查询此公司URL是否有已存在 -->
+  <select id="querycompanyWebsite" resultType="int">
+    <![CDATA[
+      select count(companyWebsite) from t_company where companyWebsite = #{companyWebsite}
+    ]]>
+    <if test="companyId != null and companyId != ''">
+      and companyId != #{companyId}
+    </if>
+  </select>
+
   <!--  查询此公司负责人联系电话是否已存在 -->
   <select id="querycompanyPricipalphone" resultType="int">
     <![CDATA[

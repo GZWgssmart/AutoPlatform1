@@ -309,6 +309,16 @@ function validator(formId) {
                     notEmpty: {
                         message: '公司官网URL不能为空'
                     },
+                    remote: {
+                        url: '/company/querycompanyWebsite',
+                        message: '该公司官网URL已存在',
+                        delay: 2000,
+                        type: 'POST',
+                        data: {
+                            companyId: $("#" + formId + " input[name=companyId]").val(),
+                            companyWebsite: $("#" + formId + " input[name=companyWebsite]").val()
+                        }
+                    }
                 }
 
             },

@@ -201,6 +201,23 @@ public class CompanyController {
     }
 
     /**
+     * 查询此公司URL是否已存在
+     */
+    @ResponseBody
+    @RequestMapping(value = "querycompanyWebsite", method = RequestMethod.POST)
+    public Map querycompanyWebsite(Company company) {
+        logger.info("此公司URL是否已存在此公司URL");
+        int countcompanyWebsite = companyService.querycompanyWebsite(company.getCompanyWebsite(),company.getCompanyId());
+        Map<String, Boolean> map = new HashMap<String, Boolean>();
+        if(countcompanyWebsite > 0)
+            map.put("valid", false);
+        else
+            map.put("valid", true);
+
+        return map;
+    }
+
+    /**
      * 查询此公司负责人电话是否已存在
      */
     @ResponseBody

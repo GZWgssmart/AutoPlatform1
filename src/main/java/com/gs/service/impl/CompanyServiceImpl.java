@@ -78,4 +78,9 @@ public class CompanyServiceImpl implements CompanyService {
 	public int querycompanyPricipalphone(String companyPricipalphone,String companyId) {
 		return companyDAO.querycompanyPricipalphone(companyPricipalphone,companyId);
 	}
+
+	@Override
+	public int querycompanyWebsite(String companyWebsite, String companyId) {
+		return companyDAO.querycompanyWebsite(companyWebsite,companyId);
+	}
 }

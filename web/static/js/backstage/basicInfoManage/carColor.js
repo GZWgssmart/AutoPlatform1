@@ -169,15 +169,16 @@ function validator(formId) {
         }
     })
         .on('success.form.bv', function (e) {
+            alert("123213213")
             if (formId == "addForm") {
                 formSubmit("/carColor/addCarColor", formId, "addWindow");
 
             } else if (formId == "editForm") {
+
                 formSubmit("/carColor/updateCarColor", formId, "editWindow");
 
             }
         })
-
 }
 
 function addSubmit(){
@@ -194,14 +195,14 @@ function addSubmit(){
 
 function editSubmit(){
     setTimeout(function () {
-    console.log("editSub");
-    $("#editForm").data('bootstrapValidator').validate();
-    if ($("#editForm").data('bootstrapValidator').isValid()) {
-        $("#editButton").attr("disabled","disabled");
-    } else {
+        console.log("editSub");
+        $("#editForm").data('bootstrapValidator').validate();
+        if ($("#editForm").data('bootstrapValidator').isValid()) {
+            $("#editButton").attr("disabled","disabled");
+        } else {
 
-        $("#editButton").removeAttr("disabled");
-    }
+            $("#editButton").removeAttr("disabled");
+        }
     },100)
 }
 
