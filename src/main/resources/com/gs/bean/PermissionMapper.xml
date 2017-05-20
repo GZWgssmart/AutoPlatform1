@@ -48,13 +48,13 @@
            LEFT JOIN t_module m  ON p.moduleId = m.moduleId
            where 1=1
            ]]>
-    <if test="permission.permissionZhname != '' and permission.permissionZhname != null">
+    <if test="permission.permissionZhname != null and permission.permissionZhname != ''">
       and p.permissionZhname like '%${permission.permissionZhname}%'
     </if>
     <if test="permission.permissionDes != '' and permission.permissionDes != null">
       or p.permissionDes like '%${permission.permissionDes}%'
     </if>
-    <if test="permission.module.moduleName != '' and permission.module.moduleName != null">
+    <if test="permission.module.moduleName != null and permission.module.moduleName != ''">
       or  m.moduleName like '%${permission.module.moduleName}%'
     </if>
     limit #{pager.beginIndex}, #{pager.pageSize}
@@ -66,13 +66,13 @@
            LEFT JOIN t_module m  ON p.moduleId = m.moduleId
            where 1=1
            ]]>
-    <if test="permission.permissionZhname != '' and permission.permissionZhname != null">
+    <if test="permission.permissionZhname != null and permission.permissionZhname != ''">
       and p.permissionZhname like '%${permission.permissionZhname}%'
     </if>
-    <if test="permission.permissionDes != '' and permission.permissionDes != null">
+    <if test="permission.permissionDes != null and permission.permissionDes != ''">
       or p.permissionDes like '%${permission.permissionDes}%'
     </if>
-    <if test="permission.module.moduleName != '' and permission.module.moduleName != null">
+    <if test="permission.module.moduleName != null and permission.module.moduleName != ''">
       or m.moduleName like '%${permission.module.moduleName}%'
     </if>
   </select>
