@@ -26,7 +26,7 @@ CREATE TABLE `t_company` (
 DROP TABLE IF EXISTS `t_user`;
 CREATE TABLE `t_user` (
   `userId` varchar(36) NOT NULL COMMENT '用户编号，UUID，主键',
-  `userEmail` varchar(100) NOT NULL COMMENT '用户邮箱，可用于登录，unique, not null',
+  `userEmail` varchar(100) NOT NULL COMMENT '用户邮箱，可用于登录，unique',
   `userPhone` varchar(11) DEFAULT NULL COMMENT '用户手机号，可用于登录',
   `userPwd` varchar(100) NOT NULL COMMENT '用户登录密码，MD5加密,not null',
   `userNickname` varchar(20) DEFAULT NULL COMMENT '用户昵称，默认为用户邮箱',
@@ -287,21 +287,22 @@ CREATE TABLE `t_accessories` (
 DROP TABLE IF EXISTS `t_accessories_buy`;
 CREATE TABLE t_accessories_buy
 (
-  accBuyId VARCHAR(36) PRIMARY KEY NOT NULL COMMENT '配件采购编号，UUID,主键',
-  accId VARCHAR(36) COMMENT '配件编号，来源于t_accessories表。配件的采购分为两种方式，一种是新增配件采购，一种是已有配件采购。如果是新增配件采购，则需要在t_accessories表中新增记录，并把上accId设置成t_accessories表中新增的记录的accId；如果是已有配件采购，则不需要在t_accessories表中新增记录，而是直接选择某个配件',
-  accUnit VARCHAR(10) COMMENT '配件计量单位',
-  accBuyCount INT(11) NOT NULL COMMENT '配件购买数量，not null',
-  accBuyPrice DOUBLE NOT NULL COMMENT '配件购买单价，not null',
-  accBuyTotal DOUBLE NOT NULL COMMENT '配件购买总价，not null',
-  accBuyDiscount DOUBLE NOT NULL COMMENT '配件购买折扣，not null, default 0。可选择折扣，也可选择减价',
-  accBuyMoney DOUBLE NOT NULL COMMENT '配件购买最终价，not null',
-  accBuyTime DATETIME NOT NULL COMMENT '配件购买时间，not null',
-  accBuyCreatedTime DATETIME COMMENT '配件购买记录创建时间',
-  companyId VARCHAR(36) COMMENT '配件购买记录所属公司，来源于t_company表',
-  accBuyStatus VARCHAR(2) COMMENT '配件购买记录状态，Y表示可用，N表示不可用',
-  accTypeId VARCHAR(36), 
-  supplyId VARCHAR(36)
+    accBuyId VARCHAR(36) PRIMARY KEY NOT NULL COMMENT '配件采购编号，UUID,主键',
+    accId VARCHAR(36) COMMENT '配件编号，来源于t_accessories表。配件的采购分为两种方式，一种是新增配件采购，一种是已有配件采购。如果是新增配件采购，则需要在t_accessories表中新增记录，并把上accId设置成t_accessories表中新增的记录的accId；如果是已有配件采购，则不需要在t_accessories表中新增记录，而是直接选择某个配件',
+    accUnit VARCHAR(10) COMMENT '配件计量单位',
+    accBuyCount INT(11) NOT NULL COMMENT '配件购买数量，not null',
+    accBuyPrice DOUBLE NOT NULL COMMENT '配件购买单价，not null',
+    accBuyTotal DOUBLE NOT NULL COMMENT '配件购买总价，not null',
+    accBuyDiscount DOUBLE NOT NULL COMMENT '配件购买折扣，not null, default 0。可选择折扣，也可选择减价',
+    accBuyMoney DOUBLE NOT NULL COMMENT '配件购买最终价，not null',
+    accBuyTime DATETIME NOT NULL COMMENT '配件购买时间，not null',
+    accBuyCreatedTime DATETIME COMMENT '配件购买记录创建时间',
+    companyId VARCHAR(36) COMMENT '配件购买记录所属公司，来源于t_company表',
+    accTypeId VARCHAR(36),
+    supplyId VARCHAR(36),
+    accBuyStatus VARCHAR(2) COMMENT '配件购买记录状态，Y表示可用，N表示不可用'
 );
+
 
 /**
 配件销售表
