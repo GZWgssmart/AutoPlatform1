@@ -212,7 +212,7 @@
         <div class="modal-content" data-options="resizable:true,modal:true">
             <div class="modal-body">
             <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('editWindow', 'editForm')"></span>
-            <form class="form-horizontal" role="form" id="editForm" method="post" enctype="multipart/form-data">
+            <form class="form-horizontal" role="form" id="editForm"  enctype="multipart/form-data">
                 <input type="hidden"name="companyId" define="company.companyId">
                 <input type="hidden"name="companyStatus" define="company.companyStatus">
                 <div class="modal-header" style="overflow:auto;">

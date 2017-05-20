@@ -165,7 +165,7 @@ public class CompanyController {
                     userRoleService.insert(userRole);
                     companyService.insert(company);
                     map.put("company",company);
-                    map.put("controllerResult",ControllerResult.getSuccessResult("账号:" + company.getCompanyPricipalphone() + " " + "初始密码为:123456"));
+                    map.put("controllerResult",ControllerResult.getSuccessResult("添加公司信息成功" + "\n" + "账号:" + company.getCompanyPricipalphone() + " " + "初始密码为:123456"));
                     return map;
                 } else {
                     map.put("controllerResult",ControllerResult.getFailResult("添加公司信息失败"));

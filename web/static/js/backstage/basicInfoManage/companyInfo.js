@@ -273,7 +273,7 @@ function validator(formId) {
                         message: '公司联系电话不能为空'
                     },
                     stringLength: {
-                        min: 1,
+                        min: 6,
                         max: 11,
                         message: '公司联系电话长度必须在1到11位之间'
                     }
@@ -552,7 +552,7 @@ function endSuc(data, winId, formId) {
     var controllerResult= data.controllerResult;
     if (controllerResult.result == "success") {
         swal({
-            title:"添加公司信息成功",
+            title:"",
             text: data.controllerResult.message,
             confirmButtonText:"确定", // 提示按钮上的文本
             type:"success"
