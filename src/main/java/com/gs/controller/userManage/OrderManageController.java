@@ -1,6 +1,7 @@
 package com.gs.controller.userManage;
 
 import ch.qos.logback.classic.Logger;
+import com.gs.bean.Company;
 import com.gs.bean.User;
 import com.gs.bean.WorkInfo;
 import com.gs.bean.echarts.QuarterUtil;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -428,6 +430,66 @@ OrderManageController {
                 return null;
             }
         }else{
+            logger.info("请先登录");
+            return null;
+        }
+    }
+
+
+    @ResponseBody
+    @RequestMapping(value = "userId")
+    public Object queryByCondition(HttpSession session){
+        if(SessionUtil.isLogin(session)) {
+            return session.getAttribute("user");
+        }else{
+            logger.info("请先登录");
+            return null;
+        }
+    }
+
+
+    @ResponseBody
+    @RequestMapping(value = "blurredQuery")
+    public Pager4EasyUI blurredQuery(@RequestParam("pageNumber") int pageNumber, @RequestParam("pageSize") int pageSize, HttpServletRequest req, HttpSession session) {
+        // TODO 系统所有管理员可以查看
+        if (SessionUtil.isLogin(session)) {
+            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师,汽车公司学徒,汽车公司销售人员,汽车公司财务人员,汽车公司采购人员,汽车公司库管人员,汽车公司人力资源管理部";
+            if (RoleUtil.checkRoles(roles)) {
+                logger.info("登记记录模糊查询");
+                Pager pager = new Pager();
+                pager.setPageNo(Integer.valueOf(pageNumber));
+                pager.setPageSize(Integer.valueOf(pageSize));
+                String text = req.getParameter("text");
+                String value = req.getParameter("value");
+                if (text != null && text != "" && value != null && value != "") {
+                    List<WorkInfo> workInfos= null;
+                    User user= new User();
+                    Company company = new Company();
+                    if (text.equals("员工/汽车公司")) { // 当多种模糊搜索条件时
+                        user.setUserNickname(value);
+                        company.setCompanyName(value);
+                    } else if (text.equals("员工")) {
+                        user.setUserNickname(value);
+                    } else if (text.equals("汽车公司")) {
+                        company.setCompanyName(value);
+                    }
+                    user.setCompany(company);
+                    WorkInfo workInfo = new WorkInfo();
+                    workInfo.setUser(user);
+                    pager.setUser((User)session.getAttribute("user"));
+                    workInfos = workInfoService.blurredQuery(pager,workInfo);
+                    pager.setTotalRecords(workInfoService.countByBlurred(workInfo, (User) session.getAttribute("user")));
+                    return new Pager4EasyUI<WorkInfo>(pager.getTotalRecords(), workInfos);
+                } else { // 当在模糊查询输入框中输入的值为空时, 使它查询全部
+                    pager.setTotalRecords(workInfoService.count((User) session.getAttribute("user")));
+                    List<WorkInfo> permissions = workInfoService.queryByPager(pager);
+                    return new Pager4EasyUI<WorkInfo>(pager.getTotalRecords(), permissions);
+                }
+            } else {
+                logger.info("此用户无拥有查看登记记录模糊查询方法的角色");
+                return null;
+            }
+        } else {
             logger.info("请先登录");
             return null;
         }
