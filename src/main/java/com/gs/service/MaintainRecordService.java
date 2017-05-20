@@ -62,4 +62,6 @@ public interface MaintainRecordService extends BaseService<String, MaintainRecor
     public List<MaintainRecord> queryByPagerSuccess(Pager pager);
 
     public int countSuccess(User user);
+
+    public List<MaintainRecord> queryCheckinAll(String userIds);
 }

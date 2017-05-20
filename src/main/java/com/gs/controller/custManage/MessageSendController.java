@@ -2,6 +2,7 @@ package com.gs.controller.custManage;
 
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.Mail;
+import com.gs.bean.MaintainRecord;
 import com.gs.bean.MessageSend;
 import com.gs.bean.User;
 import com.gs.common.Methods;
@@ -12,6 +13,7 @@ import com.gs.common.bean.Pager4EasyUI;
 import com.gs.common.mail.MailConfig;
 import com.gs.common.util.RoleUtil;
 import com.gs.common.util.SessionUtil;
+import com.gs.service.MaintainRecordService;
 import com.gs.service.MessageSendService;
 import com.gs.service.UserService;
 import org.apache.ibatis.annotations.Param;
@@ -20,10 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.mail.BodyPart;
@@ -58,6 +57,9 @@ public class MessageSendController {
     @Resource
     private UserService userService;
 
+    @Resource
+    private MaintainRecordService maintainRecordService;
+
     @ResponseBody
     @RequestMapping(value = "queryByPager", method = RequestMethod.GET)
     public Pager4EasyUI<MessageSend> queryByPager(HttpSession session, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
@@ -83,43 +85,31 @@ public class MessageSendController {
         }
     }
 
-//    @ResponseBody
-//    @RequestMapping(value = "insert", method = RequestMethod.POST)
-//    public ControllerResult batchInsert(HttpSession session) {
-//        if (SessionUtil.isLogin(session)) {
-//            String roles = "公司超级管理员,公司普通管理员,汽车公司接待员";
-//            if (RoleUtil.checkRoles(roles)) {
-//                logger.info("短信提醒记录添加操作");
-//                List<MessageSend> list = new ArrayList<MessageSend>();
-//                for (MessageSend ms : list) {
-//                    MessageSend m = new MessageSend();
-//                    m.setUserId(ms.getUserId());
-//                    m.setSendMsg(ms.getSendMsg());
-//                    m.setSendTime(ms.getSendTime());
-//                    m.setSendCreatedTime(ms.getSendCreatedTime());
-//                    list.add(m);
-//                }
-//                messageSendService.batchInsert(list);
-//                return ControllerResult.getSuccessResult("添加短信提醒成功");
-//            } else {
-//                logger.info("此用户无拥有此方法");
-//                return null;
-//            }
-//        } else {
-//            logger.info("请先登录");
-//            return null;
-//        }
-//
-//    }
-
     @ResponseBody
-    @RequestMapping(value = "insert", method = RequestMethod.POST)
-    public ControllerResult insert(HttpSession session, MessageSend messageSend) {
+    @RequestMapping(value = "insert/{userIds}/{userPhone}", method = RequestMethod.POST)
+    public ControllerResult batchInsert(HttpSession session, @PathVariable("userIds") String userIds,@PathVariable("userPhone")String userPhone) {
         if (SessionUtil.isLogin(session)) {
             String roles = "公司超级管理员,公司普通管理员,汽车公司接待员";
             if (RoleUtil.checkRoles(roles)) {
                 logger.info("短信提醒记录添加操作");
-                messageSendService.insert(messageSend);
+                User user = (User) session.getAttribute("user");
+                String sendMsg = req.getParameter("sendMsg");
+                String[] strArray = null;
+                strArray = userIds.split(",");
+                String[] strArray1 = null;
+                strArray1 = userPhone.split(",");
+                List<MessageSend> list = new ArrayList<MessageSend>();
+                for(String s: strArray){
+                    MessageSend m = new MessageSend();
+                    m.setUserId(s);
+                    m.setSendMsg(sendMsg);
+                    m.setCompanyId(user.getCompanyId());
+                    list.add(m);
+                }
+                for(String phone : strArray1){
+                    // TODO sendSms
+                }
+                messageSendService.batchInsert(list);
                 return ControllerResult.getSuccessResult("添加短信提醒成功");
             } else {
                 logger.info("此用户无拥有此方法");
@@ -131,6 +121,26 @@ public class MessageSendController {
         }
 
     }
+
+//    @ResponseBody
+//    @RequestMapping(value = "insert", method = RequestMethod.POST)
+//    public ControllerResult insert(HttpSession session, MessageSend messageSend) {
+//        if (SessionUtil.isLogin(session)) {
+//            String roles = "公司超级管理员,公司普通管理员,汽车公司接待员";
+//            if (RoleUtil.checkRoles(roles)) {
+//                logger.info("短信提醒记录添加操作");
+//                messageSendService.insert(messageSend);
+//                return ControllerResult.getSuccessResult("添加短信提醒成功");
+//            } else {
+//                logger.info("此用户无拥有此方法");
+//                return null;
+//            }
+//        } else {
+//            logger.info("请先登录");
+//            return null;
+//        }
+//
+//    }
 
 
 

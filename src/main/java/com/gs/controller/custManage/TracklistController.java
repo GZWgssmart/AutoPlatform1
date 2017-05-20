@@ -183,6 +183,7 @@ public class TracklistController {
             if (RoleUtil.checkRoles(roles)) {
                 logger.info("跟踪回访记录添加操作");
                 User user = (User) session.getAttribute("user");
+                trackList.setUserId(user.getUserId());
                 trackList.setCompanyId(user.getCompanyId());
                 trackListService.insert(trackList);
                 return ControllerResult.getSuccessResult("添加回访记录成功");

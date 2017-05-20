@@ -57,8 +57,12 @@
     insert into t_message_send(messageId,userId,sendMsg,sendTime,sendCreatedTime,companyId) values(uuid(),#{userId},#{sendMsg},now(),now(),#{companyId})
   </insert>
 
-  <insert id="batchInsert"  parameterType="java.util.List">
-    insert into t_message_send (messageId,userId,sendMsg,sendTime, sendCreatedTime)values
+  <insert id="batchInsert" parameterType="java.util.List">
+    <!--<selectKey resultType="int" keyProperty="messageId" order="AFTER">-->
+      <!--SELECT LAST_INSERT_ID()-->
+    <!--</selectKey>-->
+    insert into t_message_send(messageId,userId,sendMsg,sendTime,sendCreatedTime,companyId)
+    values
     <foreach collection="list" item="item" index="index" separator="," >
       (uuid(),#{item.userId},#{item.sendMsg},now(),now(),#{item.companyId})
     </foreach>

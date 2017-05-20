@@ -57,7 +57,7 @@ public class ComplaintController {
     @ResponseBody
     @RequestMapping(value = "queryByPager", method = RequestMethod.GET)
     public Pager4EasyUI<Complaint> queryByPager(HttpSession session, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
-        if (SessionUtil.isLogin(session) || SessionUtil.isOwnerLogin(session)) {
+        if (SessionUtil.isLogin(session)) {
             String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,车主";
             if (RoleUtil.checkRoles(roles)) {
                 logger.info("分页查看投诉记录");
@@ -78,6 +78,32 @@ public class ComplaintController {
             logger.info("请先登录");
             return null;
         }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "queryByPagerComplaintUser", method = RequestMethod.GET)
+    public Pager4EasyUI<Complaint> queryByPagerComplaintUser(HttpSession session, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
+//        if (SessionUtil.isOwnerLogin(session)) {
+//            String roles = "车主";
+//            if (RoleUtil.checkRoles(roles)) {
+                logger.info("分页查看投诉记录");
+                Pager pager = new Pager();
+                pager.setPageNo(Integer.valueOf(pageNumber));
+                pager.setPageSize(Integer.valueOf(pageSize));
+                User user = (User) session.getAttribute("user");
+                int count = complaintService.countComplaintUser(user.getUserId());
+                pager.setTotalRecords(count);
+                pager.setUser((User) session.getAttribute("user"));
+                List<Complaint> queryList = complaintService.queryByPagerComplaintUser(pager,user.getUserId());
+                return new Pager4EasyUI<Complaint>(pager.getTotalRecords(), queryList);
+//            } else {
+//                logger.info("此用户无拥有此方法");
+//                return null;
+//            }
+//        } else {
+//            logger.info("请先登录");
+//            return null;
+//        }
     }
 
     @ResponseBody
@@ -172,9 +198,11 @@ public class ComplaintController {
     @RequestMapping(value = "updateReply", method = RequestMethod.POST)
     public ControllerResult updateReply(HttpSession session, Complaint complaint) {
         if (SessionUtil.isLogin(session)) {
-            String roles = "汽修公司管理员,汽修公司接待员";
+            String roles = "公司超级管理员,公司普通管理员,汽车公司接待员";
             if (RoleUtil.checkRoles(roles)) {
                 logger.info("投诉记录回复操作");
+                User user = (User) session.getAttribute("user");
+                complaint.setComplaintReplyUser(user.getUserId());
                 complaintService.update(complaint);
                 return ControllerResult.getSuccessResult("回复车主成功");
             } else {

@@ -520,4 +520,15 @@
         </if>
     </select>
 
+    <select id="queryCheckinAll" resultMap="MaintainRecordMap">
+        SELECT m.*, ck.*,ck.userId as user_id,u.userEmail,u.userPhone as user_phone
+        FROM t_maintain_record m, t_checkin ck,t_user u
+        WHERE m.checkinId = ck.checkinId and ck.userId = u.userId
+        AND m.recordStatus = 'Y' and u.userId in (#{userIds})
+        <if test="user.companyId != '' and user.companyId != null">
+            and ck.companyId = #{user.companyId}
+        </if>
+        order by m.recordCreatedTime Desc
+    </select>
+
 </mapper>

@@ -21,4 +21,8 @@ public interface ComplaintDAO extends BaseDAO<String, Complaint>{
     public List<Complaint> queryByPagerName(@Param("pager") Pager pager, @Param("complaint") Complaint complaint);
 
     public int countName(@Param("complaint") Complaint complaint, @Param("user") User user);
+
+    public List<Complaint> queryByPagerComplaintUser(@Param("pager") Pager pager, @Param("userId") String userId);
+
+    public int countComplaintUser(String userId);
 }

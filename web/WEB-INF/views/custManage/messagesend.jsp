@@ -57,7 +57,7 @@
         <div class="modal-content" style="overflow:hidden;">
             <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('addWindow', 'addForm')"></span>
             <form class="form-horizontal" id="addForm" method="post">
-                <input id="addUserId" type="text" name="userId" width="100px">
+                <%--<input id="addUserId" type="text" name="userId" width="100px">--%>
                 <div class="modal-header" style="overflow:auto;">
                     <h4>添加短信发送提醒的信息</h4>
                 </div>

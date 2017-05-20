@@ -5,6 +5,7 @@ import com.gs.bean.User;
 import com.gs.common.bean.Pager;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+import sun.applet.Main;
 
 import java.util.List;
 
@@ -74,4 +75,6 @@ public interface MaintainRecordDAO extends BaseDAO<String, MaintainRecord>{
     public List<MaintainRecord> queryByPagerSuccess(Pager pager);
 
     public int countSuccess(User user);
+
+    public List<MaintainRecord> queryCheckinAll(String userIds);
 }
