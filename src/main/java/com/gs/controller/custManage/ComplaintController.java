@@ -83,9 +83,9 @@ public class ComplaintController {
     @ResponseBody
     @RequestMapping(value = "queryByPagerComplaintUser", method = RequestMethod.GET)
     public Pager4EasyUI<Complaint> queryByPagerComplaintUser(HttpSession session, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
-//        if (SessionUtil.isOwnerLogin(session)) {
-//            String roles = "车主";
-//            if (RoleUtil.checkRoles(roles)) {
+        if (SessionUtil.isOwnerLogin(session)) {
+            String roles = "车主";
+            if (RoleUtil.checkRoles(roles)) {
                 logger.info("分页查看投诉记录");
                 Pager pager = new Pager();
                 pager.setPageNo(Integer.valueOf(pageNumber));
@@ -96,14 +96,14 @@ public class ComplaintController {
                 pager.setUser((User) session.getAttribute("user"));
                 List<Complaint> queryList = complaintService.queryByPagerComplaintUser(pager,user.getUserId());
                 return new Pager4EasyUI<Complaint>(pager.getTotalRecords(), queryList);
-//            } else {
-//                logger.info("此用户无拥有此方法");
-//                return null;
-//            }
-//        } else {
-//            logger.info("请先登录");
-//            return null;
-//        }
+            } else {
+                logger.info("此用户无拥有此方法");
+                return null;
+            }
+        } else {
+            logger.info("请先登录");
+            return null;
+        }
     }
 
     @ResponseBody
