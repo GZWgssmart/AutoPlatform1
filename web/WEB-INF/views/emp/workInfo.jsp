@@ -27,6 +27,9 @@
             <thead>
             <tr>
                 <th data-radio="true" data-field="status"></th>
+                <th data-field="user.userNickname">
+                    指派用户a
+                </th>
                 <th data-field="workAssignTime" data-formatter="formatterDate">
                     工单指派时间
                 </th>
@@ -49,12 +52,35 @@
             <%--<button id="btn_edit" type="button" class="btn btn-default" onclick="showEdit();">--%>
                 <%--<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>指派员工--%>
             <%--</button>--%>
-                <button id="searchRapid" type="button" class="btn btn-success" onclick="showComplete();">
-                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>已完成工单记录
-                </button>
+            <button id="searchRapid" type="button" class="btn btn-success" onclick="showComplete();">
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>已完成工单记录
+            </button>
             <button id="searchDisable" type="button" class="btn btn-danger" onclick="showDisable();">
                 <span class="glyphicon glyphicon-search" aria-hidden="true"></span>未完成工单记录
             </button>
+
+
+            <div class="input-group" style="width:350px;float:left;padding:0;margin:0 0 0 -1px;">
+                <div class="input-group-btn">
+                    <button type="button" id="ulButton" class="btn btn-default" style="border-radius:0px;"
+                            data-toggle="dropdown">员工<shiro:hasAnyRoles name="系统超级管理员,系统普通管理员">/汽车公司</shiro:hasAnyRoles><span class="caret"></span></button>
+                    <ul class="dropdown-menu pull-right">
+                        <li><a onclick="onclikLi(this)">员工<shiro:hasAnyRoles name="系统超级管理员,系统普通管理员">/汽车公司</shiro:hasAnyRoles></a></li>
+                        <li class="divider"></li>
+                        <li><a onclick="onclikLi(this)">员工</a></li>
+                        <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员">
+                            <li class="divider"></li>
+                            <li><a onclick="onclikLi(this)">汽车公司</a></li>
+                        </shiro:hasAnyRoles>
+                    </ul>
+                </div><!-- /btn-group -->
+                <input id="ulInput" class="form-control" onkeypress="if(event.keyCode==13) {blurredQuery();}">
+                <a href="javaScript:;" onclick="blurredQuery()"><span
+                        class="glyphicon glyphicon-search search-style"></span></a>
+                </input>
+            </div><!-- /input-group -->
+
+
         </div>
     </div>
 </div>

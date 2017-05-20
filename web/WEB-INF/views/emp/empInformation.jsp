@@ -1,5 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
+<%@page import="com.gs.bean.User"%>
+
 <html>
 <head>
     <meta charset="utf-8">
@@ -69,6 +71,11 @@
 </head>
 <body>
 <%@include file="../backstage/contextmenu.jsp" %>
+
+<%
+    String name =((User)session.getAttribute("user")).getRole().getRoleName();
+    String userId =((User)session.getAttribute("user")).getUserId();
+%>
 
 <div class="container">
     <div class="panel-body" style="padding-bottom:0px;">
@@ -530,6 +537,9 @@
         selects: ['province', 'city', 'area'],
         nodata: 'none'
     });
+
+    var loginName = "<%= name %>";
+    var userId = "<%= userId %>";
 
 </script>
 </html>

@@ -90,10 +90,10 @@ public class ComplaintController {
                 Pager pager = new Pager();
                 pager.setPageNo(Integer.valueOf(pageNumber));
                 pager.setPageSize(Integer.valueOf(pageSize));
-                User user = (User) session.getAttribute("user");
+                User user = (User) session.getAttribute("frontUser");
                 int count = complaintService.countComplaintUser(user.getUserId());
                 pager.setTotalRecords(count);
-                pager.setUser((User) session.getAttribute("user"));
+                pager.setUser((User) session.getAttribute("frontUser"));
                 List<Complaint> queryList = complaintService.queryByPagerComplaintUser(pager,user.getUserId());
                 return new Pager4EasyUI<Complaint>(pager.getTotalRecords(), queryList);
             } else {
