@@ -291,8 +291,6 @@
                                 </li>
                                 <li><a class="J_menuItem" href="/statistics/workord">员工工单统计</a>
                                 </li>
-                                <li><a class="J_menuItem" href="/statistics/usematerials">配件使用情况统计</a>
-                                </li>
                                 <li><a class="J_menuItem" href="/statistics/maintaintype">维修项目统计</a>
                                 </li>
                                 <li><a class="J_menuItem" href="/statistics/finance">财务统计</a>

@@ -273,7 +273,6 @@ function selectMonth() {
 
             if (result != null && result.length > 0) {
                 for (var i = 0; i < result.length; i++) {
-                    console.log(result[i].outTypeId + "aaaaa")
                     accBuyMoney.push(result[i].accBuyMoney);
                     accBuyCreatedTime.push(formatterMonth(result[i].accBuyCreatedTime));
                     //挨个取出温度、湿度、压强等值并填入前面声明的温度、湿度、压强等数组
