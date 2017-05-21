@@ -225,10 +225,7 @@
                     <div class="input-group">
                         <input type="text" class="form-control form_Day" id="endQuarterInput" name="addtime"  placeholder="请选择结束时间">
                         <span class="input-group-addon" id="quarterMonth"><span class="glyphicon glyphicon-time"
-                                                                            aria-hidden="true"></span></span>
-                    </div>
-                </div>
-                <button id="quarterBtn" type="button" class="btn btn-default"  onclick="selectQuarter();">
+                                                           g">
                     <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>查询
                 </button>
                 <div class="clearfix"></div>

@@ -484,10 +484,8 @@ function selectDay() {
 }
 
 function selectQuarter() {
-
     var count=[];		//湿度数组
     var workInfoDatas=[];		//时间数组
-
     var start = $("#startQuarterInput").val();
     var end = $("#endQuarterInput").val();
     var companyId = $("#quarterCompanyId").val();
@@ -502,7 +500,6 @@ function selectQuarter() {
         success: function (result) {
             //请求成功时执行该函数内容，result即为服务器返回的json对象
 
-
             if (result != null && result.length > 0) {
                 for (var i = 0; i < result.length; i++) {
                     count.push(result[i].count);
@@ -510,7 +507,6 @@ function selectQuarter() {
 
                 }
                 myChart.hideLoading();	//隐藏加载动画
-
 
                 myChart.setOption({		//载入数据
                     xAxis: {
