@@ -64,9 +64,14 @@
                 </association>
 
                 <association property="company" javaType="com.gs.bean.Company">
-                <id property="companyId" column="companyId"/>
-                <result property="companyName" column="companyName"/>
-            </association>
+                    <id property="companyId" column="companyId"/>
+                    <result property="companyName" column="companyName"/>
+                </association>
+
+                <association property="user" javaType="com.gs.bean.User">
+                    <id property="userId" column="userId"/>
+                    <result property="userName" column="userName"/>
+                </association>
           </association>
     </association>
 
@@ -304,6 +309,17 @@
         <if test="workInfo.workStatus != null and workInfo.workStatus != '' ">
             and w.workStatus = #{workInfo.workStattus}
         </if>
+    </select>
+
+    <select id="queryByUserId" resultMap="BaseResultMap">
+        <![CDATA[
+          select u.userId,u.userName, wif.recordId,wif.userId,wif.workCreatedTime from auto_platform.t_work_info wif
+          LEFT JOIN auto_platform.t_maintain_record mr on mr.recordId=wif.recordId
+          LEFT join auto_platform.t_user u on u.userId=wif.userId
+          WHERE wif.userId=#{userId}
+        ]]>
+        order by wif.workCreatedTime Desc
+        limit 1, 5
     </select>
 
 </mapper>
