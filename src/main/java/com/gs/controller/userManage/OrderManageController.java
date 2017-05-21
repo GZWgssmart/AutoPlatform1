@@ -87,8 +87,8 @@ OrderManageController {
                 pager.setPageNo(Integer.valueOf(pageNumber));
                 pager.setPageSize(Integer.valueOf(pageSize));
                 pager.setUser((User) session.getAttribute("user"));
-                pager.setTotalRecords(workInfoService.count((User) session.getAttribute("user")));
-                List<WorkInfo> worksList = workInfoService.queryByPager(pager);
+                pager.setTotalRecords(workInfoService.count((User) session.getAttribute("user"), "Y"));
+                List<WorkInfo> worksList = workInfoService.queryByPager(pager, "Y");
                 return new Pager4EasyUI<WorkInfo>(pager.getTotalRecords(), worksList);
             }else{
                 logger.info("此用户无拥有可用工单分页查询的角色");
@@ -482,6 +482,7 @@ OrderManageController {
                     return new Pager4EasyUI<WorkInfo>(pager.getTotalRecords(), workInfos);
                 } else { // 当在模糊查询输入框中输入的值为空时, 使它查询全部
                     pager.setTotalRecords(workInfoService.count((User) session.getAttribute("user")));
+                    pager.setUser((User)session.getAttribute("user"));
                     List<WorkInfo> permissions = workInfoService.queryByPager(pager);
                     return new Pager4EasyUI<WorkInfo>(pager.getTotalRecords(), permissions);
                 }

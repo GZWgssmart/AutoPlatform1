@@ -291,14 +291,23 @@ function initTable(tableId, url) {
 
 
 function todoCell(element, row, index){
-    var accInfo = '<a style="margin-right:30px;float:left;margin-bottom: 8px;"><span onclick = "showInfo(\''+ row.record.recordId +'\')" class="glyphicon glyphicon-list-alt"><span style="position: inherit;bottom: 2px;margin-left:5px;">查看明细</span></span></a>'
+   // var accInfo = '<a style="margin-right:30px;float:left;margin-bottom: 8px;"><span onclick = "showInfo(\''+ row.record.recordId +'\')" class="glyphicon glyphicon-list-alt"><span style="position: inherit;bottom: 2px;margin-left:5px;">查看明细</span></span></a>'
+    var accInfo = '<button type="button" style="margin-right:30px;" class="btn btn-default" onclick = "showInfo(\''+ row.record.recordId +'\')"><span aria-hidden="true" style="margin-right:5px;"></span>查看明细</button>'
     var dispatcher = "";
     if(row.workInfo){
-        dispatcher = '<a style="float:left"><span onclick = "showAppoint(\''+ row.record.recordId +'\')" class="glyphicon glyphicon-user"><span style="position: inherit;bottom: 2px;margin-left:5px;">重新指定</span></span></a>'
+        // todo
+
+        // dispatcher = '<a style="float:left"><span onclick = "showAppoint(\''+ row.record.recordId +'\')" class="glyphicocn glyphicon-user"><span style="position: inherit;bottom: 2px;margin-left:5px;">重新指定</span></span></a>'
+        dispatcher = '<button type="button" class="btn btn-default" onclick = "showAppoint(\''+ row.record.recordId +'\')"><span  aria-hidden="true" style="margin-right:5px;"></span>重新指定</button>'
     } else {
-        dispatcher = '<a style="float:left"><span onclick = "showAppoint(\''+ row.record.recordId +'\')" class="glyphicon glyphicon-user"><span style="position: inherit;bottom: 2px;margin-left:5px;">指定员工</span></span></a>'
+        // dispatcher = '<a style="float:left"><span onclick = "showAppoint(\''+ row.record.recordId +'\')" class="glyphicon glyphicon-user"><span style="position: inherit;bottom: 2px;margin-left:5px;">指定员工</span></span></a>'
+        dispatcher = '<button type="button" class="btn btn-default" onclick = "showAppoint(\''+ row.record.recordId +'\')"><span   aria-hidden="true" style="margin-right:5px;"></span>指定员工</button>'
     }
     return accInfo + dispatcher;
+}
+
+function formatterPlate(el, row) {
+    return row.record.checkin.plate.plateName + " " + el;
 }
 
 function showInfo(recordId){

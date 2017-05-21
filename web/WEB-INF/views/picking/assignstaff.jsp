@@ -68,7 +68,7 @@
                 <th data-width="110" data-field="workInfo" data-formatter = "formatterUser">
                     员工
                 </th>
-                <th data-width="110" data-field="carplate">
+                <th data-width="110" data-field="carplate" data-formatter = "formatterPlate">
                     车牌
                 </th>
                 <th data-width="110" data-field="carmodel">

@@ -333,7 +333,7 @@ function showEdit(moduleId) {
     $("#addButton").text("保存");
     $("#addButton").removeAttr("disabled");
     var module = getModule(moduleId);
-    $("#addForm").fill(module);
+   $("#addForm").fill(module);
     validator('addForm');
     $("#addModal").modal('show');
 }
@@ -379,11 +379,11 @@ function validator(formId) {
                     remote: {
                         url: '/module/checkModuleName',//验证地址
                         message: '该模块名称已存在',//提示消息
+                        delay :  2000,
                         data: {
                             moduleId: $("input[name=moduleId]").val(),
                             moduleName: $("input[name=moduleName]").val()
                         },
-                        delay :  2000,//每输入一个字符，就发ajax请求，服务器压力还是太大，设置2秒发送一次ajax（默认输入一个字符，提交一次，服务器压力太大）
                         type: 'POST'//请求方式
                     }
                 }
@@ -452,12 +452,14 @@ function formSubmit(url, modalId ,formId, flag) {
     )
 }
 function addSubmit(){
-    $("#addForm").data('bootstrapValidator').validate();
-    if($("#addForm").data('bootstrapValidator').isValid()) {
-        $("#addButton").attr("disabled","disabled");
-    } else {
-        $("#addButton").removeAttr("disabled");
-    }
+    setTimeout(function() {
+        $("#addForm").data('bootstrapValidator').validate();
+        if($("#addForm").data('bootstrapValidator').isValid()) {
+            $("#addButton").attr("disabled","disabled");
+        } else {
+            $("#addButton").removeAttr("disabled");
+        }
+    }, 100);
 }
 function delSubmit(url, el) {
     var modulePanel = $(el).parents(".panel").first();

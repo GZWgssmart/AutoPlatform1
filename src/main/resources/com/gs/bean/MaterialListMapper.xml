@@ -60,7 +60,7 @@
     left join  <include refid="distincyUseOrReturn"><property name="table" value="t_material_return"/></include> mare
     on mare.matainRecordId = list.maintainRecordId and mare.accId = list.accId
     left join t_accessories acc  on list.accId = acc.accId
-    where workinfo.workStatus = 'Y' and workinfo.userId = #{userId}
+    where workinfo.workStatus = 'N' and workinfo.userId = #{userId}
     ORDER BY workinfo.workAssignTime asc
     limit #{pager.beginIndex}, #{pager.pageSize}
   </select>

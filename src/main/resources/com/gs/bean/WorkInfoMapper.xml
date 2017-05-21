@@ -83,10 +83,16 @@
 
     <select id="count" resultType="int" parameterType="com.gs.bean.User">
         <![CDATA[
-          SELECT count(workId) FROM t_work_info w where w.workStatus='Y'
+          SELECT count(workId) FROM t_work_info w
+          left join t_maintain_record record on w.recordId = record.recordId
+          left join t_checkin checkin on record.checkinId = checkin.checkinId
+          where 1 = 1
         ]]>
-        <if test="companyId != '' and companyId !=null">
-            and w.companyId = #{companyId}
+        <if test="status != null and status != ''">
+           and w.workStatus=  #{status}
+        </if>
+        <if test="user.companyId !=null and user.companyId != ''">
+            and checkin.companyId = #{user.companyId}
         </if>
     </select>
 
@@ -94,25 +100,33 @@
         <![CDATA[
         SELECT count(*) FROM t_work_info w WHERE 1=1 AND w.workStatus = 'N'
        ]]>
-        <if test="companyId != '' and companyId !=null">
+        <if test="companyId !=null and companyId != '' ">
             and w.companyId = #{companyId}
         </if>
     </select>
 
     <!--分页所有完成查询全部-->
-    <select id="queryByPager" resultMap="BaseResultMap" parameterType="com.gs.common.bean.Pager">
+    <select id="queryByPager" resultMap="BaseResultMap" parameterType="hashMap">
         <![CDATA[
             select w.*,tmR.recordId,tmR.checkinId,tmR.pickupTime,
-            u.userId,u.userNickname FROM t_work_info w
+            u.userId,u.userNickname,
+            comp.companyName
+             FROM t_work_info w
             Left JOIN t_maintain_Record tmR on w.recordId = tmR.recordId
+            left join t_checkin checkin on tmR.checkinId = checkin.checkinId
             Left JOIN t_user u on w.userId = u.userId
-            where w.workStatus = 'N'
+            left join t_company comp on checkin.companyId = comp.companyId
+            where 1 = 1
         ]]>
-        <if test="user.companyId != '' and user.companyId !=null">
-            and u.companyId = #{user.companyId}
+
+        <if test="status != null and status != ''">
+            and w.workStatus=  #{status}
+        </if>
+        <if test="pager.user.companyId !=null and pager.user.companyId != '' ">
+            and checkin.companyId = #{pager.user.companyId}
         </if>
         order by w.workCreatedTime Desc
-        limit #{beginIndex}, #{pageSize}
+        limit #{pager.beginIndex}, #{pager.pageSize}
     </select>
 
     <!--分页查询维修保养记录-->
@@ -127,7 +141,7 @@
               and ck.colorId = cc.colorId and ck.modelId = cm.modelId
              and ck.plateId = cp.plateId and ck.companyId = company.companyId
         ]]>
-        <if test="user.companyId != '' and user.companyId !=null">
+        <if test="user.companyId !=null and user.companyId != '' ">
             and ck.companyId = #{user.companyId}
         </if>
             order by wi.workCreatedTime Desc
@@ -141,11 +155,12 @@
             select w.*,tmR.recordId,tmR.checkinId,u.userId,
             u.userNickname FROM t_work_info w
             Left JOIN t_maintain_Record tmR on w.recordId = tmR.recordId
+            Left JOIN t_checkin checkin on tmR.checkinId = checkin.checkinId
             Left JOIN t_user u on u.userId = w.userId
-            where w.workStatus = 'Y'
+            where w.workStatus = 'N'
         ]]>
-        <if test="user.companyId != '' and user.companyId !=null">
-            and u.companyId = #{user.companyId}
+        <if test="user.companyId !=null and  user.companyId != ''">
+            and checkin.companyId = #{user.companyId}
         </if>
         order by w.workCreatedTime Desc
         limit #{beginIndex}, #{pageSize}
@@ -155,7 +170,7 @@
       <![CDATA[
         SELECT * FROM t_work_info
          ]]>
-      <if test="companyId != '' and companyId !=null">
+      <if test="companyId !=null and companyId != '' ">
           and s.companyId = #{companyId}
       </if>
   </select>
@@ -229,10 +244,13 @@
     <select id="blurredQuery" resultMap="BaseResultMap">
         <![CDATA[
             select w.*,tmR.recordId,tmR.checkinId,tmR.pickupTime,
-            u.userId,u.userNickname FROM t_work_info w
+            u.userId,u.userNickname,
+            comp.companyName
+            FROM t_work_info w
             Left JOIN t_maintain_Record tmR on w.recordId = tmR.recordId
+            Left JOIN t_checkin checkin on  tmR.checkinId = checkin.checkinId
             Left JOIN t_user u on w.userId = u.userId
-            LEFT JOIN t_company comp on u.companyId = comp.companyId
+            LEFT JOIN t_company comp on checkin.companyId = comp.companyId
             where 1 = 1
         ]]>
         <if test="pager.user.companyId != null and pager.user.companyId != ''">
@@ -263,12 +281,13 @@
         <![CDATA[
              select count(workId) FROM t_work_info w
             Left JOIN t_maintain_Record tmR on w.recordId = tmR.recordId
+            left join t_checkin checkin on tmR.checkinId = checkin.checkinId
             Left JOIN t_user u on w.userId = u.userId
             LEFT JOIN t_company comp on u.companyId = comp.companyId
             where 1 = 1
         ]]>
         <if test="user.companyId != null and user.companyId != ''">
-            and comp.companyId = #{user.companyId}
+            and checkin.companyId = #{user.companyId}
         </if>
         and(
         <if test="workInfo.user.company.companyName != null and workInfo.user.company.companyName != '' ">

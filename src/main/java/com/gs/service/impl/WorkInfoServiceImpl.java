@@ -6,7 +6,9 @@ import com.gs.dao.WorkInfoDAO;
 import com.gs.service.WorkInfoService;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.gs.common.bean.Pager;
 /**
@@ -36,7 +38,23 @@ public class WorkInfoServiceImpl implements WorkInfoService {
 	public List<WorkInfo> queryByStatus(String status) { return workInfoDAO.queryAll(status); }
 	public WorkInfo query(WorkInfo workInfo) { return workInfoDAO.query(workInfo); }
 	public WorkInfo queryById(String id) { return workInfoDAO.queryById(id); }
-	public List<WorkInfo> queryByPager(Pager pager) { return workInfoDAO.queryByPager(pager); }
+
+	@Override
+	public List<WorkInfo> queryByPager(Pager pager) {
+		return queryByPager(pager, "");
+	}
+
+	@Override
+	public int count(User user) {
+		return count(user, "");
+	}
+
+	public List<WorkInfo> queryByPager(Pager pager,  String status) {
+		Map paramMap = new HashMap();
+		paramMap.put("pager", pager);
+		paramMap.put("status", status);
+		return workInfoDAO.queryByPager(paramMap);
+	}
 	public int inactive(String id) { return workInfoDAO.inactive(id); }
 	public int active(String id) { return workInfoDAO.active(id); }
 
@@ -72,8 +90,11 @@ public class WorkInfoServiceImpl implements WorkInfoService {
 	}
 
 	@Override
-	public int count(User user) {
-		return 0;
+	public int count(User user, String status) {
+		Map param = new HashMap();
+		param.put("user", user);
+		param.put("status", status);
+		return workInfoDAO.count(param);
 	}
 
 	@Override

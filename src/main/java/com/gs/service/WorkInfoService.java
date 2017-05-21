@@ -1,9 +1,11 @@
 package com.gs.service;
 
+import com.gs.bean.User;
 import com.gs.bean.WorkInfo;
 import com.gs.common.bean.Pager;
 
 import java.util.List;
+import java.util.Map;
 
 /**
 *由CSWangBin技术支持
@@ -18,5 +20,7 @@ public interface WorkInfoService extends BaseService<String, WorkInfo>{
 
     public List<WorkInfo> queryByPagerschelude(Pager pager);
 
+    public List<WorkInfo> queryByPager(Pager pager, String status);
 
+    public int count(User user , String status);
 }

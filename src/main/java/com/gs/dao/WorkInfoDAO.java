@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 /**
 *由CSWangBin技术支持
@@ -25,5 +26,9 @@ public interface WorkInfoDAO extends BaseDAO<String, WorkInfo>{
     public List<WorkInfo> blurredQuery(@Param("pager")Pager pager, @Param("workInfo")WorkInfo workInfo);
 
     public int countByBlurred(@Param("workInfo")WorkInfo workInfo, @Param("user")User user);
+
+    public List<WorkInfo> queryByPager(Map paramMap);
+
+    public int count(Map paramMap);
 
 }

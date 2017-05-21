@@ -29,7 +29,7 @@
 <body>
 <%@include file="../backstage/contextmenu.jsp"%>
 <div class="container">
-    <div class="nav">
+    <%--<div class="nav">
         <ul id="myTab" class="nav nav-tabs">
             <li class="pull-right" onclick="initHistoryTab()">
                 <a href="#historyPanel" data-toggle="tab">
@@ -47,7 +47,8 @@
                 </a>
             </li>
         </ul>
-    </div>
+    </div>--%>
+
     <div  class="tab-content">
         <div id="workInfoPanel" class="tab-pane fade in active panel-body " data-toggle="tab" style="padding-bottom:0px;"  >
             <table id="materialsTable">
@@ -60,17 +61,28 @@
                     <th data-field="varsMap.acc.accTotal">总数量</th>
                     <th data-field="varsMap.acc.accUnit">计量单位</th>
                     <th data-field="varsMap.acc.accPrice">单价</th>
-                    <th data-field="varsMap.reqMsg" data-formatter = "reqMsgFormatter" >领料原因</th>
+                    <th data-field="varsMap.reqMsg" data-formatter = "reqMsgFormatter" >申请原因</th>
                     <th data-field="processInstance.startTime" data-formatter="dateTimeFormatter">时间
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
-                    <shiro:hasAnyRoles name="汽车公司库管人员">
+                    <shiro:hasAnyRoles name="汽车公司库管人员,公司超级管理员,公司普通管理员">
                         <th data-field="todoCell" data-formatter="todoCell" data-events="btnevent">操作</th>
                     </shiro:hasAnyRoles>
 
                 </tr>
                 </thead>
             </table>
+            <div id = "toolbar" class="btn-group">
+                <button type="button" class="btn btn-default" onclick = "initAcquisitionTab()">
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>领料管理
+                </button>
+                <button type="button" class="btn btn-default" onclick = "initReturnedTab()">
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>退料管理
+                </button>
+                <button type="button" class="btn btn-default" onclick="initHistoryTab()">
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>历史记录
+                </button>
+            </div>
         </div>
     </div>
 </div>

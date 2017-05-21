@@ -358,7 +358,8 @@
         where detail.maintainRecordId = record.recordId) as 'needHours',
         record.recordId,
         checkin.carPlate as 'carplate' ,
-        model.modelName 'carmodel'
+        model.modelName 'carmodel',
+        plate.plateName
         <if test="hasEmp!=''" >
             , euser.userName
         </if>
@@ -367,6 +368,7 @@
         Left JOIN t_checkin checkin on checkin.checkinId = record.checkinId
         left JOIN t_company com on com.companyId = checkin.companyId
         left join t_car_model model on checkin.modelId = model.modelId
+        Left JOIN  t_car_plate plate on checkin.plateId = plate.plateId
         <if test="hasEmp!=''" >
             left join t_user euser on euser.userId = workinfo.userId
         </if>

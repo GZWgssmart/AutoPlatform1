@@ -1,6 +1,6 @@
+
 var contentPath = ''
 var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司总技师,汽车公司技师"
-var userId;
 /**
  *初始化表格
  * @type {string}
@@ -242,7 +242,9 @@ function formatterDateTime(value) {
     }
 }
 
-
+function formatterCompany(value, row, index) {
+    return row.maintainRecord.checkin.company.companyName
+}
 
 //格式化不带时分秒的时间值。
 function formatterDate(value) {
@@ -260,6 +262,14 @@ function formatterDate(value) {
             day = "0" + day;
         }
         return year + "-" + month + "-" + day + ""
+    }
+}
+
+function formatterUserNickName(el, row) {
+    if(el) {
+        return el.userNickname
+    }else {
+        return "<p style='color:#aaa'>暂无指派给员工</p>"
     }
 }
 
@@ -281,7 +291,7 @@ function showDisable() {
  */
 function statusFormatter(index, row) {
     /*处理数据*/
-    if (row.workStatus == 'Y') {
+    if (row.workStatus == 'N') {
         return "&nbsp;&nbsp;未完成";
     } else {
         return "&nbsp;&nbsp;已完成";
@@ -297,21 +307,26 @@ function statusFormatter(index, row) {
  * @returns {string}
  */
 function openStatusFormatter(index, row) {
+    console.log(userId);
     /*处理数据*/
-    if(row.userId == userId) {
-        if (row.workStatus == 'Y') {
-            return "&nbsp;&nbsp;<button type='button' class='btn btn-danger' onclick='active(\""+'/Order/statusOperate?id='+row.workId+'&status=Y'+"\")'>点击完成</a>";
+    if(row.userId) {
+        if (row.userId == userId) {
+            if (row.workStatus == 'N') {
+                return "&nbsp;&nbsp;<button type='button' class='btn btn-danger' onclick='active(\"" + '/Order/statusOperate?id=' + row.workId + '&status=Y' + "\")'>点击完成</a>";
+            } else {
+                // return "&nbsp;&nbsp;<button type='button' class='btn btn-danger' onclick='inactive(\"" + '/Order/statusOperate?id=' + row.workId + '&status=N' + "\")'>已完成</a>";
+                return "&nbsp;&nbsp;<span>已完成</span>";
+            }
         } else {
-            return "&nbsp;&nbsp;<button type='button' class='btn btn-danger' onclick='inactive(\""+'/Order/statusOperate?id='+row.workId+'&status=N'+"\")'>已完成</a>";
+            if (row.workStatus == 'N') {
+                return "&nbsp;&nbsp;<span style='color:#aaa'>进行中</span>"
+            } else {
+                return "&nbsp;&nbsp;<span style='color:#aaa'>已完成</span>"
+            }
         }
     } else {
-        if (row.workStatus == 'Y') {
-            return "&nbsp;&nbsp;<span style='color:#aaa'>进行中</span>"
-        } else {
-            return "&nbsp;&nbsp;<span style='color:#aaa'>已完成</span>"
-        }
+        return "&nbsp;&nbsp;<span style='color:#aaa'>未派工</span>"
     }
-
 }
 
 function setUserId() {

@@ -228,15 +228,13 @@
                     <button type="button" class="btn btn-default"
                             onclick = "closeModal()">关闭
                     </button>
-                    <button id="addButton" type="submit" class="btn btn-success btn-sm" onclick="addSubmit()">保存</button>
+                    <button id="addButton" class="btn btn-success btn-sm" onclick="addSubmit()">保存</button>
                     <input type="reset" name="reset" style="display: none;"/>
                 </div>
             </form>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-
-
 
 
 <script src="/static/js/jquery.min.js"></script>
@@ -251,6 +249,8 @@
 <script src="/static/js/backstage/systemManage/jquery-ui.custom.js"></script>
 <script src="/static/js/backstage/systemManage/moduleManage.js"></script>
 </body>
+<script>
 
+</script>
 </html>
 

@@ -1,5 +1,7 @@
+<%@ page import="com.gs.bean.User" %>
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <html>
 <head>
     <title>员工工单管理</title>
@@ -27,8 +29,13 @@
             <thead>
             <tr>
                 <th data-radio="true" data-field="status"></th>
-                <th data-field="user.userNickname">
-                    指派用户a
+                <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员">
+                <th data-field="company" data-formatter="formatterCompany">
+                    公司
+                </th>
+                </shiro:hasAnyRoles>
+                <th data-field="user" data-formatter="formatterUserNickName">
+                    指派用户
                 </th>
                 <th data-field="workAssignTime" data-formatter="formatterDate">
                     工单指派时间
@@ -39,12 +46,9 @@
                 <th data-field="workStatus" data-formatter="statusFormatter">
                     工单状态
                 </th>
-                <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司总技师,汽车公司技师">
-                    <th data-width="100" data-formatter="openStatusFormatter">
-                        操作
-                    </th>
-                </shiro:hasAnyRoles>
-
+                <th data-width="100" data-formatter="openStatusFormatter">
+                    操作
+                </th>
             </tr>
             </thead>
         </table>
@@ -63,16 +67,16 @@
             <div class="input-group" style="width:350px;float:left;padding:0;margin:0 0 0 -1px;">
                 <div class="input-group-btn">
                     <button type="button" id="ulButton" class="btn btn-default" style="border-radius:0px;"
-                            data-toggle="dropdown">员工<shiro:hasAnyRoles name="系统超级管理员,系统普通管理员">/汽车公司</shiro:hasAnyRoles><span class="caret"></span></button>
-                    <ul class="dropdown-menu pull-right">
-                        <li><a onclick="onclikLi(this)">员工<shiro:hasAnyRoles name="系统超级管理员,系统普通管理员">/汽车公司</shiro:hasAnyRoles></a></li>
-                        <li class="divider"></li>
-                        <li><a onclick="onclikLi(this)">员工</a></li>
-                        <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员">
+                            data-toggle="dropdown">员工<shiro:hasAnyRoles name="系统超级管理员,系统普通管理员">/汽车公司<span class="caret"></span></shiro:hasAnyRoles></button>
+                    <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员">
+                        <ul class="dropdown-menu pull-right">
+                            <li><a onclick="onclikLi(this)">员工/汽车公司</a></li>
+                            <li class="divider"></li>
+                            <li><a onclick="onclikLi(this)">员工</a></li>
                             <li class="divider"></li>
                             <li><a onclick="onclikLi(this)">汽车公司</a></li>
-                        </shiro:hasAnyRoles>
-                    </ul>
+                        </ul>
+                    </shiro:hasAnyRoles>
                 </div><!-- /btn-group -->
                 <input id="ulInput" class="form-control" onkeypress="if(event.keyCode==13) {blurredQuery();}">
                 <a href="javaScript:;" onclick="blurredQuery()"><span
@@ -134,6 +138,11 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+<% String userId = ((User)session.getAttribute("user")).getUserId(); %>
+<script>
+    var userId = "<%= userId%>";
+</script>
 <script src="/static/js/jquery.min.js"></script>
 <script src="/static/js/bootstrap.min.js"></script>
 <script src="/static/js/bootstrap-table/bootstrap-table.js"></script>
@@ -148,4 +157,7 @@
 <script src="/static/js/backstage/main.js"></script>
 <script src="/static/js/backstage/emp/workInFo.js"></script>
 </body>
+<script>
+
+</script>
 </html>
