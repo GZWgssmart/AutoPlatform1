@@ -26,7 +26,7 @@ CREATE TABLE `t_company` (
 DROP TABLE IF EXISTS `t_user`;
 CREATE TABLE `t_user` (
   `userId` varchar(36) NOT NULL COMMENT '用户编号，UUID，主键',
-  `userEmail` varchar(100) NOT NULL COMMENT '用户邮箱，可用于登录，unique',
+  `userEmail` varchar(100) COMMENT '用户邮箱，可用于登录，unique',
   `userPhone` varchar(11) DEFAULT NULL COMMENT '用户手机号，可用于登录',
   `userPwd` varchar(100) NOT NULL COMMENT '用户登录密码，MD5加密,not null',
   `userNickname` varchar(20) DEFAULT NULL COMMENT '用户昵称，默认为用户邮箱',
