@@ -80,11 +80,6 @@ public class WorkInfoServiceImpl implements WorkInfoService {
 	}
 
 	@Override
-	public List<WorkInfo> queryByUserId(String userId) {
-		return workInfoDAO.queryByUserId(userId);
-	}
-
-	@Override
 	public List<WorkInfo> queryAll(User user) {
 		return null;
 	}
