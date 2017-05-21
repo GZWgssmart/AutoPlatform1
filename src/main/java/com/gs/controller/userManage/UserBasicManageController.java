@@ -226,7 +226,7 @@ public class UserBasicManageController {
     @RequestMapping(value="queryByPagerAll", method = RequestMethod.GET)
     public Pager4EasyUI queryByPagerAll(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize,HttpSession session) {
         if(SessionUtil.isLogin(session)) {
-            String roles = "公司超级管理员,公司普通管理员,汽车公司人力资源管理部,系统超级管理员,系统普通管理员";
+            String roles = "公司超级管理员,公司普通管理员,汽车公司人力资源管理部,系统超级管理员,系统普通管理员,汽车公司接待员";
             if (RoleUtil.checkRoles(roles)) {
                 Pager pager = new Pager();
                 pager.setPageNo(Integer.valueOf(pageNumber));
@@ -253,7 +253,7 @@ public class UserBasicManageController {
     @RequestMapping(value="queryByPager", method = RequestMethod.GET)
     public Pager4EasyUI queryByPager(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize, HttpSession session) {
         if(SessionUtil.isLogin(session)) {
-            String roles = "公司超级管理员,公司普通管理员,汽车公司人力资源管理部, 系统超级管理员,系统普通管理员";
+            String roles = "公司超级管理员,公司普通管理员,汽车公司人力资源管理部, 系统超级管理员,系统普通管理员,汽车公司接待员";
             if (RoleUtil.checkRoles(roles)) {
                 Pager pager = new Pager();
                 pager.setPageNo(Integer.valueOf(pageNumber));
@@ -280,7 +280,7 @@ public class UserBasicManageController {
     @RequestMapping(value="queryByPagerDisable", method = RequestMethod.GET)
     public Pager4EasyUI queryByPagerDisable(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize, HttpSession session) {
         if(SessionUtil.isLogin(session)) {
-            String roles = "公司超级管理员,公司普通管理员,汽车公司人力资源管理部,系统超级管理员,系统普通管理员";
+            String roles = "公司超级管理员,公司普通管理员,汽车公司人力资源管理部,系统超级管理员,系统普通管理员,汽车公司接待员";
             if (RoleUtil.checkRoles(roles)) {
                 Pager pager = new Pager();
                 pager.setPageNo(Integer.valueOf(pageNumber));
