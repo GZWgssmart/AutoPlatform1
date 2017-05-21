@@ -35,8 +35,8 @@
                 <th data-width="180" data-field="maintainRecord.pickupTime" data-formatter="formatterDate">维修保养记录提车时间</th>
                 <th data-width="150" data-field="maintainRecord.recordDes">维修保养记录描述</th>
                 <th data-width="90" data-field="paymentMethod">付款方式</th>
-                <th data-width="90" data-field="chargeBillMoney">总金额</th>
-                <th data-width="90" data-field="actualPayment">实际付款</th>
+                <th data-width="90" data-field="chargeBillMoney">总金额(元)</th>
+                <th data-width="90" data-field="actualPayment">实际付款(元)</th>
                 <th data-width="180" data-field="chargeTime" data-formatter="formatterDate">收费时间</th>
                 <th data-width="180" data-field="chargeCreatedTime" data-formatter="formatterDate">收费单据创建时间</th>
                 <th data-width="130" data-field="chargeBillDes">收费单据描述</th>

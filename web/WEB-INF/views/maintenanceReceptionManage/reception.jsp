@@ -50,10 +50,10 @@
                     到店时间
                 </th>
                 <th data-width="120" data-field="carMileage">
-                    汽车行驶里程
+                    汽车行驶里程(km)
                 </th>
                 <th data-width="120" data-field="nowOil">
-                    汽车当前油量
+                    汽车当前油量(L)
                 </th>
                 <th data-width="90" data-field="ifClearCar" data-formatter="showYesOrNoFormatter">
                     是否洗车
@@ -510,6 +510,9 @@
                     <thead>
                     <tr>
                         <th data-radio="true"></th>
+                        <th data-width="90" data-field="userIcon"data-formatter="formatterImg">
+                            用户头像
+                        </th>
                         <th data-width="90" data-field="userName">
                             用户姓名
                         </th>
@@ -519,7 +522,7 @@
                         <th data-width="90" data-field="userPhone">
                             用户电话
                         </th>
-                        <th data-width="90" data-field="userIdentity">
+                        <th data-width="100" data-field="userIdentity">
                             用户身份证
                         </th>
                         <th data-width="90" data-field="userNickname">
@@ -534,32 +537,8 @@
                         <th data-width="90" data-field="userAddress">
                             用户地址
                         </th>
-                        <th data-width="90" data-field="qqOpenId">
-                            用户qq
-                        </th>
-                        <th data-width="90" data-field="weiboOpenId">
-                            用户微博
-                        </th>
-                        <th data-width="90"data-field="wechatOpenId">
-                            用户微信
-                        </th>
-                        <th data-width="90" data-field="userIcon"data-formatter="formatterImg">
-                            用户头像
-                        </th>
                         <th data-width="90" data-field="userDes">
-                            用户描叙
-                        </th>
-                        <th data-width="90" data-field="companyId">
-                            用户所属公司
-                        </th>
-                        <th data-width="90" data-field="userSalary">
-                            用户基本工资
-                        </th>
-                        <th data-width="90" data-field="userCreatedTime"data-formatter="formatterDate">
-                            用户创建时间
-                        </th>
-                        <th data-width="90"data-field="userLoginedTime"data-formatter="formatterDate">
-                            用户最近一次登录时间
+                            用户描述
                         </th>
                         <th data-width="90" data-field="userStatus">
                             用户状态
