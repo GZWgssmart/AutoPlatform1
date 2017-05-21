@@ -340,4 +340,14 @@
     ]]>
   </update>
 
+
+  <select id="queryByCompanyId" resultMap="userBasicManageMap">
+    <![CDATA[
+      SELECT u.userName,u.userPhone,u.userEmail,u.userIcon from auto_platform.t_user u
+      LEFT JOIN auto_platform.t_company cp on u.companyId = cp.companyId
+      WHERE 1 = 1 and u.companyId = #{companyId}
+      order by u.userCreatedTime desc
+    ]]>
+  </select>
+
 </mapper>

@@ -35,4 +35,7 @@ public interface AppointmentService extends BaseService<String, Appointment>{
     public List<Appointment> queryByPhone(String userPhone);
     // 查询出有的预约id进行批量更新
     public void updateUserIds(String userId, String appIds);
+
+    //根据companyId查询展示的预约信息
+    public List<Appointment> queryByCompanyId(String companyId);
 }

@@ -50,6 +50,11 @@ public class MaintainFixServiceImpl implements MaintainFixService {
 		return maintainFixDAO.queryByCondition(start, end, maintainId, companyId, maintainOrFix, type);
 	}
 
+	@Override
+	public List<MaintainFix> queryByCompanyId(String companyId) {
+		return maintainFixDAO.queryByCompanyId(companyId);
+	}
+
 	@Resource
 	private MaintainFixDAO maintainFixDAO;
 

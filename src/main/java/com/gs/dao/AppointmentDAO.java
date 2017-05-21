@@ -50,4 +50,9 @@ public interface AppointmentDAO extends BaseDAO<String, Appointment>{
     public List<Appointment> queryByPhone(String userPhone);
     // 查询出有的预约id进行批量更新
     public void updateUserIds(@Param("userId")String userId, @Param("appIds")String appIds);
+
+    /**
+     * 根据companyId查询对应的预约信息
+     */
+    public List<Appointment> queryByCompanyId(String companyId);
 }

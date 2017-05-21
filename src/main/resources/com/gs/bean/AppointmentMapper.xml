@@ -291,4 +291,14 @@
         update auto_platform.t_appointment set userId=#{userId} where appointmentId in (${appIds})
         ]]>
   </update>
+
+  <select id="queryByCompanyId" resultMap="appointmentMap">
+    <![CDATA[
+        select cb.brandId ,cb.brandName, ap.userName,ap.userPhone,ap.carPlate,ap.maintainOrFix,ap.appCreatedTime from auto_platform.t_appointment ap
+        LEFT JOIN auto_platform.t_car_brand cb on cb.brandId= ap.brandId
+        WHERE ap.companyId = #{companyId}
+    ]]>
+    order by ap.appCreatedTime Desc
+    limit 1, 5
+  </select>
 </mapper>

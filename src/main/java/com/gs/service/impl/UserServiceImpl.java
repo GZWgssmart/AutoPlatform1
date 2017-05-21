@@ -216,4 +216,9 @@ public class UserServiceImpl implements UserService {
     public List<User> queryByPagerLike(Pager pager) {
         return userDAO.queryByPagerLike(pager);
     }
+
+    @Override
+    public List<User> queryByCompanyId(String companyId) {
+        return userDAO.queryByCompanyId(companyId);
+    }
 }

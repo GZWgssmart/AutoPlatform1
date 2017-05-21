@@ -99,4 +99,11 @@ public interface UserService extends BaseService<String, User> {
      * 模糊查询
      */
     public List<User> queryByPagerLike(Pager pager);
+
+    /**
+     * 根据companyId查询员工的展示信息
+     * @param companyId
+     * @return
+     */
+    public List<User> queryByCompanyId(String companyId);
 }

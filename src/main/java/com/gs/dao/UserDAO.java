@@ -101,4 +101,9 @@ public interface UserDAO extends BaseDAO<String, User>{
      */
     public List<User> queryByPagerLike(Pager pager);
 
+    /**
+     * 根据companyId查询员工的展示信息
+     */
+    public List<User> queryByCompanyId(String companyId);
+
 }

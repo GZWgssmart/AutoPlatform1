@@ -57,4 +57,6 @@ public interface MaintainFixService extends BaseService<String, MaintainFix>{
      */
     public List<MaintainFix> queryByCondition(String start, String end,String maintainId,
                                       String companyId, String maintainOrFix, String type);
+
+    public List<MaintainFix> queryByCompanyId(String companyId);
 }

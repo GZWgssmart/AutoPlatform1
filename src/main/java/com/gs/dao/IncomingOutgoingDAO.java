@@ -57,4 +57,6 @@ public interface IncomingOutgoingDAO extends BaseDAO<String, IncomingOutgoing> {
 
     /*根据年，月，季度，周，日查询所有收支记录*/
     public List<IncomingOutgoing> queryByCondition(@Param("start") String start, @Param("end") String end, @Param("inOutType") String inOutType, @Param("companyId") String companyId, @Param("type") String type);
+
+    public List<IncomingOutgoing> queryByCompanyId(String companyId,String type);
 }

@@ -100,4 +100,9 @@ public class AppointmentServiceImpl implements AppointmentService {
 	public void updateUserIds(String userId, String appIds) {
 		appointmentDAO.updateUserIds(userId, appIds);
 	}
+
+	@Override
+	public List<Appointment> queryByCompanyId(String companyId) {
+		return appointmentDAO.queryByCompanyId(companyId);
+	}
 }

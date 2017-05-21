@@ -42,6 +42,6 @@ public interface IncomingOutgoingService extends BaseService<String, IncomingOut
     public void addInsert(List<IncomingOutgoing> incomingOutgoings);
 
 
-
+    public List<IncomingOutgoing> queryByCompanyId(String companyId,String type);
 
 }

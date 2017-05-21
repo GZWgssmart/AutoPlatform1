@@ -1,11 +1,9 @@
 package com.gs.controller;
 
 import ch.qos.logback.classic.Logger;
-import com.gs.bean.ChargeBill;
-import com.gs.bean.MaintainDetail;
-import com.gs.bean.MaintainFixAcc;
-import com.gs.bean.MaintainRecord;
+import com.gs.bean.*;
 import com.gs.service.*;
+import org.activiti.engine.repository.Model;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,6 +12,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -38,11 +39,31 @@ public class BackstageController {
     // 项目配件service
     @Resource
     private MaintainFixAccService maintainFixAccService;
+
+    @Resource
+    private UserService userService;
+
+    @Resource
+    private AppointmentService appointmentService;
+
+    @Resource
+    private MaintainFixService maintainFixService;
+
+    @Resource
+    private IncomingOutgoingService incomingOutgoingService;
+
     /**
      * 后台主页
      */
     @RequestMapping(value = "home", method = RequestMethod.GET)
-    public String backstageHome() {
+    public String backstageHome(HttpSession session, HttpServletRequest request) {
+        User user = (User) session.getAttribute("user");
+        List<User> userinfo = userService.queryByCompanyId(user.getCompanyId());
+        List<Appointment> appinfo=appointmentService.queryByCompanyId(user.getCompanyId());
+        List<MaintainFix> mainInfo=maintainFixService.queryByCompanyId(user.getCompanyId());
+        request.setAttribute("userinfo", userinfo);
+        request.setAttribute("appinfo",appinfo);
+        request.setAttribute("maininfo",mainInfo);
         logger.info("跳转到后台主页");
         return "backstage/home";
     }
@@ -51,7 +72,7 @@ public class BackstageController {
      * 维修保养记录打印页面
      */
     @RequestMapping(value = "recordPrint/{maintainRecordId}/{ids}", method = RequestMethod.GET)
-    public ModelAndView recordPrint(@PathVariable("maintainRecordId")String maintainRecordId,@PathVariable("ids")String ids) {
+    public ModelAndView recordPrint(@PathVariable("maintainRecordId") String maintainRecordId, @PathVariable("ids") String ids) {
         logger.info("跳转到维修保养明细打印页面");
         ModelAndView mav = new ModelAndView("backstage/recordPrint");
         // 拿到选中的维修保养记录
@@ -61,16 +82,16 @@ public class BackstageController {
         List<MaintainDetail> maintainDetails = maintainDetailService.queryByRecordId(maintainRecordId);
         Double disCountMoney = 0.d;
         Double money = 0.d;
-        for(MaintainDetail md : maintainDetails){
-            if(md.getMaintainDiscount() >=1){
-                    md.setDisCount("无折扣");
-            }else{
+        for (MaintainDetail md : maintainDetails) {
+            if (md.getMaintainDiscount() >= 1) {
+                md.setDisCount("无折扣");
+            } else {
                 String str = md.getMaintainDiscount().toString();
                 String str1 = str.substring(str.indexOf(".") + 1);
-                md.setDisCount(str1+"折");
+                md.setDisCount(str1 + "折");
             }
             money += md.getMaintainFix().getMaintainMoney();
-            disCountMoney +=md.getMaintainDiscount() * md.getMaintainFix().getMaintainMoney();
+            disCountMoney += md.getMaintainDiscount() * md.getMaintainFix().getMaintainMoney();
         }
         maintainRecord.setDiscountMoney(disCountMoney);
         maintainRecord.setTotal(money);
@@ -85,7 +106,7 @@ public class BackstageController {
      * 收费单据打印页面
      */
     @RequestMapping(value = "chargeBillprint/{chargeBillId}", method = RequestMethod.GET)
-    public ModelAndView chargeBillprint(@PathVariable("chargeBillId")String chargeBillId) {
+    public ModelAndView chargeBillprint(@PathVariable("chargeBillId") String chargeBillId) {
         logger.info("跳转到收费单据打印页面");
         ChargeBill chargeBill = chargeBillService.queryById(chargeBillId);
         ModelAndView mav = new ModelAndView("backstage/chargeBillPrint");
