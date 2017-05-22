@@ -285,8 +285,6 @@
                                 </li>
                                 <li><a class="J_menuItem" href="/statistics/inventoryUsing">库存使用情况统计</a>
                                 </li>
-                                <li><a class="J_menuItem" href="/statistics/consume">消费统计</a>
-                                </li>
                                 <li><a class="J_menuItem" href="/statistics/vindicate">维修保养统计</a>
                                 </li>
                                 <li><a class="J_menuItem" href="/statistics/workord">员工工单统计</a>
