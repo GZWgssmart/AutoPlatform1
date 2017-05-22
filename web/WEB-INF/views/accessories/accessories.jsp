@@ -24,7 +24,7 @@
 <body>
 <%@include file="../backstage/contextmenu.jsp" %>
 <div class="container ">
-    <div class="panel-body" style="padding-bottom:0px;">
+    <div class="panel-body">
         <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司采购人员,系统超级管理员,系统普通管理员">
             <table id="table">
                 <thead>

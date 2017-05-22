@@ -107,7 +107,7 @@
                       data-dismiss="modal"></span>
                 <form class="form-horizontal" role="form" id="addForm" method="post">
                     <div class="modal-header" style="overflow:auto;">
-                        <h4>请填写配件销售信息</h4>
+                        <h4>添加配件销售信息</h4>
                     </div>
                     <br/>
                     <div class="form-group">
@@ -196,7 +196,7 @@
                 <form class="form-horizontal" role="form" id="editForm" method="post">
                     <input type="hidden" name="accSaleId" define="AccessoriesSale.accSaleId"/>
                     <div class="modal-header" style="overflow:auto;">
-                        <h4>请修改配件销售信息</h4>
+                        <h4>修改配件销售信息</h4>
                     </div>
                     <br/>
                     <div class="form-group">

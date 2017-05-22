@@ -44,7 +44,9 @@
                     <th data-field="accBuyMoney">购买最终价</th>
                     <th data-field="accBuyTime" data-formatter="formatterDate">购买时间</th>
                     <th data-field="accBuyCreatedTime" data-formatter="formatterDateTime">购买记录创建时间</th>
-                    <th data-field="accTypeStatus" data-formatter="showStatusFormatter">配件分类状态</th>
+                    <th data-field="accBuyStatus" data-formatter="showStatusFormatter">
+                        记录状态
+                    </th>
                     <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司采购人员">
                         <th data-width="100" data-field="accBuyStatus" data-formatter="statusFormatter">
                             操作
