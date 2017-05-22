@@ -371,22 +371,22 @@ function validator(formId) {
                     }
                 }
             },
-            companyLongitude: {
-                message: '公司经度验证失败',
-                validators: {
-                    notEmpty: {
-                        message: '公司经度不能为空'
-                    }
-                }
-            },
-            companyLatitude: {
-                message: '公司纬度验证失败',
-                validators: {
-                    notEmpty: {
-                        message: '公司纬度不能为空'
-                    }
-                }
-            },
+            // companyLongitude: {
+            //     message: '公司经度验证失败',
+            //     validators: {
+            //         notEmpty: {
+            //             message: '公司经度不能为空'
+            //         }
+            //     }
+            // },
+            // companyLatitude: {
+            //     message: '公司纬度验证失败',
+            //     validators: {
+            //         notEmpty: {
+            //             message: '公司纬度不能为空'
+            //         }
+            //     }
+            // },
             companyOpendate: {
                 message: '公司成立时间验证失败',
                 validators: {
@@ -724,7 +724,6 @@ address.click(function () {
 function showMap(winId) {
 
     $("#mapWindow").modal('show');
-    $('#addForm').data('bootstrapValidator').resetForm();
     windowId = winId;
     map.addEventListener("click", showInfo);
 }
