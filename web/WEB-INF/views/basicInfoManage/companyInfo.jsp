@@ -27,7 +27,7 @@
                     <th data-radio="true"></th>
                     <th data-width="120" data-field="companyName">公司名称</th>
                     <th data-width="180" data-field="companyAddress">公司地址</th>
-                    <th data-width="120" data-field="companyTel">联系电话</th>
+                    <th data-width="120" data-field="companyTel">公司联系电话</th>
                     <th data-width="100" data-field="companyPricipal">负责人</th>
                     <th data-width="130" data-field="companyPricipalphone">负责人联系电话</th>
                     <th data-width="170" data-field="companyWebsite">公司官网网址</th>
