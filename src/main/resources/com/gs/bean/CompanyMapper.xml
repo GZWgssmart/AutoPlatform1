@@ -136,11 +136,44 @@
         ]]>
   </update>
 
-
-  <!-- 同上 -->
+  <!-- Logo -->
   <update id="updLogo" >
     <![CDATA[
       update  t_company set companyLogo=#{companyLogo} where companyId = #{companyId}
     ]]>
   </update>
+
+
+  <!-- 分页模糊查询 -->
+  <select id="blurredQuery" resultMap="companyMap" >
+    <![CDATA[
+        select * from t_company tc  where 1=1
+      ]]>
+    <if test="pager.user.companyId != '' and pager.user.companyId !=null">
+      and tc.companyId = #{pager.user.companyId}
+    </if>
+    <if test="company.companyName != '' and company.companyName != null">
+      and  tc.companyName like '%${company.companyName}%'
+    </if>
+    <if test="company.companyPricipal !='' and company.companyPricipal !=null">
+      and tc.companyPricipal like '%${company.companyPricipal}%'
+    </if>
+    limit #{pager.beginIndex}, #{pager.pageSize}
+  </select>
+
+  <!-- 分页模糊查询个数 -->
+  <select id="countByBlurred" resultType="int">
+    <![CDATA[
+      select count(companyId) from t_company tc where 1=1
+    ]]>
+    <if test="user.companyId != '' and user.companyId !=null">
+      and tc.companyId = #{user.companyId}
+    </if>
+    <if test="company.companyName != '' and company.companyName != null">
+      and  tc.companyName like '%${company.companyName}%'
+    </if>
+    <if test="company.companyPricipal !='' and company.companyPricipal !=null">
+      and tc.companyPricipal like '%${company.companyPricipal}%'
+    </if>
+  </select>
 </mapper>
