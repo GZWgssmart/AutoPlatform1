@@ -13,6 +13,7 @@ import com.gs.common.bean.ComboBox4EasyUI;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
+import com.gs.common.mes.IndustrySMS;
 import com.gs.common.util.*;
 import com.gs.service.CompanyService;
 import com.gs.service.RoleService;
@@ -169,6 +170,9 @@ public class CompanyController {
                     userRoleService.insert(userRole);
                     companyService.insert(company);
                     map.put("company",company);
+                    String pwd = "123456";
+                    IndustrySMS i = new IndustrySMS(company.getCompanyPricipalphone(), "【汽车之家】尊敬的" +company.getCompanyPricipal() + "公司负责人您好，你的公司"+company.getCompanyName() + "已在本平台入驻成功，初始密码为"+pwd+"，请前来完善公司相关信息。");
+                    i.execute();
                     map.put("controllerResult",ControllerResult.getSuccessResult("添加公司信息成功" + "\n" + "账号:" + company.getCompanyPricipalphone() + " " + "初始密码为:123456"));
                     return map;
                 } else {
