@@ -308,6 +308,7 @@ function showBellAll(){
                     if(isConfirm){
                         var ids = "";// 设置一个字符串
                         var phones = "";
+                        var userName = "";
                         $.each(tableData, function (index, value, item) {
                             if (ids == "") {// 假如这个字符串刚开始设置,获取到所有已经被选中的维修保养记录id
                                 ids = "'" + tableData[index].recordId + "'";// 则直接赋上0索引上的id属性
@@ -319,8 +320,13 @@ function showBellAll(){
                             } else {
                                 phones += "," + tableData[index].checkin.userPhone; // 否则就加上逗号把rows里的id赋给ids
                             }
+                            if(userName == ""){
+                                userName = row[index].checkin.userName;// 则直接赋上0索引上的id属性
+                            }else {
+                                userName += "," + row[index].checkin.userName; // 否则就加上逗号把rows里的id赋给ids
+                            }
                         });
-                        $.get("/carRemind/remind/" + ids + "/" + phones,
+                        $.get("/carRemind/remind/" + ids + "/" + phones+"/"+userName,
                             function (data) {
                                 if (data.result == "success") {
                                     $('#table').bootstrapTable('refresh');
