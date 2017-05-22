@@ -40,7 +40,7 @@
     <!--修改车牌-->
       <update id="update" parameterType="carplate">
           <![CDATA[
-        update t_car_plate set plateName = #{plateName},plateDes = #{plateDes} where plateId = #{plateId}
+        update t_car_plate set plateName = #{plateName},plateDes = #{plateDes},plateStatus = 'Y' where plateId = #{plateId}
           ]]>
       </update>
 

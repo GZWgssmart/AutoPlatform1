@@ -40,7 +40,7 @@
   <!--修改汽车品牌-->
   <update id="update" parameterType="carbrand">
     <![CDATA[
-      update t_car_brand set brandName = #{brandName},brandDes = #{brandDes} where brandId = #{brandId}
+      update t_car_brand set brandName = #{brandName},brandDes = #{brandDes},brandStatus = 'Y' where brandId = #{brandId}
      ]]>
   </update>
 
@@ -90,16 +90,21 @@
     <if test="carBrand.brandName != '' and carBrand.brandName != null">
       and  cb.brandName like '%${carBrand.brandName}%'
     </if>
+    <if test="carBrand.brandDes !='' and carBrand.brandDes !=null">
+     and cb.brandDes like '%${carBrand.brandDes}%'
+    </if>
     limit #{pager.beginIndex}, #{pager.pageSize}
   </select>
 
   <select id="countByBlurred" resultType="int">
     <![CDATA[
-      select count(*) from t_car_brand cb
-      where 1=1
+      select count(*) from t_car_brand cb where 1=1
     ]]>
     <if test="carBrand.brandName != '' and carBrand.brandName != null">
       and cb.brandName like '%${carBrand.brandName}%'
+    </if>
+    <if test="carBrand.brandDes !='' and carBrand.brandDes !=null">
+      and cb.brandDes like '%${carBrand.brandDes}%'
     </if>
   </select>
 

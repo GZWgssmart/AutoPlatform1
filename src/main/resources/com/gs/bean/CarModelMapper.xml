@@ -48,7 +48,7 @@
 
   <update id="update" parameterType="carmodel">
       <![CDATA[
-            update t_car_model set modelName = #{modelName},modelDes = #{modelDes}, brandId = #{brandId} where modelId = #{modelId}
+            update t_car_model set modelName = #{modelName},modelDes = #{modelDes},modelStaus = 'Y',brandId = #{brandId} where modelId = #{modelId}
       ]]>
   </update>
 
@@ -102,7 +102,7 @@
             and cm.modelName like '%${carModel.modelName}%'
         </if>
         <if test="carModel.brandId != '' and carModel.brandId != null">
-            cb.brandName like '%${carModel.brandId}%'
+            and cb.brandName like '%${carModel.brandId}%'
         </if>
         limit #{pager.beginIndex}, #{pager.pageSize}
     </select>
@@ -117,7 +117,7 @@
             and cm.modelName like '%${carModel.modelName}%'
         </if>
         <if test="carModel.brandId != '' and carModel.brandId != null">
-            cb.brandName like '%${carModel.brandId}%'
+            and cb.brandName like '%${carModel.brandId}%'
         </if>
     </select>
 </mapper>

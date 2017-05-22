@@ -58,10 +58,12 @@
                 <div class="input-group" style="width:300px;float:left;padding:0;margin:0 0 0 -1px;">
                     <div class="input-group-btn">
                         <button type="button" id="ulButton" class="btn btn-default" style="border-radius:0px;" data-toggle="dropdown">
-                            汽车品牌名称
+                            汽车品牌名称/汽车品牌描述
                         </button>
                         <ul class="dropdown-menu pull-right">
                             <li><a onclick="onclikLi(this)">汽车品牌名称</a></li>
+                            <li class="divider"></li>
+                            <li><a onclick="onclikLi(this)">汽车品牌描述</a></li>
                         </ul>
                     </div><!-- /btn-group -->
                     <input id="ulInput" class="form-control" onkeypress="if(event.keyCode==13) {blurredQuery();}">
