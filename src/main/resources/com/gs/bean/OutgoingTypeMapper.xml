@@ -57,9 +57,11 @@
 
   <select id="queryById" resultMap="outGoingTypeMap">
     <![CDATA[
-        select * from t_outgoing_type where outTypeName = #{outTypeName} and outTypeStatus = 'Y';
+        select * from t_outgoing_type where outTypeName = #{outTypeName} and outTypeStatus = 'Y'
     ]]>
-
+    <if test="outTypeId != null and outTypeId != ''">
+      and outTypeId != #{outTypeId}
+    </if>
   </select>
 
   <insert id="insert" useGeneratedKeys="true" keyProperty="outTypeId" parameterType="outGoingType">

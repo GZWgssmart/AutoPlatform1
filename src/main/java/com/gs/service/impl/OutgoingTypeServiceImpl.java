@@ -62,6 +62,11 @@ public class OutgoingTypeServiceImpl implements OutgoingTypeService {
 		return outgoingTypeDAO.countByDisable();
 	}
 
+	@Override
+	public OutgoingType queryById(String outTypeName, String outTypeId) {
+		return outgoingTypeDAO.queryById(outTypeName, outTypeId);
+	}
+
 	public List<OutgoingType> blurredQuery(Pager pager, OutgoingType outgoingType) {
 		return null;
 	}

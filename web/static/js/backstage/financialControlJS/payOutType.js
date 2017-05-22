@@ -226,6 +226,7 @@ function validator(formId) {
                         url: '/outGoingType/checkOutTypeName',//验证收入类型名称
                         message: '该类型已存在',//提示消息
                         data: {
+                            outTypeId: $("#" + formId + " input[name=outTypeId]").val(),
                             outTypeName: $("#" + formId + " input[name=outTypeName]").val()
                         },
                         delay :  2000,//每输入一个字符，就发ajax请求，服务器压力还是太大，设置2秒发送一次ajax（默认输入一个字符，提交一次，服务器压力太大）

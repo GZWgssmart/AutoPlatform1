@@ -61,8 +61,11 @@
 
   <select id="queryById" resultMap="incomingTypeMap">
     <![CDATA[
-        select *  from t_incoming_type where inTypeName = #{inTypeName} and inTypeStatus = 'Y';;
+        select *  from t_incoming_type where inTypeName = #{inTypeName} and inTypeStatus = 'Y'
     ]]>
+    <if test="inTypeId != null and inTypeId != ''">
+      and inTypeId != #{inTypeId}
+    </if>
   </select>
 
   <select id="queryAll" resultMap="incomingTypeMap" parameterType="com.gs.bean.User">

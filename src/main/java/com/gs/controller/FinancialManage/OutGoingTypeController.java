@@ -151,15 +151,14 @@ public class OutGoingTypeController {
 
     /**
      * 验证支出类型名称
-     * @param outTypeName
      * @return
      */
     @ResponseBody
     @RequestMapping(value = "checkOutTypeName",method = RequestMethod.POST)
-    public Map checkOutTypeName(String outTypeName) {
-        OutgoingType outgoingType = outgoingTypeService.queryById(outTypeName);
+    public Map checkOutTypeName(OutgoingType outgoingType) {
+        OutgoingType o = outgoingTypeService.queryById(outgoingType.getOutTypeName(), outgoingType.getOutTypeId());
         Map<String, Boolean> map = new HashMap<String, Boolean>();
-        if(outgoingType != null)
+        if(o != null)
             map.put("valid", false);
         else
             map.put("valid", true);

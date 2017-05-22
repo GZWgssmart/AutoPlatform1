@@ -27,4 +27,6 @@ public interface OutgoingTypeDAO extends BaseDAO<String, OutgoingType>{
      * 分页查询被禁用的记录
      */
     public int countByDisable();
+
+    public OutgoingType queryById(@Param("outTypeName")String outTypeName, @Param("outTypeId")String outTypeId);
 }

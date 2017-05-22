@@ -2,6 +2,7 @@ package com.gs.service.impl;
 
 import com.gs.bean.Checkin;
 import com.gs.bean.IncomingType;
+import com.gs.bean.OutgoingType;
 import com.gs.bean.User;
 import com.gs.dao.IncomingTypeDAO;
 import com.gs.service.IncomingTypeService;
@@ -60,6 +61,11 @@ public class IncomingTypeServiceImpl implements IncomingTypeService {
 	@Override
 	public int countByDisable() {
 		return incomingTypeDAO.countByDisable();
+	}
+
+	@Override
+	public IncomingType queryById(String inTypeName, String inTypeId) {
+		return incomingTypeDAO.queryById(inTypeName, inTypeId);
 	}
 
 	public List<IncomingType> blurredQuery(Pager pager, IncomingType incomingType) {

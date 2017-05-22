@@ -1,4 +1,4 @@
-var contentPath='';
+var contentPath = '';
 
 $(function () {
     validator('loginForm');
@@ -59,19 +59,34 @@ function validator(formId) {
                     }
                 }
             },
-            companyPricipalPhone: {
-                    message: '公司负责人电话不能为空',
-                        validators: {
-                        notEmpty: {
-                            message: '公司负责人电话不能为空'
-                        },
-                        regexp: {
-                            regexp: /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/,
-                            message: '请输入正确的手机号'
+            companyPricipalphone: {
+                message: '公司负责人电话不能为空',
+                validators: {
+                    notEmpty: {
+                        message: '公司负责人电话不能为空'
+                    },
+                    stringLength: {
+                        min: 11,
+                        max: 11,
+                        message: '负责人联系电话必须为11位'
+                    },
+                    regexp: {
+                        regexp: /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/,
+                        message: '请输入正确的手机号'
+                    },
+                    remote: {
+                        url: '/company/queryPhone',
+                        message: '该负责人联系电话已存在',
+                        delay: 2000,
+                        type: 'post',
+                        data: {
+                            companyPricipalphone: $("#" + formId + " input[name=companyPricipalphone]").val()
                         }
-                    }
+                    },
 
-                },
+
+                }
+            },
             companyOpenDate: {
                 message: '公司成立时间验证失败',
                 validators: {
@@ -83,10 +98,19 @@ function validator(formId) {
         }
     }).on('success.form.bv', function (e) {
         if (formId == "loginForm") {
-            $.post("/company/addCompany",$("#loginForm").serialize(),function (data) {
-                if(data.result=="success"){
-                    window.location.href="/backstageIndex";
-                }else{
+            $.post("/company/enterCompany", $("#loginForm").serialize(), function (data) {
+                var controllerResult = data.controllerResult;
+                if (controllerResult.result == "success") {
+                    swal({
+                        title: "",
+                        text: data.controllerResult.message,
+                        confirmButtonText: "确定", // 提示按钮上的文本
+                        url: "www.baidu.co",
+                        type: "success"
+                    }, function (isConfirm) {
+                        top.location = "/user/loginPage";
+                    })
+                } else {
                     swal({
                         title: "",
                         text: data.message,
