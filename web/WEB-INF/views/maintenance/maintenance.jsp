@@ -39,11 +39,13 @@
             </tr>
             </thead>
         </table>
-        <div id="toolbar" class="btn-group">
-            <button id="btn_editAcc" type="button" class="btn btn-default" onclick="showSchedule();">
-                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查看维修保养进度
-            </button>
-        </div>
+        <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师,汽车公司学徒,汽车公司销售人员,汽车公司财务人员,汽车公司采购人员,汽车公司库管人员,汽车公司人力资源管理部">
+            <div id="toolbar" class="btn-group">
+                <button id="btn_editAcc" type="button" class="btn btn-default" onclick="showSchedule();">
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查看维修保养进度
+                </button>
+            </div>
+        </shiro:hasAnyRoles>
     </div>
 </div>
 
@@ -153,14 +155,16 @@
                 <div id="ifConfirm" style="background: url('/static/img/materialsFlag1.png')-50px -50px no-repeat;position: absolute;z-index:999;width: 200px;height: 200px;background-size:200px;display: none"></div>
                 <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
                 <h3 class="m-t-none m-b">车辆维修保养进度</h3>
-                <div id="toolbars" class="btn-group" style="padding-top: 10px;display: block">
-                    <button id="btn_add" type="button" class="btn btn-default" onclick="showAdd();">
-                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增进度描述
-                    </button>
-                    <button id="btn_edit" type="button" class="btn btn-default" onclick="showOk();">
-                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>确认完成
-                    </button>
-                </div>
+                <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师,汽车公司学徒,汽车公司销售人员,汽车公司财务人员,汽车公司采购人员,汽车公司库管人员,汽车公司人力资源管理部">
+                    <div id="toolbars" class="btn-group" style="padding-top: 10px;">
+                        <button id="btn_add" type="button" class="btn btn-default" onclick="showAdd();">
+                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增进度描述
+                        </button>
+                        <button id="btn_edit" type="button" class="btn btn-default" onclick="showOk();">
+                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>确认完成
+                        </button>
+                    </div>
+                </shiro:hasAnyRoles>
                 <div id="maintenance" style="padding-top:60px;"></div>
                 <div class="modal-footer" style="border: none">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
