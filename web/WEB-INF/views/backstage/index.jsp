@@ -1,6 +1,5 @@
-﻿<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
+﻿<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,6 +9,9 @@
     <meta http-equiv="Cache-Control" content="no-siteapp" />
     <title>汽车维修保养系统</title>
 
+    <meta name="keywords" content="H+后台主题,后台bootstrap框架,会员中心主题,后台HTML,响应式后台">
+    <meta name="description" content="H+是一个完全响应式，基于Bootstrap3最新版本开发的扁平化主题，她采用了主流的左右两栏式布局，使用了Html5+CSS3等现代技术">
+
     <!--[if lt IE 9]>
     <meta http-equiv="refresh" content="0;ie.html" />
     <![endif]-->
@@ -18,295 +20,253 @@
     <link href="/static/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
     <link href="/static/css/font-awesome.min.css?v=4.4.0" rel="stylesheet">
     <link href="/static/css/animate.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/static/css/sweetalert.css">
     <link href="/static/css/style.min.css?v=4.1.0" rel="stylesheet">
 </head>
 
 <body class="fixed-sidebar full-height-layout gray-bg" style="overflow:hidden">
-    <div id="wrapper" style="margin-bottom: 20px;display: none">
+    <div id="wrapper" style="margin-bottom: 20px;">
         <!--左侧导航开始-->
         <nav class="navbar-default navbar-static-side" role="navigation">
             <div class="nav-close"><i class="fa fa-times-circle"></i>
             </div>
             <div class="sidebar-collapse">
                 <ul class="nav" id="side-menu">
-                    <li class="nav-header" style="padding-top: 20px;">
+                    <li class="nav-header">
                         <div class="dropdown profile-element">
-                            <span>
-                                <c:choose>
-                                    <c:when test="${user.userIcon != null}">
-                                        <img alt="image" class="img-circle m-t-xs img-responsive" style="height:90px;width:90px;" src=/${user.userIcon} />
-                                    </c:when>
-                                    <c:otherwise>
-                                        <img alt="image" class="img-circle m-t-xs img-responsive" style="height:90px;width:90px;" src="/static/img/default.png" />
-                                    </c:otherwise>
-                                </c:choose>
-                            </span>
+                            <span><img alt="image" class="img-circle" src="/static/img/profile_small.jpg" /></span>
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                                 <span class="clear">
-                               <span class="block m-t-xs"><strong class="font-bold">
-                                   <c:choose>
-                                       <c:when test="${user.userNickname != null}">
-                                           ${user.userNickname}
-                                       </c:when>
-                                       <c:otherwise>
-                                           ${user.userName}
-                                       </c:otherwise>
-                                   </c:choose>
-
-                               </strong></span>
-                                <span class="text-muted text-xs block">${user.role.roleName}<b class="caret"></b></span>
+                               <span class="block m-t-xs"><strong class="font-bold">Beaut-zihan</strong></span>
+                                <span class="text-muted text-xs block">超级管理员<b class="caret"></b></span>
                                 </span>
                             </a>
                             <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                                <li><a class="J_menuItem" href="profile.html">个人资料</a>
-                                </li>
                                 <li><a class="J_menuItem" href="/edit">修改头像</a>
                                 </li>
-                                <li><a class="J_menuItem" href="contacts.html">修改密码</a>
+                                <li><a class="J_menuItem" href="profile.html">个人资料</a>
+                                </li>
+                                <li><a class="J_menuItem" href="contacts.html">联系我们</a>
+                                </li>
+                                <li><a class="J_menuItem" href="mailbox.html">信箱</a>
                                 </li>
                                 <li class="divider"></li>
-                                <li><a href="/user/logout">安全退出</a>
+                                <li><a href="login.html">安全退出</a>
                                 </li>
                             </ul>
                         </div>
                     </li>
-                    <%--<li>--%>
-                        <%--<a class="J_menuItem" href="/table/tableIndex">表格和select2</a>--%>
-                    <%--</li>--%>
-                    <%--<li>--%>
-                        <%--<a class="J_menuItem" href="/file/fileIndex">文件上传</a>--%>
-                    <%--</li>--%>
-                    <%--<li>--%>
-                        <%--<a class="J_menuItem" href="/summerNote/summerNote">summernote</a>--%>
-                    <%--</li>--%>
-                    <%--<li>--%>
-                        <%--<a class="J_menuItem" href="/vaildate/index">jqueryVaildate</a>--%>
-                    <%--</li>--%>
-                    <%--<li>--%>
-                        <%--<a class="J_menuItem" href="/error/notFound">404</a>--%>
-                    <%--</li>--%>
-                    <%--<li>--%>
-                        <%--<a class="J_menuItem" href="/error/serverError">500</a>--%>
-                    <%--</li>--%>
-                    <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师,汽车公司学徒,汽车公司销售人员,汽车公司财务人员,汽车公司采购人员,汽车公司库管人员,汽车公司人力资源管理部">
-                        <li>
-                            <a href="#">
-                                <i class="fa fa-home"></i>
-                                <span class="nav-label">基础信息管理</span>
-                                <span class="fa arrow"></span>
-                            </a>
-                            <ul class="nav nav-second-level">
-                            <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员">
-                                <li>
-                                    <a class="J_menuItem" href="/basicInfo/companyInfo">公司信息管理</a>
-                                </li>
-                            </shiro:hasAnyRoles>
-                            <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师,汽车公司学徒,汽车公司销售人员,汽车公司财务人员,汽车公司采购人员,汽车公司库管人员,汽车公司人力资源管理部">
-                                <li>
-                                    <a class="J_menuItem" href="/basicInfo/carBrand">汽车品牌管理</a>
-                                </li>
-                                <li>
-                                    <a class="J_menuItem" href="/basicInfo/carModel">车型管理</a>
-                                </li>
-                                <li>
-                                    <a class="J_menuItem" href="/basicInfo/carColor">汽车颜色管理</a>
-                                </li>
-                                <li>
-                                    <a class="J_menuItem" href="/basicInfo/carPlate" target="_blank">车牌管理</a>
-                                </li>
-                                <li>
-                                    <a class="J_menuItem" href="/basicInfo/upkeepItem" target="_blank">保养项目管理</a>
-                                </li>
-                                <li>
-                                    <a class="J_menuItem" href="/basicInfo/fixItem" target="_blank">维修项目管理</a>
-                                </li>
-                            </shiro:hasAnyRoles>
-                            </ul>
-                        </li>
-                    </shiro:hasAnyRoles>
-                    <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师,汽车公司学徒,汽车公司销售人员,汽车公司财务人员,汽车公司采购人员,汽车公司库管人员,汽车公司人力资源管理部">
-                        <li>
-                            <a href="#">
-                                <i class="fa fa-user"></i>
-                                <span class="nav-label">&nbsp;人员管理</span>
-                                <span class="fa arrow"></span>
-                            </a>
-                            <ul class="nav nav-second-level">
-                                <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司人力资源管理部">
-                                    <li>
-                                        <a class="J_menuItem" href="/emp/empInformation">人员基本信息管理</a>
-                                    </li>
-                                </shiro:hasAnyRoles>
-                                <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师,汽车公司学徒,汽车公司销售人员,汽车公司财务人员,汽车公司采购人员,汽车公司库管人员,汽车公司人力资源管理部">
-                                    <li>
-                                        <a class="J_menuItem" href="/emp/empWages">工资管理</a>
-                                    </li>
-                                </shiro:hasAnyRoles>
-                                <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师,汽车公司学徒,汽车公司销售人员,汽车公司财务人员,汽车公司采购人员,汽车公司库管人员,汽车公司人力资源管理部">
-                                    <li>
-                                        <a class="J_menuItem" href="/emp/workInfo">工单查询</a>
-                                    </li>
-                                </shiro:hasAnyRoles>
-                            </ul>
-                        </li>
-                    </shiro:hasAnyRoles>
-                    <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员">
-                        <li>
-                            <a href="#"><i class="fa fa-users"></i> <span class="nav-label">供应商管理</span><span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                    <li>
-                                        <a class="J_menuItem" href="/supplier/supplierType">供应商类型管理</a>
-                                    </li>
-                                    <li>
-                                        <a class="J_menuItem" href="/supplier/supplierInformation">供应商管理</a>
-                                    </li>
-                            </ul>
-                        </li>
-                    </shiro:hasAnyRoles>
-                    <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司采购人员">
-                        <li>
-                            <a href="#"><i class="fa fa-cubes"></i> <span class="nav-label">配件管理</span><span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员">
-                                    <li><a class="J_menuItem" href="/accessories/type">配件分类管理</a>
-                                    </li>
-                                </shiro:hasAnyRoles>
-                                    <li><a class="J_menuItem" href="/accessories/accessories">配件库存管理</a>
-                                    </li>
-                                    <li><a class="J_menuItem" href="/accessories/buy">配件采购管理</a>
-                                    </li>
-                                    <li><a class="J_menuItem" href="/accessories/sale">配件销售管理</a>
-                                    </li>
-                            </ul>
-                        </li>
-                    </shiro:hasAnyRoles>
-                    <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员">
-                        <li>
-                            <a href="#"><i class="fa fa-phone"></i> <span class="nav-label">&nbsp;维修保养预约管理</span><span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li>
-                                    <a class="J_menuItem" href="/customerBooking/phoneReservation">电话预约</a>
-                                </li>
-
-                            </ul>
-                        </li>
-                    </shiro:hasAnyRoles>
-                    <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师">
                     <li>
-                        <a href="#"><i class="fa fa-car"></i> <span class="nav-label">维修保养接待管理</span><span class="fa arrow"></span></a>
+                        <a class="J_menuItem" href="/table/tableIndex">表格和select2</a>
+                    </li>
+                    <li>
+                        <a class="J_menuItem" href="/file/fileIndex">文件上传</a>
+                    </li>
+                    <li>
+                        <a class="J_menuItem" href="/summerNote/summerNote">summernote</a>
+                    </li>
+                    <li>
+                        <a class="J_menuItem" href="/vaildate/index">jqueryVaildate</a>
+                    </li>
+                    <li>
+                        <a class="J_menuItem" href="/error/notFound">404</a>
+                    </li>
+                    <li>
+                        <a class="J_menuItem" href="/error/serverError">500</a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-home"></i>
+                            <span class="nav-label">基础信息管理</span>
+                            <span class="fa arrow"></span>
+                        </a>
                         <ul class="nav nav-second-level">
-                            <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员">
-                                <li><a class="J_menuItem" href="/maintenanceReception/reception">接待登记管理</a></li>
-                            </shiro:hasAnyRoles>
-                                <li><a class="J_menuItem" href="/maintenanceReception/subsidiary">维修保养明细管理</a></li>
+                            <li>
+                                <a class="J_menuItem" href="/basicInfo/companyInfo" data-index="0">公司信息管理</a>
+                            </li>
+                            <li>
+                                <a class="J_menuItem" href="/basicInfo/carBrand">汽车品牌管理</a>
+                            </li>
+                            <li>
+                                <a class="J_menuItem" href="/basicInfo/carModel">车型管理</a>
+                            </li>
+                            <li>
+                                <a class="J_menuItem" href="/basicInfo/carColor">汽车颜色管理</a>
+                            </li>
+                            <li>
+                                <a class="J_menuItem" href="/basicInfo/carPlate" target="_blank">车牌管理</a>
+                            </li>
+                            <li>
+                                <a class="J_menuItem" href="/basicInfo/upkeepItem" target="_blank">保养项目管理</a>
+                            </li>
+                            <li>
+                                <a class="J_menuItem" href="/basicInfo/fixItem" target="_blank">维修项目管理</a>
+                            </li>
+                        </ul>
+
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-user"></i>
+                            <span class="nav-label">&nbsp;人员管理</span>
+                            <span class="fa arrow"></span>
+                        </a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a class="J_menuItem" href="/emp/empInformation">人员基本信息管理</a>
+                            </li>
+                            <li>
+                                <a class="J_menuItem" href="/emp/empWages">工资管理</a>
+                            </li>
+                            <li>
+                                <a class="J_menuItem" href="/emp/workInfo">工单查询</a>
+                            </li>
+
                         </ul>
                     </li>
-                    </shiro:hasAnyRoles>
-                    <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师,汽车公司学徒,汽车公司销售人员,汽车公司财务人员,汽车公司采购人员,汽车公司库管人员,汽车公司人力资源管理部">
-                        <li>
-                            <a href="#"><i class="fa fa-ambulance"></i> <span class="nav-label">派工领料管理</span><span class="fa arrow"></span></a>
-                                <ul class="nav nav-second-level">
-                                    <li><a class="J_menuItem" href="pickingControll/materialsIndex">物料清单</a></li>
-                                <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司总技师">
-                                    <li><a class="J_menuItem" href="pickingControll/assignstaffIndex">指派员工</a></li>
-                                </shiro:hasAnyRoles>
-                                <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司库管人员">
-                                    <li><a class="J_menuItem" href="pickingControll/mattermanageIndex">物料管理</a></li>
-                                </shiro:hasAnyRoles>
-                            </ul>
-                        </li>
-                    </shiro:hasAnyRoles>
-                    <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师">
-                        <li>
-                            <a href="#"><i class="fa fa-wrench"></i> <span class="nav-label">维修保养进度管理</span><span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li><a class="J_menuItem" href="maintenanceController/maintenanceIndex">维修保养进度管理</a>
-                                </li>
-                            </ul>
-                        </li>
-                    </shiro:hasAnyRoles>
-                    <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员">
-                        <li>
-                            <a href="#"><i class="fa fa-calculator"></i> <span class="nav-label">结算提车</span><span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li><a class="J_menuItem" href="/clearingOut/carRemindIndex">提车提醒</a>
-                                </li>
-                                <li><a class="J_menuItem" href="/clearingOut/chargeDocumentsIndex">收费单据管理</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-user-plus"></i> <span class="nav-label">客户管理</span><span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li><a class="J_menuItem" href="/custManage/maintainrecordIndex">维修保养记录管理</a>
-                                </li>
-                                <li><a class="J_menuItem" href="/custManage/maintainremindIndex">维修保养提醒</a>
-                                </li>
-                                <li><a class="J_menuItem" href="/custManage/messagesendIndex">短信群发提醒</a>
-                                </li>
-                                <li><a class="J_menuItem" href="/custManage/complaintIndex">投诉管理</a>
-                                </li>
-                                <li><a class="J_menuItem" href="/custManage/tracklistIndex">跟踪回访管理</a>
-                                </li>
-                            </ul>
-                        </li>
-                    </shiro:hasAnyRoles>
-                    <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员">
-                        <li>
-                            <a href="#"><i class="fa fa-cny"></i> <span class="nav-label">&nbsp;&nbsp;财务管理</span><span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li><a class="J_menuItem" href="/financialView/payOutType">支出类型管理</a>
-                                </li>
-                                <li><a class="J_menuItem" href="/financialView/incomeType">收入类型管理</a>
-                                </li>
-                                <li><a class="J_menuItem" href="/financialView/piRecording">收支记录管理</a>
-                                </li>
-                                <li><a class="J_menuItem" href="/financialView/salary">工资管理</a>
-                                </li>
-                                <li><a class="J_menuItem" href="/financialView/bill">对账单管理</a>
-                                </li>
-                            </ul>
-                        </li>
-                    </shiro:hasAnyRoles>
-                    <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员">
-                        <li>
-                            <a href="#"><i class="fa fa-bar-chart"></i> <span class="nav-label">报表统计</span><span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li><a class="J_menuItem" href="/statistics/maintain">下单统计</a>
-                                </li>
-                                <li><a class="J_menuItem" href="/statistics/pay">支付统计</a>
-                                </li>
-                                <li><a class="J_menuItem" href="/statistics/repertory">库存统计</a>
-                                </li>
-                                <li><a class="J_menuItem" href="/statistics/inventoryUsing">库存使用情况统计</a>
-                                </li>
-                                <li><a class="J_menuItem" href="/statistics/vindicate">维修保养统计</a>
-                                </li>
-                                <li><a class="J_menuItem" href="/statistics/workord">员工工单统计</a>
-                                </li>
-                                <li><a class="J_menuItem" href="/statistics/maintaintype">维修项目统计</a>
-                                </li>
-                                <li><a class="J_menuItem" href="/statistics/finance">财务统计</a>
-                                </li>
-                            </ul>
-                        </li>
-                    </shiro:hasAnyRoles>
-                    <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员">
-                        <li>
-                            <a href="#"><i class="fa fa-gear"></i> <span class="nav-label">系统管理</span><span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li><a class="J_menuItem" href="/systemManage/roleManageIndex">角色管理</a>
-                                </li>
-                                <li><a class="J_menuItem" href="/systemManage/moduleManageIndex">模块管理</a>
-                                </li>
-                                <li><a class="J_menuItem" href="/systemManage/perManageIndex">权限管理</a>
-                                </li>
-                                <li><a class="J_menuItem" href="/systemManage/flowIndex">流程管理</a>
-                                </li>
-                            </ul>
-                        </li>
-                    </shiro:hasAnyRoles>
+
+                    <li>
+                        <a href="#"><i class="fa fa-users"></i> <span class="nav-label">供应商管理</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li><a class="J_menuItem" href="/supplier/supplierType">供应商类型管理</a>
+                            </li>
+                            <li><a class="J_menuItem" href="/supplier/supplierInformation">供应商管理</a>
+                            </li>
+                            <li><a class="J_menuItem" href="/supplier/purchaseDetail">下单记录</a>
+                            </li>
+                            <li><a class="J_menuItem" href="/supplier/purchaseBill">支付记录</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-cubes"></i> <span class="nav-label">配件管理</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li><a class="J_menuItem" href="/accessories/type">配件分类管理</a>
+                            </li>
+                            <li><a class="J_menuItem" href="/accessories/accessories">配件库存管理</a>
+                            </li>
+                            <li><a class="J_menuItem" href="/accessories/buy">配件采购管理</a>
+                            </li>
+                            <li><a class="J_menuItem" href="/accessories/sale">配件销售管理</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-phone"></i> <span class="nav-label">&nbsp;维修保养预约</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a class="J_menuItem" href="/customerBooking/phoneReservation">电话预约</a>
+                            </li>
+                            <li>
+                                <a class="J_menuItem" href="/customerBooking/weChatReservation">微信预约</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-car"></i> <span class="nav-label">维修保养接待</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li><a class="J_menuItem" href="/maintenanceReception/reception">接待登记管理</a></li>
+                            <li><a class="J_menuItem" href="/maintenanceReception/subsidiary">维修保养明细管理</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-ambulance"></i> <span class="nav-label">派工领料管理</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li><a class="J_menuItem" href="pickingControll/materialsIndex">物料清单</a></li>
+                            <li><a class="J_menuItem" href="pickingControll/assignstaffIndex">指派员工</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-wrench"></i> <span class="nav-label">车辆维修保养</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li><a class="J_menuItem" href="maintenanceController/maintenanceIndex">维修保养进度管理</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-calculator"></i> <span class="nav-label">结算提车</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li><a class="J_menuItem" href="/clearingOut/carRemindIndex">提车提醒</a>
+                            </li>
+                            <li><a class="J_menuItem" href="/clearingOut/chargeDocumentsIndex">收费单据管理</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-user-plus"></i> <span class="nav-label">客户管理</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li><a class="J_menuItem" href="/custManage/maintainrecordIndex">维修保养记录管理</a>
+                            </li>
+                            <li><a class="J_menuItem" href="/custManage/maintaindetailsIndex">维修保养明细管理</a>
+                            </li>
+                            <li><a class="J_menuItem" href="/custManage/maintainremindIndex">维修保养提醒</a>
+                            </li>
+                            <li><a class="J_menuItem" href="/custManage/messagesendIndex">短信群发提醒</a>
+                            </li>
+                            <li><a class="J_menuItem" href="/custManage/complaintIndex">投诉管理</a>
+                            </li>
+                            <li><a class="J_menuItem" href="/custManage/tracklistIndex">跟踪回访管理</a>
+                            </li>
+                            <li><a class="J_menuItem" href="/custManage/wechatpublicIndex">微信公众号查看</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-cny"></i> <span class="nav-label">&nbsp;&nbsp;财务管理</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li><a class="J_menuItem" href="/financialView/payOutType">支出类型管理</a>
+                            </li>
+                            <li><a class="J_menuItem" href="/financialView/incomeType">收入类型管理</a>
+                            </li>
+                            <li><a class="J_menuItem" href="/financialView/piRecording">收支记录管理</a>
+                            </li>
+                            <li><a class="J_menuItem" href="/financialView/salary">工资管理</a>
+                            </li>
+                            <li><a class="J_menuItem" href="/financialView/bill">对账单管理</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-bar-chart"></i> <span class="nav-label">报表统计</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li><a class="J_menuItem" href="/statistics/test">测试报表</a>
+                            </li>
+                            <li><a class="J_menuItem" href="/statistics/maintain">下单统计</a>
+                            </li>
+
+                            <li><a class="J_menuItem" href="/statistics/maintaintype">消费统计</a>
+                            </li>
+                            <li><a class="J_menuItem" href="/statistics/maintain">维修保养统计</a>
+                            </li>
+                            <li><a class="J_menuItem" href="/statistics/workord">员工工单统计</a>
+                            </li>
+                            <li><a class="J_menuItem" href="/statistics/pay">支付统计</a>
+                            </li>
+                            <li><a class="J_menuItem" href="/statistics/usematerials">物料使用统计</a>
+                            </li>
+                            <li><a class="J_menuItem" href="/statistics/maintaintype">维修类型统计</a>
+                            </li>
+                            <li><a class="J_menuItem" href="/statistics/stock">库存统计</a>
+                            </li>
+                            <li><a class="J_menuItem" href="/statistics/finance">财务统计</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-gear"></i> <span class="nav-label">系统管理</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li><a class="J_menuItem" href="/systemManage/roleManageIndex">角色管理</a>
+                            </li>
+                            <li><a class="J_menuItem" href="/systemManage/moduleManageIndex">模块管理</a>
+                            </li>
+                            <li><a class="J_menuItem" href="/systemManage/perManageIndex">权限管理</a>
+                            </li>
+                            <li><a class="J_menuItem" href="/systemManage/perDistributionIndex">权限分配</a>
+                            </li>
+                            <li><a class="J_menuItem" href="/systemManage/flowIndex">流程管理</a>
+                            </li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
         </nav>
@@ -316,91 +276,91 @@
             <div class="row border-bottom">
                 <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
                     <div class="navbar-header"><a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
-                        <%--<form role="search" class="navbar-form-custom" method="post" action="http://www.zi-han.net/theme/hplus/search_results.html">--%>
-                            <%--<div class="form-group">--%>
-                                <%--<input type="text" placeholder="请输入您需要查找的内容 …" class="form-control" name="top-search" id="top-search">--%>
-                            <%--</div>--%>
-                        <%--</form>--%>
+                        <form role="search" class="navbar-form-custom" method="post" action="http://www.zi-han.net/theme/hplus/search_results.html">
+                            <div class="form-group">
+                                <input type="text" placeholder="请输入您需要查找的内容 …" class="form-control" name="top-search" id="top-search">
+                            </div>
+                        </form>
                     </div>
                     <ul class="nav navbar-top-links navbar-right">
-                        <%--<li class="dropdown">--%>
-                            <%--<a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">--%>
-                                <%--<i class="fa fa-envelope"></i> <span class="label label-warning">16</span>--%>
-                            <%--</a>--%>
-                            <%--<ul class="dropdown-menu dropdown-messages">--%>
-                                <%--<li class="m-t-xs">--%>
-                                    <%--<div class="dropdown-messages-box">--%>
-                                        <%--<a href="profile.html" class="pull-left">--%>
-                                            <%--<img alt="image" class="img-circle" src="/static/img/a7.jpg">--%>
-                                        <%--</a>--%>
-                                        <%--<div class="media-body">--%>
-                                            <%--<small class="pull-right">46小时前</small>--%>
-                                            <%--<strong>小四</strong> 这个在日本投降书上签字的军官，建国后一定是个不小的干部吧？--%>
-                                            <%--<br>--%>
-                                            <%--<small class="text-muted">3天前 2014.11.8</small>--%>
-                                        <%--</div>--%>
-                                    <%--</div>--%>
-                                <%--</li>--%>
-                                <%--<li class="divider"></li>--%>
-                                <%--<li>--%>
-                                    <%--<div class="dropdown-messages-box">--%>
-                                        <%--<a href="profile.html" class="pull-left">--%>
-                                            <%--<img alt="image" class="img-circle" src="/static/img/a4.jpg">--%>
-                                        <%--</a>--%>
-                                        <%--<div class="media-body ">--%>
-                                            <%--<small class="pull-right text-navy">25小时前</small>--%>
-                                            <%--<strong>国民岳父</strong> 如何看待“男子不满自己爱犬被称为狗，刺伤路人”？——这人比犬还凶--%>
-                                            <%--<br>--%>
-                                            <%--<small class="text-muted">昨天</small>--%>
-                                        <%--</div>--%>
-                                    <%--</div>--%>
-                                <%--</li>--%>
-                                <%--<li class="divider"></li>--%>
-                                <%--<li>--%>
-                                    <%--<div class="text-center link-block">--%>
-                                        <%--<a class="J_menuItem" href="mailbox.html">--%>
-                                            <%--<i class="fa fa-envelope"></i> <strong> 查看所有消息</strong>--%>
-                                        <%--</a>--%>
-                                    <%--</div>--%>
-                                <%--</li>--%>
-                            <%--</ul>--%>
-                        <%--</li>--%>
-                        <%--<li class="dropdown">--%>
-                            <%--<a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">--%>
-                                <%--<i class="fa fa-bell"></i> <span class="label label-primary">8</span>--%>
-                            <%--</a>--%>
-                            <%--<ul class="dropdown-menu dropdown-alerts">--%>
-                                <%--<li>--%>
-                                    <%--<a href="mailbox.html">--%>
-                                        <%--<div>--%>
-                                            <%--<i class="fa fa-envelope fa-fw"></i> 您有16条未读消息--%>
-                                            <%--<span class="pull-right text-muted small">4分钟前</span>--%>
-                                        <%--</div>--%>
-                                    <%--</a>--%>
-                                <%--</li>--%>
-                                <%--<li class="divider"></li>--%>
-                                <%--<li>--%>
-                                    <%--<a href="profile.html">--%>
-                                        <%--<div>--%>
-                                            <%--<i class="fa fa-qq fa-fw"></i> 3条新回复--%>
-                                            <%--<span class="pull-right text-muted small">12分钟钱</span>--%>
-                                        <%--</div>--%>
-                                    <%--</a>--%>
-                                <%--</li>--%>
-                                <%--<li class="divider"></li>--%>
-                                <%--<li>--%>
-                                    <%--<div class="text-center link-block">--%>
-                                        <%--<a class="J_menuItem" href="notifications.html">--%>
-                                            <%--<strong>查看所有 </strong>--%>
-                                            <%--<i class="fa fa-angle-right"></i>--%>
-                                        <%--</a>--%>
-                                    <%--</div>--%>
-                                <%--</li>--%>
-                            <%--</ul>--%>
-                        <%--</li>--%>
-                        <%--<!--<li class="hidden-xs">--%>
-                            <%--<a href="index_v1.html" class="J_menuItem" data-index="0"><i class="fa fa-cart-arrow-down"></i> 购买</a>--%>
-                        <%--</li>-->--%>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
+                                <i class="fa fa-envelope"></i> <span class="label label-warning">16</span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-messages">
+                                <li class="m-t-xs">
+                                    <div class="dropdown-messages-box">
+                                        <a href="profile.html" class="pull-left">
+                                            <img alt="image" class="img-circle" src="/static/img/a7.jpg">
+                                        </a>
+                                        <div class="media-body">
+                                            <small class="pull-right">46小时前</small>
+                                            <strong>小四</strong> 这个在日本投降书上签字的军官，建国后一定是个不小的干部吧？
+                                            <br>
+                                            <small class="text-muted">3天前 2014.11.8</small>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <div class="dropdown-messages-box">
+                                        <a href="profile.html" class="pull-left">
+                                            <img alt="image" class="img-circle" src="/static/img/a4.jpg">
+                                        </a>
+                                        <div class="media-body ">
+                                            <small class="pull-right text-navy">25小时前</small>
+                                            <strong>国民岳父</strong> 如何看待“男子不满自己爱犬被称为狗，刺伤路人”？——这人比犬还凶
+                                            <br>
+                                            <small class="text-muted">昨天</small>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <div class="text-center link-block">
+                                        <a class="J_menuItem" href="mailbox.html">
+                                            <i class="fa fa-envelope"></i> <strong> 查看所有消息</strong>
+                                        </a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
+                                <i class="fa fa-bell"></i> <span class="label label-primary">8</span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-alerts">
+                                <li>
+                                    <a href="mailbox.html">
+                                        <div>
+                                            <i class="fa fa-envelope fa-fw"></i> 您有16条未读消息
+                                            <span class="pull-right text-muted small">4分钟前</span>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <a href="profile.html">
+                                        <div>
+                                            <i class="fa fa-qq fa-fw"></i> 3条新回复
+                                            <span class="pull-right text-muted small">12分钟钱</span>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <div class="text-center link-block">
+                                        <a class="J_menuItem" href="notifications.html">
+                                            <strong>查看所有 </strong>
+                                            <i class="fa fa-angle-right"></i>
+                                        </a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                        <!--<li class="hidden-xs">
+                            <a href="index_v1.html" class="J_menuItem" data-index="0"><i class="fa fa-cart-arrow-down"></i> 购买</a>
+                        </li>-->
                         <li class="dropdown hidden-xs">
                             <a class="right-sidebar-toggle" aria-expanded="false">
                                 <i class="fa fa-tasks"></i> 主题
@@ -417,8 +377,9 @@
                         <a href="javascript:;" class="active J_menuTab" data-id="/backstage/home">首页</a>
                     </div>
                 </nav>
-                <button class="roll-nav roll-right" style="padding:0; margin:0;"><i class="fa fa-forward"></i>
+                <button class="roll-nav roll-right J_tabRight" style="padding:0; margin:0;"><i class="fa fa-forward"></i>
                 </button>
+                <a href="login.html" class="roll-nav roll-right J_tabExit"><i class="fa fa fa-sign-out"></i> 退出</a>
             </div>
             <div class="row J_mainContent" id="content-main" style="height:84%;">
                 <iframe id="j_iframe" class="J_iframe" name="iframe0" width="100%" height="100%" src="/backstage/home" frameborder="0" data-id="/backstage/home" seamless></iframe>
@@ -436,24 +397,24 @@
                             <i class="fa fa-gear"></i> 主题
                         </a>
                     </li>
-                    <%--<li class=""><a data-toggle="tab" href="#tab-2">--%>
-                        <%--通知--%>
-                    <%--</a>--%>
-                    <%--</li>--%>
-                    <%--<li><a data-toggle="tab" href="#tab-3">--%>
-                        <%--项目进度--%>
-                    <%--</a>--%>
-                    <%--</li>--%>
+                    <li class=""><a data-toggle="tab" href="#tab-2">
+                        通知
+                    </a>
+                    </li>
+                    <li><a data-toggle="tab" href="#tab-3">
+                        项目进度
+                    </a>
+                    </li>
                 </ul>
 
                 <div class="tab-content">
                     <div id="tab-1" class="tab-pane active">
-                        <%--<div class="sidebar-title">--%>
-                            <%--<h3> <i class="fa fa-comments-o"></i> 主题设置</h3>--%>
-                            <%--<small><i class="fa fa-tim"></i> 你可以从这里选择和预览主题的布局和样式，这些设置会被保存在本地，下次打开的时候会直接应用这些设置。</small>--%>
-                        <%--</div>--%>
+                        <div class="sidebar-title">
+                            <h3> <i class="fa fa-comments-o"></i> 主题设置</h3>
+                            <small><i class="fa fa-tim"></i> 你可以从这里选择和预览主题的布局和样式，这些设置会被保存在本地，下次打开的时候会直接应用这些设置。</small>
+                        </div>
                         <div class="skin-setttings">
-                            <%--<div class="title">主题设置</div>--%>
+                            <div class="title">主题设置</div>
                             <div class="setings-item">
                                 <span>收起左侧菜单</span>
                                 <div class="switch">
@@ -834,51 +795,22 @@
     <script src="/static/js/plugins/layer/layer.min.js"></script>
     <script src="/static/js/hplus.min.js?v=4.1.0"></script>
     <script src="/static/js/contabs.min.js"></script>
-    <script src="/static/js/sweetalert/sweetalert.min.js"></script>
     <script src="/static/js/plugins/pace/pace.min.js"></script>
     <script>
         $(function() {
-            var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师,汽车公司学徒,汽车公司销售人员,汽车公司财务人员,汽车公司采购人员,汽车公司库管人员,汽车公司人力资源管理部";
-            $.post("/user/isLogin/"+roles, function (data) {
-                if(data.result == 'success'){
-                    $("#wrapper").css("display","block");
-                    function bodyScroll(event){
-                        event.preventDefault();
-                    }
-                    document.body.addEventListener('touchmove',bodyScroll(event),false);
-                    document.body.removeEventListener('touchmove',bodyScroll(event),false);
-                }else if(data.result == 'notLogin'){
-                    swal({title:"",
-                            text:data.message,
-                            confirmButtonText:"确认",
-                            type:"error"}
-                        ,function(isConfirm){
-                            if(isConfirm){
-                                top.location = "/user/loginPage";
-                            }else{
-                                top.location = "/user/loginPage";
-                            }
-                        })
-                }else if(data.result == 'notRole'){
-                    swal({title:"",
-                        text:data.message,
-                        confirmButtonText:"确认",
-                        type:"error"},
-                        function(isConfirm){
-                        if(isConfirm){
-                            top.location = "/user/loginPage";
-                        }else{
-                            top.location = "/user/loginPage";
-                        }
-                    })
-                }
-            });
+            function bodyScroll(event){
+                event.preventDefault();
+            }
+            document.body.addEventListener('touchmove',bodyScroll(event),false);
+            document.body.removeEventListener('touchmove',bodyScroll(event),false);
         });
-
         function doNothing(){
             window.event.returnValue=false;
             return false;
         }
     </script>
 </body>
+
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/ by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:17:11 GMT -->
 </html>
