@@ -55,12 +55,12 @@ public class MessageSendServiceImpl implements MessageSendService {
 	}
 
 	public List<MessageSend> blurredQuery(Pager pager, MessageSend messageSend) {
-		return null;
+		return messageSendDAO.blurredQuery(pager,messageSend);
 	}
 
 	@Override
 	public int countByBlurred(MessageSend messageSend, User user) {
-		return 0;
+		return messageSendDAO.countByBlurred(messageSend,user);
 	}
 
 	public int countByBlurred(MessageSend messageSend) {

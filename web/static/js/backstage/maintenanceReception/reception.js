@@ -68,6 +68,14 @@ $(function () {
     });
 });
 
+function formatterImg(value, row, index){
+    if(row.userIcon !=null){
+        return [
+            '<img style="width:120px;height:40px;" src="/'+ value +'">'
+        ]
+    }
+}
+
 // 这个方法别看
 $("#addCarBrand").change(function(){
     var div = $("#addModelDiv");

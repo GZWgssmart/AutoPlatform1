@@ -148,15 +148,14 @@ public class IncomingTypeController {
 
     /**
      * 验证收入类型名称
-     * @param inTypeName
      * @return
      */
     @ResponseBody
     @RequestMapping(value = "checkInTypeName",method = RequestMethod.POST)
-    public Map checkInTypeName(String inTypeName) {
-        IncomingType incomingType = incomingTypeService.queryById(inTypeName);
+    public Map checkInTypeName(IncomingType incomingType) {
+        IncomingType i = incomingTypeService.queryById(incomingType.getInTypeName(), incomingType.getInTypeId());
         Map<String, Boolean> map = new HashMap<String, Boolean>();
-        if(incomingType != null)
+        if(i != null)
             map.put("valid", false);
         else
             map.put("valid", true);

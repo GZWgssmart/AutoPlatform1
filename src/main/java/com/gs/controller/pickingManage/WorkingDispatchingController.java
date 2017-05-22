@@ -135,8 +135,8 @@ public class WorkingDispatchingController {
                 Pager pager = new Pager();
                 pager.setPageNo(str2int(pageNo));
                 pager.setPageSize(str2int(pageSize));
-                List workInfos = materialUseService.userWorksStatusByPager(user, "Y",pager);
-                int total = materialUseService.countUserWorksStatus(user,"Y");
+                List workInfos = materialUseService.userWorksStatusByPager(user, "N",pager);
+                int total = materialUseService.countUserWorksStatus(user,"N");
                 Pager4EasyUI pager4EasyUI = new Pager4EasyUI();
                 pager4EasyUI.setRows(workInfos);
                 pager4EasyUI.setTotal(total);

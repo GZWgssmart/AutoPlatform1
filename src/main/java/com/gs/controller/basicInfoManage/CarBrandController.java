@@ -200,12 +200,12 @@ public class CarBrandController {
                 if (id != null && !id.equals("") && status != null && !status.equals("")) {
                     if (status.equals("N")) {
                         carBrandService.active(id);
-                        logger.info("激活成功");
-                        return ControllerResult.getSuccessResult("激活成功");
+                        logger.info("激活汽车品牌成功");
+                        return ControllerResult.getSuccessResult("激活汽车品牌成功");
                     } else {
                         carBrandService.inactive(id);
-                        logger.info("禁用成功");
-                        return ControllerResult.getSuccessResult("禁用成功");
+                        logger.info("禁用汽车品牌成功");
+                        return ControllerResult.getSuccessResult("禁用汽车品牌成功");
                     }
                 } else {
                     return ControllerResult.getFailResult("操作失败");
@@ -219,5 +219,47 @@ public class CarBrandController {
             return ControllerResult.getNotLoginResult("登录信息无效，请重新登录");
         }
 
+    }
+
+    /**
+     * 汽车车型记录模糊查询
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value="blurredQuery", method = RequestMethod.GET)
+    public Pager4EasyUI<CarBrand> blurredQuery(HttpSession session, HttpServletRequest request, @Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
+        if(SessionUtil.isLogin(session)) {
+            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师,汽车公司学徒,汽车公司销售人员,汽车公司财务人员,汽车公司采购人员,汽车公司库管人员,汽车公司人力资源管理部";
+            if (RoleUtil.checkRoles(roles)) {
+                logger.info("汽车车型记录模糊查询");
+                Pager pager = new Pager();
+                pager.setPageNo(Integer.valueOf(pageNumber));
+                pager.setPageSize(Integer.valueOf(pageSize));
+                pager.setUser((User)session.getAttribute("user"));
+                String text = request.getParameter("text");
+                String value = request.getParameter("value");
+                if(text != null && text!="" && value != null && value != "") {
+                    List<CarBrand> carBrands = null;
+                    CarBrand carBrand = new CarBrand();
+                    if(text.equals("汽车品牌名称")){
+                        carBrand.setBrandName(value);
+                    }
+                    carBrands = carBrandService.blurredQuery(pager,carBrand);
+                    pager.setTotalRecords(carBrandService.countByBlurred(carBrand,(User)session.getAttribute("user")));
+                    System.out.print(carBrands);
+                    return new Pager4EasyUI<CarBrand>(pager.getTotalRecords(), carBrands);
+                }else{ // 当在模糊查询输入框中输入的值为空时, 使它查询全部
+                    pager.setTotalRecords(carBrandService.count((User)session.getAttribute("user")));
+                    List<CarBrand> carBrands = carBrandService.queryByPager(pager);
+                    return new Pager4EasyUI<CarBrand>(pager.getTotalRecords(), carBrands);
+                }
+            }else {
+                logger.info("此用户无拥有供应商记录模糊查询角色");
+                return null;
+            }
+        }else{
+            logger.info("请先登录");
+            return null;
+        }
     }
 }

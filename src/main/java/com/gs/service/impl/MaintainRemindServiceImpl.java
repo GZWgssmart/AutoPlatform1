@@ -56,12 +56,12 @@ public class MaintainRemindServiceImpl implements MaintainRemindService {
 	}
 
 	public List<MaintainRemind> blurredQuery(Pager pager, MaintainRemind maintainRemind) {
-		return null;
+		return maintainRemindDAO.blurredQuery(pager,maintainRemind);
 	}
 
 	@Override
 	public int countByBlurred(MaintainRemind maintainRemind, User user) {
-		return 0;
+		return maintainRemindDAO.countByBlurred(maintainRemind,user);
 	}
 
 	public int countByBlurred(MaintainRemind maintainRemind) {

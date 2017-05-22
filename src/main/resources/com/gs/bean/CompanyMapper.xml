@@ -115,6 +115,13 @@
     </if>
   </select>
 
+  <!--  入住公司验证负责人联系电话是否已经存在 -->
+  <select id="queryPhone"  resultMap="companyMap" >
+    <![CDATA[
+      select * from t_company where companyPricipalphone = #{companyPricipalphone};
+    ]]>
+  </select>
+
   <!--冻结数据-->
   <update id="inactive" keyProperty="companyId" parameterType="company">
     <![CDATA[

@@ -35,12 +35,12 @@
             <thead>
             <tr>
                 <th data-radio="true"></th>
-                <th data-field="checkin.userName">用户名</th>
+                <th data-field="checkin.userName">车主姓名</th>
                 <th data-field="lastMaintainTime" data-formatter="formatterDate">上次维修保养时间</th>
                 <th data-field="lastMaintainMileage">上次汽车行驶里程</th>
                 <th data-field="remindMsg">维修保养提醒消息</th>
-                <th data-field="remindTime" data-formatter="formatterDate">维修保养提醒时间</th>
                 <th data-field="remindType">维修保养提醒方式</th>
+                <th data-field="remindTime" data-formatter="formatterDate">维修保养提醒时间</th>
                 <th data-field="remindCreatedTime" data-formatter="formatterDate">提醒记录创建时间</th>
             </tr>
             </thead>
@@ -50,6 +50,28 @@
                 <button type="button" class="btn btn-success" onclick="showRemindUser()">
                     查看需要维修保养提醒的车主
                 </button>
+            </shiro:hasAnyRoles>
+            <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员">
+                <div class="input-group" style="width:350px;float:left;padding:0;margin:0 0 0 -1px;">
+                    <div class="input-group-btn">
+                        <button type="button" id="ulButton" class="btn btn-default" style="border-radius:0px;"
+                                data-toggle="dropdown">车主姓名<span class="caret"></span></button>
+                        <ul class="dropdown-menu pull-right">
+                            <li><a onclick="onclikLi(this)">车主姓名</a></li>
+                            <li class="divider"></li>
+                            <%--<li><a onclick="onclikLi(this)">上次汽车行驶里程</a></li>--%>
+                            <%--<li class="divider"></li>--%>
+                            <li><a onclick="onclikLi(this)">维修保养提醒方式</a></li>
+                            <li class="divider"></li>
+                            <li><a onclick="onclikLi(this)">维修保养提醒消息</a></li>
+                        </ul>
+                    </div><!-- /btn-group -->
+                    <input id="ulInput" class="form-control" onkeypress="if(event.keyCode==13) {blurredQuery();}">
+                    <a href="javascript:;" onclick="blurredQuery()"><span
+                            class="glyphicon glyphicon-search search-style"></span></a>
+                    </input>
+                </div>
+                <!-- /input-group -->
             </shiro:hasAnyRoles>
             <%--<button type="button" class="btn btn-w-m btn-info" onclick="showAdd();">保养提醒用户</button>--%>
             <%--<button id="btn_edit" type="button" class="btn btn-default" onclick="showEdit();">--%>
@@ -66,10 +88,12 @@
             <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('addWindow', 'addForm')"></span>
             <form class="form-horizontal" id="addForm" method="post">
                 <%--<input id="addRemindId" type="text" name="remindId">--%>
-                <input id="addLastMaintainTime" type="text" name="lastMaintainTime">
-                <input id="addLastMaintainMileage" type="text" name="lastMaintainMileage">
-                <input id="addUserId" type="text" name="userId">
-                <input id="addUserEmail" type="text" name="checkin.user.userEmail">
+                <input id="addLastMaintainTime" type="hidden" name="lastMaintainTime">
+                <input id="addLastMaintainMileage" type="hidden" name="lastMaintainMileage">
+                <input id="addUserId" type="hidden" name="userId">
+                <input id="addCheckinName" type="hidden" name="checkinuserName">
+                <input id="addUserEmail" type="hidden" name="checkin.user.userEmail">
+                <input id="addUserPhone" type="hidden" name="checkin.user.userPhone">
                 <div class="modal-header" style="overflow:auto;">
                     <h4>添加维修维修保养提醒的信息</h4>
                 </div>
@@ -78,12 +102,21 @@
                     <label class="col-sm-3 control-label">用户名：</label>
                     <div class="col-sm-7">
                         <input id="addUserName" type="text" readonly class="form-control">
-                            <%--<button type="button" class="btn btn-default" onclick="showCheckUser();">--%>
-                            <%--<span class="glyphicon glyphicon-search" aria-hidden="true"></span>请选择用户--%>
+                        <%--<button type="button" class="btn btn-default" onclick="showCheckUser();">--%>
+                        <%--<span class="glyphicon glyphicon-search" aria-hidden="true"></span>请选择用户--%>
                         <%--</button>--%>
                     </div>
                 </div>
                 <div class="form-group">
+                    <label class="col-sm-3 control-label">维修保养提醒方式：</label>
+                    <div class="col-sm-7">
+                        <select name="remindType" onchange="remindTypeChange(this)" class="form-control js-data-example-ajax">
+                            <option value="邮箱提醒">邮箱提醒</option>
+                            <option value="短信提醒">短信提醒</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="addRemindMsg" class="form-group">
                     <label class="col-sm-3 control-label">维修保养提醒内容：</label>
                     <div class="col-sm-7">
                         <textarea type="text" name="remindMsg" placeholder="请输入维修保养提醒内容" style="height: 100px;"
@@ -91,32 +124,24 @@
                     </div>
                 </div>
                 <%--<div class="form-group">--%>
-                    <%--<label class="col-sm-3 control-label">维修保养提醒时间：</label>--%>
-                    <%--<div class="col-sm-7">--%>
-                        <%--<input id="addRemindTime" name="remindTime" readonly class="layui-input">--%>
-                    <%--</div>--%>
+                <%--<label class="col-sm-3 control-label">维修保养提醒时间：</label>--%>
+                <%--<div class="col-sm-7">--%>
+                <%--<input id="addRemindTime" name="remindTime" readonly class="layui-input">--%>
                 <%--</div>--%>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">维修保养提醒方式：</label>
-                    <div class="col-sm-7">
-                        <select name="remindType" class="form-control js-data-example-ajax">
-                            <option value="短信提醒">短信提醒</option>
-                            <option value="邮箱提醒">邮箱提醒</option>
-                        </select>
-                    </div>
-                </div>
+                <%--</div>--%>
                 <%--<div class="form-group">--%>
-                    <%--<label class="col-sm-3 control-label">维修保养记录创建时间：</label>--%>
-                    <%--<div class="col-sm-7">--%>
-                        <%--<input id="addRemindCreatedTime" name="remindCreatedTime" readonly class="layui-input">--%>
-                    <%--</div>--%>
+                <%--<label class="col-sm-3 control-label">维修保养记录创建时间：</label>--%>
+                <%--<div class="col-sm-7">--%>
+                <%--<input id="addRemindCreatedTime" name="remindCreatedTime" readonly class="layui-input">--%>
+                <%--</div>--%>
                 <%--</div>--%>
                 <div class="form-group">
                     <div class="col-sm-offset-8">
                         <button type="button" class="btn btn-default"
                                 onclick="closeModals('addWindow', 'addForm')">关闭
                         </button>
-                        <button id="addButton" class="btn btn-sm btn-success" type="button" onclick="addSubmit()">保 存</button>
+                        <button id="addButton" class="btn btn-sm btn-success" type="button" onclick="addSubmit()">添 加
+                        </button>
                         <input type="reset" name="reset" style="display: none;"/>
                     </div>
                 </div>
@@ -163,8 +188,8 @@
                     <label class="col-sm-3 control-label">维修保养提醒方式：</label>
                     <div class="col-sm-7">
                         <select id="editRemindType" name="remindType" define="MaintainRemind.remindType" class="form-control js-data-example-ajax">
-                            <option value="短信提醒">短信提醒</option>
                             <option value="邮箱提醒">邮箱提醒</option>
+                            <option value="短信提醒">短信提醒</option>
                         </select>
                     </div>
                 </div>
@@ -193,11 +218,11 @@
         <div class="modal-content">
             <div class="modal-body">
                 <span class="glyphicon glyphicon-remove closeModal" onclick="closeUserWin()"></span>
-                <h3>请选择车主</h3>
+                <h4>请选择车主</h4>
                 <table class="table table-hover" id="addUserTable" style="table-layout: fixed">
                     <thead>
                     <tr>
-                        <th data-checkbox="true"></th>
+                        <th data-radio="true"></th>
                         <th data-field="user.userName">
                             用户名称
                         </th>
@@ -227,13 +252,19 @@
         <div class="modal-content">
             <div class="modal-body">
                 <span class="glyphicon glyphicon-remove closeModal" onclick="closeRemindUserWin()"></span>
-                <h3>查看需要维修保养提醒的车主</h3>
+                <h4>查看需要维修保养提醒的车主</h4>
                 <table class="table table-hover" id="showRemindUserTable" style="table-layout: fixed">
                     <thead>
                     <tr>
-                        <th data-checkbox="true"></th>
+                        <th data-radio="true"></th>
                         <th data-field="checkin.user.userName">
-                            用户名称
+                            车主名称
+                        </th>
+                        <th data-field="checkin.user.userPhone" data-width="150">
+                            车主手机号码
+                        </th>
+                        <th data-field="checkin.user.userEmail" data-width="200">
+                            车主邮箱
                         </th>
                         <th data-field="actualEndTime" data-formatter="formatterDate">
                             上次维修保养时间

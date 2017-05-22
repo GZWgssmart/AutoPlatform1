@@ -29,4 +29,6 @@ public interface OutgoingTypeService extends BaseService<String, OutgoingType>{
     public int countByDisable();
 
 
+    public OutgoingType queryById(String outTypeName, String outTypeId);
+
 }

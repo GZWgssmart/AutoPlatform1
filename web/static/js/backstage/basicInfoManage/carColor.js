@@ -169,7 +169,7 @@ function validator(formId) {
         }
     })
         .on('success.form.bv', function (e) {
-            alert("123213213")
+            // alert("123213213")
             if (formId == "addForm") {
                 formSubmit("/carColor/addCarColor", formId, "addWindow");
 

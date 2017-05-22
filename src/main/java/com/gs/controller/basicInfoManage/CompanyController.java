@@ -186,6 +186,37 @@ public class CompanyController {
     }
 
 
+    @ResponseBody
+    @RequestMapping(value = "enterCompany",method = RequestMethod.POST)
+    public Object enterCompany(HttpSession session,HttpServletRequest request,Company company) {
+        Map map = new HashMap();
+        if (company != null && !company.equals("")) {
+            logger.info("添加公司信息");
+            String companyId = UUIDUtil.uuid();
+            company.setCompanyId(companyId);
+            User user = new User();
+            user.setUserId(UUIDUtil.uuid());
+            user.setUserPhone(company.getCompanyPricipalphone());
+            user.setCompanyId(companyId);
+            user.setUserName(company.getCompanyPricipal());
+            user.setUserAddress(company.getCompanyAddress());
+            user.setUserPwd(EncryptUtil.md5Encrypt("123456"));
+            UserRole userRole = new UserRole();
+            userRole.setUserId(user.getUserId());
+            userRole.setRoleId("8010cecf-3205-11e7-bc72-507b9d765567");
+            userService.insert(user);
+            userRoleService.insert(userRole);
+            companyService.insert(company);
+            map.put("company",company);
+            map.put("controllerResult",ControllerResult.getSuccessResult("入驻成功" + "\n" + "账号:" + company.getCompanyPricipalphone() + " " + "初始密码为:123456" + " " + "请前往后台登陆进行登陆"));
+            return map;
+        } else {
+            map.put("controllerResult",ControllerResult.getFailResult("添加公司信息失败"));
+            return  map;
+        }
+    }
+
+
 
     /**
      * 查询此公司名称是否已存在
@@ -239,6 +270,22 @@ public class CompanyController {
         return map;
     }
 
+  /*    <!--  入住公司验证负责人联系电话是否已经存在 -->*/
+    @ResponseBody
+    @RequestMapping(value = "queryPhone", method = RequestMethod.POST)
+    public Map queryPhone(Company company) {
+        logger.info("入驻公司验证负责人联系电话是否已经存在");
+        Company c = companyService.queryPhone(company.getCompanyPricipalphone());
+        Map<String, Boolean> map = new HashMap<String, Boolean>();
+        if(c != null) {
+            map.put("valid", false);
+        }else {
+            map.put("valid", true);
+        }
+        return map;
+    }
+
+
     @ResponseBody
     @RequestMapping(value = "updateCompany",method = RequestMethod.POST)
     public Object update(HttpSession session,HttpServletRequest request,Company company){
@@ -279,12 +326,12 @@ public class CompanyController {
                 if (id != null && !id.equals("") && status != null && !status.equals("")) {
                     if (status.equals("N")) {
                         companyService.active(id);
-                        logger.info("激活成功");
-                        return ControllerResult.getSuccessResult("激活成功");
+                        logger.info("激活公司成功");
+                        return ControllerResult.getSuccessResult("激活公司成功");
                     } else {
                         companyService.inactive(id);
-                        logger.info("禁用成功");
-                        return ControllerResult.getSuccessResult("禁用成功");
+                        logger.info("禁用公司成功");
+                        return ControllerResult.getSuccessResult("禁用公司成功");
                     }
                 } else {
                     return ControllerResult.getFailResult("操作失败");

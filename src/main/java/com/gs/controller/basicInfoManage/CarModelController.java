@@ -221,12 +221,12 @@ public class CarModelController {
                 if (id != null && !id.equals("") && status != null && !status.equals("")) {
                     if (status.equals("N")) {
                         carModelService.active(id);
-                        logger.info("激活成功");
-                        return ControllerResult.getSuccessResult("激活成功");
+                        logger.info("激活汽车车型成功");
+                        return ControllerResult.getSuccessResult("激活汽车车型成功");
                     } else {
                         carModelService.inactive(id);
-                        logger.info("禁用成功");
-                        return ControllerResult.getSuccessResult("禁用成功");
+                        logger.info("禁用汽车车型成功");
+                        return ControllerResult.getSuccessResult("禁用汽车车型成功");
                     }
                 } else {
                     return ControllerResult.getFailResult("操作失败");

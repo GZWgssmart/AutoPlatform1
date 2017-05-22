@@ -3,12 +3,64 @@ $(function () {
 });
 
 // 查看全部可用
-function showAvailable(){
-    initTable('table', '/maintainRecord/queryByPager');
+function showAvailable() {
+    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,车主";
+    $.post("/user/isLogin/" + roles, function (data) {
+        if (data.result == 'success') {
+            initTable('table', '/maintainRecord/queryByPager');
+        } else if (data.result == 'notLogin') {
+            swal({
+                    title: "",
+                    text: data.message,
+                    confirmButtonText: "确认",
+                    type: "error"
+                }
+                , function (isConfirm) {
+                    if (isConfirm) {
+                        top.location = "/user/loginPage";
+                    } else {
+                        top.location = "/user/loginPage";
+                    }
+                })
+        } else if (data.result == 'notRole') {
+            swal({
+                title: "",
+                text: data.message,
+                confirmButtonText: "确认",
+                type: "error"
+            })
+        }
+    });
 }
 // 查看全部禁用
-function showDisable(){
-    initTable('table', '/maintainRecord/queryByPagerDisable');
+function showDisable() {
+    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,车主";
+    $.post("/user/isLogin/" + roles, function (data) {
+        if (data.result == 'success') {
+            initTable('table', '/maintainRecord/queryByPagerDisable');
+        } else if (data.result == 'notLogin') {
+            swal({
+                    title: "",
+                    text: data.message,
+                    confirmButtonText: "确认",
+                    type: "error"
+                }
+                , function (isConfirm) {
+                    if (isConfirm) {
+                        top.location = "/user/loginPage";
+                    } else {
+                        top.location = "/user/loginPage";
+                    }
+                })
+        } else if (data.result == 'notRole') {
+            swal({
+                title: "",
+                text: data.message,
+                confirmButtonText: "确认",
+                type: "error"
+            })
+        }
+    });
 }
 
 //显示弹窗
@@ -58,14 +110,14 @@ function showInactive(id) {
             cancelButtonText: "取消",
             confirmButtonText: "是的，我要冻结",
             confirmButtonColor: "#ec6c62"
-        }, function() {
+        }, function () {
             $.ajax({
-                url: "/maintainRecord/inactive/"+id,
+                url: "/maintainRecord/inactive/" + id,
                 type: "DELETE"
-            }).done(function(data) {
+            }).done(function (data) {
                 swal("操作成功!", "已成功冻结数据！", "success");
                 $('#table').bootstrapTable("refresh");
-            }).error(function(data) {
+            }).error(function (data) {
                 swal("OMG", "冻结操作失败了!", "error");
             });
         });
@@ -81,14 +133,14 @@ function showInactive(id) {
 function showActive(id) {
     var row = $('#table').bootstrapTable('getSelections');
     if (row.length > 0) {
-        $(function() {
+        $(function () {
             $.ajax({
-                url: "/maintainRecord/active/"+id,
+                url: "/maintainRecord/active/" + id,
                 type: "DELETE"
-            }).done(function(data) {
+            }).done(function (data) {
                 swal("操作成功!", "已成功解冻数据！", "success");
                 $('#table').bootstrapTable("refresh");
-            }).error(function(data) {
+            }).error(function (data) {
                 swal("OMG", "解冻操作失败了!", "error");
             });
             $('#table').bootstrapTable("refresh");
@@ -104,9 +156,9 @@ function showActive(id) {
 
 function formatterStatus(value, row, index) {
     if (row.recordStatus == 'Y') {
-        return "&nbsp;&nbsp;<button type='button' class='btn btn-danger' onclick='showInactive(\""+row.recordId+ "\")'>禁用</a>"
+        return "&nbsp;&nbsp;<button type='button' class='btn btn-danger' onclick='showInactive(\"" + row.recordId + "\")'>禁用</a>"
     } else if (row.recordStatus == 'N') {
-        return "&nbsp;&nbsp;<button type='button' class='btn btn-success' onclick='showActive(\""+row.recordId+ "\")'>激活</a>";
+        return "&nbsp;&nbsp;<button type='button' class='btn btn-success' onclick='showActive(\"" + row.recordId + "\")'>激活</a>";
     }
 }
 
@@ -178,15 +230,18 @@ $(document).ready(function () {
                         $("#addWindow").modal('hide'); // 关闭指定的窗口
                         $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
                         swal({
-                            title:"",
+                            title: "",
                             text: data.message,
-                            confirmButtonText:"确定", // 提示按钮上的文本
-                            type:"success"})// 提示窗口, 修改成功
+                            confirmButtonText: "确定", // 提示按钮上的文本
+                            type: "success"
+                        })// 提示窗口, 修改成功
                     } else if (data.result == "fail") {
-                        swal({title:"",
-                            text:"添加失败",
-                            confirmButtonText:"确认",
-                            type:"error"})
+                        swal({
+                            title: "",
+                            text: "添加失败",
+                            confirmButtonText: "确认",
+                            type: "error"
+                        })
                     }
                 }, "json"
             );
@@ -258,15 +313,18 @@ $(document).ready(function () {
                         $("#editWindow").modal('hide'); // 关闭指定的窗口
                         $('#table').bootstrapTable("refresh"); // 重新加载指定数据网格数据
                         swal({
-                            title:"",
+                            title: "",
                             text: data.message,
-                            confirmButtonText:"确定", // 提示按钮上的文本
-                            type:"success"})// 提示窗口, 修改成功
+                            confirmButtonText: "确定", // 提示按钮上的文本
+                            type: "success"
+                        })// 提示窗口, 修改成功
                     } else if (data.result == "fail") {
-                        swal({title:"",
-                            text:"修改失败",
-                            confirmButtonText:"确认",
-                            type:"error"})
+                        swal({
+                            title: "",
+                            text: "修改失败",
+                            confirmButtonText: "确认",
+                            type: "error"
+                        })
                     }
                 }, "json"
             );

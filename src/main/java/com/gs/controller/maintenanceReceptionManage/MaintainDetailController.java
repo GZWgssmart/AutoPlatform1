@@ -273,7 +273,7 @@ public class MaintainDetailController {
                             maintainRecord.setCurrentStatus("维修保养中");
                             maintainRecord.setIfConfirm("Y");
                             maintainRecordService.update(maintainRecord);
-                            return ControllerResult.getSuccessResult("确定成功, 开始进行维修保养...");
+                            return ControllerResult.getSuccessResult("确定成功, 请在派工领料为工单指派员工开始进行维修保养...");
                     }else{
                         return ControllerResult.getFailResult("确定失败, 此维修保养记录所属明细的维修项目并没有配件");
                     }

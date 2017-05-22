@@ -37,8 +37,8 @@
                 <th data-radio="true"></th>
                 <th data-field="user.userName">回访人</th>
                 <th data-field="checkin.userName">跟踪回访的用户</th>
-                <th data-field="trackContent">回访问题</th>
                 <th data-field="serviceEvaluate">本次服务评价</th>
+                <th data-field="trackContent">回访问题</th>
                 <th data-field="trackCreatedTime" data-formatter="formatterDate">跟踪回访创建时间</th>
             </tr>
             </thead>
@@ -86,7 +86,7 @@
         <div class="modal-content" style="overflow:hidden;">
             <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('addWindow', 'addForm')"></span>
             <form class="form-horizontal" id="addForm" method="post">
-                <input id="addTrackUserId" type="text" name="trackUser" />
+                <input id="addTrackUserId" type="hidden" name="trackUser" />
                 <div class="modal-header" style="overflow:auto;">
                     <h4>跟踪回跟踪回访的信息</h4>
                 </div>
@@ -113,6 +113,13 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <label class="col-sm-3 control-label">本次服务评价：</label>
+                    <div class="col-sm-7">
+                        <input type="number" name="serviceEvaluate" min="1" max="10" placeholder="请输入本次服务评价（1-10分）"
+                               class="form-control"></input>
+                    </div>
+                </div>
+                <div class="form-group">
                     <label class="col-sm-3 control-label">回访问题：</label>
                     <div class="col-sm-7">
                         <textarea type="text" name="trackContent" placeholder="请输入回访问题内容" style="height: 100px;"
@@ -126,13 +133,6 @@
                         <%--&lt;%&ndash;onclick="layui.laydate({elem: this, min: laydate.now(), format: 'yyyy-MM-dd hh:mm:ss', max: '2099-06-16 23:59:59'})"&ndash;%&gt;--%>
                     <%--</div>--%>
                 <%--</div>--%>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">本次服务评价：</label>
-                    <div class="col-sm-7">
-                        <input type="number" name="serviceEvaluate" min="1" max="10" placeholder="请输入本次服务评价（1-10分）"
-                               class="form-control"></input>
-                    </div>
-                </div>
                 <div class="form-group">
                     <div class="col-sm-offset-8">
                         <button type="button" class="btn btn-default"
@@ -155,7 +155,7 @@
         <div class="modal-content">
             <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('editWindow', 'editForm')"></span>
             <form class="form-horizontal" id="editForm" method="post">
-                <input type="text" name="trackId" define="TrackList.trackId"/>
+                <input type="hidden" name="trackId" define="TrackList.trackId"/>
                 <div class="modal-header" style="overflow:auto;">
                     <h4>修改跟踪回访的信息</h4>
                 </div>
@@ -180,6 +180,13 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <label class="col-sm-3 control-label">本次服务评价：</label>
+                    <div class="col-sm-7">
+                        <input type="number" name="serviceEvaluate" min="1" max="10 " define="TrackList.serviceEvaluate"
+                               placeholder="请输入本次服务评价（1-10分）" class="form-control"></input>
+                    </div>
+                </div>
+                <div class="form-group">
                     <label class="col-sm-3 control-label">回访问题：</label>
                     <div class="col-sm-7">
                         <textarea type="text" name="trackContent" define="TrackList.trackContent"
@@ -194,13 +201,6 @@
                                <%--define="TrackList.trackCreatedTime" class="form-control datetimepicker">--%>
                     <%--</div>--%>
                 <%--</div>--%>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">本次服务评价：</label>
-                    <div class="col-sm-7">
-                        <input type="number" name="serviceEvaluate" min="1" max="10 " define="TrackList.serviceEvaluate"
-                               placeholder="请输入本次服务评价（1-10分）" class="form-control"></input>
-                    </div>
-                </div>
                 <div class="form-group">
                     <div class="col-sm-offset-8">
                         <button type="button" class="btn btn-default"
@@ -236,7 +236,7 @@
                     </thead>
                 </table>
                 <div class="modal-footer" style="overflow:hidden;">
-                    <button type="button" class="btn btn-default" onclick="closeUserWin()">关闭
+                    <button id="closeButton" type="button" class="btn btn-default" onclick="closeUserWin()">关闭
                     </button>
                     <input type="button" class="btn btn-primary" onclick="checkRemind()" value="确定">
                     </input>

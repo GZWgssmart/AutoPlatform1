@@ -2,6 +2,7 @@ package com.gs.service;
 
 import com.gs.bean.Checkin;
 import com.gs.bean.IncomingType;
+import com.gs.bean.OutgoingType;
 import com.gs.common.bean.Pager;
 
 import java.util.List;
@@ -22,4 +23,6 @@ public interface IncomingTypeService extends BaseService<String, IncomingType>{
      * 分页查询被禁用的记录
      */
     public int countByDisable();
+
+    public IncomingType queryById(String inTypeName, String inTypeId);
 }

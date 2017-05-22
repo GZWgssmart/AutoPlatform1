@@ -41,17 +41,21 @@
                 <th data-field="recordCreatedTime" data-formatter="formatterDate">维修保养记录创建时间</th>
                 <th data-field="pickupTime" data-formatter="formatterDate">维修保养车主提车时间</th>
                 <th data-field="recordDes">维修保养记录描述</th>
-                <th data-field="recordStatus" data-formatter="formatterStatus">维修保养记录状态</th>
+                <%--<th data-field="recordStatus" data-formatter="formatterStatus">维修保养记录状态</th>--%>
             </tr>
             </thead>
         </table>
         <div id="toolbar" class="btn-group">
-            <button id="btn_available" type="button" class="btn btn-success" onclick="showAvailable();">
-                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>可用保养记录
-            </button>
-            <button id="btn_disable" type="button" class="btn btn-danger" onclick="showDisable();">
-                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>禁用保养记录
-            </button>
+            <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,车主">
+                <button id="btn_available" type="button" class="btn btn-success" onclick="showAvailable();">
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>可用保养记录
+                </button>
+            </shiro:hasAnyRoles>
+            <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,车主">
+                <button id="btn_disable" type="button" class="btn btn-danger" onclick="showDisable();">
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>禁用保养记录
+                </button>
+            </shiro:hasAnyRoles>
             <%--<button id="btn_add" type="button" class="btn btn-default" onclick="showAdd();">--%>
                 <%--<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增--%>
             <%--</button>--%>

@@ -161,16 +161,20 @@ function showReply() {
                     validator('addReplyForm');
                 } else {
                     swal({
-                        "title": "",
-                        "text": "该记录已经回复了",
-                        "type": "warning"
+                        title: "",
+                        text: "您已经回复了该车主", // 主要文本
+                        confirmButtonColor: "#DD6B55", // 提示按钮的颜色
+                        confirmButtonText: "确定", // 提示按钮上的文本
+                        type: "warning"
                     })
                 }
             } else {
                 swal({
-                    "title": "",
-                    "text": "请先选择一条数据",
-                    "type": "warning"
+                    title: "",
+                    text: "请先选择回复的车主", // 主要文本
+                    confirmButtonColor: "#DD6B55", // 提示按钮的颜色
+                    confirmButtonText: "确定", // 提示按钮上的文本
+                    type: "warning"
                 })
             }
         } else if (data.result == 'notLogin') {

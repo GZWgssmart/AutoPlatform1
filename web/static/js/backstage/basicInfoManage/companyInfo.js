@@ -3,14 +3,14 @@ var localSearch;
 var windowId;
 $(function () {
     var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员";
-    $.post("/user/isLogin/"+roles, function (data) {
-        if(data.result == 'success'){
+    $.post("/user/isLogin/" + roles, function (data) {
+        if (data.result == 'success') {
             initTable('table', '/company/queryByPagerCompany'); // 初始化表格
             //0.初始化fileinput
             var oFileInput = new FileInput();
             oFileInput.Init("file", "/company/addFile");
             // 初始化地图
-            map = new BMap.Map("allmap",{minZoom:10,maxZoom:18});    // 创建Map实例
+            map = new BMap.Map("allmap", {minZoom: 10, maxZoom: 18});    // 创建Map实例
             map.centerAndZoom("赣州", 11);  // 初始化地图,设置中心点坐标和地图级别
             map.addControl(new BMap.MapTypeControl());   //添加地图类型控件
             map.setCurrentCity("赣州");          // 设置地图显示的城市 此项是必须设置的
@@ -18,27 +18,31 @@ $(function () {
             map.enableContinuousZoom();    //启用地图惯性拖拽，默认禁用
             map.addControl(new BMap.NavigationControl());  //添加默认缩放平移控件
             map.addControl(new BMap.OverviewMapControl()); //添加默认缩略地图控件
-            map.addControl(new BMap.OverviewMapControl({ isOpen: true, anchor: BMAP_ANCHOR_BOTTOM_RIGHT }));   //右下角，打开
+            map.addControl(new BMap.OverviewMapControl({isOpen: true, anchor: BMAP_ANCHOR_BOTTOM_RIGHT}));   //右下角，打开
             localSearch = new BMap.LocalSearch(map);
             localSearch.enableAutoViewport(); //允许自动调节窗体大小
 
-        }else if(data.result == 'notLogin'){
-            swal({title:"",
-                    text:data.message,
-                    confirmButtonText:"确认",
-                    type:"error"}
-                ,function(isConfirm){
-                    if(isConfirm){
+        } else if (data.result == 'notLogin') {
+            swal({
+                    title: "",
+                    text: data.message,
+                    confirmButtonText: "确认",
+                    type: "error"
+                }
+                , function (isConfirm) {
+                    if (isConfirm) {
                         top.location = "/user/loginPage";
-                    }else{
+                    } else {
                         top.location = "/user/loginPage";
                     }
                 })
-        }else if(data.result == 'notRole'){
-            swal({title:"",
-                text:data.message,
-                confirmButtonText:"确认",
-                type:"error"})
+        } else if (data.result == 'notRole') {
+            swal({
+                title: "",
+                text: data.message,
+                confirmButtonText: "确认",
+                type: "error"
+            })
         }
     });
 });
@@ -50,8 +54,8 @@ var FileInput = function () {
     //初始化fileinput控件（第一次初始化）
     oFile.Init = function (ctrlName, uploadUrl) {
         var control = $('#' + ctrlName);
-        $('#' + ctrlName).parent().css('width','90%');
-        $('#' + ctrlName).parent().css('height','70%');
+        $('#' + ctrlName).parent().css('width', '90%');
+        $('#' + ctrlName).parent().css('height', '70%');
         //初始化上传控件的样式
         control.fileinput({
             language: 'zh', //设置语言
@@ -73,7 +77,7 @@ var FileInput = function () {
             // msgFilesTooMany: "选择上传的文件数量({n}) 超过允许的最大数值{m}！",
         }).on("fileuploaded", function (event, data) {
             // data 为controller返回的json
-            var resp= data.response;
+            var resp = data.response;
             if (resp.controllerResult.result == 'success') {
                 $("#file").val(resp.imgPath)
                 alert('处理成功');
@@ -87,9 +91,9 @@ var FileInput = function () {
 
 //显示弹窗
 function showEdit() {
-    initDatePicker('editForm', 'companyOpendate','editDatetimepicker'); // 初始化时间框
+    initDatePicker('editForm', 'companyOpendate', 'editDatetimepicker'); // 初始化时间框
     var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员";
-    $.post("/user/isLogin/"+roles, function (data) {
+    $.post("/user/isLogin/" + roles, function (data) {
         if (data.result == 'success') {
             var row = $('#table').bootstrapTable('getSelections');
             if (row.length > 0) {
@@ -143,19 +147,19 @@ function showEdit() {
 }
 
 // 初始化没有分秒的时间框
-function initDatePicker(formId, field){
+function initDatePicker(formId, field) {
     $(".datetimepicker").datetimepicker({
         minView: "month", //选择日期后，不会再跳转去选择时分秒
         language: 'zh-CN',
         format: 'yyyy-mm-dd',
         initialDate: new Date(),
         autoclose: true,
-        todayHighligh:true,
-        todayBtn :true, // 显示今日按钮
+        todayHighligh: true,
+        todayBtn: true, // 显示今日按钮
         autoclose: 1
-    }).on('hide',function(e) {
-        $('#'+formId).data('bootstrapValidator')
-            .updateStatus(field, 'NOT_VALIDATED',null)
+    }).on('hide', function (e) {
+        $('#' + formId).data('bootstrapValidator')
+            .updateStatus(field, 'NOT_VALIDATED', null)
             .validateField(field);
     });
 }
@@ -180,18 +184,18 @@ function formatterDate(value) {
 
 // 激活或禁用
 function statusFormatter(value, row, index) {
-    if(value == 'Y') {
-        return "&nbsp;&nbsp;<button type='button' class='btn btn-danger' onclick='inactive(\""+'/company/statusOperate?id='+row.companyId+'&status=Y'+"\")'>禁用</a>";
+    if (value == 'Y') {
+        return "&nbsp;&nbsp;<button type='button' class='btn btn-danger' onclick='inactive(\"" + '/company/statusOperate?id=' + row.companyId + '&status=Y' + "\")'>禁用</a>";
     } else {
-        return "&nbsp;&nbsp;<button type='button' class='btn btn-success' onclick='active(\""+'/company/statusOperate?id='+ row.companyId+'&status=N'+ "\")'>激活</a>";
+        return "&nbsp;&nbsp;<button type='button' class='btn btn-success' onclick='active(\"" + '/company/statusOperate?id=' + row.companyId + '&status=N' + "\")'>激活</a>";
     }
 }
 //显示添加
-function showAdd(){
+function showAdd() {
     // 初始化时间框, 第一参数是form表单id, 第二参数是input的name, 第三个参数为input的id
-    initDatePicker('addForm', 'companyOpendate','addDateTimePicker');
+    initDatePicker('addForm', 'companyOpendate', 'addDateTimePicker');
     var roles = "系统超级管理员,系统普通管理员";
-    $.post("/user/isLogin/"+roles, function (data) {
+    $.post("/user/isLogin/" + roles, function (data) {
         if (data.result == 'success') {
             $("#addWindow").modal('show');
             $("#addButton").removeAttr("disabled");
@@ -249,10 +253,10 @@ function validator(formId) {
                     remote: {
                         url: '/company/querycompanyName',
                         message: '该公司名称已存在',
-                        delay :  2000,
+                        delay: 2000,
                         type: 'POST',
                         data: {
-                            companyId: $("#"+formId + " input[name=companyId]").val(),
+                            companyId: $("#" + formId + " input[name=companyId]").val(),
                             companyName: $("#" + formId + " input[name=companyName]").val()
                         }
                     }
@@ -334,29 +338,29 @@ function validator(formId) {
             },
             companyPricipalphone: {
                 message: '负责人联系电话验证失败',
-                    validators: {
+                validators: {
                     notEmpty: {
                         message: '负责人联系电话不能为空'
                     },
                     stringLength: {
                         min: 11,
-                            max: 11,
-                            message: '负责人联系电话必须为11位'
+                        max: 11,
+                        message: '负责人联系电话必须为11位'
                     },
                     regexp: {
                         regexp: /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/,
-                            message: '请输入正确的手机号'
+                        message: '请输入正确的手机号'
                     },
-                        remote: {
-                            url: '/company/querycompanyPricipalphone',
-                            message: '该负责人联系电话已存在',
-                            delay :  2000,
-                            type: 'POST',
-                            data: {
-                                companyId: $("#"+formId + " input[name=companyId]").val(),
-                                companyPricipalphone: $("#" + formId + " input[name=companyPricipalphone]").val()
-                            }
+                    remote: {
+                        url: '/company/querycompanyPricipalphone',
+                        message: '该负责人联系电话已存在',
+                        delay: 2000,
+                        type: 'POST',
+                        data: {
+                            companyId: $("#" + formId + " input[name=companyId]").val(),
+                            companyPricipalphone: $("#" + formId + " input[name=companyPricipalphone]").val()
                         }
+                    }
                 }
             },
             companySize: {
@@ -392,7 +396,7 @@ function validator(formId) {
                 }
             }
             ,
-            companyLogo:{
+            companyLogo: {
                 message: '公司Logo失败',
                 validators: {
                     notEmpty: {
@@ -417,10 +421,10 @@ function validator(formId) {
 
 }
 
-function formatterImg(value, row, index){
-    if(row.companyLogo !=null){
+function formatterImg(value, row, index) {
+    if (row.companyLogo != null) {
         return [
-            '<img style="width:100px;height:40px;" src="/'+ value +'">'
+            '<img style="width:100px;height:40px;" src="/' + value + '">'
         ]
     }
 }
@@ -494,62 +498,63 @@ function formatterImg(value, row, index){
 //     return oFile;
 // };
 
-function addSubmit(){
+function addSubmit() {
     setTimeout(function () {
         $("#addForm").data('bootstrapValidator').validate();
         if ($("#addForm").data('bootstrapValidator').isValid()) {
-            $("#addButton").attr("disabled","disabled");
+            $("#addButton").attr("disabled", "disabled");
         } else {
             $("#addButton").removeAttr("disabled");
         }
-    },100)
+    }, 100)
 
 }
 
-function editSubmit(){
+function editSubmit() {
     setTimeout(function () {
         $("#editForm").data('bootstrapValidator').validate();
         if ($("#editForm").data('bootstrapValidator').isValid()) {
-            $("#editButton").attr("disabled","disabled");
+            $("#editButton").attr("disabled", "disabled");
         } else {
             $("#editButton").removeAttr("disabled");
         }
-    },100)
+    }, 100)
 
 }
 
 function formSubmit(url, formId, winId, fileId) {
     var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员";
-    $.post("/user/isLogin/"+roles, function (data) {
+    $.post("/user/isLogin/" + roles, function (data) {
         if (data.result == "success") {
-            $.post(url, $("#"+formId).serialize(),
+            $.post(url, $("#" + formId).serialize(),
                 function (data) {
-                        if(data.company) {
-                            console.log(data);
-                            $('#table').bootstrapTable('refresh');
-                            var fileData = document.getElementById(fileId).files[0];
-                            if(fileData) {
-                                var formData = new FormData();
-                                formData.append("companyLogo", fileData);
-                                formData.append("companyId", data.company.companyId);
-                                $.ajax({
-                                    url: "/company/afterUpdIcon",
-                                    type: "POST",
-                                    data: formData,
-                                    processData: false,
-                                    contentType: false,
-                                    success: function (data1) {
-                                        if (data1.controllerResult.result == "success") {
-                                            endSuc(data, winId, formId);
-                                        }
+                    if (data.company) {
+                        console.log(data);
+                        $('#table').bootstrapTable('refresh');
+                        var fileData = document.getElementById(fileId).files[0];
+                        if (fileData) {
+                            var formData = new FormData();
+                            formData.append("companyLogo", fileData);
+                            formData.append("companyId", data.company.companyId);
+                            $.ajax({
+                                url: "/company/afterUpdIcon",
+                                type: "POST",
+                                data: formData,
+                                processData: false,
+                                contentType: false,
+                                success: function (data1) {
+                                    if (data1.controllerResult.result == "success") {
+                                        endSuc(data, winId, formId);
                                     }
-                                })
-                            } else {
-                                endSuc(data, winId, formId);}
-                        } else{
+                                }
+                            })
+                        } else {
                             endSuc(data, winId, formId);
                         }
-                    }, "json");
+                    } else {
+                        endSuc(data, winId, formId);
+                    }
+                }, "json");
         } else if (data.result == "notLogin") {
             swal({
                 text: data.message,
@@ -573,13 +578,13 @@ function formSubmit(url, formId, winId, fileId) {
 }
 
 function endSuc(data, winId, formId) {
-    var controllerResult= data.controllerResult;
+    var controllerResult = data.controllerResult;
     if (controllerResult.result == "success") {
         swal({
-            title:"",
+            title: "",
             text: data.controllerResult.message,
-            confirmButtonText:"确定", // 提示按钮上的文本
-            type:"success"
+            confirmButtonText: "确定", // 提示按钮上的文本
+            type: "success"
         })
         $('#' + winId).modal('hide');
         $('#table').bootstrapTable('refresh');
@@ -589,7 +594,7 @@ function endSuc(data, winId, formId) {
             $("#addButton").removeAttr("disabled"); // 移除不可点击
             $("#" + formId).data('bootstrapValidator').destroy(); // 销毁此form表单
             $('#' + formId).data('bootstrapValidator', null);// 此form表单设置为空
-        }else if(formId =='editForm'){
+        } else if (formId == 'editForm') {
             $("#editButton").removeAttr("disabled");
         } else if (controllerResult.result == "fail") {
             swal({
@@ -600,74 +605,84 @@ function endSuc(data, winId, formId) {
             })
             $("#" + formId).removeAttr("disabled");
         }
-    }else if (data.result == "fail") {
-        swal({title:"",
-            text:"操作失败",
-            confirmButtonText:"确认",
-            type:"error"})
-        $("#"+formId).removeAttr("disabled");
+    } else if (data.result == "fail") {
+        swal({
+            title: "",
+            text: "操作失败",
+            confirmButtonText: "确认",
+            type: "error"
+        })
+        $("#" + formId).removeAttr("disabled");
     }
 
 }
 
 // 查看全部可用
-function showAvailable(){
+function showAvailable() {
     var roles = "系统超级管理员,系统普通管理员";
-    $.post("/user/isLogin/"+roles, function (data) {
-        if(data.result == 'success'){
+    $.post("/user/isLogin/" + roles, function (data) {
+        if (data.result == 'success') {
             initTable('table', '/company/queryByPagerCompany');
-        }else if(data.result == 'notLogin'){
-            swal({title:"",
-                    text:data.message,
-                    confirmButtonText:"确认",
-                    type:"error"}
-                ,function(isConfirm){
-                    if(isConfirm){
+        } else if (data.result == 'notLogin') {
+            swal({
+                    title: "",
+                    text: data.message,
+                    confirmButtonText: "确认",
+                    type: "error"
+                }
+                , function (isConfirm) {
+                    if (isConfirm) {
                         top.location = "/user/loginPage";
-                    }else{
+                    } else {
                         top.location = "/user/loginPage";
                     }
                 })
-        }else if(data.result == 'notRole'){
-            swal({title:"",
-                text:data.message,
-                confirmButtonText:"确认",
-                type:"error"})
+        } else if (data.result == 'notRole') {
+            swal({
+                title: "",
+                text: data.message,
+                confirmButtonText: "确认",
+                type: "error"
+            })
         }
     });
 }
 // 查看全部禁用
-function showDisable(){
+function showDisable() {
     var roles = "系统超级管理员,系统普通管理员";
-    $.post("/user/isLogin/"+roles, function (data) {
-        if(data.result == 'success'){
+    $.post("/user/isLogin/" + roles, function (data) {
+        if (data.result == 'success') {
             initTable('table', '/company/queryByPagerDisable');
-        }else if(data.result == 'notLogin'){
-            swal({title:"",
-                    text:data.message,
-                    confirmButtonText:"确认",
-                    type:"error"}
-                ,function(isConfirm){
-                    if(isConfirm){
+        } else if (data.result == 'notLogin') {
+            swal({
+                    title: "",
+                    text: data.message,
+                    confirmButtonText: "确认",
+                    type: "error"
+                }
+                , function (isConfirm) {
+                    if (isConfirm) {
                         top.location = "/user/loginPage";
-                    }else{
+                    } else {
                         top.location = "/user/loginPage";
                     }
                 })
-        }else if(data.result == 'notRole'){
-            swal({title:"",
-                text:data.message,
-                confirmButtonText:"确认",
-                type:"error"})
+        } else if (data.result == 'notRole') {
+            swal({
+                title: "",
+                text: data.message,
+                confirmButtonText: "确认",
+                type: "error"
+            })
         }
     });
 }
 
-function showInfo(e){
-    if(windowId == 'addWindow'){
+function showInfo(e) {
+    if (windowId == 'addWindow') {
         $("#addCompanyLongitudeId").val(e.point.lng);
         $("#addCompanyLatitudeId").val(e.point.lat);
-    }else{
+    } else {
         $("#editCompanyLongitudeId").val(e.point.lng);
         $("#editCompanyLatitudeId").val(e.point.lat);
     }
@@ -684,7 +699,9 @@ function searchByStationName() {
         map.addOverlay(marker);
         var content = document.getElementById("text_").value + "<br/><br/>经度：" + poi.point.lng + "<br/>纬度：" + poi.point.lat;
         var infoWindow = new BMap.InfoWindow("<p style='font-size:14px;'>" + content + "</p>");
-        marker.addEventListener("click", function () { this.openInfoWindow(infoWindow); });
+        marker.addEventListener("click", function () {
+            this.openInfoWindow(infoWindow);
+        });
         marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
     });
     localSearch.search(keyword);
@@ -704,7 +721,7 @@ address.click(function () {
     $('#companyAddress').css('display', 'block');
 })
 
-function showMap(winId){
+function showMap(winId) {
 
     $("#mapWindow").modal('show');
     $('#addForm').data('bootstrapValidator').resetForm();

@@ -37,7 +37,7 @@
     FROM t_company co,t_complaint c
     LEFT JOIN t_user u ON c.userId = u.userId
     LEFT  JOIN t_user u2 ON c.complaintReplyUser = u2.userId
-    WHERE u.companyId = co.companyId
+    WHERE c.companyId = co.companyId
     <if test="user.companyId != null and user.companyId != ''">
       and c.companyId = #{user.companyId}
     </if>
@@ -52,7 +52,7 @@
     FROM t_company co,t_complaint c
     LEFT JOIN t_user u ON c.userId = u.userId
     LEFT  JOIN t_user u2 ON c.complaintReplyUser = u2.userId
-    WHERE u.companyId = co.companyId
+    WHERE c.companyId = co.companyId
     <if test="pager.user.companyId != null and pager.user.companyId != ''">
       and c.companyId = #{pager.user.companyId}
     </if>
@@ -76,7 +76,7 @@
     FROM t_company co,t_complaint c
     LEFT JOIN t_user u ON c.userId = u.userId
     LEFT  JOIN t_user u2 ON c.complaintReplyUser = u2.userId
-    WHERE u.companyId = co.companyId
+    WHERE c.companyId = co.companyId
     <if test="user.companyId != null and user.companyId != ''">
       and c.companyId = #{user.companyId}
     </if>
@@ -99,7 +99,7 @@
     FROM t_company co,t_complaint c
     LEFT JOIN t_user u ON c.userId = u.userId
     LEFT  JOIN t_user u2 ON c.complaintReplyUser = u2.userId
-    WHERE u.companyId = co.companyId
+    WHERE c.companyId = co.companyId
     <if test="companyId != null and companyId != ''">
       and c.companyId = #{companyId}
     </if>

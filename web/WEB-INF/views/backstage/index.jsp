@@ -31,7 +31,7 @@
             <div class="sidebar-collapse">
                 <ul class="nav" id="side-menu">
                     <li class="nav-header" style="padding-top: 20px;">
-                        <div class="dropdown profile-element" style="margin-left:30px;">
+                        <div class="dropdown profile-element">
                             <span>
                                 <c:choose>
                                     <c:when test="${user.userIcon != null}">
@@ -284,8 +284,6 @@
                                 <li><a class="J_menuItem" href="/statistics/repertory">库存统计</a>
                                 </li>
                                 <li><a class="J_menuItem" href="/statistics/inventoryUsing">库存使用情况统计</a>
-                                </li>
-                                <li><a class="J_menuItem" href="/statistics/consume">消费统计</a>
                                 </li>
                                 <li><a class="J_menuItem" href="/statistics/vindicate">维修保养统计</a>
                                 </li>

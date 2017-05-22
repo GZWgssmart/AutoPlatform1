@@ -2,7 +2,9 @@ package com.gs.dao;
 
 import com.gs.bean.Checkin;
 import com.gs.bean.IncomingType;
+import com.gs.bean.OutgoingType;
 import com.gs.common.bean.Pager;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -24,5 +26,7 @@ public interface IncomingTypeDAO extends BaseDAO<String, IncomingType>{
      * 分页查询被禁用的记录
      */
     public int countByDisable();
+
+    public IncomingType queryById(@Param("inTypeName")String inTypeName, @Param("inTypeId")String inTypeId);
 
 }

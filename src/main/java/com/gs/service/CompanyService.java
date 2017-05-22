@@ -28,4 +28,9 @@ public interface CompanyService extends BaseService<String, Company>{
      * 查询此公司联系方式是否已存在
      */
     public int querycompanyWebsite(String companyWebsite,String companyId);
+
+    /**
+     * 查询此公司联系方式是否已存在
+     */
+    public Company queryPhone(String companyPricipalphone);
 }

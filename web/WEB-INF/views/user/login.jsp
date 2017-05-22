@@ -80,7 +80,7 @@
                     <div class="form-group">
                         <label class="col-sm-4  col-md-4 control-label">公司负责人电话</label>
                         <div class="col-sm-7 col-md-7">
-                            <input type="number" name="companyPricipalPhone" placeholder="请输入公司负责人电话" class="form-control" >
+                            <input type="number" name="companyPricipalphone" placeholder="请输入公司负责人电话" class="form-control" >
                         </div>
                     </div>
                     <div class="form-group">

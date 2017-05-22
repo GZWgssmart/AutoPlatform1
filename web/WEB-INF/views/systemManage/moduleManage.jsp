@@ -177,9 +177,11 @@
         <div class="col-md-9">
             <div class="panel-heading" style="height:90px; border-bottom: 1px solid #ddd">
                <h3 style="display: inline;line-height:70px;" >模块管理</h3>
-                <button id="btn_add" type="button" class="btn btn-default" onclick="showAdd();" style="margin-left:15px;">
-                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
-                </button>
+                <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员">
+                    <button id="btn_add" type="button" class="btn btn-default" onclick="showAdd();" style="margin-left:15px;">
+                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
+                    </button>
+                </shiro:hasAnyRoles>
             </div>
 
             <div id="navbar" class="col-md-2">
@@ -204,10 +206,10 @@
 <div class="modal fade" id="addModal" aria-hidden="true" data-backdrop="static" keyboard="false">
     <div class="modal-dialog">
         <div class="modal-content">
-            <span  class="close"   onclick = "closeModal()">&times;</span>
-                <div class="modal-header" style="overflow:auto;">
-                    <h4 data-tit = "title"></h4><input style="display:none" data-flag="flag"/>
-                </div>
+            <div class="modal-header" style="overflow:auto;width:95%" >
+                <span class="glyphicon glyphicon-remove closeModal" onclick = "closeModal()"></span>
+                <h4 data-tit = "title"></h4><input style="display:none" data-flag="flag"/>
+            </div>
             <hr/>
             <form id="addForm" role="form" class="form-horizontal">
                 <input type="text" name="moduleId" define="module.moduleId" style="display: none;"/>

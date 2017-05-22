@@ -331,7 +331,6 @@ function initTabs(tabMsg) {
 
 function setPageTitle(){
     var role = initObj.role;
-    console.log(role)
     var title = $("#home .title:eq(0)")
     var roleNameNode = "<span>" + role.roleName + "</span>";
     var roleDesNode = "<br /><small style='font-size:9px;color:#999; position:relative; margin-top: 5px;margin-left:10px;'>简介: "+ role.roleDes +"</small>"

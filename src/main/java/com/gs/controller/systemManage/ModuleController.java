@@ -165,8 +165,6 @@ public class ModuleController {
         }
     }
 
-
-
     // baoliu
     @ResponseBody
     @RequestMapping(value = "checkModuleName")

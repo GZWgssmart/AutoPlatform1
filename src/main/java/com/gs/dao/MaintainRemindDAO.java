@@ -27,4 +27,8 @@ public interface MaintainRemindDAO extends BaseDAO<String, MaintainRemind>{
     public List<MaintainRemind> queryByPagerUser(@Param("pager") Pager pager, @Param("userId") String userId);
 
     public int countUser(@Param("userId") String userId);
+
+    public List<MaintainRemind> blurredQuery(@Param("pager") Pager pager,@Param("maintainRemind") MaintainRemind maintainRemind);
+
+    public int countByBlurred(@Param("maintainRemind") MaintainRemind maintainRemind, @Param("user") User user);
 }
