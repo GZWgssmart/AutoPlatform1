@@ -1,12 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: 不曾有黑夜
-  Date: 2017/4/20
-  Time: 20:11
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
     <meta charset="utf-8">
@@ -337,12 +331,21 @@
                     </div>
                     <div class="acc-content">
                         <ul style="margin: 0;padding: 0;">
-                            <li>
-                                <span style="width:20%;margin-left:19px;padding-right: 15px;">w3rwefsef</span>
-                                <span style="width:33%;padding-right: 15px;">丰田 Alphard(进口) 3.5 手自一体 豪华版 2011款</span>
-                                <span style="width: 20%;">579.00</span>
-                                <span style="width: 16%;">2017-04-24</span>
-                            </li>
+                            <c:choose>
+                                <c:when test="${queryList != null}">
+                                    <c:forEach items="${queryList}" var = "m">
+                                        <li>
+                                            <span style="width:20%;margin-left:19px;padding-right: 15px;">${m.maintainFix.maintainName}</span>
+                                            <span style="width:33%;padding-right: 15px;">${m.maintainRecord.checkin.model.modelName}</span>
+                                            <span style="width: 20%;">${m.maintainFix.maintainMoney}</span>
+                                            <span style="width: 16%;"><fmt:formatDate value="${m.mdcreatedTime}" pattern="yyyy/MM/dd  HH:mm:ss"></fmt:formatDate></span>
+                                        </li>
+                                    </c:forEach>
+                                </c:when>
+                                <c:otherwise>
+                                    暂无最新维修保养记录
+                                </c:otherwise>
+                            </c:choose>
                         </ul>
                     </div>
                 </div>

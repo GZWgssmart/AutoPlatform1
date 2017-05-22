@@ -153,7 +153,7 @@ function showEdit() {
             } else {
                 swal({
                     "title": "",
-                    "text": "请先选择一条数据",
+                    "text": "请先选择一条保养项目记录",
                     "type": "warning"
                 })
             }
@@ -290,11 +290,11 @@ function validator(formId) {
 
 }
 
-function addSubmit() {
+function addSubmit(){
     setTimeout(function () {
         $("#addForm").data('bootstrapValidator').validate();
         if ($("#addForm").data('bootstrapValidator').isValid()) {
-            $("#addButton").attr("disabled", "disabled");
+            $("#addButton").attr("disabled","disabled");
         } else {
             $("#addButton").removeAttr("disabled");
         }
@@ -338,7 +338,7 @@ function showdetai() {
             var row =  $('#detailTable').bootstrapTable('getSelections');
             if(row.length >0) {
                 $("#detailWindow").modal('hide');
-                $("#accButton").removeAttr("disabled");
+                $("#accEidtButton").removeAttr("disabled");// 移除不可点击
                 // var MaintainFixMap = row[0];
                 // $("#accForm").fill(MaintainFixMap);
                 $("#editmaintainId").val(row[0].mainAccId);

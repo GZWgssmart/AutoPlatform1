@@ -11,6 +11,7 @@
     <title>账号信息</title>
 </head>
 <link rel="stylesheet" href="/static/css/bootstrap.css">
+<link rel="stylesheet" href="/static/css/sweetalert.css">
 <style>
     body,html{
         font-family:Microsoft YaHei,Arial,simsun, Helvetica, sans-serif;
@@ -103,11 +104,22 @@
     function edit() {
         $.post("/editinfomation",$("#form2").serialize(),function (data) {
             if(data.result=="success"){
-                window.location.href="accountinfo";
-                window.location.reload;
-                alert("更新成功");
+//                window.location.href="accountinfo";
+//                window.location.reload;
+                swal({
+                    title: "",
+                    text: data.message,
+                    confirmButtonText: "确认",
+                    type: "success"
+                })
+
             }else{
-                alert("更新失败");
+                swal({
+                    title: "",
+                    text: data.message,
+                    confirmButtonText: "确认",
+                    type: "error"
+                })
             }
         })
     }

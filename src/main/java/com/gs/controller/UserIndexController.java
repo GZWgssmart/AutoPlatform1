@@ -144,7 +144,7 @@ public class UserIndexController {
         return "Frontpage/Personalcenter/Consumptionstatistics/Chargedocuments";
     }
 
-    /*我的评价*/
+    /*投诉页面*/
     @RequestMapping(value = "mycomment", method = RequestMethod.GET)
     public String myComment() {
         return "Frontpage/Personalcenter/Consumptionstatistics/mycomment";
@@ -285,9 +285,7 @@ public class UserIndexController {
     @ResponseBody
     @RequestMapping(value = "appointmentAdd",method = RequestMethod.POST)
     public ControllerResult add(Appointment appointment,HttpSession session){
-        if(SessionUtil.isOwnerLogin(session)){
             String roles = "车主";
-            if (RoleUtil.checkRoles(roles)) {
                 User user = (User)session.getAttribute("frontUser");
                 logger.info("添加电话预约");
                 if (appointment != null) {
@@ -298,43 +296,32 @@ public class UserIndexController {
                 } else {
                     return ControllerResult.getFailResult("添加预约失败");
                 }
-            } else {
-                logger.info("此用户无拥有添加电话预约记录的角色");
-                return ControllerResult.getNotRoleResult("权限不足");
-            }
-        }else {
-            logger.info("请先登录");
-            return ControllerResult.getNotLoginResult("添加预约无效，请重新登录");
-        }
     }
 
-    /*查询所有投诉*/
+    /*添加投诉*/
     @ResponseBody
-    @RequestMapping(value = "UserqueryByPager", method = RequestMethod.GET)
-    public Pager4EasyUI<Complaint> queryByPager(HttpSession session, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
-        if (SessionUtil.isOwnerLogin(session)) {
-            String roles = "车主";
-            if (RoleUtil.checkRoles(roles)) {
-                logger.info("分页查看投诉记录");
-                Pager pager = new Pager();
-                pager.setPageNo(Integer.valueOf(pageNumber));
-                pager.setPageSize(Integer.valueOf(pageSize));
-                User user = (User) session.getAttribute("frontUser");
-                int count = complaintService.count(user);
-                pager.setTotalRecords(count);
-                pager.setUser((User) session.getAttribute("frontUser"));
-                List<Complaint> queryList = complaintService.queryByPager(pager);
-                return new Pager4EasyUI<Complaint>(pager.getTotalRecords(), queryList);
-            } else {
-                logger.info("此用户无拥有此方法");
-                return null;
-            }
-        } else {
-            logger.info("请先登录");
-            return null;
-        }
+    @RequestMapping(value = "Userinsert", method = RequestMethod.POST)
+    public ControllerResult insert(HttpSession session, Complaint complaint) {
+        logger.info("投诉记录添加操作");
+        User user = (User)session.getAttribute("frontUser");
+        complaint.setUserId(user.getUserId());
+        complaintService.insert(complaint);
+        return ControllerResult.getSuccessResult("添加投诉信息成功");
     }
-
+    /**
+     * 退出登录
+     */
+    @RequestMapping(value="logout",method=RequestMethod.GET)
+    public String logout(HttpSession session) {
+        Subject currentUser = SecurityUtils.getSubject();
+        if(SessionUtil.isLogin(session)) {
+            User user = (User) session.getAttribute("user");
+            user.setUserLoginedTime((Date) session.getAttribute("userLoginedTime"));
+            userService.update(user);
+        }
+        currentUser.logout();
+        return "Frontpage/registered";
+    }
 
 }
 

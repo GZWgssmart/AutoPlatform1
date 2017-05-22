@@ -135,9 +135,10 @@
 
   <select id="queryByFrontpage" resultMap="maintainDetailMap" parameterType="com.gs.common.bean.Pager">
     <![CDATA[
-       select md.*, mf.*, c.* from t_maintain_detail md,t_maintain_fix mf,t_maintain_record mr,t_checkin ck, t_company c
+       select md.*, mf.*, c.*, m.* from t_maintain_detail md,t_maintain_fix mf,t_maintain_record mr,t_checkin ck,t_car_model m, t_company c
        where md.maintainItemId = mf.maintainId and md.maintainRecordId = mr.recordId
 		and mr.checkinId = ck.checkinId and ck.companyId = c.companyId
+		and ck.modelId = m.modelId
 		and mr.recordStatus = 'Y' and mr.currentStatus = '已收费'
     ]]>
     order by md.mdCreatedTime Desc
@@ -181,7 +182,7 @@
 
   <select id="countByOwner" resultType="int">
     <![CDATA[
-      select count(maintainDetailId) from t_maintain_detail,
+      select count(maintainDetailId) from t_maintain_detail md,
        t_maintain_record mr, t_checkin ck where
         md.maintainRecordId=mr.recordId and mr.checkinId = ck.checkinId
         and md.maintainRecordId = #{recordId} and ck.userId =#{userId}

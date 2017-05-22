@@ -337,7 +337,7 @@ function showdetai() {
             var row =  $('#detailTable').bootstrapTable('getSelections');
             if(row.length >0) {
                 $("#detailWindow").modal('hide');
-                $("#accButton").removeAttr("disabled");
+                $("#accEidtButton").removeAttr("disabled");
                 // var MaintainFixMap = row[0];
                 // $("#accForm").fill(MaintainFixMap);
                 $("#editmaintainId").val(row[0].mainAccId);

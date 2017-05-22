@@ -205,7 +205,7 @@ public class MaintainDetailController {
     @ResponseBody
     @RequestMapping(value="queryByOwner/{recordId}", method = RequestMethod.GET)
     public Pager4EasyUI<MaintainDetail> queryByOwner(HttpSession session, @PathVariable("recordId") String recordId, @Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
-        if(SessionUtil.isLogin(session)) {
+        if(SessionUtil.isOwnerLogin(session)) {
             String roles = "车主";
             if(RoleUtil.checkRoles(roles)) {
                 logger.info("分页查询此记录下所有明细");

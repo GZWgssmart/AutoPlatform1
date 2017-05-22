@@ -75,7 +75,11 @@
 
                             </div>
                             <div class="form-group">
-                                <label style="overflow: hidden;"><input type="checkbox" value="记住账号" style="position: relative;top:3px;width: 16px;height: 16px;"> <span style="font-size: 16px;">记住账号</span></label>
+                                <div>
+                                <label style="overflow: hidden;display: inline;"><input type="checkbox" value="记住账号" style="position: relative;top:3px;width: 16px;height: 16px;"> <span style="font-size: 16px;">记住账号</span></label>
+
+                                    <label><a href="">忘记密码</a></label>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <button type="button" class="btn btn-success btn-block" value="登录" id="loginButton" onclick="loginSubmit()">登录</button>

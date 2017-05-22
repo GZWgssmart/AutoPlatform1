@@ -58,11 +58,11 @@
             </ul>
         </div>
         <%--主内容区开始--%>
-        <div class="content">
+        <div class="content" style="padding: 50px 200px;">
 
             <div class="content-main">
                 <h2>赣州市天道有限公司</h2>
-                <div class="showdata">
+                <div class="showdata" style="padding: 30px;">
                     <div class="show-left">
                         <div>
                             <label>公司地址：</label>

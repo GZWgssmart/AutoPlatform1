@@ -59,7 +59,7 @@
                                 </span>
                         </a>
                         <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                            <li><a class="J_menuItem" href="profile.html">个人资料</a>
+                            <li><a class="J_menuItem" href="/emp/selfManage">个人资料</a>
                             </li>
                             <li><a class="J_menuItem" href="/edit">修改头像</a>
                             </li>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.gs.dao.CarPlateDAO" >
-  <resultMap id="plateMap" type="carplate" >
+  <resultMap id="plateMap" type="carPlate" >
     <id column="plateId" property="plateId" jdbcType="VARCHAR" />
     <result column="plateName" property="plateName" jdbcType="VARCHAR" />
     <result column="plateDes" property="plateDes" jdbcType="VARCHAR" />
@@ -18,7 +18,7 @@
         <!--分页查询所有车牌-->
          <select id="queryByPager" resultMap="plateMap"  parameterType="com.gs.common.bean.Pager">
              <![CDATA[
-              select *  from t_car_plate cp where cp.plateStatus = 'Y'
+              select *  from t_car_plate cp where 1=1 and cp.plateStatus = 'Y'
              ]]>
               limit #{beginIndex}, #{pageSize}
           </select>
@@ -26,19 +26,19 @@
         <!--分页查询车牌总数-->
         <select id="count" resultType="int" parameterType="com.gs.bean.User">
             <![CDATA[
-          select count(plateId) from t_car_plate cp where cp.plateStatus = 'Y'
+          select count(plateId) from t_car_plate cp where 1=1 and cp.plateStatus = 'Y'
         ]]>
         </select>
 
     <!--添加车牌-->
-      <insert id="insert" parameterType="carplate">
+      <insert id="insert" parameterType="carPlate">
          <![CDATA[
         insert into t_car_plate(plateId, plateName, plateDes, plateStatus) values(uuid(), #{plateName}, #{plateDes}, 'Y')
          ]]>
       </insert>
 
     <!--修改车牌-->
-      <update id="update" parameterType="carplate">
+      <update id="update" parameterType="carPlate">
           <![CDATA[
         update t_car_plate set plateName = #{plateName},plateDes = #{plateDes},plateStatus = 'Y' where plateId = #{plateId}
           ]]>
@@ -70,17 +70,43 @@
     </select>
 
     <!--冻结数据-->
-    <update id="inactive" keyProperty="plateId" parameterType="carplate">
+    <update id="inactive" keyProperty="plateId" parameterType="carPlate">
         <![CDATA[
          update t_car_plate set plateStatus = 'N' where plateId = #{plateId}
         ]]>
     </update>
 
     <!--激活数据-->
-    <update id="active" keyProperty="plateId" parameterType="carplate">
+    <update id="active" keyProperty="plateId" parameterType="carPlate">
         <![CDATA[
         update t_car_plate set plateStatus = 'Y' where plateId = #{plateId}
         ]]>
     </update>
+
+    <!--迷糊索搜-->
+    <select id="blurredQuery" resultMap="plateMap">
+        <![CDATA[
+            select * from t_car_plate cp where 1=1
+       ]]>
+        <if test="carPlate.plateName != '' and carPlate.plateName != null">
+            and cp.plateName like '%${carPlate.plateName}%'
+        </if>
+        <if test="carPlate.plateDes !='' and carPlate.plateDes !=null">
+            and cp.plateDes like '%${carPlate.plateDes}%'
+        </if>
+        limit #{pager.beginIndex}, #{pager.pageSize}
+    </select>
+
+    <select id="countByBlurred" resultType="int">
+        <![CDATA[
+        select count(*) from t_car_plate cp where 1=1
+    ]]>
+        <if test="carPlate.plateName != '' and carPlate.plateName != null">
+            and cp.plateName like '%${carPlate.plateName}%'
+        </if>
+        <if test="carPlate.plateDes !='' and carPlate.plateDes !=null">
+            and cp.plateDes like '%${carPlate.plateDes}%'
+        </if>
+    </select>
 
 </mapper>

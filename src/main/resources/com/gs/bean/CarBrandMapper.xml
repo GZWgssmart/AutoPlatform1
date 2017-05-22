@@ -18,7 +18,7 @@
   <!--分页查询所有汽车品牌-->
   <select id="queryByPager" resultMap="carbrandMap" parameterType="com.gs.common.bean.Pager">
     <![CDATA[
-       select * from t_car_brand cb  where cb.brandStatus = 'Y'
+       select * from t_car_brand cb  where 1=1 and cb.brandStatus = 'Y'
      ]]>
     limit #{beginIndex}, #{pageSize}
   </select>

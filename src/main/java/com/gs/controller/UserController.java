@@ -233,20 +233,7 @@ public class UserController {
             }
         }
 
-    /**
-     * 退出登录
-     */
-    @RequestMapping(value="logout",method=RequestMethod.GET)
-    public String logout(HttpSession session) {
-        Subject currentUser = SecurityUtils.getSubject();
-        if(SessionUtil.isLogin(session)) {
-            User user = (User) session.getAttribute("user");
-            user.setUserLoginedTime((Date) session.getAttribute("userLoginedTime"));
-            userService.update(user);
-        }
-        currentUser.logout();
-        return "Frontpage/registered";
-    }
+
 
     /**
      * 验证是否登录
