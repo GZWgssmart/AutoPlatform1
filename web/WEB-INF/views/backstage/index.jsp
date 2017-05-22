@@ -57,46 +57,46 @@
                                </strong></span>
                                 <span class="text-muted text-xs block">${user.role.roleName}<b class="caret"></b></span>
                                 </span>
-                            </a>
-                            <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                                <li><a class="J_menuItem" href="/emp/selfManage">个人资料</a>
-                                    <>
-                                <li><a class="J_menuItem" href="/edit">修改头像</a>
-                                    <>
-                                <li><a class="J_menuItem" href="contacts.html">修改密码</a>
-                                    <>
-                                <li class="divider"><>
-                                <li><a href="/user/logout">安全退出</a>
-                                    <>
-                            </ul>
+                        </a>
+                        <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                            <li><a class="J_menuItem" href="profile.html">个人资料</a>
+                            </li>
+                            <li><a class="J_menuItem" href="/edit">修改头像</a>
+                            </li>
+                            <li><a class="J_menuItem" href="/user/updatePwdPage">修改密码</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li><a href="/user/logout">安全退出</a>
+                            </li>
+                        </ul>
                     </div>
-                    </li>
-                    <%--<li>--%>
-                        <%--<a class="J_menuItem" href="/table/tableIndex">表格和select2</a>--%>
-                    <%--</li>--%>
-                    <%--<li>--%>
-                        <%--<a class="J_menuItem" href="/file/fileIndex">文件上传</a>--%>
-                    <%--</li>--%>
-                    <%--<li>--%>
-                        <%--<a class="J_menuItem" href="/summerNote/summerNote">summernote</a>--%>
-                    <%--</li>--%>
-                    <%--<li>--%>
-                        <%--<a class="J_menuItem" href="/vaildate/index">jqueryVaildate</a>--%>
-                    <%--</li>--%>
-                    <%--<li>--%>
-                        <%--<a class="J_menuItem" href="/error/notFound">404</a>--%>
-                    <%--</li>--%>
-                    <%--<li>--%>
-                        <%--<a class="J_menuItem" href="/error/serverError">500</a>--%>
-                    <%--</li>--%>
-                    <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师,汽车公司学徒,汽车公司销售人员,汽车公司财务人员,汽车公司采购人员,汽车公司库管人员,汽车公司人力资源管理部">
-                        <li>
-                            <a href="#">
-                                <i class="fa fa-home"></i>
-                                <span class="nav-label">基础信息管理</span>
-                                <span class="fa arrow"></span>
-                            </a>
-                            <ul class="nav nav-second-level">
+                </li>
+                <%--<li>--%>
+                <%--<a class="J_menuItem" href="/table/tableIndex">表格和select2</a>--%>
+                <%--</li>--%>
+                <%--<li>--%>
+                <%--<a class="J_menuItem" href="/file/fileIndex">文件上传</a>--%>
+                <%--</li>--%>
+                <%--<li>--%>
+                <%--<a class="J_menuItem" href="/summerNote/summerNote">summernote</a>--%>
+                <%--</li>--%>
+                <%--<li>--%>
+                <%--<a class="J_menuItem" href="/vaildate/index">jqueryVaildate</a>--%>
+                <%--</li>--%>
+                <%--<li>--%>
+                <%--<a class="J_menuItem" href="/error/notFound">404</a>--%>
+                <%--</li>--%>
+                <%--<li>--%>
+                <%--<a class="J_menuItem" href="/error/serverError">500</a>--%>
+                <%--</li>--%>
+                <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师,汽车公司学徒,汽车公司销售人员,汽车公司财务人员,汽车公司采购人员,汽车公司库管人员,汽车公司人力资源管理部">
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-home"></i>
+                            <span class="nav-label">基础信息管理</span>
+                            <span class="fa arrow"></span>
+                        </a>
+                        <ul class="nav nav-second-level">
                             <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员">
                                 <li>
                                     <a class="J_menuItem" href="/basicInfo/companyInfo">公司信息管理</a>

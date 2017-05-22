@@ -284,4 +284,69 @@ public class UserController {
         }
        return ControllerResult.getFailResult("发送短信验证码失败");
     }
+
+    /**
+     * 跳转修改密码页面
+     */
+    @RequestMapping(value="updatePwdPage",method=RequestMethod.GET)
+    public String updatePwdPage() {
+        return "backstage/updatePwd";
+    }
+
+
+    /**
+     * @param oldPwd 旧密码
+     * @param newPwd 新密码
+     * @param conPwd 确认密码
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "updatePwd", method = RequestMethod.POST)
+    public ControllerResult updatePwd(@Param("oldPwd") String oldPwd, @Param("newPwd")
+            String newPwd, @Param("conPwd") String conPwd, HttpSession session, HttpServletRequest request) {
+        User user = (User) session.getAttribute("user");
+        if (user != null && !user.equals("")) {
+          if (oldPwd != null && !oldPwd.equals("")) {
+              if (newPwd != null && !newPwd.equals("")) {
+                  if (conPwd != null && !conPwd.equals("")) {
+                      if (newPwd.equals(conPwd)) {
+                          if (user.getUserPwd().equals(EncryptUtil.md5Encrypt(oldPwd))) {
+                              if (newPwd != null && newPwd.equals(conPwd)) {
+                                  user.setUserPwd(EncryptUtil.md5Encrypt(conPwd));
+                                  userService.updatePwd(user);
+                                  Subject currentUser = SecurityUtils.getSubject();
+                                  if(SessionUtil.isLogin(session)) {
+                                      user.setUserLoginedTime((Date) session.getAttribute("userLoginedTime"));
+                                      userService.update(user);
+                                  }
+                                  currentUser.logout();
+                                  logger.info("用户更新密码成功");
+                                  return ControllerResult.getSuccessResult("修改密码成功");
+                              } else {
+                                  logger.info("两次密码输入不一致");
+                                  return ControllerResult.getFailResult("两次密码输入不一致，请重新输入！");
+                              }
+                          } else {
+                              logger.info("旧密码输入有误！");
+                              return ControllerResult.getFailResult("更新密码失败，您的旧密码输入有误");
+                          }
+                      } else {
+                          return ControllerResult.getFailResult("两次密码输入错误");
+                      }
+                  } else {
+                      return ControllerResult.getFailResult("重复密码不能为空");
+                  }
+              } else {
+                  return ControllerResult.getFailResult("新密码不能为空");
+              }
+          } else {
+              return ControllerResult.getFailResult("旧密码不能为空");
+          }
+        } else {
+            logger.info("用户还未登陆");
+            return ControllerResult.getFailResult("请登录");
+        }
+    }
 }
+
+
