@@ -183,7 +183,7 @@ public class MaterialsController {
                         resultPre = "同意";
                     }
                     taskService.setAssignee(task.getId(), user.getUserId());
-                    return nextTask(proInsId, task.getId(), map, resultPre);
+                    return nextTask(proInsId, task.getId(), map, isOK);
                 } else {
                     return ControllerResult.getFailResult("审批失败,该申请已被用户删除");
                 }
@@ -198,7 +198,7 @@ public class MaterialsController {
         }
     }
 
-    private ControllerResult nextTask(String proInsId, String taskId, Map map, String otherMsg) {
+    private ControllerResult nextTask(String proInsId, String taskId, Map map, Boolean isOK) {
         HistoricProcessInstance hisProInst = historyService.createHistoricProcessInstanceQuery().processInstanceId(proInsId).singleResult();
         Map varMap = taskService.getVariables(taskId);
         String recordId = varMap.get("recordId").toString();
@@ -207,13 +207,18 @@ public class MaterialsController {
         String startUserId = hisProInst.getStartUserId();
         try {
             taskService.complete(taskId, map);
-            if(addMaterialUseAReturnTable(varMap,startUserId)) {
+            if(isOK) {
+                if(addMaterialUseAReturnTable(varMap,startUserId)) {
+                    return ControllerResult.getSuccessResult("审核完成");
+                }
+                return ControllerResult.getFailResult("审核失败");
+            } else {
                 return ControllerResult.getSuccessResult("审核完成");
             }
         } catch(Exception e) {
             e.printStackTrace();
         }
-        return ControllerResult.getSuccessResult("审核失败");
+        return ControllerResult.getFailResult("审核失败");
     }
 
 

@@ -44,8 +44,8 @@ public interface MaterialUseDAO extends BaseDAO<String, MaterialUse>{
     public List<User> companyEmps(@Param("companyId")String companyId);
     public int insertWorkInfo(WorkInfo workInfo);
 
-    public List<WorkView> userWorksByPager(@Param("user")User user,@Param("pager") Pager pager);
-    public List<WorkView> userWorksByPager(@Param("user")User user,@Param("status")String status,@Param("pager") Pager pager);
+    public List<WorkInfo> userWorksByPager(@Param("user")User user,@Param("pager") Pager pager);
+    public List<WorkInfo> userWorksByPager(@Param("user")User user,@Param("status")String status,@Param("pager") Pager pager);
 
     public int countUserWorks(@Param("user")User user);
     public int countUserWorks(@Param("user")User user, @Param("status")String status);

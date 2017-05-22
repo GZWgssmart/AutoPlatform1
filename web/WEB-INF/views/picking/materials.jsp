@@ -11,7 +11,7 @@
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <html>
 <head>
-    <title>物料领取</title>
+    <title>配件领取</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/css/bootstrap.min.css">
@@ -55,6 +55,13 @@
         }
         .select2.select2-container.select2-container--default {
             width: 100%;
+            height: 34px;
+        }
+        .select2-selection.select2-selection--single {
+            height: 34px;
+        }
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+            line-height: 34px;
         }
     </style>
 </head>
@@ -86,16 +93,16 @@
             <table id="materialsTable" style="table-layout: fixed" data-search=true>
                 <thead>
                 <tr >
-                    <th data-width="110" data-field="carplate">
+                    <th data-width="110" data-field="carplate" data-formatter = "formatterPlate">
                         车牌
                     </th>
-                    <th data-width="180" data-hide="all" data-field="carbrand">
+                    <th data-width="180" data-hide="all" data-field="maintainRecord.checkin.brand.brandName">
                         品牌
                     </th>
-                    <th data-width="110" data-field="carmodel">
+                    <th data-width="110" data-field="maintainRecord.checkin.model.modelName">
                         车型
                     </th>
-                    <th data-width="110" data-field="colorName">
+                    <th data-width="110" data-field="maintainRecord.checkin.color.colorName">
                         颜色
                     </th>
                     <th data-width="180"  data-field="workAssignTime" data-formatter=formatterDate >
@@ -132,7 +139,7 @@
             <table id="reviewingTable" style="table-layout: fixed" data-search=true>
                 <thead>
                 <tr >
-                    <th data-field="varsMap.acc.accName"  data-width="100">物料名称</th>
+                    <th data-field="varsMap.acc.accName"  data-width="100">配件名称</th>
                     <th data-field="varsMap.accCount" data-formatter="countFormatter" data-width="100">数量</th>
                     <th data-field="varsMap.acc.accTotal" data-formatter="countFormatter" data-width="100">总数量</th>
                     <th data-field="varsMap.acc.accPrice" data-width="100">单价</th>
@@ -161,7 +168,7 @@
             <table id="historyTable" style="table-layout: fixed" data-search=true>
                 <thead>
                 <tr >
-                    <th data-width="110" data-field="accessories.accName">零件名称</th>
+                    <th data-width="110" data-field="accessories.accName">配件名称</th>
                     <th data-width="110" data-field="record.checkin.carPlate">车牌</th>
                     <th data-width="110" data-field="flag" data-formatter="todoType">操作类型</th>
                     <th data-width="110" data-field="accCount">数量</th>
@@ -196,7 +203,7 @@
             <div class="modal-content">
                 <div class="modal-header" style="margin-right:0;width:95%;">
                     <span class="glyphicon glyphicon-remove closeModal"  data-dismiss="modal" aria-hidden="true"></span>
-                    <h4 class="modal-title" id="myModalLabel">零件明细
+                    <h4 class="modal-title" id="myModalLabel">配件明细
                        <button type="button" class="btn btn-warning"  aria-hidden="true" onclick="showAppend()">追加配件</button>
                     </h4>
                 </div>
@@ -226,7 +233,7 @@
                 <div class="modal-footer" style="text-align: center;">
                     <span class="glyphicon glyphicon-remove closeModal"  onclick = "closeModal('application','materialsForm')"></span>
                     <div class="modal-header" style="overflow:auto;">
-                        <h4>领取/退回 物料</h4>
+                        <h4>领取/退回 配件</h4>
                     </div>
                     <hr>
                     <form role="form"  id="materialsForm" class="form-horizontal">
@@ -244,13 +251,13 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">物料名称：</label>
+                            <label class="col-sm-3 control-label">配件名称：</label>
                             <div class="col-sm-7">
                                 <input type="text" define="materials.accName" name="accessories.accName" class="form-control" style="background-color:#fff;border:none">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">物料数量：</label>
+                            <label class="col-sm-3 control-label">配件数量：</label>
                             <div class="col-sm-7">
                                 <input type="number"  define="materials.accCountView" disabled class="form-control" style="background-color:#fff;border:none">
                             </div>

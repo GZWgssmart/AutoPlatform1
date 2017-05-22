@@ -59,7 +59,7 @@
                     <th data-field="varsMap.acc.accName">物料名称</th>
                     <th data-field="varsMap.accCount"  data-formatter="accCountFormatter">数量</th>
                     <th data-field="varsMap.acc.accTotal">总数量</th>
-                    <th data-field="varsMap.acc.accUnit">计量单位</th>
+                    <%--<th data-field="varsMap.acc.accUnit">计量单位</th>--%>
                     <th data-field="varsMap.acc.accPrice">单价</th>
                     <th data-field="varsMap.reqMsg" data-formatter = "reqMsgFormatter" >申请原因</th>
                     <th data-field="processInstance.startTime" data-formatter="dateTimeFormatter">时间
