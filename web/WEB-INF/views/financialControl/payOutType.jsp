@@ -29,7 +29,7 @@
                 <th data-field="createTime" data-formatter="formatterDate">
                     类型创建时间
                 </th>
-                <th data-formatter="statusFormatter">支出类型状态</th>
+                <th data-formatter="statusFormatter">记录状态</th>
                 <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司财务人员">
                     <th data-formatter="openStatusFormatter">操作</th>
                 </shiro:hasAnyRoles>
@@ -49,12 +49,12 @@
             </shiro:hasAnyRoles>
             <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员">
                 <button id="searchDisable" type="button" class="btn btn-danger" onclick="searchDisableStatus();">
-                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询禁用支出类型
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>禁用支出类型
                 </button>
             </shiro:hasAnyRoles>
             <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员">
                 <button id="searchRapid" type="button" class="btn btn-success" onclick="searchRapidStatus();">
-                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询启用支出类型
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>可用支出类型
                 </button>
             </shiro:hasAnyRoles>
 
@@ -77,7 +77,7 @@
                         </div>
                         <br/>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">名称：</label>
+                            <label class="col-sm-3 control-label">支出类型名称：</label>
                             <div class="col-sm-7">
                                 <input type="text" id="outTypeName" name="outTypeName" placeholder="请输入支出类型名称"
                                        class="form-control">
@@ -117,7 +117,7 @@
                         </div>
                         <br/>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">名称：</label>
+                            <label class="col-sm-3 control-label">支出类型名称：</label>
                             <div class="col-sm-7">
                                 <input type="text" id="outUpdateTypeName" define="outGoingType.outTypeName"
                                        name="outTypeName" class="form-control">

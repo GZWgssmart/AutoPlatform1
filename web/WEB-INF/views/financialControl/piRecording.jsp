@@ -54,12 +54,12 @@
         <div id="toolbar" class="btn-group">
             <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司财务人员">
                 <button id="o_add" type="button" class="btn btn-default" onclick="outAddWin();">
-                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>其它支出记录添加
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>添加其它支出记录
                 </button>
             </shiro:hasAnyRoles>
             <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司财务人员">
                 <button id="i_add" type="button" class="btn btn-default" onclick="inAddWin();">
-                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>其它收入记录添加
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>添加其它收入记录
                 </button>
             </shiro:hasAnyRoles>
 <%--            <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司财务人员">
@@ -69,12 +69,12 @@
             </shiro:hasAnyRoles>--%>
             <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员">
                 <button id="searchDisable" type="button" class="btn btn-danger" onclick="searchDisableStatus();">
-                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询禁用收支记录
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>禁用收支记录
                 </button>
             </shiro:hasAnyRoles>
             <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员">
                 <button id="searchRapid" type="button" class="btn btn-success" onclick="searchRapidStatus();">
-                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询启用收支记录
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>可用收支记录
                 </button>
             </shiro:hasAnyRoles>
             <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员">
@@ -97,7 +97,7 @@
                 <!-- /input-group -->
             </shiro:hasAnyRoles>
             <button id="searchRapid" type="button" class="btn btn-success" onclick="returnButton();">
-                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>还原
+                <span aria-hidden="true"></span>还原
             </button>
         </div>
     </div>
@@ -113,7 +113,7 @@
                     <span class="glyphicon glyphicon-remove closeModal"  onclick="closeModals('addOutWin', 'addOutForm')"></span>
                 <form class="form-horizontal" role="form" id="addOutForm" method="post">
                     <div class="modal-header" style="overflow:auto;">
-                        <h4>其它支出添加的信息</h4>
+                        <h4>添加其它支出记录的信息</h4>
                     </div>
                     <br/>
                     <div class="form-group">
@@ -121,13 +121,13 @@
                         <div class="col-sm-7">
                             <input type="hidden" id="outTypeId" readonly="true" name="outTypeId">
                             <input type="text" onclick="openCheckOutType();" readonly="true" id="outTypeName"
-                                   name="outTypeName" placeholder="请点击选择支出类型" class="form-control">
+                                   name="outTypeName" placeholder="请选择支出类型" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">支出金额：</label>
                         <div class="col-sm-7">
-                            <input type="text" name="inOutMoney" placeholder="请输入支出金额" class="form-control">
+                            <input type="number" name="inOutMoney" placeholder="请输入支出金额" class="form-control">
                         </div>
                     </div>
                   <%--  <div class="form-group">
@@ -165,7 +165,7 @@
                                data-height="550">
                             <thead>
                             <tr>
-                                <th data-checkbox="true"></th>
+                                <th data-radio="true"></th>
                                 <th data-field="outTypeName">
                                     支出类型
                                 </th>
@@ -178,7 +178,7 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" onclick="closeOutTypeWin()">关闭
                             </button>
-                            <input type="button" class="btn btn-primary" onclick="checkOutType()" value="确定">
+                            <input type="button" class="btn btn-success" onclick="checkOutType()" value="确定">
                             </input>
                         </div>
                     </div>
@@ -237,7 +237,7 @@
                                data-height="550">
                             <thead>
                             <tr>
-                                <th data-checkbox="true"></th>
+                                <th data-radio="true"></th>
                                 <th data-field="inTypeName">
                                     收入类型
                                 </th>
@@ -250,7 +250,7 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" onclick="inCloseInTypeWin()">关闭
                             </button>
-                            <input type="button" class="btn btn-primary" onclick="inCheckInType()" value="确定">
+                            <input type="button" class="btn btn-success" onclick="inCheckInType()" value="确定">
                             </input>
                         </div>
                     </div>
@@ -310,7 +310,7 @@
                 <form class="form-horizontal" id="addInForm" method="post">
                     <input type="reset" name="reset" style="display: none;"/>
                     <div class="modal-header" style="overflow:auto;">
-                        <h4>其它收入添加的信息</h4>
+                        <h4>添加其它收入记录的信息</h4>
                     </div>
                     <br/>
                     <div class="form-group">
@@ -318,13 +318,13 @@
                         <div class="col-sm-7">
                             <input type="hidden" id="inTypeId" readonly="true" name="inTypeId">
                             <input type="text" onclick="inOpenCheckInType();" readonly="true" id="inTypeName"
-                                   name="inTypeName" placeholder="请点击选择收入类型" class="form-control">
+                                   name="inTypeName" placeholder="请选择收入类型" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">收支金额：</label>
+                        <label class="col-sm-3 control-label">收入金额：</label>
                         <div class="col-sm-7">
-                            <input type="text" name="inOutMoney" placeholder="请输入收支金额" class="form-control">
+                            <input type="number" name="inOutMoney" placeholder="请输入收入金额" class="form-control">
                         </div>
                     </div>
                    <%-- <div class="form-group">
@@ -365,7 +365,7 @@
                                data-height="550">
                             <thead>
                             <tr>
-                                <th data-checkbox="true"></th>
+                                <th data-radio="true"></th>
                                 <th data-field="outTypeName">
                                     收支类型
                                 </th>
@@ -378,7 +378,7 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" onclick="updateCloseOutTypeWin()">关闭
                             </button>
-                            <input type="button" class="btn btn-primary" onclick="updateCheckOutType()" value="确定">
+                            <input type="button" class="btn btn-success" onclick="updateCheckOutType()" value="确定">
                             </input>
                         </div>
                     </div>
@@ -438,7 +438,7 @@
                                data-height="550">
                             <thead>
                             <tr>
-                                <th data-checkbox="true"></th>
+                                <th data-radio="true"></th>
                                 <th data-field="inTypeName">
                                     收入类型
                                 </th>
@@ -451,7 +451,7 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" onclick="updateInCloseInTypeWin()">关闭
                             </button>
-                            <input type="button" class="btn btn-primary" onclick="updateInCheckInType()" value="确定">
+                            <input type="button" class="btn btn-success" onclick="updateInCheckInType()" value="确定">
                             </input>
                         </div>
                     </div>

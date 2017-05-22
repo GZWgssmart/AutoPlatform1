@@ -40,7 +40,7 @@ $(function () {
 function statusFormatter(index, row) {
     /*处理数据*/
     if(row.inTypeStatus == 'Y') {
-        return "&nbsp;&nbsp;激活";
+        return "&nbsp;&nbsp;可用";
     } else {
         return "&nbsp;&nbsp;禁用";
     }
@@ -149,7 +149,10 @@ function showEdit(){
                 swal({
                     title:"",
                     text:"请先选择要修改的收入类型",
-                    type:"warning"})
+                    confirmButtonColor: "#DD6B55", // 提示按钮的颜色
+                    confirmButtonText: "确定", // 提示按钮上的文本
+                    type: "warning"
+                })
             }
         }else if(data.result == 'notLogin'){
             swal({title:"",

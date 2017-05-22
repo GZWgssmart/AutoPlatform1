@@ -37,7 +37,7 @@ $(function () {
 function statusFormatter(index, row) {
     /*处理数据*/
     if (row.outTypeStatus == 'Y') {
-        return "&nbsp;&nbsp;激活";
+        return "&nbsp;&nbsp;可用";
     } else {
         return "&nbsp;&nbsp;禁用";
     }
@@ -144,8 +144,10 @@ function showEdit() {
                 validator("editForm");
             } else {
                 swal({
-                    title: "",
+                    title:"",
                     text: "请先选择要修改的支出类型",
+                    confirmButtonColor: "#DD6B55", // 提示按钮的颜色
+                    confirmButtonText: "确定", // 提示按钮上的文本
                     type: "warning"
                 })
             }

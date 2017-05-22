@@ -72,7 +72,7 @@ function ioTypeFormatter(value, row, index) {
 function statusFormatter(value) {
     /*处理数据*/
     if (value == 'Y') {
-        return "&nbsp;&nbsp;激活";
+        return "&nbsp;&nbsp;可用";
     } else {
         return "&nbsp;&nbsp;禁用";
     }
@@ -239,7 +239,10 @@ function showEdit(){
                 swal({
                     title:"",
                     text:"请先选择要修改的收支记录",
-                    type:"warning"})
+                    confirmButtonColor: "#DD6B55", // 提示按钮的颜色
+                    confirmButtonText: "确定", // 提示按钮上的文本
+                    type: "warning"
+                })
             }
         }else if(data.result == 'notLogin'){
             swal({title:"",
@@ -354,7 +357,13 @@ function closeOutTypeWin() {
 function checkOutType () {
     var selectRow = $("#outTable").bootstrapTable('getSelections');
     if (selectRow.length != 1) {
-        swal('选择失败', "只能选择一条数据", "error");
+        swal({
+            title:"",
+            text:"请先选择支出类型",
+            confirmButtonColor: "#DD6B55", // 提示按钮的颜色
+            confirmButtonText: "确定", // 提示按钮上的文本
+            type: "warning"
+        })
         return false;
     } else {
         $("#outWin").modal('hide');
@@ -385,7 +394,13 @@ function closePersonnelWin() {
 function checkPersonnel () {
     var selectRow = $("#appTable").bootstrapTable('getSelections');
     if (selectRow.length != 1) {
-        swal('选择失败', "只能选择一条数据", "error");
+        swal({
+            title:"",
+            text:"请先选择收入类型",
+            confirmButtonColor: "#DD6B55", // 提示按钮的颜色
+            confirmButtonText: "确定", // 提示按钮上的文本
+            type: "warning"
+        })
         return false;
     } else {
         $("#personnelWin").modal('hide');
@@ -419,7 +434,13 @@ function inCloseInTypeWin() {
 function inCheckInType () {
     var selectRow = $("#inTable").bootstrapTable('getSelections');
     if (selectRow.length != 1) {
-        swal('选择失败', "只能选择一条数据", "error");
+        swal({
+            title:"",
+            text:"请先选择收入类型",
+            confirmButtonColor: "#DD6B55", // 提示按钮的颜色
+            confirmButtonText: "确定", // 提示按钮上的文本
+            type: "warning"
+        })
         return false;
     } else {
         $("#inWin").modal('hide');

@@ -51,7 +51,13 @@ function exceCheckOutType () {
         if(data.result == 'success'){
             var selectRow = $("#exceTable").bootstrapTable('getSelections');
             if (selectRow.length != 1) {
-                swal('选择失败', "只能选择一条数据", "error");
+                swal({
+                    title:"",
+                    text:"请先选择支出类型",
+                    confirmButtonColor: "#DD6B55", // 提示按钮的颜色
+                    confirmButtonText: "确定", // 提示按钮上的文本
+                    type: "warning"
+                })
                 return false;
             } else {
                 $("#exceWin").modal('hide');
@@ -215,8 +221,10 @@ function showEdit() {
 
             } else {
                 swal({
-                    title: "",
+                    title:"",
                     text: "请先选择要修改的工资信息",
+                    confirmButtonColor: "#DD6B55", // 提示按钮的颜色
+                    confirmButtonText: "确定", // 提示按钮上的文本
                     type: "warning"
                 })
             }
@@ -307,7 +315,13 @@ function closePersonnelWin() {
 function checkPersonnel() {
     var selectRow = $("#appTable").bootstrapTable('getSelections');
     if (selectRow.length != 1) {
-        swal('选择失败', "只能选择一条数据", "error");
+        swal({
+            title:"",
+            text:"请先选择员工",
+            confirmButtonColor: "#DD6B55", // 提示按钮的颜色
+            confirmButtonText: "确定", // 提示按钮上的文本
+            type: "warning"
+        })
         return false;
     } else {
         var user = selectRow[0];
@@ -456,10 +470,10 @@ function validator(formId) {
         },
         fields: {
             userName: {
-                message: '人员不能为空',
+                message: '员工不能为空',
                 validators: {
                     notEmpty: {
-                        message: '请点击选择人员',
+                        message: '请选择员工',
                     }
 
                 }
@@ -501,6 +515,7 @@ function validator(formId) {
                     initTableNotTollbar("outTable", "/outGoingType/queryByPager");
                     $("#addWin").modal('hide');
                 } else {
+
                     $("#inWin").modal('show');
                     initTableNotTollbar("inTable", "/incomingType/queryByPager");
                     $("#addWin").modal('hide');
@@ -527,7 +542,14 @@ function closeOutTypeWin() {
 function checkOutType () {
     var selectRow = $("#outTable").bootstrapTable('getSelections');
     if (selectRow.length != 1) {
-        swal('选择失败', "只能选择一条数据", "error");
+
+        swal({
+            title:"",
+            text:"请先选择支出类型",
+            confirmButtonColor: "#DD6B55", // 提示按钮的颜色
+            confirmButtonText: "确定", // 提示按钮上的文本
+            type: "warning"
+        })
         return false;
     } else {
         $("#outWin").modal('hide');
@@ -545,7 +567,13 @@ function checkOutType () {
 function inCheckInType () {
     var selectRow = $("#inTable").bootstrapTable('getSelections');
     if (selectRow.length != 1) {
-        swal('选择失败', "只能选择一条数据", "error");
+        swal({
+            title:"",
+            text:"请先选择收入类型",
+            confirmButtonColor: "#DD6B55", // 提示按钮的颜色
+            confirmButtonText: "确定", // 提示按钮上的文本
+            type: "warning"
+        })
         return false;
     } else {
         $("#inWin").modal('hide');

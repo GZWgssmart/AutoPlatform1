@@ -75,7 +75,7 @@
                     </div>
                 </div>
                 <button id="yearBtnId" type="button" onclick="selectYears()" class="btn btn-default" >
-                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>查询
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询
                 </button>
                 <div class="clearfix"></div>
             </div>
@@ -108,7 +108,7 @@
                     </div>
                 </div>
                 <button id="monthBtnId" type="button" onclick="selectMonth()" class="btn btn-default" >
-                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>查询
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询
                 </button>
                 <div class="clearfix"></div>
             </div>
@@ -141,7 +141,7 @@
                     </div>
                 </div>
                 <button id="dayBtnId" type="button" onclick="selectDay()" class="btn btn-default" >
-                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>查询
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询
                 </button>
                 <div class="clearfix"></div>
             </div>
@@ -174,7 +174,7 @@
                     </div>
                 </div>
                 <button id="quarterBtnId" type="button" onclick="selectQuarter()" class="btn btn-default" >
-                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>查询
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询
                 </button>
                 <div class="clearfix"></div>
             </div>
@@ -207,7 +207,7 @@
                     </div>
                 </div>
                 <button id="weekBtnId" type="button" onclick="selectWeek()" class="btn btn-default" >
-                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>查询
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询
                 </button>
                 <div class="clearfix"></div>
             </div>

@@ -182,7 +182,7 @@ public class SalaryController {
                         objs[0] = salary1.getSalaryId();
                         objs[1] = salary1.getUserId();
                         objs[2] = salary1.getUser().getUserName();
-                        if (salary.getPrizeSalary() != null) {
+                        if (salary1.getPrizeSalary() != null) {
                             objs[3] = salary1.getPrizeSalary();
                         } else {
                             objs[3] = 0;

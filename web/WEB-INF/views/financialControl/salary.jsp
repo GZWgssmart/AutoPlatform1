@@ -112,24 +112,25 @@
                           onclick="closeModals('import','fileForm')"></span>
                     <form id="fileForm">
                         <input type="hidden" id="outId" readonly="true" name="inoutId">
-                    <div class="container kv-main">
-                        <div class="ibox-title">
-                            <div class="input-group">
-                                <div class="input-group-btn">
+                        <div class="container kv-main">
+                            <div class="ibox-title">
+                                <div class="input-group">
+                                    <div class="input-group-btn">
+                                    </div>
+                                    <input id="txt_file" name="txt_file" type="file" class="form-control" multiple
+                                           class="file-loading"
+                                           placeholder="请选择或输入一个你想上传的相册类型,默认当天日期为类型!"/>
                                 </div>
-                                <input id="txt_file" name="txt_file" type="file" class="form-control" multiple class="file-loading"
-                                       placeholder="请选择或输入一个你想上传的相册类型,默认当天日期为类型!"/>
                             </div>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <span id="fileError"></span>
-                        <button type="button" class="btn btn-default" onclick="fileCloseModals()">关闭
-                        </button>
-                        <button type="button" id="fileButton" onclick="fileSubmit()" class="btn btn-success btn-sm">
-                          添加
-                        </button>
-                    </div>
+                        <div class="modal-footer">
+                            <span id="fileError"></span>
+                            <button type="button" class="btn btn-default" onclick="fileCloseModals()">关闭
+                            </button>
+                            <button type="button" id="fileButton" onclick="fileSubmit()" class="btn btn-success btn-sm">
+                                添加
+                            </button>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -152,45 +153,51 @@
                     <form class="form-horizontal" role="form" id="addForm">
                         <input type="hidden" id="inOutId" readonly="true" name="inoutId">
                         <div class="modal-header" style="overflow:auto;">
-                            <p>添加员工工资录入的信息</p>
+                            <h4>添加员工工资的信息</h4>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label" for="userName">员工姓名：</label>
                             <div class="col-sm-7">
-                                <input type="hidden" id="userSalary" name="userSalary">
+                                <input type="hidden" id="userSalary" readonly="true" name="userSalary">
                                 <input type="hidden" id="userId" name="userId">
-                                <input  onclick="checkAppointment();" type="text" name="userName"
-                                       id="userName" placeholder="请点击选择员工" class="form-control">
+                                <input readonly="true" onclick="checkAppointment();"  type="text" name="userName"
+                                       id="userName" placeholder="请选择员工" class="form-control">
                             </div>
 
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">罚款：</label>
                             <div class="col-sm-7">
-                                <input type="number" id="minusSalary" name="minusSalay" placeholder="请输入罚款" class="form-control">
+                                <input type="number" id="minusSalary" name="minusSalay" placeholder="请输入罚款"
+                                       class="form-control">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">奖金：</label>
                             <div class="col-sm-7">
-                                <input type="number" id="prizeSalary" name="prizeSalary" placeholder="请输入奖金" class="form-control">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">工资描述：</label>
-                            <div class="col-sm-7">
-                                <input type="text" name="salaryDes" placeholder="请输入工资发放描述" class="form-control">
+                                <input type="number" id="prizeSalary" name="prizeSalary" placeholder="请输入奖金"
+                                       class="form-control">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label">工资发放时间：</label>
                             <div class="col-sm-7">
-                                <input  readonly="true" type="text" name="salaryTime"
-                                       onclick="getDate('addDateTimePicker')" placeholder="请点击选择工资发放时间" id="addDateTimePicker"
+                                <input readonly="true" type="text" name="salaryTime"
+                                       onclick="getDate('addDateTimePicker')" placeholder="请选择工资发放时间"
+                                       id="addDateTimePicker"
                                        class="form-control datetimepicker">
                             </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">工资发放描述：</label>
+                            <div class="col-sm-7">
+                                  <textarea type="text" name="salaryDes" placeholder="请输入工资发放描述" style="height:100px;"
+                                            class="form-control"></textarea>
+                            </div>
+
+
                         </div>
 
 
@@ -218,7 +225,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 b-r">
-                        <h3 class="m-t-none m-b">选择人员</h3>
+                        <h3 class="m-t-none m-b">选择员工</h3>
                         <table class="table table-hover" id="appTable"
                                data-height="550">
                             <thead>
@@ -234,7 +241,7 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" onclick="closePersonnelWin()">关闭
                             </button>
-                            <input type="button" class="btn btn-primary" onclick="checkPersonnel()" value="确定">
+                            <input type="button" class="btn btn-success" onclick="checkPersonnel()" value="确定">
                             </input>
                         </div>
                     </div>
@@ -257,7 +264,7 @@
                                data-height="550">
                             <thead>
                             <tr>
-                                <th data-checkbox="true"></th>
+                                <th data-radio="true"></th>
                                 <th data-field="outTypeName">
                                     支出类型
                                 </th>
@@ -270,7 +277,7 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" onclick="closeOutTypeWin()">关闭
                             </button>
-                            <input type="button" class="btn btn-primary" onclick="checkOutType()" value="确定">
+                            <input type="button" class="btn btn-success" onclick="checkOutType()" value="确定">
                             </input>
                         </div>
                     </div>
@@ -293,7 +300,7 @@
                                data-height="550">
                             <thead>
                             <tr>
-                                <th data-checkbox="true"></th>
+                                <th data-radio="true"></th>
                                 <th data-field="outTypeName">
                                     支出类型
                                 </th>
@@ -306,7 +313,7 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" onclick="exceCloseOutTypeWin()">关闭
                             </button>
-                            <input type="button" class="btn btn-primary" onclick="exceCheckOutType()" value="确定">
+                            <input type="button" class="btn btn-success" onclick="exceCheckOutType()" value="确定">
                             </input>
                         </div>
                     </div>
@@ -318,9 +325,8 @@
 </div>
 
 
-
 <%--收入管理弹窗显示--%>
-<div  id="inWin" class="modal fade" aria-hidden="true" style="overflow:scroll" data-backdrop="static" keyboard:false>
+<div id="inWin" class="modal fade" aria-hidden="true" style="overflow:scroll" data-backdrop="static" keyboard:false>
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
@@ -331,7 +337,7 @@
                                data-height="550">
                             <thead>
                             <tr>
-                                <th data-checkbox="true"></th>
+                                <th data-radio="true"></th>
                                 <th data-field="inTypeName">
                                     收入类型
                                 </th>
@@ -344,7 +350,7 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" onclick="inCloseInTypeWin()">关闭
                             </button>
-                            <input type="button" class="btn btn-primary" onclick="inCheckInType()" value="确定">
+                            <input type="button" class="btn btn-success" onclick="inCheckInType()" value="确定">
                             </input>
                         </div>
                     </div>
@@ -354,7 +360,6 @@
         </div>
     </div>
 </div>
-
 
 
 <!-- 修改弹窗 -->
@@ -370,13 +375,13 @@
                     <form class="form-horizontal" role="form" id="editForm" method="post">
                         <input type="hidden" define="salary.salaryId" name="salaryId">
                         <div class="modal-header" style="overflow:auto;">
-                            <p>修改员工工资录入的信息</p>
+                            <h4>修改员工工资的信息</h4>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label" for="userName">员工姓名：</label>
                             <div class="col-sm-7">
                                 <input type="hidden" define="salary.userId" name="userId">
-                                <input define="salary.user.userName" type="text" readonly="true" class="form-control">
+                                <input define="salary.user.userName" readonly="true" type="text" readonly="true" class="form-control">
                             </div>
                         </div>
                         <div class="form-group">
@@ -388,16 +393,11 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">奖金：</label>
                             <div class="col-sm-7">
-                                <input type="number" define="salary.prizeSalary" name="prizeSalary" class="form-control">
+                                <input type="number" define="salary.prizeSalary" name="prizeSalary"
+                                       class="form-control">
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">工资描述：</label>
-                            <div class="col-sm-7">
-                                <input type="text" define="salary.salaryDes" name="salaryDes" class="form-control">
-                            </div>
-                        </div>
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label">工资发放时间：</label>
@@ -406,6 +406,14 @@
                                        onclick="getDate('editDateTimePicker')" id="editDateTimePicker"
                                        class="form-control">
                             </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">工资发放描述：</label>
+                            <div class="col-sm-7">
+                                  <textarea type="text" define="salary.salaryDes" name="salaryDes" style="height:100px;"
+                                            class="form-control"></textarea>
+                            </div>
+
                         </div>
                         <div class="modal-footer">
                             <span id="editError"></span>

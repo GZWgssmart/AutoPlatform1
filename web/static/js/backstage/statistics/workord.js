@@ -163,7 +163,6 @@ $.ajax({	//使用JQuery内置的Ajax方法
         }
         else {
             //返回的数据为空时显示提示信息
-            alert("图表请求数据为空,没有当前时间段的数据");
             myChart.hideLoading();
         }
 
