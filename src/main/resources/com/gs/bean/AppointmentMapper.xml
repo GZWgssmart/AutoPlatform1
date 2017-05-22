@@ -299,6 +299,6 @@
         WHERE ap.companyId = #{companyId}
     ]]>
     order by ap.appCreatedTime Desc
-    limit 1, 5
+    limit 0, 5
   </select>
 </mapper>

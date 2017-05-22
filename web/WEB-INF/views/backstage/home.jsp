@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="/static/css/bootstrap.min.css">
     <link href="/static/css/animate.min.css" rel="stylesheet">
     <style>
-
     </style>
 </head>
 <%@include file="contextmenu.jsp" %>
@@ -21,7 +20,7 @@
                         <div class="tab-content">
                             <div id="tab-1" class="tab-pane active">
                                 <div class="full-height-scroll">
-                                    <h3>公司员工</h3>
+                                    <h4>公司员工</h4>
                                     <div class="table-responsive">
                                         <c:choose>
                                             <c:when test="${requestScope.userinfo!=null}">
@@ -65,6 +64,64 @@
                                                     </tbody>
                                                 </table>
                                             </c:when>
+                                            <c:when test="${requestScope.userinfo==null}">
+                                                暂无数据
+                                            </c:when>
+                                        </c:choose>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr/>
+                <div class="ibox-content">
+                    <div class="clients-list">
+                        <div class="tab-content">
+                            <div id="tab-2" class="tab-pane active">
+                                <div class="full-height-scroll">
+                                    <h4>预约记录</h4>
+                                    <div class="table-responsive">
+                                        <c:choose>
+                                            <c:when test="${requestScope.appinfo!=null}">
+                                                <table class="table table-striped table-hover">
+                                                    <tbody>
+                                                    <tr>
+                                                        <td class="client-avatar">车主</td>
+                                                        <i class="fa fa-envelope"></i>
+                                                        <td class="client-avatar">车主电话</td>
+                                                        <i class="fa fa-envelope"></i>
+                                                        <i class="fa fa-envelope"></i>
+                                                        <td>维修/保养</td>
+                                                        <i class="fa fa-envelope"></i>
+                                                        <td>预约时间</td>
+                                                        <i class="fa fa-envelope"></i>
+                                                        <td class="client-status"><span
+                                                                class="label label-primary">是否已经验证</span>
+                                                        </td>
+                                                    </tr>
+                                                    <c:forEach items="${requestScope.appinfo}" var="app">
+                                                        <tr>
+                                                            <td class="client-avatar">
+                                                                    ${app.userName}
+                                                            </td>
+                                                            <td>
+                                                                <a data-toggle="tab" href="#contact-1"
+                                                                   class="client-link">
+                                                                        ${app.userPhone}
+                                                                </a>
+                                                            </td>
+                                                            <td class="client-avatar">${app.maintainOrFix}</td>
+                                                            <td class="client-avatar">${app.appCreatedTime}</td>
+                                                            <td class="client-status">
+                                                                <span class="label label-primary">已验证</span>
+                                                            </td>
+                                                            <br/>
+                                                        </tr>
+                                                    </c:forEach>
+                                                    </tbody>
+                                                </table>
+                                            </c:when>
                                             <c:otherwise>
                                                 暂无数据
                                             </c:otherwise>
@@ -74,110 +131,167 @@
                             </div>
                         </div>
                     </div>
-                    <hr/>
-                    <div class="ibox-content">
-                        <div class="clients-list">
-                            <div class="tab-content">
-                                <div id="tab-2" class="tab-pane active">
-                                    <div class="full-height-scroll">
-                                        <h3>预约记录</h3>
-                                        <div class="table-responsive">
-                                            <c:choose>
-                                                <c:when test="${requestScope.appinfo!=null}">
-                                                    <table class="table table-striped table-hover">
-                                                        <tbody>
+                </div>
+                <hr/>
+                <div class="ibox-content">
+                    <div class="clients-list">
+                        <div class="tab-content">
+                            <div id="tab-4" class="tab-pane active">
+                                <div class="full-height-scroll">
+                                    <h4>已完成的维修保养记录</h4>
+                                    <div class="table-responsive">
+                                        <c:choose>
+                                            <c:when test="${requestScope.maininfo!=null}">
+                                                <table class="table table-striped table-hover">
+                                                    <tbody>
+                                                    <tr>
+                                                        <td class="client-avatar">维修保养项目名称</td>
+                                                        <i class="fa fa-envelope"></i>
+                                                        <td class="client-avatar">项目所需费用</td>
+                                                        <i class="fa fa-envelope"></i>
+                                                        <td>维修/保养</td>
+                                                        <i class="fa fa-envelope"></i>
+                                                        <td>维修时间</td>
+                                                        <i class="fa fa-envelope"></i>
+                                                        <td class="client-status"><span
+                                                                class="label label-primary">是否已经验证</span>
+                                                        </td>
+                                                    </tr>
+                                                    <c:forEach items="${requestScope.maininfo}" var="main">
                                                         <tr>
-                                                            <td class="client-avatar">车主</td>
-                                                            <i class="fa fa-envelope"></i>
-                                                            <td class="client-avatar">车主电话</td>
-                                                            <i class="fa fa-envelope"></i>
-                                                            <i class="fa fa-envelope"></i>
-                                                            <td>维修/保养</td>
-                                                            <i class="fa fa-envelope"></i>
-                                                            <td>预约时间</td>
-                                                            <i class="fa fa-envelope"></i>
-                                                            <td class="client-status"><span
-                                                                    class="label label-primary">是否已经验证</span>
+                                                            <td class="client-avatar">
+                                                                    ${main.maintainName}
                                                             </td>
+                                                            <td>
+                                                                <a data-toggle="tab" href="#contact-1"
+                                                                   class="client-link">
+                                                                        ${main.maintainMoney}
+                                                                </a>
+                                                            </td>
+                                                            <td class="client-avatar">${main.maintainOrFix}</td>
+                                                            <td class="client-avatar">${main.maintainHour}</td>
+                                                            <td class="client-status">
+                                                                <span class="label label-primary">已验证</span>
+                                                            </td>
+                                                            <br/>
                                                         </tr>
-                                                        <c:forEach items="${requestScope.appinfo}" var="app">
-                                                            <tr>
-                                                                <td class="client-avatar">
-                                                                        ${app.userName}
-                                                                </td>
-                                                                <td>
-                                                                    <a data-toggle="tab" href="#contact-1"
-                                                                       class="client-link">
-                                                                            ${app.userPhone}
-                                                                    </a>
-                                                                </td>
-                                                                <td class="client-avatar">${app.maintainOrFix}</td>
-                                                                <td class="client-avatar">${app.appCreatedTime}</td>
-                                                                <td class="client-status">
-                                                                    <span class="label label-primary">已验证</span>
-                                                                </td>
-                                                                <br/>
-                                                            </tr>
-                                                        </c:forEach>
-                                                        </tbody>
-                                                    </table>
-                                                </c:when>
-                                                <c:otherwise>
-                                                    暂无数据
-                                                </c:otherwise>
-                                            </c:choose>
-                                        </div>
+                                                    </c:forEach>
+                                                    </tbody>
+                                                </table>
+                                            </c:when>
+                                            <c:otherwise>
+                                                暂无数据
+                                            </c:otherwise>
+                                        </c:choose>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <hr/>
-                        <div class="ibox-content">
-                            <div class="clients-list">
-                                <div class="tab-content">
-                                    <div id="tab-4" class="tab-pane active">
-                                        <div class="full-height-scroll">
-                                            <h3>已完成的维修保养记录</h3>
-                                            <div class="table-responsive">
-                                                <c:choose>
-                                                    <c:when test="${requestScope.maininfo!=null}">
-                                                        <table class="table table-striped table-hover">
-                                                            <tbody>
-                                                            <tr>
-                                                                <td class="client-avatar">维修保养项目名称</td>
-                                                                <i class="fa fa-envelope"></i>
-                                                                <td class="client-avatar">项目所需费用</td>
-                                                                <i class="fa fa-envelope"></i>
-                                                                <td>维修/保养</td>
-                                                                <i class="fa fa-envelope"></i>
-                                                                <td>维修时间</td>
-                                                                <i class="fa fa-envelope"></i>
-                                                            </tr>
-                                                            <c:forEach items="${requestScope.maininfo}" var="main">
-                                                                <tr>
-                                                                    <td class="client-avatar">
-                                                                            ${main.maintainName}
-                                                                    </td>
-                                                                    <td>
-                                                                        <a data-toggle="tab" href="#contact-1"
-                                                                           class="client-link">
-                                                                                ${main.maintainMoney}
-                                                                        </a>
-                                                                    </td>
-                                                                    <td class="client-avatar">${main.maintainOrFix}</td>
-                                                                    <td class="client-avatar">${main.maintainHour}</td>
-                                                                    <br/>
-                                                                </tr>
-                                                            </c:forEach>
-                                                            </tbody>
-                                                        </table>
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        暂无数据
-                                                    </c:otherwise>
-                                                </c:choose>
-                                            </div>
-                                        </div>
+                    </div>
+                </div>
+                <hr/>
+                <div class="ibox-content">
+                    <div class="clients-list">
+                        <div class="tab-content">
+                            <div id="tab-5" class="tab-pane active">
+                                <div class="full-height-scroll">
+                                    <h4>支出记录</h4>
+                                    <div class="table-responsive">
+                                        <c:choose>
+                                            <c:when test="${requestScope.outgoInfo!=null}">
+                                                <table class="table table-striped table-hover">
+                                                    <tbody>
+                                                    <tr>
+                                                        <td class="client-avatar">所属用户</td>
+                                                        <i class="fa fa-envelope"></i>
+                                                        <td class="client-avatar">支出类型</td>
+                                                        <i class="fa fa-envelope"></i>
+                                                        <i class="fa fa-envelope"></i>
+                                                        <td>创建时间</td>
+                                                        <i class="fa fa-envelope"></i>
+                                                        <td class="client-status"><span
+                                                                class="label label-primary">是否已经验证</span>
+                                                        </td>
+                                                    </tr>
+                                                    <c:forEach items="${requestScope.outgoInfo}" var="out">
+                                                        <tr>
+                                                            <td class="client-avatar">
+                                                                    ${out.user.userName}
+                                                            </td>
+                                                            <td>
+                                                                <a data-toggle="tab" href="#contact-1"
+                                                                   class="client-link">
+                                                                        ${out.outgoingType.outTypeName}
+                                                                </a>
+                                                            </td>
+                                                            <td class="client-avatar">${out.inOutCreatedTime}</td>
+                                                            <td class="client-status">
+                                                                <span class="label label-primary">已验证</span>
+                                                            </td>
+                                                            <br/>
+                                                        </tr>
+                                                    </c:forEach>
+                                                    </tbody>
+                                                </table>
+                                            </c:when>
+                                            <c:otherwise>
+                                                暂无数据
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr/>
+                <div class="ibox-content">
+                    <div class="clients-list">
+                        <div class="tab-content">
+                            <div id="tab-6" class="tab-pane active">
+                                <div class="full-height-scroll">
+                                    <h4>收入记录</h4>
+                                    <div class="table-responsive">
+                                        <c:choose>
+                                            <c:when test="${requestScope.incomInfo!=null}">
+                                                <table class="table table-striped table-hover">
+                                                    <tbody>
+                                                    <tr>
+                                                        <td class="client-avatar">所属用户</td>
+                                                        <i class="fa fa-envelope"></i>
+                                                        <td class="client-avatar">收入类型</td>
+                                                        <i class="fa fa-envelope"></i>
+                                                        <td>创建时间</td>
+                                                        <i class="fa fa-envelope"></i>
+                                                        <td class="client-status"><span
+                                                                class="label label-primary">是否已经验证</span>
+                                                        </td>
+                                                    </tr>
+                                                    <c:forEach items="${requestScope.incomInfo}" var="in">
+                                                        <tr>
+                                                            <td class="client-avatar">
+                                                                    ${in.user.userName}
+                                                            </td>
+                                                            <td>
+                                                                <a data-toggle="tab" href="#contact-1"
+                                                                   class="client-link">
+                                                                        ${in.incomingType.inTypeName}
+                                                                </a>
+                                                            </td>
+                                                            <td class="client-avatar">${in.inOutCreatedTime}</td>
+                                                            <td class="client-status">
+                                                                <span class="label label-primary">已验证</span>
+                                                            </td>
+                                                            <br/>
+                                                        </tr>
+                                                    </c:forEach>
+                                                    </tbody>
+                                                </table>
+                                            </c:when>
+                                            <c:otherwise>
+                                                暂无数据
+                                            </c:otherwise>
+                                        </c:choose>
                                     </div>
                                 </div>
                             </div>
@@ -187,13 +301,15 @@
             </div>
         </div>
     </div>
-    <script src="/static/js/jquery.min.js"></script>
-    <script src="/static/js/bootstrap.min.js"></script>
-    <script src="/static/js/contextmenu.js"></script>
-    <script src="/static/js/content.min.js"></script>
-    <script src="/static/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
-    <script>
-    </script>
+</div>
+</div>
+<script src="/static/js/jquery.min.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+<script src="/static/js/contextmenu.js"></script>
+<script src="/static/js/content.min.js"></script>
+<script src="/static/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+<script>
+</script>
 </div>
 </body>
 </html>

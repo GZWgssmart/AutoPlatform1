@@ -121,7 +121,7 @@ public class AccessoriesBuyController {
                         accessoriesBuy.setCompanyId(user.getCompanyId());
                         accessoriesBuyService.insert(accessoriesBuy);
                         accessoriesService.updateCount(accessoriesBuy.getAccBuyCount(), accessoriesBuy.getAccId());
-                        incomingOutgoingService.insert(inconSet(accessoriesBuy,session,outgoingId));
+                        incomingOutgoingService.insert(inconSet(accessoriesBuy,outgoingId,user));
                         return ControllerResult.getSuccessResult("更新配件数量成功");
                     } else {
                         if (accName != null && !accName.equals("")) {
@@ -132,15 +132,15 @@ public class AccessoriesBuyController {
                                 accessoriesBuy.setCompanyId(user.getCompanyId());
                                 accessoriesBuyService.insert(accessoriesBuy);
                                 accessoriesService.updateCount(accessoriesBuy.getAccBuyCount(), accessoriesBuy.getAccId());
-                                incomingOutgoingService.insert(inconSet(accessoriesBuy,session,outgoingId));
+                                incomingOutgoingService.insert(inconSet(accessoriesBuy,outgoingId,user));
                                 return ControllerResult.getSuccessResult("更新配件数量成功");
                             } else {
                                 String uuid = UUIDUtil.uuid();
-                                accessoriesService.insert(accSet(accessoriesBuy,accName,uuid));
+                                accessoriesService.insert(accSet(accessoriesBuy,accName,uuid,user));
                                 accessoriesBuy.setAccId(uuid);
                                 accessoriesBuy.setCompanyId(user.getCompanyId());
                                 accessoriesBuyService.insert(accessoriesBuy);
-                                incomingOutgoingService.insert(inconSet(accessoriesBuy,session,outgoingId));
+                                incomingOutgoingService.insert(inconSet(accessoriesBuy,outgoingId,user));
                                 return ControllerResult.getSuccessResult("添加配件采购成功");
                             }
                         }
@@ -157,16 +157,16 @@ public class AccessoriesBuyController {
         }
     }
 
-    public Accessories accSet(AccessoriesBuy accessoriesBuy, String accName,String uuid) {
+    public Accessories accSet(AccessoriesBuy accessoriesBuy, String accName,String uuid,User user) {
         if (accessoriesBuy != null && !accessoriesBuy.equals("") && accName != null & !accName.equals("")) {
             Accessories acc=new Accessories();
             acc.setAccId(uuid);
             acc.setAccName(accName);
-            acc.setCompanyId(accessoriesBuy.getCompanyId());
+            acc.setCompanyId(user.getCompanyId());
             acc.setAccTotal(accessoriesBuy.getAccBuyCount());
             acc.setAccPrice(accessoriesBuy.getAccBuyPrice());
             acc.setAccBuyedTime(accessoriesBuy.getAccBuyTime());
-            acc.setAccCommodityCode("123456");
+            acc.setAccCommodityCode("12345678");
             acc.setAccSalePrice(accessoriesBuy.getAccBuyPrice());
             acc.setAccIdle(accessoriesBuy.getAccBuyCount());
             acc.setSupplyId(accessoriesBuy.getSupplyId());
@@ -176,13 +176,13 @@ public class AccessoriesBuyController {
         return null;
     }
 
-    public IncomingOutgoing inconSet(AccessoriesBuy accessoriesBuy,HttpSession session,String outgoingId){
+    public IncomingOutgoing inconSet(AccessoriesBuy accessoriesBuy,String outgoingId,User user){
         if(accessoriesBuy!=null&&!accessoriesBuy.equals("")){
-            User user=(User)session.getAttribute("user");
             IncomingOutgoing incomingOutgoing=new IncomingOutgoing();
             incomingOutgoing.setInOutMoney(accessoriesBuy.getAccBuyMoney());
             incomingOutgoing.setInOutCreatedUser(user.getUserId());
             incomingOutgoing.setOutTypeId(outgoingId);
+            incomingOutgoing.setCompanyId(user.getCompanyId());
             return incomingOutgoing;
         }
         return null;

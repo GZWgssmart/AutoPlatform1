@@ -123,7 +123,7 @@ public class AccessoriesSaleController {
                     accessoriesSale.setCompanyId(user.getCompanyId());
                     accessoriesSaleService.insert(accessoriesSale);
                     accessoriesService.reduceCount(accessoriesSale.getAccSaleCount(), accessoriesSale.getAccId());
-                    incomingOutgoingService.insert(inconSet(accessoriesSale, session, inTypeId));
+                    incomingOutgoingService.insert(inconSet(accessoriesSale, inTypeId,user));
                     logger.info("添加配件销售成功");
                     return ControllerResult.getSuccessResult("添加配件销售成功");
                 } else {
@@ -140,13 +140,13 @@ public class AccessoriesSaleController {
         }
     }
 
-    public IncomingOutgoing inconSet(AccessoriesSale accessoriesSale, HttpSession session, String inTypeId) {
+    public IncomingOutgoing inconSet(AccessoriesSale accessoriesSale, String inTypeId,User user) {
         if (accessoriesSale != null && !accessoriesSale.equals("")) {
-            User user = (User) session.getAttribute("user");
             IncomingOutgoing incomingOutgoing = new IncomingOutgoing();
             incomingOutgoing.setInOutMoney(accessoriesSale.getAccSaleMoney());
             incomingOutgoing.setInOutCreatedUser(user.getUserId());
             incomingOutgoing.setInTypeId(inTypeId);
+            incomingOutgoing.setCompanyId(user.getCompanyId());
             return incomingOutgoing;
         }
         return null;

@@ -220,12 +220,28 @@
     </select>
 
 
-    <select id="queryByCompanyId" resultMap="incomingOutgoingMap">
+    <select id="queryByCompanyIdForInType" resultMap="incomingOutgoingMap">
         <![CDATA[
-          select io.inTypeId,io.outTypeId,io.inOutCreatedTime,io.inOutCreatedUser from auto_platform.t_incoming_outgoing io WHERE companyId
+          select io.inTypeId,io.inOutCreatedTime,io.inOutCreatedUser,it.inTypeName,u.userName
+          from auto_platform.t_incoming_outgoing io
+          LEFT join auto_platform.t_incoming_type it on it.inTypeId=io.inTypeId
+          LEFT join auto_platform.t_user u on u.userId=io.inOutCreatedUser
+          WHERE io.companyId=#{companyId} and io.outTypeId is NULL
+          order by io.inOutCreatedTime Desc
         ]]>
+        LIMIT 0,5
     </select>
 
-
+    <select id="queryByCompanyIdForOutType" resultMap="incomingOutgoingMap">
+        <![CDATA[
+          select io.outTypeId,io.inOutCreatedTime,io.inOutCreatedUser,ot.outTypeName,u.userName
+          from auto_platform.t_incoming_outgoing io
+          LEFT join auto_platform.t_outgoing_type ot on ot.outTypeId=io.outTypeId
+          LEFT join auto_platform.t_user u on u.userId=io.inOutCreatedUser
+          WHERE io.companyId=#{companyId} AND io.inTypeId is NULL
+          order by io.inOutCreatedTime Desc
+        ]]>
+        LIMIT 0,5
+    </select>
 
 </mapper>

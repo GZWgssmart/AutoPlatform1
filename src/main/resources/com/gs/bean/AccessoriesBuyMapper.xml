@@ -149,11 +149,12 @@
        LEFT JOIN auto_platform.t_accessories ac on ac.accId=abu.accId
        LEFT join auto_platform.t_accessories_type atp on atp.accTypeId=abu.accTypeId
        LEFT JOIN auto_platform.t_supply sp on sp.supplyId=abu.supplyId
-       WHERE accBuyStatus='N' order by abu.accBuyCreatedTime Desc
+       WHERE accBuyStatus='N'
        ]]>
         <if test="user.companyId != '' and user.companyId !=null">
             and abu.companyId = #{user.companyId}
         </if>
+        order by abu.accBuyCreatedTime Desc
         limit #{beginIndex}, #{pageSize}
     </select>
 

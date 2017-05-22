@@ -41,7 +41,9 @@
                     <th data-field="accSaleDiscount">配件销售折扣</th>
                     <th data-field="accSaleMoney">配件销售最终价</th>
                     <th data-field="accSaleCreatedTime" data-formatter="formatterDateTime">销售记录创建时间</th>
-                    <th data-field="accTypeStatus" data-formatter="showStatusFormatter">配件分类状态</th>
+                    <th data-field="accSaleStatus" data-formatter="showStatusFormatter">
+                        记录状态
+                    </th>
                     <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司销售人员">
                         <th data-width="100" data-field="accSaleStatus" data-formatter="statusFormatter">
                             操作

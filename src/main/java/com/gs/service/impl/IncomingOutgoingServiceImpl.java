@@ -126,10 +126,14 @@ public class IncomingOutgoingServiceImpl implements IncomingOutgoingService {
     }
 
     @Override
-    public List<IncomingOutgoing> queryByCompanyId(String companyId, String type) {
-        return incomingOutgoingDAO.queryByCompanyId(companyId,type);
+    public List<IncomingOutgoing> queryByCompanyIdForInType(String companyId) {
+        return incomingOutgoingDAO.queryByCompanyIdForInType(companyId);
     }
 
+    @Override
+    public List<IncomingOutgoing> queryByCompanyIdForOutType(String companyId) {
+        return incomingOutgoingDAO.queryByCompanyIdForOutType(companyId);
+    }
 
     public List<IncomingOutgoing> blurredQuery(Pager pager, IncomingOutgoing incomingOutgoing)
     {

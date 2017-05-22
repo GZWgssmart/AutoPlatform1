@@ -117,11 +117,12 @@
        SELECT asa.*,cp.companyName,cp.companyId,ac.accId,ac.accName FROM auto_platform.t_accessories_sale asa
        LEFT JOIN auto_platform.t_company cp on cp.companyId=asa.companyId
        LEFT JOIN auto_platform.t_accessories ac on ac.accId=asa.accId
-       WHERE accSaleStatus='N' order by asa.accSaleCreatedTime Desc
+       WHERE accSaleStatus='N'
     ]]>
     <if test="user.companyId != '' and user.companyId !=null">
       and asa.companyId = #{user.companyId}
     </if>
+    order by asa.accSaleCreatedTime Desc
     limit #{beginIndex}, #{pageSize}
   </select>
 

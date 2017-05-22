@@ -226,7 +226,11 @@
   </select>
 
   <select id="queryByCompanyId" resultMap="MaintainFixMap">
-    SELECT mx.maintainName,mx.maintainMoney,mx.maintainOrFix,mx.maintainHour from auto_platform.t_maintain_fix mx WHERE mx.companyId=#{companyId}
+    <![CDATA[
+      SELECT mx.maintainName,mx.maintainMoney,mx.maintainOrFix,mx.maintainHour
+      from auto_platform.t_maintain_fix mx
+      WHERE mx.companyId=#{companyId}
+    ]]>
   </select>
 
 </mapper>
