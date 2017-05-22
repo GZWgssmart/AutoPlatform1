@@ -1,7 +1,4 @@
-﻿/**
-公司表
-*/
-DROP TABLE IF EXISTS `t_company`;
+﻿DROP TABLE IF EXISTS `t_company`;
 CREATE TABLE `t_company` (
   `companyId` varchar(36) NOT NULL COMMENT '公司编号,UUID，主键',
   `companyName` varchar(100) NOT NULL COMMENT '公司名称,not null, unique',

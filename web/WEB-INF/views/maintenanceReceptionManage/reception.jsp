@@ -49,10 +49,10 @@
                 <th data-width="180" data-field="arriveTime" data-formatter="formatterDate">
                     到店时间
                 </th>
-                <th data-width="120" data-field="carMileage">
+                <th data-width="160" data-field="carMileage">
                     汽车行驶里程(km)
                 </th>
-                <th data-width="120" data-field="nowOil">
+                <th data-width="160" data-field="nowOil">
                     汽车当前油量(L)
                 </th>
                 <th data-width="90" data-field="ifClearCar" data-formatter="showYesOrNoFormatter">
@@ -516,13 +516,13 @@
                         <th data-width="90" data-field="userName">
                             用户姓名
                         </th>
-                        <th data-width="90" data-field="userEmail">
+                        <th data-width="110" data-field="userEmail">
                             用户邮箱
                         </th>
-                        <th data-width="90" data-field="userPhone">
+                        <th data-width="130" data-field="userPhone">
                             用户电话
                         </th>
-                        <th data-width="100" data-field="userIdentity">
+                        <th data-width="180" data-field="userIdentity">
                             用户身份证
                         </th>
                         <th data-width="90" data-field="userNickname">
@@ -531,16 +531,16 @@
                         <th data-width="90" data-field="userGender">
                             用户性别
                         </th>
-                        <th data-width="90" data-field="userBirthday"data-formatter="formatterDate">
+                        <th data-width="170" data-field="userBirthday"data-formatter="formatterDate">
                             用户生日
                         </th>
-                        <th data-width="90" data-field="userAddress">
+                        <th data-width="170" data-field="userAddress">
                             用户地址
                         </th>
-                        <th data-width="90" data-field="userDes">
+                        <th data-width="130" data-field="userDes">
                             用户描述
                         </th>
-                        <th data-width="90" data-field="userStatus">
+                        <th data-width="90" data-field="userStatus" data-formatter="showStatusFormatter">
                             用户状态
                         </th>
                     </thead>

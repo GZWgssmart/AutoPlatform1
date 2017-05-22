@@ -31,7 +31,7 @@
             <div class="sidebar-collapse">
                 <ul class="nav" id="side-menu">
                     <li class="nav-header" style="padding-top: 20px;">
-                        <div class="dropdown profile-element" style="margin-left:30px;">
+                        <div class="dropdown profile-element">
                             <span>
                                 <c:choose>
                                     <c:when test="${user.userIcon != null}">
