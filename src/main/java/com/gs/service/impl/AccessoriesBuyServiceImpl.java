@@ -10,12 +10,12 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.List;
 /**
-*由CSWangBin技术支持
-*
-*@author CSWangBin
-*@since 2017-04-17 15:45:35
-*@des 配件采购Service实现
-*/
+ *由CSWangBin技术支持
+ *
+ *@author CSWangBin
+ *@since 2017-04-17 15:45:35
+ *@des 配件采购Service实现
+ */
 @Service
 public class AccessoriesBuyServiceImpl implements AccessoriesBuyService {
 
@@ -26,8 +26,8 @@ public class AccessoriesBuyServiceImpl implements AccessoriesBuyService {
 	public int batchInsert(List<AccessoriesBuy> list) { return accessoriesBuyDAO.batchInsert(list); }
 	public int delete(AccessoriesBuy accessoriesBuy) { return accessoriesBuyDAO.delete(accessoriesBuy); }
 	public int deleteById(String id) {
-        return accessoriesBuyDAO.deleteById(id);
-    }
+		return accessoriesBuyDAO.deleteById(id);
+	}
 	public int batchDelete(List<AccessoriesBuy> list) { return accessoriesBuyDAO.batchDelete(list); }
 	public int update(AccessoriesBuy accessoriesBuy) { return accessoriesBuyDAO.update(accessoriesBuy); }
 	public int batchUpdate(List<AccessoriesBuy> list) { return accessoriesBuyDAO.batchUpdate(list); }

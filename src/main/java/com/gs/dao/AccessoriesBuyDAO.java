@@ -1,6 +1,7 @@
 package com.gs.dao;
 
 import com.gs.bean.AccessoriesBuy;
+import com.gs.bean.User;
 import com.gs.common.bean.Pager;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -8,12 +9,12 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
-*由CSWangBin技术支持
-*
-*@author CSWangBin
-*@since 2017-04-17 15:44:30
-*@des 配件采购dao
-*/
+ *由CSWangBin技术支持
+ *
+ *@author CSWangBin
+ *@since 2017-04-17 15:44:30
+ *@des 配件采购dao
+ */
 @Repository
 public interface AccessoriesBuyDAO extends BaseDAO<String, AccessoriesBuy>{
     /**
@@ -33,7 +34,7 @@ public interface AccessoriesBuyDAO extends BaseDAO<String, AccessoriesBuy>{
     /**
      * 模糊查询的记录数
      */
-    public int countByBlurred(@Param("accBuy")AccessoriesBuy AccessoriesBuy);
+    public int countByBlurred(@Param("accessoriesBuy") AccessoriesBuy accessoriesBuy, @Param("user") User user);
 
 
     /**
