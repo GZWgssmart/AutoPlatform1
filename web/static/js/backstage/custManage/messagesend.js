@@ -55,6 +55,40 @@ $(function () {
     // });
 });
 
+// 模糊查询
+function blurredQuery() {
+    var roles = "公司超级管理员,公司普通管理员,汽车公司接待员";
+    $.post("/user/isLogin/" + roles, function (data) {
+        if (data.result == 'success') {
+            var button = $("#ulButton");// 获取模糊查询按钮
+            var text = button.text();// 获取模糊查询按钮文本
+            var vaule = $("#ulInput").val();// 获取模糊查询输入框文本
+            initTable('table', '/messageSend/blurredQuery?text=' + text + '&value=' + vaule);
+        } else if (data.result == 'notLogin') {
+            swal({
+                    title: "",
+                    text: data.message,
+                    confirmButtonText: "确认",
+                    type: "error"
+                }
+                , function (isConfirm) {
+                    if (isConfirm) {
+                        top.location = "/user/loginPage";
+                    } else {
+                        top.location = "/user/loginPage";
+                    }
+                })
+        } else if (data.result == 'notRole') {
+            swal({
+                title: "",
+                text: data.message,
+                confirmButtonText: "确认",
+                type: "error"
+            })
+        }
+    });
+}
+
 //显示弹窗
 function showEdit() {
     var roles = "公司超级管理员,公司普通管理员,汽车公司接待员";
@@ -132,7 +166,7 @@ function showAdd() {
     });
 }
 
-function validator(formId,userIds, userPhone) {
+function validator(formId, userIds, userPhone) {
     $('#' + formId).bootstrapValidator({
         feedbackIcons: {
             valid: 'glyphicon glyphicon-ok',
@@ -177,7 +211,7 @@ function validator(formId,userIds, userPhone) {
 
         .on('success.form.bv', function (e) {
             if (formId == "addForm") {
-                formSubmit("/messageSend/insert/"+ userIds+"/"+userPhone, formId, "addWindow");
+                formSubmit("/messageSend/insert/" + userIds + "/" + userPhone, formId, "addWindow");
 
             } else if (formId == "editForm") {
                 formSubmit("/messageSend/update", formId, "editWindow");
@@ -251,8 +285,34 @@ function formSubmit(url, formId, winId) {
 }
 
 function showMessageSend() {
-    $("#showMessageSendWindow").modal('show');
-    initTableMessageNotTollbar("showMessageSendTable", "/maintainRecord/queryByPagerSuccess");
+    var roles = "公司超级管理员,公司普通管理员,汽车公司接待员";
+    $.post("/user/isLogin/" + roles, function (data) {
+        if (data.result == 'success') {
+            $("#showMessageSendWindow").modal('show');
+            initTableMessageNotTollbar("showMessageSendTable", "/maintainRecord/queryByPagerSuccess");
+        } else if (data.result == 'notLogin') {
+            swal({
+                    title: "",
+                    text: data.message,
+                    confirmButtonText: "确认",
+                    type: "error"
+                }
+                , function (isConfirm) {
+                    if (isConfirm) {
+                        top.location = "/user/loginPage";
+                    } else {
+                        top.location = "/user/loginPage";
+                    }
+                })
+        } else if (data.result == 'notRole') {
+            swal({
+                title: "",
+                text: data.message,
+                confirmButtonText: "确认",
+                type: "error"
+            })
+        }
+    });
 }
 
 function closeMessageSend() {
@@ -264,33 +324,62 @@ function closeMessageSend() {
 
 
 function showMessageSendUser() {
-    var row = $('#showMessageSendTable').bootstrapTable('getSelections');
-    if (row.length < 1) {
-        swal({
-            "title": "",
-            "text": "只能选择一条数据",
-            "type": "warning"
-        })
-    } else if(row.length >= 1) {
-        var userIds = "";
-        var userPhone = "";
-        $.each(row, function (index, value, item) {
-            if (userIds == "") {
-                userIds = row[index].checkin.user.userId;
-            } else {
-                userIds += "," + row[index].checkin.user.userId
+    var roles = "公司超级管理员,公司普通管理员,汽车公司接待员";
+    $.post("/user/isLogin/" + roles, function (data) {
+        if (data.result == 'success') {
+            var row = $('#showMessageSendTable').bootstrapTable('getSelections');
+            if (row.length < 1) {
+                swal({
+                    title: "",
+                    text: "请先选择需要短信提醒的车主", // 主要文本
+                    confirmButtonColor: "#DD6B55", // 提示按钮的颜色
+                    confirmButtonText: "确定", // 提示按钮上的文本
+                    type: "warning"
+                })
+            } else if (row.length >= 1) {
+                var userIds = "";
+                var userPhone = "";
+                $.each(row, function (index, value, item) {
+                    if (userIds == "") {
+                        userIds = row[index].checkin.user.userId;
+                    } else {
+                        userIds += "," + row[index].checkin.user.userId
+                    }
+                    if (userPhone == "") {
+                        userPhone = row[index].checkin.user.userPhone;
+                    } else {
+                        userPhone += "," + row[index].checkin.user.userPhone;
+                    }
+                });
+                $("#showMessageSendWindow").modal('hide');
+                $("#addWindow").modal('show');
+                $("#addButton").removeAttr("disabled");
+                validator('addForm', userIds, userPhone); // 初始化验证
+
             }
-            if (userPhone == "") {
-                userPhone = row[index].checkin.user.userPhone;
-            } else {
-                userPhone += "," + row[index].checkin.user.userPhone;
-            }
-        });
-        $("#showMessageSendWindow").modal('hide');
-        $("#addWindow").modal('show');
-        $("#addButton").removeAttr("disabled");
-        validator('addForm',userIds, userPhone); // 初始化验证
-    }
+        } else if (data.result == 'notLogin') {
+            swal({
+                    title: "",
+                    text: data.message,
+                    confirmButtonText: "确认",
+                    type: "error"
+                }
+                , function (isConfirm) {
+                    if (isConfirm) {
+                        top.location = "/user/loginPage";
+                    } else {
+                        top.location = "/user/loginPage";
+                    }
+                })
+        } else if (data.result == 'notRole') {
+            swal({
+                title: "",
+                text: data.message,
+                confirmButtonText: "确认",
+                type: "error"
+            })
+        }
+    });
 }
 
 function closeMessageSendUserWin() {

@@ -84,9 +84,11 @@ function showEdit() {
                 validator('editForm');
             } else {
                 swal({
-                    "title": "",
-                    "text": "请先选择一条数据",
-                    "type": "warning"
+                    title: "",
+                    text: "请先选择需要回访的车主", // 主要文本
+                    confirmButtonColor: "#DD6B55", // 提示按钮的颜色
+                    confirmButtonText: "确定", // 提示按钮上的文本
+                    type: "warning"
                 })
             }
         } else if (data.result == 'notLogin') {
@@ -154,25 +156,80 @@ function closeUserWin() {
 }
 
 function showRemindUser() {
-    $("#showRemindWindow").modal('show');
-    initTableNotTollbar("addRemindTable", "/maintainRecord/queryByPagerSuccess");
+    var roles = "公司超级管理员,公司普通管理员,汽车公司接待员";
+    $.post("/user/isLogin/" + roles, function (data) {
+        if (data.result == 'success') {
+            $("#showRemindWindow").modal('show');
+            initTableNotTollbar("addRemindTable", "/maintainRecord/queryByPagerSuccess");
+        } else if (data.result == 'notLogin') {
+            swal({
+                    title: "",
+                    text: data.message,
+                    confirmButtonText: "确认",
+                    type: "error"
+                }
+                , function (isConfirm) {
+                    if (isConfirm) {
+                        top.location = "/user/loginPage";
+                    } else {
+                        top.location = "/user/loginPage";
+                    }
+                })
+        } else if (data.result == 'notRole') {
+            swal({
+                title: "",
+                text: data.message,
+                confirmButtonText: "确认",
+                type: "error"
+            })
+        }
+    });
 }
 
 function checkRemind() {
-    var row = $('#addRemindTable').bootstrapTable('getSelections');
-    if (row.length != 1) {
-        swal({
-            "title": "",
-            "text": "只能选择一条数据",
-            "type": "warning"
-        })
-    } else {
-        alert(row[0].recordId);
-        alert(row[0].checkin.userName);
-        $("#addTrackUser").val(row[0].checkin.userName);
-        $("#addTrackUserId").val(row[0].checkin.userId);
-        $("#showRemindWindow").modal('hide');
-    }
+    var roles = "公司超级管理员,公司普通管理员,汽车公司接待员";
+    $.post("/user/isLogin/" + roles, function (data) {
+        if (data.result == 'success') {
+            var row = $('#addRemindTable').bootstrapTable('getSelections');
+            if (row.length != 1) {
+                swal({
+                    title: "",
+                    text: "请先选择需要跟踪回访的车主", // 主要文本
+                    confirmButtonColor: "#DD6B55", // 提示按钮的颜色
+                    confirmButtonText: "确定", // 提示按钮上的文本
+                    type: "warning"
+                })
+            } else {
+                // alert(row[0].recordId);
+                // alert(row[0].checkin.userName);
+                $("#addTrackUser").val(row[0].checkin.userName);
+                $("#addTrackUserId").val(row[0].checkin.userId);
+                $("#showRemindWindow").modal('hide');
+                $("#closeButton").removeClass('showRemindWindow');
+            }
+        } else if (data.result == 'notLogin') {
+            swal({
+                    title: "",
+                    text: data.message,
+                    confirmButtonText: "确认",
+                    type: "error"
+                }
+                , function (isConfirm) {
+                    if (isConfirm) {
+                        top.location = "/user/loginPage";
+                    } else {
+                        top.location = "/user/loginPage";
+                    }
+                })
+        } else if (data.result == 'notRole') {
+            swal({
+                title: "",
+                text: data.message,
+                confirmButtonText: "确认",
+                type: "error"
+            })
+        }
+    });
 }
 
 
@@ -273,8 +330,8 @@ function formSubmit(url, formId, winId) {
                     $("input[type=reset]").trigger("click"); // 移除表单中填的值
                     // $('#addForm').data('bootstrapValidator').resetForm(true); // 移除所有验证样式
                     $("#addButton").removeAttr("disabled"); // 移除不可点击
-                    $("#addAdminName").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
-                    $("#addUserName").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
+                } else if (formId == 'editForm') {
+                    $("#editButton").removeAttr("disabled");
                 }
                 $("#" + formId).data('bootstrapValidator').destroy(); // 销毁此form表单
                 $('#' + formId).data('bootstrapValidator', null);// 此form表单设置为空

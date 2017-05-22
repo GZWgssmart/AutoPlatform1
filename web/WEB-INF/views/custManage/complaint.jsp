@@ -36,12 +36,12 @@
             <tr>
                 <th data-radio="true"></th>
                 <th data-field="user.userName">投诉人</th>
-                <th data-field="company.companyName">投诉人所属公司</th>
-                <th data-field="complaintCreatedTime" data-formatter="formatterDate">投诉时间</th>
+                <%--<th data-field="company.companyName">投诉人所属公司</th>--%>
                 <th data-field="complaintContent">投诉内容</th>
+                <th data-field="complaintCreatedTime" data-formatter="formatterDate">投诉时间</th>
                 <th data-formatter="formatterUserName">投诉回复人</th>
-                <th data-field="complaintReplyTime" data-formatter="formatterDate">投诉回复时间</th>
                 <th data-field="complaintReply">投诉回复内容</th>
+                <th data-field="complaintReplyTime" data-formatter="formatterDate">投诉回复时间</th>
             </tr>
             </thead>
         </table>
@@ -185,7 +185,7 @@
         <div class="modal-content">
             <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('editWindow', 'editForm')"></span>
             <form class="form-horizontal" id="editForm" method="post">
-                <input type="text" name="complaintId" define="Complaint.complaintId" />
+                <input type="hidden" name="complaintId" define="Complaint.complaintId" />
                 <%--<input type="text" name="userId" define="Complaint.user.userId" />--%>
                 <%--<input id="start3" type="text" name="complaintCreatedTime" define="Complaint.complaintCreatedTime" />--%>
                 <%--<input type="text" name="complaintContent" define="Complaint.complaintContent" />--%>

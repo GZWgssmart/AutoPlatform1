@@ -8,6 +8,7 @@ import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
 import com.gs.common.mail.MailConfig;
+import com.gs.common.mes.IndustrySMS;
 import com.gs.common.util.RoleUtil;
 import com.gs.common.util.SessionUtil;
 import com.gs.common.util.UUIDUtil;
@@ -94,16 +95,27 @@ public class MaintainRemindController {
     @ResponseBody
     @RequestMapping(value = "queryByPagerUser", method = RequestMethod.GET)
     public Pager4EasyUI<MaintainRemind> queryByPagerUser(HttpSession session, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
-        logger.info("分页查看维修保养提醒记录");
-        Pager pager = new Pager();
-        pager.setPageNo(Integer.valueOf(pageNumber));
-        pager.setPageSize(Integer.valueOf(pageSize));
-        User user = (User) session.getAttribute("frontUser");
-        int count = maintainRemindService.countUser(user.getUserId());
-        pager.setTotalRecords(count);
-        pager.setUser((User) session.getAttribute("frontUser"));
-        List<MaintainRemind> queryList = maintainRemindService.queryByPagerUser(pager,user.getUserId());
-        return new Pager4EasyUI<MaintainRemind>(pager.getTotalRecords(), queryList);
+        if (SessionUtil.isOwnerLogin(session)) {
+            String roles = "车主";
+            if (RoleUtil.checkRoles(roles)) {
+                logger.info("分页用户查看维修保养提醒记录");
+                Pager pager = new Pager();
+                pager.setPageNo(Integer.valueOf(pageNumber));
+                pager.setPageSize(Integer.valueOf(pageSize));
+                User user = (User) session.getAttribute("frontUser");
+                int count = maintainRemindService.countUser(user.getUserId());
+                pager.setTotalRecords(count);
+                pager.setUser((User) session.getAttribute("frontUser"));
+                List<MaintainRemind> queryList = maintainRemindService.queryByPagerUser(pager, user.getUserId());
+                return new Pager4EasyUI<MaintainRemind>(pager.getTotalRecords(), queryList);
+            } else {
+                logger.info("此用户无拥有此方法");
+                return null;
+            }
+        } else {
+            logger.info("请先登录");
+            return null;
+        }
     }
 
     @ResponseBody
@@ -120,17 +132,6 @@ public class MaintainRemindController {
                 pager.setTotalRecords(count);
                 pager.setUser((User) session.getAttribute("user"));
                 List<MaintainRecord> queryList = maintainRecordService.queryByPagerSix(pager,getInsertDateTime());
-//                if(queryList != null) {
-//                    List<MaintainRemind> maintainReminds = new ArrayList<MaintainRemind>();
-//                    for(MaintainRecord mrs : queryList) {
-//                        MaintainRemind mrs1 = new MaintainRemind();
-//                        mrs1.setUserId(mrs.getCheckin().getUserId());
-//                        mrs1.setLastMaintainTime(mrs.getActualEndTime());
-//                        mrs1.setLastMaintainMileage(mrs.getCheckin().getCarMileage());
-//                        maintainReminds.add(mrs1);
-//                    }
-//                    maintainRemindService.insertBatch(maintainReminds);
-//                }
                 return new Pager4EasyUI<MaintainRecord>(pager.getTotalRecords(), queryList);
             } else {
                 logger.info("此用户无拥有此方法");
@@ -150,22 +151,32 @@ public class MaintainRemindController {
             if (RoleUtil.checkRoles(roles)) {
                 logger.info("维修保养提醒记录添加操作");
                 String remindType = req.getParameter("remindType");
+                String userName = req.getParameter("checkinuserName");
+                String emails = req.getParameter("checkin.user.userEmail");
+                String phone = req.getParameter("checkin.user.userPhone");
                 String uuid = UUIDUtil.uuid();
                 maintainRemind.setRemindId(uuid);
                 User user = (User) session.getAttribute("user");
-                maintainRemind.setCompanyId(user.getCompanyId());
-                maintainRemindService.insert(maintainRemind);
-                String emails = req.getParameter("checkin.user.userEmail");
+//                maintainRemind.setRemindMsg("【汽车之家】尊敬的"+userName+"车主， 你的爱车已经需要再次维修保养了， 请速速前来本店。 ");
+//                maintainRemind.setCompanyId(user.getCompanyId());
+//                maintainRemindService.insert(maintainRemind);
+                System.out.print("车主的名称："+userName);
                 System.out.print("车主的邮箱为："+emails);
+                System.out.print("车主的手机号码为："+phone);
                 if(remindType.equals("短信提醒")) {
+                    IndustrySMS i = new IndustrySMS(phone, "【汽车之家】尊敬的"+userName+"车主， 你的爱车已经需要再次维修保养了， 请速速前来本店。 ");
+                    i.execute();
+                    maintainRemind.setRemindMsg("【汽车之家】尊敬的"+userName+"车主， 你的爱车已经需要再次维修保养了， 请速速前来本店。 ");
+                    maintainRemind.setCompanyId(user.getCompanyId());
+                    maintainRemindService.insert(maintainRemind);
                     messageSend.setMessageId(maintainRemind.getRemindId());
                     messageSend.setUserId(maintainRemind.getUserId());
-//                messageSend.setSendTime(maintainRemind.getRemindTime());
                     messageSend.setSendMsg(maintainRemind.getRemindMsg());
-//                messageSend.setSendCreatedTime(new Date());
                     messageSend.setCompanyId(user.getCompanyId());
                     messageSendService.insertRemind(messageSend);
                 } else if(remindType.equals("邮箱提醒")) {
+                    maintainRemind.setCompanyId(user.getCompanyId());
+                    maintainRemindService.insert(maintainRemind);
                     Mail mail = new Mail();
                     mail.setSubject("维修保修提醒");
                     mail.setBccRecipients(emails); // 密送
@@ -239,6 +250,45 @@ public class MaintainRemindController {
                 messageSend.setSendCreatedTime(maintainRemind.getRemindCreatedTime());
                 messageSendService.update(messageSend);
                 return ControllerResult.getSuccessResult("修改保养提醒成功");
+            } else {
+                logger.info("此用户无拥有此方法");
+                return null;
+            }
+        } else {
+            logger.info("请先登录");
+            return null;
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "blurredQuery", method = RequestMethod.GET)
+    public Pager4EasyUI<MaintainRemind> blurredQuery(HttpSession session, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize, MaintainRemind maintainRemind) {
+        if (SessionUtil.isLogin(session)) {
+            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员";
+            if (RoleUtil.checkRoles(roles)) {
+                logger.info("模糊查询维修保养提醒记录");
+                String text = req.getParameter("text");
+                String value = req.getParameter("value");
+                if (text != null && text != "") {
+                    Pager pager = new Pager();
+                    pager.setPageNo(Integer.valueOf(pageNumber));
+                    pager.setPageSize(Integer.valueOf(pageSize));
+                    if (text.equals("车主姓名")) {
+                        maintainRemind.setUserId(value);
+                    } else if (text.equals("上次汽车行驶里程")) {
+                        maintainRemind.setLastMaintainMileage(Double.valueOf(value));
+                    } else if (text.equals("维修保养提醒消息")) {
+                        maintainRemind.setRemindMsg(value);
+                    } else if (text.equals("维修保养提醒方式")) {
+                        maintainRemind.setRemindType(value);
+                    }
+                    int count = maintainRemindService.countByBlurred(maintainRemind, (User) session.getAttribute("user"));
+                    pager.setTotalRecords(count);
+                    pager.setUser((User) session.getAttribute("user"));
+                    List<MaintainRemind> queryList = maintainRemindService.blurredQuery(pager, maintainRemind);
+                    return new Pager4EasyUI<MaintainRemind>(pager.getTotalRecords(), queryList);
+                }
+                return null;
             } else {
                 logger.info("此用户无拥有此方法");
                 return null;

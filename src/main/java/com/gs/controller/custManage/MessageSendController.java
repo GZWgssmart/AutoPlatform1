@@ -174,6 +174,41 @@ public class MessageSendController {
         }
     }
 
+    @ResponseBody
+    @RequestMapping(value = "blurredQuery", method = RequestMethod.GET)
+    public Pager4EasyUI<MessageSend> blurredQuery(HttpSession session, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize, MessageSend messageSend) {
+        if (SessionUtil.isLogin(session)) {
+            String roles = "公司超级管理员,公司普通管理员,汽车公司接待员";
+            if (RoleUtil.checkRoles(roles)) {
+                logger.info("模糊查询短信提醒记录");
+                String text = req.getParameter("text");
+                String value = req.getParameter("value");
+                if (text != null && text != "") {
+                    Pager pager = new Pager();
+                    pager.setPageNo(Integer.valueOf(pageNumber));
+                    pager.setPageSize(Integer.valueOf(pageSize));
+                    if (text.equals("车主姓名")) {
+                        messageSend.setUserId(value);
+                    } else if (text.equals("发送内容")) {
+                        messageSend.setSendMsg(value);
+                    }
+                    int count = messageSendService.countByBlurred(messageSend, (User) session.getAttribute("user"));
+                    pager.setTotalRecords(count);
+                    pager.setUser((User) session.getAttribute("user"));
+                    List<MessageSend> queryList = messageSendService.blurredQuery(pager, messageSend);
+                    return new Pager4EasyUI<MessageSend>(pager.getTotalRecords(), queryList);
+                }
+                return null;
+            } else {
+                logger.info("此用户无拥有此方法");
+                return null;
+            }
+        } else {
+            logger.info("请先登录");
+            return null;
+        }
+    }
+
     /**
      * 时间格式化
      */

@@ -183,7 +183,7 @@ public class ComplaintController {
             if (RoleUtil.checkRoles(roles)) {
                 logger.info("投诉记录添加操作");
                 complaintService.insert(complaint);
-                return ControllerResult.getSuccessResult("添加投诉信息成功");
+                return ControllerResult.getSuccessResult("添加投诉信息成功,请留意该公司的回复");
             } else {
                 logger.info("此用户无拥有此方法");
                 return null;

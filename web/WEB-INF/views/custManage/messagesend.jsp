@@ -35,7 +35,7 @@
             <thead>
             <tr>
                 <th data-radio="true"></th>
-                <th data-field="checkin.userName">用户名</th>
+                <th data-field="checkin.userName">车主姓名</th>
                 <th data-field="sendMsg">发送内容</th>
                 <th data-field="sendTime" data-formatter="formatterDate">发送时间</th>
                 <th data-field="sendCreatedTime" data-formatter="formatterDate">发送记录创建时间</th>
@@ -46,6 +46,24 @@
             <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司接待员">
                 <%--<button type="button" class="btn btn-w-m btn-info" onclick="showAdd();">发送短信提醒</button>--%>
                 <button type="button" class="btn btn-w-m btn-info" onclick="showMessageSend()">发送短信提醒</button>
+            </shiro:hasAnyRoles>
+            <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司接待员">
+                <div class="input-group" style="width:350px;float:left;padding:0;margin:0 0 0 -1px;">
+                    <div class="input-group-btn">
+                        <button type="button" id="ulButton" class="btn btn-default" style="border-radius:0px;"
+                                data-toggle="dropdown">车主姓名<span class="caret"></span></button>
+                        <ul class="dropdown-menu pull-right">
+                            <li><a onclick="onclikLi(this)">车主姓名</a></li>
+                            <li class="divider"></li>
+                            <li><a onclick="onclikLi(this)">发送内容</a></li>
+                        </ul>
+                    </div><!-- /btn-group -->
+                    <input id="ulInput" class="form-control" onkeypress="if(event.keyCode==13) {blurredQuery();}">
+                    <a href="javascript:;" onclick="blurredQuery()"><span
+                            class="glyphicon glyphicon-search search-style"></span></a>
+                    </input>
+                </div>
+                <!-- /input-group -->
             </shiro:hasAnyRoles>
         </div>
     </div>
@@ -95,7 +113,7 @@
                         <button type="button" class="btn btn-default"
                                 onclick="closeMessageSend()">关闭
                         </button>
-                        <button id="addButton" class="btn btn-sm btn-success" type="button" onclick="addSubmit()">保 存</button>
+                        <button id="addButton" class="btn btn-sm btn-success" type="button" onclick="addSubmit()">发送</button>
                         <input type="reset" name="reset" style="display: none;"/>
                     </div>
                 </div>
@@ -162,7 +180,7 @@
                     <thead>
                     <tr>
                         <th data-checkbox="true"></th>
-                        <th data-field="checkin.userName" data-width="100">维修保养登记人</th>
+                        <th data-field="checkin.userName">维修保养登记人</th>
                         <th data-field="checkin.user.userEmail">车主邮箱</th>
                         <th data-field="checkin.user.userPhone">车主电话号码</th>
                     </tr>

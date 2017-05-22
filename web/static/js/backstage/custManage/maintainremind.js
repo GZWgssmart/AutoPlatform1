@@ -30,6 +30,40 @@ $(function () {
     });
 });
 
+// 模糊查询
+function blurredQuery(){
+    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员";
+    $.post("/user/isLogin/" + roles, function (data) {
+        if (data.result == 'success') {
+            var button = $("#ulButton");// 获取模糊查询按钮
+            var text = button.text();// 获取模糊查询按钮文本
+            var vaule = $("#ulInput").val();// 获取模糊查询输入框文本
+            initTable('table', '/maintainRemind/blurredQuery?text=' + text + '&value=' + vaule);
+        } else if (data.result == 'notLogin') {
+            swal({
+                    title: "",
+                    text: data.message,
+                    confirmButtonText: "确认",
+                    type: "error"
+                }
+                , function (isConfirm) {
+                    if (isConfirm) {
+                        top.location = "/user/loginPage";
+                    } else {
+                        top.location = "/user/loginPage";
+                    }
+                })
+        } else if (data.result == 'notRole') {
+            swal({
+                title: "",
+                text: data.message,
+                confirmButtonText: "确认",
+                type: "error"
+            })
+        }
+    });
+}
+
 function showRemindUser() {
     var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员";
     $.post("/user/isLogin/" + roles, function (data) {
@@ -199,19 +233,23 @@ function showAddRemindUser() {
             var row = $('#showRemindUserTable').bootstrapTable('getSelections');
             if (row.length != 1) {
                 swal({
-                    "title": "",
-                    "text": "只能选择一条数据",
-                    "type": "warning"
-                })
+                    title: "",
+                    text: "请先选择需要保养提醒的车主", // 主要文本
+                    confirmButtonColor: "#DD6B55", // 提示按钮的颜色
+                    confirmButtonText: "确定", // 提示按钮上的文本
+                    type: "warning"
+                }) // 提示类型
             } else {
-                alert(row[0].checkin.user.userId);
-                alert(row[0].checkin.user.userName);
+                // alert(row[0].checkin.user.userId);
+                // alert(row[0].checkin.user.userName);
                 $("#addRemindId").val(row[0].remindId);
                 $("#addLastMaintainTime").val(formatterDate(row[0].actualEndTime));
                 $("#addLastMaintainMileage").val(row[0].checkin.carMileage);
                 $('#addUserId').val(row[0].checkin.user.userId);
+                $('#addCheckinName').val(row[0].checkin.user.userName);
                 $('#addUserName').val(row[0].checkin.user.userName);
                 $("#addUserEmail").val(row[0].checkin.user.userEmail);
+                $("#addUserPhone").val(row[0].checkin.user.userPhone);
                 $("#RemindUserWindow").modal('hide');
                 $("#addWindow").modal('show');
                 $("#addButton").removeAttr("disabled");
@@ -241,6 +279,14 @@ function showAddRemindUser() {
         }
     });
 
+}
+
+function remindTypeChange(obj) {
+    if(obj.value == '短信提醒') {
+        document.getElementById('addRemindMsg').style.display='none';
+    } else if(obj.value == '邮箱提醒') {
+        document.getElementById('addRemindMsg').style.display='';
+    }
 }
 
 function validator(formId) {

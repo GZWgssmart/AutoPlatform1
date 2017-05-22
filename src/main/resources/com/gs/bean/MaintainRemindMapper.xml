@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.gs.dao.MaintainRemindDAO" >
-  <resultMap id="BaseResultMap" type="maintainremind" >
+  <resultMap id="BaseResultMap" type="maintainRemind" >
     <id column="remindId" property="remindId" jdbcType="VARCHAR" />
     <result column="userId" property="userId" jdbcType="VARCHAR" />
     <result column="lastMaintainTime" property="lastMaintainTime" jdbcType="TIMESTAMP" />
@@ -44,7 +44,7 @@
     </if>
   </select>
 
-  <update id="update" parameterType="maintainremind">
+  <update id="update" parameterType="maintainRemind">
     update t_maintain_remind set remindMsg=#{remindMsg},remindTime=#{remindTime},remindType=#{remindType},remindCreatedTime=#{remindCreatedTime} where remindId=#{remindId}
   </update>
 
@@ -64,7 +64,7 @@
       and mr.companyId = #{companyId}
     </if>
   </select>
-  <insert id="insert"  parameterType="maintainremind">
+  <insert id="insert"  parameterType="maintainRemind">
     <![CDATA[
 			insert into t_maintain_remind(remindId, userId, lastMaintainTime, lastMaintainMileage, remindMsg, remindTime, remindType,
 			    remindCreatedTime,companyId)
@@ -88,5 +88,48 @@
 
   <select id="countUser" resultType="int">
     select count(mr.remindId) from t_maintain_remind mr,t_checkin c where mr.userId = c.userId and mr.userId = #{userId}
+  </select>
+
+  <select id="blurredQuery" resultMap="BaseResultMap">
+    select mr.*,c.userId,c.userName,c.checkinId
+    from t_maintain_remind mr,t_checkin c where mr.userId = c.userId
+    and remindMsg is not null
+    <if test="pager.user.companyId != null and pager.user.companyId != ''">
+      and mr.companyId = #{pager.user.companyId}
+    </if>
+    <if test="maintainRemind.userId != null and maintainRemind.userId != ''">
+      and c.userName like concat('%',#{maintainRemind.userId},'%')
+    </if>
+    <if test="maintainRemind.lastMaintainMileage != null and maintainRemind.lastMaintainMileage != ''">
+      and mr.lastMaintainMileage like concat('%',#{maintainRemind.lastMaintainMileage},'%')
+    </if>
+    <if test="maintainRemind.remindMsg != null and maintainRemind.remindMsg != ''">
+      and mr.remindMsg like concat('%',#{maintainRemind.remindMsg},'%')
+    </if>
+    <if test="maintainRemind.remindType != null and maintainRemind.remindType != ''">
+      and mr.remindType like concat('%',#{maintainRemind.remindType},'%')
+    </if>
+    limit #{pager.beginIndex}, #{pager.pageSize}
+  </select>
+
+  <select id="countByBlurred"  resultType="int">
+    select count(mr.remindId)
+    from t_maintain_remind mr,t_checkin c where mr.userId = c.userId
+    and remindMsg is not null
+    <if test="user.companyId != null and user.companyId != ''">
+      and mr.companyId = #{user.companyId}
+    </if>
+    <if test="maintainRemind.userId != null and maintainRemind.userId != ''">
+      and c.userName like concat('%',#{maintainRemind.userId},'%')
+    </if>
+    <if test="maintainRemind.lastMaintainMileage != null and maintainRemind.lastMaintainMileage != ''">
+      and mr.lastMaintainMileage like concat('%',#{maintainRemind.lastMaintainMileage},'%')
+    </if>
+    <if test="maintainRemind.remindMsg != null and maintainRemind.remindMsg != ''">
+      and mr.remindMsg like concat('%',#{maintainRemind.remindMsg},'%')
+    </if>
+    <if test="maintainRemind.remindType != null and maintainRemind.remindType != ''">
+      and mr.remindType like concat('%',#{maintainRemind.remindType},'%')
+    </if>
   </select>
 </mapper>
