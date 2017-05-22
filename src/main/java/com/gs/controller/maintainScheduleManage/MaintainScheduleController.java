@@ -48,7 +48,7 @@ public class    MaintainScheduleController {
     @RequestMapping(value = "queryScheduleByRecord/{recordId}", method = RequestMethod.POST)
     public List<MaintainSchedule> queryScheduleByRecord(HttpSession session, @PathVariable("recordId") String recordId){
         if(SessionUtil.isLogin(session) || SessionUtil.isOwnerLogin(session)) {
-            String roles="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,车主,汽车公司接待员,车主";
+            String roles="公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师,汽车公司学徒,汽车公司销售人员,汽车公司财务人员,汽车公司采购人员,汽车公司库管人员,汽车公司人力资源管理部,车主";
             if(RoleUtil.checkRoles(roles)) {
                 logger.info("根据维修保养记录id查询此记录下所有维修保养进度");
                 List<MaintainSchedule> maintainSchedules = maintainScheduleService.queryScheduleByRecord(recordId);
@@ -72,7 +72,7 @@ public class    MaintainScheduleController {
     @RequestMapping(value = "queryAllschedule", method = RequestMethod.GET)
     public List<ComboBox4EasyUI> queryAllSchedule(HttpSession session){
         if(SessionUtil.isLogin(session)) {
-            String roles="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,车主,汽车公司接待员";
+            String roles="系统超级管理员,系统普通管理员公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师,汽车公司学徒,汽车公司销售人员,汽车公司财务人员,汽车公司采购人员,汽车公司库管人员,汽车公司人力资源管理部,车主";
             if(RoleUtil.checkRoles(roles)) {
                 logger.info("查询全部维修保养进度管理");
                 List<MaintainSchedule> maintainSchedules = maintainScheduleService.queryAll((User)session.getAttribute("user"));
@@ -130,7 +130,7 @@ public class    MaintainScheduleController {
     @RequestMapping(value="addSchedule", method = RequestMethod.POST)
     public ControllerResult addSchedule(HttpSession session,MaintainSchedule maintainSchedule){
         if(SessionUtil.isLogin(session)) {
-            String roles="系统超级管理员,公司超级管理员,公司普通管理员,汽车公司总技师";
+            String roles="公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师,汽车公司学徒,汽车公司销售人员,汽车公司财务人员,汽车公司采购人员,汽车公司库管人员,汽车公司人力资源管理部,车主";
             if(RoleUtil.checkRoles(roles)) {
                 if(maintainSchedule !=null && !maintainSchedule.equals("")){
                     maintainScheduleService.insert(maintainSchedule);
@@ -160,7 +160,7 @@ public class    MaintainScheduleController {
     @RequestMapping(value= "queryByPagerDisable", method = RequestMethod.POST)
     public Pager4EasyUI<MaintainSchedule> queryByPagerDisable(HttpSession session, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
         if(SessionUtil.isLogin(session)) {
-            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司总技师,汽车公司技师";
+            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师,汽车公司学徒,汽车公司销售人员,汽车公司财务人员,汽车公司采购人员,汽车公司库管人员,汽车公司人力资源管理部,车主";
             if(RoleUtil.checkRoles(roles)) {
                 logger.info("分布查看已禁用的维修保养记录");
                 Pager pager = new Pager();
@@ -188,7 +188,7 @@ public class    MaintainScheduleController {
     @RequestMapping(value = "statusOperate", method = RequestMethod.POST)
     public ControllerResult inactive(HttpSession session, String id, String status) {
         if(SessionUtil.isLogin(session)) {
-            String roles = "公司超级管理员,公司普通管理员,汽车公司接待员";
+            String roles = "公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师,汽车公司学徒,汽车公司销售人员,汽车公司财务人员,汽车公司采购人员,汽车公司库管人员,汽车公司人力资源管理部";
             if(RoleUtil.checkRoles(roles)) {
                 if (id != null && !id.equals("") && status != null && !status.equals("")) {
                     if (status.equals("N")) {
@@ -218,7 +218,7 @@ public class    MaintainScheduleController {
     @RequestMapping(value = "updateSchedule", method = RequestMethod.POST)
     public ControllerResult updateSchedule(HttpSession session, MaintainSchedule maintainSchedule){
         if(SessionUtil.isLogin(session)) {
-            String roles="公司超级管理员,公司普通管理员,汽车公司总技师";
+            String roles="公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师,汽车公司学徒,汽车公司销售人员,汽车公司财务人员,汽车公司采购人员,汽车公司库管人员,汽车公司人力资源管理部";
             if(RoleUtil.checkRoles(roles)) {
                 if(maintainSchedule !=null && !maintainSchedule.equals("")){
                     maintainScheduleService.update(maintainSchedule);

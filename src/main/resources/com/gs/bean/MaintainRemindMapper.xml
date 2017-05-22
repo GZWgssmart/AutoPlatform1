@@ -34,6 +34,7 @@
     <if test="user.companyId != null and user.companyId != ''">
       and mr.companyId = #{user.companyId}
     </if>
+    order by mr.remindCreatedTime Desc
     limit #{beginIndex}, #{pageSize}
   </select>
 
@@ -55,6 +56,7 @@
     <if test="user.companyId != null and user.companyId != ''">
       and mr.companyId = #{user.companyId}
     </if>
+    order by mr.remindCreatedTime Desc
     limit #{pager.beginIndex}, #{pager.pageSize}
   </select>
 
@@ -83,6 +85,7 @@
     select mr.*,c.userId,c.userName,c.checkinId
     from t_maintain_remind mr,t_checkin c where mr.userId = c.userId
     and mr.userId = #{userId}
+    order by mr.remindCreatedTime Desc
     limit #{pager.beginIndex}, #{pager.pageSize}
   </select>
 
@@ -109,6 +112,7 @@
     <if test="maintainRemind.remindType != null and maintainRemind.remindType != ''">
       and mr.remindType like concat('%',#{maintainRemind.remindType},'%')
     </if>
+    order by mr.remindCreatedTime Desc
     limit #{pager.beginIndex}, #{pager.pageSize}
   </select>
 

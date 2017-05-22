@@ -151,7 +151,7 @@ $.ajax({	//使用JQuery内置的Ajax方法
     },
     error: function (errorMsg) {
         //请求失败时执行该函数
-        alert("图表请求数据失败，可能是服务器开小差了");
+
         myChart.hideLoading();
     }
 })
@@ -215,7 +215,6 @@ function selectYears() {
             if (result !== null && result.length > 0) {
                 for (var i = 0; i < result.length; i++) {
                     accBuyMoney.push(result[i].accBuyMoney);
-                    console.log(result[i].accBuyMoney)
                     accBuyCreatedTime.push(formatterYear(result[i].accBuyCreatedTime));
                 }
                 myChart.hideLoading();	//隐藏加载动画
@@ -245,7 +244,7 @@ function selectYears() {
         },
         error: function (errorMsg) {
             //请求失败时执行该函数
-            alert("图表请求数据失败，可能是服务器开小差了");
+
             myChart.hideLoading();
         }
     })
@@ -276,7 +275,6 @@ function selectMonth() {
                     accBuyMoney.push(result[i].accBuyMoney);
                     accBuyCreatedTime.push(formatterMonth(result[i].accBuyCreatedTime));
                     //挨个取出温度、湿度、压强等值并填入前面声明的温度、湿度、压强等数组
-                    console.log(result[i].inOutCreatedTime)
 
                 }
                 myChart.hideLoading();	//隐藏加载动画
@@ -305,7 +303,7 @@ function selectMonth() {
         },
         error: function (errorMsg) {
             //请求失败时执行该函数
-            alert("图表请求数据失败，可能是服务器开小差了");
+
             myChart.hideLoading();
         }
     })
@@ -331,12 +329,10 @@ function selectDay() {
 
             if (result != null && result.length > 0) {
                 for (var i = 0; i < result.length; i++) {
-                    console.log(result[i].outTypeId + "aaaaa")
 
                     accBuyMoney.push(result[i].accBuyMoney);
                     accBuyCreatedTime.push(formatterDay(result[i].accBuyCreatedTime));
                     //挨个取出温度、湿度、压强等值并填入前面声明的温度、湿度、压强等数组
-                    console.log(result[i].inOutCreatedTime)
 
                 }
                 myChart.hideLoading();	//隐藏加载动画
@@ -365,7 +361,7 @@ function selectDay() {
         },
         error: function (errorMsg) {
             //请求失败时执行该函数
-            alert("图表请求数据失败，可能是服务器开小差了");
+
             myChart.hideLoading();
         }
     })
@@ -396,7 +392,6 @@ function selectQuarter() {
 
                     accBuyCreatedTime.push(formatterQuarter(result[i].accBuyCreatedTime));
                     //挨个取出温度、湿度、压强等值并填入前面声明的温度、湿度、压强等数组
-                    console.log(result[i].inOutCreatedTime)
 
                 }
                 myChart.hideLoading();	//隐藏加载动画
@@ -425,7 +420,7 @@ function selectQuarter() {
         },
         error: function (errorMsg) {
             //请求失败时执行该函数
-            alert("图表请求数据失败，可能是服务器开小差了");
+
             myChart.hideLoading();
         }
     })
@@ -482,7 +477,7 @@ function selectWeek() {
         },
         error: function (errorMsg) {
             //请求失败时执行该函数
-            alert("图表请求数据失败，可能是服务器开小差了");
+
             myChart.hideLoading();
         }
     })

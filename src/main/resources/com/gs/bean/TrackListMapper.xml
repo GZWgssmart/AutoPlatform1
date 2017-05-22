@@ -38,6 +38,7 @@
     <if test="user.companyId != null and user.companyId != ''">
     and t.companyId = #{user.companyId}
     </if>
+    order by t.trackCreatedTime Desc
     limit #{beginIndex}, #{pageSize}
   </select>
 
@@ -81,6 +82,7 @@
     <if test="trackList.trackUser != null and trackList.trackUser != ''">
       and c.userName like concat('%',#{trackList.trackUser},'%')
     </if>
+    order by t.trackCreatedTime Desc
     limit #{pager.beginIndex}, #{pager.pageSize}
   </select>
 

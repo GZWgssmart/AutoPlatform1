@@ -166,7 +166,7 @@ $.ajax({	//使用JQuery内置的Ajax方法
         }
         else {
             //返回的数据为空时显示提示信息
-            alert("请选择完全，或该时间段没有数据");
+            alert("图表请求数据为空,没有当前时间段的数据");
             myChart.hideLoading();
         }
 
@@ -174,7 +174,7 @@ $.ajax({	//使用JQuery内置的Ajax方法
     },
     error: function (errorMsg) {
         //请求失败时执行该函数
-        alert("图表请求数据失败，可能是服务器开小差了");
+
         myChart.hideLoading();
     }
 })
@@ -263,7 +263,7 @@ function selectYears() {
             }
             else {
                 //返回的数据为空时显示提示信息
-                alert("请选择完全，或该时间段没有数据");
+                alert("图表请求数据为空,没有当前时间段的数据");
                 myChart.hideLoading();
             }
 
@@ -271,7 +271,7 @@ function selectYears() {
         },
         error: function (errorMsg) {
             //请求失败时执行该函数
-            alert("图表请求数据失败，可能是服务器开小差了");
+
             myChart.hideLoading();
         }
     })
@@ -328,14 +328,14 @@ function selectMonth() {
             }
             else {
                 //返回的数据为空时显示提示信息
-                alert("请选择完全，或该时间段没有数据");
+                alert("图表请求数据为空,没有当前时间段的数据");
                 myChart.hideLoading();
             }
 
         },
         error: function (errorMsg) {
             //请求失败时执行该函数
-            alert("图表请求数据失败，可能是服务器开小差了");
+
             myChart.hideLoading();
         }
     })
@@ -346,7 +346,6 @@ function selectDay() {
     var inMoney=[];		//湿度数组
     var outMoney=[];		//湿度数组
     var Datas=[];		//时间数组
-
     var start = $("#startDayInput").val();
     var end = $("#endDayInput").val();
     var companyId = $("#dayCompanyId").val();
@@ -392,14 +391,14 @@ function selectDay() {
             }
             else {
                 //返回的数据为空时显示提示信息
-                alert("请选择完全，或该时间段没有数据");
+                alert("图表请求数据为空,没有当前时间段的数据");
                 myChart.hideLoading();
             }
 
         },
         error: function (errorMsg) {
             //请求失败时执行该函数
-            alert("图表请求数据失败，可能是服务器开小差了");
+
             myChart.hideLoading();
         }
     })
@@ -457,15 +456,14 @@ function selectQuarter() {
 
             }
             else {
-                //返回的数据为空时显示提示信息
-                alert("请选择完全，或该时间段没有数据");
+                alert("图表请求数据为空,没有当前时间段的数据");
                 myChart.hideLoading();
             }
 
         },
         error: function (errorMsg) {
             //请求失败时执行该函数
-            alert("图表请求数据失败，可能是服务器开小差了");
+
             myChart.hideLoading();
         }
     })
@@ -525,14 +523,14 @@ function selectWeek() {
             }
             else {
                 //返回的数据为空时显示提示信息
-                alert("请选择完全，或该时间段没有数据");
+                alert("图表请求数据为空,没有当前时间段的数据");
                 myChart.hideLoading();
             }
 
         },
         error: function (errorMsg) {
             //请求失败时执行该函数
-            alert("图表请求数据失败，可能是服务器开小差了");
+
             myChart.hideLoading();
         }
     })

@@ -19,7 +19,6 @@ myChart.on(ecConfig.EVENT.TIMELINE_CHANGED, function(paramA,paramB){
      * 相同的 paramB.component.timeline.timelineOption 则能获取到timeline属性了
      * 别问我为什么知道的，调试！调试！调试！
      */
-    //Console.log(option);
     option.xAxis[0].data=paramB.component.timeline.options[paramA.currentIndex].xAxis.data;
     /**
      * myChart.setOption(option,true); 是告诉图形不合并数据，一定要设置为true，不然多出来的数据会一直存在！会一直存在！会一直存在！
