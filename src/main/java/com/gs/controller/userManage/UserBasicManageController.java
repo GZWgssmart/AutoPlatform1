@@ -201,11 +201,11 @@ public class UserBasicManageController {
                 if (status.equals("Y")) {
                     userService.inactive(id);
                     logger.info("修改状态成功，已禁用");
-                    return ControllerResult.getSuccessResult("修改状态成功");
+                    return ControllerResult.getSuccessResult("禁用人员基本信息成功");
                 } else if (status.equals("N")) {
                     userService.active(id);
                     logger.info("修改状态成功，已激活");
-                    return ControllerResult.getSuccessResult("修改状态成功，已激活");
+                    return ControllerResult.getSuccessResult("激活人员基本信息成功");
                 }
                 return ControllerResult.getFailResult("修改状态失败");
             } else {
@@ -227,13 +227,21 @@ public class UserBasicManageController {
         if(SessionUtil.isLogin(session)) {
             String roles = "公司超级管理员,公司普通管理员,汽车公司人力资源管理部,系统超级管理员,系统普通管理员,汽车公司接待员";
             if (RoleUtil.checkRoles(roles)) {
+                logger.info("分页查询人员基本信息成功");
                 Pager pager = new Pager();
                 pager.setPageNo(Integer.valueOf(pageNumber));
                 pager.setPageSize(Integer.valueOf(pageSize));
                 pager.setUser((User) session.getAttribute("user"));
-                pager.setTotalRecords(userService.count((User) session.getAttribute("user")));
-                logger.info("分页查询人员基本信息成功");
-                List<User> users = userService.queryByPagerAll(pager);
+
+                String roleName = ((User) session.getAttribute("user")).getRole().getRoleName();
+                List<User> users = null;
+                if(roleName == "系统超级管理员" || roleName == "系统普通管理员") {
+                    pager.setTotalRecords(userService.countAll((User) session.getAttribute("user")));
+                    users = userService.queryAllByPager(pager);
+                } else {
+                    pager.setTotalRecords(userService.count((User) session.getAttribute("user")));
+                    users = userService.queryByPagerAll(pager);
+                }
                 return new Pager4EasyUI<User>(pager.getTotalRecords(), users);
             } else {
                 logger.info("此用户没有该操作所属的角色");
@@ -252,15 +260,23 @@ public class UserBasicManageController {
     @RequestMapping(value="queryByPager", method = RequestMethod.GET)
     public Pager4EasyUI queryByPager(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize, HttpSession session) {
         if(SessionUtil.isLogin(session)) {
-            String roles = "公司超级管理员,公司普通管理员,汽车公司人力资源管理部, 系统超级管理员,系统普通管理员,汽车公司接待员";
+            String roles = "公司超级管理员,公司普通管理员,汽车公司人力资源管理部,系统超级管理员,系统普通管理员,汽车公司接待员";
             if (RoleUtil.checkRoles(roles)) {
+                logger.info("分页查询状态为可用的人员基本信息成功");
                 Pager pager = new Pager();
                 pager.setPageNo(Integer.valueOf(pageNumber));
                 pager.setPageSize(Integer.valueOf(pageSize));
                 pager.setUser((User) session.getAttribute("user"));
-                pager.setTotalRecords(userService.countOK((User) session.getAttribute("user")));
-                logger.info("分页查询状态为可用的人员基本信息成功");
-                List<User> users = userService.queryByPager(pager);
+
+                String roleName = ((User) session.getAttribute("user")).getRole().getRoleName();
+                List<User> users = null;
+                if(roleName == "系统超级管理员" || roleName == "系统普通管理员") {
+                    pager.setTotalRecords(userService.countStatus((User) session.getAttribute("user"), "Y"));
+                    users = userService.querySystemAdminByPager(pager, "Y");
+                } else {
+                    pager.setTotalRecords(userService.countOK((User) session.getAttribute("user")));
+                    users = userService.queryByPager(pager);
+                }
                 return new Pager4EasyUI<User>(pager.getTotalRecords(), users);
             } else {
                 logger.info("此用户没有该操作所属的角色");
@@ -281,13 +297,21 @@ public class UserBasicManageController {
         if(SessionUtil.isLogin(session)) {
             String roles = "公司超级管理员,公司普通管理员,汽车公司人力资源管理部,系统超级管理员,系统普通管理员,汽车公司接待员";
             if (RoleUtil.checkRoles(roles)) {
+                logger.info("分页查询状态为不可用的人员基本信息成功");
                 Pager pager = new Pager();
                 pager.setPageNo(Integer.valueOf(pageNumber));
                 pager.setPageSize(Integer.valueOf(pageSize));
                 pager.setUser((User) session.getAttribute("user"));
-                pager.setTotalRecords(userService.countNO((User) session.getAttribute("user")));
-                logger.info("分页查询状态为不可用的人员基本信息成功");
-                List<User> users = userService.queryByPagerDisable(pager);
+
+                String roleName = ((User) session.getAttribute("user")).getRole().getRoleName();
+                List<User> users = null;
+                if(roleName == "系统超级管理员" || roleName == "系统普通管理员") {
+                    pager.setTotalRecords(userService.countStatus((User) session.getAttribute("user"), "N"));
+                    users = userService.querySystemAdminByPager(pager, "N");
+                } else {
+                    pager.setTotalRecords(userService.countNO((User) session.getAttribute("user")));
+                    users = userService.queryByPagerDisable(pager);
+                }
                 return new Pager4EasyUI<User>(pager.getTotalRecords(), users);
             } else {
                 logger.info("此用户没有该操作所属的角色");
