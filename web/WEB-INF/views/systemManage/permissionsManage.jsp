@@ -92,7 +92,7 @@
 <div class="modal fade" id="edit" aria-hidden="true" data-backdrop="static" keyboard="false">
     <div class="modal-dialog">
         <div class="modal-content">
-            <span  class="close"   onclick = "closeModal()">&times;</span>
+            <span class="glyphicon glyphicon-remove closeModal" onclick = "closeModal()"></span>
             <div class="modal-header">
                 <h4></h4>
             </div>

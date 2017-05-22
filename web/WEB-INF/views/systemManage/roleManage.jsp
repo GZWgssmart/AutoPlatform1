@@ -57,7 +57,7 @@
             <div class="tab-content" id="panel">
                 <div class="tab-pane active" id="home">
                     <div class="panel title" style="margin-bottom:1px">
-                        <h3 class="col-md-4"></h3>
+                        <h4 class="col-md-4"></h4>
                         <div class="col-md-8" >
                             <div style="float: right;">
                                 <button type="button" class="btn btn-default" style="margin-right:5px;" onclick="showEdit()"><span class="glyphicon glyphicon-edit" style="margin-right:5px"></span>修改</button>
@@ -112,7 +112,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <form class="form-horizontal" role="form" id="addForm" >
-                <span  class="close"   onclick = "formModalclose('addModal', 'addForm' )">&times;</span>
+                <span class="glyphicon glyphicon-remove closeModal" onclick = "formModalclose('addModal', 'addForm' )"></span>
                 <div class="modal-header" style="overflow:auto;">
                     <h4></h4><input data-flag="flag" style="display: none;">
                 </div>
@@ -147,7 +147,7 @@
 <div class="modal fade" id="editPermission" aria-hidden="true" data-backdrop="static"  keyboard="false">
     <div class="modal-dialog">
         <div class="modal-content">
-            <span  class="close"   data-dismiss="modal">&times;</span>
+            <span class="glyphicon glyphicon-remove closeModal"  data-dismiss="modal" aria-hidden="true"></span>
             <div class="panel-heading">
                 <h4 style="display: inline-block">修改角色权限</h4>
             </div>
@@ -158,7 +158,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default"  data-dismiss="modal">取消</button>
-                <button  type="submit" id="subRolePer" class="btn btn-success btn-sm" onclick="savePermission()">保存</button>
+                <button  type="button" id="subRolePer" class="btn btn-success btn-sm" onclick="savePermission()">保存</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->

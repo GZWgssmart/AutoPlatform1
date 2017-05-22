@@ -38,7 +38,7 @@
         .sd{
             font-weight: bold;
         }
-        .modal-header h2 {
+        .modal-header h4 {
             text-align: left;
         }
         a {
@@ -52,6 +52,9 @@
         .bgFont {
             color: #aaa;
             font-family: 微软雅黑;
+        }
+        .select2.select2-container.select2-container--default {
+            width: 100%;
         }
     </style>
 </head>
@@ -189,31 +192,31 @@
 <!-- 零件明细弹窗 -->
 <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师,汽车公司学徒,汽车公司销售人员,汽车公司财务人员,汽车公司采购人员,汽车公司库管人员,汽车公司人力资源管理部">
     <div class="modal fade" id="accsInfo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" keyboard="false">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header" style="margin-right:0;width:95%;">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h3 class="modal-title" id="myModalLabel">零件明细
-                   <button type="button" class="btn btn-warning"  aria-hidden="true" onclick="showAppend()">追加物料</button>
-                </h3>
-            </div>
-            <div class="modal-body">
-                <input style="display: none;" id="seachRecordId" />
-                <table id="workInfoAccDetailTable" style="table-layout: fixed" data-single-select="true"
-                       data-show-header="false" >
-                    <thead>
-                        <tr >
-                            <th data-width="50"  data-field="accessories.accName"></th>
-                            <th data-width="110"  data-formatter="accInfoFormat"></th>
-                        </tr>
-                    </thead>
-                </table>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default"  data-dismiss="modal" >关闭</button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal -->
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="margin-right:0;width:95%;">
+                    <span class="glyphicon glyphicon-remove closeModal"  data-dismiss="modal" aria-hidden="true"></span>
+                    <h4 class="modal-title" id="myModalLabel">零件明细
+                       <button type="button" class="btn btn-warning"  aria-hidden="true" onclick="showAppend()">追加配件</button>
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <input style="display: none;" id="seachRecordId" />
+                    <table id="workInfoAccDetailTable" style="table-layout: fixed" data-single-select="true"
+                           data-show-header="false" >
+                        <thead>
+                            <tr >
+                                <th data-width="50"  data-field="accessories.accName"></th>
+                                <th data-width="110"  data-formatter="accInfoFormat"></th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default"  data-dismiss="modal" >关闭</button>
+                </div>
+            </div><!-- /.modal-content -->
+     </div><!-- /.modal -->
 </div>
 
     <!-- 领取/退回表单弹窗 -->
@@ -221,9 +224,9 @@
     <div class="modal-dialog" style="overflow:hidden;">
             <div class="modal-content">
                 <div class="modal-footer" style="text-align: center;">
-                    <span  class="close"  onclick = "closeModal('application','materialsForm')">&times;</span>
+                    <span class="glyphicon glyphicon-remove closeModal"  onclick = "closeModal('application','materialsForm')"></span>
                     <div class="modal-header" style="overflow:auto;">
-                        <h2>领取/退回 物料</h2>
+                        <h4>领取/退回 物料</h4>
                     </div>
                     <hr>
                     <form role="form"  id="materialsForm" class="form-horizontal">
@@ -259,9 +262,11 @@
                                       rows="3" maxlength="100"></textarea>
                             </div>
                         </div>
-                        <button type="button" class="btn btn-default" onclick = "closeModal('application','materialsForm')">取消</button>
-                        <button  class="btn btn-success" id = "subButton1" onclick = "checkForm('materialsForm','subButton1')" >确认</button>
-                        <input type="reset" name="reset" style="display: none;"/>
+                        <div class="modal-footer" style="border: none;">
+                            <button type="button" class="btn btn-default" onclick = "closeModal('application','materialsForm')">取消</button>
+                            <button  class="btn btn-success" id = "subButton1" onclick = "checkForm('materialsForm','subButton1')" >确认</button>
+                            <input type="reset" name="reset" style="display: none;"/>
+                        </div>
                     </form>
                 </div>
             </div><!-- /.modal-content -->
@@ -275,34 +280,36 @@
     <div class="modal-dialog" style="overflow:hidden;">
         <div class="modal-content">
             <div style="text-align: center;">
-                <span  class="close"   onclick="closeModal('appendModal','appendMaterialsForm')">&times;</span>
-                <div class="modal-header" style="overflow:auto;">
-                    <h2>追加配件</h2>
+                <div class="modal-header" style="overflow:auto;width:95%">
+                    <span class="glyphicon glyphicon-remove closeModal"  onclick="closeModal('appendModal','appendMaterialsForm')"></span>
+                    <h4  style="text-align: left;">追加配件</h4>
                 </div>
                 <hr>
                 <form role="form" id="appendMaterialsForm" class="form-horizontal">
                     <input name="maintainRecordId" readonly style="display:none" />
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">请选择零件：</label>
+                        <label class="col-sm-3 control-label">配件名称：</label>
                         <div class="col-sm-7">
-                            <select type="select" class="js-example-tags materialsCombobox"  name="accId"  style="width:300px;"></select>
+                            <select type="select" class="js-example-tags form-control materialsCombobox"  name="accId"  style="width:300px;"></select>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label" >请填写数量：</label>
+                        <label class="col-sm-3 control-label" >配件数量：</label>
                         <div class="col-sm-7">
-                            <input type="number" name="materialCount" min = 1 data-field="materialCount" class="form-control">
+                            <input type="number" name="materialCount" min = 1 data-field="materialCount" placeholder="请输入追加数量" class="form-control">
                         </div>
                     </div>
                     <div class="form-group" >
                         <label class="col-sm-3 control-label">描述：</label>
                         <div class="col-sm-7">
-                                <textarea type="textarea"  name="reqMsg" class="form-control" data-field="reqMsg"  placeholder="请输入领取/退回描述" rows="3" maxlength="100"></textarea>
+                                <textarea type="textarea"  name="reqMsg" class="form-control" data-field="reqMsg"  placeholder="请输入追加描述" rows="3" maxlength="100"></textarea>
                         </div>
                     </div>
-                    <button type="button" class="btn btn-default" onclick="closeModal('appendModal','appendMaterialsForm') ">取消</button>
-                    <button  class="btn btn-success" id="subButton2" onclick = "checkForm('appendMaterialsForm','subButton2')">确认</button>
-                    <input type="reset" name="reset" style="display: none;"/>
+                    <div class="modal-footer" style="border: none;">
+                        <button type="button" class="btn btn-default" onclick="closeModal('appendModal','appendMaterialsForm') ">取消</button>
+                        <button  class="btn btn-success" id="subButton2" onclick = "checkForm('appendMaterialsForm','subButton2')">确认</button>
+                        <input type="reset" name="reset" style="display: none;"/>
+                    </div>
                 </form>
             </div>
         </div><!-- /.modal-content -->

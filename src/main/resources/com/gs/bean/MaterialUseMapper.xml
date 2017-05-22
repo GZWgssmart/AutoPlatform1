@@ -525,10 +525,12 @@
 
     <select id = "accQueryAll" resultType ="Accessories" parameterType="hashMap" >
             <![CDATA[
-            select * FROM auto_platform.t_accessories ac where 1=1 and ac.accStatus = 'Y'
+            select * FROM auto_platform.t_accessories ac
+            left join t_accessories_type acType on ac.accTypeId = acType.accTypeId
+            where 1=1 and ac.accStatus = 'Y'
         ]]>
             <if test="companyId != '' and companyId !=null">
-                and ac.companyId = #{companyId}
+                and acType.companyId = #{companyId}
             </if>
     </select>
 

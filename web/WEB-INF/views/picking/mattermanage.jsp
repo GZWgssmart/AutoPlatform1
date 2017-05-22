@@ -91,7 +91,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
-                <span  class="close"  onclick = "closeModal('reviewModal','form')">&times;</span>
+                <span class="glyphicon glyphicon-remove closeModal"  onclick = "closeModal('reviewModal','form')"></span>
                 <form role="form" class="form-horizontal" id="reviewForm">
                     <div class="modal-header">
                     </div>
