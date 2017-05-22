@@ -348,6 +348,7 @@ function formSubmit(url, modalId ,formId, subBtnId,tableId){
                 swal({
                     title:"",
                     text: data.message,
+                    confirmButtonText:"确认",
                     type:"success"});// 提示窗口, 修改成功
                 $('#'+tableId).bootstrapTable("refresh");
                 $("#"+subBtnId).removeAttr("disable");
@@ -355,6 +356,7 @@ function formSubmit(url, modalId ,formId, subBtnId,tableId){
                 swal({
                     title:"",
                     text: data.message,
+                    confirmButtonText:"确认",
                     type:"error"}) // 提示窗口, 修改失败
             }
             closeModal(modalId,formId);
@@ -366,12 +368,14 @@ function removeMaterialsProInst(url, proInstId) {
             swal({
                 title:"",
                 text: data.message,
+                confirmButtonText:"确认",
                 type:"success"});// 提示窗口, 修改成功
             $('#reviewingTable').bootstrapTable('refresh');
         } else if(data.result === "fail") {
             swal({
                 title:"",
                 text: data.message,
+                confirmButtonText:"确认",
                 type:"error"});// 提示窗口, 修改成功
         }
         // closeModal("application", "materialsForm");
