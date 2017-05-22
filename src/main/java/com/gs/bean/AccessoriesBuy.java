@@ -1,5 +1,7 @@
 package com.gs.bean;
 
+import org.joda.time.DateTime;
+
 import java.util.Date;
 
 public class AccessoriesBuy {
@@ -25,18 +27,11 @@ public class AccessoriesBuy {
 
     private String companyId;
 
-    private String supplyId;
-
-    private String accTypeId;
-
     private String accBuyStatus;
 
     private Company company;
 
     private Accessories accessories;
-
-    private Supply supply;
-    private AccessoriesType accessoriesType;
 
     private int count;
     private int week;
@@ -153,22 +148,6 @@ public class AccessoriesBuy {
         this.accBuyStatus = accBuyStatus;
     }
 
-    public String getSupplyId() {
-        return supplyId;
-    }
-
-    public void setSupplyId(String supplyId) {
-        this.supplyId = supplyId;
-    }
-
-    public String getAccTypeId() {
-        return accTypeId;
-    }
-
-    public void setAccTypeId(String accTypeId) {
-        this.accTypeId = accTypeId;
-    }
-
     public Company getCompany() {
         return company;
     }
@@ -185,22 +164,6 @@ public class AccessoriesBuy {
         this.accessories = accessories;
     }
 
-    public Supply getSupply() {
-        return supply;
-    }
-
-    public void setSupply(Supply supply) {
-        this.supply = supply;
-    }
-
-    public AccessoriesType getAccessoriesType() {
-        return accessoriesType;
-    }
-
-    public void setAccessoriesType(AccessoriesType accessoriesType) {
-        this.accessoriesType = accessoriesType;
-    }
-
     @Override
     public String toString() {
         return "AccessoriesBuy{" +
@@ -215,13 +178,9 @@ public class AccessoriesBuy {
                 ", accBuyTime=" + accBuyTime +
                 ", accBuyCreatedTime=" + accBuyCreatedTime +
                 ", companyId='" + companyId + '\'' +
-                ", supplyId='" + supplyId + '\'' +
-                ", accTypeId='" + accTypeId + '\'' +
                 ", accBuyStatus='" + accBuyStatus + '\'' +
                 ", company=" + company +
                 ", accessories=" + accessories +
-                ", supply=" + supply +
-                ", accessoriesType=" + accessoriesType +
                 '}';
     }
 }

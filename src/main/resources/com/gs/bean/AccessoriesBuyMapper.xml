@@ -268,4 +268,102 @@ and ab.accBuyStatus = 'Y' and ab.accBuyCreatedTime >= #{start} and ab.accBuyCrea
         </if>
     </select>
 
+    <!--下单报表统计-->
+
+    <select id="queryByCondition" resultMap="AccessoriesBuyMap">
+        <![CDATA[
+            select count(*) as count ,week(ab.accBuyCreatedTime) as week, ab.accBuyCreatedTime from t_accessories_buy ab, t_company cc where ab.companyId = cc.companyId and ab.companyId = #{companyId}
+and ab.accBuyStatus = 'Y' and ab.accBuyCreatedTime >= #{start} and ab.accBuyCreatedTime <= #{end}
+        ]]>
+        <if test="type =='year'">
+            group by date_format(ab.accBuyCreatedTime, '%Y') ORDER BY ab.accBuyCreatedTime ASC;
+        </if>
+        <if test="type =='quarter'">
+            group by concat(date_format(ab.accBuyCreatedTime, '%Y'),FLOOR((date_format(ab.accBuyCreatedTime, '%m')+2)/3)) ORDER BY ab.accBuyCreatedTime ASC;
+        </if>
+        <if test="type =='month'">
+            group by date_format(ab.accBuyCreatedTime, '%y-%m') ORDER BY ab.accBuyCreatedTime ASC;
+        </if>
+        <if test="type =='week'">
+            group by date_format(ab.accBuyCreatedTime, '%y-%m') ORDER BY ab.accBuyCreatedTime ASC;
+        </if>
+        <if test="type =='day'">
+            group by date(ab.accBuyCreatedTime) ORDER BY ab.accBuyCreatedTime ASC;
+        </if>
+    </select>
+
+
+
+    <!--支付记录报表-->
+    <select id="queryByPayCondition" resultMap="AccessoriesBuyMap">
+        <![CDATA[
+       select sum(accBuyMoney) as accBuyMoney ,ab.accBuyCreatedTime from t_accessories_buy ab, t_company cc where ab.companyId = cc.companyId and ab.companyId = #{companyId}
+and ab.accBuyStatus = 'Y' and ab.accBuyCreatedTime >= #{start} and ab.accBuyCreatedTime <= #{end}
+        ]]>
+        <if test="type =='year'">
+            GROUP BY year(ab.accBuyCreatedTime);
+        </if>
+        <if test="type =='quarter'">
+            GROUP BY quarter(ab.accBuyCreatedTime);
+        </if>
+        <if test="type =='month'">
+            GROUP BY month(ab.accBuyCreatedTime);
+        </if>
+        <if test="type =='week'">
+            GROUP BY week(ab.accBuyCreatedTime);
+        </if>
+        <if test="type =='day'">
+            GROUP BY day(ab.accBuyCreatedTime);
+        </if>
+    </select>
+
+    <!--下单报表统计-->
+
+    <select id="queryByCondition" resultMap="AccessoriesBuyMap">
+        <![CDATA[
+            select count(*) as count ,week(ab.accBuyCreatedTime) as week, ab.accBuyCreatedTime from t_accessories_buy ab, t_company cc where ab.companyId = cc.companyId and ab.companyId = #{companyId}
+and ab.accBuyStatus = 'Y' and ab.accBuyCreatedTime >= #{start} and ab.accBuyCreatedTime <= #{end}
+        ]]>
+        <if test="type =='year'">
+            group by date_format(ab.accBuyCreatedTime, '%Y') ORDER BY ab.accBuyCreatedTime ASC;
+        </if>
+        <if test="type =='quarter'">
+            group by concat(date_format(ab.accBuyCreatedTime, '%Y'),FLOOR((date_format(ab.accBuyCreatedTime, '%m')+2)/3)) ORDER BY ab.accBuyCreatedTime ASC;
+        </if>
+        <if test="type =='month'">
+            group by date_format(ab.accBuyCreatedTime, '%y-%m') ORDER BY ab.accBuyCreatedTime ASC;
+        </if>
+        <if test="type =='week'">
+            group by date_format(ab.accBuyCreatedTime, '%y-%m') ORDER BY ab.accBuyCreatedTime ASC;
+        </if>
+        <if test="type =='day'">
+            group by date(ab.accBuyCreatedTime) ORDER BY ab.accBuyCreatedTime ASC;
+        </if>
+    </select>
+
+
+
+    <!--支付记录报表-->
+    <select id="queryByPayCondition" resultMap="AccessoriesBuyMap">
+        <![CDATA[
+       select sum(accBuyMoney) as accBuyMoney ,ab.accBuyCreatedTime from t_accessories_buy ab, t_company cc where ab.companyId = cc.companyId and ab.companyId = #{companyId}
+and ab.accBuyStatus = 'Y' and ab.accBuyCreatedTime >= #{start} and ab.accBuyCreatedTime <= #{end}
+        ]]>
+        <if test="type =='year'">
+            GROUP BY year(ab.accBuyCreatedTime);
+        </if>
+        <if test="type =='quarter'">
+            GROUP BY quarter(ab.accBuyCreatedTime);
+        </if>
+        <if test="type =='month'">
+            GROUP BY month(ab.accBuyCreatedTime);
+        </if>
+        <if test="type =='week'">
+            GROUP BY week(ab.accBuyCreatedTime);
+        </if>
+        <if test="type =='day'">
+            GROUP BY day(ab.accBuyCreatedTime);
+        </if>
+    </select>
+
 </mapper>
