@@ -204,12 +204,12 @@ public class MaterialUseServiceImpl implements MaterialUseService {
 	}
 
 	@Override
-	public List<WorkView> userWorksByPager(User user, Pager pager) {
+	public List<WorkInfo> userWorksByPager(User user, Pager pager) {
 		return materialUseDAO.userWorksByPager(user,pager);
 	}
 
 	@Override
-	public List<WorkView> userWorksStatusByPager(User user, String status, Pager pager) {
+	public List<WorkInfo> userWorksStatusByPager(User user, String status, Pager pager) {
 		return materialUseDAO.userWorksByPager(user,status,pager);
 	}
 

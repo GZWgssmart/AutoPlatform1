@@ -91,20 +91,20 @@
                 <th data-width="150" data-field="company" data-formatter="companyFormatter">所属公司</th>
                 <th data-field="userEmail">用户Email</th>
                 <th data-field="userPhone">用户手机号</th>
-            <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司人力资源管理部">
+            <shiro:hasAnyRoles name="系统超级管理员, 系统普通管理员, 公司超级管理员,公司普通管理员,汽车公司人力资源管理部">
                 <th data-field="userStatus" data-formatter="formatterStatus">操作</th>
             </shiro:hasAnyRoles>
             </tr>
             </thead>
         </table>
         <div id="toolbar" class="btn-group">
+        <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司人力资源管理部">
             <button id="searchRapid" type="button" class="btn btn-success" onclick="searchRapidStatus();">
                 <span class="glyphicon glyphicon-search" aria-hidden="true"></span>可用人员记录
             </button>
             <button id="searchDisable" type="button" class="btn btn-danger" onclick="searchDisableStatus();">
                 <span class="glyphicon glyphicon-search" aria-hidden="true"></span>禁用人员记录
             </button>
-        <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司人力资源管理部">
             <button id="btn_add" type="button" class="btn btn-default" onclick="showAdd();">
                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
             </button>
@@ -272,8 +272,9 @@
                     <div class="modal-footer">
                         <span id="addError"></span>
                         <button type="button" class="btn btn-default" onclick="closeModals('addWindow','addForm')">关闭</button>
-                        <button id="addButton" onClick="addSubmit();" type="button" class="btn btn-sm btn-success">保存
+                        <button id="addButton" onClick="addSubmit();" type="button" class="btn btn-sm btn-success">添加
                         </button>
+                        <input type="reset" name="reset" style="display: none;"/>
                     </div>
                 </form>
             </div><!-- /.modal-body -->
@@ -359,12 +360,14 @@
                         <p class="clearfix"></p>
                     </div>
                     <div>
+                    <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司人力资源管理部">
                         <div class="form-group col-md-6 pull-left">
                             <label class="col-md-4 control-label">底薪：</label>
                             <div class="col-md-8">
                                 <input type="number" define="emp.userSalary" name="userSalary" class="form-control">
                             </div>
                         </div>
+                    </shiro:hasAnyRoles>
                         <div class="form-group col-md-6 pull-left">
                             <label class="col-md-4 control-label">昵称：</label>
                             <div class="col-md-8">
@@ -476,10 +479,13 @@
                                 <label class="control-label">昵称：</label>
                                 <input type="text" define="emp.userNickname" class="form-control" disabled="true" style="margin-left: 30px;">
                             </div>
-                            <div class="form-group pull-left">
-                                <label class="control-label">所属公司：</label>
-                                <input define="emp.company.companyName" class="form-control" disabled="true">
-                            </div>
+                            <%-- 当角色不为系统的管理员的时候就显示此div --%>
+                            <shiro:lacksRole name="系统超级管理员, 系统普通管理员">
+                                <div class="form-group pull-left">
+                                    <label class="control-label">所属公司：</label>
+                                    <input define="emp.company.companyName" class="form-control" disabled="true">
+                                </div>
+                            </shiro:lacksRole>
                             <div class="form-group pull-left">
                                 <label class="control-label" >地址：</label>
                                 <input type="text" define="emp.userAddress" class="form-control" disabled="true" style="margin-left: 20px;">
@@ -538,7 +544,7 @@
         nodata: 'none'
     });
 
-    var loginName = "<%= name %>";
+    var loginRoleName = "<%= name %>";
     var userId = "<%= userId %>";
 
 </script>

@@ -25,17 +25,6 @@
     </association>
   </resultMap>
 
-  <resultMap id="userWorkView" type="com.gs.bean.view.WorkView">
-        <id column="workId" property="workId" jdbcType="VARCHAR" />
-        <result column = "recordId" property="recordId" />
-        <result column="colorRGB" property="colorRGB" />
-        <result column="colorName" property="colorName" />
-        <result column="carplate" property="carplate" />
-        <result column="carmodel" property="carmodel" />
-        <result column="carbrand" property="carbrand" />
-        <result column="userRequests" property="userRequests" />
-        <result column="workAssignTime" property="workAssignTime" />
-    </resultMap>
 
   <resultMap id="materialTempView" type="com.gs.bean.view.MaterialURTemp">
         <result column="materialUseId" property="materialUseId" jdbcType="VARCHAR" />
@@ -437,17 +426,18 @@
         update t_work_info  set userId = #{userId} , workAssignTime = #{workAssignTime} where recordId = #{recordId}
     </update>
     
-    <select id="userWorksByPager" resultMap="userWorkView">
+    <select id="userWorksByPager" resultMap="com.gs.dao.WorkInfoDAO.BaseResultMap">
         select
-            workinfo.workId 'workId',
-            record.recordId 'recordId',
-            color.colorRGB 'colorRGB',
-            color.colorName 'colorName',
-            checkin.carplate 'carplate',
-            model.modelName 'carmodel',
-            brand.brandName 'carbrand',
-            checkin.userRequests 'useRequests',
-            workinfo.workAssignTime 'workAssignTime'
+            workinfo.workId ,
+            record.recordId ,
+            color.colorRGB ,
+            color.colorName ,
+            checkin.carplate,
+            model.modelName ,
+            brand.brandName ,
+            plate.plateName ,
+            checkin.userRequests ,
+            workinfo.workAssignTime
         from
         t_work_info workinfo
         left JOIN t_maintain_record record on workinfo.recordId = record.recordId
@@ -455,6 +445,7 @@
         left join t_car_model model on checkin.modelId = model.modelId
         left join t_car_color color on checkin.colorId = color.colorId
         left join t_car_brand brand on checkin.brandId = brand.brandId
+        left join t_car_plate plate on checkin.plateId = plate.plateId
         <where>
             1 = 1
             <if test="user.companyId != '' and user.companyId != null">

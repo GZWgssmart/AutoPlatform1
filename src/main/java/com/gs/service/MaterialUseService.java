@@ -52,8 +52,8 @@ public interface MaterialUseService extends BaseService<String, MaterialUse>{
     public List<User> companyEmps(String companyId);
     public int insertWorkInfo(WorkInfo workInfo);
 
-    public List<WorkView> userWorksByPager(User user, Pager pager);
-    public List<WorkView> userWorksStatusByPager(User user,String status,Pager pager);
+    public List<WorkInfo> userWorksByPager(User user, Pager pager);
+    public List<WorkInfo> userWorksStatusByPager(User user,String status,Pager pager);
     public int countUserWorks(User user);
     public int countUserWorksStatus(User user, String status);
     public boolean recordIsDisp(String recordId);

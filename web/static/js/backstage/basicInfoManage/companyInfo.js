@@ -106,12 +106,6 @@ function showEdit() {
                 $('#editCity_china').val(formatterAddress(ceshi.companyAddress));
                 $("#editForm").fill(ceshi);
                 validator('editForm');
-                // $('#editcompanyName').bind('input propertychange', function() {
-                //     companyName = $("#editcompanyName").val();
-                // });
-                // $('#editcompanyPricipalphone').bind('input propertychange', function() {
-                //     companyPricipalphone = $("#editcompanyPricipalphone").val();
-                // });
             } else {
                 swal({
                     title: "",
@@ -199,12 +193,6 @@ function showAdd() {
         if (data.result == 'success') {
             $("#addWindow").modal('show');
             $("#addButton").removeAttr("disabled");
-            // $('#addcompanyName').bind('input propertychange', function() {
-            //     companyName = $("#addcompanyName").val();
-            // });
-            // $('#addcompanyPricipalphone').bind('input propertychange', function() {
-            //     companyPricipalphone = $("#addcompanyPricipalphone").val();
-            // });
             validator('addForm'); // 初始化验证
         } else if (data.result == 'notLogin') {
             swal({
@@ -292,18 +280,6 @@ function validator(formId) {
                     }
                 }
             },
-            // companyWebsite: {
-            //     message: '公司官网网址验证失败',
-            //     validators: {
-            //         notEmpty: {
-            //             message: '公司官网网址格式为http|ftp|https://www'
-            //         },
-            //         regexp: {
-            //             regexp: /^(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?$/,
-            //                 message: '请输入正确公司官网网址'
-            //         }
-            //     }
-            // },
             companyWebsite: {
                 message: '公司官网URL验证失败',
                 validators: {
@@ -348,7 +324,7 @@ function validator(formId) {
                         message: '负责人联系电话必须为11位'
                     },
                     regexp: {
-                        regexp: /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/,
+                        regexp: /^(((13[0-9]{1})|(15[0-9]{1})|(17[0-9]{1})|(18[0-9]{1}))+\d{8})$/,
                         message: '请输入正确的手机号'
                     },
                     remote: {
@@ -371,22 +347,22 @@ function validator(formId) {
                     }
                 }
             },
-            companyLongitude: {
-                message: '公司经度验证失败',
-                validators: {
-                    notEmpty: {
-                        message: '公司经度不能为空'
-                    }
-                }
-            },
-            companyLatitude: {
-                message: '公司纬度验证失败',
-                validators: {
-                    notEmpty: {
-                        message: '公司纬度不能为空'
-                    }
-                }
-            },
+            // companyLongitude: {
+            //     message: '公司经度验证失败',
+            //     validators: {
+            //         notEmpty: {
+            //             message: '公司经度不能为空'
+            //         }
+            //     }
+            // },
+            // companyLatitude: {
+            //     message: '公司纬度验证失败',
+            //     validators: {
+            //         notEmpty: {
+            //             message: '公司纬度不能为空'
+            //         }
+            //     }
+            // },
             companyOpendate: {
                 message: '公司成立时间验证失败',
                 validators: {
@@ -428,75 +404,6 @@ function formatterImg(value, row, index) {
         ]
     }
 }
-
-
-// //初始化文件上传控件
-// $(function () {
-//
-//     $("#add_companyLogo").fileinput({
-//         language: 'zh', //设置语言
-//         showCaption: true, //是否显示文件的标题
-//         showPreview: true, //是否显示文件的预览图
-//         showRemove: true, //是否显示删除/清空按钮
-//         showUpload: true, //是否显示文件上传按钮
-//         showCancel: true, //是否显示取消文件上传按钮
-//         uploadAsync: true,
-//         minFileCount: 1,
-//         maxFileCount: 6,
-// //        validateInitialCount: true,
-//         enctype: 'multipart/form-data',
-//         uploadUrl: '<%=path %>/company/editFile', //上传的地址
-// //      maxFileSize: 5000,
-// //      browseClass: "btn btn-primary", //按钮样式
-// //        allowedPreviewTypes: ['image'], //可以配置哪些文件类型被允许显示为预览,用默认较好
-// //        allowedFileTypes: ['image'],
-// //        browseClass: "btn btn-primary", //按钮样式
-// //        previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
-//         allowedFileExtensions: ['jpg', 'png', 'gif']
-//     });
-// });
-
-// $(function () {
-//     //0.初始化fileinput
-//     var oFileInput = new FileInput();
-//     oFileInput.Init("edit_companyLogo", "/company/editFile");
-// });
-
-// //初始化fileinput
-// var FileInput = function () {
-//     var oFile = new Object();
-//     //初始化fileinput控件（第一次初始化）
-//     oFile.Init = function (ctrlName, uploadUrl) {
-//         var control = $('#' + ctrlName);
-//         //初始化上传控件的样式
-//         control.fileinput({
-//             language: 'zh', //设置语言
-//             uploadUrl: uploadUrl, //上传的地址
-//             allowedFileExtensions: ['jpg', 'gif', 'png'],//接收的文件后缀
-//             showUpload: true, //是否显示上传按钮
-//             showCaption: false,//是否显示标题
-//             browseClass: "btn btn-primary", //按钮样式
-//             dropZoneEnabled: true,//是否显示拖拽区域
-//             //minImageWidth: 50, //图片的最小宽度
-//             //minImageHeight: 50,//图片的最小高度
-//             //maxImageWidth: 1000,//图片的最大宽度
-//             //maxImageHeight: 1000,//图片的最大高度
-//             //maxFileSize: 0,//单位为kb，如果为0表示不限制文件大小
-//             //minFileCount: 0,
-//             maxFileCount: 10, //表示允许同时上传的最大文件个数
-//             enctype: 'multipart/form-data',
-//             validateInitialCount: true,
-//             previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
-//             msgFilesTooMany: "选择上传的文件数量({n}) 超过允许的最大数值{m}！",
-//         }).on("fileuploaded", function (event, data) {
-//             // data 为controller返回的json
-//             if (data.response.result == 'success') {
-//                 alert('处理成功');
-//             }
-//         });
-//     }
-//     return oFile;
-// };
 
 function addSubmit() {
     setTimeout(function () {
@@ -722,9 +629,38 @@ address.click(function () {
 })
 
 function showMap(winId) {
-
     $("#mapWindow").modal('show');
-    $('#addForm').data('bootstrapValidator').resetForm();
     windowId = winId;
     map.addEventListener("click", showInfo);
+}
+
+
+// 模糊查询
+function blurredQuery(){
+    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员";
+    $.post("/user/isLogin/"+roles, function (data) {
+        if(data.result == 'success'){
+            var button = $("#ulButton");// 获取模糊查询按钮
+            var text = button.text();// 获取模糊查询按钮文本
+            var vaule = $("#ulInput").val();// 获取模糊查询输入框文本
+            initTable('table', '/company/blurredQuery?text='+text+'&value='+vaule);
+        }else if(data.result == 'notLogin'){
+            swal({title:"",
+                    text:data.message,
+                    confirmButtonText:"确认",
+                    type:"error"}
+                ,function(isConfirm){
+                    if(isConfirm){
+                        top.location = "/user/loginPage";
+                    }else{
+                        top.location = "/user/loginPage";
+                    }
+                })
+        }else if(data.result == 'notRole'){
+            swal({title:"",
+                text:data.message,
+                confirmButtonText:"确认",
+                type:"error"})
+        }
+    });
 }

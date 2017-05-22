@@ -76,6 +76,24 @@ public interface UserService extends BaseService<String, User> {
     public int countNO(User user);
 
     /**
+     * 根据状态计数
+     * @return
+     */
+    public int countStatus(User user, String status);
+
+    /**
+     * 根据状态计数 系统管理员
+     * @return
+     */
+    public int countSystemAdminStatus(User user, String status);
+
+    /**
+     * 状态计数全部
+     * @return
+     */
+    public int countAll(User user);
+
+    /**
      * 查询此手机号是否已存在此手机
      */
     public int queryPhoneByOne(String phone);
@@ -106,4 +124,10 @@ public interface UserService extends BaseService<String, User> {
      * @return
      */
     public List<User> queryByCompanyId(String companyId);
+
+    //  根据状态查询该状态下的所有系统管理员
+    public List<User> querySystemAdminByPager(Pager pager, String status);
+
+    //  分页查询全部，不分状态
+    public List<User> queryAllByPager(Pager pager);
 }

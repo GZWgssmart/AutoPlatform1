@@ -10,6 +10,7 @@ import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
 import com.gs.common.mail.MailConfig;
+import com.gs.common.mes.IndustrySMS;
 import com.gs.common.util.RoleUtil;
 import com.gs.common.util.SessionUtil;
 import com.gs.service.CheckinService;
@@ -70,17 +71,21 @@ public class CarRemindController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value="remind/{ids}/{phones}", method = RequestMethod.GET)
-    public ControllerResult remind(HttpSession session, HttpServletRequest req, @PathVariable("ids") String ids, @PathVariable("phones") String phones) throws MessagingException, MessagingException {
+    @RequestMapping(value="remind/{ids}/{phones}/{userName}", method = RequestMethod.GET)
+    public ControllerResult remind(HttpSession session, HttpServletRequest req, @PathVariable("ids") String ids, @PathVariable("phones") String phones, @PathVariable("userName")String userName) throws MessagingException, MessagingException {
         if(SessionUtil.isLogin(session)) {
             String roles = "公司超级管理员,公司普通管理员,汽车公司接待员";
             if(RoleUtil.checkRoles(roles)) {
                 logger.info("提车提醒");
                 if(ids != null && ids != "" && phones != null && phones != "") {
-                    // 直接把用户手机传过来, 根据手机发送短信
-                    // 发送短信
-//                    IndustrySMS i = new IndustrySMS("", "【汽车之家】您的验证码为123456，请于30分钟内正确输入，如非本人操作，请忽略此短信。");
-//                    i.execute();
+                    String[] strArray = null;
+                    strArray = phones.split(",");
+                    String[] strArray1 = null;
+                    strArray1 = userName.split(",");
+                    for(int i =0; i<strArray.length; i++) {
+                        IndustrySMS is = new IndustrySMS(strArray[i], "【汽车之家】尊敬的"+strArray1[i]+"车主您好，您在本店进行的维修保养已经完工，请前来本店提取车辆");
+                        is.execute();
+                    }
                     List<User> users = userService.queryEmail(ids);// 根据维修保养记录id查出所有的用户, 拿到用户的email;
                     String emails = "";
                     for (User u : users) { // 设置邮箱

@@ -443,7 +443,6 @@ CREATE TABLE `t_maintain_schedule` (
   `maintainScheduleDes` varchar(500) DEFAULT NULL COMMENT '维修保养进度描述',
   `msCreatedTime` datetime DEFAULT NULL COMMENT '维修保养进度创建时间',
   `msStatus` varchar(2) DEFAULT NULL COMMENT '维修保养进度状态，Y表示可用，N表示不可用',
-  `currentStatus` varchar(2) DEFAULT NULL COMMENT '标记此进度是否完成',
   PRIMARY KEY (`maintainScheduleId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

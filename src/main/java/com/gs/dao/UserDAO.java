@@ -19,8 +19,14 @@ public interface UserDAO extends BaseDAO<String, User>{
 //  分页查询全部，不分状态
     public List<User> queryByPagerAll(Pager pager);
 
+    //  分页查询全部，不分状态
+    public List<User> queryAllByPager(Pager pager);
+
     //  分页查询被禁用的记录
     public List<User> queryByPagerDisable(Pager pager);
+
+//  根据状态查询该状态下的所有系统管理员
+    public List<User> querySystemAdminByPager(Pager pager, String status);
 
     /**
      * 根据维修保养记录查询到用户的email发送邮件提醒车主进行提车
@@ -76,6 +82,25 @@ public interface UserDAO extends BaseDAO<String, User>{
      * @return
      */
     public int countNO(User user);
+
+    /**
+     * 根据状态计数
+     * @return
+     */
+    public int countStatus(User user, String status);
+
+    /**
+     * 根据状态计数 系统管理员
+     * @return
+     */
+    public int countSystemAdminStatus(User user, String status);
+
+    /**
+     * 状态计数全部
+     * @return
+     */
+    public int countAll(User user);
+
     /**
      * 查询此手机号是否已存在此手机 用于注册验证
      */

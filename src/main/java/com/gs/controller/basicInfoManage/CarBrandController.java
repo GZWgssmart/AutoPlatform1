@@ -241,8 +241,13 @@ public class CarBrandController {
                 if(text != null && text!="" && value != null && value != "") {
                     List<CarBrand> carBrands = null;
                     CarBrand carBrand = new CarBrand();
-                    if(text.equals("汽车品牌名称")){
+                    if(text.equals("汽车品牌名称/汽车品牌描述")){
                         carBrand.setBrandName(value);
+                        carBrand.setBrandDes(value);
+                    }else if(text.equals("汽车品牌名称")){
+                        carBrand.setBrandName(value);
+                    }else if(text.equals("汽车品牌描述")) {
+                        carBrand.setBrandDes(value);
                     }
                     carBrands = carBrandService.blurredQuery(pager,carBrand);
                     pager.setTotalRecords(carBrandService.countByBlurred(carBrand,(User)session.getAttribute("user")));

@@ -4,7 +4,6 @@ import ch.qos.logback.classic.Logger;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.gs.bean.*;
 import com.gs.bean.view.MaterialURTemp;
-import com.gs.bean.view.VariableInstanceTemp;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;

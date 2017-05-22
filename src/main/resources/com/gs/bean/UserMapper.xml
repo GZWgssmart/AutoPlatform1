@@ -142,6 +142,32 @@
     limit #{beginIndex}, #{pageSize};
   </select>
 
+  <!-- 不根据状态分页查询全部的 -->
+  <select id="queryAllByPager" resultMap="userBasicManageMap" parameterType="com.gs.common.bean.Pager">
+    <![CDATA[
+      select u.*, r.*, c.companyId, c.companyName from t_user u
+        left join t_user_role ur on u.userId = ur.userId
+        left join t_role r on r.roleId = ur.roleId
+        left join t_company c on u.companyId = c.companyId
+        where 1 = 1
+    ]]>
+    order by u.userCreatedTime desc
+    limit #{beginIndex}, #{pageSize};
+  </select>
+
+  <!-- 根据状态分页查询的系统管理员 -->
+  <select id="querySystemAdminByPager" resultMap="userBasicManageMap" parameterType="com.gs.common.bean.Pager">
+    <![CDATA[
+      select u.*, r.*, c.companyId, c.companyName from t_user u
+        left join t_user_role ur on u.userId = ur.userId
+        left join t_role r on r.roleId = ur.roleId
+        left join t_company c on u.companyId = c.companyId
+        where u.userStatus = #{userStatus}
+    ]]>
+    order by u.userCreatedTime desc
+    limit #{beginIndex}, #{pageSize};
+  </select>
+
   <!-- 分页模糊查询 -->
   <select id="queryByPagerLike" resultMap="userBasicManageMap" parameterType="com.gs.common.bean.Pager">
     <![CDATA[
@@ -185,28 +211,77 @@
 
   <select id="count" resultType="int" parameterType="user">
     <![CDATA[
-      select count(*) from t_user u where 1 = 1
+      select count(*) from t_user u
+        left join t_user_role ur on u.userId = ur.userId
+        left join t_role r on r.roleId = ur.roleId
+        where 1 = 1
     ]]>
     <if test="companyId != null and companyId != ''">
       and u.companyId = #{companyId}
+      and ur.roleId !='7ff4f1c5-3205-11e7-bc72-507b9d765567'
+      and ur.roleId != '80095901-3205-11e7-bc72-507b9d765567'
     </if>
+  </select>
+
+  <select id="countAll" resultType="int" parameterType="user">
+    <![CDATA[
+      select count(*) from t_user u
+        left join t_user_role ur on u.userId = ur.userId
+        left join t_role r on r.roleId = ur.roleId
+        where 1 = 1
+    ]]>
   </select>
 
   <select id="countOK" resultType="int" parameterType="user">
     <![CDATA[
-      select count(*) from t_user u where u.userStatus = 'Y'
+      select count(*) from t_user u
+        left join t_user_role ur on u.userId = ur.userId
+        left join t_role r on r.roleId = ur.roleId
+        where 1 = 1 and u.userStatus = 'Y'
     ]]>
     <if test="companyId != null and companyId != ''">
       and u.companyId = #{companyId}
+      and ur.roleId !='7ff4f1c5-3205-11e7-bc72-507b9d765567'
+      and ur.roleId != '80095901-3205-11e7-bc72-507b9d765567'
     </if>
   </select>
 
   <select id="countNO" resultType="int" parameterType="user">
     <![CDATA[
-      select count(*) from t_user u where u.userStatus = 'N'
+      select count(*) from t_user u
+        left join t_user_role ur on u.userId = ur.userId
+        left join t_role r on r.roleId = ur.roleId
+        where 1 = 1 and u.userStatus = 'N'
     ]]>
     <if test="companyId != null and companyId != ''">
       and u.companyId = #{companyId}
+      and ur.roleId !='7ff4f1c5-3205-11e7-bc72-507b9d765567'
+      and ur.roleId != '80095901-3205-11e7-bc72-507b9d765567'
+    </if>
+  </select>
+
+  <select id="countStatus" resultType="int" parameterType="user">
+    <![CDATA[
+      select count(*) from t_user u
+        left join t_user_role ur on u.userId = ur.userId
+        left join t_role r on r.roleId = ur.roleId
+        where 1 = 1 and u.userStatus = #{userStatus}
+    ]]>
+    <if test="companyId != null and companyId != ''">
+      and u.companyId = #{companyId}
+    </if>
+  </select>
+
+  <select id="countSystemAdminStatus" resultType="int" parameterType="user">
+    <![CDATA[
+      select count(*) from t_user u
+        left join t_user_role ur on u.userId = ur.userId
+        left join t_role r on r.roleId = ur.roleId
+        where 1 = 1 and u.userStatus = #{userStatus}
+    ]]>
+    <if test="companyId != null and companyId != ''">
+      and ur.roleId =='7ff4f1c5-3205-11e7-bc72-507b9d765567'
+      and ur.roleId == '80095901-3205-11e7-bc72-507b9d765567'
     </if>
   </select>
 
@@ -215,7 +290,7 @@
     <![CDATA[
       select * from t_user u where 1 = 1 and u.userStatus = 'Y'
     ]]>
-    <if test="companyId != null and companyId != ''">
+    <if test="companyI != null and companyId != ''">
       and u.companyId = #{companyId}
     </if>
   </select>

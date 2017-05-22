@@ -37,7 +37,7 @@
 
     <update id="update" parameterType="carcolor">
         <![CDATA[
-            update t_car_color set colorName = #{colorName},colorRGB = #{colorRgb},colorHex = #{colorHex},colorDes = #{colorDes} where colorId = #{colorId}
+            update t_car_color set colorName = #{colorName},colorRGB = #{colorRgb},colorHex = #{colorHex},colorDes = #{colorDes},colorStatus = 'Y' where colorId = #{colorId}
          ]]>
     </update>
 

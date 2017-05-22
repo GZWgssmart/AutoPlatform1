@@ -87,7 +87,8 @@ $(function(){
     var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师,汽车公司学徒,汽车公司销售人员,汽车公司财务人员,汽车公司采购人员,汽车公司库管人员,汽车公司人力资源管理部";
     $.post("/user/isLogin/"+roles, function (data) {
         if(data.result == 'success') {
-            $(".materialsCombobox").select2({ language: 'zh-CN'});
+            initSelect2("materialsCombobox", "请选择配件", "/materials/queryAllAccInv"); // 初始化select2, 第一个参数是class的名字, 第二个参数是select2的提示语, 第三个参数是select2的查询url
+            $(".select2.select2-container.select2-container--default").css("width", "");
             mySelfRecord();
         } else if(data.result == 'notLogin'){
             swal({title:"",
@@ -195,7 +196,6 @@ function showDel(t){
         materials.accCountView = -parseInt(accCount);
     }
     validator("materialsForm");
-    initSelect2("materialsCombobox", "请选择零件", "/materials/queryAllAccInv"); // 初始化select2, 第一个参数是class的名字, 第二个参数是select2的提示语, 第三个参数是select2的查询url
     $("#subButton1").removeAttr("disabled");
     $("#materialsForm").fill(materials);
     $("#formTag").val("add");
@@ -204,7 +204,6 @@ function showDel(t){
 }
 function showAppend(){
     validator("appendMaterialsForm");
-    initSelect2("materialsCombobox", "请选择零件", "/materials/queryAllAccInv"); // 初始化select2, 第一个参数是class的名字, 第二个参数是select2的提示语, 第三个参数是select2的查询url
     var recordIdEl = $("#appendMaterialsForm").find("input[name=maintainRecordId]");
     var recordId = $("#seachRecordId").val();
     $(recordIdEl).val(recordId);
@@ -304,10 +303,10 @@ function validator(formId) {
                 }
             },
             accId: {
-                message: '零件验证失败',
+                message: '配件验证失败',
                 validators: {
                     notEmpty: {
-                        message: '请选择零件'
+                        message: '请选择配件'
                     }
                 }
             },
@@ -349,6 +348,7 @@ function formSubmit(url, modalId ,formId, subBtnId,tableId){
                 swal({
                     title:"",
                     text: data.message,
+                    confirmButtonText:"确认",
                     type:"success"});// 提示窗口, 修改成功
                 $('#'+tableId).bootstrapTable("refresh");
                 $("#"+subBtnId).removeAttr("disable");
@@ -356,6 +356,7 @@ function formSubmit(url, modalId ,formId, subBtnId,tableId){
                 swal({
                     title:"",
                     text: data.message,
+                    confirmButtonText:"确认",
                     type:"error"}) // 提示窗口, 修改失败
             }
             closeModal(modalId,formId);
@@ -367,12 +368,14 @@ function removeMaterialsProInst(url, proInstId) {
             swal({
                 title:"",
                 text: data.message,
+                confirmButtonText:"确认",
                 type:"success"});// 提示窗口, 修改成功
             $('#reviewingTable').bootstrapTable('refresh');
         } else if(data.result === "fail") {
             swal({
                 title:"",
                 text: data.message,
+                confirmButtonText:"确认",
                 type:"error"});// 提示窗口, 修改成功
         }
         // closeModal("application", "materialsForm");
@@ -381,7 +384,12 @@ function removeMaterialsProInst(url, proInstId) {
 
 // tableFormatter一块
 function todoCell(ele, row, index) {
-    return "<a href='javascript:;'><span onclick='showWorkInfoDetail(\"" + row.recordId +"\")'><span class='glyphicon glyphicon-list-alt icon-list-alt' style='margin-right: 5px;' ></span><span>查看清单</span></span></a>";
+    return "<a href='javascript:;'><span onclick='showWorkInfoDetail(\"" + row.maintainRecord.recordId +"\")'><span class='glyphicon glyphicon-list-alt icon-list-alt' style='margin-right: 5px;' ></span><span>查看清单</span></span></a>";
+}
+function formatterPlate(el, row) {
+    console.log(row);
+    var checkin = row.maintainRecord.checkin;
+    return checkin.plate.plateName + " " + checkin.carPlate;
 }
 function reTodoBtn(ele, row, index) {
     var retodoHtml = [];
@@ -398,7 +406,7 @@ function reTodoBtn(ele, row, index) {
     return retodoHtml.join("");
 }
 function countFormatter(ele, row, index) {
-    return ele +  "&nbsp;&nbsp;/" + row.varsMap.acc.accUnit;
+    return ele;
 }
 function userRequestsFormatter(ele ,row, index) {
     var reqView = "";

@@ -67,6 +67,23 @@
                     <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
                 </button>
             </shiro:hasAnyRoles>
+            <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员">
+                <div class="input-group" style="width:300px;float:left;padding:0;margin:0 0 0 -1px;">
+                    <div class="input-group-btn">
+                        <button type="button" id="ulButton" class="btn btn-default" style="border-radius:0px;" data-toggle="dropdown">
+                            公司名称/公司负责人
+                        </button>
+                        <ul class="dropdown-menu pull-right">
+                            <li><a onclick="onclikLi(this)">公司名称</a></li>
+                            <li class="divider"></li>
+                            <li><a onclick="onclikLi(this)">公司负责人</a></li>
+                        </ul>
+                    </div><!-- /btn-group -->
+                    <input id="ulInput" class="form-control" onkeypress="if(event.keyCode==13) {blurredQuery();}">
+                    <a href="javaScript:;" onclick="blurredQuery()"><span class="glyphicon glyphicon-search search-style"></span></a>
+                    </input>
+                </div><!-- /input-group -->
+            </shiro:hasAnyRoles>
         </div>
     </div>
 </div>

@@ -184,6 +184,31 @@ public class UserServiceImpl implements UserService {
         return userDAO.countNO(user);
     }
 
+
+    /**
+     * 根据状态计数
+     * @return
+     */
+    public int countStatus(User user, String status) {
+        return userDAO.countStatus(user, status);
+    }
+
+    /**
+     * 根据状态计数 系统管理员
+     * @return
+     */
+    public int countSystemAdminStatus(User user, String status) {
+        return userDAO.countSystemAdminStatus(user, status);
+    }
+
+    /**
+     * 状态计数全部
+     * @return
+     */
+    public int countAll(User user) {
+        return userDAO.countAll(user);
+    }
+
     @Override
     public int queryPhoneByOne(String userPhone) {
         return userDAO.queryPhoneByOne(userPhone);
@@ -220,5 +245,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> queryByCompanyId(String companyId) {
         return userDAO.queryByCompanyId(companyId);
+    }
+
+    //  根据状态查询该状态下的所有系统管理员
+    public List<User> querySystemAdminByPager(Pager pager, String status) {
+        return userDAO.querySystemAdminByPager(pager, status);
+    }
+
+    //  分页查询全部，不分状态
+    public List<User> queryAllByPager(Pager pager) {
+        return userDAO.queryAllByPager(pager);
     }
 }

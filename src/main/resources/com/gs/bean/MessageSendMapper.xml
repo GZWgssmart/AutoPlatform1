@@ -38,6 +38,7 @@
     <if test="user.companyId != null and user.companyId != ''">
       and m.companyId = #{user.companyId}
     </if>
+    order by m.sendCreatedTime Desc
     limit #{beginIndex}, #{pageSize}
   </select>
 
@@ -86,6 +87,7 @@
     <if test="messageSend.sendMsg != null and messageSend.sendMsg != ''">
       and m.sendMsg like concat('%',#{messageSend.sendMsg},'%')
     </if>
+    order by m.sendCreatedTime Desc
     limit #{pager.beginIndex}, #{pager.pageSize}
   </select>
 

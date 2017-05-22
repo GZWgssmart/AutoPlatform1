@@ -13,6 +13,7 @@ import com.gs.common.bean.ComboBox4EasyUI;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
+import com.gs.common.mes.IndustrySMS;
 import com.gs.common.util.*;
 import com.gs.service.CompanyService;
 import com.gs.service.RoleService;
@@ -169,6 +170,9 @@ public class CompanyController {
                     userRoleService.insert(userRole);
                     companyService.insert(company);
                     map.put("company",company);
+                    String pwd = "123456";
+                    IndustrySMS i = new IndustrySMS(company.getCompanyPricipalphone(), "【汽车之家】尊敬的" +company.getCompanyPricipal() + "公司负责人您好，你的公司"+company.getCompanyName() + "已在本平台入驻成功，初始密码为"+pwd+"，请前来完善公司相关信息。");
+                    i.execute();
                     map.put("controllerResult",ControllerResult.getSuccessResult("添加公司信息成功" + "\n" + "账号:" + company.getCompanyPricipalphone() + " " + "初始密码为:123456"));
                     return map;
                 } else {
@@ -345,6 +349,55 @@ public class CompanyController {
             return ControllerResult.getNotLoginResult("登录信息无效，请重新登录");
         }
     }
+
+
+    /**
+     * 公司记录模糊查询
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value="blurredQuery", method = RequestMethod.GET)
+    public Pager4EasyUI<Company> blurredQuery(HttpSession session,HttpServletRequest request, @Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
+        if(SessionUtil.isLogin(session)) {
+            String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员";
+            if (RoleUtil.checkRoles(roles)) {
+                logger.info("公司模糊查询");
+                Pager pager = new Pager();
+                pager.setPageNo(Integer.valueOf(pageNumber));
+                pager.setPageSize(Integer.valueOf(pageSize));
+                pager.setUser((User)session.getAttribute("user"));
+                String text = request.getParameter("text");
+                String value = request.getParameter("value");
+                if(text != null && text!="" && value != null && value != "") {
+                    List<Company> companys = null;
+                    Company company = new Company();
+                    if(text.equals("公司名称/公司负责人")){
+                        company.setCompanyName(value);
+                        company.setCompanyPricipal(value);
+                    }else if(text.equals("公司名称")){
+                        company.setCompanyName(value);
+                    }else if(text.equals("公司负责人")) {
+                        company.setCompanyPricipal(value);
+                    }
+                    companys = companyService.blurredQuery(pager,company);
+                    pager.setTotalRecords(companyService.countByBlurred(company,(User)session.getAttribute("user")));
+                    System.out.print(companys);
+                    return new Pager4EasyUI<Company>(pager.getTotalRecords(), companys);
+                }else{ // 当在模糊查询输入框中输入的值为空时, 使它查询全部
+                    pager.setTotalRecords(companyService.count((User)session.getAttribute("user")));
+                    List<Company> companys = companyService.queryByPager(pager);
+                    return new Pager4EasyUI<Company>(pager.getTotalRecords(), companys);
+                }
+            }else {
+                logger.info("此用户无拥有公司模糊查询角色");
+                return null;
+            }
+        }else{
+            logger.info("请先登录");
+            return null;
+        }
+    }
+
 
 //    private boolean saveFile(MultipartFile file, HttpSession session, Company company) {
 //        // 判断文件是否为空

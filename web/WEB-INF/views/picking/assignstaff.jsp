@@ -104,7 +104,7 @@
     <div class="modal fade" id="appointModal" aria-hidden="true" data-backdrop="static" keyboard="false" style="overflow:auto; ">
     <div class="modal-dialog">
         <div class="modal-content">
-            <span class="glyphicon glyphicon-remove closeModal"  odata-dismiss="modal" aria-hidden="true"></span>
+            <span class="glyphicon glyphicon-remove closeModal"  data-dismiss="modal" aria-hidden="true"></span>
             <form class="form-horizontal" id="appointForm" method="post">
                 <input type="text" name="recordId" define="record.recordId" style="display:none"/>
                 <div class="modal-header" style="overflow:auto;">
@@ -136,7 +136,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header" style="margin-right:0;width:95%;">
-                <span class="glyphicon glyphicon-remove closeModal"  odata-dismiss="modal" aria-hidden="true"></span>
+                <span class="glyphicon glyphicon-remove closeModal"  data-dismiss="modal" aria-hidden="true"></span>
                 <h4 class="modal-title" id="myModalLabel">维修保养明细</h4>
             </div>
             <div class="modal-body">

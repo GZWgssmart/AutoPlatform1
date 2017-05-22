@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.gs.dao.WorkInfoDAO" >
-  <resultMap id="BaseResultMap" type="com.gs.bean.WorkInfo" >
-    <id column="workId" property="workId" jdbcType="VARCHAR" />
-    <result column="recordId" property="recordId" jdbcType="VARCHAR" />
-    <result column="userId" property="userId" jdbcType="VARCHAR" />
-    <result column="workAssignTime" property="workAssignTime" jdbcType="TIMESTAMP" />
-    <result column="workCreatedTime" property="workCreatedTime" jdbcType="TIMESTAMP" />
-    <result column="workStatus" property="workStatus" jdbcType="VARCHAR" />
-    <result column="count" property="count" jdbcType="VARCHAR" />
-    <result column="week" property="week" jdbcType="VARCHAR" />
+    <resultMap id="BaseResultMap" type="com.gs.bean.WorkInfo" >
+        <id column="workId" property="workId" jdbcType="VARCHAR" />
+        <result column="recordId" property="recordId" jdbcType="VARCHAR" />
+        <result column="userId" property="userId" jdbcType="VARCHAR" />
+        <result column="workAssignTime" property="workAssignTime" jdbcType="TIMESTAMP" />
+        <result column="workCreatedTime" property="workCreatedTime" jdbcType="TIMESTAMP" />
+        <result column="workStatus" property="workStatus" jdbcType="VARCHAR" />
+        <result column="count" property="count" jdbcType="VARCHAR" />
+        <result column="week" property="week" jdbcType="VARCHAR" />
 
-    <association property="maintainRecord" javaType="com.gs.bean.MaintainRecord">
-        <id column="recordId" property="recordId"/>
-        <result column="startTime" property="startTime"/>
-        <result column="endTime" property="endTime"/>
-        <result column="actualEndTime" property="actualEndTime"/>
-        <result column="recordCreatedTime" property="recordCreatedTime"/>
-        <result column="pickupTime" property="pickupTime"/>
-        <result column="recordDes" property="recordDes"/>
+        <association property="maintainRecord" javaType="com.gs.bean.MaintainRecord">
+            <id column="recordId" property="recordId"/>
+            <result column="startTime" property="startTime"/>
+            <result column="endTime" property="endTime"/>
+            <result column="actualEndTime" property="actualEndTime"/>
+            <result column="recordCreatedTime" property="recordCreatedTime"/>
+            <result column="pickupTime" property="pickupTime"/>
+            <result column="recordDes" property="recordDes"/>
 
-          <association property="checkin" javaType="com.gs.bean.Checkin">
+            <association property="checkin" javaType="com.gs.bean.Checkin">
                 <id column="checkinId" property="checkinId" jdbcType="VARCHAR" />
                 <result column="userId" property="userId" jdbcType="VARCHAR" />
                 <result column="appointmentId" property="appointmentId" jdbcType="VARCHAR" />
@@ -72,19 +72,19 @@
                     <id property="userId" column="userId"/>
                     <result property="userName" column="userName"/>
                 </association>
-          </association>
-    </association>
+            </association>
+        </association>
 
-    <association property="user" javaType="com.gs.bean.User">
-        <id column="userId" property="userId"/>
-        <result column="userEmail" property="userEmail" />
-        <result column="userPhone" property="userPhone" />
-        <result column="userNickname" property="userNickname" />
-        <result column="userIdentity" property="userIdentity" />
-        <result column="userName" property="userName" />
-        <result column="companyId" property="companyId" />
-    </association>
-  </resultMap>
+        <association property="user" javaType="com.gs.bean.User">
+            <id column="userId" property="userId"/>
+            <result column="userEmail" property="userEmail" />
+            <result column="userPhone" property="userPhone" />
+            <result column="userNickname" property="userNickname" />
+            <result column="userIdentity" property="userIdentity" />
+            <result column="userName" property="userName" />
+            <result column="companyId" property="companyId" />
+        </association>
+    </resultMap>
 
     <select id="count" resultType="int" parameterType="com.gs.bean.User">
         <![CDATA[
@@ -94,7 +94,7 @@
           where 1 = 1
         ]]>
         <if test="status != null and status != ''">
-           and w.workStatus=  #{status}
+            and w.workStatus=  #{status}
         </if>
         <if test="user.companyId !=null and user.companyId != ''">
             and checkin.companyId = #{user.companyId}
@@ -149,8 +149,8 @@
         <if test="user.companyId !=null and user.companyId != '' ">
             and ck.companyId = #{user.companyId}
         </if>
-            order by wi.workCreatedTime Desc
-            limit #{beginIndex}, #{pageSize}
+        order by wi.workCreatedTime Desc
+        limit #{beginIndex}, #{pageSize}
     </select>
 
 
@@ -171,24 +171,24 @@
         limit #{beginIndex}, #{pageSize}
     </select>
 
-  <select id="queryAll" resultMap="BaseResultMap" parameterType="com.gs.bean.User">
-      <![CDATA[
+    <select id="queryAll" resultMap="BaseResultMap" parameterType="com.gs.bean.User">
+        <![CDATA[
         SELECT * FROM t_work_info
          ]]>
-      <if test="companyId !=null and companyId != '' ">
-          and s.companyId = #{companyId}
-      </if>
-  </select>
+        <if test="companyId !=null and companyId != '' ">
+            and s.companyId = #{companyId}
+        </if>
+    </select>
 
-   <!-- 添加数据 -->
-  <insert id="insert" keyProperty="id" parameterType="com.gs.bean.WorkInfo">
-      <![CDATA[
+    <!-- 添加数据 -->
+    <insert id="insert" keyProperty="id" parameterType="com.gs.bean.WorkInfo">
+        <![CDATA[
           INSERT INTO t_work_info
           (workId,recordId, userId, workAssignTime, workCreatedTime,workStatus)
           VALUES
           (uuid(),#{recordId},#{userId},#{workAssignTime},now(),'N')
       ]]>
-  </insert>
+    </insert>
 
     <!--更新数据-->
     <update id="update" keyProperty="workId" parameterType="com.gs.bean.WorkInfo">
@@ -206,7 +206,7 @@
 
     <!--已完成工单-->
     <update id="active" keyProperty="workId" parameterType="string">
-      <![CDATA[
+        <![CDATA[
         UPDATE t_work_info set workStatus='Y' WHERE workId = #{workId}
          ]]>
     </update>
