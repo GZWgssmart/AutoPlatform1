@@ -222,7 +222,7 @@
 
     <select id="queryByCompanyIdForInType" resultMap="incomingOutgoingMap">
         <![CDATA[
-          select io.inTypeId,io.inOutCreatedTime,io.inOutCreatedUser,it.inTypeName,u.userName
+          select io.inTypeId,io.inOutCreatedTime,io.inOutCreatedUser,io.inOutMoney,it.inTypeName,u.userName
           from auto_platform.t_incoming_outgoing io
           LEFT join auto_platform.t_incoming_type it on it.inTypeId=io.inTypeId
           LEFT join auto_platform.t_user u on u.userId=io.inOutCreatedUser
@@ -234,7 +234,7 @@
 
     <select id="queryByCompanyIdForOutType" resultMap="incomingOutgoingMap">
         <![CDATA[
-          select io.outTypeId,io.inOutCreatedTime,io.inOutCreatedUser,ot.outTypeName,u.userName
+          select io.outTypeId,io.inOutCreatedTime,io.inOutCreatedUser,io.inOutMoney,ot.outTypeName,u.userName
           from auto_platform.t_incoming_outgoing io
           LEFT join auto_platform.t_outgoing_type ot on ot.outTypeId=io.outTypeId
           LEFT join auto_platform.t_user u on u.userId=io.inOutCreatedUser

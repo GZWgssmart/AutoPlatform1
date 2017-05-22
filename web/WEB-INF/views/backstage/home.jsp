@@ -13,7 +13,7 @@
 <body class="gray-bg" style="font-size: 0px;">
 <div class="wrapper wrapper-content  animated fadeInRight">
     <div class="row">
-        <div class="col-sm-10" style="margin-left: 10%;">
+        <div class="col-sm-8" style="margin-left: 16%;">
             <div class="ibox">
                 <div class="ibox-content">
                     <div class="clients-list">
@@ -34,14 +34,11 @@
                                                             <i class="fa fa-envelope"></i>
                                                         </td>
                                                         <td>邮箱</td>
-                                                        <td class="client-status"><span
-                                                                class="label label-primary">是否已经验证</span>
-                                                        </td>
                                                     </tr>
                                                     <c:forEach items="${requestScope.userinfo}" var="us">
                                                         <tr>
                                                             <td class="client-avatar">
-                                                                <img alt="image" src="${us.userIcon}" height="30px"
+                                                                <img alt="image" src="/${us.userIcon}" height="30px"
                                                                      width="30px">
                                                             </td>
                                                             <td>
@@ -55,18 +52,15 @@
                                                                 <i class="fa fa-envelope"></i>
                                                             </td>
                                                             <td>${us.userEmail}</td>
-                                                            <td class="client-status">
-                                                                <span class="label label-primary">已验证</span>
-                                                            </td>
                                                             <br/>
                                                         </tr>
                                                     </c:forEach>
                                                     </tbody>
                                                 </table>
                                             </c:when>
-                                            <c:when test="${requestScope.userinfo==null}">
+                                            <c:otherwise>
                                                 暂无数据
-                                            </c:when>
+                                            </c:otherwise>
                                         </c:choose>
                                     </div>
                                 </div>
@@ -96,9 +90,6 @@
                                                         <i class="fa fa-envelope"></i>
                                                         <td>预约时间</td>
                                                         <i class="fa fa-envelope"></i>
-                                                        <td class="client-status"><span
-                                                                class="label label-primary">是否已经验证</span>
-                                                        </td>
                                                     </tr>
                                                     <c:forEach items="${requestScope.appinfo}" var="app">
                                                         <tr>
@@ -113,9 +104,6 @@
                                                             </td>
                                                             <td class="client-avatar">${app.maintainOrFix}</td>
                                                             <td class="client-avatar">${app.appCreatedTime}</td>
-                                                            <td class="client-status">
-                                                                <span class="label label-primary">已验证</span>
-                                                            </td>
                                                             <br/>
                                                         </tr>
                                                     </c:forEach>
@@ -153,9 +141,6 @@
                                                         <i class="fa fa-envelope"></i>
                                                         <td>维修时间</td>
                                                         <i class="fa fa-envelope"></i>
-                                                        <td class="client-status"><span
-                                                                class="label label-primary">是否已经验证</span>
-                                                        </td>
                                                     </tr>
                                                     <c:forEach items="${requestScope.maininfo}" var="main">
                                                         <tr>
@@ -170,9 +155,6 @@
                                                             </td>
                                                             <td class="client-avatar">${main.maintainOrFix}</td>
                                                             <td class="client-avatar">${main.maintainHour}</td>
-                                                            <td class="client-status">
-                                                                <span class="label label-primary">已验证</span>
-                                                            </td>
                                                             <br/>
                                                         </tr>
                                                     </c:forEach>
@@ -206,17 +188,15 @@
                                                         <i class="fa fa-envelope"></i>
                                                         <td class="client-avatar">支出类型</td>
                                                         <i class="fa fa-envelope"></i>
+                                                        <td class="client-avatar">支出金额</td>
                                                         <i class="fa fa-envelope"></i>
                                                         <td>创建时间</td>
                                                         <i class="fa fa-envelope"></i>
-                                                        <td class="client-status"><span
-                                                                class="label label-primary">是否已经验证</span>
-                                                        </td>
                                                     </tr>
                                                     <c:forEach items="${requestScope.outgoInfo}" var="out">
                                                         <tr>
                                                             <td class="client-avatar">
-                                                                    ${out.user.userName}
+                                                                ${out.user.userName}
                                                             </td>
                                                             <td>
                                                                 <a data-toggle="tab" href="#contact-1"
@@ -224,10 +204,10 @@
                                                                         ${out.outgoingType.outTypeName}
                                                                 </a>
                                                             </td>
-                                                            <td class="client-avatar">${out.inOutCreatedTime}</td>
-                                                            <td class="client-status">
-                                                                <span class="label label-primary">已验证</span>
+                                                            <td class="client-avatar">
+                                                                    ${out.inOutMoney}
                                                             </td>
+                                                            <td class="client-avatar">${out.inOutCreatedTime}</td>
                                                             <br/>
                                                         </tr>
                                                     </c:forEach>
@@ -261,11 +241,9 @@
                                                         <i class="fa fa-envelope"></i>
                                                         <td class="client-avatar">收入类型</td>
                                                         <i class="fa fa-envelope"></i>
+                                                        <td class="client-avatar">收入金额</td>
                                                         <td>创建时间</td>
                                                         <i class="fa fa-envelope"></i>
-                                                        <td class="client-status"><span
-                                                                class="label label-primary">是否已经验证</span>
-                                                        </td>
                                                     </tr>
                                                     <c:forEach items="${requestScope.incomInfo}" var="in">
                                                         <tr>
@@ -278,10 +256,10 @@
                                                                         ${in.incomingType.inTypeName}
                                                                 </a>
                                                             </td>
-                                                            <td class="client-avatar">${in.inOutCreatedTime}</td>
-                                                            <td class="client-status">
-                                                                <span class="label label-primary">已验证</span>
+                                                            <td class="client-avatar">
+                                                                    ${in.inOutMoney}
                                                             </td>
+                                                            <td class="client-avatar">${in.inOutCreatedTime}</td>
                                                             <br/>
                                                         </tr>
                                                     </c:forEach>
