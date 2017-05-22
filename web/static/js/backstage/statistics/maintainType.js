@@ -29,7 +29,6 @@ $(function () {
 function selectMaintainName() {
     var companyId = $("#companyId").val();
     var maintainTypeId = $("#maintainTypeId").val();
-    console.log(companyId + maintainTypeId)
     initSelect2("maintainName", "请选择项目名称", "/maintain/queryByMaintainName/"+companyId+"/"+maintainTypeId);
     $('#maintainId').html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
 
@@ -37,7 +36,6 @@ function selectMaintainName() {
 function selectMonthMaintainName() {
     var companyId = $("#monthCompanyId").val();
     var maintainTypeId = $("#monthMaintainTypeId").val();
-    console.log(companyId + maintainTypeId)
     initSelect2("maintainName", "请选择项目名称", "/maintain/queryByMaintainName/"+companyId+"/"+maintainTypeId);
     $('#monthMaintainId').html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
 
@@ -45,7 +43,6 @@ function selectMonthMaintainName() {
 function selectDayMaintainName() {
     var companyId = $("#dayCompanyId").val();
     var maintainTypeId = $("#dayMaintainTypeId").val();
-    console.log(companyId + maintainTypeId)
     initSelect2("maintainName", "请选择项目名称", "/maintain/queryByMaintainName/"+companyId+"/"+maintainTypeId);
     $('#dayMaintainId').html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
 
@@ -53,7 +50,6 @@ function selectDayMaintainName() {
 function selectQuarterMaintainName() {
     var companyId = $("#quarterCompanyId").val();
     var maintainTypeId = $("#quarterMaintainTypeId").val();
-    console.log(companyId + maintainTypeId)
     initSelect2("maintainName", "请选择项目名称", "/maintain/queryByMaintainName/"+companyId+"/"+maintainTypeId);
     $('#quarterMaintainId').html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
 
@@ -61,7 +57,6 @@ function selectQuarterMaintainName() {
 function selectWeekMaintainName() {
     var companyId = $("#weekCompanyId").val();
     var maintainTypeId = $("#weekMaintainTypeId").val();
-    console.log(companyId + maintainTypeId)
     initSelect2("maintainName", "请选择项目名称", "/maintain/queryByMaintainName/"+companyId+"/"+maintainTypeId);
     $('#weekMaintainId').html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
 
@@ -72,7 +67,6 @@ $("#maintainTypeId").change(function(){
     var companyId = $("#companyId").val();
     var maintainTypeId = $("#maintainTypeId").val();
     $('#maintainId').html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
-    console.log(companyId + maintainTypeId)
     if (companyId != null && companyId != '') {
         initSelect2("maintainName", "请选择项目名称", "/maintain/queryByMaintainName/"+companyId+"/"+maintainTypeId);
     } else {
@@ -258,7 +252,7 @@ $.ajax({	//使用JQuery内置的Ajax方法
     },
     error : function(errorMsg) {
         //请求失败时执行该函数
-        alert("图表请求数据失败，可能是服务器开小差了");
+
         myChart.hideLoading();
     }
 })
@@ -313,7 +307,6 @@ function selectYears() {
     var companyId = $("#companyId").val();
     var maintainOrFix = $("#maintainTypeId").val();
     var maintainId = $("#maintainId").val();
-    console.log(companyId + maintainOrFix + maintainId)
     $.ajax({	//使用JQuery内置的Ajax方法
         type: "post",		//post请求方式
         async: true,		//异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
@@ -354,7 +347,7 @@ function selectYears() {
         },
         error: function (errorMsg) {
             //请求失败时执行该函数
-            alert("图表请求数据失败，可能是服务器开小差了");
+
             myChart.hideLoading();
         }
     })
@@ -417,7 +410,7 @@ function selectMonth() {
         },
         error: function (errorMsg) {
             //请求失败时执行该函数
-            alert("图表请求数据失败，可能是服务器开小差了");
+
             myChart.hideLoading();
         }
     })
@@ -476,7 +469,7 @@ function selectDay() {
         },
         error: function (errorMsg) {
             //请求失败时执行该函数
-            alert("图表请求数据失败，可能是服务器开小差了");
+
             myChart.hideLoading();
         }
     })
@@ -532,7 +525,7 @@ function selectQuarter() {
         },
         error: function (errorMsg) {
             //请求失败时执行该函数
-            alert("图表请求数据失败，可能是服务器开小差了");
+
             myChart.hideLoading();
         }
     })
@@ -593,7 +586,7 @@ function selectWeek() {
         },
         error: function (errorMsg) {
             //请求失败时执行该函数
-            alert("图表请求数据失败，可能是服务器开小差了");
+
             myChart.hideLoading();
         }
     })

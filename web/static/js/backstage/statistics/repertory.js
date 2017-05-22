@@ -186,7 +186,6 @@ $.ajax({	//使用JQuery内置的Ajax方法
     },
     error : function(errorMsg) {
         //请求失败时执行该函数
-        alert("图表请求数据失败，可能是服务器开小差了");
         myChart.hideLoading();
     }
 })
@@ -240,7 +239,6 @@ function selectYears() {
     var end = $("#endYearInput").val() + "-12-31";
     var companyId = $("#companyId").val();
     var maintainId = $("#maintainId").val();
-    console.log(companyId + maintainId)
     $.ajax({	//使用JQuery内置的Ajax方法
         type: "post",		//post请求方式
         async: true,		//异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
@@ -281,7 +279,7 @@ function selectYears() {
         },
         error: function (errorMsg) {
             //请求失败时执行该函数
-            alert("图表请求数据失败，可能是服务器开小差了");
+
             myChart.hideLoading();
         }
     })
@@ -341,7 +339,7 @@ function selectMonth() {
         },
         error: function (errorMsg) {
             //请求失败时执行该函数
-            alert("图表请求数据失败，可能是服务器开小差了");
+
             myChart.hideLoading();
         }
     })
@@ -398,7 +396,7 @@ function selectDay() {
         },
         error: function (errorMsg) {
             //请求失败时执行该函数
-            alert("图表请求数据失败，可能是服务器开小差了");
+
             myChart.hideLoading();
         }
     })
@@ -457,7 +455,7 @@ function selectQuarter() {
         },
         error: function (errorMsg) {
             //请求失败时执行该函数
-            alert("图表请求数据失败，可能是服务器开小差了");
+
             myChart.hideLoading();
         }
     })
@@ -517,7 +515,7 @@ function selectWeek() {
         },
         error: function (errorMsg) {
             //请求失败时执行该函数
-            alert("图表请求数据失败，可能是服务器开小差了");
+
             myChart.hideLoading();
         }
     })
