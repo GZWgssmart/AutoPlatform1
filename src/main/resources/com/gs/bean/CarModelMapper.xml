@@ -96,10 +96,10 @@
         <![CDATA[
             select cm.*, cb.brandId, cb.brandName from auto_platform.t_car_model cm
             left join t_car_brand cb on cm.brandId = cb.brandId
-            where 1=1 and
+            where 1=1
        ]]>
         <if test="carModel.modelName != '' and carModel.modelName != null">
-            cm.modelName like '%${carModel.modelName}%'
+            and cm.modelName like '%${carModel.modelName}%'
         </if>
         <if test="carModel.brandId != '' and carModel.brandId != null">
             cb.brandName like '%${carModel.brandId}%'
@@ -111,10 +111,10 @@
     <![CDATA[
       select count(*) from auto_platform.t_car_model cm
       left join t_car_brand cb on cm.brandId = cb.brandId
-      where 1=1 and
+      where 1=1
     ]]>
         <if test="carModel.modelName != '' and carModel.modelName != null">
-            cm.modelName like '%${carModel.modelName}%'
+            and cm.modelName like '%${carModel.modelName}%'
         </if>
         <if test="carModel.brandId != '' and carModel.brandId != null">
             cb.brandName like '%${carModel.brandId}%'

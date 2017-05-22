@@ -98,11 +98,11 @@ public class CarPlateController {
             String roles = "系统超级管理员,系统普通管理员";
             if (RoleUtil.checkRoles(roles)) {
                 if (carPlate != null && !carPlate.equals("")) {
-                    logger.info("添加车牌信息");
+                    logger.info("添加汽车车牌信息");
                     carPlateService.insert(carPlate);
-                    return ControllerResult.getSuccessResult("添加车牌信息成功");
+                    return ControllerResult.getSuccessResult("添加汽车车牌信息成功");
                 } else {
-                    return ControllerResult.getFailResult("添加车牌信息失败");
+                    return ControllerResult.getFailResult("添加汽车车牌信息失败");
                 }
             } else {
                 logger.info("此用户无拥有此方法角色");
@@ -121,11 +121,11 @@ public class CarPlateController {
             String roles = "系统超级管理员,系统普通管理员";
             if (RoleUtil.checkRoles(roles)) {
                 if (carPlate != null && !carPlate.equals("")) {
-                    logger.info("修改车牌信息");
+                    logger.info("修改汽车车牌信息");
                     carPlateService.update(carPlate);
-                    return ControllerResult.getSuccessResult("修改车牌信息成功");
+                    return ControllerResult.getSuccessResult("修改汽车车牌信息成功");
                 } else {
-                    return ControllerResult.getFailResult("修改车牌信息失败");
+                    return ControllerResult.getFailResult("修改汽车车牌信息失败");
                 }
             } else {
                 logger.info("此用户无拥有此方法角色");
@@ -195,12 +195,12 @@ public class CarPlateController {
                 if (id != null && !id.equals("") && status != null && !status.equals("")) {
                     if (status.equals("N")) {
                         carPlateService.active(id);
-                        logger.info("激活成功");
-                        return ControllerResult.getSuccessResult("激活成功");
+                        logger.info("激活汽车车牌成功");
+                        return ControllerResult.getSuccessResult("激活汽车车牌成功");
                     } else {
                         carPlateService.inactive(id);
-                        logger.info("禁用成功");
-                        return ControllerResult.getSuccessResult("禁用成功");
+                        logger.info("禁用汽车车牌成功");
+                        return ControllerResult.getSuccessResult("禁用汽车车牌成功");
                     }
                 } else {
                     return ControllerResult.getFailResult("操作失败");

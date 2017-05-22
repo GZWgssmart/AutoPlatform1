@@ -51,7 +51,7 @@ var FileInput = function () {
     oFile.Init = function (ctrlName, uploadUrl) {
         var control = $('#' + ctrlName);
         $('#' + ctrlName).parent().css('width','90%');
-        $('#' + ctrlName).parent().css('height','70%');
+        $('#' + ctrlName).parent().css('height','60%');
         //初始化上传控件的样式
         control.fileinput({
             language: 'zh', //设置语言
@@ -288,27 +288,12 @@ function validator(formId) {
                     }
                 }
             },
-            // companyWebsite: {
-            //     message: '公司官网网址验证失败',
-            //     validators: {
-            //         notEmpty: {
-            //             message: '公司官网网址格式为http|ftp|https://www'
-            //         },
-            //         regexp: {
-            //             regexp: /^(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?$/,
-            //                 message: '请输入正确公司官网网址'
-            //         }
-            //     }
-            // },
             companyWebsite: {
                 message: '公司官网URL验证失败',
                 validators: {
                     regexp: {
                         regexp: /^(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?$/,
                         message: '请输入正确公司官网网址（http://开头）'
-                    },
-                    notEmpty: {
-                        message: '公司官网URL不能为空'
                     },
                     remote: {
                         url: '/company/querycompanyWebsite',
@@ -366,23 +351,24 @@ function validator(formId) {
                         message: '公司规模不能为空'
                     }
                 }
-            },
-            companyLongitude: {
-                message: '公司经度验证失败',
-                validators: {
-                    notEmpty: {
-                        message: '公司经度不能为空'
-                    }
-                }
-            },
-            companyLatitude: {
-                message: '公司纬度验证失败',
-                validators: {
-                    notEmpty: {
-                        message: '公司纬度不能为空'
-                    }
-                }
-            },
+            }
+            ,
+            // companyLongitude: {
+            //     message: '公司经度验证失败',
+            //     validators: {
+            //         notEmpty: {
+            //             message: '公司经度不能为空'
+            //         }
+            //     }
+            // },
+            // companyLatitude: {
+            //     message: '公司纬度验证失败',
+            //     validators: {
+            //         notEmpty: {
+            //             message: '公司纬度不能为空'
+            //         }
+            //     }
+            // },
             companyOpendate: {
                 message: '公司成立时间验证失败',
                 validators: {
@@ -425,97 +411,22 @@ function formatterImg(value, row, index){
     }
 }
 
-
-// //初始化文件上传控件
-// $(function () {
-//
-//     $("#add_companyLogo").fileinput({
-//         language: 'zh', //设置语言
-//         showCaption: true, //是否显示文件的标题
-//         showPreview: true, //是否显示文件的预览图
-//         showRemove: true, //是否显示删除/清空按钮
-//         showUpload: true, //是否显示文件上传按钮
-//         showCancel: true, //是否显示取消文件上传按钮
-//         uploadAsync: true,
-//         minFileCount: 1,
-//         maxFileCount: 6,
-// //        validateInitialCount: true,
-//         enctype: 'multipart/form-data',
-//         uploadUrl: '<%=path %>/company/editFile', //上传的地址
-// //      maxFileSize: 5000,
-// //      browseClass: "btn btn-primary", //按钮样式
-// //        allowedPreviewTypes: ['image'], //可以配置哪些文件类型被允许显示为预览,用默认较好
-// //        allowedFileTypes: ['image'],
-// //        browseClass: "btn btn-primary", //按钮样式
-// //        previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
-//         allowedFileExtensions: ['jpg', 'png', 'gif']
-//     });
-// });
-
-// $(function () {
-//     //0.初始化fileinput
-//     var oFileInput = new FileInput();
-//     oFileInput.Init("edit_companyLogo", "/company/editFile");
-// });
-
-// //初始化fileinput
-// var FileInput = function () {
-//     var oFile = new Object();
-//     //初始化fileinput控件（第一次初始化）
-//     oFile.Init = function (ctrlName, uploadUrl) {
-//         var control = $('#' + ctrlName);
-//         //初始化上传控件的样式
-//         control.fileinput({
-//             language: 'zh', //设置语言
-//             uploadUrl: uploadUrl, //上传的地址
-//             allowedFileExtensions: ['jpg', 'gif', 'png'],//接收的文件后缀
-//             showUpload: true, //是否显示上传按钮
-//             showCaption: false,//是否显示标题
-//             browseClass: "btn btn-primary", //按钮样式
-//             dropZoneEnabled: true,//是否显示拖拽区域
-//             //minImageWidth: 50, //图片的最小宽度
-//             //minImageHeight: 50,//图片的最小高度
-//             //maxImageWidth: 1000,//图片的最大宽度
-//             //maxImageHeight: 1000,//图片的最大高度
-//             //maxFileSize: 0,//单位为kb，如果为0表示不限制文件大小
-//             //minFileCount: 0,
-//             maxFileCount: 10, //表示允许同时上传的最大文件个数
-//             enctype: 'multipart/form-data',
-//             validateInitialCount: true,
-//             previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
-//             msgFilesTooMany: "选择上传的文件数量({n}) 超过允许的最大数值{m}！",
-//         }).on("fileuploaded", function (event, data) {
-//             // data 为controller返回的json
-//             if (data.response.result == 'success') {
-//                 alert('处理成功');
-//             }
-//         });
-//     }
-//     return oFile;
-// };
-
 function addSubmit(){
-    setTimeout(function () {
         $("#addForm").data('bootstrapValidator').validate();
         if ($("#addForm").data('bootstrapValidator').isValid()) {
             $("#addButton").attr("disabled","disabled");
         } else {
             $("#addButton").removeAttr("disabled");
         }
-    },100)
-
 }
 
 function editSubmit(){
-    setTimeout(function () {
         $("#editForm").data('bootstrapValidator').validate();
         if ($("#editForm").data('bootstrapValidator').isValid()) {
             $("#editButton").attr("disabled","disabled");
         } else {
             $("#editButton").removeAttr("disabled");
         }
-    },100)
-
 }
 
 function formSubmit(url, formId, winId, fileId) {
@@ -707,7 +618,7 @@ address.click(function () {
 function showMap(winId){
 
     $("#mapWindow").modal('show');
-    $('#addForm').data('bootstrapValidator').resetForm();
+    // $('#addForm').data('bootstrapValidator').resetForm();
     windowId = winId;
     map.addEventListener("click", showInfo);
 }

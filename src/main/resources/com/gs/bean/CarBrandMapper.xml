@@ -82,4 +82,26 @@
         ]]>
   </update>
 
+<!--迷糊索搜-->
+  <select id="blurredQuery" resultMap="carbrandMap"  parameterType="com.gs.common.bean.Pager">
+    <![CDATA[
+            select * from t_car_brand cb  where 1=1
+       ]]>
+    <if test="carBrand.brandName != '' and carBrand.brandName != null">
+      and  cb.brandName like '%${carBrand.brandName}%'
+    </if>
+    limit #{pager.beginIndex}, #{pager.pageSize}
+  </select>
+
+  <select id="countByBlurred" resultType="int">
+    <![CDATA[
+      select count(*) from t_car_brand cb
+      where 1=1
+    ]]>
+    <if test="carBrand.brandName != '' and carBrand.brandName != null">
+      and cb.brandName like '%${carBrand.brandName}%'
+    </if>
+  </select>
+
+
 </mapper>

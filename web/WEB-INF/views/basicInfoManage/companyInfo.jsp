@@ -170,7 +170,7 @@
                     <div class="form-group col-md-6">
                         <label class="col-md-4 control-label">公司经度：</label>
                         <div class="col-md-8">
-                            <input id="addCompanyLongitudeId" name="companyLongitude" readonly="true" placeholder="请选择公司经度" class="form-control">
+                            <input id="addCompanyLongitudeId" name="companyLongitude" readonly="true"  type="text" placeholder="请选择公司经度" class="form-control">
                         </div>
                     </div>
 
@@ -350,7 +350,7 @@
                 <div>
                     <div class="form-group col-md-12 pull-right">
                         <label class="col-md-2 control-label" style="bottom: 6px;right:5px">公司地址：</label>
-                        <div class="col-md-9" id="address" style="bottom:3px;display: block;">
+                        <div class="col-md-10" id="address" style="bottom:3px;display: block;">
                             <input type="text" define="companyInfo.companyAddress" class="form-control">
                         </div>
                         <div class="col-md-9" id="companyAddress" style="display: none;">
@@ -401,13 +401,6 @@
                     </button>
                 </div>
                     <div id="allmap" style="wdith:100%;height: 100%"></div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default"
-                                data-dismiss="modal">关闭
-                        </button>
-                        <button type="button" class="btn btn-sm btn-success">保存
-                        </button>
-                    </div>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
