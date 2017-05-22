@@ -336,7 +336,7 @@
                                     <c:forEach items="${queryList}" var = "m">
                                         <li>
                                             <span style="width:20%;margin-left:19px;padding-right: 15px;">${m.maintainFix.maintainName}</span>
-                                            <span style="width:33%;padding-right: 15px;">${m.maintainRecord.checkin.carModel.modelName}</span>
+                                            <span style="width:33%;padding-right: 15px;">${m.maintainRecord.checkin.model.modelName}</span>
                                             <span style="width: 20%;">${m.maintainFix.maintainMoney}</span>
                                             <span style="width: 16%;"><fmt:formatDate value="${m.mdcreatedTime}" pattern="yyyy/MM/dd  HH:mm:ss"></fmt:formatDate></span>
                                         </li>

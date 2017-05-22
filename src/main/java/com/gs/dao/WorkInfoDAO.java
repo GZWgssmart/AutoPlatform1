@@ -30,5 +30,9 @@ public interface WorkInfoDAO extends BaseDAO<String, WorkInfo>{
     public List<WorkInfo> queryByPager(Map paramMap);
 
     public int count(Map paramMap);
+    // 车主维修保养进度查询
+    public int countByFront(User frontUser);
+
+    public List<WorkInfo> queryByFront(Pager pager);
 
 }

@@ -2,15 +2,15 @@ package com.gs.service.impl;
 
 import com.gs.bean.User;
 import com.gs.bean.WorkInfo;
+import com.gs.common.bean.Pager;
 import com.gs.dao.WorkInfoDAO;
 import com.gs.service.WorkInfoService;
 import org.springframework.stereotype.Service;
+
 import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import com.gs.common.bean.Pager;
 /**
 *由CSWangBin技术支持
 *
@@ -107,4 +107,13 @@ public class WorkInfoServiceImpl implements WorkInfoService {
 		return workInfoDAO.countByBlurred(workInfo,user);
 	}
 
+	@Override
+	public int countByFront(User frontUser) {
+		return workInfoDAO.countByFront(frontUser);
+	}
+
+	@Override
+	public List<WorkInfo> queryByFront(Pager pager) {
+		return workInfoDAO.queryByFront(pager);
+	}
 }

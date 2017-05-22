@@ -153,6 +153,27 @@
         limit #{beginIndex}, #{pageSize}
     </select>
 
+    <!--车主维修保养记录查询-->
+    <select id="queryByFront" resultMap="BaseResultMap" parameterType="com.gs.common.bean.Pager">
+        <![CDATA[
+         select wi.*,m.*, ck.*, wi.recordId, wi.userId,cc.colorId, cc.colorName, cp.plateId, cp.plateName,
+            cm.modelId, cm.modelName,
+            company.companyName, cb.brandId, cb.brandName
+            from t_work_info wi, t_maintain_record m, t_checkin ck, t_car_brand cb,
+             t_car_color cc, t_car_model cm, t_car_plate cp, t_company company
+              where wi.recordId = m.recordId and m.checkinId = ck.checkinId and ck.brandId = cb.brandId
+              and ck.colorId = cc.colorId and ck.modelId = cm.modelId
+             and ck.plateId = cp.plateId and ck.companyId = company.companyId and ck.userId = #{user.userId}
+        ]]>
+        order by wi.workCreatedTime Desc
+        limit #{beginIndex}, #{pageSize}
+    </select>
+
+    <select id="countByFront" resultType="int" parameterType="com.gs.bean.User">
+        <![CDATA[
+        SELECT count(*) FROM t_work_info w, t_maintain_record m, t_checkin ck where w.recordId = m.recordId and m.checkinId = ck.checkinId and ck.userId = #{userId}
+       ]]>
+    </select>
 
     <!--分页所有已完成查询全部-->
     <select id="queryByPagerDisable" resultMap="BaseResultMap" parameterType="com.gs.common.bean.Pager">

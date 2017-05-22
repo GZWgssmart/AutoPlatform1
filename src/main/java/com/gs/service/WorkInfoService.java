@@ -5,7 +5,6 @@ import com.gs.bean.WorkInfo;
 import com.gs.common.bean.Pager;
 
 import java.util.List;
-import java.util.Map;
 
 /**
 *由CSWangBin技术支持
@@ -23,4 +22,9 @@ public interface WorkInfoService extends BaseService<String, WorkInfo>{
     public List<WorkInfo> queryByPager(Pager pager, String status);
 
     public int count(User user , String status);
+
+    // 车主维修保养进度查询
+    public int countByFront(User frontUser);
+
+    public List<WorkInfo> queryByFront(Pager pager);
 }

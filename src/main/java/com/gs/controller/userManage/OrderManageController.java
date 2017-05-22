@@ -102,9 +102,6 @@ OrderManageController {
 
     /**
      * 维修保养进度查看
-     * @param pageNumber
-     * @param pageSize
-     * @return
      */
     @ResponseBody
     @RequestMapping(value = "queryBySche",method = RequestMethod.GET)
@@ -112,7 +109,7 @@ OrderManageController {
         if(SessionUtil.isLogin(session)) {
             String roles="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,车主,汽车公司总技师,汽车公司技师,汽车公司接待员";
             if(RoleUtil.checkRoles(roles)) {
-                logger.info("维修保养记录分页查询");
+                logger.info("维修保养进度工单分页查询");
                 Pager pager = new Pager();
                 pager.setPageNo(Integer.valueOf(pageNumber));
                 pager.setPageSize(Integer.valueOf(pageSize));
@@ -122,6 +119,33 @@ OrderManageController {
                 return new Pager4EasyUI<WorkInfo>(pager.getTotalRecords(), worksList);
             }else{
                 logger.info("此用户无拥有维修保养进度分页查询的角色");
+                return null;
+            }
+        }else{
+            logger.info("请先登录");
+            return null;
+        }
+    }
+
+    /**
+     * 车主进度查看
+     */
+    @ResponseBody
+    @RequestMapping(value = "queryByFrontpage",method = RequestMethod.GET)
+    public Pager4EasyUI<WorkInfo> queryByFrontpage(HttpSession session,@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
+        if(SessionUtil.isOwnerLogin(session)) {
+            String roles="车主";
+            if(RoleUtil.checkRoles(roles)) {
+                logger.info("车主维修保养进度工单分页查询");
+                Pager pager = new Pager();
+                pager.setPageNo(Integer.valueOf(pageNumber));
+                pager.setPageSize(Integer.valueOf(pageSize));
+                pager.setUser((User) session.getAttribute("frontUser"));
+                pager.setTotalRecords(workInfoService.countByFront((User) session.getAttribute("frontUser")));
+                List<WorkInfo> worksList = workInfoService.queryByFront(pager);
+                return new Pager4EasyUI<WorkInfo>(pager.getTotalRecords(), worksList);
+            }else{
+                logger.info("此用户无拥有维修保养进度工单分页查询的车主角色");
                 return null;
             }
         }else{
