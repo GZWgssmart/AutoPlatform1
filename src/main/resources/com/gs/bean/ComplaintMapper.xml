@@ -41,6 +41,7 @@
     <if test="user.companyId != null and user.companyId != ''">
       and c.companyId = #{user.companyId}
     </if>
+    order by c.complaintCreatedTime Desc
     limit #{beginIndex}, #{pageSize}
   </select>
 
@@ -68,6 +69,7 @@
     <if test="complaint.complaintReply != null and complaint.complaintReply != ''">
       and c.complaintReply like concat('%',#{complaint.complaintReply},'%')
     </if>
+    order by c.complaintCreatedTime Desc
     limit #{pager.beginIndex}, #{pager.pageSize}
   </select>
 
@@ -122,6 +124,7 @@
     LEFT JOIN t_user u ON c.userId = u.userId
     LEFT  JOIN t_user u2 ON c.complaintReplyUser = u2.userId
     WHERE c.companyId = co.companyId and u.userId = #{userId}
+    order by c.complaintCreatedTime Desc
     limit #{pager.beginIndex}, #{pager.pageSize}
   </select>
 
