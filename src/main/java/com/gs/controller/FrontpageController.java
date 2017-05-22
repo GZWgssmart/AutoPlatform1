@@ -3,12 +3,15 @@ package com.gs.controller;
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.Appointment;
 import com.gs.bean.Company;
+import com.gs.bean.MaintainDetail;
 import com.gs.bean.User;
 import com.gs.common.bean.ControllerResult;
+import com.gs.common.bean.Pager;
 import com.gs.controller.customerBooking.PhoneReservationController;
 import com.gs.service.AppointmentService;
 import com.gs.service.CompanyService;
 import com.gs.service.MaintainDetailService;
+import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -51,10 +54,15 @@ FrontpageController {
 
     /*主页面*/
     @RequestMapping(value ="home",method = RequestMethod.GET)
-    public ModelAndView Home(HttpServletRequest request, HttpSession session){
-        List<Company> company = companyService.queryAll((User)session.getAttribute("user"));
-        request.setAttribute("company", company);
+    public ModelAndView Home(HttpSession session){
         ModelAndView mav = new ModelAndView("Frontpage/Frontindex");
+        // 查询所有公司信息
+        List<Company> company = companyService.queryAll((User)session.getAttribute("user"));
+        mav.addObject("company", company);
+        Pager pager = new Pager();
+        // 查询前十条维修保养记录
+        List<MaintainDetail> queryList = maintainDetailService.queryByFrontpage(pager);
+        mav.addObject("queryList", queryList);
         return mav;
     }
 
@@ -119,4 +127,14 @@ FrontpageController {
                     return ControllerResult.getFailResult("预约失败");
                 }
             }
-        }
+
+    /*关于我们页面*/
+    @RequestMapping(value ="aboutus",method=RequestMethod.GET)
+    public String aboutus(){
+
+        return "Frontpage/aboutus";
+    }
+
+
+}
+

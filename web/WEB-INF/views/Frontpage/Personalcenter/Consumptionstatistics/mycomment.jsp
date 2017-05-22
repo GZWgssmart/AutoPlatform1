@@ -35,9 +35,10 @@
                 <th data-field="user.userName">投诉人</th>
                 <th data-field="complaintCreatedTime" data-formatter="formatterDate">投诉时间</th>
                 <th data-field="complaintContent">投诉内容</th>
+                <th data-field="company.companyName">投诉公司</th>
                 <th data-formatter="formatterUserName">投诉回复人</th>
-                <th data-field="complaintReplyTime" data-formatter="formatterDate">投诉回复时间</th>
                 <th data-field="complaintReply">投诉回复内容</th>
+                <th data-field="complaintReplyTime">投诉回复时间</th>
             </tr>
             </thead>
         </table>
@@ -61,8 +62,14 @@
                 <br/>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">投诉人：</label>
+                    <div class="col-md-7 col-sm-7">
+                        <input class="form-control" name="userName" type="text" value="${sessionScope.frontUser.userName}">
+                    </div>
+                </div>
+                <div id="addCompanyBox" class="form-group">
+                    <label class="col-sm-3 control-label">选择公司：</label>
                     <div class="col-sm-7">
-                        <select id="addUserName" name="userId" class="form-control js-data-example-ajax user" style="width:100%">
+                        <select id="addCompany"class="js-example-tags company" name="companyId" style="width:100%">
                         </select>
                     </div>
                 </div>
@@ -113,19 +120,105 @@
 
     $(function () {
         initTable('table', '/complaint/queryByPagerComplaintUser'); // 初始化表格
+        initDateTimePicker('addForm', 'complaintCreatedTime', 'addComplaintCreatedTime');
         initSelect2("user", "请选择用户", "/complaint/queryCombox");
         initSelect2("admin", "请选择回复人", "/complaint/queryCombox");
+        initSelect2("company", "请选择公司", "/company/queryAllCompany");
 
     });
     function showAdd(){
-        initDateTimePicker('addForm', 'complaintCreatedTime', 'addComplaintCreatedTime');
         $("#addWindow").modal('show');
         $("#addButton").removeAttr("disabled");
         validator('addForm'); // 初始化验证
     }
 
+    function addSubmit(){
+        $("#addForm").data('bootstrapValidator').validate();
+        if ($("#addForm").data('bootstrapValidator').isValid()) {
+            $("#addButton").attr("disabled","disabled");
+        } else {
+            $("#addButton").removeAttr("disabled");
+        }
+    }
 
+    function validator(formId) {
+        $('#' + formId).bootstrapValidator({
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                 userName: {
+                     message: '投诉人验证失败',
+                     validators: {
+                         notEmpty: {
+                             message: '投诉人不能为空'
+                         }
+                     }
+                 },
+                 complaintCreatedTime: {
+                     message: '投诉时间验证失败',
+                     validators: {
+                         notEmpty: {
+                             message: '投诉时间不能为空'
+                         }
+                     }
+                 },
+                 complaintContent: {
+                     message: '投诉内容验证失败',
+                     validators: {
+                         notEmpty: {
+                             message: '投诉内容不能为空'
+                         }
+                     }
+                 },
+                companyId: {
+                    message: '投诉公司验证失败',
+                    validators: {
+                        notEmpty: {
+                            message: '投诉公司内容不能为空'
+                        }
+                    }
+                },
 
+            }
+        })
+                .on('success.form.bv', function (e) {
+                    if (formId == "addForm") {
+                        formSubmit("/Userinsert", formId, "addWindow");
+                    }
+                })
+    }
+
+    function formSubmit(url, formId){
+        $.post(url,
+                $("#" + formId).serialize(),
+                function (data) {
+                    if (data.result == "success") {
+//                        swal({
+//                            title: "",
+//                            text: data.message,
+//                            confirmButtonText: "确认",
+//                            type: "success"
+//                        })
+                        alert("投诉成功！");
+                        window.location.href = "mycomment";
+                    } else if (data.result == "fail" ) {
+                        swal({
+                            title: "",
+                            text: data.message,
+                            confirmButtonText: "确认",
+                            type: "error"
+                        })
+                    }
+                }, "json");
+    }
+    function formatterUserName(value, row, index) {
+        if(row.admin != null) {
+            return row.admin.userName;
+        }
+    }
 </script>
 </body>
 </html>

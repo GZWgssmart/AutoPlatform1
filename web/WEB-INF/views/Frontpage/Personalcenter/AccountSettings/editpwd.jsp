@@ -11,6 +11,7 @@
     <title>修改密码</title>
 </head>
 <link rel="stylesheet" href="/static/css/bootstrap.css">
+<link rel="stylesheet" href="/static/css/sweetalert.css">
 <style>
     body,html{
         font-family:Microsoft YaHei,Arial,simsun, Helvetica, sans-serif;
@@ -68,13 +69,24 @@
     </div>
 </body>
 <script src="/static/js/jquery.min.js"></script>
+<script src="/static/js/sweetalert/sweetalert.min.js"></script>
 <script>
     function editPwd() {
         $.post("/updatePwd",$("#pwdForm").serialize(),function (data) {
             if(data.result=="success"){
-                alert(data.message);
+                swal({
+                    title: "",
+                    text: data.message,
+                    confirmButtonText: "确认",
+                    type: "success"
+                })
             }else{
-                alert(data.message)
+                swal({
+                    title: "",
+                    text: data.message,
+                    confirmButtonText: "确认",
+                    type: "error"
+                })
             }
         })
     }
