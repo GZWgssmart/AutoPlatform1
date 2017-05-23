@@ -176,4 +176,11 @@
       and tc.companyPricipal like '%${company.companyPricipal}%'
     </if>
   </select>
+
+  <select id="queryByCompanyInfo" resultMap="companyMap">
+    <![CDATA[
+      select cp.companyLogo,cp.companyName,cp.companyPricipal,cp.companyTel,cp.companyAddress,cp.companySize
+      from auto_platform.t_company cp
+    ]]>
+  </select>
 </mapper>

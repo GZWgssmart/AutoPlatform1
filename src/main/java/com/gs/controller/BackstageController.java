@@ -54,7 +54,6 @@ public class BackstageController {
     @Resource
     private IncomingOutgoingService incomingOutgoingService;
 
-
     /**
      * 后台主页
      */
@@ -62,17 +61,27 @@ public class BackstageController {
     public String backstageHome(HttpSession session, HttpServletRequest request) {
         User user = (User) session.getAttribute("user");
         List<User> userinfo = userService.queryByCompanyId(user.getCompanyId());
+        for (User u:userinfo){
+            if(u.getUserIcon()==null || u.getUserIcon().equals("")){
+                u.setUserIcon("static/img/a1.jpg");
+            }
+        }
+        List<Company> companyInfo=companyService.queryByCompanyInfo();
+        for(Company c:companyInfo){
+            if(c.getCompanyLogo()==null || c.getCompanyLogo().equals("")){
+                c.setCompanyLogo("static/img/a2.jpg");
+            }
+        }
         List<Appointment> appinfo=appointmentService.queryByCompanyId(user.getCompanyId());
         List<MaintainFix> mainInfo=maintainFixService.queryByCompanyId(user.getCompanyId());
         List<IncomingOutgoing> incomInfo=incomingOutgoingService.queryByCompanyIdForInType(user.getCompanyId());
         List<IncomingOutgoing> outgoInfo=incomingOutgoingService.queryByCompanyIdForOutType(user.getCompanyId());
-        request.setAttribute("userinfo", userinfo);
+        request.setAttribute("userinfo",userinfo);
         request.setAttribute("appinfo",appinfo);
         request.setAttribute("maininfo",mainInfo);
         request.setAttribute("incomInfo",incomInfo);
         request.setAttribute("outgoInfo",outgoInfo);
-        logger.info("incominfo"+incomInfo.toString());
-        logger.info("outgoInfo"+outgoInfo.toString());
+        request.setAttribute("companyInfo",companyInfo);
         logger.info("跳转到后台主页");
         return "backstage/home";
     }

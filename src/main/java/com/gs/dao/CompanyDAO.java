@@ -51,4 +51,9 @@ public interface CompanyDAO extends BaseDAO<String, Company>{
      */
     public Company queryPhone(@Param("companyPricipalphone")String companyPricipalphone);
 
+    /**
+     *查询公司需要显示的信息
+     */
+    public List<Company> queryByCompanyInfo();
+
 }

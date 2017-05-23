@@ -380,10 +380,10 @@ function validator(formId) {
                 }
             },
             accName: {
-                message: '配件编号不能为空',
+                message: '配件名称不能为空',
                 validators: {
                     notEmpty: {
-                        message: '配件编号不能为空'
+                        message: '配件名称不能为空'
                     }
                 }
             },
