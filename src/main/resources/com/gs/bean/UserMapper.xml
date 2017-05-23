@@ -312,7 +312,9 @@
   <!-- 根据id查询员工的基本信息 -->
   <select id="queryInfoById" resultMap="userBasicManageMap" parameterType="String">
     <![CDATA[
-      select u.* from t_user u where u.userId = #{userId}
+      select u.*, c.* from t_user u
+          left join t_company c on u.companyId = c.companyId
+      where u.userId = #{userId}
     ]]>
   </select>
 
@@ -394,7 +396,9 @@
   <!--根据用户输入的邮箱或者手机号判断成功时, 查询到此用户所有信息-->
   <select id ="queryUser" resultMap="userBasicManageMap">
     <![CDATA[
-      select r.*, u.*, ur.* from t_user u,t_role r, t_user_role ur where ur.roleId=r.roleId and ur.userId = u.userId and (userPhone= #{email} or userEmail = #{email})
+      select r.*, u.*, ur.*,c.* from t_user u,t_role r, t_user_role ur,t_company c
+      where ur.roleId=r.roleId and ur.userId = u.userId and u.companyId = c.companyId
+      and (userPhone= #{email} or userEmail =#{eamil})
     ]]>
   </select>
 

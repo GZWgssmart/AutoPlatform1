@@ -124,14 +124,14 @@ function validator(formId) {
             validating: 'glyphicon glyphicon-refresh'
         },
         fields: {
-            userIconTemp: {
-                message: '用户头像验证失败',
-                validators: {
-                    notEmpty: {
-                        message: '头像不能为空'
-                    }
-                }
-            },
+            // userIconTemp: {
+            //     message: '用户头像验证失败',
+            //     validators: {
+            //         notEmpty: {
+            //             message: '头像不能为空'
+            //         }
+            //     }
+            // },
             userName: {
                 message: '用户名验证失败',
                 validators: {
@@ -298,6 +298,8 @@ function formSubmit(url, formId, winId) {
                                         iconUpldSuc(data1, winId, formId);
                                     }
                                 })
+                            } else {
+                                iconUpldSuc(data, winId, formId);
                             }
                         } else{
                             iconUpldSuc(data, winId, formId);
@@ -574,10 +576,16 @@ function blurredQuery(){
 }
 
 // 点击显示详细信息
-function showDetail() {
-    var row =  $('table').bootstrapTable('getSelections');
-    if(row.length >0) {
-        var emp = row[0];
+function showDetail(row) {
+        var emp = row;
+
+        // 将获取到的userIcon 的值 赋给img的src  attr=>属性 val=>值
+        if(emp.userIcon != null) {
+            $('#detailUserIcon').attr("src", "/" + emp.userIcon);
+        } else {
+            $('#detailUserIcon').attr("src", "/static/img/default.png");    // 如果图片为空就显示默认图
+        }
+
         var gender = emp.userGender;
         if(gender == 'M') {
             $('#detailGender').val('男');
@@ -586,6 +594,7 @@ function showDetail() {
         } else {
             $('#detailGender').val('未选择');
         }
+
         var createdTime = emp.userCreatedTime;  /* 创建时间 */
         var formatterCreateTime = formatterDateTime(createdTime);
         $("#detailCreatedTime").val(formatterCreateTime);
@@ -598,16 +607,15 @@ function showDetail() {
             $("#detailLoginTime").val(formatterLoginTime);
         }
 
-        $("#detailWindow").modal('show');
+        var address = emp.userAddress;
+        alert(address);
+
         $('#detailBirthday').val(formatterDate(emp.userBirthday));  /* 格式化不带时分秒的时间 */
-        // $('#detailCreatedTime').val(formatterDateTime(emp.userCreatedTime));    /* 格式化带时分秒的时间 */
+
+        $("#detailWindow").modal('show');
         $("#detailForm").fill(emp);
 
-        // 将获取到的userIcon 的值 赋给img的src  attr=>属性 val=>值
-        $('#detailUserIcon').attr("src", "/" + emp.userIcon);
-
         console.log(emp);
-    }
 }
 
 //  查询不可用的
@@ -762,17 +770,17 @@ function formatterStatus(value, row, index) {
                 if (value == 'Y') {
                     return "&nbsp;<button type='button' class='btn btn-danger' " +
                         "onclick='inactive(\"" + '/userBasicManage/updateStatus?id=' + row.userId + '&status=Y' + "\")'>禁用</button>&nbsp;&nbsp;"
-                        + "<a onclick='showDetail()' class='btn btn-info btn-sm'><span class='glyphicon glyphicon-fullscreen'></span>详细信息</a>";
+                        + "<a  class='btn btn-info btn-sm detail'><span class='glyphicon glyphicon-fullscreen'></span>详细信息</a>";
                 } else {
                     return "&nbsp;<button type='button' class='btn btn-success' " +
                         "onclick='active(\"" + '/userBasicManage/updateStatus?id=' + row.userId + '&status=N' + "\")'>激活</button>&nbsp;&nbsp;"
-                        + "<a onclick='showDetail()' class='btn btn-info btn-sm'><span class='glyphicon glyphicon-fullscreen'></span>详细信息</a>";
+                        + "<a  class='btn btn-info btn-sm detail'><span class='glyphicon glyphicon-fullscreen'></span>详细信息</a>";
                 }
             }
-            return "&nbsp;&nbsp;<a onclick='showDetail()' style='margin-left: 60px;' class='btn btn-info btn-sm'>" +
+            return "&nbsp;&nbsp;<a  style='margin-left: 60px;' class='btn btn-info btn-sm detail'>" +
                 "<span class='glyphicon glyphicon-fullscreen'></span>详细信息</a>";
         }
-        return "&nbsp;&nbsp;<a onclick='showDetail()' style='margin-left: 60px;' class='btn btn-info btn-sm'>" +
+        return "&nbsp;&nbsp;<a  style='margin-left: 60px;' class='btn btn-info btn-sm detail'>" +
             "<span class='glyphicon glyphicon-fullscreen'></span>详细信息</a>";
     } else {	// 登录的角色不为系统的管理员的时候
         if (userId != row.userId) {  // 登录的用户是否和选中行的userId一致
@@ -780,17 +788,17 @@ function formatterStatus(value, row, index) {
                 if (value == 'Y') {
                     return "&nbsp;<button type='button' class='btn btn-danger' " +
                         "onclick='inactive(\"" + '/userBasicManage/updateStatus?id=' + row.userId + '&status=Y' + "\")'>禁用</button>&nbsp;&nbsp;"
-                        + "<a onclick='showDetail()' class='btn btn-info btn-sm'><span class='glyphicon glyphicon-fullscreen'></span>详细信息</a>";
+                        + "<a  class='btn btn-info btn-sm detail'><span class='glyphicon glyphicon-fullscreen'></span>详细信息</a>";
                 }
-                return "&nbsp;&nbsp;<a onclick='showDetail()' style='margin-left: 60px;' class='btn btn-info btn-sm'>" +
+                return "&nbsp;&nbsp;<a  style='margin-left: 60px;' class='btn btn-info btn-sm detail'>" +
                     "<span class='glyphicon glyphicon-fullscreen'></span>详细信息</a>";
             } else {
                 return "&nbsp;<button type='button' class='btn btn-success' " +
                     "onclick='active(\"" + '/userBasicManage/updateStatus?id=' + row.userId + '&status=N' + "\")'>激活</button>&nbsp;&nbsp;"
-                    + "<a onclick='showDetail()' class='btn btn-info btn-sm'><span class='glyphicon glyphicon-fullscreen'></span>详细信息</a>";
+                    + "<a  class='btn btn-info btn-sm detail'><span class='glyphicon glyphicon-fullscreen'></span>详细信息</a>";
             }
         }
-        return "&nbsp;&nbsp;<a onclick='showDetail()' style='margin-left: 60px;' class='btn btn-info btn-sm'>" +
+        return "&nbsp;&nbsp;<a  style='margin-left: 60px;' class='btn btn-info btn-sm detail'>" +
             "<span class='glyphicon glyphicon-fullscreen'></span>详细信息</a>";
     }
 }

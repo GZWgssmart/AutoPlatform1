@@ -11,6 +11,9 @@
     <link rel="stylesheet" href="/static/css/sweetalert.css">
     <link rel="stylesheet" href="/static/css/table/table.css">
     <link rel="stylesheet" href="/static/css/bootstrap-validate/bootstrapValidator.min.css">
+    <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet/less" href="/static/css/bootstrap-dateTimePicker/datetimepicker.less">
+    <link rel="stylesheet" href="/static/css/select2.min.css">
 
     <style>
         /* 让显示详细信息的窗口中的所有Input都不显示边框 */
@@ -124,10 +127,128 @@
                         <p class="clearfix"></p>
                     </div>
                 </div>
+                <%-- 暂时先不添加修改功能，完善工资后再回头完成修改 --%>
+                <%--<div class="modal-footer">
+                    <button id="btn_edit" type="button" class="btn btn-default" onclick="showEdit();">
+                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
+                    </button>
+                </div>--%>
             </form>
         </div>
     </div>
 </div>
+
+<!-- 修改弹窗 -->
+<div class="modal fade" id="editWindow" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static" keyboard:false>
+    <div class="modal-dialog">
+        <div class="modal-content" style="width:900px; margin-left:-150px;">
+            <div class="modal-body">
+                <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('editWindow', 'editForm')"></span>
+                <div class="modal-header" style="overflow:auto;">
+                    <h3>修改人员信息</h3>
+                </div>
+                <form role="form" class="form-horizontal" id="editForm" method="post">
+                    <input type="hidden" value="${sessionScope.user.userId}" name="userId" class="form-control"/>
+                    <div>
+                        <div class="form-group col-md-6 pull-left">
+                            <label class="col-md-4 control-label">姓名：</label>
+                            <div class="col-md-8">
+                                <input type="text" name="userName" value="${sessionScope.user.userName}" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6 pull-left">
+                            <label class="col-md-4 control-label">Email：</label>
+                            <div class="col-md-8">
+                                <input type="text" name="userEmail" value="${sessionScope.user.userEmail}" class="form-control">
+                            </div>
+                        </div>
+                        <p class="clearfix"></p>
+                    </div>
+                    <div>
+                        <div class="form-group col-md-6 pull-left">
+                            <label class="col-md-4 control-label">手机号码：</label>
+                            <div class="col-md-8">
+                                <input type="number" name="userPhone" value="${sessionScope.user.userPhone}" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6 pull-left">
+                            <label class="col-md-4 control-label">身份证：</label>
+                            <div class="col-md-8">
+                                <input type="number" name="userIdentity" value="${sessionScope.user.userIdentity}" class="form-control">
+                            </div>
+                        </div>
+                        <p class="clearfix"></p>
+                    </div>
+                    <div>
+                        <div class="form-group col-md-6 pull-left">
+                            <label class="col-md-4 control-label">性别：</label>
+                            <div class="col-md-8">
+                                <select name="userGender" value="${sessionScope.user.userGender}" class="form-control" style="width: 50%;">
+                                    <option value='N'>未选择</option>
+                                    <option value='M'>男</option>
+                                    <option value='F'>女</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6 pull-left">
+                            <label class="col-md-4 control-label">用户描述：</label>
+                            <div class="col-md-8">
+                                <input type="text" name="userDes" value="${sessionScope.user.userDes}" class="form-control">
+                            </div>
+                        </div>
+                        <p class="clearfix"></p>
+                    </div>
+                    <div>
+                        <div class="form-group col-md-6 pull-left">
+                            <label class="col-md-4 control-label">昵称：</label>
+                            <div class="col-md-8">
+                                <input type="text" name="userNickname" value="${sessionScope.user.userNickname}" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6 pull-left">
+                            <label class="col-md-4 control-label">生日：</label>
+                            <div class="col-md-8">
+                                <input id="editDatetimepicker" readonly="true" type="date" value="${sessionScope.user.userBirthday}"
+                                       name="userBirthday" class="form-control datetimepicker">
+                            </div>
+                        </div>
+                        <p class="clearfix"></p>
+                    </div>
+                    <div>
+                        <div class="form-group col-md-12 pull-right">
+                            <label class="col-md-2 control-label" style="top: 9px;right:5px">地址：</label>
+                            <div class="col-md-9" id="address" style="margin-top: 10px;display: block;">
+                                <input id="sourceAddress" type="text" value="${sessionScope.user.userAddress}" class="form-control">
+                            </div>
+                            <div class="col-md-9" id="userAddress" style="display: none;">
+                                <fieldset id="editCity_china">
+                                    <div class="pull-left">
+                                        省份：<select class="province" disabled="disabled" id="editProvince" name="editProvince"></select>
+                                    </div>
+                                    <div class="pull-left">
+                                        &nbsp;&nbsp;&nbsp;城市：<select class="city" disabled="disabled"
+                                                     id="editCity" name="editCity"></select>
+                                    </div>
+                                    <div class="pull-left">
+                                        &nbsp;&nbsp;&nbsp;地区：<select class="area" disabled="disabled"
+                                         id="editArea" name="editArea"></select>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <span id="editError"></span>
+                        <button type="button" class="btn btn-default" onclick="closeModals('editWindow', 'editForm')">关闭</button>
+                        <button id="editButton" onclick="editSubmit();" type="button" class="btn btn-primary btn-sm" title="双击我">
+                            保存
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 
 <script src="/static/js/jquery.min.js"></script>
@@ -140,91 +261,13 @@
 <script src="/static/js/contextmenu.js"></script>
 <script src="/static/js/backstage/main.js"></script>
 <script src="/static/js/bootstrap-validate/bootstrapValidator.js"></script>
+<script src="/static/js/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.js"></script>
+<script src="/static/js/bootstrap-dateTimePicker/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+<script src="/static/js/select2/select2.js"></script>
+<script src="/static/js/backstage/emp/selfManage.js"></script>
+
+<%-- 地址选择 --%>
+<script src="/static/js/jquery.cxselect.min.js"></script>
+
 </body>
-
-<script>
-    var gender = $("#detailGender").val();
-    $(function() {
-        var resultGender = formatterSex(gender);
-        $("#detailGender").val(resultGender);
-
-        var birthday = $("#detailBirthday").val();
-        $('#detailBirthday').val(formatterDate(new Date(birthday)));  /* 格式化不带时分秒的时间 */
-
-        var createdTime = $("#detailCreatedTime").val();  /* 创建时间 */
-        var formatterCreateTime = formatterDateTime(createdTime);
-        $("#detailCreatedTime").val(formatterCreateTime);
-
-        var loginTime = $("#detailLoginTime").val();  /* 登录时间 */
-        var formatterLoginTime = formatterDateTime(loginTime);
-        if(formatterLoginTime == null || formatterLoginTime == '') {
-            $("#detailLoginTime").val("未登录过");
-        } else {
-            $("#detailLoginTime").val(formatterLoginTime);
-        }
-    }
-    );
-
-    function formatterSex(gender) {
-        if (gender == 'N') {
-            return "未选择";
-        } else if (gender == 'M') {
-            return "男"
-        } else if (gender == 'F') {
-            return "女"
-        }
-    }
-
-    //格式化不带时分秒的时间值。
-    function formatterDate(value) {
-        if (value == undefined || value == null || value == '') {
-            return "";
-        } else {
-            var date = new Date(value);
-            var year = date.getFullYear().toString();
-            var month = (date.getMonth() + 1);
-            var day = date.getDate().toString();
-            if (month < 10) {
-                month = "0" + month;
-            }
-            if (day < 10) {
-                day = "0" + day;
-            }
-            return year + "-" + month + "-" + day
-        }
-    }
-
-    //格式化带时分秒的时间值。
-    function formatterDateTime(value) {
-        if (value == undefined || value == null || value == '') {
-            return "";
-        } else {
-            var date = new Date(value);
-            var year = date.getFullYear().toString();
-            var month = (date.getMonth() + 1);
-            var day = date.getDate().toString();
-            var hour = date.getHours().toString();
-            var minutes = date.getMinutes().toString();
-            var seconds = date.getSeconds().toString();
-            if (month < 10) {
-                month = "0" + month;
-            }
-            if (day < 10) {
-                day = "0" + day;
-            }
-            if (hour < 10) {
-                hour = "0" + hour;
-            }
-            if (minutes < 10) {
-                minutes = "0" + minutes;
-            }
-            if (seconds < 10) {
-                seconds = "0" + seconds;
-            }
-            return year + "-" + month + "-" + day + " " + hour + ":" + minutes + ":" + seconds;
-        }
-    }
-
-</script>
-
 </html>
