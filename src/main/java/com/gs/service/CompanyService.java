@@ -31,9 +31,6 @@ public interface CompanyService extends BaseService<String, Company>{
      */
     public int querycompanyWebsite(String companyWebsite,String companyId);
 
-    //根据ID查询公司
-    public Company queryById(String id);
-
     /**
      * 查询此公司联系方式是否已存在
      */

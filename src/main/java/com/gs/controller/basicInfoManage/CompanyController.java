@@ -26,6 +26,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -117,10 +118,13 @@ public class CompanyController {
 
 
     @ResponseBody
-    @RequestMapping(value = "queryById", method = RequestMethod.POST)
-    public Company queryById(@Param("companyId") String companyId) {
+    @RequestMapping(value = "queryById", method = RequestMethod.GET)
+    public ModelAndView queryById(HttpServletRequest request, @Param("companyId") String companyId) {
         logger.info("根据公司id查询该id的详细信息");
-        return companyService.queryById(companyId);
+        Company company = companyService.queryById(companyId);
+        request.setAttribute("companybyid",company);
+        ModelAndView mav = new ModelAndView("Frontpage/Factorydeta");
+        return mav;
     }
 
     @ResponseBody

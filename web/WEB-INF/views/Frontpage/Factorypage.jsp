@@ -102,7 +102,7 @@
                         <c:forEach items="${requestScope.companypage}" var="c">
                             <div class="factory">
                                 <div class="f-img">
-                                    <a href="factorydeta">
+                                    <a href="/company/queryById?companyId=${c.companyId}">
                                         <img src="${c.companyLogo}"/>
                                     </a>
                                 </div>
@@ -262,5 +262,9 @@
 <script src="/static/js/bootstrap.min.js"></script>
 <script src="/static/js/jquery.cxselect.min.js"></script>
 <script src="/static/js/general.js"></script>
-
+<script>
+    function test(companyId) {
+        $.get("/company/queryById?companyId="+companyId);
+    }
+</script>
 </html>

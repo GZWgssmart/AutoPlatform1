@@ -61,36 +61,36 @@
         <div class="content" style="padding: 50px 200px;">
 
             <div class="content-main">
-                <h2>赣州市天道有限公司</h2>
+                <h2>${requestScope.companybyid.companyName}</h2>
                 <div class="showdata" style="padding: 30px;">
                     <div class="show-left">
                         <div>
                             <label>公司地址：</label>
-                            <span>天知道在哪天知道在哪天知道在哪天知道在哪</span>
+                            <span>${requestScope.companybyid.companyAddress}</span>
                         </div>
                         <div>
                             <label>联系电话：</label>
-                            <span>15779094094</span>
+                            <span>${requestScope.companybyid.companyTel}</span>
                         </div>
                         <div>
                             <label>负责人：</label>
-                            <span>天知道在哪wwwwwwwwwwwwwwwwwww</span>
+                            <span>${requestScope.companybyid.companyPricipal}</span>
                         </div>
                         <div>
                             <label>网站地址：</label>
-                            <span>天知道在哪</span>
+                            <span>${requestScope.companybyid.companyWebsite}</span>
                         </div>
                         <div>
                             <label>公司成立时间：</label>
-                            <span>公元397年</span>
+                            <span>${requestScope.companybyid.companyOpendate}</span>
                         </div>
                         <div>
                             <label>公司规模：</label>
-                            <span>200</span>
+                            <span>${requestScope.companybyid.companySize}</span>
                         </div>
                         <div>
                             <label>公司描述：</label>
-                            <span>这。。。。</span>
+                            <span>${requestScope.companybyid.companyDes}</span>
                         </div>
                     </div>
                     <div class="show-right">
