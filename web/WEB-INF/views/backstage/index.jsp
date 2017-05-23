@@ -66,7 +66,7 @@
                             <li><a class="J_menuItem" href="/user/updatePwdPage">修改密码</a>
                             </li>
                             <li class="divider"></li>
-                            <li><a href="/user/logout">安全退出</a>
+                            <li><a href="/changeaccount">安全退出</a>
                             </li>
                         </ul>
                     </div>
