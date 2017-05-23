@@ -36,7 +36,7 @@
                 <th data-radio="true"></th>
                 <th data-field="user.userName">回访人</th>
                 <th data-field="checkin.userName">跟踪回访的用户</th>
-                <th data-field="serviceEvaluate">本次服务评价</th>
+                <th data-field="serviceEvaluate" data-formatter="formatterserviceEvaluate">本次服务评价</th>
                 <th data-field="trackContent">回访问题</th>
                 <th data-field="trackCreatedTime" data-formatter="formatterDate">跟踪回访创建时间</th>
             </tr>
@@ -115,8 +115,13 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">本次服务评价：</label>
                     <div class="col-sm-7">
-                        <input type="number" name="serviceEvaluate" min="1" max="10" placeholder="请输入本次服务评价（1-10分）"
-                               class="form-control"></input>
+                        <%--<input type="number" name="serviceEvaluate" min="1" max="10" placeholder="请输入本次服务评价"--%>
+                               <%--class="form-control"></input>--%>
+                        <select name="serviceEvaluate" class="form-control js-data-example-ajax">
+                            <option value="10">10分（好）</option>
+                            <option value="9">9分（一般）</option>
+                            <option value="8">8分（差）</option>
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">
@@ -184,8 +189,13 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">本次服务评价：</label>
                     <div class="col-sm-7">
-                        <input type="number" name="serviceEvaluate" min="1" max="10 " define="TrackList.serviceEvaluate"
-                               placeholder="请输入本次服务评价（1-10分）" class="form-control"></input>
+                        <%--<input type="number" name="serviceEvaluate" min="1" max="10 " define="TrackList.serviceEvaluate"--%>
+                               <%--placeholder="请输入本次服务评价" class="form-control"></input>--%>
+                        <select name="serviceEvaluate" define="TrackList.serviceEvaluate" class="form-control js-data-example-ajax">
+                            <option value="10">10分（好）</option>
+                            <option value="9">9分（一般）</option>
+                            <option value="8">8分（差）</option>
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">

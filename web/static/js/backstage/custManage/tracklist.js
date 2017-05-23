@@ -31,6 +31,16 @@ $(function () {
     });
 });
 
+function formatterserviceEvaluate(value, row, index) {
+    if(row.serviceEvaluate == '10') {
+        return '10分（好）';
+    } else if(row.serviceEvaluate == '9') {
+        return '9分（一般）';
+    } else if(row.serviceEvaluate == '8') {
+        return '8分（差）';
+    }
+}
+
 // 模糊查询
 function blurredQuery() {
     var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,车主";
