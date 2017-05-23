@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: 不曾有黑夜
-  Date: 2017/5/4
-  Time: 14:44
-  To change this template use File | Settings | File Templates.
---%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -12,12 +5,13 @@
     <title>账号登录</title>
 </head>
 <link rel="stylesheet" href="/static/css/bootstrap.css">
-<link rel="stylesheet" href="/static/css/animate.css">
 <link rel="stylesheet" href="/static/css/sweetalert.css">
+<link rel="stylesheet" href="/static/css/table/table.css">
 <link rel="stylesheet" href="/static/css/bootstrap-validate/bootstrapValidator.min.css">
 <link rel="stylesheet" href="/static/css/registeredStyle.css">
-<link rel="stylesheet" href="/static/css/animate.css">
-<link rel="stylesheet" href="/static/css/common.css">
+<style>
+    .nav-tabs li.bv-tab-error>a{color:#555}
+</style>
 <body>
     <div class="main">
         <%--顶部导航栏--%>
@@ -52,7 +46,6 @@
         </div>
 
         <div class="login-content" id="background-img">
-
             <div class="content wow fadeInLeft animated" id="login" onkeydown="keydown()">
                 <div class="form-box">
                     <div class="form-logo">
@@ -79,7 +72,7 @@
                             <div class="form-group">
                                 <div>
                                 <label style="overflow: hidden;display: inline;"><input type="checkbox" value="记住账号" style="position: relative;top:3px;width: 16px;height: 16px;"> <span style="font-size: 16px;">记住账号</span></label>
-                                    <label><a class="bounceInDown dialog" style="font-size: 16px;margin-left: 10px;" href="javaScript:;" onclick="">忘记密码</a></label>
+                                    <label><a class="bounceInDown" style="font-size: 16px;margin-left: 10px;" href="javaScript:;" onclick="showAdd();">忘记密码</a></label>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -128,179 +121,120 @@
                     </div>
                 </div>
         </div>
-            <div id="HBox">
-                <form id="rtpwd" role="form" class="form-horizontal">
-                    <ul class="list">
-                            <li>
-                                <strong>选择验证方式<font color="#ff0000">*</font></strong>
-                                <select id="pore" style="width:56%;display: inline;" onchange="choose()">
-                                    <option>请选择验证方式</option>
-                                    <option value="phone">手机验证</option>
-                                    <option value="email">邮箱验证</option>
-                                </select>
-                            </li>
-                        <div id="phonecode" class="zoomIn zoomOut" style="display: none">
-                            <li>
-                                <strong>手 机 <font color="#ff0000">*</font></strong>
-                                <div class="fl"><input id="phoneinput" type="text" name="rtphone" value="" onblur="showpwd()" class="ipt phone" /></div>
-                            </li>
-                            <li>
-                                <strong>验证码<font color="#ff0000">*</font></strong>
-                                <div class="fl">
-                                    <input type="text" name="rtcode" value="" class="ipt nickname" style="width: 50%;"/>
-                                    <input type="button" value="发送验证码" class="submitBtn" style="width: 45%;float: right;margin-top:0;height: 27px;line-height: 27px;"/>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </li>
-                        </div>
-                        <div id="emailcode" class="zoomIn zoomOut" style="display: none">
-                            <li>
-                                <strong>邮 箱 <font color="#ff0000">*</font></strong>
-                                <div class="fl"><input id="emailinput" type="text" name="rtemail" onblur="showpwd()" value="" class="ipt phone" /></div>
-                            </li>
-                            <li>
-                                <strong>验证码<font color="#ff0000">*</font></strong>
-                                <div class="fl">
-                                    <input type="text" name="rtemailcode" value="" class="ipt nickname" style="width: 50%;"/>
-                                    <input type="button" value="发送验证码" class="submitBtn" style="width: 45%;float: right;margin-top:0;height: 27px;line-height: 27px;"/>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </li>
-                        </div>
-                        <div style="visibility: hidden;" id="pwdbox" class="zoomIn">
-                            <li>
-                                <strong>新密码<font color="#ff0000">*</font></strong>
-                                <div class="fl"><input type="password" name="rtpwd1" value="" class="ipt email" /></div>
-                            </li>
-                            <li>
-                                <strong>再次输入密码<font color="#ff0000">*</font></strong>
-                                <div class="fl"><input type="password" name="rtpwdagin" value="" class="ipt email" /></div>
-                            </li>
-                            <li><input type="button" value="确认提交" class="submitBtn" onclick="rtpwdSubmit()"/></li>
-                        </div>
 
-                    </ul>
-                </form>
+            <div id="addWindow" class="modal fade" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static"
+                 keyboard:false>
+                <div class="modal-dialog" style="width: 50%;">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                             <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
+                            <div class="modal-header" style="overflow:auto;">
+                                <h4>找回密码</h4>
+                            </div>
+                            <div class="tabs-container">
+                                <ul class="nav nav-tabs">
+                                    <li class="active"><a data-toggle="tab" href="#tab-1"> 手机验证</a></li>
+                                    <li class=""><a data-toggle="tab" href="#tab-2">邮箱验证</a></li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div id="tab-1" class="tab-pane active">
+                                        <div class="panel-body">
+                                            <form id="addForm" role="form" class="form-horizontal">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-3 control-label">手 机：</label>
+                                                        <div class="col-sm-7">
+                                                            <div class="fl"><input id="phoneInput" type="text" placeholder="请输入手机号码" class="form-control" name="rtphone"/></div>
+                                                            <span class="caveat" id="phoneCodePrint"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-3 control-label">验证码：</label>
+                                                        <div class="col-sm-4">
+                                                            <input type="text" name="phoneCodeInput" placeholder="请输入验证码" class="form-control"/>
+                                                        </div>
+                                                        <button id="phoneCode" type="button" class="btn btn-primary col-sm-3"
+                                                                style="width: 146px;margin: 0" onclick="phoneCodeTime(this)">发送验证码</button>
+                                                    </div>
+                                                <div id="pwdbox" class="zoomIn">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-3 control-label">新密码：</label>
+                                                        <div class="col-sm-7">
+                                                            <div class="fl"><input type="password" placeholder="请输入新密码" class="form-control" name="rtpwd1" value=""
+                                                                                   class="ipt email"/></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-3 control-label">再次输入密码：</label>
+                                                        <div class="col-sm-7">
+                                                            <div class="fl"><input type="password" class="form-control" name="rtpwdagin" placeholder="请再次输入密码"
+                                                                                   class="ipt email"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                                <button id="editButton" type="button" onclick="rtPhoneSubmit()" class="btn btn-success">确认</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="tab-2" class="tab-pane">
+                                        <div class="panel-body">
+                                            <form id="addForm1" role="form" class="form-horizontal">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-3 control-label">邮 箱：</label>
+                                                        <div class="col-sm-7">
+                                                            <input id="emailInput" type="text" class="form-control" placeholder="请输入邮箱" name="rtemail"/>
+                                                            <span class="caveat" id="emailCodePrint"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-3 control-label">验证码：</label>
+                                                        <div class="col-sm-4">
+                                                            <input type="text" name="emailCodeInput" placeholder="请输入验证码" class="form-control"/>
+                                                        </div>
+                                                        <button id="emailCode" type="button" value="发送验证码" class="btn btn-primary col-sm-3"
+                                                                style="width: 146px;margin: 0" onclick="emailCodes(this)">发送验证码</button>
+                                                    </div>
+                                                <div id="pwdbox1" class="zoomIn">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-3 control-label">新密码：</label>
+                                                        <div class="col-sm-7">
+                                                            <div class="fl"><input type="password" class="form-control" placeholder="请输入新密码" name="rtpwd2" value=""
+                                                                                   class="ipt email"/></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-3 control-label">再次输入密码：</label>
+                                                        <div class="col-sm-7">
+                                                            <div class="fl"><input type="password" class="form-control" placeholder="请再次输入密码" name="rtpwdagin1" value=""
+                                                                                   class="ipt email"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                                <button id="editButton1" type="button" onclick="rtEmailSubmit()" class="btn btn-success">确认</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
     </div>
+</div>
 <script src="/static/js/jquery.min.js"></script>
 <script src="/static/js/bootstrap.min.js"></script>
-<script src="/static/js/jquery.cxselect.min.js"></script>
-<script src="/static/js/wow.js"></script><script src="/static/js/sweetalert/sweetalert.min.js"></script>
+<script src="/static/js/sweetalert/sweetalert.min.js"></script>
 <script src="/static/js/backstage/user/frontLogin.js"></script>
 <script src="/static/js/bootstrap-validate/bootstrapValidator.js"></script>
+<script src="/static/js/backstage/main.js"></script>
 <script src="/static/js/registeredgen.js"></script>
-<script src="/static/js/jquery.hDialog.js"></script>
-<script src="/static/js/wow.js"></script>
 </body>
-<script>
-    $(function () {
-
-        var $el = $('.dialog');
-        $el.click().hDialog({title:'找回密码',height:400,width:350}); //默认调用
-    })
-    /*选择验证方式触发方法*/
-    function choose(){
-        var poe = document.getElementById("pore");
-        var phonecode = document.getElementById("phonecode");
-        var emailcode = document.getElementById("emailcode");
-        if(poe.value == "phone"){
-            phonecode.style.display = "block";
-            emailcode.style.display = "none";
-        }else if(poe.value == "email"){
-            emailcode.style.display = "block";
-            phonecode.style.display = "none";
-        };
-    }
-
-    /*填写完手机或邮箱后显示密码框*/
-    function showpwd(){
-        var phonecodes = document.getElementById("phoneinput");
-        var emailcodes = document.getElementById("emailinput");
-        var pwdbox = document.getElementById("pwdbox");
-        if((/^1[35789]\d{9}$/).test(phonecodes.value)){
-            pwdbox.style.visibility = "visible";
-        }else if((/^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/).test(emailcodes.value)){
-            pwdbox.style.visibility = "visible";
-        }
-    }
-
-    function rtpwdSubmit() {
-        validator3('rtpwd');
-        $("#rtpwd").data('bootstrapValidator').validate();
-        if ($("#rtpwd").data('bootstrapValidator').isValid()) {
-            $("#rtpwd").attr("disabled", "disabled");
-        } else {
-            $("#rtpwd").removeAttr("disabled");
-        }
-    }
-
-    // 找回密码表单验证
-    function validator3(formId) {
-        $('#' + formId).bootstrapValidator({
-            feedbackIcons: {
-                valid: 'glyphicon glyphicon-ok',
-                invalid: 'glyphicon glyphicon-remove',
-                validating: 'glyphicon glyphicon-refresh'
-            },
-            fields: {
-                rtphone: {
-                    message: '手机号不能为空',
-                    validators: {
-                        notEmpty: {
-                            message: '手机号不能为空'
-                        },
-                        regexp: {
-                            regexp: /^1[3578]\d{9}$/,
-                            message: '请输入正确的手机号'
-                        }
-                    }
-
-                },
-                rtemail: {
-                    message: '邮箱不能为空',
-                    validators: {
-                        notEmpty: {
-                            message: '邮箱不能为空'
-                        },
-                        regexp:{
-                            regexp:/^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/,
-                            message:'请输入正确的邮箱'
-                        }
-                    }
-                },
-                rtpwd1: {
-                    message: '密码不能为空',
-                    validators: {
-                        notEmpty: {
-                            message: '密码不能为空'
-                        }
-                    }
-                },
-                rtpwdagin: {
-                    message: '密码不能为空',
-                    validators: {
-                        notEmpty: {
-                            message: '密码不能为空'
-                        },
-                        identical: {
-                            field: 'rtpwd',
-                            message: '两次输入密码不一致'
-                        }
-                    }
-                },
-            }
-        }).on('success.form.bv', function (e) {
-            if (formId == "rtpwd") {
-                $.post("",$("#rtpwd").serialize(),function (data) {
-                    if(data.result=="success"){
-                        alert("成功");
-                    }else if(data.result=="fail"){
-                        alert("失败");
-                    }
-                })
-            }
-        })
-    }
-</script>
 </html>

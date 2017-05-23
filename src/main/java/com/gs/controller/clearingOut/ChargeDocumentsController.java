@@ -165,6 +165,7 @@ public class ChargeDocumentsController {
             if (RoleUtil.checkRoles(roles)) {
                 User user = (User) session.getAttribute("user");
                 chargeBillService.updateDate(chargeBillId);
+                maintainRecordService.updatePickupTime(maintainRecordId);
                 maintainRecordService.updateCurrentStatus("已收费", "'"+maintainRecordId+"'");
                 return ControllerResult.getSuccessResult("确认收费成功");
             } else {

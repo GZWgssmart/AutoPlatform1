@@ -146,4 +146,14 @@ public class MaintainRecordServiceImpl implements MaintainRecordService {
 	public List<MaintainRecord> queryByBackstage(Pager pager) {
 		return null;
 	}
+
+	@Override
+	public void updateActualEndTime(String maintainRecordId) {
+		maintainRecordDAO.updateActualEndTime(maintainRecordId);
+	}
+
+	@Override
+	public void updatePickupTime(String maintainRecordId) {
+		maintainRecordDAO.updatePickupTime(maintainRecordId);
+	}
 }

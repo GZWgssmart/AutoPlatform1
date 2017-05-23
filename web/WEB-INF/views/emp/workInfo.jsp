@@ -46,9 +46,6 @@
                 <th data-field="workStatus" data-formatter="statusFormatter">
                     工单状态
                 </th>
-                <th data-width="100" data-formatter="openStatusFormatter">
-                    操作
-                </th>
             </tr>
             </thead>
         </table>

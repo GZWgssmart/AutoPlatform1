@@ -37,6 +37,17 @@ public interface MaintainRecordService extends BaseService<String, MaintainRecor
     public List<MaintainRecord> queryByCondition(String start,String end, String companyId,String maintainOrFix, String type);
 
     /**
+     * 修改维修保养实际结束时间
+     */
+    public void updateActualEndTime(String maintainRecordId);
+
+    /**
+     * 修改维修保养提车时间
+     */
+    public void updatePickupTime(String maintainRecordId);
+
+
+    /**
      * 修改维修保养记录当前状态
      */
     public void updateCurrentStatus(String currentStatus, String recordId);

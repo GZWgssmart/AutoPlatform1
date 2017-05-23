@@ -63,7 +63,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">进度描述：</label>
                         <div class="col-sm-7">
-                            <input class="form-control" row="8" name="maintainScheduleDes" placeholder="请输入保养进度描述"></input>
+                            <textarea type="textarea" class="form-control" row="8" name="maintainScheduleDes" maxlength="200" placeholder="请输入保养进度描述"></textarea>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -96,7 +96,6 @@
                         <label class="col-sm-3 control-label">进度描述：</label>
                         <div class="col-sm-7">
                             <textarea id="editMaintainScheduleDes" name="maintainScheduleDes" placeholder="请输入保养进度描述" row="50" class="form-control" ></textarea>
-                            <%--                        <input type="text" name="maintainScheduleDes" placeholder="请输入保养进度描述" class="form-control">--%>
                         </div>
                     </div>
                     <div class="modal-footer">
