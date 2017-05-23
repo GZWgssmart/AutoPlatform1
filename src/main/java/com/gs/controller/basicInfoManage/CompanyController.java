@@ -117,6 +117,13 @@ public class CompanyController {
 
 
     @ResponseBody
+    @RequestMapping(value = "queryById", method = RequestMethod.POST)
+    public Company queryById(@Param("companyId") String companyId) {
+        logger.info("根据公司id查询该id的详细信息");
+        return companyService.queryById(companyId);
+    }
+
+    @ResponseBody
     @RequestMapping(value="queryByPagerCompany", method = RequestMethod.GET)
     public Pager4EasyUI<Company> queryAll(HttpSession session,@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
         if (SessionUtil.isLogin(session)) {
