@@ -321,9 +321,9 @@ function showBellAll(){
                                 phones += "," + tableData[index].checkin.userPhone; // 否则就加上逗号把rows里的id赋给ids
                             }
                             if(userName == ""){
-                                userName = row[index].checkin.userName;// 则直接赋上0索引上的id属性
+                                userName = tableData[index].checkin.userName;// 则直接赋上0索引上的id属性
                             }else {
-                                userName += "," + row[index].checkin.userName; // 否则就加上逗号把rows里的id赋给ids
+                                userName += "," + tableData[index].checkin.userName; // 否则就加上逗号把rows里的id赋给ids
                             }
                         });
                         $.get("/carRemind/remind/" + ids + "/" + phones+"/"+userName,
