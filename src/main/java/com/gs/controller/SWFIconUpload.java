@@ -41,9 +41,14 @@ public class SWFIconUpload {
         result.setSuccess(false);
         result.setMsg("修改头像失败!");
         result.setAvatarUrls(new ArrayList());
-        String savePath = Constants.UPLOAD_HEAD + Methods.createNewFolder() + "/";
         User user = (User)session.getAttribute("user");
-//        Map map = new HashMap();
+        String savePath = user.getUserIcon();
+        if(user.getUserIcon() == null || user.getUserIcon().equals("")) {
+            savePath = Constants.UPLOAD_HEAD + Methods.createNewFolder() + "/";
+        }
+
+
+//      p map = new HashMap();
 //        map.put("code", 5);
 //        map.put("type", 2);
 //        map.put("content", ControllerResult.getFailResult("修改头像失败"));
@@ -55,31 +60,45 @@ public class SWFIconUpload {
             MultipartFile file = req.getFile(fileName);
             files.add(file);
         }
-        if(fileSave(files, savePath, user.getUserId(), session)) {
-            int i = userService.updIcon(user.getUserId(),savePath+user.getUserId()+".jpg");   // 设置头像
-            if(i>0) {
-                // map.put("content",ControllerResult.getSuccessResult("修改头像成功"));
+        if(fileSave(files, savePath ,  session)) {
+            if(user.getUserIcon() == null || user.getUserIcon().equals("")) {
+                int i = userService.updIcon(user.getUserId(), savePath+user.getUserId() + ".jpg");   // 设置头像
+                if (i > 0) {
+                    result.setSuccess(true);
+                    result.setMsg("修改头像成功!");
+                    user.setUserIcon(savePath+user.getUserId() + ".jpg");
+                    result.setSourceUrl(savePath+user.getUserId() + ".jpg");
+                }
+            } else  {
                 result.setSuccess(true);
                 result.setMsg("修改头像成功!");
+                user.setUserIcon(savePath);
+                result.setSourceUrl(savePath);
             }
         }
-        result.setSourceUrl(savePath+user.getUserId()+".jpg");
+
         // Object {content: "Error #2032", code: 5, type: 2}
         return  result;
     }
 
-    private boolean fileSave(List<MultipartFile> sourceFiles, String savePath,String userId, HttpSession session) {
+    private boolean fileSave(List<MultipartFile> sourceFiles, String savePath,  HttpSession session) {
+        User user = (User)session.getAttribute("user");
         byte[] temp = new byte[1024];
         int len = -1;
         String rootPath = session.getServletContext().getRealPath("/");
-        savePath =rootPath + "/"+ savePath ;
         try {
-            File saveDir = new File(savePath);
-            if(!saveDir.isDirectory()) {
-                saveDir.mkdirs();
+            File saveFile = null;
+            if(user.getUserIcon() == null || user.getUserIcon().equals("")) {
+                savePath = rootPath + "/" + savePath;
+                File saveDir = new File(savePath);
+                if(!saveDir.isDirectory()) {
+                    saveDir.mkdirs();
+                }
+                saveFile = new File(savePath + user.getUserId() + ".jpg");
+            } else {
+                savePath = rootPath + "/" + savePath;
+                saveFile = new File(savePath);
             }
-            File saveFile = new File(savePath + userId + ".jpg");
-            System.out.println("*************path: " + saveFile.getAbsolutePath());
             OutputStream fos = new FileOutputStream(saveFile);
             for(MultipartFile file : sourceFiles) {
                 InputStream fis = file.getInputStream();
@@ -88,7 +107,6 @@ public class SWFIconUpload {
                 }
                 fis.close();
             }
-            System.out.println(saveFile.getAbsolutePath());
             fos.flush();
             fos.close();
         } catch (Exception e) {
