@@ -75,13 +75,13 @@
   </update>
 
   <!-- 根据邮箱手机号修改密码 -->
-  <update id="updatePwd">
+  <update id="updatePwdByEmail">
     <![CDATA[
        update t_user u set u.userPwd = #{pwd} where u.userEmail=#{email};
      ]]>
   </update>
 
-  <update id="updatePwd">
+  <update id="updatePwdByPhone">
     <![CDATA[
        update t_user u set u.userPwd = #{pwd} where u.userPhone=#{phone};
      ]]>
