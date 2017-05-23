@@ -196,6 +196,10 @@ public class CompanyController {
         Map map = new HashMap();
         if (company != null && !company.equals("")) {
             logger.info("添加公司信息");
+            String province = request.getParameter("province");
+            String city = request.getParameter("city");
+            String area = request.getParameter("area");
+            company.setCompanyAddress(province + "-" + city + "-" + area);
             String companyId = UUIDUtil.uuid();
             company.setCompanyId(companyId);
             User user = new User();
@@ -214,7 +218,7 @@ public class CompanyController {
             IndustrySMS i = new IndustrySMS(company.getCompanyPricipalphone(), "【汽车之家】尊敬的" +company.getCompanyPricipal() + "公司负责人您好，你的公司"+company.getCompanyName() + "已在本平台入驻成功，初始密码为"+"123456"+"，请前来完善公司相关信息。");
             i.execute();
             map.put("company",company);
-            map.put("controllerResult",ControllerResult.getSuccessResult("入驻成功" + "\n" + "账号:" + company.getCompanyPricipalphone() + " " + "初始密码为:123456" + " " + "请前往后台登陆进行登陆"));
+            map.put("controllerResult",ControllerResult.getSuccessResult("入驻成功" + "\n" + "账号:" + company.getCompanyPricipalphone() + " " + "初始密码为:123456" + " " + "点击确定自动跳转后台管理"));
             return map;
         } else {
             map.put("controllerResult",ControllerResult.getFailResult("添加公司信息失败"));

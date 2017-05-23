@@ -63,10 +63,15 @@
                         <label class="col-sm-4  col-md-4 control-label">公司地址</label>
                         <div class="col-sm-7 col-md-7">
                             <fieldset id="city_china">
-                                <select style="margin:5px; " class="province select" disabled="disabled" name="province" >
-                                </select>
-                                <select style="margin:5px; " class="city select" disabled="disabled" name="city"></select>
-                                <select style="margin:5px; " class="area select" disabled="disabled" name="area"></select>
+                                <div class="form-group col-md-4">
+                                    <select class="province js-example-tags form-control" disabled="disabled" name="province"></select>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <select class="city js-example-tags form-control" disabled="disabled" name="city"></select>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <select class="area js-example-tags form-control" disabled="disabled" name="area"></select>
+                                </div>
                             </fieldset>
                         </div>
                     </div>

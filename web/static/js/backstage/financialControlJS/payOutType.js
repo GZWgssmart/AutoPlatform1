@@ -219,10 +219,10 @@ function validator(formId) {
         },
         fields: {
             outTypeName: {
-                message: '类型名称不能为空',
+                message: '支出类型名称不能为空',
                 validators: {
                     notEmpty: {
-                        message: '类型名称不能为空',
+                        message: '支出类型名称不能为空',
                     },
                     remote: {
                         url: '/outGoingType/checkOutTypeName',//验证收入类型名称
