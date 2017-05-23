@@ -135,4 +135,9 @@ public interface UserDAO extends BaseDAO<String, User>{
     public int queryPhoneIsNull(String phone);
 
     public int queryEmailIsNull(String email);
+
+    // 根据邮箱和手机号修改密码
+    public void updatePwdByEmail(@Param("pwd") String pwd, @Param("email") String email);
+
+    public void updatePwdByPhone(@Param("pwd")String pwd, @Param("phone")String phone);
 }

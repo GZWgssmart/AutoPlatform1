@@ -74,6 +74,19 @@
      ]]>
   </update>
 
+  <!-- 根据邮箱手机号修改密码 -->
+  <update id="updatePwd">
+    <![CDATA[
+       update t_user u set u.userPwd = #{pwd} where u.userEmail=#{email};
+     ]]>
+  </update>
+
+  <update id="updatePwd">
+    <![CDATA[
+       update t_user u set u.userPwd = #{pwd} where u.userPhone=#{phone};
+     ]]>
+  </update>
+
   <!-- 禁用 -->
   <update id="inactive" parameterType="user">
     <![CDATA[

@@ -273,6 +273,7 @@ function showAdd(){
     validator4('addForm1')
 }
 
+// 手机验证确定按钮
 function rtPhoneSubmit() {
     $("#addForm").data('bootstrapValidator').validate();
     if ($("#addForm").data('bootstrapValidator').isValid()) {
@@ -282,6 +283,7 @@ function rtPhoneSubmit() {
     }
 }
 
+// 邮箱验证确定按钮
 function rtEmailSubmit() {
     $("#addForm1").data('bootstrapValidator').validate();
     if ($("#addForm1").data('bootstrapValidator').isValid()) {
@@ -425,7 +427,6 @@ function validator3(formId) {
                         type: 'GET'
                     }
                 }
-
             },
             phoneCodeInput :{
                 message: '验证码不能为空',
@@ -434,7 +435,6 @@ function validator3(formId) {
                         message: '验证码不能为空'
                     }
                 }
-
             },
             rtpwd1: {
                 message: '密码不能为空',
@@ -461,15 +461,28 @@ function validator3(formId) {
             },
         }
     }).on('success.form.bv', function (e) {
-        if (formId == "rtpwd") {
-            $.post("",$("#rtpwd").serialize(),function (data) {
+            var email = $("#emailInput").val();
+            var code = $("#codeEmail").val();
+            var pwd = $("#pwdEmail").val();
+            $.post("/user/emailConfirm/"+email+"/"+code+"/"+pwd,function (data) {
                 if(data.result=="success"){
-                    alert("成功");
+                    swal({
+                        title: "",
+                        text: data.message,
+                        confirmButtonText: "确认",
+                        type: "success"
+                    }, function (isConfirm) {
+                        $("#addWindow").modal('hide');
+                    });
                 }else if(data.result=="fail"){
-                    alert("失败");
+                    swal({
+                        title: "",
+                        text: data.message,
+                        confirmButtonText: "确认",
+                        type: "error"
+                    });
                 }
             })
-        }
     })
 }
 
@@ -534,14 +547,27 @@ function validator4(formId) {
             },
         }
     }).on('success.form.bv', function (e) {
-        if (formId == "rtpwd") {
-            $.post("",$("#rtpwd").serialize(),function (data) {
+        var phone = $("#phoneInput").val();
+        var code = $("#codePhone").val();
+        var pwd = $("#pwdPhone").val();
+            $.post("/user/phoneConfirm/"+phone+"/"+code+"/"+pwd,function (data) {
                 if(data.result=="success"){
-                    alert("成功");
+                    swal({
+                        title: "",
+                        text: data.message,
+                        confirmButtonText: "确认",
+                        type: "success"
+                    }, function (isConfirm) {
+                        $("#addWindow").modal('hide');
+                    });
                 }else if(data.result=="fail"){
-                    alert("失败");
+                    swal({
+                        title: "",
+                        text: data.message,
+                        confirmButtonText: "确认",
+                        type: "error"
+                    });
                 }
             })
-        }
     })
 }

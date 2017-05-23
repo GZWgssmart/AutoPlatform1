@@ -135,4 +135,9 @@ public interface UserService extends BaseService<String, User> {
     public int queryPhoneIsNull(String rtphone);
 
     public int queryEmailIsNull(String eamil);
+
+    // 根据邮箱和手机号修改密码
+    public void updatePwdByEmail(String pwd, String email);
+
+    public void updatePwdByPhone(String pwd, String phone);
 }

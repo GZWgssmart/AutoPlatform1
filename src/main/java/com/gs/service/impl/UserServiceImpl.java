@@ -266,4 +266,14 @@ public class UserServiceImpl implements UserService {
     public int queryEmailIsNull(String eamil) {
         return userDAO.queryEmailIsNull(eamil);
     }
+
+    @Override
+    public void updatePwdByEmail(String pwd, String email) {
+        userDAO.updatePwdByEmail(pwd, email);
+    }
+
+    @Override
+    public void updatePwdByPhone(String pwd, String phone) {
+        userDAO.updatePwdByPhone(pwd, phone);
+    }
 }

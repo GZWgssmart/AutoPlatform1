@@ -150,7 +150,7 @@
                                                     <div class="form-group">
                                                         <label class="col-sm-3 control-label">验证码：</label>
                                                         <div class="col-sm-4">
-                                                            <input type="text" name="phoneCodeInput" placeholder="请输入验证码" class="form-control"/>
+                                                            <input id="codePhone" type="text" name="phoneCodeInput" placeholder="请输入验证码" class="form-control"/>
                                                         </div>
                                                         <button id="phoneCode" type="button" class="btn btn-primary col-sm-3"
                                                                 style="width: 146px;margin: 0" onclick="phoneCodeTime(this)">发送验证码</button>
@@ -159,7 +159,7 @@
                                                     <div class="form-group">
                                                         <label class="col-sm-3 control-label">新密码：</label>
                                                         <div class="col-sm-7">
-                                                            <div class="fl"><input type="password" placeholder="请输入新密码" class="form-control" name="rtpwd1" value=""
+                                                            <div class="fl"><input id="pwdPhone" type="password" placeholder="请输入新密码" class="form-control" name="rtpwd1" value=""
                                                                                    class="ipt email"/></div>
                                                         </div>
                                                     </div>
@@ -192,7 +192,7 @@
                                                     <div class="form-group">
                                                         <label class="col-sm-3 control-label">验证码：</label>
                                                         <div class="col-sm-4">
-                                                            <input type="text" name="emailCodeInput" placeholder="请输入验证码" class="form-control"/>
+                                                            <input id="codeEmail" type="text" name="emailCodeInput" placeholder="请输入验证码" class="form-control"/>
                                                         </div>
                                                         <button id="emailCode" type="button" value="发送验证码" class="btn btn-primary col-sm-3"
                                                                 style="width: 146px;margin: 0" onclick="emailCodes(this)">发送验证码</button>
@@ -201,7 +201,7 @@
                                                     <div class="form-group">
                                                         <label class="col-sm-3 control-label">新密码：</label>
                                                         <div class="col-sm-7">
-                                                            <div class="fl"><input type="password" class="form-control" placeholder="请输入新密码" name="rtpwd2" value=""
+                                                            <div class="fl"><input id="pwdEmail" type="password" class="form-control" placeholder="请输入新密码" name="rtpwd2" value=""
                                                                                    class="ipt email"/></div>
                                                         </div>
                                                     </div>
