@@ -4,6 +4,7 @@ import ch.qos.logback.classic.Logger;
 import com.gs.bean.*;
 import com.gs.common.util.DateFormatUtil;
 import com.gs.common.util.DateUtil;
+import com.gs.common.util.RoleUtil;
 import com.gs.service.*;
 import org.activiti.engine.repository.Model;
 import org.slf4j.LoggerFactory;
@@ -58,35 +59,27 @@ public class BackstageController {
      * 后台主页
      */
     @RequestMapping(value = "home", method = RequestMethod.GET)
-    public String backstageHome(HttpSession session, HttpServletRequest request) {
-        User user = (User) session.getAttribute("user");
-        if(user.getCompanyId()==null&&user.getCompanyId().equals("")){
-            return "backstage/home";
-        }
-        List<User> userinfo = userService.queryByCompanyId(user.getCompanyId());
-        for (User u:userinfo){
-            if(u.getUserIcon()==null || u.getUserIcon().equals("")){
-                u.setUserIcon("static/img/a1.jpg");
-            }
-        }
-        List<Company> companyInfo=companyService.queryByCompanyInfo();
-        for(Company c:companyInfo){
-            if(c.getCompanyLogo()==null || c.getCompanyLogo().equals("")){
-                c.setCompanyLogo("static/img/a2.jpg");
-            }
-        }
-        List<Appointment> appinfo=appointmentService.queryByCompanyId(user.getCompanyId());
-        List<MaintainFix> mainInfo=maintainFixService.queryByCompanyId(user.getCompanyId());
-        List<IncomingOutgoing> incomInfo=incomingOutgoingService.queryByCompanyIdForInType(user.getCompanyId());
-        List<IncomingOutgoing> outgoInfo=incomingOutgoingService.queryByCompanyIdForOutType(user.getCompanyId());
-        request.setAttribute("userinfo",userinfo);
-        request.setAttribute("appinfo",appinfo);
-        request.setAttribute("maininfo",mainInfo);
-        request.setAttribute("incomInfo",incomInfo);
-        request.setAttribute("outgoInfo",outgoInfo);
-        request.setAttribute("companyInfo",companyInfo);
+    public ModelAndView backstageHome(HttpSession session, HttpServletRequest request) {
         logger.info("跳转到后台主页");
-        return "backstage/home";
+        User user = (User) session.getAttribute("user");
+        ModelAndView mav = new ModelAndView("backstage/home");
+        String roles = "系统超级管理员,系统普通管理员";
+        if(RoleUtil.checkRoles(roles)) {
+            List<Company> companyInfo=companyService.queryByCompanyInfo();
+            mav.addObject("companyInfo",companyInfo);
+        }else{
+            List<User> userinfo = userService.queryByCompanyId(user.getCompanyId());
+            List<Appointment> appinfo=appointmentService.queryByCompanyId(user.getCompanyId());
+            List<MaintainFix> mainInfo=maintainFixService.queryByCompanyId(user.getCompanyId());
+            List<IncomingOutgoing> incomInfo=incomingOutgoingService.queryByCompanyIdForInType(user.getCompanyId());
+            List<IncomingOutgoing> outgoInfo=incomingOutgoingService.queryByCompanyIdForOutType(user.getCompanyId());
+            mav.addObject("userinfo",userinfo);
+            mav.addObject("appinfo",appinfo);
+            mav.addObject("maininfo",mainInfo);
+            mav.addObject("incomInfo",incomInfo);
+            mav.addObject("outgoInfo",outgoInfo);
+        }
+        return mav;
     }
 
     /**

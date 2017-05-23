@@ -293,7 +293,7 @@ public class UserController {
         }
 
     /**
-     * 登陆方法1。
+     * 登陆方法2。
      *
      * @param session
      * @return

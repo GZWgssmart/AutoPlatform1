@@ -71,8 +71,8 @@
                             </div>
                             <div class="form-group">
                                 <div>
-                                <label style="overflow: hidden;display: inline;"><input type="checkbox" value="记住账号" style="position: relative;top:3px;width: 16px;height: 16px;"> <span style="font-size: 16px;">记住账号</span></label>
-                                    <label><a class="bounceInDown" style="font-size: 16px;margin-left: 10px;" href="javaScript:;" onclick="showAdd();">忘记密码</a></label>
+                                <%--<label style="overflow: hidden;display: inline;"><input type="checkbox" value="记住账号" style="position: relative;top:3px;width: 16px;height: 16px;"> <span style="font-size: 16px;">记住账号</span></label>--%>
+                                    <label><a class="bounceInDown" style="font-size: 16px;margin-left: 10px;" href="javaScript:;" onclick="showAdd();">忘记密码？</a></label>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -176,7 +176,7 @@
                                             </form>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-default" onclick="closem()">关闭</button>
-                                                <button id="editButton" type="button" onclick="rtPhoneSubmit()" class="btn btn-success">确认</button>
+                                                <button id="phoneButton" type="button" onclick="rtPhoneSubmit()" class="btn btn-success">确认</button>
                                             </div>
                                         </div>
                                     </div>
@@ -219,7 +219,7 @@
                                             </form>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-default" onclick="closem()">关闭</button>
-                                                <button id="editButton1" type="button" onclick="rtEmailSubmit()" class="btn btn-success">确认</button>
+                                                <button id="emailButton" type="button" onclick="rtEmailSubmit()" class="btn btn-success">确认</button>
                                             </div>
                                         </div>
                                     </div>

@@ -38,7 +38,14 @@
                                     <c:forEach items="${requestScope.companyInfo}" var="cp">
                                         <tr>
                                             <td class="client-avatar">
-                                                <img alt="image" src="/${cp.companyLogo}" height="30px" width="30px">
+                                                <c:choose>
+                                                    <c:when test="${cp.companyLogo != null}">
+                                                        <img alt="image" src="/${cp.companyLogo}" height="30px" width="30px">
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <img alt="image" src="/static/img/default.png" height="30px" width="30px">
+                                                    </c:otherwise>
+                                                </c:choose>
                                             </td>
                                             <td>${cp.companyName}</td>
                                             <td>${cp.companyPricipal}</td>
@@ -80,7 +87,14 @@
                                     <c:forEach items="${requestScope.userinfo}" var="us">
                                         <tr>
                                             <td class="client-avatar">
-                                                <img alt="image" src="/${us.userIcon}" height="30px" width="30px">
+                                                <c:choose>
+                                                    <c:when test="${us.userIcon != null}">
+                                                        <img alt="image" src="/${us.userIcon}" height="30px" width="30px">
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <img alt="image" src="/static/img/default.png" height="30px" width="30px">
+                                                    </c:otherwise>
+                                                </c:choose>
                                             </td>
                                             <td>${us.userName}</td>
                                             <td>${us.userPhone}</td>

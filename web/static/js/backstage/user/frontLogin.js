@@ -277,9 +277,9 @@ function showAdd(){
 function rtPhoneSubmit() {
     $("#addForm").data('bootstrapValidator').validate();
     if ($("#addForm").data('bootstrapValidator').isValid()) {
-        $("#addForm").attr("disabled", "disabled");
+        $("#phoneButton").attr("disabled", "disabled");
     } else {
-        $("#addForm").removeAttr("disabled");
+        $("#phoneButton").removeAttr("disabled");
     }
 }
 
@@ -287,15 +287,16 @@ function rtPhoneSubmit() {
 function rtEmailSubmit() {
     $("#addForm1").data('bootstrapValidator').validate();
     if ($("#addForm1").data('bootstrapValidator').isValid()) {
-        $("#addForm1").attr("disabled", "disabled");
+        $("#emailButton").attr("disabled", "disabled");
     } else {
-        $("#addForm1").removeAttr("disabled");
+        $("#emailButton").removeAttr("disabled");
     }
 }
 
 // 点击发送短信
 var phoneCode1 = 60;
 function phoneCode(button) {
+    button.setAttribute("disabled", true);
     phoneCodeTime(button);
 }
 
@@ -309,6 +310,7 @@ function phoneCodeTime(o) {
         var phone = $("#phoneInput").val();
         if(phone!= null && phone != ""){
             if(phone.length != 11){
+                o.removeAttribute("disabled", true);
             }else{
                 $.get("/user/rtPhoneCode?phone="+phone, function (data) {
                     if(data.result == "success"){
@@ -325,6 +327,7 @@ function phoneCodeTime(o) {
                 });
             }
         }else{
+            o.removeAttribute("disabled", true);
             $("#phoneCodePrint").html("请先输入手机号码");
             $("#phoneCodePrint").css("display","block");
         }
@@ -350,6 +353,7 @@ function phoneCodeTime1(o, phone) {
 // 点击发送短信
 var emailCode1 = 60;
 function emailCodes(button) {
+    button.setAttribute("disabled", true);
     emailCodeTime(button);
 }
 
@@ -363,6 +367,7 @@ function emailCodeTime(o) {
         var phone = $("#emailInput").val();
         if(phone!= null && phone != ""){
             if(!(/^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/).test(phone)){
+                o.removeAttribute("disabled", true);
             }else{
                 $.get("/user/rtEmailCode?email="+phone, function (data) {
                     if(data.result == "success"){
@@ -379,6 +384,7 @@ function emailCodeTime(o) {
                 });
             }
         }else{
+            o.removeAttribute("disabled", true);
             $("#emailCodePrint").html("请先输入邮箱");
             $("#emailCodePrint").css("display","block");
         }
@@ -482,10 +488,12 @@ function validator3(formId) {
                     type: "success"
                 }, function (isConfirm) {
                     $("#addWindow").modal('hide');
+                    $("#phoneButton").removeAttr("disabled");
                     $("#addForm").data('bootstrapValidator').destroy(); // 销毁此form表单
                     $('#addForm').data('bootstrapValidator', null);// 此form表单设置为空
                 });
             }else if(data.result=="fail"){
+                $("#phoneButton").removeAttr("disabled");
                 swal({
                     title: "",
                     text: data.message,
@@ -570,10 +578,12 @@ function validator4(formId) {
                     type: "success"
                 }, function (isConfirm) {
                     $("#addWindow").modal('hide');
+                    $("#emailButton").removeAttr("disabled");
                     $("#addForm1").data('bootstrapValidator').destroy(); // 销毁此form表单
                     $('#addForm1').data('bootstrapValidator', null);// 此form表单设置为空
                 });
             }else if(data.result=="fail"){
+                $("#emailButton").removeAttr("disabled");
                 swal({
                     title: "",
                     text: data.message,
