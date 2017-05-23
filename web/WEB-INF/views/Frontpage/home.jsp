@@ -24,7 +24,7 @@
                     <li class="icon-li"><a href="#mc2-des" id="pt">平台介绍</a></li>
                     <li class="icon-li"><a href="#mc4-des" id="gn">功能介绍</a></li>
                     <li class="icon-li"><a href="reg">登录</a></li>
-                    <%--<li class="icon-li"><a href="aboutus">关于我们</a></li>--%>
+                    <li class="icon-li"><a href="/platformIntro">关于我们</a></li>
                     <li id="menu-bg"><a href="factoryreg">汽车公司入驻</a></li>
                 </ul>
             </div>
@@ -128,7 +128,7 @@
                 </div>
                 <div id="rt" class="col-md-5 col-sm-7 banner-img wow fadeInRight animated" data-wow-delay="0.4s" style="height: 100%;visibility: visible; animation-name: fadeInRight;">
                     <div class="right-img" >
-                        <a href="platformIntro"><img src="/static/img/Frontpage/slider.png" style="width: 100%;height: 100%"/></a>
+                        <a href="home"><img src="/static/img/Frontpage/slider.png" style="width: 100%;height: 100%"/></a>
                     </div>
                 </div>
             </div>
@@ -177,7 +177,7 @@
                     </div>
                 </div>
                 <div class="button-box2" style="margin-top: 8%;">
-                    <a href="platformIntro" class="btn wow fadeInRight animated " data-wow-delay="0.5s" style="width: 200px;height: 50px;visibility: visible; animation-delay: 1s; animation-name: fadeInRight;">马上进入</a>
+                    <a href="factoryreg" class="btn wow fadeInRight animated " data-wow-delay="0.5s" style="width: 200px;height: 50px;visibility: visible; animation-delay: 1s; animation-name: fadeInRight;">马上进入</a>
                 </div>
         </div>
         <%--主内容四--%>
@@ -211,14 +211,14 @@
                 </div>
             </div>
             <div class="button-box2">
-                <a href="platformIntro" class="btn zoomIn wow animated" style="width: 200px;height: 50px;">马上进入</a>
+                <a href="home" class="btn zoomIn wow animated" style="width: 200px;height: 50px;">马上进入</a>
             </div>
         </div>
         <%--主内容五--%>
         <div class="Maincontent5">
             <div class="mc5-top">
-                <h2><a href="javaScript:;" style="color: #0d8ddb;">商家加盟入口</a></h2>
-                <h3 class="wow fadeInRight animated" data-wow-delay="0.5s" style="text-align:center;visibility: visible; animation-name: fadeInRight;"><a href="javaScript:;" style="color:white ;">欢迎汽修、汽配商家入驻加盟</a></h3>
+                <h2><a href="factoryreg" style="color: #0d8ddb;">商家加盟入口</a></h2>
+                <h3 class="wow fadeInRight animated" data-wow-delay="0.5s" style="text-align:center;visibility: visible; animation-name: fadeInRight;"><a href="factoryreg" style="color:white ;">欢迎汽修、汽配商家入驻加盟</a></h3>
             </div>
         </div>
         <%--底部版权--%>
@@ -228,35 +228,34 @@
                         <h4>联系我们：</h4>
                         <p>
                             <i class="icon-phone"><img src="/static/img/Frontpage/phone.png"/></i>
-                            <span class="phone">40000-13864</span>
+                            <span class="phone">15570102341</span>
                         </p>
-                        <p>E-mail:qweasdzxc102@qq.com</p>
+                        <p>E-mail:8318045@qq.com</p>
                         <p><a href="javaScript:;"><img src="/static/img/Frontpage/btm-left.png"></a></p>
                     </div>
                     <div class="col-sm-9 col-md-5 wechat">
-                        <h2>扫码关注</h2>
+                        <h3 style="margin: 0;">扫码关注</h3>
                         <div class="row sm ">
-                            <div class="col-md-4 col-sm-4">
-                                <img src="/static/img/Frontpage/pcode-4.png"/>
+                            <div class="col-md-3 col-sm-3">
                             </div>
-                            <div class="col-md-4 col-sm-4">
-                                <img src="/static/img/Frontpage/pcode-4.png"/>
+                            <div class="col-md-5 col-sm-5" style="text-align: center;">
+                                <img src="/static/img/Frontpage/erweim.jpg" width="180px" height="140px"/>
                             </div>
-                            <div class="col-md-4 col-sm-4">
-                                <img src="/static/img/Frontpage/pcode-4.png"/>
+                            <div class="col-md-3 col-sm-3">
+
                             </div>
                         </div>
                     </div>
                     <div class="col-md-2 col-sm-3 rt-img row">
                         <div class="col-md-12 col-sm-10 gz">
-                            <h4>关注抽奖有好礼</h4>
-                            <a href="javaScript:;" id="mc5-rtimg"><img src="/static/img/Frontpage/weibo.png"/></a>
-                            <a href="javaScript:;"><img src="/static/img/Frontpage/toutiao.png"/></a>
+                            <h4 style="margin-bottom: 10px;">关注预约有好礼</h4>
+                            <a href="/resepage" id="mc5-rtimg"><img src="/static/img/Frontpage/weixin.jpg" width="100px" height="100px"/></a>
+
                         </div>
                     </div>
                 </div>
             <div class="t-bottom">
-                <span style="font-size: 19px;">© 2011-2016 赣州宏图预科班 版权所有 ｜ 赣ICP备11018683-3</span>
+                <span style="font-size: 19px;">© 2017-3017 神的坐骑 版权所有 ｜ 赣ICP备11018683-3</span>
             </div>
         </div>
         <a href="#top" class="go-top" id="backtop" style="display:none;"></a>

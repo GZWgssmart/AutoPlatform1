@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>平台下载</title>
+    <title>关于我们</title>
 </head>
 <link rel="stylesheet" href="/static/css/bootstrap.css">
 <link rel="stylesheet" href="/static/css/animate.css">
@@ -30,9 +30,10 @@
 
                 </div>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="index">主页</a></li>
-                    <li class="icon-li"><a href="javaScript:;">关于我们</a></li>
-                    <li id="menu-bg"><a href="javaScript:;">汽修公司入驻</a></li>
+                    <li><a href="/index">主页</a></li>
+                    <li class="icon-li"><a href="/reg">登录</a></li>
+                    <li class="icon-li"><a href="/platformIntro">关于我们</a></li>
+                    <li id="menu-bg"><a href="/factoryreg">汽修公司入驻</a></li>
                 </ul>
             </div>
         </nav>
@@ -40,10 +41,10 @@
         <div class="nav-two">
             <div class="container-nav">
                 <ul class="nav-ul">
-                    <a href="#windows-m"><li><span id="computer">&nbsp;&nbsp;&nbsp;&nbsp;</span>Windows</li></a>
-                    <a href="#iphone-m"><li><span style="background: url(/static/img/Frontpage/iphone.png)0 10px no-repeat;">&nbsp;&nbsp;&nbsp;&nbsp;</span>iPhone</li></a>
-                    <a href="#android-m"><li><span style="background: url(/static/img/Frontpage/android.png)0 10px no-repeat">&nbsp;&nbsp;&nbsp;&nbsp;</span>Android</li></a>
-                    <a href="#ipad-m"><li><span style="background: url(/static/img/Frontpage/iphone.png)0 10px no-repeat;">&nbsp;&nbsp;&nbsp;&nbsp;   </span>iPad</li></a>
+                    <a href="#windows-m"><li>我是谁</li></a>
+                    <a href="#android-m"><li>我在哪</li></a>
+                    <a href="#iphone-m"><li>我要干嘛</li></a>
+                    <a href="#ipad-m"><li>都是浮云</li></a>
                     <div class="clearfix"></div>
                 </ul>
             </div>
@@ -58,62 +59,32 @@
                 </div>
                 <div class="col-md-6 col-sm-6 content-right wow fadeInRight animated" data-wow-delay="0.7s" >
                     <div class="first-rt-txt">
-                        <h1>电脑版使用·PC端</h1>
-                        <ol class="des-txt">
-                            <li>
-                                基本资料：汽修厂名称设置、员工登记、故障定义、维修项目定义、客户档案、车型、修理班组、其它费用定义、颜色、行驶里程保养规定、维修类别
-                            </li>
-                            <li>
-                                接车登记：接车登记、接车明细、结算客户、挂账客户、免费修理、打印结算单
-                            </li>
-                            <li>
-                                分类查询：用料查询、其它收费、维修完工、维修查询、保养提醒
-                            </li>
-                            <li>
-                                材料管理：材料出库、材料入库、材料库存、配件销售、材料下限清单、当天入库统计、当天出库统计
-                            </li>
-                            <li>
-                                材料管理：材料出库、材料入库、材料库存、配件销售、材料下限清单、当天入库统计、当天出库统计
-                            </li>
-                        </ol>
-                    </div>
-                    <button class="btn dl-btn" style="background-color:#696969 ;color: white;"><span style="font-size: 20px;" class="glyphicon glyphicon-download-alt"></span> 立即试用</button>
-                    <div class="eweim">
+                        <h1 style="font-size: 4em;"><p>我们是谁？</p> Who are we</h1>
+                        <ul class="des-txt" style="list-style: none;">
+
+                        </ul>
                     </div>
                     <div class="clearfix"></div>
                 </div>
             </div>
         </div>
         <%--背景图--%>
-        <div id="thirdBar"></div>
+        <div id="thirdBar">
+
+        </div>
         <%--第二个内容--%>
         <div id="two" name="iphone-m">
             <div class="container">
                 <div class="col-md-6 col-sm-6 content-left  wow fadeInLeft animated" data-wow-delay="0.7s" >
-                    <div class="first-left-bg">
-                        <img src="/static/img/Frontpage/iphone-green.png"/>
+                    <div class="first-rt-txt">
+                        <h1 style="font-size: 4em;">我们在做什么？<p>What are we doing</p></h1>
+
                     </div>
+
                 </div>
                 <div class="col-md-6 col-sm-6 content-right wow fadeInRight animated" data-wow-delay="0.7s" >
-                    <div class="first-rt-txt">
-                        <h1>平台使用·iPhone</h1>
-                        <ol class="des-txt">
-                            <li>
-                                基本资料：汽修厂名称设置、员工登记、故障定义、维修项目定义、客户档案、车型、修理班组、其它费用定义、颜色、行驶里程保养规定、维修类别
-                            </li>
-                            <li>
-                                接车登记：接车登记、接车明细、结算客户、挂账客户、免费修理、打印结算单
-                            </li>
-                            <li>
-                                分类查询：用料查询、其它收费、维修完工、维修查询、保养提醒
-                            </li>
-                            <li>
-                                材料管理：材料出库、材料入库、材料库存、配件销售、材料下限清单、当天入库统计、当天出库统计
-                            </li>
-                        </ol>
-                    </div>
-                    <button class="btn" style="background-color: green;color: white;"><span style="font-size: 20px;" class="glyphicon glyphicon-download-alt"></span> 立即试用</button>
-                    <div class="eweim">
+                    <div class="first-left-bg">
+                        <img src="/static/img/Frontpage/iphone-green.png"/>
                     </div>
                     <div class="clearfix"></div>
                 </div>
@@ -131,24 +102,7 @@
                     </div>
                     <div class="col-md-6 col-sm-6 content-right wow fadeInRight animated" data-wow-delay="0.7s" >
                         <div class="first-rt-txt">
-                            <h1>移动设备·Android</h1>
-                            <ol class="des-txt">
-                                <li>
-                                    基本资料：汽修厂名称设置、员工登记、故障定义、维修项目定义、客户档案、车型、修理班组、其它费用定义、颜色、行驶里程保养规定、维修类别
-                                </li>
-                                <li>
-                                    接车登记：接车登记、接车明细、结算客户、挂账客户、免费修理、打印结算单
-                                </li>
-                                <li>
-                                    分类查询：用料查询、其它收费、维修完工、维修查询、保养提醒
-                                </li>
-                                <li>
-                                    材料管理：材料出库、材料入库、材料库存、配件销售、材料下限清单、当天入库统计、当天出库统计
-                                </li>
-                            </ol>
-                        </div>
-                        <button class="btn" style="background-color: burlywood;color: white;"><span style="font-size: 20px;" class="glyphicon glyphicon-download-alt"></span> 立即试用</button>
-                        <div class="eweim">
+                            <h1 style="font-size: 4em;">我们在哪？<p>Where are we</p></h1>
                         </div>
                         <div class="clearfix"></div>
                     </div>
@@ -159,30 +113,14 @@
         <div id="four" name="ipad-m">
                 <div class="container">
                     <div class="col-md-6 col-sm-6 content-left wow fadeInLeft animated">
-                        <div class="first-left-bg">
-                            <img src="/static/img/Frontpage/ipad-bg.jpg"/>
+                        <div class="first-rt-txt">
+                            <h1 style="font-size: 4em;">不想说什么</h1>
                         </div>
+
                     </div>
                     <div class="col-md-6 col-sm-6 content-right wow fadeInRight animated">
-                        <div class="first-rt-txt">
-                            <h1>平板端下载·iPad</h1>
-                            <ol class="des-txt">
-                                <li>
-                                    基本资料：汽修厂名称设置、员工登记、故障定义、维修项目定义、客户档案、车型、修理班组、其它费用定义、颜色、行驶里程保养规定、维修类别
-                                </li>
-                                <li>
-                                    接车登记：接车登记、接车明细、结算客户、挂账客户、免费修理、打印结算单
-                                </li>
-                                <li>
-                                    分类查询：用料查询、其它收费、维修完工、维修查询、保养提醒
-                                </li>
-                                <li>
-                                    材料管理：材料出库、材料入库、材料库存、配件销售、材料下限清单、当天入库统计、当天出库统计
-                                </li>
-                            </ol>
-                        </div>
-                        <button class="btn" style="background-color: thistle;color: white;"><span style="font-size: 20px;" class="glyphicon glyphicon-download-alt"></span> 立即试用</button>
-                        <div class="eweim">
+                        <div class="first-left-bg">
+                            <img src="/static/img/Frontpage/ipad-bg.jpg"/>
                         </div>
                         <div class="clearfix"></div>
                     </div>
@@ -190,43 +128,42 @@
             </div>
         <div id="sixthBar"></div>
         <%--底部版权--%>
-        <div class="bottom-nav">
-            <div class="row concart-warp">
-                <div class="col-md-5 col-sm-12 btm-left">
-                    <h4>联系我们：</h4>
-                    <p>
-                        <i class="icon-phone"><img src="/static/img/Frontpage/phone.png"/></i>
-                        <span class="phone">40000-13864</span>
-                    </p>
-                    <p>E-mail:qweasdzxc102@qq.com</p>
-                    <p><a href="javaScript:;"><img src="/static/img/Frontpage/btm-left.png"></a></p>
-                </div>
-                <div class="col-sm-9 col-md-5 wechat">
-                    <h2>扫码关注</h2>
-                    <div class="row eweima ">
-                        <div class="col-md-4 col-sm-4">
-                            <img src="/static/img/Frontpage/2wei.jpg"/>
+            <div class="bottom-nav">
+                <div class="row concart-warp">
+                    <div class="col-md-5 col-sm-12 btm-left">
+                        <h4>联系我们：</h4>
+                        <p>
+                            <i class="icon-phone"><img src="/static/img/Frontpage/phone.png"/></i>
+                            <span class="phone">15570102341</span>
+                        </p>
+                        <p>E-mail:8318045@qq.com</p>
+                        <p><a href="javaScript:;"><img src="/static/img/Frontpage/btm-left.png"></a></p>
+                    </div>
+                    <div class="col-sm-9 col-md-5 wechat">
+                        <h3 style="margin: 0;">扫码关注</h3>
+                        <div class="row sm ">
+                            <div class="col-md-3 col-sm-3">
+                            </div>
+                            <div class="col-md-5 col-sm-5" style="text-align: center;">
+                                <img src="/static/img/Frontpage/erweim.jpg" width="180px" height="140px"/>
+                            </div>
+                            <div class="col-md-3 col-sm-3">
+
+                            </div>
                         </div>
-                        <div class="col-md-4 col-sm-4">
-                            <img src="/static/img/Frontpage/2wei.jpg"/>
-                        </div>
-                        <div class="col-md-4 col-sm-4">
-                            <img src="/static/img/Frontpage/2wei.jpg"/>
+                    </div>
+                    <div class="col-md-2 col-sm-3 rt-img row">
+                        <div class="col-md-12 col-sm-10 gz">
+                            <h4 style="margin-bottom: 10px;">关注预约有好礼</h4>
+                            <a href="/resepage" id="mc5-rtimg"><img src="/static/img/Frontpage/weixin.jpg" width="100px" height="100px"/></a>
+
                         </div>
                     </div>
                 </div>
-                <div class="col-md-2 col-sm-3 rt-img row">
-                    <div class="col-md-12 col-sm-10 gz">
-                        <h4>关注抽奖有好礼</h4>
-                        <a href="javaScript:;" id="mc5-rtimg"><img src="/static/img/Frontpage/weibo.png"/></a>
-                        <a href="javaScript:;"><img src="/static/img/Frontpage/toutiao.png"/></a>
-                    </div>
+                <div class="t-bottom">
+                    <span style="font-size: 19px;">© 2017-3017 神的坐骑 版权所有 ｜ 赣ICP备11018683-3</span>
                 </div>
             </div>
-            <div class="t-bottom">
-                <span style="font-size: 19px;">© 2011-2016 赣州宏图预科班 版权所有 ｜ 赣ICP备11018683-3</span>
-            </div>
-        </div>
     </div>
     <a href="#top" class="go-top" id="backtop" style="display:none;"></a>
 <script src="/static/js/jquery.min.js"></script>

@@ -63,6 +63,9 @@
     background-color: white;
     box-shadow: 5px 0px 3px grey;
 }
+.container-nav .nav-ul li:hover{
+    background-color: #e2e2e2;
+}
 .nav-ul li{
     float: left;
     list-style-type: none;
@@ -71,6 +74,7 @@
     text-align: center;
     font-size: 23px;
 }
+
 .nav-ul{
     margin-bottom:0px;
 }
