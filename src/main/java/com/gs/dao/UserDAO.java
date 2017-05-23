@@ -131,4 +131,8 @@ public interface UserDAO extends BaseDAO<String, User>{
      */
     public List<User> queryByCompanyId(String companyId);
 
+    // 查询手机和邮箱绑定账号是否存在
+    public int queryPhoneIsNull(String phone);
+
+    public int queryEmailIsNull(String email);
 }

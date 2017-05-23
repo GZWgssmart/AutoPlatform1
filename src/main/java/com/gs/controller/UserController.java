@@ -160,15 +160,15 @@ public class UserController {
     @ResponseBody
     @RequestMapping(value = "queryEmailIsNull", method = RequestMethod.GET)
     public String queryEmailIsNull(HttpServletRequest req) {
-        logger.info("验证手机号是否已经存在");
-        String eamil = (String)req.getParameter("emailCodeInput");
+        logger.info("验证邮箱绑定账号是否存在");
+        String eamil = (String)req.getParameter("rtemail");
         boolean result = true;
         String resultString = "";
         Map<String, Boolean> map = new HashMap<String, Boolean>();
         ObjectMapper mapper = new ObjectMapper();
         if (eamil != null && eamil !="") {
             int count = userService.queryEmailIsNull(eamil);
-            if (count > 1 || count == 1) {
+            if (count == 0) {
                 result = false;
             }
         }
@@ -187,7 +187,7 @@ public class UserController {
     @ResponseBody
     @RequestMapping(value = "queryPhoneIsNull", method = RequestMethod.GET)
     public String queryPhoneIsNull(HttpServletRequest req) {
-        logger.info("验证手机号是否已经存在");
+        logger.info("验证手机号码绑定账号是否存在");
         String rtphone = (String)req.getParameter("rtphone");
         boolean result = true;
         String resultString = "";
@@ -195,7 +195,7 @@ public class UserController {
         ObjectMapper mapper = new ObjectMapper();
         if (rtphone != null && rtphone !="") {
             int count = userService.queryPhoneIsNull(rtphone);
-            if (count > 1 || count == 1) {
+            if (count == 0) {
                 result = false;
             }
         }
@@ -394,7 +394,7 @@ public class UserController {
             int code = (int)((Math.random()*9+1)*100000);
             session.setAttribute("rtEmailCode", code);
             Mail mail = new Mail();
-            mail.setSubject("维修保养记录完工提醒"); // 设置标题
+            mail.setSubject("找回密码"); // 设置标题
             // 设置接收者
             // mail.setRecipients(u.getUserEmail()); 收件人
             // mail.setCcRecipients(); // 抄送

@@ -1,6 +1,6 @@
 var userPhone;
 var rtphone;
-var emailCodeInput;
+var rtemail;
 $(function () {
     // 监听手机输入的唯一验证
     $('#phone').bind('input propertychange', function() {
@@ -266,7 +266,7 @@ function showAdd(){
         $("#phoneCodePrint").css("display","none");
     });
     $('#emailInput').bind('input propertychange', function() {
-        emailCodeInput = $("#emailInput").val();
+        rtemail = $("#emailInput").val();
         $("#emailCodePrint").css("display","none");
     });
     validator3('addForm');
@@ -482,7 +482,7 @@ function validator4(formId) {
             validating: 'glyphicon glyphicon-refresh'
         },
         fields: {
-            emailCodeInput: {
+            rtemail: {
                 message: '邮箱不能为空',
                 validators: {
                     notEmpty: {
@@ -497,6 +497,14 @@ function validator4(formId) {
                         message: '该邮箱绑定账号不存在',
                         delay :  2000,
                         type: 'GET'
+                    }
+                }
+            },
+            emailCodeInput: {
+                message: '验证码不能为空',
+                validators: {
+                    notEmpty: {
+                        message: '验证码不能为空'
                     }
                 }
             },
