@@ -87,9 +87,7 @@
   </select>
 
   <select id="countName"  resultType="int">
-    select t.*,u.userId AS user_id,u.userName AS user_name,
-    c.userId AS checkin_id,c.userName AS checkin_name,
-    com.companyId as company_id, com.companyName,com.companyAddress,com.companyTel
+    select count(t.trackId)
     from t_track_list t,t_company com,
     t_checkin c, t_user u where u.userId = t.userId and t.trackUser = c.userId
     and c.checkinStatus = 'Y' and t.companyId = com.companyId

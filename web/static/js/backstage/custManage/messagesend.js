@@ -94,7 +94,7 @@ function showEdit() {
     var roles = "公司超级管理员,公司普通管理员,汽车公司接待员";
     $.post("/user/isLogin/" + roles, function (data) {
         if (data.result == 'success') {
-            var row = $('table').bootstrapTable('getSelections');
+            var row = $("#table").bootstrapTable('getSelections');
             if (row.length > 0) {
                 $("#editWindow").modal('show'); // 显示弹窗
                 $("#editButton").removeAttr("disabled");
@@ -245,7 +245,7 @@ function formSubmit(url, formId, winId) {
                     $("input[type=reset]").trigger("click"); // 移除表单中填的值
                     // $('#addForm').data('bootstrapValidator').resetForm(true); // 移除所有验证样式
                     $("#addButton").removeAttr("disabled"); // 移除不可点击
-                    $("#addUserName").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
+                    // $("#addUserName").html('<option value="' + '' + '">' + '' + '</option>').trigger("change");
                 }
                 $("#" + formId).data('bootstrapValidator').destroy(); // 销毁此form表单
                 $('#' + formId).data('bootstrapValidator', null);// 此form表单设置为空

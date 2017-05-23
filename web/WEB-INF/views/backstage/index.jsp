@@ -239,8 +239,8 @@
                     <li>
                         <a href="#"><i class="fa fa-user-plus"></i> <span class="nav-label">客户管理</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
-                            <li><a class="J_menuItem" href="/custManage/maintainrecordIndex">维修保养记录管理</a>
-                            </li>
+                            <%--<li><a class="J_menuItem" href="/custManage/maintainrecordIndex">维修保养记录管理</a>--%>
+                            <%--</li>--%>
                             <li><a class="J_menuItem" href="/custManage/maintainremindIndex">维修保养提醒</a>
                             </li>
                             <li><a class="J_menuItem" href="/custManage/messagesendIndex">短信群发提醒</a>

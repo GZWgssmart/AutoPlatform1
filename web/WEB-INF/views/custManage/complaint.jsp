@@ -20,7 +20,6 @@
     <link rel="stylesheet" href="/static/css/select2.min.css">
     <link rel="stylesheet" href="/static/css/sweetalert.css">
     <link rel="stylesheet" href="/static/css/table/table.css">
-    <link rel="stylesheet" href="/static/js/plugins/layui/css/layui.css" media="all">
     <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.css">
     <link rel="stylesheet/less" href="/static/css/bootstrap-dateTimePicker/datetimepicker.less">
 </head>
@@ -58,7 +57,7 @@
             <%--<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改--%>
             <%--</button>--%>
             <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,车主">
-                <div class="input-group" style="width:350px;float:left;padding:0;margin:0 0 0 -1px;">
+                <div class="input-group" style="width:350px;float:right;padding:0;margin:0 0 0 -1px;">
                     <div class="input-group-btn">
                         <button type="button" id="ulButton" class="btn btn-default" style="border-radius:0px;"
                                 data-toggle="dropdown">投诉人<span class="caret"></span></button>
@@ -87,93 +86,107 @@
 <div class="modal fade" id="addWindow" aria-hidden="true" data-backdrop="static" keyboard:false style="overflow:auto; ">
     <div class="modal-dialog" style="width: 780px;height: auto;">
         <div class="modal-content" style="overflow:hidden;">
-            <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('addWindow', 'addForm')"></span>
-            <form class="form-horizontal" role="form" id="addForm" method="post">
-                <div class="modal-header" style="overflow:auto;">
-                    <h4>添加投诉的信息</h4>
-                </div>
-                <br/>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">投诉人：</label>
-                    <div class="col-sm-7">
-                        <select id="addUserName" name="userId" class="form-control js-data-example-ajax user" style="width:100%">
-                        </select>
+            <div class="modal-body">
+                <span class="glyphicon glyphicon-remove closeModal"
+                      onclick="closeModals('addWindow', 'addForm')"></span>
+                <form class="form-horizontal" role="form" id="addForm" method="post">
+                    <div class="modal-header" style="overflow:auto;">
+                        <h4>添加投诉的信息</h4>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">投诉时间：</label>
-                    <div class="col-sm-7">
-                        <input id="addComplaintCreatedTime" name="complaintCreatedTime" readonly onclick="getDate('addComplaintCreatedTime')" class="form-control datetimepicker"/>
+                    <br/>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">投诉人：</label>
+                        <div class="col-sm-7">
+                            <select id="addUserName" name="userId" class="form-control js-data-example-ajax user"
+                                    style="width:100%">
+                            </select>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">投诉内容：</label>
-                    <div class="col-sm-7">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">投诉时间：</label>
+                        <div class="col-sm-7">
+                            <input id="addComplaintCreatedTime" name="complaintCreatedTime" readonly
+                                   onclick="getDate('addComplaintCreatedTime')" class="form-control datetimepicker"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">投诉内容：</label>
+                        <div class="col-sm-7">
                         <textarea type="text" name="complaintContent" placeholder="请输入投诉内容" style="height: 100px;"
                                   class="form-control"></textarea>
+                        </div>
                     </div>
-                </div>
 
-                <div class="form-group">
-                    <div class="col-sm-offset-8">
-                        <button type="button" class="btn btn-default"
-                                onclick="closeModals('addWindow', 'addForm')">关闭
-                        </button>
-                        <button id="addButton" class="btn btn-sm btn-success" type="button" onclick="addSubmit()">保 存</button>
-                        <input type="reset" name="reset" style="display: none;"/>
+                    <div class="form-group">
+                        <div class="col-sm-offset-8">
+                            <button type="button" class="btn btn-default"
+                                    onclick="closeModals('addWindow', 'addForm')">关闭
+                            </button>
+                            <button id="addButton" class="btn btn-sm btn-success" type="button" onclick="addSubmit()">保
+                                存
+                            </button>
+                            <input type="reset" name="reset" style="display: none;"/>
+                        </div>
                     </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
 <!-- 回复弹窗 -->
-<div class="modal fade" id="addReplyWindow" aria-hidden="true" data-backdrop="static" keyboard:false style="overflow:auto; ">
+<div class="modal fade" id="addReplyWindow" aria-hidden="true" data-backdrop="static" keyboard:false
+     style="overflow:auto; ">
     <div class="modal-dialog" style="width: 780px;height: auto;">
         <div class="modal-content" style="overflow:hidden;">
-            <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('addReplyWindow', 'addReplyForm')"></span>
-            <form class="form-horizontal" role="form" id="addReplyForm" method="post">
-                <input type="hidden" name="complaintId" define="Complaint.complaintId" />
-                <%--<input type="text" name="complaintReplyUser" value="${sessionScope.user.userId}"/>--%>
-                <%--<input id="start2" type="text" name="complaintCreatedTime" define="Complaint.complaintCreatedTime" />--%>
-                <%--<input type="hidden" name="complaintContent" define="Complaint.complaintContent" />--%>
-                <div class="modal-header" style="overflow:auto;">
-                    <h4>回复投诉的信息</h4>
-                </div>
-                <br/>
-                <%--<div class="form-group">--%>
+            <div class="modal-body">
+                <span class="glyphicon glyphicon-remove closeModal"
+                      onclick="closeModals('addReplyWindow', 'addReplyForm')"></span>
+                <form class="form-horizontal" role="form" id="addReplyForm" method="post">
+                    <input type="hidden" name="complaintId" define="Complaint.complaintId"/>
+                    <%--<input type="text" name="complaintReplyUser" value="${sessionScope.user.userId}"/>--%>
+                    <%--<input id="start2" type="text" name="complaintCreatedTime" define="Complaint.complaintCreatedTime" />--%>
+                    <%--<input type="hidden" name="complaintContent" define="Complaint.complaintContent" />--%>
+                    <div class="modal-header" style="overflow:auto;">
+                        <h4>回复投诉的信息</h4>
+                    </div>
+                    <br/>
+                    <%--<div class="form-group">--%>
                     <%--<label class="col-sm-3 control-label">投诉回复人：</label>--%>
                     <%--<div class="col-sm-7">--%>
-                        <%--&lt;%&ndash;<select id="addAdminName" name="complaintReplyUser" class="form-control js-data-example-ajax admin" style="width:100%">&ndash;%&gt;--%>
-                        <%--&lt;%&ndash;</select>&ndash;%&gt;--%>
-                        <%--<input  readonly value="${sessionScope.user.userName}" class="form-control">--%>
+                    <%--&lt;%&ndash;<select id="addAdminName" name="complaintReplyUser" class="form-control js-data-example-ajax admin" style="width:100%">&ndash;%&gt;--%>
+                    <%--&lt;%&ndash;</select>&ndash;%&gt;--%>
+                    <%--<input  readonly value="${sessionScope.user.userName}" class="form-control">--%>
                     <%--</div>--%>
-                <%--</div>--%>
-                <%--<div class="form-group">--%>
+                    <%--</div>--%>
+                    <%--<div class="form-group">--%>
                     <%--<label class="col-sm-3 control-label">投诉回复时间：</label>--%>
                     <%--<div class="col-sm-7">--%>
-                        <%--<input id="addReplyComplaintReplyTime" name="complaintReplyTime" readonly define="Complaint.complaintReplyTime" onclick="getDate('addReplyComplaintReplyTime')" class="form-control datetimepicker"/>--%>
+                    <%--<input id="addReplyComplaintReplyTime" name="complaintReplyTime" readonly define="Complaint.complaintReplyTime" onclick="getDate('addReplyComplaintReplyTime')" class="form-control datetimepicker"/>--%>
                     <%--</div>--%>
-                <%--</div>--%>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">投诉回复内容：</label>
-                    <div class="col-sm-7">
-                        <textarea type="text"  name="complaintReply" define="Complaint.complaintReply" placeholder="请输入投诉回复内容" style="height: 100px;"
+                    <%--</div>--%>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">投诉回复内容：</label>
+                        <div class="col-sm-7">
+                        <textarea type="text" name="complaintReply" define="Complaint.complaintReply"
+                                  placeholder="请输入投诉回复内容" style="height: 100px;"
                                   class="form-control"></textarea>
+                        </div>
                     </div>
-                </div>
 
-                <div class="form-group">
-                    <div class="col-sm-offset-8">
-                        <button type="button" class="btn btn-default"
-                                onclick="closeModals('addReplyWindow', 'addReplyForm')">关闭
-                        </button>
-                        <button id="replyButton" class="btn btn-sm btn-success" type="button" onclick="addReplySubmit()">保 存</button>
-                        <input type="reset" name="reset" style="display: none;"/>
+                    <div class="form-group">
+                        <div class="col-sm-offset-8">
+                            <button type="button" class="btn btn-default"
+                                    onclick="closeModals('addReplyWindow', 'addReplyForm')">关闭
+                            </button>
+                            <button id="replyButton" class="btn btn-sm btn-success" type="button"
+                                    onclick="addReplySubmit()">保 存
+                            </button>
+                            <input type="reset" name="reset" style="display: none;"/>
+                        </div>
                     </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
@@ -183,45 +196,51 @@
 <div class="modal fade" id="editWindow" aria-hidden="true" data-backdrop="static" keyboard:false>
     <div class="modal-dialog" style="width: 780px;height: auto;">
         <div class="modal-content">
-            <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('editWindow', 'editForm')"></span>
-            <form class="form-horizontal" id="editForm" method="post">
-                <input type="hidden" name="complaintId" define="Complaint.complaintId" />
-                <%--<input type="text" name="userId" define="Complaint.user.userId" />--%>
-                <%--<input id="start3" type="text" name="complaintCreatedTime" define="Complaint.complaintCreatedTime" />--%>
-                <%--<input type="text" name="complaintContent" define="Complaint.complaintContent" />--%>
-                <div class="modal-header" style="overflow:auto;">
-                    <h4>修改投诉的信息</h4>
-                </div>
-                <br/>
-                <%--<div class="form-group">--%>
+            <div class="modal-body">
+                <span class="glyphicon glyphicon-remove closeModal"
+                      onclick="closeModals('editWindow', 'editForm')"></span>
+                <form class="form-horizontal" id="editForm" method="post">
+                    <input type="hidden" name="complaintId" define="Complaint.complaintId"/>
+                    <%--<input type="text" name="userId" define="Complaint.user.userId" />--%>
+                    <%--<input id="start3" type="text" name="complaintCreatedTime" define="Complaint.complaintCreatedTime" />--%>
+                    <%--<input type="text" name="complaintContent" define="Complaint.complaintContent" />--%>
+                    <div class="modal-header" style="overflow:auto;">
+                        <h4>修改投诉的信息</h4>
+                    </div>
+                    <br/>
+                    <%--<div class="form-group">--%>
                     <%--<label class="col-sm-3 control-label">投诉回复人：</label>--%>
                     <%--<div class="col-sm-7">--%>
-                        <%--<select id="editAdminName" name="complaintReplyUser" class="form-control js-data-example-ajax admin" style="width:100%">--%>
-                        <%--</select>--%>
+                    <%--<select id="editAdminName" name="complaintReplyUser" class="form-control js-data-example-ajax admin" style="width:100%">--%>
+                    <%--</select>--%>
                     <%--</div>--%>
-                <%--</div>--%>
-                <%--<div class="form-group">--%>
+                    <%--</div>--%>
+                    <%--<div class="form-group">--%>
                     <%--<label class="col-sm-3 control-label">投诉回复时间：</label>--%>
                     <%--<div class="col-sm-7">--%>
-                        <%--<input id="editComplaintReplyTime" name="complaintReplyTime" readonly  define="Complaint.complaintReplyTime" onclick="getDate('editComplaintReplyTime')" class="form-control datetimepicker"/>--%>
+                    <%--<input id="editComplaintReplyTime" name="complaintReplyTime" readonly  define="Complaint.complaintReplyTime" onclick="getDate('editComplaintReplyTime')" class="form-control datetimepicker"/>--%>
                     <%--</div>--%>
-                <%--</div>--%>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">投诉回复内容：</label>
-                    <div class="col-sm-7">
-                        <textarea type="text"  name="complaintReply" define="Complaint.complaintReply" placeholder="请输入投诉回复内容" style="height: 100px;"
+                    <%--</div>--%>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">投诉回复内容：</label>
+                        <div class="col-sm-7">
+                        <textarea type="text" name="complaintReply" define="Complaint.complaintReply"
+                                  placeholder="请输入投诉回复内容" style="height: 100px;"
                                   class="form-control"></textarea>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-offset-8">
-                        <button type="button" class="btn btn-default"
-                                onclick="closeModals('editWindow', 'editForm')">关闭
-                        </button>
-                        <button id="editButton" class="btn btn-sm btn-success" type="button" onclick="editSubmit()">保 存</button>
+                    <div class="form-group">
+                        <div class="col-sm-offset-8">
+                            <button type="button" class="btn btn-default"
+                                    onclick="closeModals('editWindow', 'editForm')">关闭
+                            </button>
+                            <button id="editButton" class="btn btn-sm btn-success" type="button" onclick="editSubmit()">
+                                保 存
+                            </button>
+                        </div>
                     </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->

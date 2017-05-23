@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Administrator
-  Date: 2017/4/11
-  Time: 15:59
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%
@@ -20,7 +13,6 @@
     <link rel="stylesheet" href="/static/css/select2.min.css">
     <link rel="stylesheet" href="/static/css/sweetalert.css">
     <link rel="stylesheet" href="/static/css/table/table.css">
-    <link rel="stylesheet" href="/static/js/plugins/layui/css/layui.css" media="all">
     <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.css">
     <link rel="stylesheet/less" href="/static/css/bootstrap-dateTimePicker/datetimepicker.less">
 </head>
@@ -52,15 +44,15 @@
                 </button>
             </shiro:hasAnyRoles>
             <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员">
-                <div class="input-group" style="width:350px;float:left;padding:0;margin:0 0 0 -1px;">
+                <div class="input-group" style="width:350px;float:right;padding:0;margin:0 0 0 -1px;">
                     <div class="input-group-btn">
                         <button type="button" id="ulButton" class="btn btn-default" style="border-radius:0px;"
                                 data-toggle="dropdown">车主姓名<span class="caret"></span></button>
                         <ul class="dropdown-menu pull-right">
                             <li><a onclick="onclikLi(this)">车主姓名</a></li>
                             <li class="divider"></li>
-                            <%--<li><a onclick="onclikLi(this)">上次汽车行驶里程</a></li>--%>
-                            <%--<li class="divider"></li>--%>
+                                <%--<li><a onclick="onclikLi(this)">上次汽车行驶里程</a></li>--%>
+                                <%--<li class="divider"></li>--%>
                             <li><a onclick="onclikLi(this)">维修保养提醒方式</a></li>
                             <li class="divider"></li>
                             <li><a onclick="onclikLi(this)">维修保养提醒消息</a></li>
@@ -85,67 +77,72 @@
 <div class="modal fade" id="addWindow" aria-hidden="true" data-backdrop="static" keyboard:false style="overflow:auto; ">
     <div class="modal-dialog" style="width: 790px;height: auto;">
         <div class="modal-content" style="overflow:hidden;">
-            <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('addWindow', 'addForm')"></span>
-            <form class="form-horizontal" id="addForm" method="post">
-                <%--<input id="addRemindId" type="text" name="remindId">--%>
-                <input id="addLastMaintainTime" type="hidden" name="lastMaintainTime">
-                <input id="addLastMaintainMileage" type="hidden" name="lastMaintainMileage">
-                <input id="addUserId" type="hidden" name="userId">
-                <input id="addCheckinName" type="hidden" name="checkinuserName">
-                <input id="addUserEmail" type="hidden" name="checkin.user.userEmail">
-                <input id="addUserPhone" type="hidden" name="checkin.user.userPhone">
-                <div class="modal-header" style="overflow:auto;">
-                    <h4>添加维修维修保养提醒的信息</h4>
-                </div>
-                <br/>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">用户名：</label>
-                    <div class="col-sm-7">
-                        <input id="addUserName" type="text" readonly class="form-control">
-                        <%--<button type="button" class="btn btn-default" onclick="showCheckUser();">--%>
-                        <%--<span class="glyphicon glyphicon-search" aria-hidden="true"></span>请选择用户--%>
-                        <%--</button>--%>
+            <div class="modal-body">
+                <span class="glyphicon glyphicon-remove closeModal"
+                      onclick="closeModals('addWindow', 'addForm')"></span>
+                <form class="form-horizontal" id="addForm" method="post">
+                    <%--<input id="addRemindId" type="text" name="remindId">--%>
+                    <input id="addLastMaintainTime" type="hidden" name="lastMaintainTime">
+                    <input id="addLastMaintainMileage" type="hidden" name="lastMaintainMileage">
+                    <input id="addUserId" type="hidden" name="userId">
+                    <input id="addCheckinName" type="hidden" name="checkinuserName">
+                    <input id="addUserEmail" type="hidden" name="checkin.user.userEmail">
+                    <input id="addUserPhone" type="hidden" name="checkin.user.userPhone">
+                    <div class="modal-header" style="overflow:auto;">
+                        <h4>添加维修维修保养提醒的信息</h4>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">维修保养提醒方式：</label>
-                    <div class="col-sm-7">
-                        <select name="remindType" onchange="remindTypeChange(this)" class="form-control js-data-example-ajax">
-                            <option value="邮箱提醒">邮箱提醒</option>
-                            <option value="短信提醒">短信提醒</option>
-                        </select>
+                    <br/>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">用户名：</label>
+                        <div class="col-sm-7">
+                            <input id="addUserName" type="text" readonly class="form-control">
+                            <%--<button type="button" class="btn btn-default" onclick="showCheckUser();">--%>
+                            <%--<span class="glyphicon glyphicon-search" aria-hidden="true"></span>请选择用户--%>
+                            <%--</button>--%>
+                        </div>
                     </div>
-                </div>
-                <div id="addRemindMsg" class="form-group">
-                    <label class="col-sm-3 control-label">维修保养提醒内容：</label>
-                    <div class="col-sm-7">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">维修保养提醒方式：</label>
+                        <div class="col-sm-7">
+                            <select name="remindType" onchange="remindTypeChange(this)"
+                                    class="form-control js-data-example-ajax">
+                                <option value="邮箱提醒">邮箱提醒</option>
+                                <option value="短信提醒">短信提醒</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="addRemindMsg" class="form-group">
+                        <label class="col-sm-3 control-label">维修保养提醒内容：</label>
+                        <div class="col-sm-7">
                         <textarea type="text" name="remindMsg" placeholder="请输入维修保养提醒内容" style="height: 100px;"
                                   class="form-control"></textarea>
+                        </div>
                     </div>
-                </div>
-                <%--<div class="form-group">--%>
-                <%--<label class="col-sm-3 control-label">维修保养提醒时间：</label>--%>
-                <%--<div class="col-sm-7">--%>
-                <%--<input id="addRemindTime" name="remindTime" readonly class="layui-input">--%>
-                <%--</div>--%>
-                <%--</div>--%>
-                <%--<div class="form-group">--%>
-                <%--<label class="col-sm-3 control-label">维修保养记录创建时间：</label>--%>
-                <%--<div class="col-sm-7">--%>
-                <%--<input id="addRemindCreatedTime" name="remindCreatedTime" readonly class="layui-input">--%>
-                <%--</div>--%>
-                <%--</div>--%>
-                <div class="form-group">
-                    <div class="col-sm-offset-8">
-                        <button type="button" class="btn btn-default"
-                                onclick="closeModals('addWindow', 'addForm')">关闭
-                        </button>
-                        <button id="addButton" class="btn btn-sm btn-success" type="button" onclick="addSubmit()">添 加
-                        </button>
-                        <input type="reset" name="reset" style="display: none;"/>
+                    <%--<div class="form-group">--%>
+                    <%--<label class="col-sm-3 control-label">维修保养提醒时间：</label>--%>
+                    <%--<div class="col-sm-7">--%>
+                    <%--<input id="addRemindTime" name="remindTime" readonly class="layui-input">--%>
+                    <%--</div>--%>
+                    <%--</div>--%>
+                    <%--<div class="form-group">--%>
+                    <%--<label class="col-sm-3 control-label">维修保养记录创建时间：</label>--%>
+                    <%--<div class="col-sm-7">--%>
+                    <%--<input id="addRemindCreatedTime" name="remindCreatedTime" readonly class="layui-input">--%>
+                    <%--</div>--%>
+                    <%--</div>--%>
+                    <div class="form-group">
+                        <div class="col-sm-offset-8">
+                            <button type="button" class="btn btn-default"
+                                    onclick="closeModals('addWindow', 'addForm')">关闭
+                            </button>
+                            <button id="addButton" class="btn btn-sm btn-success" type="button" onclick="addSubmit()">
+                                添加
+                            </button>
+                            <input type="reset" name="reset" style="display: none;"/>
+                        </div>
                     </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
@@ -155,59 +152,71 @@
 <div class="modal fade" id="editWindow" aria-hidden="true" data-backdrop="static" keyboard:false>
     <div class="modal-dialog" style="width: 790px;height: auto;">
         <div class="modal-content">
-            <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('editWindow', 'editForm')"></span>
-            <form class="form-horizontal" id="editForm" method="post">
-                <input type="hidden" name="remindId" define="MaintainRemind.remindId">
-                <input id="editLastMaintainTime" type="hidden" name="lastMaintainTime" define="MaintainRemind.lastMaintainTime">
-                <input id="editLastMaintainMileage" type="hidden" name="lastMaintainMileage" define="MaintainRemind.lastMaintainMileage">
-                <input id="editUserId" type="hidden" name="userId" define="MaintainRemind.user.userId">
-                <div class="modal-header" style="overflow:auto;">
-                    <h4>修改维修维修保养提醒的信息</h4>
-                </div>
-                <br/>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">用户名称：</label>
-                    <div class="col-sm-7">
-                        <input id="editUserName" type="text" readonly define="MaintainRemind.user.userName" class="form-control">
+            <div class="modal-body">
+                <span class="glyphicon glyphicon-remove closeModal"
+                      onclick="closeModals('editWindow', 'editForm')"></span>
+                <form class="form-horizontal" id="editForm" method="post">
+                    <input type="hidden" name="remindId" define="MaintainRemind.remindId">
+                    <input id="editLastMaintainTime" type="hidden" name="lastMaintainTime"
+                           define="MaintainRemind.lastMaintainTime">
+                    <input id="editLastMaintainMileage" type="hidden" name="lastMaintainMileage"
+                           define="MaintainRemind.lastMaintainMileage">
+                    <input id="editUserId" type="hidden" name="userId" define="MaintainRemind.user.userId">
+                    <div class="modal-header" style="overflow:auto;">
+                        <h4>修改维修维修保养提醒的信息</h4>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">维修保养提醒内容：</label>
-                    <div class="col-sm-7">
-                        <textarea type="text"  name="remindMsg" define="MaintainRemind.remindMsg"  placeholder="请输入维修保养提醒内容" style="height: 100px;"
+                    <br/>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">用户名称：</label>
+                        <div class="col-sm-7">
+                            <input id="editUserName" type="text" readonly define="MaintainRemind.user.userName"
+                                   class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">维修保养提醒内容：</label>
+                        <div class="col-sm-7">
+                        <textarea type="text" name="remindMsg" define="MaintainRemind.remindMsg"
+                                  placeholder="请输入维修保养提醒内容" style="height: 100px;"
                                   class="form-control"></textarea>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">维修保养提醒时间：</label>
-                    <div class="col-sm-7">
-                        <input id="editRemindTime" name="remindTime" define="MaintainRemind.remindTime" readonly class="layui-input">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">维修保养提醒时间：</label>
+                        <div class="col-sm-7">
+                            <input id="editRemindTime" name="remindTime" define="MaintainRemind.remindTime" readonly
+                                   class="layui-input">
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">维修保养提醒方式：</label>
-                    <div class="col-sm-7">
-                        <select id="editRemindType" name="remindType" define="MaintainRemind.remindType" class="form-control js-data-example-ajax">
-                            <option value="邮箱提醒">邮箱提醒</option>
-                            <option value="短信提醒">短信提醒</option>
-                        </select>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">维修保养提醒方式：</label>
+                        <div class="col-sm-7">
+                            <select id="editRemindType" name="remindType" define="MaintainRemind.remindType"
+                                    class="form-control js-data-example-ajax">
+                                <option value="邮箱提醒">邮箱提醒</option>
+                                <option value="短信提醒">短信提醒</option>
+                            </select>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">提醒记录创建时间：</label>
-                    <div class="col-sm-7">
-                        <input id="editRemindCreatedTime" name="remindCreatedTime" define="MaintainRemind.remindCreatedTime" readonly class="layui-input">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">提醒记录创建时间：</label>
+                        <div class="col-sm-7">
+                            <input id="editRemindCreatedTime" name="remindCreatedTime"
+                                   define="MaintainRemind.remindCreatedTime" readonly class="layui-input">
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-offset-8">
-                        <button type="button" class="btn btn-default"
-                                onclick="closeModals('editWindow', 'editForm')">关闭
-                        </button>
-                        <button id="editButton" class="btn btn-sm btn-success" type="button" onclick="editSubmit()">保 存</button>
+                    <div class="form-group">
+                        <div class="col-sm-offset-8">
+                            <button type="button" class="btn btn-default"
+                                    onclick="closeModals('editWindow', 'editForm')">关闭
+                            </button>
+                            <button id="editButton" class="btn btn-sm btn-success" type="button" onclick="editSubmit()">
+                                保 存
+                            </button>
+                        </div>
                     </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
@@ -252,7 +261,9 @@
         <div class="modal-content">
             <div class="modal-body">
                 <span class="glyphicon glyphicon-remove closeModal" onclick="closeRemindUserWin()"></span>
-                <h4>查看需要维修保养提醒的车主</h4>
+                <div class="modal-header" style="overflow:auto;">
+                    <h4>查看需要维修保养提醒的车主</h4>
+                </div>
                 <table class="table table-hover" id="showRemindUserTable" style="table-layout: fixed">
                     <thead>
                     <tr>
@@ -277,7 +288,8 @@
                 </table>
                 <div id="remindToolbar" class="btn-group">
                     <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司接待员">
-                        <button type="button" class="btn btn-w-m btn-info" onclick="showAddRemindUser();">保养提醒用户</button>
+                        <button type="button" class="btn btn-w-m btn-info" onclick="showAddRemindUser();">保养提醒用户
+                        </button>
                     </shiro:hasAnyRoles>
                 </div>
                 <div class="modal-footer" style="overflow:hidden;">
@@ -306,63 +318,63 @@
 <script src="/static/js/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.js"></script>
 <script src="/static/js/bootstrap-dateTimePicker/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
 <%--<script>--%>
-    <%--layui.use('laydate', function(){--%>
-        <%--var laydate = layui.laydate;--%>
+<%--layui.use('laydate', function(){--%>
+<%--var laydate = layui.laydate;--%>
 
-        <%--var addRemindTime = {--%>
-            <%--format: 'yyyy-MM-dd hh:mm:ss',--%>
-            <%--min: laydate.now(), //设定最小日期为当前日期--%>
-            <%--max: '2099-12-30 23:59:59', //最大日期--%>
-            <%--istime: true,--%>
-            <%--istoday: false,--%>
-            <%--festival: true--%>
-        <%--};--%>
+<%--var addRemindTime = {--%>
+<%--format: 'yyyy-MM-dd hh:mm:ss',--%>
+<%--min: laydate.now(), //设定最小日期为当前日期--%>
+<%--max: '2099-12-30 23:59:59', //最大日期--%>
+<%--istime: true,--%>
+<%--istoday: false,--%>
+<%--festival: true--%>
+<%--};--%>
 
-        <%--document.getElementById('addRemindTime').onclick = function () {--%>
-            <%--addRemindTime.elem = this;--%>
-            <%--laydate(addRemindTime);--%>
-        <%--}--%>
+<%--document.getElementById('addRemindTime').onclick = function () {--%>
+<%--addRemindTime.elem = this;--%>
+<%--laydate(addRemindTime);--%>
+<%--}--%>
 
-        <%--var addRemindCreatedTime = {--%>
-            <%--format: 'yyyy-MM-dd hh:mm:ss',--%>
-            <%--max: '2099-12-30 23:59:59', //最大日期--%>
-            <%--istime: true,--%>
-            <%--istoday: false,--%>
-            <%--festival: true--%>
-        <%--};--%>
+<%--var addRemindCreatedTime = {--%>
+<%--format: 'yyyy-MM-dd hh:mm:ss',--%>
+<%--max: '2099-12-30 23:59:59', //最大日期--%>
+<%--istime: true,--%>
+<%--istoday: false,--%>
+<%--festival: true--%>
+<%--};--%>
 
-        <%--document.getElementById('addRemindCreatedTime').onclick = function () {--%>
-            <%--addRemindCreatedTime.elem = this;--%>
-            <%--laydate(addRemindCreatedTime);--%>
-        <%--}--%>
+<%--document.getElementById('addRemindCreatedTime').onclick = function () {--%>
+<%--addRemindCreatedTime.elem = this;--%>
+<%--laydate(addRemindCreatedTime);--%>
+<%--}--%>
 
-        <%--var editRemindTime = {--%>
-            <%--format: 'yyyy-MM-dd hh:mm:ss',--%>
-            <%--min: laydate.now(), //设定最小日期为当前日期--%>
-            <%--max: '2099-12-30 23:59:59', //最大日期--%>
-            <%--istime: true,--%>
-            <%--istoday: false,--%>
-            <%--festival: true--%>
-        <%--};--%>
+<%--var editRemindTime = {--%>
+<%--format: 'yyyy-MM-dd hh:mm:ss',--%>
+<%--min: laydate.now(), //设定最小日期为当前日期--%>
+<%--max: '2099-12-30 23:59:59', //最大日期--%>
+<%--istime: true,--%>
+<%--istoday: false,--%>
+<%--festival: true--%>
+<%--};--%>
 
-        <%--document.getElementById('editRemindTime').onclick = function () {--%>
-            <%--editRemindTime.elem = this;--%>
-            <%--laydate(editRemindTime);--%>
-        <%--}--%>
+<%--document.getElementById('editRemindTime').onclick = function () {--%>
+<%--editRemindTime.elem = this;--%>
+<%--laydate(editRemindTime);--%>
+<%--}--%>
 
-        <%--var editRemindCreatedTime = {--%>
-            <%--format: 'yyyy-MM-dd hh:mm:ss',--%>
-            <%--max: '2099-12-30 23:59:59', //最大日期--%>
-            <%--istime: true,--%>
-            <%--istoday: false,--%>
-            <%--festival: true--%>
-        <%--};--%>
+<%--var editRemindCreatedTime = {--%>
+<%--format: 'yyyy-MM-dd hh:mm:ss',--%>
+<%--max: '2099-12-30 23:59:59', //最大日期--%>
+<%--istime: true,--%>
+<%--istoday: false,--%>
+<%--festival: true--%>
+<%--};--%>
 
-        <%--document.getElementById('editRemindCreatedTime').onclick = function () {--%>
-            <%--editRemindCreatedTime.elem = this;--%>
-            <%--laydate(editRemindCreatedTime);--%>
-        <%--}--%>
-    <%--});--%>
+<%--document.getElementById('editRemindCreatedTime').onclick = function () {--%>
+<%--editRemindCreatedTime.elem = this;--%>
+<%--laydate(editRemindCreatedTime);--%>
+<%--}--%>
+<%--});--%>
 <%--</script>--%>
 </body>
 </html>

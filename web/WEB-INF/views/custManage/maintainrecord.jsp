@@ -21,7 +21,6 @@
     <link rel="stylesheet" href="/static/css/table/table.css">
     <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.css">
     <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/datetimepicker.less">
-    <link rel="stylesheet" href="/static/js/plugins/layui/css/layui.css">
 </head>
 <body>
 <%@include file="../backstage/contextmenu.jsp" %>

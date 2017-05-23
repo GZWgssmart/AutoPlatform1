@@ -4,8 +4,8 @@ $(function () {
         if (data.result == 'success') {
             initTable('table', '/tracklist/queryByPager'); // 初始化表格
 
-            initSelect2("admin", "请选择回访人", "/tracklist/queryAdmin");
-            initSelect2("user", "请选择跟踪回访用户", "/tracklist/queryUser");
+            // initSelect2("admin", "请选择回访人", "/tracklist/queryAdmin");
+            // initSelect2("user", "请选择跟踪回访用户", "/tracklist/queryUser");
         } else if (data.result == 'notLogin') {
             swal({
                     title: "",
@@ -70,8 +70,7 @@ function showEdit() {
     var roles = "公司超级管理员,公司普通管理员,汽车公司接待员";
     $.post("/user/isLogin/" + roles, function (data) {
         if (data.result == 'success') {
-            initDateTimePicker('editForm', 'trackCreatedTime', 'editTrackCreatedTime');
-            var row = $('table').bootstrapTable('getSelections');
+            var row = $('#table').bootstrapTable('getSelections');
             if (row.length > 0) {
                 $("#editWindow").modal('show'); // 显示弹窗
                 $("#editButton").removeAttr("disabled"); // 移除不可点击
@@ -121,7 +120,6 @@ function showAdd() {
     var roles = "公司超级管理员,公司普通管理员,汽车公司接待员";
     $.post("/user/isLogin/" + roles, function (data) {
         if (data.result == 'success') {
-            initDateTimePicker('addForm', 'trackCreatedTime', 'addTrackCreatedTime');
             $("#addWindow").modal('show');
             $("#addButton").removeAttr("disabled");
             validator('addForm'); // 初始化验证
@@ -150,6 +148,12 @@ function showAdd() {
     });
 }
 
+function closeTrackListModals() {
+    $("#addWindow").modal('hide');
+    $("#addForm").data('bootstrapValidator').destroy(); // 销毁此form表单
+    $("#addForm").data('bootstrapValidator', null);// 此form表单设置为空
+}
+
 function closeUserWin() {
     $("#showRemindWindow").modal('hide');
     // $("#addWindow").modal('show');
@@ -160,7 +164,7 @@ function showRemindUser() {
     $.post("/user/isLogin/" + roles, function (data) {
         if (data.result == 'success') {
             $("#showRemindWindow").modal('show');
-            initTableNotTollbar("addRemindTable", "/maintainRecord/queryByPagerSuccess");
+            initTableTracklistNotTollbar("addRemindTable", "/maintainRecord/queryByPagerSuccess");
         } else if (data.result == 'notLogin') {
             swal({
                     title: "",
@@ -205,7 +209,8 @@ function checkRemind() {
                 $("#addTrackUser").val(row[0].checkin.userName);
                 $("#addTrackUserId").val(row[0].checkin.userId);
                 $("#showRemindWindow").modal('hide');
-                $("#closeButton").removeClass('showRemindWindow');
+                $("#addWindow").modal('show');
+                // $("#closeButton").removeClass('showRemindWindow');
             }
         } else if (data.result == 'notLogin') {
             swal({
@@ -273,22 +278,20 @@ function validator(formId) {
             //         }
             //     }
             // },
-            trackCreatedTime: {
-                message: '维修跟踪回访创建时间验证失败',
-                validators: {
-                    notEmpty: {
-                        message: '维修跟踪回访创建时间不能为空'
-                    }
-                }
-            }
+            // trackCreatedTime: {
+            //     message: '维修跟踪回访创建时间验证失败',
+            //     validators: {
+            //         notEmpty: {
+            //             message: '维修跟踪回访创建时间不能为空'
+            //         }
+            //     }
+            // }
         }
     })
 
         .on('success.form.bv', function (e) {
             if (formId == "addForm") {
-
                 formSubmit("/tracklist/insert", formId, "addWindow");
-
             } else if (formId == "editForm") {
                 formSubmit("/tracklist/update", formId, "editWindow");
             }
@@ -368,4 +371,42 @@ function formSubmit(url, formId, winId) {
                 }
             }
         }, "json");
+}
+
+function initTableTracklistNotTollbar(tableId, url) {
+    //先销毁表格
+    $('#' + tableId).bootstrapTable('destroy');
+    //初始化表格,动态从服务器加载数据
+    $("#" + tableId).bootstrapTable({
+        method: "get",  //使用get请求到服务器获取数据
+        url: url, //获取数据的Servlet地址
+        striped: false,  //表格显示条纹
+        pagination: true, //启动分页
+        pageSize: 10,  //每页显示的记录数
+        pageNumber: 1, //当前第几页
+        pageList: [10, 15, 20, 25, 30],  //记录数可选列表
+        showColumns: true,  //显示下拉框勾选要显示的列
+        showRefresh: true,  //显示刷新按钮
+        showToggle: true, // 显示详情
+        strictSearch: true,
+        clickToSelect: true,  //是否启用点击选中行
+        uniqueId: "id",                     //每一行的唯一标识，一般为主键列
+        sortable: true,                     //是否启用排序
+        sortOrder: "asc",
+        toolbar: "#trackListToolbar",//排序方式
+        sidePagination: "server", //表示服务端请求
+
+
+        //设置为undefined可以获取pageNumber，pageSize，searchText，sortName，sortOrder
+        //设置为limit可以获取limit, offset, search, sort, order
+        queryParamsType: "undefined",
+        queryParams: function queryParams(params) {   //设置查询参数
+            var param = {
+                pageNumber: params.pageNumber,
+                pageSize: params.pageSize,
+                orderNum: $("#orderNum").val()
+            };
+            return param;
+        },
+    });
 }

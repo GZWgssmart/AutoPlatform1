@@ -20,7 +20,6 @@
     <link rel="stylesheet" href="/static/css/select2.min.css">
     <link rel="stylesheet" href="/static/css/sweetalert.css">
     <link rel="stylesheet" href="/static/css/table/table.css">
-    <link rel="stylesheet" href="/static/js/plugins/layui/css/layui.css" media="all">
     <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.css">
     <link rel="stylesheet/less" href="/static/css/bootstrap-dateTimePicker/datetimepicker.less">
 </head>
@@ -55,7 +54,7 @@
                 </button>
             </shiro:hasAnyRoles>
             <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,车主">
-                <div class="input-group" style="width:350px;float:left;padding:0;margin:0 0 0 -1px;">
+                <div class="input-group" style="width:350px;float:right;padding:0;margin:0 0 0 -1px;">
                     <div class="input-group-btn">
                         <button type="button" id="ulButton" class="btn btn-default" style="border-radius:0px;"
                                 data-toggle="dropdown">回访人<span class="caret"></span></button>
@@ -84,11 +83,12 @@
 <div class="modal fade" id="addWindow" aria-hidden="true" data-backdrop="static" keyboard:false style="overflow:auto; ">
     <div class="modal-dialog" style="width: 750px;height: auto;">
         <div class="modal-content" style="overflow:hidden;">
+            <div class="modal-body">
             <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('addWindow', 'addForm')"></span>
             <form class="form-horizontal" id="addForm" method="post">
                 <input id="addTrackUserId" type="hidden" name="trackUser" />
                 <div class="modal-header" style="overflow:auto;">
-                    <h4>跟踪回跟踪回访的信息</h4>
+                    <h4>添加跟踪回访的信息</h4>
                 </div>
                 <br/>
                 <%--<div class="form-group">--%>
@@ -136,7 +136,7 @@
                 <div class="form-group">
                     <div class="col-sm-offset-8">
                         <button type="button" class="btn btn-default"
-                                onclick="closeModals('addWindow', 'addForm')">关闭
+                                onclick="closeTrackListModals()">关闭
                         </button>
                         <button id="addButton" class="btn btn-sm btn-success" type="button" onclick="addSubmit()">保 存
                         </button>
@@ -144,6 +144,7 @@
                     </div>
                 </div>
             </form>
+            </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
@@ -153,6 +154,7 @@
 <div class="modal fade" id="editWindow" aria-hidden="true" data-backdrop="static" keyboard:false>
     <div class="modal-dialog" style="width: 750px;height: auto;">
         <div class="modal-content">
+            <div class="modal-body">
             <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('editWindow', 'editForm')"></span>
             <form class="form-horizontal" id="editForm" method="post">
                 <input type="hidden" name="trackId" define="TrackList.trackId"/>
@@ -176,7 +178,7 @@
                         <%--<select id="editUserName" name="trackUser" class="form-control js-data-example-ajax user"--%>
                                 <%--style="width:100%">--%>
                         <%--</select>--%>
-                            <input id="editUserName" type="text" name="trackUser" define="TrackList.trackUser" readonly class="form-control">
+                            <input id="editUserName" type="text" readonly class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
@@ -212,6 +214,7 @@
                     </div>
                 </div>
             </form>
+            </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
@@ -222,7 +225,7 @@
         <div class="modal-content">
             <div class="modal-body">
                 <span class="glyphicon glyphicon-remove closeModal" onclick="closeUserWin()"></span>
-                <h3>请选择车主</h3>
+                <h4>请选择车主</h4>
                 <table class="table table-hover" id="addRemindTable" style="table-layout: fixed">
                     <thead>
                     <tr>

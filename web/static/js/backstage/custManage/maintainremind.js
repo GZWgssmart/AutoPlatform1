@@ -116,7 +116,7 @@ function showEdit() {
     var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员";
     $.post("/user/isLogin/" + roles, function (data) {
         if (data.result == 'success') {
-            var row = $('table').bootstrapTable('getSelections');
+            var row = $("#table").bootstrapTable('getSelections');
             if (row.length > 0) {
                 // alert(row[0].remindId);
                 $("#editWindow").modal('show'); // 显示弹窗

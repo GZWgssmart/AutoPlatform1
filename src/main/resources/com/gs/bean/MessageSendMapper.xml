@@ -35,6 +35,7 @@
     u.userPhone,u.userEmail,u.userName as user_name,u.userId as user_ids
     FROM t_message_send m, t_checkin c, t_user u
     where  m.userId = c.userId and c.userId = u.userId
+    and c.checkinStatus = 'Y'
     <if test="user.companyId != null and user.companyId != ''">
       and m.companyId = #{user.companyId}
     </if>
@@ -45,6 +46,7 @@
   <select id="count" resultType="int" parameterType="com.gs.bean.User" >
     select count(m.messageId) FROM t_message_send m, t_checkin c, t_user u
     where  m.userId = c.userId and c.userId = u.userId
+    and c.checkinStatus = 'Y'
     <if test="companyId != null and companyId != ''">
       and m.companyId = #{companyId}
     </if>
@@ -78,6 +80,7 @@
     u.userPhone,u.userEmail,u.userName as user_name,u.userId as user_ids
     FROM t_message_send m, t_checkin c, t_user u
     where  m.userId = c.userId and c.userId = u.userId
+    and c.checkinStatus = 'Y'
     <if test="pager.user.companyId != null and pager.user.companyId != ''">
       and m.companyId = #{pager.user.companyId}
     </if>
@@ -95,6 +98,7 @@
     SELECT count(m.messageId)
     FROM t_message_send m, t_checkin c, t_user u
     where  m.userId = c.userId and c.userId = u.userId
+    and c.checkinStatus = 'Y'
     <if test="user.companyId != null and user.companyId != ''">
       and m.companyId = #{user.companyId}
     </if>

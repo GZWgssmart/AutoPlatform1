@@ -20,7 +20,6 @@
     <link rel="stylesheet" href="/static/css/select2.min.css">
     <link rel="stylesheet" href="/static/css/sweetalert.css">
     <link rel="stylesheet" href="/static/css/table/table.css">
-    <link rel="stylesheet" href="/static/js/plugins/layui/css/layui.css" media="all">
     <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.css">
     <link rel="stylesheet/less" href="/static/css/bootstrap-dateTimePicker/datetimepicker.less">
 </head>
@@ -48,7 +47,7 @@
                 <button type="button" class="btn btn-w-m btn-info" onclick="showMessageSend()">发送短信提醒</button>
             </shiro:hasAnyRoles>
             <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司接待员">
-                <div class="input-group" style="width:350px;float:left;padding:0;margin:0 0 0 -1px;">
+                <div class="input-group" style="width:350px;float:right;padding:0;margin:0 0 0 -1px;">
                     <div class="input-group-btn">
                         <button type="button" id="ulButton" class="btn btn-default" style="border-radius:0px;"
                                 data-toggle="dropdown">车主姓名<span class="caret"></span></button>
@@ -73,6 +72,7 @@
 <div class="modal fade" id="addWindow" aria-hidden="true" data-backdrop="static" keyboard:false style="overflow:auto; ">
     <div class="modal-dialog" style="width: 720px;height: auto;">
         <div class="modal-content" style="overflow:hidden;">
+            <div class="modal-body">
             <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('addWindow', 'addForm')"></span>
             <form class="form-horizontal" id="addForm" method="post">
                 <%--<input id="addUserId" type="text" name="userId" width="100px">--%>
@@ -118,6 +118,7 @@
                     </div>
                 </div>
             </form>
+            </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
@@ -175,7 +176,7 @@
         <div class="modal-content">
             <div class="modal-body">
                 <span class="glyphicon glyphicon-remove closeModal" onclick="closeMessageSendUserWin()"></span>
-                <h3>请选择车主</h3>
+                <h4>请选择车主</h4>
                 <table class="table table-hover" id="showMessageSendTable" style="table-layout: fixed">
                     <thead>
                     <tr>

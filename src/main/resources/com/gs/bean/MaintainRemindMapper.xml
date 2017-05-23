@@ -30,7 +30,7 @@
   <select id="queryByPager" resultMap="BaseResultMap" parameterType="com.gs.common.bean.Pager">
     select mr.*,c.userId,c.userName,c.checkinId
     from t_maintain_remind mr,t_checkin c where mr.userId = c.userId
-    and remindMsg is not null
+    and remindMsg is not null and c.checkinStatus = 'Y'
     <if test="user.companyId != null and user.companyId != ''">
       and mr.companyId = #{user.companyId}
     </if>
@@ -39,7 +39,9 @@
   </select>
 
   <select id="count" resultType="int" parameterType="com.gs.bean.User">
-    select count(mr.remindId) from t_maintain_remind mr,t_checkin c where mr.userId = c.userId and remindMsg is not null
+    select count(mr.remindId) from t_maintain_remind mr,t_checkin c
+    where mr.userId = c.userId and remindMsg is not null
+    and c.checkinStatus = 'Y'
     <if test="companyId != null and companyId != ''">
       and mr.companyId = #{companyId}
     </if>
@@ -52,7 +54,7 @@
   <select id="queryByPagerNull" resultMap="BaseResultMap" parameterType="com.gs.common.bean.Pager">
     select mr.*,c.userId,c.userName,c.checkinId
     from t_maintain_remind mr,t_checkin c where mr.userId = c.userId
-    and remindMsg is null
+    and remindMsg is null and c.checkinStatus = 'Y'
     <if test="user.companyId != null and user.companyId != ''">
       and mr.companyId = #{user.companyId}
     </if>
@@ -61,7 +63,9 @@
   </select>
 
   <select id="countNull" resultType="int" parameterType="com.gs.bean.User">
-    select count(mr.remindId) from t_maintain_remind mr,t_checkin c where mr.userId = c.userId and remindMsg is null
+    select count(mr.remindId) from t_maintain_remind mr,t_checkin c
+    where mr.userId = c.userId and remindMsg is null
+    and c.checkinStatus = 'Y'
     <if test="companyId != null and companyId != ''">
       and mr.companyId = #{companyId}
     </if>
@@ -84,19 +88,21 @@
   <select id="queryByPagerUser" resultMap="BaseResultMap" parameterType="com.gs.common.bean.Pager">
     select mr.*,c.userId,c.userName,c.checkinId
     from t_maintain_remind mr,t_checkin c where mr.userId = c.userId
-    and mr.userId = #{userId}
+    and mr.userId = #{userId} and c.checkinStatus = 'Y'
     order by mr.remindCreatedTime Desc
     limit #{pager.beginIndex}, #{pager.pageSize}
   </select>
 
   <select id="countUser" resultType="int">
-    select count(mr.remindId) from t_maintain_remind mr,t_checkin c where mr.userId = c.userId and mr.userId = #{userId}
+    select count(mr.remindId) from t_maintain_remind mr,t_checkin c
+    where mr.userId = c.userId and mr.userId = #{userId}
+    and c.checkinStatus = 'Y'
   </select>
 
   <select id="blurredQuery" resultMap="BaseResultMap">
     select mr.*,c.userId,c.userName,c.checkinId
     from t_maintain_remind mr,t_checkin c where mr.userId = c.userId
-    and remindMsg is not null
+    and remindMsg is not null and c.checkinStatus = 'Y'
     <if test="pager.user.companyId != null and pager.user.companyId != ''">
       and mr.companyId = #{pager.user.companyId}
     </if>
@@ -119,7 +125,7 @@
   <select id="countByBlurred"  resultType="int">
     select count(mr.remindId)
     from t_maintain_remind mr,t_checkin c where mr.userId = c.userId
-    and remindMsg is not null
+    and remindMsg is not null and c.checkinStatus = 'Y'
     <if test="user.companyId != null and user.companyId != ''">
       and mr.companyId = #{user.companyId}
     </if>

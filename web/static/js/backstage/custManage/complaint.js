@@ -3,8 +3,8 @@ $(function () {
     $.post("/user/isLogin/" + roles, function (data) {
         if (data.result == 'success') {
             initTable('table', '/complaint/queryByPager'); // 初始化表格
-            initSelect2("user", "请选择用户", "/complaint/queryCombox");
-            initSelect2("admin", "请选择回复人", "/complaint/queryCombox");
+            // initSelect2("user", "请选择用户", "/complaint/queryCombox");
+            // initSelect2("admin", "请选择回复人", "/complaint/queryCombox");
         } else if (data.result == 'notLogin') {
             swal({
                     title: "",
@@ -77,7 +77,7 @@ function showEdit() {
     $.post("/user/isLogin/" + roles, function (data) {
         if (data.result == 'success') {
             initDateTimePicker('editForm', 'complaintReplyTime', 'editComplaintReplyTime');
-            var row = $('table').bootstrapTable('getSelections');
+            var row = $("#table").bootstrapTable('getSelections');
             if (row.length > 0) {
                 if (row[0].complaintReplyTime != null || row[0].complaintReply != null) {
                     $("#editWindow").modal('show'); // 显示弹窗
@@ -149,7 +149,7 @@ function showReply() {
     $.post("/user/isLogin/" + roles, function (data) {
         if (data.result == 'success') {
             initDateTimePicker('addReplyForm', 'complaintReplyTime', 'addReplyComplaintReplyTime');
-            var row = $('table').bootstrapTable('getSelections');
+            var row = $("#table").bootstrapTable('getSelections');
             if (row.length > 0) {
                 if (row[0].complaintReplyTime == null || row[0].complaintReply == null) {
                     $("#addReplyWindow").modal('show'); // 显示弹窗

@@ -65,7 +65,7 @@ function showDisable() {
 
 //显示弹窗
 function showEdit() {
-    var row = $('table').bootstrapTable('getSelections');
+    var row = $("#table").bootstrapTable('getSelections');
     if (row.length > 0) {
         $("#editWindow").modal('show'); // 显示弹窗
         var MaintainRecord = row[0];
