@@ -108,7 +108,21 @@ function validator(formId) {
                         url: "www.baidu.co",
                         type: "success"
                     }, function (isConfirm) {
-                        top.location = "/user/loginPage";
+                        $.post("/user/login2",$("#loginForm").serialize(),function (data) {
+                            if(data.result=="success"){
+                                window.location.href="/backstageIndex";
+                            }else if(data.result == "isOwner"){
+                                window.location.href="/backstageIndex";
+                            }else if(data.result=="fail"){
+                                swal({
+                                    title: "",
+                                    text: data.message,
+                                    confirmButtonText: "确认",
+                                    type: "error"
+                                })
+                                $("#" + formId).removeAttr("disabled");
+                            }
+                        });
                     })
                 } else {
                     swal({

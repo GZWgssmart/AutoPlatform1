@@ -223,11 +223,11 @@ function validator(formId) {
         },
         fields: {
             inTypeName: {
-                message: '类型名称不能为空',
+                message: '收入类型名称不能为空',
                 validators: {
                     notEmpty: {
-                        message: '类型名称不能为空',
-                        remote:'此类型已经存在'
+                        message: '收入类型名称不能为空',
+                        remote:'该类型已经存在'
                     },
                     remote: {
                         url: '/incomingType/checkInTypeName',//验证收入类型名称

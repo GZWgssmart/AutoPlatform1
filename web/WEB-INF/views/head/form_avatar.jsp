@@ -123,12 +123,9 @@
 <!-- 全局js -->
 <script src="/static/jsp/jquery.min.js?v=2.1.4"></script>
 <script src="/static/jsp/bootstrap.min.js?v=3.3.6"></script>
-
-
+<script src="/static/js/sweetalert/sweetalert.min.js"></script>
 <!-- 自定义js -->
 <script src="/static/jsp/content.js?v=1.0.0"></script>
-
-
 <!-- fullavatareditor -->
 <script type="text/javascript" src="/static/scripts/swfobject.js"></script>
 <script type="text/javascript" src="/static/scripts/fullAvatarEditor.js"></script>
@@ -150,9 +147,10 @@
         if (sourcePic2Url == null) {
             sourcePic2Url = "http://www.baidu.com/img/bdlogo.png";
         }
+        var $parentDocument = $(parent.document);
+        var jpgj= $parentDocument.find("img.img-circle.m-t-xs.img-responsive");
+        var $jpgj = $(jpgj);
         var callback = function (json) {
-            console.log(arguments.length);
-            console.log(json);
             var id = this.id;
             switch (json.code) {
                 case 2:
@@ -185,16 +183,25 @@
                         }
                         //如果摄像头已准备就绪但用户已拒绝使用。
                         if (json.type == 1) {
-                            alert('用户拒绝使用摄像头!');
+                            swal({title:"",
+                                text:"用户拒绝使用摄像头!",
+                                confirmButtonText:"确认",
+                                type:"error"});
                         }
                         //如果摄像头已准备就绪但摄像头被占用。
                         else {
-                            alert('摄像头被占用!');
+                            swal({title:"",
+                                text:"摄像头被占用!",
+                                confirmButtonText:"确认",
+                                type:"error"});
                         }
                     }
                     break;
                 case 4:
-                    alert("您选择的原图片文件大小（" + json.content + "）超出了指定的值(2MB)。");
+                    swal({title:"",
+                        text:"您选择的原图片文件大小（" + json.content + "）超出了指定的值(2MB)。",
+                        confirmButtonText:"确认",
+                        type:"error"});
                     break;
                 case 5:
                     //如果上传成功
@@ -215,14 +222,12 @@
                                     //e.call('loadPic', json.content.sourceUrl);
                                 }
                             });
+                            $jpgj.attr("src",json.content.sourceUrl + "?ran=" +parseInt(Math.random()*1000000));
                         } else {
                             $.Cookie(id, null);
                         }
                         button.push({text: '关闭窗口'});
-                        var $parentDocument = $(parent.document);
-                        var jpgj= $parentDocument.find("img.img-circle.m-t-xs.img-responsive");
-                        var $jpgj = $(jpgj);
-                        $jpgj.attr("src", $jpgj.attr("src") + "?ran=" +parseInt(Math.random()*1000000));
+
                         $.dialog({
                             title: '图片已成功保存至服务器',
                             content: html,
@@ -231,8 +236,10 @@
                             draggable: false
                         });
                     } else {
-                        alert("hhh");
-                        alert(json.type);
+                        swal({title:"",
+                            text:"上传头像失败,原因未知,请联系管理员",
+                            confirmButtonText:"确认",
+                            type:"error"});
                     }
                     break;
             }

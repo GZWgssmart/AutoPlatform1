@@ -62,7 +62,17 @@
                     <div class="form-group">
                         <label class="col-sm-4  col-md-4 control-label">公司地址</label>
                         <div class="col-sm-7 col-md-7">
-                            <input type="text" name="companyAddress" placeholder="请输入公司地址" class="form-control" >
+                            <fieldset id="city_china">
+                                <div class="form-group col-md-4">
+                                    <select class="province js-example-tags form-control" disabled="disabled" name="province"></select>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <select class="city js-example-tags form-control" disabled="disabled" name="city"></select>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <select class="area js-example-tags form-control" disabled="disabled" name="area"></select>
+                                </div>
+                            </fieldset>
                         </div>
                     </div>
                     <div class="form-group">
@@ -127,9 +137,16 @@
 <script src="/static/js/bootstrap-validate/bootstrapValidator.js"></script>
 <script src="/static/js/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.js"></script>
 <script src="/static/js/bootstrap-dateTimePicker/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+<script src="/static/js/jquery.cxselect.js"></script>
 <script>
+
+    $.cxSelect.defaults.url = '/static/js/cityData.min.json';
+    $('#city_china').cxSelect({
+        selects: ['province', 'city', 'area']
+    });
+
     $(function () {
-        initDateTimePicker('loginForm', 'companyOpenDate', 'addDatetimepicker'); // 初始化时间框, 第一参数是form表单id, 第二参数是input的name, 第三个参数为input的id
+        initDatePicker('loginForm', 'companyOpenDate', 'addDatetimepicker'); // 初始化时间框, 第一参数是form表单id, 第二参数是input的name, 第三个参数为input的id
         function bodyScroll(event) {
             event.preventDefault();
         }

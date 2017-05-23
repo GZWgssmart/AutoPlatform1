@@ -364,10 +364,10 @@
         where record.recordStatus='Y'
         <choose>
             <when test="hasEmp!=null and  hasEmp != ''">
-              and workinfo.userId is not null or workinfo.userId != ''
+              and (workinfo.userId is not null or workinfo.userId != '')
             </when>
             <otherwise>
-                and workinfo.userId is null or workinfo.userId = ''
+                and (workinfo.userId is null or workinfo.userId = '')
             </otherwise>
         </choose>
         and com.companyId = #{companyId}
@@ -387,10 +387,10 @@
         </if>
         <choose>
             <when test="hasEmp!=null and  hasEmp != ''">
-                and workinfo.userId is not null or workinfo.userId != ''
+                and (workinfo.userId is not null or workinfo.userId != '')
             </when>
             <otherwise>
-                and workinfo.userId is null or workinfo.userId = ''
+                and (workinfo.userId is null or workinfo.userId = '')
             </otherwise>
         </choose>
     </select>
