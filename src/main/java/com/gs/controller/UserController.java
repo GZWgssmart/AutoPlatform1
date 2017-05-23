@@ -415,10 +415,10 @@ public class UserController {
      */
     @ResponseBody
     @RequestMapping(value="emailConfirm/{email}/{code}/{pwd}",method=RequestMethod.GET)
-    public ControllerResult emailConfirm(HttpServletRequest req, HttpSession session, @PathVariable("email")String email, @PathVariable("code")String code, @PathVariable("pwd")String pwd) {
-        String sessionCode = (String)session.getAttribute("rtEmailCode");
-        if(code.equals(sessionCode)){
-            userService.updatePwdByEmail(pwd, email);
+    public ControllerResult emailConfirm(HttpServletRequest req, HttpSession session, @PathVariable("email")String email, @PathVariable("code")int code, @PathVariable("pwd")String pwd) {
+        Integer sessionCode = (Integer)session.getAttribute("rtEmailCode");
+        if(code == sessionCode){
+            userService.updatePwdByEmail(EncryptUtil.md5Encrypt(pwd), email);
             return ControllerResult.getSuccessResult("修改密码成功");
         }else{
             return ControllerResult.getFailResult("邮箱验证码输入错误");
@@ -430,10 +430,10 @@ public class UserController {
      */
     @ResponseBody
     @RequestMapping(value="phoneConfirm/{phone}/{code}/{pwd}",method=RequestMethod.GET)
-    public ControllerResult phoneConfirm(HttpServletRequest req, HttpSession session, @PathVariable("phone")String phone, @PathVariable("code")String code, @PathVariable("pwd")String pwd) {
-        String sessionCode = (String)session.getAttribute("rtPhoneCode");
-        if(code.equals(sessionCode)){
-            userService.updatePwdByPhone(pwd, phone);
+    public ControllerResult phoneConfirm(HttpServletRequest req, HttpSession session, @PathVariable("phone")String phone, @PathVariable("code")int code, @PathVariable("pwd")String pwd) {
+        Integer sessionCode = (Integer)session.getAttribute("rtPhoneCode");
+        if(code == sessionCode){
+            userService.updatePwdByPhone(EncryptUtil.md5Encrypt(pwd), phone);
             return ControllerResult.getSuccessResult("修改密码成功");
         }else{
             return ControllerResult.getFailResult("短信验证码输入错误");

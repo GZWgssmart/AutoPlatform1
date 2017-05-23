@@ -401,6 +401,15 @@ function emailCode1Time1(o, phone) {
     }
 }
 
+function closem(){
+    $("#addWindow").modal("hide");
+    $("input[type=reset]").trigger("click"); // 移除表单中填的值
+    $("#addForm").data('bootstrapValidator').destroy(); // 销毁此form表单
+    $('#addForm').data('bootstrapValidator', null);// 此form表单设置为空
+    $("#addForm1").data('bootstrapValidator').destroy(); // 销毁此form表单
+    $('#addForm1').data('bootstrapValidator', null);// 此form表单设置为空
+}
+
 // 找回密码表单验证
 function validator3(formId) {
     $('#' + formId).bootstrapValidator({
@@ -454,35 +463,37 @@ function validator3(formId) {
                         message: '密码不能为空'
                     },
                     identical: {
-                        field: 'rtpwd',
+                        field: 'rtpwd1',
                         message: '两次输入密码不一致'
                     }
                 }
             },
         }
     }).on('success.form.bv', function (e) {
-            var email = $("#emailInput").val();
-            var code = $("#codeEmail").val();
-            var pwd = $("#pwdEmail").val();
-            $.post("/user/emailConfirm/"+email+"/"+code+"/"+pwd,function (data) {
-                if(data.result=="success"){
-                    swal({
-                        title: "",
-                        text: data.message,
-                        confirmButtonText: "确认",
-                        type: "success"
-                    }, function (isConfirm) {
-                        $("#addWindow").modal('hide');
-                    });
-                }else if(data.result=="fail"){
-                    swal({
-                        title: "",
-                        text: data.message,
-                        confirmButtonText: "确认",
-                        type: "error"
-                    });
-                }
-            })
+        var phone = $("#phoneInput").val();
+        var code = $("#codePhone").val();
+        var pwd = $("#pwdPhone").val();
+        $.get("/user/phoneConfirm/"+phone+"/"+code+"/"+pwd,function (data) {
+            if(data.result=="success"){
+                swal({
+                    title: "",
+                    text: data.message,
+                    confirmButtonText: "确认",
+                    type: "success"
+                }, function (isConfirm) {
+                    $("#addWindow").modal('hide');
+                    $("#addForm").data('bootstrapValidator').destroy(); // 销毁此form表单
+                    $('#addForm').data('bootstrapValidator', null);// 此form表单设置为空
+                });
+            }else if(data.result=="fail"){
+                swal({
+                    title: "",
+                    text: data.message,
+                    confirmButtonText: "确认",
+                    type: "error"
+                });
+            }
+        })
     })
 }
 
@@ -547,27 +558,29 @@ function validator4(formId) {
             },
         }
     }).on('success.form.bv', function (e) {
-        var phone = $("#phoneInput").val();
-        var code = $("#codePhone").val();
-        var pwd = $("#pwdPhone").val();
-            $.post("/user/phoneConfirm/"+phone+"/"+code+"/"+pwd,function (data) {
-                if(data.result=="success"){
-                    swal({
-                        title: "",
-                        text: data.message,
-                        confirmButtonText: "确认",
-                        type: "success"
-                    }, function (isConfirm) {
-                        $("#addWindow").modal('hide');
-                    });
-                }else if(data.result=="fail"){
-                    swal({
-                        title: "",
-                        text: data.message,
-                        confirmButtonText: "确认",
-                        type: "error"
-                    });
-                }
-            })
+        var email = $("#emailInput").val();
+        var code = $("#codeEmail").val();
+        var pwd = $("#pwdEmail").val();
+        $.get("/user/emailConfirm/"+email+"/"+code+"/"+pwd,function (data) {
+            if(data.result=="success"){
+                swal({
+                    title: "",
+                    text: data.message,
+                    confirmButtonText: "确认",
+                    type: "success"
+                }, function (isConfirm) {
+                    $("#addWindow").modal('hide');
+                    $("#addForm1").data('bootstrapValidator').destroy(); // 销毁此form表单
+                    $('#addForm1').data('bootstrapValidator', null);// 此form表单设置为空
+                });
+            }else if(data.result=="fail"){
+                swal({
+                    title: "",
+                    text: data.message,
+                    confirmButtonText: "确认",
+                    type: "error"
+                });
+            }
+        })
     })
 }

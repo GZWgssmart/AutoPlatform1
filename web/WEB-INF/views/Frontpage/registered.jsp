@@ -127,7 +127,7 @@
                 <div class="modal-dialog" style="width: 50%;">
                     <div class="modal-content">
                         <div class="modal-body">
-                             <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
+                             <span class="glyphicon glyphicon-remove closeModal" onclick="closem()"></span>
                             <div class="modal-header" style="overflow:auto;">
                                 <h4>找回密码</h4>
                             </div>
@@ -172,9 +172,10 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <input type="reset" name="reset" style="display: none;"/>
                                             </form>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                                <button type="button" class="btn btn-default" onclick="closem()">关闭</button>
                                                 <button id="editButton" type="button" onclick="rtPhoneSubmit()" class="btn btn-success">确认</button>
                                             </div>
                                         </div>
@@ -214,9 +215,10 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <input type="reset" name="reset" style="display: none;"/>
                                             </form>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                                <button type="button" class="btn btn-default" onclick="closem()">关闭</button>
                                                 <button id="editButton1" type="button" onclick="rtEmailSubmit()" class="btn btn-success">确认</button>
                                             </div>
                                         </div>
