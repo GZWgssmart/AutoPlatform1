@@ -255,6 +255,9 @@ public class SupplyController {
                         supply.setSupplyName(value);
                         supply.setSupplyTypeId(value);
                         supply.setCompanyId(value);
+                    }if(text.equals("供应商/供应商类型")){
+                        supply.setSupplyName(value);
+                        supply.setSupplyTypeId(value);
                     }else if(text.equals("供应商")){
                         supply.setSupplyName(value);
                     }else if(text.equals("供应商类型")) {
