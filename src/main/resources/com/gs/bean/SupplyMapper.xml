@@ -179,7 +179,7 @@
     <if test="supply.companyId != '' and supply.companyId != null">
       co.companyName like '%${supply.companyId}%'
     </if>
-    <if test="supply.companyId != '' and supply.companyId != null and
+    <if test="supply.supplyName != '' and supply.supplyName != null and
             supply.supplyTypeId != '' and supply.supplyTypeId != null">
       or
     </if>

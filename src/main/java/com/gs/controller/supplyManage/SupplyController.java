@@ -1,11 +1,10 @@
 package com.gs.controller.supplyManage;
 
 import ch.qos.logback.classic.Logger;
-import com.gs.bean.Checkin;
 import com.gs.bean.Supply;
 import com.gs.bean.User;
-import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.ComboBox4EasyUI;
+import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
 import com.gs.common.util.RoleUtil;
@@ -23,7 +22,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.SimpleFormatter;
 
 /**
  * 钟燕玲 供应商管理
@@ -249,6 +247,7 @@ public class SupplyController {
                 String text = request.getParameter("text");
                 String value = request.getParameter("value");
                 if(text != null && text!="" && value != null && value != "") {
+                    System.out.print(text);
                     List<Supply> supplys = null;
                     Supply supply = new Supply();
                     if(text.equals("供应商/供应商类型/所属公司")){
