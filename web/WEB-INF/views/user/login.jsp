@@ -62,7 +62,12 @@
                     <div class="form-group">
                         <label class="col-sm-4  col-md-4 control-label">公司地址</label>
                         <div class="col-sm-7 col-md-7">
-                            <input type="text" name="companyAddress" placeholder="请输入公司地址" class="form-control" >
+                            <fieldset id="city_china">
+                                <select style="margin:5px; " class="province select" disabled="disabled" name="province" >
+                                </select>
+                                <select style="margin:5px; " class="city select" disabled="disabled" name="city"></select>
+                                <select style="margin:5px; " class="area select" disabled="disabled" name="area"></select>
+                            </fieldset>
                         </div>
                     </div>
                     <div class="form-group">
@@ -127,7 +132,14 @@
 <script src="/static/js/bootstrap-validate/bootstrapValidator.js"></script>
 <script src="/static/js/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.js"></script>
 <script src="/static/js/bootstrap-dateTimePicker/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+<script src="/static/js/jquery.cxselect.js"></script>
 <script>
+
+    $.cxSelect.defaults.url = '/static/js/cityData.min.json';
+    $('#city_china').cxSelect({
+        selects: ['province', 'city', 'area']
+    });
+
     $(function () {
         initDateTimePicker('loginForm', 'companyOpenDate', 'addDatetimepicker'); // 初始化时间框, 第一参数是form表单id, 第二参数是input的name, 第三个参数为input的id
         function bodyScroll(event) {
