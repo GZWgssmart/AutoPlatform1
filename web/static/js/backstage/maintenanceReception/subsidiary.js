@@ -342,7 +342,7 @@ function showUserDetail(){
                     text: "请先生成维修保养明细", // 主要文本
                     confirmButtonColor: "#DD6B55", // 提示按钮的颜色
                     confirmButtonText:"确定", // 提示按钮上的文本
-                    type:"warning"}) // 提示类型
+                    type:"error"}) // 提示类型
                 }
         }else if(data.result == 'notLogin'){
             swal({title:"",

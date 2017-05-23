@@ -256,4 +256,24 @@ public class UserServiceImpl implements UserService {
     public List<User> queryAllByPager(Pager pager) {
         return userDAO.queryAllByPager(pager);
     }
+
+    @Override
+    public int queryPhoneIsNull(String rtphone) {
+        return userDAO.queryPhoneIsNull(rtphone);
+    }
+
+    @Override
+    public int queryEmailIsNull(String eamil) {
+        return userDAO.queryEmailIsNull(eamil);
+    }
+
+    @Override
+    public void updatePwdByEmail(String pwd, String email) {
+        userDAO.updatePwdByEmail(pwd, email);
+    }
+
+    @Override
+    public void updatePwdByPhone(String pwd, String phone) {
+        userDAO.updatePwdByPhone(pwd, phone);
+    }
 }

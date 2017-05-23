@@ -62,13 +62,8 @@ public class EmployeController {
      */
     @RequiresAuthentication
     @RequestMapping(value = "selfManage", method = RequestMethod.GET)
-    public String selfManage(User user, HttpSession session) {
+    public String selfManage() {
         logger.info("个人资料跳转页面");
-        if(user != null && !user.equals("")){
-            User u = userService.queryInfoById(user.getUserId());
-            session.setAttribute("EmpUser", u);
-            return "emp/selfManage";
-        }
-        return null;
+        return "emp/selfManage";
     }
 }

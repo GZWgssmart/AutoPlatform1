@@ -42,6 +42,16 @@ public interface MaintainRecordDAO extends BaseDAO<String, MaintainRecord>{
     public List<MaintainRecord> queryByCondition(@Param("start") String start,@Param("end") String end, @Param("companyId") String companyId,@Param("maintainOrFix")String maintainOrFix, @Param("type") String type);
 
     /**
+     * 修改维修保养实际结束时间
+     */
+    public void updateActualEndTime(String maintainRecordId);
+
+    /**
+     * 修改维修保养提车时间
+     */
+    public void updatePickupTime(String maintainRecordId);
+
+    /**
      * 修改维修保养记录当前状态
      */
     public void updateCurrentStatus(@Param("currentStatus")String currentStatus, @Param("recordId")String recordId);

@@ -92,7 +92,7 @@
                 <th data-field="userEmail">用户Email</th>
                 <th data-field="userPhone">用户手机号</th>
             <shiro:hasAnyRoles name="系统超级管理员, 系统普通管理员, 公司超级管理员,公司普通管理员,汽车公司人力资源管理部">
-                <th data-field="userStatus" data-formatter="formatterStatus">操作</th>
+                <th data-field="userStatus" data-formatter="formatterStatus" data-events="tableTodoCellFun">操作</th>
             </shiro:hasAnyRoles>
             </tr>
             </thead>
@@ -417,7 +417,7 @@
     <div class="modal-dialog">
         <div class="modal-content" style="width:850px; margin-left:-121px;">
             <div class="modal-body">
-                <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('detailWindow', 'detailForm')"></span>
+                <%--<span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('detailWindow', 'detailForm')"></span>--%>
                 <div class="modal-header">
                     <h3>详细信息</h3>
                 </div>
@@ -480,15 +480,15 @@
                                 <input type="text" define="emp.userNickname" class="form-control" disabled="true" style="margin-left: 30px;">
                             </div>
                             <%-- 当角色不为系统的管理员的时候就显示此div --%>
-                            <shiro:lacksRole name="系统超级管理员, 系统普通管理员">
+                            <shiro:hasAnyRoles name="系统超级管理员, 系统普通管理员">
                                 <div class="form-group pull-left">
                                     <label class="control-label">所属公司：</label>
                                     <input define="emp.company.companyName" class="form-control" disabled="true">
                                 </div>
-                            </shiro:lacksRole>
+                            </shiro:hasAnyRoles>
                             <div class="form-group pull-left">
                                 <label class="control-label" >地址：</label>
-                                <input type="text" define="emp.userAddress" class="form-control" disabled="true" style="margin-left: 20px;">
+                                <input type="text" id="detailAddress" class="form-control" disabled="true" style="margin-left: 20px;">
                             </div>
                             <div class="form-group pull-left">
                                 <label class="control-label">上一次登录时间：</label>
@@ -547,5 +547,11 @@
     var loginRoleName = "<%= name %>";
     var userId = "<%= userId %>";
 
+
+    var tableTodoCellFun = {
+        'click .detail': function (e, value, row, index) {
+             showDetail(row);
+        }
+    }
 </script>
 </html>

@@ -36,11 +36,14 @@
                 </tr>
             </thead>
         </table>
-            <%--
-                只有超级管理员和汽修公司的管理员能对员工工资进行录入和修改,普通员工的话只能分页查询自己的工资
-                添加员工工资 对工资的管理应该属于财务的管理员负责，即使是超级管理员应该也不能对工资进行录入或者修改，
-                所以，这一块，就只用来查询员工自己的工资
-            --%>
+        <div id="toolbar" class="btn-group">
+            <button id="searchRapid" type="button" class="btn btn-success" onclick="searchRapidStatus();">
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>可用人员记录
+            </button>
+            <button id="searchDisable" type="button" class="btn btn-danger" onclick="searchDisableStatus();">
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>禁用人员记录
+            </button>
+        </div>
     </div>
 </div>
 

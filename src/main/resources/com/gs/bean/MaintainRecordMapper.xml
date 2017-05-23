@@ -179,6 +179,16 @@
         update t_maintain_record set currentStatus=#{currentStatus} where recordId in (${recordId})
     </update>
 
+    <!-- 修改维修保养实际结束时间 -->
+    <update id="updateActualEndTime">
+        update t_maintain_record set actualEndTime=now() where recordId = #{maintainRecordId}
+    </update>
+
+    <!-- 修改维修保养提车时间 -->
+    <update id="updatePickupTime">
+        update t_maintain_record set pickupTime=now() where recordId = #{maintainRecordId}
+    </update>
+
     <!-- 维修保养记录分页模糊查询 -->
     <select id="blurredQuery" resultMap="MaintainRecordMap">
         <![CDATA[

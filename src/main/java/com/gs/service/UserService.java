@@ -130,4 +130,14 @@ public interface UserService extends BaseService<String, User> {
 
     //  分页查询全部，不分状态
     public List<User> queryAllByPager(Pager pager);
+
+    // 查询手机和邮箱绑定账号是否存在
+    public int queryPhoneIsNull(String rtphone);
+
+    public int queryEmailIsNull(String eamil);
+
+    // 根据邮箱和手机号修改密码
+    public void updatePwdByEmail(String pwd, String email);
+
+    public void updatePwdByPhone(String pwd, String phone);
 }

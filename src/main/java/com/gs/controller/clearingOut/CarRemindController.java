@@ -104,7 +104,6 @@ public class CarRemindController {
                         // mail.setRecipients(u.getUserEmail()); 收件人
                         // mail.setCcRecipients(); // 抄送
                         mail.setBccRecipients(emails); // 密送
-                        logger.info(emails);
                         Multipart multipart = new MimeMultipart();
                         BodyPart part1 = new MimeBodyPart(); // 邮件内容
                         // 设置邮件内容

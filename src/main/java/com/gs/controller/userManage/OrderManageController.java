@@ -219,6 +219,7 @@ OrderManageController {
             if(RoleUtil.checkRoles(roles)) {
                 if (workId != null && !workId.equals("") && recordId!=null && !recordId.equals("")) {
                         workInfoService.active(workId);
+                        maintainRecordService.updateActualEndTime(recordId);
                         maintainRecordService.updateCurrentStatus("待提醒", "'"+recordId+"'");
                         logger.info("确认完成工单成功");
                         return ControllerResult.getSuccessResult("确认完成工单成功");

@@ -61,12 +61,12 @@ public class UserBasicManageController {
 
         String savePath = Constants.UPLOAD_HEAD + Methods.createNewFolder() + "/";
         Map map= new HashMap();
-        System.out.println(fileName);
         if(fileSave(file, savePath,userId,session)) {
             userService.updIcon(userId,savePath+userId+".jpg");   // 设置头像
             map.put("controllerResult", ControllerResult.getSuccessResult("添加成功,默认密码为123456"));
             map.put("imgPath", savePath);
         } else {
+            userService.updIcon(userId,"/static/uploads/head/default.jpg");   // 设置头像
             map.put("controllerResult", ControllerResult.getFailResult("提交失败"));
         }
         return map;

@@ -131,4 +131,13 @@ public interface UserDAO extends BaseDAO<String, User>{
      */
     public List<User> queryByCompanyId(String companyId);
 
+    // 查询手机和邮箱绑定账号是否存在
+    public int queryPhoneIsNull(String phone);
+
+    public int queryEmailIsNull(String email);
+
+    // 根据邮箱和手机号修改密码
+    public void updatePwdByEmail(@Param("pwd") String pwd, @Param("email") String email);
+
+    public void updatePwdByPhone(@Param("pwd")String pwd, @Param("phone")String phone);
 }

@@ -5,7 +5,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gs.bean.*;
 import com.gs.common.Constants;
+import com.gs.common.Methods;
 import com.gs.common.bean.ControllerResult;
+import com.gs.common.mail.MailConfig;
 import com.gs.common.mes.IndustrySMS;
 import com.gs.common.util.EncryptUtil;
 import com.gs.common.util.RoleUtil;
@@ -30,9 +32,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.mail.BodyPart;
+import javax.mail.MessagingException;
+import javax.mail.Multipart;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMultipart;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
@@ -144,6 +152,60 @@ public class UserController {
                 e.printStackTrace();
             }
             return resultString;
+    }
+
+    /**
+     * 验证邮箱绑定账号是否存在
+     */
+    @ResponseBody
+    @RequestMapping(value = "queryEmailIsNull", method = RequestMethod.GET)
+    public String queryEmailIsNull(HttpServletRequest req) {
+        logger.info("验证邮箱绑定账号是否存在");
+        String eamil = (String)req.getParameter("rtemail");
+        boolean result = true;
+        String resultString = "";
+        Map<String, Boolean> map = new HashMap<String, Boolean>();
+        ObjectMapper mapper = new ObjectMapper();
+        if (eamil != null && eamil !="") {
+            int count = userService.queryEmailIsNull(eamil);
+            if (count == 0) {
+                result = false;
+            }
+        }
+        map.put("valid", result);
+        try {
+            resultString = mapper.writeValueAsString(map);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return resultString;
+    }
+
+    /**
+     * 验证手机号码绑定账号是否存在
+     */
+    @ResponseBody
+    @RequestMapping(value = "queryPhoneIsNull", method = RequestMethod.GET)
+    public String queryPhoneIsNull(HttpServletRequest req) {
+        logger.info("验证手机号码绑定账号是否存在");
+        String rtphone = (String)req.getParameter("rtphone");
+        boolean result = true;
+        String resultString = "";
+        Map<String, Boolean> map = new HashMap<String, Boolean>();
+        ObjectMapper mapper = new ObjectMapper();
+        if (rtphone != null && rtphone !="") {
+            int count = userService.queryPhoneIsNull(rtphone);
+            if (count == 0) {
+                result = false;
+            }
+        }
+        map.put("valid", result);
+        try {
+            resultString = mapper.writeValueAsString(map);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return resultString;
     }
 
     /**
@@ -263,8 +325,6 @@ public class UserController {
         }
     }
 
-
-
     /**
      * 验证是否登录
      */
@@ -285,7 +345,7 @@ public class UserController {
     }
 
     /**
-     * 发送短信
+     * 注册发送短信
      */
     @ResponseBody
     @RequestMapping(value="sendSms",method=RequestMethod.GET)
@@ -300,6 +360,84 @@ public class UserController {
             return ControllerResult.getSuccessResult("发送短信验证码成功");
         }
        return ControllerResult.getFailResult("发送短信验证码失败");
+    }
+
+    /**
+     * 找回密码发送短信
+     */
+    @ResponseBody
+    @RequestMapping(value="rtPhoneCode",method=RequestMethod.GET)
+    public ControllerResult rtPhoneCode(HttpServletRequest req, HttpSession session) {
+        String phone = req.getParameter("phone");
+        if(phone!= null && phone!= "") {
+            logger.info("发送短信验证码");
+            int code = (int)((Math.random()*9+1)*100000);
+            session.setAttribute("rtPhoneCode", code);
+            IndustrySMS i = new IndustrySMS(phone, "【汽车之家】您的验证码为" +code+"，请于30分钟内正确输入，如非本人操作，请忽略此短信。");
+            i.execute();
+            return ControllerResult.getSuccessResult("发送短信验证码成功");
+        }
+        return ControllerResult.getFailResult("发送短信验证码失败");
+    }
+
+    /**
+     * 找回密码发送邮箱
+     */
+    @ResponseBody
+    @RequestMapping(value="rtEmailCode",method=RequestMethod.GET)
+    public ControllerResult rtEmailCode(HttpServletRequest req, HttpSession session) throws MessagingException {
+        String email = req.getParameter("email");
+        if(email!= null && email!= "") {
+            logger.info("发送邮箱验证码");
+            int code = (int)((Math.random()*9+1)*100000);
+            session.setAttribute("rtEmailCode", code);
+            Mail mail = new Mail();
+            mail.setSubject("找回密码"); // 设置标题
+            // 设置接收者
+            // mail.setRecipients(u.getUserEmail()); 收件人
+            // mail.setCcRecipients(); // 抄送
+            mail.setBccRecipients(email); // 密送
+            Multipart multipart = new MimeMultipart();
+            BodyPart part1 = new MimeBodyPart(); // 邮件内容
+            // 设置邮件内容
+            part1.setContent("您的验证码为"+code+"，请于30分钟内正确输入，如非本人操作，请忽略此邮件。", "text/html;charset=utf-8");
+            multipart.addBodyPart(part1); // 把此邮件内容添加到实例化好的邮件中
+            mail.setMultinart(multipart); // 把此邮件对象添加进邮箱
+            File file = new File(Methods.getRootPath(req) + "WEB-INF/config/mail.properties");
+            MailConfig.sendMail(file, mail);
+            return ControllerResult.getSuccessResult("发送邮箱验证码成功");
+        }
+        return ControllerResult.getFailResult("发送邮箱验证码失败");
+    }
+
+    /**
+     * 邮箱验证确定按钮
+     */
+    @ResponseBody
+    @RequestMapping(value="emailConfirm/{email}/{code}/{pwd}",method=RequestMethod.GET)
+    public ControllerResult emailConfirm(HttpServletRequest req, HttpSession session, @PathVariable("email")String email, @PathVariable("code")String code, @PathVariable("pwd")String pwd) {
+        String sessionCode = (String)session.getAttribute("rtEmailCode");
+        if(code.equals(sessionCode)){
+            userService.updatePwdByEmail(pwd, email);
+            return ControllerResult.getSuccessResult("修改密码成功");
+        }else{
+            return ControllerResult.getFailResult("邮箱验证码输入错误");
+        }
+    }
+
+    /**
+     * 手机验证确定按钮
+     */
+    @ResponseBody
+    @RequestMapping(value="phoneConfirm/{phone}/{code}/{pwd}",method=RequestMethod.GET)
+    public ControllerResult phoneConfirm(HttpServletRequest req, HttpSession session, @PathVariable("phone")String phone, @PathVariable("code")String code, @PathVariable("pwd")String pwd) {
+        String sessionCode = (String)session.getAttribute("rtPhoneCode");
+        if(code.equals(sessionCode)){
+            userService.updatePwdByPhone(pwd, phone);
+            return ControllerResult.getSuccessResult("修改密码成功");
+        }else{
+            return ControllerResult.getFailResult("短信验证码输入错误");
+        }
     }
 
     /**
