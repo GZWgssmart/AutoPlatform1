@@ -60,22 +60,6 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-4  col-md-4 control-label">公司地址</label>
-                        <div class="col-sm-7 col-md-7">
-                            <fieldset id="city_china">
-                                <div class="form-group col-md-4">
-                                    <select class="province js-example-tags form-control" disabled="disabled" name="province"></select>
-                                </div>
-                                <div class="form-group col-md-4">
-                                    <select class="city js-example-tags form-control" disabled="disabled" name="city"></select>
-                                </div>
-                                <div class="form-group col-md-4">
-                                    <select class="area js-example-tags form-control" disabled="disabled" name="area"></select>
-                                </div>
-                            </fieldset>
-                        </div>
-                    </div>
-                    <div class="form-group">
                         <label class="col-sm-4  col-md-4 control-label">公司联系方式</label>
                         <div class="col-sm-7 col-md-7">
                             <input type="number" name="companyTel" placeholder="请输入公司联系方式" class="form-control" >
@@ -96,7 +80,7 @@
                     <div class="form-group">
                         <label class="col-sm-4  col-md-4 control-label">公司成立时间</label>
                         <div class="col-sm-7 col-md-7">
-                            <input type="text" id="addDatetimepicker" name="companyOpenDate" readonly="true" onclick="getDate('addDatetimepicker')" placeholder="请选择公司成立时间" class="form-control" >
+                            <input type="text" id="addDatetimepicker" name="companyOpendate" readonly="true" onclick="getDate('addDatetimepicker')" placeholder="请选择公司成立时间" class="form-control" >
                         </div>
                     </div>
                     <div class="form-group">
@@ -109,6 +93,22 @@
                                 <option>101-150人</option>
                                 <option>150人以上</option>
                             </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4  col-md-4 control-label">公司地址</label>
+                        <div class="col-sm-7 col-md-7">
+                            <fieldset id="city_china">
+                                <div class="form-group col-md-4">
+                                    <select class="province js-example-tags form-control" disabled="disabled" name="province"></select>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <select class="city js-example-tags form-control" disabled="disabled" name="city"></select>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <select class="area js-example-tags form-control" disabled="disabled" name="area"></select>
+                                </div>
+                            </fieldset>
                         </div>
                     </div>
                     <div class="form-group">
@@ -146,7 +146,7 @@
     });
 
     $(function () {
-        initDatePicker('loginForm', 'companyOpenDate', 'addDatetimepicker'); // 初始化时间框, 第一参数是form表单id, 第二参数是input的name, 第三个参数为input的id
+        initDatePicker('loginForm', 'companyOpendate', 'addDatetimepicker'); // 初始化时间框, 第一参数是form表单id, 第二参数是input的name, 第三个参数为input的id
         function bodyScroll(event) {
             event.preventDefault();
         }

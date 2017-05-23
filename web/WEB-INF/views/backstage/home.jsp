@@ -65,6 +65,7 @@
                 </div>
             </div>
         </shiro:hasAnyRoles>
+        <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师,汽车公司学徒,汽车公司销售人员,汽车公司财务人员,汽车公司采购人员,汽车公司库管人员,汽车公司人力资源管理部">
         <div class="row">
             <div class="col-sm-12">
                 <div class="ibox float-e-margins">
@@ -262,6 +263,7 @@
                         </div>
                     </div>
                 </div>
+            </shiro:hasAnyRoles>
             </shiro:hasAnyRoles>
         </div>
     </div>

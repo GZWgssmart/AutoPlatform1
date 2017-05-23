@@ -206,6 +206,15 @@ public class CompanyController {
             String province = request.getParameter("province");
             String city = request.getParameter("city");
             String area = request.getParameter("area");
+            if (province == null) {
+                province = "";
+            }
+            if (city == null) {
+                city = "";
+            }
+            if (area == null) {
+                area = "";
+            }
             company.setCompanyAddress(province + "-" + city + "-" + area);
             String companyId = UUIDUtil.uuid();
             company.setCompanyId(companyId);
@@ -216,6 +225,7 @@ public class CompanyController {
             user.setUserName(company.getCompanyPricipal());
             user.setUserAddress(company.getCompanyAddress());
             user.setUserPwd(EncryptUtil.md5Encrypt("123456"));
+            user.setUserCreatedTime(company.getCompanyOpendate());
             UserRole userRole = new UserRole();
             userRole.setUserId(user.getUserId());
             userRole.setRoleId("8010cecf-3205-11e7-bc72-507b9d765567");
