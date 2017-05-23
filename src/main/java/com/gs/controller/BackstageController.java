@@ -60,6 +60,9 @@ public class BackstageController {
     @RequestMapping(value = "home", method = RequestMethod.GET)
     public String backstageHome(HttpSession session, HttpServletRequest request) {
         User user = (User) session.getAttribute("user");
+        if(user.getCompanyId()==null&&user.getCompanyId().equals("")){
+            return "backstage/home";
+        }
         List<User> userinfo = userService.queryByCompanyId(user.getCompanyId());
         for (User u:userinfo){
             if(u.getUserIcon()==null || u.getUserIcon().equals("")){
