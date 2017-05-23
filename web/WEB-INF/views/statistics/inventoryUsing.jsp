@@ -22,6 +22,7 @@
 <script src="/static/js/bootstrap.min.js"></script>
 <script src="/static/js/bootstrap-select/select2.js"></script>
 <script type="text/javascript" src="/static/js/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript" src="/static/js/bootstrap-dateTimePicker/locales/bootstrap-datetimepicker.zh-CN.js"></script>
 
 
 <body>
