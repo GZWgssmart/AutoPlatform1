@@ -22,7 +22,7 @@
                     </div>
                     <div class="ibox-content">
                         <c:choose>
-                            <c:when test="${requestScope.companyInfo!=null}">
+                            <c:when test="${companyInfo!=null}">
                                 <table class="table">
                                     <thead>
                                     <tr>
@@ -35,7 +35,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <c:forEach items="${requestScope.companyInfo}" var="cp">
+                                    <c:forEach items="${companyInfo}" var="cp">
                                         <tr>
                                             <td class="client-avatar">
                                                 <c:choose>
@@ -73,7 +73,7 @@
                     </div>
                     <div class="ibox-content">
                         <c:choose>
-                            <c:when test="${requestScope.userinfo!=null}">
+                            <c:when test="${userinfo!=null}">
                                 <table class="table">
                                     <thead>
                                     <tr>
@@ -84,7 +84,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <c:forEach items="${requestScope.userinfo}" var="us">
+                                    <c:forEach items="${userinfo}" var="us">
                                         <tr>
                                             <td class="client-avatar">
                                                 <c:choose>
@@ -119,7 +119,7 @@
                     </div>
                     <div class="ibox-content">
                         <c:choose>
-                            <c:when test="${requestScope.appinfo!=null}">
+                            <c:when test="${appinfo!=null}">
                                 <table class="table">
                                     <thead>
                                     <tr>
@@ -130,7 +130,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <c:forEach items="${requestScope.appinfo}" var="app">
+                                    <c:forEach items="${appinfo}" var="app">
                                         <tr>
                                             <td>${app.userName}</td>
                                             <td>${app.userPhone}</td>
@@ -157,7 +157,7 @@
                     </div>
                     <div class="ibox-content">
                         <c:choose>
-                            <c:when test="${requestScope.maininfo!=null}">
+                            <c:when test="${maininfo!=null}">
                                 <table class="table">
                                     <thead>
                                     <tr>
@@ -168,7 +168,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <c:forEach items="${requestScope.maininfo}" var="main">
+                                    <c:forEach items="${maininfo}" var="main">
                                         <tr>
                                             <td>${main.maintainName}</td>
                                             <td>${main.maintainMoney}</td>
@@ -195,7 +195,7 @@
                         </div>
                         <div class="ibox-content">
                             <c:choose>
-                                <c:when test="${requestScope.outgoInfo!=null}">
+                                <c:when test="${outgoInfo!=null}">
                                     <table class="table">
                                         <thead>
                                         <tr>
@@ -206,7 +206,7 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <c:forEach items="${requestScope.outgoInfo}" var="out">
+                                        <c:forEach items="${outgoInfo}" var="out">
                                             <tr>
                                                 <td>${out.user.userName}</td>
                                                 <td>${out.outgoingType.outTypeName}</td>
@@ -232,7 +232,7 @@
                         </div>
                         <div class="ibox-content">
                             <c:choose>
-                                <c:when test="${requestScope.incomInfo!=null}">
+                                <c:when test="${incomInfo!=null}">
                                     <table class="table">
                                         <thead>
                                         <tr>
@@ -243,7 +243,7 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <c:forEach items="${requestScope.incomInfo}" var="in">
+                                        <c:forEach items="${incomInfo}" var="in">
                                             <tr>
                                                 <td>${in.user.userName}</td>
                                                 <td>${in.incomingType.inTypeName}</td>

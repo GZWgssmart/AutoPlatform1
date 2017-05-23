@@ -28,7 +28,7 @@ public class IndexController {
     public ModelAndView backstageHome(HttpSession session) {
         ModelAndView mav = new ModelAndView("backstage/index");
         if(SessionUtil.isLogin(session)) {
-            mav.addObject((User) session.getAttribute("user"));
+            mav.addObject("user",(User) session.getAttribute("user"));
         }
         return mav;
     }
