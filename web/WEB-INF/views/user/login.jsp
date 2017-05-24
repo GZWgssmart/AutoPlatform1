@@ -44,7 +44,7 @@
 </style>
 <body class="gray-bg">
 <div class="row">
-    <div class="col-sm-5 col-md-5" style="margin: 10px 30%;">
+    <div class="col-sm-6 col-md-6" style="margin: 10px 25%;">
         <span style="font-size: 20px"><a id="backindex" href="/index">返回主页</a></span>
         <div class="ibox float-e-margins">
             <div class="ibox-title" style="padding:15px 0;background:black;text-align: center;border-color: black;">
@@ -96,8 +96,8 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-4  col-md-4 control-label">公司地址</label>
-                        <div class="col-sm-7 col-md-7">
+                        <label class="col-sm-3  col-md-3 control-label">公司地址</label>
+                        <div class="col-sm-9 col-md-9">
                             <fieldset id="city_china">
                                 <div class="form-group col-md-4">
                                     <select class="province js-example-tags form-control" disabled="disabled" name="province"></select>
