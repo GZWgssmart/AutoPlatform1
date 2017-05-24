@@ -257,10 +257,10 @@ function validator(formId) {
         },
         fields: {
             userName: {
-                message: '回访人验证失败',
+                message: '车主验证失败',
                 validators: {
                     notEmpty: {
-                        message: '回访人不能为空'
+                        message: '车主不能为空'
                     }
                 }
             },
