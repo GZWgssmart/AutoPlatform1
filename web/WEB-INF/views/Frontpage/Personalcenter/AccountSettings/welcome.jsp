@@ -105,7 +105,7 @@
                     <c:forEach items="${requestScope.companys}" var="c">
                         <div class="factory col-md-4 col-sm-12">
                             <div class="f-img">
-                                <a href="companydeta">
+                                <a href="javaScript:;">
                                     <c:if test="${c.companyLogo != null}">
                                         <img src="${c.companyLogo}" alt="公司图片"/>
                                     </c:if>
