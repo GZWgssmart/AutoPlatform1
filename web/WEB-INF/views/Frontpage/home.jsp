@@ -224,7 +224,7 @@
         <%--底部版权--%>
         <div class="bottom-nav">
                 <div class="row concart-warp">
-                    <div class="col-md-5 col-sm-12 btm-left">
+                    <div class="col-md-5 col-sm-12 btm-left" style="padding-left: 110px;">
                         <h4>联系我们：</h4>
                         <p>
                             <i class="icon-phone"><img src="/static/img/Frontpage/phone.png"/></i>
@@ -236,13 +236,12 @@
                     <div class="col-sm-9 col-md-5 wechat">
                         <h3 style="margin: 0;">扫码关注</h3>
                         <div class="row sm ">
-                            <div class="col-md-3 col-sm-3">
-                            </div>
                             <div class="col-md-5 col-sm-5" style="text-align: center;">
                                 <img src="/static/img/Frontpage/erweim.jpg" width="180px" height="140px"/>
                             </div>
                             <div class="col-md-3 col-sm-3">
-
+                            </div>
+                            <div class="col-md-3 col-sm-3">
                             </div>
                         </div>
                     </div>

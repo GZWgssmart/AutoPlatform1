@@ -591,3 +591,57 @@ a {color: #337ab7;}
 .btn:hover span{
     color:white;
 }
+.bottom-nav{
+    width: 100%;
+    height: auto;
+}
+.bottom-nav a{
+    text-decoration: none;
+    color: #9d9d9d;
+}
+.btm-left{
+    font-size: 24px;
+    padding-left: 10%;
+    border-right: solid 1px #d4d4d4;
+}
+
+.phone{
+    padding-left: 15px;
+    font-size:22px;
+}
+.wechat{
+    text-align: center;
+    border-right: solid 1px #d4d4d4;
+    height: 163px;
+}
+.sm{
+    margin-left: 20px;
+}
+.gz{
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+.gz h4{
+    margin-bottom: 20px;
+}
+#mc5-rtimg{
+    margin-right: 20px;
+}
+.t-bottom{
+    margin-top: 10px;
+    text-align: center;
+    width: 100%;
+    background-color: #e2e2e2;
+}
+.t-bottom span{
+    margin-top: 20px;
+}
+
+.concart-warp{
+    width:100%;
+}
+.mc2-title{
+    font-size: 3em;
+    color: white;
+    text-align: center
+}

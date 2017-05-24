@@ -167,7 +167,7 @@
         </div>
         <%--底部--%>
         <div class="t-bottom">
-            <span style="font-size:19px;">© 2011-2016 赣州宏图预科班 版权所有 ｜ 赣ICP备11018683-3</span>
+            <span style="font-size: 19px;">© 2017-3017 神的坐骑 版权所有 ｜ 赣ICP备11018683-3</span>
         </div>
     </div>
 
