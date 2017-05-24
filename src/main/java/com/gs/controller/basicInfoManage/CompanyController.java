@@ -163,19 +163,19 @@ public class CompanyController {
 //                    company.setCompanyId(UUIDUtil.uuid());
                     String companyId = UUIDUtil.uuid();
                     company.setCompanyId(companyId);
-                    String province = request.getParameter("province");
-                    String city = request.getParameter("city");
-                    String area = request.getParameter("area");
-                    if (province == null) {
-                        province = "";
-                    }
-                    if (city == null) {
-                        city = "";
-                    }
-                    if (area == null) {
-                        area = "";
-                    }
-                    company.setCompanyAddress(province + "-" + city + "-" + area);
+//                    String province = request.getParameter("province");
+//                    String city = request.getParameter("city");
+//                    String area = request.getParameter("area");
+//                    if (province == null) {
+//                        province = "";
+//                    }
+//                    if (city == null) {
+//                        city = "";
+//                    }
+//                    if (area == null) {
+//                        area = "";
+//                    }
+//                    company.setCompanyAddress(province + "-" + city + "-" + area);
                     User user = new User();
                     user.setUserId(UUIDUtil.uuid());
                     user.setUserPhone(company.getCompanyPricipalphone());
@@ -335,10 +335,10 @@ public class CompanyController {
                 Map map = new HashMap();
                 if (company != null && !company.equals("")) {
                         logger.info("修改公司信息");
-                        String province = request.getParameter("editProvince");
-                        String city = request.getParameter("editCity");
-                        String area = request.getParameter("editArea");
-                        company.setCompanyAddress(province + "-" + city + "-" + area);
+//                        String province = request.getParameter("editProvince");
+//                        String city = request.getParameter("editCity");
+//                        String area = request.getParameter("editArea");
+//                        company.setCompanyAddress(province + "-" + city + "-" + area);
                         companyService.update(company);
                         map.put("company",company);
                         map.put("controllerResult",ControllerResult.getSuccessResult("修改公司信息成功"));

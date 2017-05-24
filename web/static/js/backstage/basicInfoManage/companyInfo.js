@@ -162,12 +162,13 @@ function showEdit() {
                 $("#editButton").removeAttr("disabled");
                 var ceshi = row[0];
                 $('#editDatetimepicker').val(formatterDate(ceshi.companyOpendate));
-                $('#editCity_china').val(formatterAddress(ceshi.companyAddress));
+                // $('#editCity_china').val(formatterAddress(ceshi.companyAddress));
                 $("#editForm").fill(ceshi);
                 var editLogo = row[0].companyLogo;
                 // alert(editLogo);
                 var oFileInput = new FileInput();
                 oFileInput.Init("file1", "/company/addFile", editLogo);
+                initCityPicker("address");//初始化三级地区联动
                 validator('editForm');
             } else {
                 swal({
@@ -682,20 +683,19 @@ function searchByStationName() {
 }
 
 // 格式化地址
-function formatterAddress(val) {
-    var address = val.split('-');
-    $("#editProvince").val(address[0]);
-    $("#editCity").val(address[1]);
-    $("#editArea").val(address[2]);
-
-
-}
-//  修改时，点击地址的文本框后，文本框隐藏，地址下拉选择显示
-var address = $("#address");
-address.click(function () {
-    address.css('display', 'none');
-    $('#companyAddress').css('display', 'block');
-})
+// function formatterAddress(val) {
+//     var address = val.split('-');
+//     $("#editProvince").val(address[0]);
+//     $("#editCity").val(address[1]);
+//     $("#editArea").val(address[2]);
+//
+// }
+// //  修改时，点击地址的文本框后，文本框隐藏，地址下拉选择显示
+// var address = $("#address");
+// address.click(function () {
+//     address.css('display', 'none');
+//     $('#companyAddress').css('display', 'block');
+// })
 
 function showMap(winId) {
     $("#mapWindow").modal('show');
