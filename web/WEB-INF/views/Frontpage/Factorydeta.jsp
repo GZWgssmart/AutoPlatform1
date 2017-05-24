@@ -7,6 +7,7 @@
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
     <title>厂商详情</title>
@@ -82,7 +83,8 @@
                         </div>
                         <div>
                             <label>公司成立时间：</label>
-                            <span>${requestScope.companybyid.companyOpendate}</span>
+                            <span><fmt:formatDate value="${requestScope.companybyid.companyOpendate}"
+                                                  pattern="yyyy/MM/dd  HH:mm:ss"></fmt:formatDate></span>
                         </div>
                         <div>
                             <label>公司规模：</label>

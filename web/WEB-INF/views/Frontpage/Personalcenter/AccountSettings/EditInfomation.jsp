@@ -104,8 +104,6 @@
     function edit() {
         $.post("/editinfomation",$("#form2").serialize(),function (data) {
             if(data.result=="success"){
-//                window.location.href="accountinfo";
-//                window.location.reload;
                 swal({
                     title: "",
                     text: data.message,
