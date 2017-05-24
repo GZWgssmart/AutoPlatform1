@@ -158,6 +158,13 @@ $.ajax({	//使用JQuery内置的Ajax方法
 
         }
         else {
+            swal({
+                title:"",
+                text:"请选择条件查询图表",
+                confirmButtonColor: "#DD6B55", // 提示按钮的颜色
+                confirmButtonText: "确定", // 提示按钮上的文本
+                type: "warning"
+            })
             //返回的数据为空时显示提示信息
             myChart.hideLoading();
         }
