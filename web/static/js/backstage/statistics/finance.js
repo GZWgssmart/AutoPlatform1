@@ -166,7 +166,13 @@ $.ajax({	//使用JQuery内置的Ajax方法
         }
         else {
             //返回的数据为空时显示提示信息
-            alert("图表请求数据为空,没有当前时间段的数据");
+            swal({
+                title:"",
+                text:"图表请求数据为空,没有当前时间段的数据,请选择一个时间段的数据，可以根据年月日季度周查询",
+                confirmButtonColor: "#DD6B55", // 提示按钮的颜色
+                confirmButtonText: "确定", // 提示按钮上的文本
+                type: "warning"
+            })
             myChart.hideLoading();
         }
 
@@ -263,7 +269,13 @@ function selectYears() {
             }
             else {
                 //返回的数据为空时显示提示信息
-                alert("图表请求数据为空,没有当前时间段的数据");
+                swal({
+                    title:"",
+                    text:"图表请求数据为空,没有当前时间段的数据,请选择一个时间段的数据，可以根据年月日季度周查询",
+                    confirmButtonColor: "#DD6B55", // 提示按钮的颜色
+                    confirmButtonText: "确定", // 提示按钮上的文本
+                    type: "warning"
+                })
                 myChart.hideLoading();
             }
 
@@ -328,7 +340,13 @@ function selectMonth() {
             }
             else {
                 //返回的数据为空时显示提示信息
-                alert("图表请求数据为空,没有当前时间段的数据");
+                swal({
+                    title:"",
+                    text:"图表请求数据为空,没有当前时间段的数据,请选择一个时间段的数据，可以根据年月日季度周查询",
+                    confirmButtonColor: "#DD6B55", // 提示按钮的颜色
+                    confirmButtonText: "确定", // 提示按钮上的文本
+                    type: "warning"
+                })
                 myChart.hideLoading();
             }
 
@@ -391,7 +409,13 @@ function selectDay() {
             }
             else {
                 //返回的数据为空时显示提示信息
-                alert("图表请求数据为空,没有当前时间段的数据");
+                swal({
+                    title:"",
+                    text:"图表请求数据为空,没有当前时间段的数据,请选择一个时间段的数据，可以根据年月日季度周查询",
+                    confirmButtonColor: "#DD6B55", // 提示按钮的颜色
+                    confirmButtonText: "确定", // 提示按钮上的文本
+                    type: "warning"
+                })
                 myChart.hideLoading();
             }
 
@@ -456,7 +480,13 @@ function selectQuarter() {
 
             }
             else {
-                alert("图表请求数据为空,没有当前时间段的数据");
+                swal({
+                    title:"",
+                    text:"图表请求数据为空,没有当前时间段的数据,请选择一个时间段的数据，可以根据年月日季度周查询",
+                    confirmButtonColor: "#DD6B55", // 提示按钮的颜色
+                    confirmButtonText: "确定", // 提示按钮上的文本
+                    type: "warning"
+                })
                 myChart.hideLoading();
             }
 
@@ -523,7 +553,13 @@ function selectWeek() {
             }
             else {
                 //返回的数据为空时显示提示信息
-                alert("图表请求数据为空,没有当前时间段的数据");
+                swal({
+                    title:"",
+                    text:"图表请求数据为空,没有当前时间段的数据,请选择一个时间段的数据，可以根据年月日季度周查询",
+                    confirmButtonColor: "#DD6B55", // 提示按钮的颜色
+                    confirmButtonText: "确定", // 提示按钮上的文本
+                    type: "warning"
+                })
                 myChart.hideLoading();
             }
 

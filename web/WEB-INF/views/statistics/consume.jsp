@@ -3,10 +3,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>员工工单报表</title>
+    <title>消费统计</title>
     <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.css">
     <link rel="stylesheet" href="/static/css/bootstrap.min.css">
     <link rel="stylesheet" href="/static/css/select2.min.css">
+    <link rel="stylesheet" href="/static/css/sweetalert.css">
     <link href="/static/css/select2/select2.css" rel="stylesheet">
 </head>
 <style>
@@ -29,7 +30,7 @@
 
 
 <div class='container-fluid'>
-    <h2 class='page-header'>员工工单报表</h2>
+    <h2 class='page-header'>消费统计</h2>
     <!--
         选项卡：通过BS的类来控制选项卡的样式
     -->
@@ -197,6 +198,7 @@
 <script src="/static/js/contextmenu.js"></script>
 <script src="/static/js/select2/select2.js"></script>
 <script src="/static/js/backstage/main.js"></script>
+<script src="/static/js/sweetalert/sweetalert.min.js"></script>
 </div>
 <%--<script>
     function showCompany(){

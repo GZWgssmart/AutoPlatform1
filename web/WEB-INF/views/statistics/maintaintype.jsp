@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="/static/css/bootstrap.min.css">
     <link rel="stylesheet" href="/static/css/select2.min.css">
     <link href="/static/css/select2/select2.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/sweetalert.css">
 
 </head>
 <style>
@@ -23,6 +24,7 @@
 <script src="/static/js/bootstrap-select/select2.js"></script>
 <script type="text/javascript" src="/static/js/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.js"></script>
 <script type="text/javascript" src="/static/js/bootstrap-dateTimePicker/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+
 
 
 <body>
@@ -226,7 +228,10 @@
                     <div class="input-group">
                         <input type="text" class="form-control form_Day" id="endQuarterInput" name="addtime"  placeholder="请选择结束时间">
                         <span class="input-group-addon" id="quarterMonth"><span class="glyphicon glyphicon-time"
-                                                           g">
+                                                                            aria-hidden="true"></span></span>
+                    </div>
+                </div>
+                <button id="quarterBtn" type="button" class="btn btn-default"  onclick="selectQuarter();">
                     <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询
                 </button>
                 <div class="clearfix"></div>
@@ -299,6 +304,7 @@
 <script src="/static/js/contextmenu.js"></script>
 <script src="/static/js/select2/select2.js"></script>
 <script src="/static/js/backstage/main.js"></script>
+<script src="/static/js/sweetalert/sweetalert.min.js"></script>
 
 </div>
 

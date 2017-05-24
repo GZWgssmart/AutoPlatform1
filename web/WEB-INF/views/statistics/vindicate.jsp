@@ -22,6 +22,7 @@
 <script src="/static/js/bootstrap-select/select2.js"></script>
 <script type="text/javascript" src="/static/js/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.js"></script>
 <script type="text/javascript" src="/static/js/bootstrap-dateTimePicker/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+<link rel="stylesheet" href="/static/css/sweetalert.css">
 
 <body>
 <%@include file="../backstage/contextmenu.jsp" %>
@@ -233,6 +234,7 @@
 <script src="/static/js/contextmenu.js"></script>
 <script src="/static/js/select2/select2.js"></script>
 <script src="/static/js/backstage/main.js"></script>
+<script src="/static/js/sweetalert/sweetalert.min.js"></script>
 </div>
 <%--<script>
     function showCompany(){
