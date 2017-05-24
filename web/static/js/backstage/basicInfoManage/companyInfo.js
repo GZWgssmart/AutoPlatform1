@@ -687,6 +687,8 @@ function formatterAddress(val) {
     $("#editProvince").val(address[0]);
     $("#editCity").val(address[1]);
     $("#editArea").val(address[2]);
+
+
 }
 //  修改时，点击地址的文本框后，文本框隐藏，地址下拉选择显示
 var address = $("#address");

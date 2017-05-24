@@ -166,6 +166,15 @@ public class CompanyController {
                     String province = request.getParameter("province");
                     String city = request.getParameter("city");
                     String area = request.getParameter("area");
+                    if (province == null) {
+                        province = "";
+                    }
+                    if (city == null) {
+                        city = "";
+                    }
+                    if (area == null) {
+                        area = "";
+                    }
                     company.setCompanyAddress(province + "-" + city + "-" + area);
                     User user = new User();
                     user.setUserId(UUIDUtil.uuid());
