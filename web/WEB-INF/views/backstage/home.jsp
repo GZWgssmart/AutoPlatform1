@@ -22,7 +22,7 @@
                     </div>
                     <div class="ibox-content">
                         <c:choose>
-                            <c:when test="${companyInfo!=null}">
+                            <c:when test="${companyInfo.size()>0}">
                                 <table class="table">
                                     <thead>
                                     <tr>
@@ -73,7 +73,7 @@
                     </div>
                     <div class="ibox-content">
                         <c:choose>
-                            <c:when test="${userinfo!=null}">
+                            <c:when test="${userinfo.size()>0}">
                                 <table class="table">
                                     <thead>
                                     <tr>
@@ -119,7 +119,7 @@
                     </div>
                     <div class="ibox-content">
                         <c:choose>
-                            <c:when test="${appinfo!=null}">
+                            <c:when test="${appinfo.size()>0}">
                                 <table class="table">
                                     <thead>
                                     <tr>
@@ -144,7 +144,7 @@
                                 </table>
                             </c:when>
                             <c:otherwise>
-                                暂无数据
+
                             </c:otherwise>
                         </c:choose>
                     </div>
@@ -157,7 +157,7 @@
                     </div>
                     <div class="ibox-content">
                         <c:choose>
-                            <c:when test="${maininfo!=null}">
+                            <c:when test="${maininfo.size()>0}">
                                 <table class="table">
                                     <thead>
                                     <tr>
@@ -195,7 +195,7 @@
                         </div>
                         <div class="ibox-content">
                             <c:choose>
-                                <c:when test="${outgoInfo!=null}">
+                                <c:when test="${outgoInfo.size()>0}">
                                     <table class="table">
                                         <thead>
                                         <tr>
@@ -232,7 +232,7 @@
                         </div>
                         <div class="ibox-content">
                             <c:choose>
-                                <c:when test="${incomInfo!=null}">
+                                <c:when test="${incomInfo.size()>0}">
                                     <table class="table">
                                         <thead>
                                         <tr>
