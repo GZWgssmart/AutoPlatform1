@@ -199,6 +199,7 @@
                                 <label class="col-md-4 control-label">开户银行全称：</label>
                                 <div class="col-md-8">
                                     <select class="js-example-tags form-control" name="supplyBank" placeholder="请选择开户银行全称" class="form-control">
+                                        <option value="请选择开户银行">请选择开户银行</option>
                                         <option value="中国银行">中国银行</option>
                                         <option value="交通银行">交通银行</option>
                                         <option value="招商银行">招商银行</option>
@@ -339,6 +340,7 @@
                                 <label class="col-md-4 control-label">开户银行全称：</label>
                                 <div class="col-md-8">
                                     <select class="js-example-tags form-control" define="supply.supplyBank" class="form-control" name="supplyBank">
+                                        <option value="请选择开户银行">请选择开户银行</option>
                                         <option value="中国银行">中国银行</option>
                                         <option value="交通银行">交通银行</option>
                                         <option value="招商银行">招商银行</option>
