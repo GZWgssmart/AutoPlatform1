@@ -100,7 +100,7 @@ public class MaterialsController {
 
     // baoliu
     @ResponseBody
-    @RequestMapping("history")
+    @RequestMapping("history") // 查询一个员工的领料历史记录
     public Pager4EasyUI historyByPager(@RequestParam("pageNumber") int pageNumber, @RequestParam("pageSize") int pageSize, HttpSession session){
         // TODO 公司员工
         if(SessionUtil.isLogin(session)) {
@@ -116,6 +116,27 @@ public class MaterialsController {
             pager4EasyUI.setRows(rows);
             return pager4EasyUI;
         } else {
+            logger.info("请先登录");
+            return null;
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping("finishWorkByUser") // 查询一个员工的领料历史记录
+    public Pager4EasyUI queryFinishWorkByUser(@RequestParam("pageNumber") int pageNumber, @RequestParam("pageSize") int pageSize, HttpSession session) {
+        User user = (User)session.getAttribute("user");
+        if(SessionUtil.isLogin(session)) {
+            Pager4EasyUI pager4EasyUI = new Pager4EasyUI();
+            Pager pager = new Pager();
+            //当前以用户1号查询,后期需要判断是否拥有查询所有领用记录才可以使用
+            int total = materialUseService.countUserWorksStatus(user,"Y");
+            pager.setPageNo(pageNumber);
+            pager.setPageSize(pageSize);
+            List workInfos = materialUseService.userWorksStatusByPager(user, "Y",pager);
+            pager4EasyUI.setTotal(total);
+            pager4EasyUI.setRows(workInfos);
+            return pager4EasyUI;
+        }  else {
             logger.info("请先登录");
             return null;
         }
@@ -233,6 +254,7 @@ public class MaterialsController {
         int resultCount = 0;
         MaterialUse materialUse = new MaterialUse();
         materialUse.setMaterialUseId(UUIDUtil.uuid());
+        // TODO  零件库存需要更新
         if(accCount>0) {
             materialUse.setMatainRecordId(recordId);
             materialUse.setAccId(accId);
@@ -240,6 +262,9 @@ public class MaterialsController {
             materialUse.setMuCreatedTime(new Date());
             materialUse.setMuUseDate(new Date());
             resultCount  = materialUseService.insert(materialUse);
+            if(resultCount > 0) {
+                accessoriesService.reduceCount(Math.abs(accCount), accId);
+            }
         }else {
             MaterialReturn materialReturn = new MaterialReturn();
             materialReturn.setMaterialReturnId(materialUse.getMaterialUseId());
@@ -249,6 +274,9 @@ public class MaterialsController {
             materialReturn.setMrCreatedDate(new Date());
             materialReturn.setMrReturnDate(new Date());
             resultCount  = materialReturnService.insert(materialReturn);
+            if(resultCount > 0) {
+                accessoriesService.reduceCount(-Math.abs(accCount), accId);
+            }
         }
         if(resultCount>0) {
             return true;

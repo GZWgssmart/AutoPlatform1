@@ -169,7 +169,7 @@
                 <thead>
                 <tr >
                     <th data-width="110" data-field="accessories.accName">配件名称</th>
-                    <th data-width="110" data-field="record.checkin.carPlate">车牌</th>
+                    <th data-width="110" data-field="record.checkin.carPlate" data-formatter="formatterCarPlate">车牌</th>
                     <th data-width="110" data-field="flag" data-formatter="todoType">操作类型</th>
                     <th data-width="110" data-field="accCount">数量</th>
                     <th data-width="110" data-field="muUseDate" data-formatter=formatterDate>
@@ -209,6 +209,7 @@
                 </div>
                 <div class="modal-body">
                     <input style="display: none;" id="seachRecordId" />
+                    <input style="display: none;" id="workStatus" />
                     <table id="workInfoAccDetailTable" style="table-layout: fixed" data-single-select="true"
                            data-show-header="false" >
                         <thead>

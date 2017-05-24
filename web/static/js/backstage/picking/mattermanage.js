@@ -134,13 +134,17 @@ function initHistoryTab(){
 };
 
 function todoCell(el, row, index) {
-    var okbtn = '<button type="button"  class="btn btn-primary ok" style="margin-right:10px" >同意'
+    var wantCount = row.varsMap.accCount;
+    var canUseCount = row.varsMap.acc.accIdle ;
+    var disable = "";
+
+    var okbtn = '<button type="button"  class="btn btn-primary ok" style="margin-right:10px">同意'
         + '</button>';
-    if(row.varsMap.accCount > row.varsMap.acc.accTotal) {
+    if(wantCount > 0 && wantCount > canUseCount) {
         okbtn = '<button type="button" disabled class="btn btn-primary ok" style="margin-right:10px" >同意'
             + '</button>';
     }
-    var nobtn = '<button type="button" class="btn btn-warning no" >不同意'
+    var nobtn = '<button type="button" class="btn btn-warning no" > 不同意'
         + '</button>';
     return okbtn+ nobtn;
 }
@@ -152,21 +156,6 @@ function validator(formId) {
             valid: 'glyphicon glyphicon-ok',
             invalid: 'glyphicon glyphicon-remove',
             validating: 'glyphicon glyphicon-refresh'
-        },
-        fields: {
-            respMsg: {
-                message: '结果说明验证失败',
-                validators: {
-                    notEmpty: {
-                        message: '请输入审核结果说明'
-                    },
-                    stringLength: {
-                        min: 3,
-                        max: 100,
-                        message: '说明至少3至100个字符'
-                    }
-                }
-            }
         }
     }).on('success.form.bv', function (e) {
         formSubmit("/materials/doReview", "reviewModal", formId, "subButton1");
@@ -250,7 +239,6 @@ function y(e, value, row, index) {
     resp.isOK = true;
     resp.processInstanceId = row.processInstanceId;
     $("#subButton1").removeAttr("disable");
-    console.log($("#subButton1"))
     showModal("reviewModal","reviewForm", resp);
 }
 function n(e, value, row, index) {

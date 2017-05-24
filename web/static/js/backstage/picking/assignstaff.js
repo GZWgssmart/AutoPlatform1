@@ -228,7 +228,8 @@ $(function() {
         if(data.result == 'success') {
             $("#addSelect").select2({ language: 'zh-CN'});
             initTable('recordTable', '/dispatching/noDispRecordByPager'); // 初始化表格
-            $("#recordTable").bootstrapTable("hideColumn","workInfo")
+            initTableNotTollbar('designatedForm', '/userBasicManage/queryByPager'); // 初始化表格
+            $("#recordTable").bootstrapTable("hideColumn","workInfo");
             initSelect2("addemp", "请选择员工", "/dispatching/emps"); // 初始化select2, 第一个参数是class的名字, 第二个参数是select2的提示语, 第三个参数是select2的查询url
         } else if(data.result == 'notLogin'){
             swal({title:"",
@@ -297,10 +298,10 @@ function todoCell(element, row, index){
         // todo
 
         // dispatcher = '<a style="float:left"><span onclick = "showAppoint(\''+ row.record.recordId +'\')" class="glyphicocn glyphicon-user"><span style="position: inherit;bottom: 2px;margin-left:5px;">重新指定</span></span></a>'
-        dispatcher = '<button type="button" class="btn btn-default" onclick = "showAppoint(\''+ row.record.recordId +'\')"><span  aria-hidden="true" style="margin-right:5px;"></span>重新指定</button>'
+        dispatcher = '<button type="button" class="btn btn-default" onclick = "showAppoint(\''+ row.record.recordId +'\')"><span  aria-hidden="true" style="margin-right:5px;"></span>重新指派</button>'
     } else {
         // dispatcher = '<a style="float:left"><span onclick = "showAppoint(\''+ row.record.recordId +'\')" class="glyphicon glyphicon-user"><span style="position: inherit;bottom: 2px;margin-left:5px;">指定员工</span></span></a>'
-        dispatcher = '<button type="button" class="btn btn-default" onclick = "showAppoint(\''+ row.record.recordId +'\')"><span   aria-hidden="true" style="margin-right:5px;"></span>指定员工</button>'
+        dispatcher = '<button type="button" class="btn btn-default" onclick = "showAppoint(\''+ row.record.recordId +'\')"><span   aria-hidden="true" style="margin-right:5px;"></span>指派员工</button>'
     }
     return accInfo + dispatcher;
 }
@@ -323,7 +324,7 @@ function showInfo(recordId){
 function showAppoint(recordId){
     $("#appointModal").modal('show'); // 显示弹窗
     var record = {recordId:recordId};
-    $("#appointForm").fill(record);
+    $("#recordId").val(recordId);
 }
 
 function formatterUser(ele, row, index) {
@@ -402,24 +403,65 @@ function infoTableSet(tableId, url) {
 }
 
 function submitDispatcher() {
-    $.post("/dispatching/insert",
-        $("#appointForm").serialize(),
-        function (data) {
-            if (data.result == "success") {
-                $("#appointModal").modal('hide'); // 关闭指定的窗口
-                $('#recordTable').bootstrapTable("refresh"); // 重新加载指定数据网格数据
-                swal({
-                    title:"",
-                    text: data.message,
-                    type:"success"})// 提示窗口, 修改成功
-            } else if (data.result == "fail") {
-                swal({
-                    title:"",
-                    text: data.message,
-                    type:"error"})
+    var rows =  $('#designatedForm').bootstrapTable('getSelections');
+
+    if(rows.length> 0) {
+        var row = rows[0];
+        var recordId = $("#recordId").val();
+        var userId = row.userId;
+        var sendInfo = "recordId=" +recordId+ "&userId="+userId;
+        $.post("/dispatching/insert",
+            sendInfo,
+            function (data) {
+                if (data.result == "success") {
+                    $("#appointModal").modal('hide'); // 关闭指定的窗口
+                    $('#recordTable').bootstrapTable("refresh"); // 重新加载指定数据网格数据
+                    swal({
+                        title: "",
+                        text: data.message,
+                        type: "success"
+                    })// 提示窗口, 修改成功
+                } else if (data.result == "fail") {
+                    swal({
+                        title: "",
+                        text: data.message,
+                        type: "error"
+                    })
+                }
+            }, "json"
+        );
+    } else {
+        swal({
+            title:"",
+            text:"请先选择一个员工",
+            type:"warning"})// 提示窗口, 修改成功
+    }
+}
+
+function formatterRole(value, row, index) {
+    if(row.role != null && row.role!=""){
+        var roles = null;
+        $.each(row.role, function(index, value, item) {
+            if(roles == "" ||roles == null){
+                roles = row.role.roleName;
+            } else if(roles != row.role.roleName) {
+                roles += "," + row.role.roleName;
             }
-        }, "json"
-    );
+        });
+        return roles;
+    }else{
+        return "-"
+    }
+}
+
+function formatterGender(val) {
+    if (val == 'N') {
+        return "未选择";
+    } else if (val == 'M') {
+        return "男"
+    } else if (val == 'F') {
+        return "女"
+    }
 }
 
 

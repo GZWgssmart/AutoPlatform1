@@ -58,9 +58,6 @@
             </li>
         </ul>
     </div>--%>
-
-
-
     <div class="panel-body" style="padding-bottom:0px;"  >
         <table id="recordTable" style="table-layout: fixed" data-search=true>
             <thead>
@@ -104,8 +101,31 @@
     <div class="modal fade" id="appointModal" aria-hidden="true" data-backdrop="static" keyboard="false" style="overflow:auto; ">
     <div class="modal-dialog">
         <div class="modal-content">
-            <span class="glyphicon glyphicon-remove closeModal"  data-dismiss="modal" aria-hidden="true"></span>
-            <form class="form-horizontal" id="appointForm" method="post">
+            <span class="glyphicon glyphicon-remove closeModal"  data-dismiss="modal" aria-hidden="true" style="right:10px; top:10px"></span>
+            <div class="modal-header" style="overflow:auto;width: 95%">
+                <h4>指派员工</h4>
+                <input type="text" id="recordId" style="display: none;"/>
+            </div>
+            <table id="designatedForm" >
+                <thead>
+                <tr>
+                    <th data-radio="true"></th>
+                    <th data-width="100" data-field="userName">姓名</th>
+                    <th data-width="70" data-field="userGender" data-formatter="formatterGender">性别</th>
+                    <th data-formatter="formatterRole">用户角色</th>
+                </tr>
+                </thead>
+            </table>
+            <div class="modal-footer" style="border: none;">
+                <span id="editError" style="color: red;"></span>
+                <button type="button" class="btn btn-default"
+                        data-dismiss="modal">关闭
+                </button>
+                <button type="button" onclick="submitDispatcher()" class="btn btn-success">
+                    确认
+                </button>
+            </div>
+           <%-- <form class="form-horizontal" id="appointForm" method="post">
                 <input type="text" name="recordId" define="record.recordId" style="display:none"/>
                 <div class="modal-header" style="overflow:auto;">
                     <h4 class="sd">请选择指定的员工</h4>
@@ -125,7 +145,7 @@
                         确认
                     </button>
                 </div>
-            </form>
+            </form>--%>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
