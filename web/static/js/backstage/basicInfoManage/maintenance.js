@@ -49,10 +49,10 @@ function showSchedule(){
                     $("#toolbars").css("display", "block");
                     $.each(data, function(index, value, item) {
                             if (htmlDiv == "") {// 假如这个字符串刚开始设置,
-                                htmlDiv = "<button class='btn btn-info btn-circle btn-lg' type='button' onclick='edit(\""+data[index].maintainScheduleId+','+ data[index].maintainRecordId+','+data[index].maintainScheduleDes+','+data[index].msCreatedTime+"\")' style='border-radius:45px;height:45px;'>" + (index + 1) + "</button>" +
+                                htmlDiv = "<button class='btn btn-info btn-circle btn-lg' disabled='disabled' type='button' onclick='edit(\""+data[index].maintainScheduleId+','+ data[index].maintainRecordId+','+data[index].maintainScheduleDes+','+data[index].msCreatedTime+"\")' style='border-radius:45px;height:45px;'>" + (index + 1) + "</button>" +
                                     "<div style='border-bottom: 1px solid black;display:inline;'>&nbsp;&nbsp;" + data[index].maintainScheduleDes + "&nbsp;&nbsp;</div>"
                             } else {
-                                htmlDiv += "<button class='btn btn-info btn-circle btn-lg' type='button' onclick='edit(\""+data[index].maintainScheduleId+','+ data[index].maintainRecordId+','+data[index].maintainScheduleDes+','+data[index].msCreatedTime+"\")' style='border-radius:45px;height:45px;'>" + (index + 1) + "</button>" +
+                                htmlDiv += "<button class='btn btn-info btn-circle btn-lg' disabled='disabled' type='button' onclick='edit(\""+data[index].maintainScheduleId+','+ data[index].maintainRecordId+','+data[index].maintainScheduleDes+','+data[index].msCreatedTime+"\")' style='border-radius:45px;height:45px;'>" + (index + 1) + "</button>" +
                                     "<div style='border-bottom: 1px solid black;display:inline;' >&nbsp;&nbsp;" + data[index].maintainScheduleDes + "&nbsp;&nbsp;</div>";
                             }
                     });

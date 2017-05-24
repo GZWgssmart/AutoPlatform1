@@ -263,10 +263,12 @@ function showAdd(){
     $("#addWindow").modal('show');
     $('#phoneInput').bind('input propertychange', function() {
         rtphone = $("#phoneInput").val();
+        $("#phoneButton").removeAttr("disabled");
         $("#phoneCodePrint").css("display","none");
     });
     $('#emailInput').bind('input propertychange', function() {
         rtemail = $("#emailInput").val();
+        $("#emailButton").removeAttr("disabled");
         $("#emailCodePrint").css("display","none");
     });
     validator3('addForm');
