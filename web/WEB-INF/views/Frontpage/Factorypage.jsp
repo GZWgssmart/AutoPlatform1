@@ -57,8 +57,6 @@
                 <a href="/home"><li>首页</li></a>
                 <a href="/factorypage"><li class="actives">商家</li></a>
                 <a href="/resepage"><li>预约</li></a>
-                <a href="javaScript:;"><li>配件商城</li></a>
-                <a href="javaScript:;"><li>保养项目</li></a>
             </ul>
         </div>
         <%--主内容区--%>
@@ -81,7 +79,7 @@
                     <div class="title">
                         <span class="hot-icon"></span>
                         <h3><a href="/factorypage" style="text-decoration: none;">商家大全</a></h3>
-                        <div class="sorting">
+                        <%--<div class="sorting">
                             <a id="opens" data-toggle="dropdown" href="javaScript:;" style="text-decoration: none;">按评分排序 <span class="glyphicon glyphicon-chevron-down"></span></a>
                             <ul class="dropdown-menu" aria-labelledby="opens">
                                 <li>
@@ -91,7 +89,7 @@
                                     <a href="javaScript:;">从低到高</a>
                                 </li>
                             </ul>
-                        </div>
+                        </div>--%>
                         <div class="clearfix"></div>
                     </div>
                 <c:choose>
@@ -216,7 +214,7 @@
                             <span class="phone">15570102341</span>
                         </p>
                         <p>E-mail:8318045@qq.com</p>
-                        <p><a href="javaScript:;"><img src="/static/img/Frontpage/btm-left.png"></a></p>
+                        <p><a href="tencent://message/?uin=8318045&Site=&Menu=yes"><img src="/static/img/Frontpage/btm-left.png"></a></p>
                     </div>
                     <div class="col-sm-9 col-md-5 wechat">
                         <h3 style="margin-left: 55px;">扫码关注</h3>

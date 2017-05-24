@@ -231,7 +231,7 @@
                             <span class="phone">15570102341</span>
                         </p>
                         <p>E-mail:8318045@qq.com</p>
-                        <p><a href="javaScript:;"><img src="/static/img/Frontpage/btm-left.png"></a></p>
+                        <p><a href="tencent://message/?uin=8318045&Site=&Menu=yes"><img src="/static/img/Frontpage/btm-left.png"></a></p>
                     </div>
                     <div class="col-sm-9 col-md-5 wechat">
                         <h3 style="margin: 0;">扫码关注</h3>
