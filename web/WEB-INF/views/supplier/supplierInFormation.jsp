@@ -115,20 +115,17 @@
             <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员">
                 <div class="input-group" style="width:300px;float:left;padding:0;margin:0 0 0 -1px;">
                     <div class="input-group-btn">
-                        <button type="button" id="ulButton" class="btn btn-default" style="border-radius:0px;" data-toggle="dropdown">
-                            供应商/供应商类型/<shiro:hasAnyRoles name="系统超级管理员,系统普通管理员">所属公司</shiro:hasAnyRoles>
-                            <span class="caret"></span>
-                        </button>
+                        <button type="button" id="ulButton" class="btn btn-default" style="border-radius:0px;" data-toggle="dropdown">供应商/供应商类型<shiro:hasAnyRoles name="系统超级管理员,系统普通管理员">/所属公司</shiro:hasAnyRoles><span class="caret"></span></button>
                         <ul class="dropdown-menu pull-right">
+                            <li><a onclick="onclikLi(this)">供应商/供应商类型<shiro:hasAnyRoles name="系统超级管理员,系统普通管理员">/所属公司</shiro:hasAnyRoles></a></li>
+                            <li class="divider"></li>
                             <li><a onclick="onclikLi(this)">供应商</a></li>
                             <li class="divider"></li>
                             <li><a onclick="onclikLi(this)">供应商类型</a></li>
-                            <li class="divider"></li>
                             <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员">
+                                <li class="divider"></li>
                                  <li><a onclick="onclikLi(this)">所属公司</a></li>
-                                 <li class="divider"></li>
                             </shiro:hasAnyRoles>
-                            <li><a onclick="onclikLi(this)"></a></li>
                         </ul>
                     </div><!-- /btn-group -->
                     <input id="ulInput" class="form-control" onkeypress="if(event.keyCode==13) {blurredQuery();}">
@@ -202,6 +199,7 @@
                                 <label class="col-md-4 control-label">开户银行全称：</label>
                                 <div class="col-md-8">
                                     <select class="js-example-tags form-control" name="supplyBank" placeholder="请选择开户银行全称" class="form-control">
+                                        <option value="请选择开户银行">请选择开户银行</option>
                                         <option value="中国银行">中国银行</option>
                                         <option value="交通银行">交通银行</option>
                                         <option value="招商银行">招商银行</option>
@@ -342,6 +340,7 @@
                                 <label class="col-md-4 control-label">开户银行全称：</label>
                                 <div class="col-md-8">
                                     <select class="js-example-tags form-control" define="supply.supplyBank" class="form-control" name="supplyBank">
+                                        <option value="请选择开户银行">请选择开户银行</option>
                                         <option value="中国银行">中国银行</option>
                                         <option value="交通银行">交通银行</option>
                                         <option value="招商银行">招商银行</option>

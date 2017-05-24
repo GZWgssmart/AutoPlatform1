@@ -9,7 +9,7 @@ $(function () {
                 language: 'zh-CN',
                 minimumResultsForSearch: -1,
                 maximumSelectionLength: 5,
-                placeholder: '请选择用户',
+                placeholder: '请选择车主',
                 ajax: {
                     url: "/messageSend/queryCombox",
                     processResults: function (data, page) {
@@ -175,10 +175,10 @@ function validator(formId, userIds, userPhone) {
         },
         fields: {
             userName: {
-                message: '用户验证失败',
+                message: '车主验证失败',
                 validators: {
                     notEmpty: {
-                        message: '用户不能为空'
+                        message: '车主不能为空'
                     }
                 }
             },

@@ -103,10 +103,16 @@
 
     <select id="countByDisable" resultType="int" parameterType="com.gs.bean.User">
         <![CDATA[
-        SELECT count(*) FROM t_work_info w WHERE 1=1 AND w.workStatus = 'N'
+        SELECT count(workId) FROM t_work_info w
+          left join t_maintain_record record on w.recordId = record.recordId
+          left join t_checkin checkin on record.checkinId = checkin.checkinId
+          where 1 = 1
        ]]>
-        <if test="companyId !=null and companyId != '' ">
-            and w.companyId = #{companyId}
+        <if test="status != null and status != ''">
+            and w.workStatus=  #{status}
+        </if>
+        <if test="user.companyId !=null and user.companyId != ''">
+            and checkin.companyId = #{user.companyId}
         </if>
     </select>
 
@@ -175,7 +181,7 @@
        ]]>
     </select>
 
-    <!--分页所有已完成查询全部-->
+    <!--分页所有未完成查询全部-->
     <select id="queryByPagerDisable" resultMap="BaseResultMap" parameterType="com.gs.common.bean.Pager">
         <![CDATA[
             select w.*,tmR.recordId,tmR.checkinId,u.userId,

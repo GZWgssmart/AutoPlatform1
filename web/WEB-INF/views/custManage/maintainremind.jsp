@@ -93,7 +93,7 @@
                     </div>
                     <br/>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">用户名：</label>
+                        <label class="col-sm-3 control-label">车主名称：</label>
                         <div class="col-sm-7">
                             <input id="addUserName" type="text" readonly class="form-control">
                             <%--<button type="button" class="btn btn-default" onclick="showCheckUser();">--%>
@@ -167,7 +167,7 @@
                     </div>
                     <br/>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">用户名称：</label>
+                        <label class="col-sm-3 control-label">车主名称：</label>
                         <div class="col-sm-7">
                             <input id="editUserName" type="text" readonly define="MaintainRemind.user.userName"
                                    class="form-control">
@@ -233,7 +233,7 @@
                     <tr>
                         <th data-radio="true"></th>
                         <th data-field="user.userName">
-                            用户名称
+                            车主名称
                         </th>
                         <th data-field="lastMaintainTime" data-formatter="formatterDate">
                             上次维修保养时间
@@ -288,7 +288,7 @@
                 </table>
                 <div id="remindToolbar" class="btn-group">
                     <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司接待员">
-                        <button type="button" class="btn btn-w-m btn-info" onclick="showAddRemindUser();">保养提醒用户
+                        <button type="button" class="btn btn-w-m btn-info" onclick="showAddRemindUser();">保养提醒车主
                         </button>
                     </shiro:hasAnyRoles>
                 </div>

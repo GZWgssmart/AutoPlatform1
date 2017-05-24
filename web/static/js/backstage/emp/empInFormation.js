@@ -381,8 +381,15 @@ function showEdit(){
             var row =  $('table').bootstrapTable('getSelections');
             if(row.length >0) {
                 var emp = row[0];
-                console.log(loginRoleName)
-                console.log(userId)
+
+                var loginTime = emp.userLoginedTime;  /* 登录时间 */
+                var formatterLoginTime = formatterDateTime(loginTime);
+                if(formatterLoginTime == null || formatterLoginTime == '') {
+                    $("#editLoginTime").val("未登录过");
+                } else {
+                    $("#editLoginTime").val(formatterLoginTime);
+                }
+
                 //如果登录的是系统的管理员就只能对系统的管理员进行操作
                 if(loginRoleName == '系统超级管理员' || loginRoleName == '系统普通管理员' ) {
                     if(emp.role.roleName == '系统超级管理员' || emp.role.roleName == '系统普通管理员') {
@@ -608,7 +615,20 @@ function showDetail(row) {
         }
 
         var address = emp.userAddress;
-        alert(address);
+        var addresses = address.split('-');
+        console.log(addresses)
+        var dress="";
+        for(var i= 0, len = addresses.length; i<len; i++ ){
+            if(addresses[i] != null && addresses[i] != 'null' && addresses[i] != "" && addresses[i] != 0){
+                dress += '-' + addresses[i] ;
+            }
+        }
+        if(dress != "") {
+            dress = dress.substring(1);
+        } else {
+            dress = "未选择";
+        }
+        $("#detailAddress").val(dress);
 
         $('#detailBirthday').val(formatterDate(emp.userBirthday));  /* 格式化不带时分秒的时间 */
 
@@ -710,6 +730,7 @@ function formatterAddress(val) {
     $("#editProvince").val(address[0]);
     $("#editCity").val(address[1]);
     $("#editArea").val(address[2]);
+    // alert(address[0] + ',' + address[1] + ',' + address[2]);
 }
 
 //格式化不带时分秒的时间值。

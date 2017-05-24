@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.gs.dao.CarBrandDAO" >
-  <resultMap id="carbrandMap" type="carbrand" >
+  <resultMap id="carbrandMap" type="carBrand" >
     <id column="brandId" property="brandId" jdbcType="VARCHAR" />
     <result column="brandName" property="brandName" jdbcType="VARCHAR" />
     <result column="brandDes" property="brandDes" jdbcType="VARCHAR" />
@@ -31,14 +31,14 @@
   </select>
 
   <!--添加汽车品牌-->
-  <insert id="insert"  parameterType="carbrand">
+  <insert id="insert"  parameterType="carBrand">
     <![CDATA[
     INSERT into t_car_brand(brandId, brandName, brandDes, brandStatus) values(uuid(), #{brandName}, #{brandDes},'Y')
      ]]>
   </insert>
 
   <!--修改汽车品牌-->
-  <update id="update" parameterType="carbrand">
+  <update id="update" parameterType="carBrand">
     <![CDATA[
       update t_car_brand set brandName = #{brandName},brandDes = #{brandDes},brandStatus = 'Y' where brandId = #{brandId}
      ]]>
@@ -69,14 +69,14 @@
   </select>
 
   <!--冻结数据-->
-  <update id="inactive" keyProperty="brandId" parameterType="carbrand">
+  <update id="inactive" keyProperty="brandId" parameterType="carBrand">
     <![CDATA[
          update t_car_brand set brandStatus = 'N' where brandId = #{brandId}
         ]]>
   </update>
 
   <!--激活数据-->
-  <update id="active" keyProperty="brandId" parameterType="carbrand">
+  <update id="active" keyProperty="brandId" parameterType="carBrand">
     <![CDATA[
         update t_car_brand set brandStatus = 'Y' where brandId = #{brandId}
         ]]>
@@ -85,14 +85,19 @@
 <!--迷糊索搜-->
   <select id="blurredQuery" resultMap="carbrandMap"  parameterType="com.gs.common.bean.Pager">
     <![CDATA[
-            select * from t_car_brand cb  where 1=1
+            select cb.* from t_car_brand cb  where 1=1
        ]]>
+    and(
     <if test="carBrand.brandName != '' and carBrand.brandName != null">
-      and  cb.brandName like '%${carBrand.brandName}%'
+      cb.brandName like '%${carBrand.brandName}%'
+    </if>
+    <if test="carBrand.brandName != '' and carBrand.brandName != null and carBrand.brandDes !='' and carBrand.brandDes !=null">
+      or
     </if>
     <if test="carBrand.brandDes !='' and carBrand.brandDes !=null">
-     and cb.brandDes like '%${carBrand.brandDes}%'
+     cb.brandDes like '%${carBrand.brandDes}%'
     </if>
+    )
     limit #{pager.beginIndex}, #{pager.pageSize}
   </select>
 
@@ -100,12 +105,17 @@
     <![CDATA[
       select count(*) from t_car_brand cb where 1=1
     ]]>
+    and(
     <if test="carBrand.brandName != '' and carBrand.brandName != null">
-      and cb.brandName like '%${carBrand.brandName}%'
+      cb.brandName like '%${carBrand.brandName}%'
+    </if>
+    <if test="carBrand.brandName != '' and carBrand.brandName != null and carBrand.brandDes !='' and carBrand.brandDes !=null">
+      or
     </if>
     <if test="carBrand.brandDes !='' and carBrand.brandDes !=null">
-      and cb.brandDes like '%${carBrand.brandDes}%'
+      cb.brandDes like '%${carBrand.brandDes}%'
     </if>
+    )
   </select>
 
 

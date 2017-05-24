@@ -35,7 +35,7 @@
             <tr>
                 <th data-radio="true"></th>
                 <th data-field="user.userName">回访人</th>
-                <th data-field="checkin.userName">跟踪回访的用户</th>
+                <th data-field="checkin.userName">跟踪回访的车主</th>
                 <th data-field="serviceEvaluate" data-formatter="formatterserviceEvaluate">本次服务评价</th>
                 <th data-field="trackContent">回访问题</th>
                 <th data-field="trackCreatedTime" data-formatter="formatterDate">跟踪回访创建时间</th>
@@ -57,15 +57,17 @@
                 <div class="input-group" style="width:350px;float:right;padding:0;margin:0 0 0 -1px;">
                     <div class="input-group-btn">
                         <button type="button" id="ulButton" class="btn btn-default" style="border-radius:0px;"
-                                data-toggle="dropdown">回访人<span class="caret"></span></button>
+                                data-toggle="dropdown">跟踪回访车主<span class="caret"></span></button>
                         <ul class="dropdown-menu pull-right">
-                            <li><a onclick="onclikLi(this)">回访人</a></li>
+                            <%--<li><a onclick="onclikLi(this)">跟踪回访用户/回访问题/服务评价</a></li>--%>
+                            <%--<li class="divider"></li>--%>
+                            <%--<li><a onclick="onclikLi(this)">回访人</a></li>--%>
+                            <%--<li class="divider"></li>--%>
+                            <li><a onclick="onclikLi(this)">跟踪回访车主</a></li>
                             <li class="divider"></li>
                             <li><a onclick="onclikLi(this)">回访问题</a></li>
                             <li class="divider"></li>
-                            <li><a onclick="onclikLi(this)">本次服务评价</a></li>
-                            <li class="divider"></li>
-                            <li><a onclick="onclikLi(this)">跟踪回访用户</a></li>
+                            <li><a onclick="onclikLi(this)">服务评价</a></li>
                         </ul>
                     </div><!-- /btn-group -->
                     <input id="ulInput" class="form-control" onkeypress="if(event.keyCode==13) {blurredQuery();}">
@@ -101,14 +103,14 @@
                     <%--</div>--%>
                 <%--</div>--%>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">跟踪回访的用户：</label>
+                    <label class="col-sm-3 control-label">跟踪回访的车主：</label>
                     <div class="col-sm-7">
                         <%--<select id="addUserName" name="trackUser" class="form-control js-data-example-ajax user"--%>
                         <%--style="width:100%">--%>
                         <%--</select>--%>
                         <input id="addTrackUser" type="text" readonly class="form-control" style="width:70%">
                         <button type="button" class="btn btn-default" onclick="showRemindUser()">
-                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>请选择用户
+                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>请选择车主
                         </button>
                     </div>
                 </div>
@@ -178,7 +180,7 @@
                     <%--</div>--%>
                 <%--</div>--%>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">跟踪回访的用户：</label>
+                    <label class="col-sm-3 control-label">跟踪回访的车主：</label>
                     <div class="col-sm-7">
                         <%--<select id="editUserName" name="trackUser" class="form-control js-data-example-ajax user"--%>
                                 <%--style="width:100%">--%>

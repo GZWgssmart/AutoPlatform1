@@ -105,7 +105,7 @@
                     <c:forEach items="${requestScope.companys}" var="c">
                         <div class="factory col-md-4 col-sm-12">
                             <div class="f-img">
-                                <a href="companydeta">
+                                <a href="javaScript:;">
                                     <c:if test="${c.companyLogo != null}">
                                         <img src="${c.companyLogo}" alt="公司图片"/>
                                     </c:if>
@@ -117,9 +117,9 @@
                             <div class="f-des">
                                 <div class="company-name">
                                         <span class="cns">
-                                            <a class="cns-a" href="javaScript:;" title="${c.companyName}">
-                                                <i class="glyphicon glyphicon-bookmark"></i> ${c.companyName}
-                                            </a>
+                                            <span class="cns-a" href="javaScript:;" title="${c.companyName}">
+                                                <i class="glyphicon glyphicon-bookmark"></i> <strong>公司名称：</strong>  ${c.companyName}
+                                            </span>
                                             <div style="float: right;margin-right: 15px">
                                                 <img src="/static/img/Frontpage/xun-lv.png"/>
                                                 <img src="/static/img/Frontpage/xun-lv.png"/>
@@ -129,12 +129,12 @@
                                 </div>
                                 <div class="company-des">
                                         <span class="com-des" title="${c.companyDes}">
-                                            <i class="glyphicon glyphicon-edit"></i> ${c.companyDes}
+                                            <i class="glyphicon glyphicon-edit"></i> <strong>公司描述：</strong>  ${c.companyDes}
                                         </span>
                                 </div>
                                 <div class="company-address">
                                         <span class="com-address" title="${c.companyAddress}">
-                                            <i class="glyphicon glyphicon-map-marker"></i> ${c.companyAddress}
+                                            <i class="glyphicon glyphicon-map-marker"></i> <strong>公司地址：</strong>  ${c.companyAddress}
                                         </span>
                                 </div>
                                 <span class="tuijian" title="预约">

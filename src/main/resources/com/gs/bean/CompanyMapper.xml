@@ -60,11 +60,8 @@
   <!-- 根据id查询公司的基本信息 -->
   <select id="queryById" resultMap="companyMap" parameterType="String">
     <![CDATA[
-      select * from t_company tc where 1=1 and tc.companyId = #{companyId}
+      select * from t_company tc where 1=1 and tc.companyId = #{id}
     ]]>
-    <if test="companyId != '' and companyId !=null">
-      and tc.companyId = #{companyId}
-    </if>
   </select>
 
   <!--修改公司-->
@@ -157,34 +154,44 @@
   <!-- 分页模糊查询 -->
   <select id="blurredQuery" resultMap="companyMap" >
     <![CDATA[
-        select * from t_company tc  where 1=1
+        select tc.* from t_company tc  where 1=1
       ]]>
     <if test="pager.user.companyId != '' and pager.user.companyId !=null">
       and tc.companyId = #{pager.user.companyId}
     </if>
+    and(
     <if test="company.companyName != '' and company.companyName != null">
-      and  tc.companyName like '%${company.companyName}%'
+      tc.companyName like '%${company.companyName}%'
+    </if>
+    <if test="company.companyName != '' and company.companyName != null and company.companyPricipal !='' and company.companyPricipal !=null">
+      or
     </if>
     <if test="company.companyPricipal !='' and company.companyPricipal !=null">
-      and tc.companyPricipal like '%${company.companyPricipal}%'
+     tc.companyPricipal like '%${company.companyPricipal}%'
     </if>
-    limit #{pager.beginIndex}, #{pager.pageSize}
+    )
+      limit #{pager.beginIndex}, #{pager.pageSize}
   </select>
 
   <!-- 分页模糊查询个数 -->
   <select id="countByBlurred" resultType="int">
     <![CDATA[
-      select count(companyId) from t_company tc where 1=1
+      select count(*) from t_company tc  where 1=1
     ]]>
     <if test="user.companyId != '' and user.companyId !=null">
-      and tc.companyId = #{user.companyId}
+      and tc.companyId = #{pager.user.companyId}
     </if>
+    and(
     <if test="company.companyName != '' and company.companyName != null">
-      and  tc.companyName like '%${company.companyName}%'
+      tc.companyName like '%${company.companyName}%'
+    </if>
+    <if test="company.companyName != '' and company.companyName != null and company.companyPricipal !='' and company.companyPricipal !=null">
+      or
     </if>
     <if test="company.companyPricipal !='' and company.companyPricipal !=null">
-      and tc.companyPricipal like '%${company.companyPricipal}%'
+      tc.companyPricipal like '%${company.companyPricipal}%'
     </if>
+    )
   </select>
 
   <select id="queryByCompanyInfo" resultMap="companyMap">

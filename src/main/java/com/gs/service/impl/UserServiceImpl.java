@@ -276,4 +276,9 @@ public class UserServiceImpl implements UserService {
     public void updatePwdByPhone(String pwd, String phone) {
         userDAO.updatePwdByPhone(pwd, phone);
     }
+
+    //   修改个人资料
+    public int updateSelfManage(String userId) {
+        return userDAO.updateSelfManage(userId);
+    }
 }

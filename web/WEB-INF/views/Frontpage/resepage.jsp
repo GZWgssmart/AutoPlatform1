@@ -34,21 +34,21 @@
                     <c:when test="${sessionScope.frontUser != null}">
                         <c:if test="${sessionScope.frontUser.userName != null}">
                             <li id="placelogin">欢迎您，${sessionScope.frontUser.userName}</li>
-                            <a href="userpage" class="right-ul"><li>我的中心</li></a>
-                            <a href="outusers"><li>退出</li></a>
+                            <a href="/userpage" class="right-ul"><li>我的中心</li></a>
+                            <a href="/outusers"><li>退出</li></a>
                             <div class="clearfix"></div>
                         </c:if>
                         <c:if test="${sessionScope.frontUser.userName == null}">
                             <li id="placelogin">欢迎您，${sessionScope.frontUser.userPhone}</li>
-                            <a href="userpage" class="right-ul"><li>我的中心</li></a>
-                            <a href="outusers"><li>退出</li></a>
+                            <a href="/userpage" class="right-ul"><li>我的中心</li></a>
+                            <a href="/outusers"><li>退出</li></a>
                             <div class="clearfix"></div>
                         </c:if>
                     </c:when>
 
                     <c:otherwise>
                         <li id="placelogin">欢迎您，请登录</li>
-                        <a href="reg" id="loginreg"><li>登录/注册</li></a>
+                        <a href="/reg" id="loginreg"><li>登录/注册</li></a>
                         <div class="clearfix"></div>
                     </c:otherwise>
                 </c:choose>
@@ -57,11 +57,9 @@
         </div>
         <div class="nav nav-two" id="navbar-two">
             <ul class="nav-two-ul">
-                <a href="home"><li>首页</li></a>
-                <a href="factorypage"><li>商家</li></a>
-                <a href="resepage"><li class="actives">预约</li></a>
-                <a href="javaScript:;"><li>配件商城</li></a>
-                <a href="javaScript:;"><li>保养项目</li></a>
+                <a href="/home"><li>首页</li></a>
+                <a href="/factorypage"><li>商家</li></a>
+                <a href="/resepage"><li class="actives">预约</li></a>
             </ul>
         </div>
         <%--主内容区--%>
@@ -167,7 +165,7 @@
         </div>
         <%--底部--%>
         <div class="t-bottom">
-            <span style="font-size:19px;">© 2011-2016 赣州宏图预科班 版权所有 ｜ 赣ICP备11018683-3</span>
+            <span style="font-size: 19px;">© 2017-3017 神的坐骑 版权所有 ｜ 赣ICP备11018683-3</span>
         </div>
     </div>
 

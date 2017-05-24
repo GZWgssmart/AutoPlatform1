@@ -59,6 +59,7 @@ function validator(formId) {
                     }
                 }
             },
+
             companyPricipalphone: {
                 message: '公司负责人电话不能为空',
                 validators: {
@@ -87,7 +88,7 @@ function validator(formId) {
 
                 }
             },
-            companyOpenDate: {
+            companyOpendate: {
                 message: '公司成立时间验证失败',
                 validators: {
                     notEmpty: {

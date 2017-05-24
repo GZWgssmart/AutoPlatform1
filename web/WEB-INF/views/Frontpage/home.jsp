@@ -23,9 +23,9 @@
                     <li><a href="#top">主页</a></li>
                     <li class="icon-li"><a href="#mc2-des" id="pt">平台介绍</a></li>
                     <li class="icon-li"><a href="#mc4-des" id="gn">功能介绍</a></li>
-                    <li class="icon-li"><a href="reg">登录</a></li>
+                    <li class="icon-li"><a href="/reg">登录</a></li>
                     <li class="icon-li"><a href="/platformIntro">关于我们</a></li>
-                    <li id="menu-bg"><a href="factoryreg">汽车公司入驻</a></li>
+                    <li id="menu-bg"><a href="/factoryreg">汽车公司入驻</a></li>
                 </ul>
             </div>
         </nav>
@@ -101,7 +101,7 @@
                 </div>
             </div>
             <div class="button-box">
-                <a href="home" class="btn zoomIn wow animated" data-wow-delay="0.3s" style="width: 200px;">立即进入</a>
+                <a href="/home" class="btn zoomIn wow animated" data-wow-delay="0.3s" style="width: 200px;">立即进入</a>
             </div>
         </div>
         <%--主内容二--%>
@@ -128,7 +128,7 @@
                 </div>
                 <div id="rt" class="col-md-5 col-sm-7 banner-img wow fadeInRight animated" data-wow-delay="0.4s" style="height: 100%;visibility: visible; animation-name: fadeInRight;">
                     <div class="right-img" >
-                        <a href="home"><img src="/static/img/Frontpage/slider.png" style="width: 100%;height: 100%"/></a>
+                        <a href="/home"><img src="/static/img/Frontpage/slider.png" style="width: 100%;height: 100%"/></a>
                     </div>
                 </div>
             </div>
@@ -177,7 +177,7 @@
                     </div>
                 </div>
                 <div class="button-box2" style="margin-top: 8%;">
-                    <a href="factoryreg" class="btn wow fadeInRight animated " data-wow-delay="0.5s" style="width: 200px;height: 50px;visibility: visible; animation-delay: 1s; animation-name: fadeInRight;">马上进入</a>
+                    <a href="/factoryreg" class="btn wow fadeInRight animated " data-wow-delay="0.5s" style="width: 200px;height: 50px;visibility: visible; animation-delay: 1s; animation-name: fadeInRight;">马上进入</a>
                 </div>
         </div>
         <%--主内容四--%>
@@ -211,38 +211,37 @@
                 </div>
             </div>
             <div class="button-box2">
-                <a href="home" class="btn zoomIn wow animated" style="width: 200px;height: 50px;">马上进入</a>
+                <a href="/home" class="btn zoomIn wow animated" style="width: 200px;height: 50px;">马上进入</a>
             </div>
         </div>
         <%--主内容五--%>
         <div class="Maincontent5">
             <div class="mc5-top">
-                <h2><a href="factoryreg" style="color: #0d8ddb;">商家加盟入口</a></h2>
-                <h3 class="wow fadeInRight animated" data-wow-delay="0.5s" style="text-align:center;visibility: visible; animation-name: fadeInRight;"><a href="factoryreg" style="color:white ;">欢迎汽修、汽配商家入驻加盟</a></h3>
+                <h2><a href="/factoryreg" style="color: #0d8ddb;">商家加盟入口</a></h2>
+                <h3 class="wow fadeInRight animated" data-wow-delay="0.5s" style="text-align:center;visibility: visible; animation-name: fadeInRight;"><a href="/factoryreg" style="color:white ;">欢迎汽修、汽配商家入驻加盟</a></h3>
             </div>
         </div>
         <%--底部版权--%>
         <div class="bottom-nav">
                 <div class="row concart-warp">
-                    <div class="col-md-5 col-sm-12 btm-left">
+                    <div class="col-md-5 col-sm-12 btm-left" style="padding-left: 110px;">
                         <h4>联系我们：</h4>
                         <p>
                             <i class="icon-phone"><img src="/static/img/Frontpage/phone.png"/></i>
                             <span class="phone">15570102341</span>
                         </p>
                         <p>E-mail:8318045@qq.com</p>
-                        <p><a href="javaScript:;"><img src="/static/img/Frontpage/btm-left.png"></a></p>
+                        <p><a href="tencent://message/?uin=8318045&Site=&Menu=yes"><img src="/static/img/Frontpage/btm-left.png"></a></p>
                     </div>
                     <div class="col-sm-9 col-md-5 wechat">
                         <h3 style="margin: 0;">扫码关注</h3>
                         <div class="row sm ">
-                            <div class="col-md-3 col-sm-3">
-                            </div>
                             <div class="col-md-5 col-sm-5" style="text-align: center;">
                                 <img src="/static/img/Frontpage/erweim.jpg" width="180px" height="140px"/>
                             </div>
                             <div class="col-md-3 col-sm-3">
-
+                            </div>
+                            <div class="col-md-3 col-sm-3">
                             </div>
                         </div>
                     </div>

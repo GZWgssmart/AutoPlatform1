@@ -78,7 +78,6 @@ FrontpageController {
     /*商家详情页面*/
     @RequestMapping(value = "factorydeta",method = RequestMethod.GET)
     public String deta(){
-
         return "Frontpage/Factorydeta";
     }
 

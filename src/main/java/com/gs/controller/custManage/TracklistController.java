@@ -90,12 +90,16 @@ public class TracklistController {
                     pager.setPageSize(Integer.valueOf(pageSize));
                     if (text.equals("回访人")) {
                         trackList.setUserId(value);
-                    } else if (text.equals("本次服务评价")) {
+                    } else if (text.equals("服务评价")) {
                         trackList.setServiceEvaluate(Integer.valueOf(value));
-                    } else if (text.equals("跟踪回访用户")) {
+                    } else if (text.equals("跟踪回访车主")) {
                         trackList.setTrackUser(value);
                     } else if (text.equals("回访问题")) {
                         trackList.setTrackContent(value);
+                    } else if (text.equals("跟踪回访车主/回访问题/服务评价")) {
+                        trackList.setTrackUser(value);
+                        trackList.setTrackContent(value);
+                        trackList.setServiceEvaluate(Integer.valueOf(value));
                     }
                     int count = trackListService.countName(trackList, (User) session.getAttribute("user"));
                     pager.setTotalRecords(count);

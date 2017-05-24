@@ -30,21 +30,21 @@
                         <c:when test="${sessionScope.frontUser != null}">
                             <c:if test="${sessionScope.frontUser.userName != null}">
                                 <li id="placelogin">欢迎您，${sessionScope.frontUser.userName}</li>
-                                <a href="userpage" class="right-ul"><li>我的中心</li></a>
-                                <a href="outusers"><li>退出</li></a>
+                                <a href="/userpage" class="right-ul"><li>我的中心</li></a>
+                                <a href="/outusers"><li>退出</li></a>
                                 <div class="clearfix"></div>
                             </c:if>
                             <c:if test="${sessionScope.frontUser.userName == null}">
                                 <li id="placelogin">欢迎您，${sessionScope.frontUser.userPhone}</li>
-                                <a href="userpage" class="right-ul"><li>我的中心</li></a>
-                                <a href="outusers"><li>退出</li></a>
+                                <a href="/userpage" class="right-ul"><li>我的中心</li></a>
+                                <a href="/outusers"><li>退出</li></a>
                                 <div class="clearfix"></div>
                             </c:if>
                         </c:when>
 
                         <c:otherwise>
                             <li id="placelogin">欢迎您，请登录</li>
-                            <a href="reg" id="loginreg"><li>登录/注册</li></a>
+                            <a href="/reg" id="loginreg"><li>登录/注册</li></a>
                             <div class="clearfix"></div>
                         </c:otherwise>
                     </c:choose>
@@ -54,11 +54,9 @@
         </div>
         <div class="nav nav-two" id="navbar-two">
             <ul class="nav-two-ul">
-                <a href="home"><li>首页</li></a>
-                <a href="factorypage"><li class="actives">商家</li></a>
-                <a href="resepage"><li>预约</li></a>
-                <a href="javaScript:;"><li>配件商城</li></a>
-                <a href="javaScript:;"><li>保养项目</li></a>
+                <a href="/home"><li>首页</li></a>
+                <a href="/factorypage"><li class="actives">商家</li></a>
+                <a href="/resepage"><li>预约</li></a>
             </ul>
         </div>
         <%--主内容区--%>
@@ -80,8 +78,8 @@
                 <div class="hot-factory">
                     <div class="title">
                         <span class="hot-icon"></span>
-                        <h3><a href="factorypage" style="text-decoration: none;">商家大全</a></h3>
-                        <div class="sorting">
+                        <h3><a href="/factorypage" style="text-decoration: none;">商家大全</a></h3>
+                        <%--<div class="sorting">
                             <a id="opens" data-toggle="dropdown" href="javaScript:;" style="text-decoration: none;">按评分排序 <span class="glyphicon glyphicon-chevron-down"></span></a>
                             <ul class="dropdown-menu" aria-labelledby="opens">
                                 <li>
@@ -91,7 +89,7 @@
                                     <a href="javaScript:;">从低到高</a>
                                 </li>
                             </ul>
-                        </div>
+                        </div>--%>
                         <div class="clearfix"></div>
                     </div>
                 <c:choose>
@@ -102,16 +100,16 @@
                         <c:forEach items="${requestScope.companypage}" var="c">
                             <div class="factory">
                                 <div class="f-img">
-                                    <a href="factorydeta">
+                                    <a href="/company/queryById?companyId=${c.companyId}">
                                         <img src="${c.companyLogo}"/>
                                     </a>
                                 </div>
                                 <div class="f-des">
                                     <div class="company-name">
                                         <span class="cns">
-                                            <a class="cns-a" href="javaScript:;" title="${c.companyName}">
-                                                <i class="glyphicon glyphicon-bookmark"></i> ${c.companyName}
-                                            </a>
+                                            <span class="cns-a" href="javaScript:;" title="${c.companyName}">
+                                                <i class="glyphicon glyphicon-bookmark"></i> <strong>公司名称：</strong>  ${c.companyName}
+                                            </span>
                                             <div style="float: right;margin-right: 15px">
                                                 <img src="/static/img/Frontpage/xun-lv.png"/>
                                                 <img src="/static/img/Frontpage/xun-lv.png"/>
@@ -121,22 +119,13 @@
                                     </div>
                                     <div class="company-des">
                                         <span class="com-des" title="${c.companyDes}">
-                                            <i class="glyphicon glyphicon-edit"></i> ${c.companyDes}
+                                            <i class="glyphicon glyphicon-edit"></i> <strong>公司描述：</strong>  ${c.companyDes}
                                         </span>
                                     </div>
                                     <div class="company-address">
                                         <span class="com-address" title="${c.companyAddress}">
-                                            <i class="glyphicon glyphicon-map-marker"></i> ${c.companyAddress}
+                                            <i class="glyphicon glyphicon-map-marker"></i> <strong>公司地址：</strong>  ${c.companyAddress}
                                         </span>
-                                    </div>
-                                    <div class="com-icon">
-                                        <div class="icon-t">
-                                            <i class="ms glyphicon glyphicon-thumbs-up" title="五星好评"></i>
-                                            <i class="hp glyphicon glyphicon-hourglass" title="闪电发货"></i>
-                                            <span class="tuij" title="五星店铺">
-                                                <i class="glyphicon glyphicon-star" style="width: 14px;height: 16px;"></i> 推荐
-                                            </span>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -158,7 +147,7 @@
             </div>
         </div>
         <%--底部模块--%>
-        <div class="index-bottom">
+        <div class="index-bottom" style="background: #fff;">
             <div class="bottom-main">
                 <div class="bottom-bs">
                     <div class="bg"></div>
@@ -216,44 +205,40 @@
                 </div>
                 <div class="clearfix"></div>
             </div>
-            <div class="btm-two">
-                <ul class="btm-ul">
-                    <li>
-                        <div style="margin: 15px 20px;">
-                            <div style="font-size: 20px;">联系我们：</div>
-                            <span style="display: block;line-height: 3;color: #0e9aef;font-size: 22px;"><img src="/static/img/Frontpage/phone.png"/> 4000-5875200</span>
-                            <span style="font-size: 18px">Email: qweasdxzc102@qq.com</span>
+            <div class="bottom-nav">
+                <div class="row concart-warp">
+                    <div class="col-md-5 col-sm-12 btm-left" style="padding-left: 110px;">
+                        <h4>联系我们：</h4>
+                        <p>
+                            <i class="icon-phone"><img src="/static/img/Frontpage/phone.png"/></i>
+                            <span class="phone">15570102341</span>
+                        </p>
+                        <p>E-mail:8318045@qq.com</p>
+                        <p><a href="tencent://message/?uin=8318045&Site=&Menu=yes"><img src="/static/img/Frontpage/btm-left.png"></a></p>
+                    </div>
+                    <div class="col-sm-9 col-md-5 wechat">
+                        <h3 style="margin-left: 55px;">扫码关注</h3>
+                        <div class="row sm ">
+                            <div class="col-md-5 col-sm-5" style="text-align: center;">
+                                <img src="/static/img/Frontpage/erweim.jpg" width="180px" height="140px"/>
+                            </div>
+                            <div class="col-md-3 col-sm-3">
+                            </div>
+                            <div class="col-md-3 col-sm-3">
+                            </div>
                         </div>
-                    </li>
-                    <li>
-                        <div style="margin: 15px 20px;text-align: center;">
-                            <span style="font-size: 20px;">扫码关注</span>
-                            <ul class="saoma">
-                                <li>
-                                    <img src="/static/img/Frontpage/pcode-4.png"/>
-                                </li>
-                                <li>
-                                    <img src="/static/img/Frontpage/pcode-4.png"/>
-                                </li>
-                                <li>
-                                    <img src="/static/img/Frontpage/pcode-4.png"/>
-                                </li>
-                                <div class="clearfix"></div>
-                            </ul>
+                    </div>
+                    <div class="col-md-2 col-sm-3 rt-img row">
+                        <div class="col-md-12 col-sm-10 gz">
+                            <h4 style="margin-bottom: 10px;">关注预约有好礼</h4>
+                            <a href="/resepage" id="mc5-rtimg"><img src="/static/img/Frontpage/weixin.jpg" width="100px" height="100px"/></a>
+
                         </div>
-                    </li>
-                    <li>
-                        <div class="btm-an">
-                            <a class="ruzhu" href="javaScript:;" >汽修厂入驻</a>
-                            <a class="jiam" href="platformIntro">商家加盟</a>
-                        </div>
-                    </li>
-                    <div class="clearfix"></div>
-                </ul>
-            </div>
-            <div class="t-bottom">
-                <span style="font-size: 19px;">© 2011-2016 赣州宏图预科班 版权所有 ｜ 赣ICP备11018683-3</span>
-            </div>
+                    </div>
+                </div>
+                <div class="t-bottom">
+                    <span style="font-size: 19px;">© 2017-3017 神的坐骑 版权所有 ｜ 赣ICP备11018683-3</span>
+                </div>
         </div>
         <a href="#top" class="go-top" id="backtop" style="display:none;"></a>
     </div>
@@ -262,5 +247,9 @@
 <script src="/static/js/bootstrap.min.js"></script>
 <script src="/static/js/jquery.cxselect.min.js"></script>
 <script src="/static/js/general.js"></script>
-
+<script>
+    function test(companyId) {
+        $.get("/company/queryById?companyId="+companyId);
+    }
+</script>
 </html>

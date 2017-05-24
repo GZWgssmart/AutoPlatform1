@@ -163,16 +163,16 @@ OrderManageController {
     @RequestMapping(value="queryByPagerDisable", method = RequestMethod.GET)
     public Pager4EasyUI<WorkInfo> queryByPagerDisable(HttpSession session,@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
         if(SessionUtil.isLogin(session)) {
-            String roles="汽车公司总技师,汽车公司技师,公司超级管理员,公司普通管理员";
+            String roles="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司总技师,汽车公司技师,汽车公司接待员";
             if(RoleUtil.checkRoles(roles)) {
                 logger.info("分页查询所有被禁用登记记录");
                 Pager pager = new Pager();
                 pager.setPageNo(Integer.valueOf(pageNumber));
                 pager.setPageSize(Integer.valueOf(pageSize));
                 pager.setUser((User) session.getAttribute("user"));
-                pager.setTotalRecords(workInfoService.countByDisable((User) session.getAttribute("user")));
-                List<WorkInfo> worklLis = workInfoService.queryByPagerDisable(pager);
-                return new Pager4EasyUI<WorkInfo>(pager.getTotalRecords(), worklLis);
+                pager.setTotalRecords(workInfoService.count((User) session.getAttribute("user"), "N"));
+                List<WorkInfo> worksList = workInfoService.queryByPager(pager, "N");
+                return new Pager4EasyUI<WorkInfo>(pager.getTotalRecords(), worksList);
             }else{
                 logger.info("此用户无拥有查询未完成工单的角色");
                 return null;

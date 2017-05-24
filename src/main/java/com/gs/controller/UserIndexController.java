@@ -6,8 +6,6 @@ import com.gs.bean.Company;
 import com.gs.bean.Complaint;
 import com.gs.bean.User;
 import com.gs.common.bean.ControllerResult;
-import com.gs.common.bean.Pager;
-import com.gs.common.bean.Pager4EasyUI;
 import com.gs.common.util.EncryptUtil;
 import com.gs.common.util.RoleUtil;
 import com.gs.common.util.SessionUtil;

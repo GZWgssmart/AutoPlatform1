@@ -22,21 +22,21 @@
                         <c:when test="${sessionScope.frontUser != null}">
                             <c:if test="${sessionScope.frontUser.userName != null}">
                                 <li id="placelogin">欢迎您，${sessionScope.frontUser.userName}</li>
-                                <a href="userpage" class="right-ul"><li>我的中心</li></a>
-                                <a href="home" id="loginreg"><li>返回首页</li></a>
+                                <a href="/userpage" class="right-ul"><li>我的中心</li></a>
+                                <a href="/home" id="loginreg"><li>返回首页</li></a>
                                 <div class="clearfix"></div>
                             </c:if>
                             <c:if test="${sessionScope.frontUser.userName == null}">
                                 <li id="placelogin">欢迎您，${sessionScope.frontUser.userPhone}</li>
-                                <a href="userpage" class="right-ul"><li>我的中心</li></a>
-                                <a href="home" id="loginreg"><li>返回首页</li></a>
+                                <a href="/userpage" class="right-ul"><li>我的中心</li></a>
+                                <a href="/home" id="loginreg"><li>返回首页</li></a>
                                 <div class="clearfix"></div>
                             </c:if>
                         </c:when>
 
                         <c:otherwise>
                             <li id="placelogin">欢迎您，请登录</li>
-                            <a href="home" id="loginreg"><li>返回首页</li></a>
+                            <a href="/home" id="loginreg"><li>返回首页</li></a>
                             <div class="clearfix"></div>
                         </c:otherwise>
                     </c:choose>

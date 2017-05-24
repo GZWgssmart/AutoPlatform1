@@ -44,7 +44,7 @@
 </style>
 <body class="gray-bg">
 <div class="row">
-    <div class="col-sm-5 col-md-5" style="margin: 10px 30%;">
+    <div class="col-sm-6 col-md-6" style="margin: 10px 25%;">
         <span style="font-size: 20px"><a id="backindex" href="/index">返回主页</a></span>
         <div class="ibox float-e-margins">
             <div class="ibox-title" style="padding:15px 0;background:black;text-align: center;border-color: black;">
@@ -57,22 +57,6 @@
                         <label class="col-sm-4  col-md-4 control-label">公司名称</label>
                         <div class="col-sm-7 col-md-7">
                             <input type="text" name="companyName" placeholder="请输入公司名称" class="form-control" >
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-4  col-md-4 control-label">公司地址</label>
-                        <div class="col-sm-7 col-md-7">
-                            <fieldset id="city_china">
-                                <div class="form-group col-md-4">
-                                    <select class="province js-example-tags form-control" disabled="disabled" name="province"></select>
-                                </div>
-                                <div class="form-group col-md-4">
-                                    <select class="city js-example-tags form-control" disabled="disabled" name="city"></select>
-                                </div>
-                                <div class="form-group col-md-4">
-                                    <select class="area js-example-tags form-control" disabled="disabled" name="area"></select>
-                                </div>
-                            </fieldset>
                         </div>
                     </div>
                     <div class="form-group">
@@ -96,7 +80,7 @@
                     <div class="form-group">
                         <label class="col-sm-4  col-md-4 control-label">公司成立时间</label>
                         <div class="col-sm-7 col-md-7">
-                            <input type="text" id="addDatetimepicker" name="companyOpenDate" readonly="true" onclick="getDate('addDatetimepicker')" placeholder="请选择公司成立时间" class="form-control" >
+                            <input type="text" id="addDatetimepicker" name="companyOpendate" readonly="true" onclick="getDate('addDatetimepicker')" placeholder="请选择公司成立时间" class="form-control" >
                         </div>
                     </div>
                     <div class="form-group">
@@ -109,6 +93,22 @@
                                 <option>101-150人</option>
                                 <option>150人以上</option>
                             </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3  col-md-3 control-label">公司地址</label>
+                        <div class="col-sm-9 col-md-9">
+                            <fieldset id="city_china">
+                                <div class="form-group col-md-4">
+                                    <select class="province js-example-tags form-control" disabled="disabled" name="province"></select>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <select class="city js-example-tags form-control" disabled="disabled" name="city"></select>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <select class="area js-example-tags form-control" disabled="disabled" name="area"></select>
+                                </div>
+                            </fieldset>
                         </div>
                     </div>
                     <div class="form-group">
@@ -146,7 +146,7 @@
     });
 
     $(function () {
-        initDatePicker('loginForm', 'companyOpenDate', 'addDatetimepicker'); // 初始化时间框, 第一参数是form表单id, 第二参数是input的name, 第三个参数为input的id
+        initDatePicker('loginForm', 'companyOpendate', 'addDatetimepicker'); // 初始化时间框, 第一参数是form表单id, 第二参数是input的name, 第三个参数为input的id
         function bodyScroll(event) {
             event.preventDefault();
         }

@@ -140,4 +140,7 @@ public interface UserService extends BaseService<String, User> {
     public void updatePwdByEmail(String pwd, String email);
 
     public void updatePwdByPhone(String pwd, String phone);
+
+    //   修改个人资料
+    public int updateSelfManage(String userId);
 }

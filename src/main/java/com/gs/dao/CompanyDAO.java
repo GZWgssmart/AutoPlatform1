@@ -28,9 +28,6 @@ public interface CompanyDAO extends BaseDAO<String, Company>{
      */
     public int countByBlurred(@Param("company")Company company, @Param("user")User user);
 
-    //根据ID查询公司
-    public Company queryById(String id);
-
     public int updLogo(@Param("companyId")String userId,@Param("companyLogo")String companyLogo);
 
     /**

@@ -7,6 +7,7 @@
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
     <title>厂商详情</title>
@@ -26,21 +27,21 @@
                         <c:when test="${sessionScope.frontUser != null}">
                             <c:if test="${sessionScope.frontUser.userName != null}">
                                 <li id="placelogin">欢迎您，${sessionScope.frontUser.userName}</li>
-                                <a href="userpage" class="right-ul"><li>我的中心</li></a>
-                                <a href="outusers"><li>退出</li></a>
+                                <a href="/userpage" class="right-ul"><li>我的中心</li></a>
+                                <a href="/outusers"><li>退出</li></a>
                                 <div class="clearfix"></div>
                             </c:if>
                             <c:if test="${sessionScope.frontUser.userName == null}">
                                 <li id="placelogin">欢迎您，${sessionScope.frontUser.userPhone}</li>
-                                <a href="userpage" class="right-ul"><li>我的中心</li></a>
-                                <a href="outusers"><li>退出</li></a>
+                                <a href="/userpage" class="right-ul"><li>我的中心</li></a>
+                                <a href="/outusers"><li>退出</li></a>
                                 <div class="clearfix"></div>
                             </c:if>
                         </c:when>
 
                         <c:otherwise>
                             <li id="placelogin">欢迎您，请登录</li>
-                            <a href="reg" id="loginreg"><li>登录/注册</li></a>
+                            <a href="/reg" id="loginreg"><li>登录/注册</li></a>
                             <div class="clearfix"></div>
                         </c:otherwise>
                     </c:choose>
@@ -50,47 +51,46 @@
         </div>
         <div class="nav nav-two" id="navbar-two">
             <ul class="nav-two-ul">
-                <a href="home"><li>首页</li></a>
-                <a href="factorypage"><li class="actives">商家</li></a>
-                <a href="resepage"><li>预约</li></a>
-                <a href="javaScript:;"><li>配件商城</li></a>
-                <a href="javaScript:;"><li>保养项目</li></a>
+                <a href="/home"><li>首页</li></a>
+                <a href="/factorypage"><li class="actives">商家</li></a>
+                <a href="/resepage"><li>预约</li></a>
             </ul>
         </div>
         <%--主内容区开始--%>
         <div class="content" style="padding: 50px 200px;">
 
             <div class="content-main">
-                <h2>赣州市天道有限公司</h2>
+                <h2>${requestScope.companybyid.companyName}</h2>
                 <div class="showdata" style="padding: 30px;">
                     <div class="show-left">
                         <div>
                             <label>公司地址：</label>
-                            <span>天知道在哪天知道在哪天知道在哪天知道在哪</span>
+                            <span>${requestScope.companybyid.companyAddress}</span>
                         </div>
                         <div>
                             <label>联系电话：</label>
-                            <span>15779094094</span>
+                            <span>${requestScope.companybyid.companyTel}</span>
                         </div>
                         <div>
                             <label>负责人：</label>
-                            <span>天知道在哪wwwwwwwwwwwwwwwwwww</span>
+                            <span>${requestScope.companybyid.companyPricipal}</span>
                         </div>
                         <div>
                             <label>网站地址：</label>
-                            <span>天知道在哪</span>
+                            <span>${requestScope.companybyid.companyWebsite}</span>
                         </div>
                         <div>
                             <label>公司成立时间：</label>
-                            <span>公元397年</span>
+                            <span><fmt:formatDate value="${requestScope.companybyid.companyOpendate}"
+                                                  pattern="yyyy/MM/dd"></fmt:formatDate></span>
                         </div>
                         <div>
                             <label>公司规模：</label>
-                            <span>200</span>
+                            <span>${requestScope.companybyid.companySize}</span>
                         </div>
                         <div>
                             <label>公司描述：</label>
-                            <span>这。。。。</span>
+                            <span>${requestScope.companybyid.companyDes}</span>
                         </div>
                     </div>
                     <div class="show-right">
@@ -98,7 +98,7 @@
                             <img src="/static/img/Frontpage/u29.png"/>
                         </div>
                         <div class="rese-btn">
-                            <a href="resepage" class="btn">我要预约</a>
+                            <a href="/resepage" class="btn">我要预约</a>
                         </div>
                     </div>
                     <div class="clearfix"></div>
@@ -106,7 +106,7 @@
             </div>
         </div>
         <%--底部模块--%>
-        <div class="index-bottom">
+        <div class="index-bottom" style="background: #fff;">
             <div class="bottom-main" style="margin-top: 0">
                 <div class="bottom-bs">
                     <div class="bg"></div>
@@ -164,44 +164,40 @@
                 </div>
                 <div class="clearfix"></div>
             </div>
-            <div class="btm-two">
-                <ul class="btm-ul">
-                    <li>
-                        <div style="margin: 15px 20px;">
-                            <div style="font-size: 20px;">联系我们：</div>
-                            <span style="display: block;line-height: 3;color: #0e9aef;font-size: 22px;"><img src="/static/img/Frontpage/phone.png"/> 4000-5875200</span>
-                            <span style="font-size: 18px">Email: qweasdxzc102@qq.com</span>
+            <div class="bottom-nav">
+                <div class="row concart-warp">
+                    <div class="col-md-5 col-sm-12 btm-left" style="padding-left: 110px;">
+                        <h4>联系我们：</h4>
+                        <p>
+                            <i class="icon-phone"><img src="/static/img/Frontpage/phone.png"/></i>
+                            <span class="phone">15570102341</span>
+                        </p>
+                        <p>E-mail:8318045@qq.com</p>
+                        <p><a href="javaScript:;"><img src="/static/img/Frontpage/btm-left.png"></a></p>
+                    </div>
+                    <div class="col-sm-9 col-md-5 wechat">
+                        <h3 style="margin: 0;">扫码关注</h3>
+                        <div class="row sm ">
+                            <div class="col-md-5 col-sm-5" style="text-align: center;">
+                                <img src="/static/img/Frontpage/erweim.jpg" width="180px" height="140px"/>
+                            </div>
+                            <div class="col-md-3 col-sm-3">
+                            </div>
+                            <div class="col-md-3 col-sm-3">
+                            </div>
                         </div>
-                    </li>
-                    <li>
-                        <div style="margin: 15px 20px;text-align: center;">
-                            <span style="font-size: 20px;">扫码关注</span>
-                            <ul class="saoma">
-                                <li>
-                                    <img src="/static/img/Frontpage/pcode-4.png"/>
-                                </li>
-                                <li>
-                                    <img src="/static/img/Frontpage/pcode-4.png"/>
-                                </li>
-                                <li>
-                                    <img src="/static/img/Frontpage/pcode-4.png"/>
-                                </li>
-                                <div class="clearfix"></div>
-                            </ul>
+                    </div>
+                    <div class="col-md-2 col-sm-3 rt-img row">
+                        <div class="col-md-12 col-sm-10 gz">
+                            <h4 style="margin-bottom: 10px;">关注预约有好礼</h4>
+                            <a href="/resepage" id="mc5-rtimg"><img src="/static/img/Frontpage/weixin.jpg" width="100px" height="100px"/></a>
+
                         </div>
-                    </li>
-                    <li>
-                        <div class="btm-an">
-                            <a class="ruzhu" href="javaScript:;" >汽修厂入驻</a>
-                            <a class="jiam" href="platformIntro">商家加盟</a>
-                        </div>
-                    </li>
-                    <div class="clearfix"></div>
-                </ul>
-            </div>
-            <div class="t-bottom">
-                <span style="font-size: 19px;">© 2011-2016 赣州宏图预科班 版权所有 ｜ 赣ICP备11018683-3</span>
-            </div>
+                    </div>
+                </div>
+                <div class="t-bottom">
+                    <span style="font-size: 19px;">© 2017-3017 神的坐骑 版权所有 ｜ 赣ICP备11018683-3</span>
+                </div>
         </div>
         <a href="#top" class="go-top" id="backtop" style="display:none;"></a>
     </div>

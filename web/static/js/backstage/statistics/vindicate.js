@@ -159,7 +159,6 @@ $.ajax({	//使用JQuery内置的Ajax方法
         }
         else {
             //返回的数据为空时显示提示信息
-            alert("请选择完全，或该时间段没有数据");
             myChart.hideLoading();
         }
 
@@ -260,7 +259,7 @@ function selectYears() {
             }
             else {
                 //返回的数据为空时显示提示信息
-                alert("请选择完全，或该时间段没有数据");
+                    alert("图表请求数据为空,没有当前时间段的数据,");
                 myChart.hideLoading();
             }
 
@@ -328,7 +327,7 @@ function selectMonth() {
             }
             else {
                 //返回的数据为空时显示提示信息
-                alert("请选择完全，或该时间段没有数据");
+                    alert("图表请求数据为空,没有当前时间段的数据,");
                 myChart.hideLoading();
             }
 
@@ -393,7 +392,7 @@ function selectDay() {
             }
             else {
                 //返回的数据为空时显示提示信息
-                alert("请选择完全，或该时间段没有数据");
+                    alert("图表请求数据为空,没有当前时间段的数据,");
                 myChart.hideLoading();
             }
 
@@ -458,7 +457,7 @@ function selectQuarter() {
             }
             else {
                 //返回的数据为空时显示提示信息
-                alert("请选择完全，或该时间段没有数据");
+                    alert("图表请求数据为空,没有当前时间段的数据,");
                 myChart.hideLoading();
             }
 
@@ -522,7 +521,7 @@ function selectWeek() {
             }
             else {
                 //返回的数据为空时显示提示信息
-                alert("请选择完全，或该时间段没有数据");
+                    alert("图表请求数据为空,没有当前时间段的数据,");
                 myChart.hideLoading();
             }
 

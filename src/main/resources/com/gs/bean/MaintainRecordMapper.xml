@@ -516,6 +516,7 @@
         <if test="user.companyId != '' and user.companyId != null">
             and ck.companyId = #{user.companyId}
         </if>
+        group by u.userEmail, u.userPhone
         order by m.recordCreatedTime Desc
         limit #{beginIndex}, #{pageSize}
     </select>
@@ -528,6 +529,7 @@
         <if test="companyId != '' and companyId != null">
             and ck.companyId = #{companyId}
         </if>
+        group by u.userEmail, u.userPhone
     </select>
 
     <select id="queryCheckinAll" resultMap="MaintainRecordMap">

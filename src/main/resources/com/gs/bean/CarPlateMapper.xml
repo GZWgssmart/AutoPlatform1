@@ -88,12 +88,17 @@
         <![CDATA[
             select * from t_car_plate cp where 1=1
        ]]>
+        and(
         <if test="carPlate.plateName != '' and carPlate.plateName != null">
-            and cp.plateName like '%${carPlate.plateName}%'
+          cp.plateName like '%${carPlate.plateName}%'
+        </if>
+        <if test="carPlate.plateName != '' and carPlate.plateName != null and carPlate.plateDes !='' and carPlate.plateDes !=null">
+          or
         </if>
         <if test="carPlate.plateDes !='' and carPlate.plateDes !=null">
-            and cp.plateDes like '%${carPlate.plateDes}%'
+          cp.plateDes like '%${carPlate.plateDes}%'
         </if>
+        )
         limit #{pager.beginIndex}, #{pager.pageSize}
     </select>
 
@@ -101,12 +106,17 @@
         <![CDATA[
         select count(*) from t_car_plate cp where 1=1
     ]]>
+        and(
         <if test="carPlate.plateName != '' and carPlate.plateName != null">
-            and cp.plateName like '%${carPlate.plateName}%'
+            cp.plateName like '%${carPlate.plateName}%'
+        </if>
+        <if test="carPlate.plateName != '' and carPlate.plateName != null and carPlate.plateDes !='' and carPlate.plateDes !=null">
+            or
         </if>
         <if test="carPlate.plateDes !='' and carPlate.plateDes !=null">
-            and cp.plateDes like '%${carPlate.plateDes}%'
+            cp.plateDes like '%${carPlate.plateDes}%'
         </if>
+        )
     </select>
 
 </mapper>

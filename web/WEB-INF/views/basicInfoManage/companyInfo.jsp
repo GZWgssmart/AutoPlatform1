@@ -70,10 +70,11 @@
             <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员">
                 <div class="input-group" style="width:300px;float:left;padding:0;margin:0 0 0 -1px;">
                     <div class="input-group-btn">
-                        <button type="button" id="ulButton" class="btn btn-default" style="border-radius:0px;" data-toggle="dropdown">
-                            公司名称/公司负责人
-                        </button>
+                        <button type="button" id="ulButton" class="btn btn-default" style="border-radius:0px;"
+                                data-toggle="dropdown">公司名称/公司负责人</button>
                         <ul class="dropdown-menu pull-right">
+                            <li><a onclick="onclikLi(this)">公司名称/公司负责人</a></li>
+                            <li class="divider"></li>
                             <li><a onclick="onclikLi(this)">公司名称</a></li>
                             <li class="divider"></li>
                             <li><a onclick="onclikLi(this)">公司负责人</a></li>
@@ -250,6 +251,7 @@
             <form class="form-horizontal" role="form" id="editForm"  enctype="multipart/form-data">
                 <input type="hidden"name="companyId" define="company.companyId">
                 <input type="hidden"name="companyStatus" define="company.companyStatus">
+                <input id="editLogo" type="hidden" name="logo" define="companyInfo.companyLogo"/>
                 <div class="modal-header" style="overflow:auto;">
                     <h4>修改公司的信息</h4>
                 </div>
@@ -323,7 +325,7 @@
                         <div class="col-md-8">
                             <div class="ibox-title">
                                 <div class="input-group">
-                                    <input id="file1" name="companyLogo" type="file" class="form-control" multiple
+                                    <input id="file1" name="companyLogo" value="" type="file" class="form-control" multiple
                                            class="file-loading"/>
                                 </div>
                             </div>
@@ -389,7 +391,7 @@
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default"
-                            data-dismiss="modal" onclick="closeModals('editWindow', 'editForm')">关闭
+                            data-dismiss="modal" onclick="closeCompanyModals('editWindow', 'editForm')">关闭
                     </button>
                     <button id="editButton" type="button" onclick="editSubmit()" class="btn btn-sm btn-success">保存
                     </button>

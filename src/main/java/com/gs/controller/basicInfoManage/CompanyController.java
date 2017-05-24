@@ -26,6 +26,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -117,10 +118,13 @@ public class CompanyController {
 
 
     @ResponseBody
-    @RequestMapping(value = "queryById", method = RequestMethod.POST)
-    public Company queryById(@Param("companyId") String companyId) {
+    @RequestMapping(value = "queryById", method = RequestMethod.GET)
+    public ModelAndView queryById(HttpServletRequest request, @Param("companyId") String companyId) {
         logger.info("根据公司id查询该id的详细信息");
-        return companyService.queryById(companyId);
+        Company company = companyService.queryById(companyId);
+        request.setAttribute("companybyid",company);
+        ModelAndView mav = new ModelAndView("Frontpage/Factorydeta");
+        return mav;
     }
 
     @ResponseBody
@@ -162,6 +166,15 @@ public class CompanyController {
                     String province = request.getParameter("province");
                     String city = request.getParameter("city");
                     String area = request.getParameter("area");
+                    if (province == null) {
+                        province = "";
+                    }
+                    if (city == null) {
+                        city = "";
+                    }
+                    if (area == null) {
+                        area = "";
+                    }
                     company.setCompanyAddress(province + "-" + city + "-" + area);
                     User user = new User();
                     user.setUserId(UUIDUtil.uuid());
@@ -206,6 +219,15 @@ public class CompanyController {
             String province = request.getParameter("province");
             String city = request.getParameter("city");
             String area = request.getParameter("area");
+            if (province == null) {
+                province = "";
+            }
+            if (city == null) {
+                city = "";
+            }
+            if (area == null) {
+                area = "";
+            }
             company.setCompanyAddress(province + "-" + city + "-" + area);
             String companyId = UUIDUtil.uuid();
             company.setCompanyId(companyId);
@@ -216,6 +238,7 @@ public class CompanyController {
             user.setUserName(company.getCompanyPricipal());
             user.setUserAddress(company.getCompanyAddress());
             user.setUserPwd(EncryptUtil.md5Encrypt("123456"));
+            user.setUserCreatedTime(company.getCompanyOpendate());
             UserRole userRole = new UserRole();
             userRole.setUserId(user.getUserId());
             userRole.setRoleId("8010cecf-3205-11e7-bc72-507b9d765567");
