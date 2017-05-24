@@ -68,8 +68,9 @@ function showEdit(){
                 var supply = row[0];
                 $('#editSupplyType').html('<option value="' + supply.supplyType.supplyTypeId + '">' + supply.supplyType.supplyTypeName + '</option>').trigger("change");
                 $('#editCompanyName').html('<option value="' + supply.company.companyId + '">' + supply.company.companyName + '</option>').trigger("change");
-                $('#editCity_china').val(formatterAddress(supply.supplyAddress));
+                // $('#editCity_china').val(formatterAddress(supply.supplyAddress));
                 $("#editForm").fill(supply);
+                initCityPicker("address");//初始化三级地区联动
                 validator('editForm');
             } else {
                 swal({
@@ -156,6 +157,16 @@ function validator(formId) {
                         min: 1,
                         max: 6,
                         message: '供应商名称长度必须在1到6位之间'
+                    },
+                    remote: {
+                        url: '/supply/queryNameByOne',
+                        message: '该供应商名称已存在',
+                        data: {
+                            supplyId: $("#" + formId + " input[name=supplyId]").val(),
+                            supplyName: $("#" + formId + " input[name=supplyName]").val()
+                        },
+                        delay :  2000,//每输入一个字符，就发ajax请求，服务器压力还是太大，设置2秒发送一次ajax（默认输入一个字符，提交一次，服务器压力太大）
+                        type: 'GET'
                     }
                 }
             },
@@ -184,14 +195,6 @@ function validator(formId) {
                     }
                 }
             },
-            /*supplyAddress: {
-                message: '供应商地址验证失败',
-                validators: {
-                    notEmpty: {
-                        message: '供应商地址不能为空'
-                    }
-                }
-            },*/
             supplyWeChat: {
                 message: '供应商微信号验证失败',
                 validators: {
@@ -217,29 +220,17 @@ function validator(formId) {
                     }
                 }
             },
-            /*companyId: {
-                message: '供应商所属公司验证失败',
-                validators: {
-                    notEmpty: {
-                        message: '供应商所属公司不能为空'
-                    }
-                }
-            },*/
             supplyAlipay: {
                 message: '支付宝账号验证失败',
                 validators: {
                     notEmpty: {
                         message: '支付宝账号不能为空'
-                    },
-                    stringLength: {
-                        min: 11,
-                        max: 11,
-                        message: '支付宝账号必须为11位'
-                    },
+                    }/*,
                     regexp: {
+
                         regexp: /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/,
                         message: '请输入正确的支付宝帐号'
-                    }
+                    }*/
                 }
             },
            supplyBank: {
@@ -312,12 +303,12 @@ function addSubmit(){
 }
 
 // 格式化地址
-function formatterAddress(val) {
-    var address = val.split('-');
-    $("#editProvince").val(address[0]);
-    $("#editCity").val(address[1]);
-    $("#editArea").val(address[2]);
-}
+// function formatterAddress(val) {
+//     var address = val.split('-');
+//     $("#editProvince").val(address[0]);
+//     $("#editCity").val(address[1]);
+//     $("#editArea").val(address[2]);
+// }
 
 //  修改时，点击地址的文本框后，文本框隐藏，地址下拉选择显示
 var address = $("#address");

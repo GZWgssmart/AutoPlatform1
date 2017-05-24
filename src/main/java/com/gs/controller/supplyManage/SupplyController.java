@@ -2,6 +2,7 @@ package com.gs.controller.supplyManage;
 
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.Supply;
+import com.gs.bean.SupplyType;
 import com.gs.bean.User;
 import com.gs.common.bean.ComboBox4EasyUI;
 import com.gs.common.bean.ControllerResult;
@@ -21,7 +22,9 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 钟燕玲 供应商管理
@@ -159,6 +162,23 @@ public class SupplyController {
         }
 
     }
+
+    /**
+     * 验证供应商名称是否存在
+     */
+    @ResponseBody
+    @RequestMapping(value = "queryNameByOne")
+    public Map queryNameByOne(Supply supply, HttpSession session) {
+        int countName = supplyService.queryNameByOne(supply.getSupplyName(), supply.getSupplyId());
+        Map<String, Boolean> map = new HashMap<String, Boolean>();
+        if(countName > 0)
+            map.put("valid", false);
+        else
+            map.put("valid", true);
+
+        return map;
+    }
+
 
     /**
      * 修改供应商信息

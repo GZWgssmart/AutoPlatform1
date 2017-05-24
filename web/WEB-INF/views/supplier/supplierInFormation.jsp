@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="/static/css/bootstrap-table.css">
     <link rel="stylesheet" href="/static/css/select2.min.css">
     <link rel="stylesheet" href="/static/css/sweetalert.css">
+    <link rel="stylesheet" href="/static/css/city-picker/city-picker.css">
     <link rel="stylesheet" href="/static/css/table/table.css">
     <link rel="stylesheet" href="/static/css/bootstrap-validate/bootstrapValidator.min.css">
 
@@ -244,7 +245,7 @@
                             <p class="clearfix"></p>
                         </div>
                         <div>
-                           <div class="form-group col-md-12">
+                           <%--<div class="form-group col-md-12">
                                    <label class="col-md-2 control-label" style="top:3px;right:5px">供应商地址：</label>
                                    <div class="col-md-10">
                                        <fieldset id="city_china">
@@ -258,6 +259,12 @@
                                                <select class="area js-example-tags form-control" disabled="disabled" name="area"></select>
                                            </div>
                                        </fieldset>
+                                   </div>
+                               </div>--%>
+                               <label class="col-md-2 control-label">供应商地址：</label>
+                               <div class="col-md-10">
+                                   <div style="position: relative;">
+                                       <input data-toggle="city-picker" class="col-md-4" name="supplyAddress"/>
                                    </div>
                                </div>
                             <p class="clearfix"></p>
@@ -385,7 +392,7 @@
                             <p class="clearfix"></p>
                         </div>
                         <div>
-                            <div class="form-group col-md-12 pull-right">
+                            <%--<div class="form-group col-md-12 pull-right">
                                 <label class="col-md-2 control-label" style="bottom: 6px;right:5px">供应商地址：</label>
                                 <div class="col-md-9" id="address" style="bottom:3px;display: block;">
                                     <input type="text" define="supply.supplyAddress" class="form-control">
@@ -403,7 +410,13 @@
                                         </div>
                                     </fieldset>
                                 </div>
-                            </div>
+                            </div>--%>
+                                <label class="col-md-2 control-label">供应商地址：</label>
+                                <div class="col-md-10">
+                                    <div style="position: relative;">
+                                        <input id="address" type="text" class="col-md-4" define="supply.supplyAddress" name="supplyAddress"/>
+                                    </div>
+                                </div>
                             <p class="clearfix"></p>
                         </div>
                         <p class="clearfix"></p>
@@ -498,6 +511,8 @@
 <script src="/static/js/jquery.formFill.js"></script>
 <script src="/static/js/select2/select2.js"></script>
 <script src="/static/js/sweetalert/sweetalert.min.js"></script>
+<script src="/static/js/city-picker/city-picker.data.js"></script>
+<script src="/static/js/city-picker/city-picker.js"></script>
 <script src="/static/js/contextmenu.js"></script>
 <script src="/static/js/bootstrap-validate/bootstrapValidator.js"></script>
 <script src="/static/js/backstage/main.js"></script>

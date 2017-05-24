@@ -39,4 +39,7 @@ public interface SupplyDAO extends BaseDAO<String, Supply>{
      */
     public int countByBlurred(@Param("supply")Supply supply, @Param("user")User user);
 
+    // 检查此供应商名称是否已经存在
+    public int queryNameByOne(@Param("supplyName") String supplyName, @Param("supplyId") String supplyId);
+
 }

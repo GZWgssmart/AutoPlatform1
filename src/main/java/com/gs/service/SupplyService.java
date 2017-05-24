@@ -15,4 +15,7 @@ import java.util.List;
 */
 public interface SupplyService extends BaseService<String, Supply>{
 
+    // 检查此供应商名称是否已经存在
+    public int queryNameByOne(String supplyName, String supplyId);
+
 }
