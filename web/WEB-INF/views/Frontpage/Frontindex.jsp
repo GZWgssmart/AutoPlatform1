@@ -28,24 +28,24 @@
                         <c:when test="${sessionScope.frontUser != null}">
                             <c:if test="${sessionScope.frontUser.userName != null}">
                                 <li id="placelogin">欢迎您，${sessionScope.frontUser.userName}</li>
-                                <a href="userpage" class="right-ul"><li>我的中心</li></a>
-                                <a href="index" class="right-ul"><li>主页</li></a>
-                                <a href="outusers"><li>退出</li></a>
+                                <a href="/userpage" class="right-ul"><li>我的中心</li></a>
+                                <a href="/index" class="right-ul"><li>主页</li></a>
+                                <a href="/outusers"><li>退出</li></a>
                                 <div class="clearfix"></div>
                             </c:if>
                             <c:if test="${sessionScope.frontUser.userName == null}">
                                 <li id="placelogin">欢迎您，${sessionScope.frontUser.userPhone}</li>
-                                <a href="userpage" class="right-ul"><li>我的中心</li></a>
-                                <a href="index" class="right-ul"><li>主页</li></a>
-                                <a href="outusers"><li>退出</li></a>
+                                <a href="/userpage" class="right-ul"><li>我的中心</li></a>
+                                <a href="/index" class="right-ul"><li>主页</li></a>
+                                <a href="/outusers"><li>退出</li></a>
                                 <div class="clearfix"></div>
                             </c:if>
                         </c:when>
 
                         <c:otherwise>
                             <li id="placelogin">欢迎您，请登录</li>
-                            <a href="reg" id="loginreg"><li>登录/注册</li></a>
-                            <a href="index" class="right-ul"><li>主页</li></a>
+                            <a href="/reg" id="loginreg"><li>登录/注册</li></a>
+                            <a href="/index" class="right-ul"><li>主页</li></a>
                             <div class="clearfix"></div>
                         </c:otherwise>
 
@@ -57,9 +57,9 @@
         </div>
         <div class="nav nav-two" id="navbar-two">
             <ul class="nav-two-ul">
-                <a href="home"><li class="actives">首页</li></a>
-                <a href="factorypage"><li>商家</li></a>
-                <a href="resepage"><li>预约</li></a>
+                <a href="/home"><li class="actives">首页</li></a>
+                <a href="/factorypage"><li>商家</li></a>
+                <a href="/resepage"><li>预约</li></a>
                 <a href="javaScript:;"><li>配件商城</li></a>
                 <a href="javaScript:;"><li>保养项目</li></a>
             </ul>
@@ -241,14 +241,14 @@
                 <div class="hot-factory">
                     <div class="title">
                         <span class="hot-icon"></span>
-                        <h3><a href="factorypage" style="text-decoration: none;">热门商家</a></h3>
+                        <h3><a href="/factorypage" style="text-decoration: none;">热门商家</a></h3>
                         <div class="clearfix"></div>
                     </div>
                 <c:if test="${requestScope.company != null}">
                     <c:forEach items="${requestScope.company}" var="c">
                     <div class="factory">
                         <div class="f-img">
-                            <a href="factorypage">
+                            <a href="/factorypage">
                                 <c:if test="${c.companyLogo != null}">
                                     <img src="${c.companyLogo}" alt="公司图片"/>
                                 </c:if>
@@ -438,8 +438,7 @@
                     </li>
                     <li>
                         <div class="btm-an">
-                            <a class="ruzhu" href="javaScript:;" >汽修厂入驻</a>
-                            <a class="jiam" href="platformIntro">商家加盟</a>
+                            <a class="ruzhu" href="/factoryreg" >汽修公司入驻</a>
                         </div>
                     </li>
                     <div class="clearfix"></div>
