@@ -67,7 +67,7 @@
                     </div>
                 </div>
                 <button id="yearBtnId" type="button" onclick="selectYears()" class="btn btn-default" >
-                    <span class="glyphicon glyphicon-scale" aria-hidden="true"></span>查询
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询
                 </button>
                 <div class="clearfix"></div>
             </div>
@@ -195,7 +195,6 @@
 <script type="text/javascript" src="/static/js/backstage/statistics/consume.js"></script>
 <script src="/static/js/backstage/statistics/myEcharts.js"></script>
 <script src="/static/js/jquery.min.js"></script>
-<script src="/static/js/contextmenu.js"></script>
 <script src="/static/js/select2/select2.js"></script>
 <script src="/static/js/backstage/main.js"></script>
 <script src="/static/js/sweetalert/sweetalert.min.js"></script>
