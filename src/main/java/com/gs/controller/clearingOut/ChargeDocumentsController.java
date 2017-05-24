@@ -345,177 +345,163 @@ public class ChargeDocumentsController {
         List<ChargeBill> maintainList = null;
         List<ChargeBill> preserveList = null;
         list = new ArrayList<ChargeBillBean>();
-        User user = (User)session.getAttribute("user");
-        if(SessionUtil.isLogin(session)) {
-            String roles = "车主";
-            if(RoleUtil.checkRoles(roles)) {
-                if (type != null && !type.equals("")) {
-                    if (type.equals("year")) {
-                        timeList = chargeBillService.queryByCondition(start, end,user.getUserId(),"0","year");
-                        maintainList=chargeBillService.queryByCondition(start, end,user.getUserId(),"1","year");
-                        preserveList=chargeBillService.queryByCondition(start, end,user.getUserId(),"2","year");
-                        for (int p = 0; p < timeList.size(); p++) {
-                            ChargeBillBean io = new ChargeBillBean();
-                            String ag = DateFormatUtil.YearFormater(timeList.get(p).getChargeCreatedTime());
-                            io.setDate(ag);
-                            for (int j = 0; j < maintainList.size(); j++) {
-                                String outTime = DateFormatUtil.YearFormater(maintainList.get(j).getChargeCreatedTime());
-                                if (ag.equals(outTime)) {
-                                    io.setMaintainMoney(maintainList.get(j).getActualPayment());
-                                    break;
-                                } else {
-                                    io.setMaintainMoney(0.d);
-                                }
-                            }
-                            for (int k = 0; k < preserveList.size(); k++) {
-                                String inTime = DateFormatUtil.YearFormater(preserveList.get(k).getChargeCreatedTime());
-                                if (ag.equals(inTime)) {
-                                    io.setPreserveMoney(preserveList.get(k).getActualPayment());
-                                    break;
-                                } else {
-                                    io.setPreserveMoney(0.d);
-                                }
-                            }
-                            list.add(io);
-                        }
-
-                    } else if (type.equals("quarter")) {
-                        timeList = chargeBillService.queryByCondition(start, end,user.getUserId(),"0","quarter");
-                        maintainList=chargeBillService.queryByCondition(start, end,user.getUserId(),"1","quarter");
-                        preserveList=chargeBillService.queryByCondition(start, end,user.getUserId(),"2","quarter");
-                        for (int p = 0; p < timeList.size(); p++) {
-                            ChargeBillBean io = new ChargeBillBean();
-                            String ag = DateFormatUtil.MonthFormater(timeList.get(p).getChargeCreatedTime());
-                            QuarterUtil.quarter(ag);
-                            io.setDate(ag);
-                            for (int j = 0; j < maintainList.size(); j++) {
-                                String outTime = DateFormatUtil.MonthFormater(maintainList.get(j).getChargeCreatedTime());
-                                QuarterUtil.quarter(outTime);
-                                if (ag.equals(outTime)) {
-                                    io.setMaintainMoney(maintainList.get(j).getActualPayment());
-                                    break;
-                                } else {
-                                    io.setMaintainMoney(0.d);
-                                }
-                            }
-                            for (int k = 0; k < preserveList.size(); k++) {
-                                String inTime = DateFormatUtil.MonthFormater(preserveList.get(k).getChargeCreatedTime());
-                                QuarterUtil.quarter(inTime);
-                                if (ag.equals(inTime)) {
-                                    io.setPreserveMoney(preserveList.get(k).getActualPayment());
-                                    break;
-                                } else {
-                                    io.setPreserveMoney(0.d);
-                                }
-                            }
-                            list.add(io);
-                        }
-                    } else if (type.equals("month")) {
-                        timeList = chargeBillService.queryByCondition(start, end,user.getUserId(),"0","month");
-                        maintainList=chargeBillService.queryByCondition(start, end,user.getUserId(),"1","month");
-                        preserveList=chargeBillService.queryByCondition(start, end,user.getUserId(),"2","month");
-                        for (int p = 0; p < timeList.size(); p++) {
-                            ChargeBillBean io = new ChargeBillBean();
-                            String ag = DateFormatUtil.MonthFormater(timeList.get(p).getChargeCreatedTime());
-                            io.setDate(ag);
-                            for (int j = 0; j < maintainList.size(); j++) {
-                                String outTime = DateFormatUtil.MonthFormater(maintainList.get(j).getChargeCreatedTime());
-                                if (ag.equals(outTime)) {
-                                    io.setMaintainMoney(maintainList.get(j).getActualPayment());
-                                    break;
-                                } else {
-                                    io.setMaintainMoney(0.d);
-                                }
-                            }
-                            for (int k = 0; k < preserveList.size(); k++) {
-                                String inTime = DateFormatUtil.MonthFormater(preserveList.get(k).getChargeCreatedTime());
-                                if (ag.equals(inTime)) {
-                                    io.setPreserveMoney(preserveList.get(k).getActualPayment());
-                                    break;
-                                } else {
-                                    io.setPreserveMoney(0.d);
-                                }
-                            }
-                            list.add(io);
-                        }
-                    } else if (type.equals("week")) {
-                        timeList = chargeBillService.queryByCondition(start, end,user.getUserId(),"0","week");
-                        maintainList=chargeBillService.queryByCondition(start, end,user.getUserId(),"1","week");
-                        preserveList=chargeBillService.queryByCondition(start, end,user.getUserId(),"2","week");
-                        for (int p = 0; p < timeList.size(); p++) {
-                            ChargeBillBean io = new ChargeBillBean();
-                            String ag = DateFormatUtil.WEEK(timeList.get(p).getChargeCreatedTime());
-                            String year = DateFormatUtil.YearFormater(timeList.get(p).getChargeCreatedTime());
-                            String time = String.valueOf(Echarts.getWeek(ag));
-                            String yearTime = time + year;
-                            io.setDate(year + "第" + time + "周");
-                            for (int j = 0; j < maintainList.size(); j++) {
-                                String outTime = DateFormatUtil.WEEK(maintainList.get(j).getChargeCreatedTime());
-                                String outYear = DateFormatUtil.YearFormater(maintainList.get(j).getChargeCreatedTime());
-                                String out = String.valueOf(Echarts.getWeek(outTime));
-                                String yearOut = out + outYear;
-                                if (yearTime.equals(yearOut)) {
-                                    io.setMaintainMoney(maintainList.get(j).getActualPayment());
-                                    break;
-                                } else {
-                                    io.setMaintainMoney(0.d);
-                                }
-                            }
-                            for (int k = 0; k < preserveList.size(); k++) {
-                                String inTime = DateFormatUtil.WEEK(preserveList.get(k).getChargeCreatedTime());
-                                String inYear = DateFormatUtil.YearFormater(preserveList.get(k).getChargeCreatedTime());
-                                String in = String.valueOf(Echarts.getWeek(inTime));
-                                String yearIn = in + inYear;
-                                if (yearTime.equals(yearIn)) {
-                                    io.setPreserveMoney(preserveList.get(k).getActualPayment());
-                                    break;
-                                } else {
-                                    io.setPreserveMoney(0.d);
-                                }
-                            }
-                            list.add(io);
-                        }
-                    } else if (type.equals("day")) {
-                        timeList = chargeBillService.queryByCondition(start, end,user.getUserId(),"0","day");
-                        maintainList=chargeBillService.queryByCondition(start, end,user.getUserId(),"1","day");
-                        preserveList=chargeBillService.queryByCondition(start, end,user.getUserId(),"2","day");
-                        for (int p = 0; p < timeList.size(); p++) {
-                            ChargeBillBean io = new ChargeBillBean();
-                            String ag = DateFormatUtil.DayFormater(timeList.get(p).getChargeCreatedTime());
-                            io.setDate(ag);
-                            for (int j = 0; j < maintainList.size(); j++) {
-                                String outTime = DateFormatUtil.DayFormater(maintainList.get(j).getChargeCreatedTime());
-                                if (ag.equals(outTime)) {
-                                    io.setMaintainMoney(maintainList.get(j).getActualPayment());
-                                    break;
-                                } else {
-                                    io.setMaintainMoney(0.d);
-                                }
-                            }
-                            for (int k = 0; k < preserveList.size(); k++) {
-                                String inTime = DateFormatUtil.DayFormater(preserveList.get(k).getChargeCreatedTime());
-                                if (ag.equals(inTime)) {
-                                    io.setPreserveMoney(preserveList.get(k).getActualPayment());
-                                    break;
-                                } else {
-                                    io.setPreserveMoney(0.d);
-                                }
-                            }
-                            list.add(io);
+        User user = (User)session.getAttribute("frontUser");
+        if (type != null && !type.equals("")) {
+            if (type.equals("year")) {
+                timeList = chargeBillService.queryByCondition(start, end,user.getUserId(),"0","year");
+                maintainList=chargeBillService.queryByCondition(start, end,user.getUserId(),"1","year");
+                preserveList=chargeBillService.queryByCondition(start, end,user.getUserId(),"2","year");
+                for (int p = 0; p < timeList.size(); p++) {
+                    ChargeBillBean io = new ChargeBillBean();
+                    String ag = DateFormatUtil.YearFormater(timeList.get(p).getChargeCreatedTime());
+                    io.setDate(ag);
+                    for (int j = 0; j < maintainList.size(); j++) {
+                        String outTime = DateFormatUtil.YearFormater(maintainList.get(j).getChargeCreatedTime());
+                        if (ag.equals(outTime)) {
+                            io.setMaintainMoney(maintainList.get(j).getActualPayment());
+                            break;
+                        } else {
+                            io.setMaintainMoney(0.d);
                         }
                     }
+                    for (int k = 0; k < preserveList.size(); k++) {
+                        String inTime = DateFormatUtil.YearFormater(preserveList.get(k).getChargeCreatedTime());
+                        if (ag.equals(inTime)) {
+                            io.setPreserveMoney(preserveList.get(k).getActualPayment());
+                            break;
+                        } else {
+                            io.setPreserveMoney(0.d);
+                        }
+                    }
+                    list.add(io);
                 }
-                return list;
-            }else{
-                logger.info("此用户无拥有查询消费统计角色");
-                return null;
+
+            } else if (type.equals("quarter")) {
+                timeList = chargeBillService.queryByCondition(start, end,user.getUserId(),"0","quarter");
+                maintainList=chargeBillService.queryByCondition(start, end,user.getUserId(),"1","quarter");
+                preserveList=chargeBillService.queryByCondition(start, end,user.getUserId(),"2","quarter");
+                for (int p = 0; p < timeList.size(); p++) {
+                    ChargeBillBean io = new ChargeBillBean();
+                    String ag = DateFormatUtil.MonthFormater(timeList.get(p).getChargeCreatedTime());
+                    QuarterUtil.quarter(ag);
+                    io.setDate(ag);
+                    for (int j = 0; j < maintainList.size(); j++) {
+                        String outTime = DateFormatUtil.MonthFormater(maintainList.get(j).getChargeCreatedTime());
+                        QuarterUtil.quarter(outTime);
+                        if (ag.equals(outTime)) {
+                            io.setMaintainMoney(maintainList.get(j).getActualPayment());
+                            break;
+                        } else {
+                            io.setMaintainMoney(0.d);
+                        }
+                    }
+                    for (int k = 0; k < preserveList.size(); k++) {
+                        String inTime = DateFormatUtil.MonthFormater(preserveList.get(k).getChargeCreatedTime());
+                        QuarterUtil.quarter(inTime);
+                        if (ag.equals(inTime)) {
+                            io.setPreserveMoney(preserveList.get(k).getActualPayment());
+                            break;
+                        } else {
+                            io.setPreserveMoney(0.d);
+                        }
+                    }
+                    list.add(io);
+                }
+            } else if (type.equals("month")) {
+                timeList = chargeBillService.queryByCondition(start, end,user.getUserId(),"0","month");
+                maintainList=chargeBillService.queryByCondition(start, end,user.getUserId(),"1","month");
+                preserveList=chargeBillService.queryByCondition(start, end,user.getUserId(),"2","month");
+                for (int p = 0; p < timeList.size(); p++) {
+                    ChargeBillBean io = new ChargeBillBean();
+                    String ag = DateFormatUtil.MonthFormater(timeList.get(p).getChargeCreatedTime());
+                    io.setDate(ag);
+                    for (int j = 0; j < maintainList.size(); j++) {
+                        String outTime = DateFormatUtil.MonthFormater(maintainList.get(j).getChargeCreatedTime());
+                        if (ag.equals(outTime)) {
+                            io.setMaintainMoney(maintainList.get(j).getActualPayment());
+                            break;
+                        } else {
+                            io.setMaintainMoney(0.d);
+                        }
+                    }
+                    for (int k = 0; k < preserveList.size(); k++) {
+                        String inTime = DateFormatUtil.MonthFormater(preserveList.get(k).getChargeCreatedTime());
+                        if (ag.equals(inTime)) {
+                            io.setPreserveMoney(preserveList.get(k).getActualPayment());
+                            break;
+                        } else {
+                            io.setPreserveMoney(0.d);
+                        }
+                    }
+                    list.add(io);
+                }
+            } else if (type.equals("week")) {
+                timeList = chargeBillService.queryByCondition(start, end,user.getUserId(),"0","week");
+                maintainList=chargeBillService.queryByCondition(start, end,user.getUserId(),"1","week");
+                preserveList=chargeBillService.queryByCondition(start, end,user.getUserId(),"2","week");
+                for (int p = 0; p < timeList.size(); p++) {
+                    ChargeBillBean io = new ChargeBillBean();
+                    String ag = DateFormatUtil.WEEK(timeList.get(p).getChargeCreatedTime());
+                    String year = DateFormatUtil.YearFormater(timeList.get(p).getChargeCreatedTime());
+                    String time = String.valueOf(Echarts.getWeek(ag));
+                    String yearTime = time + year;
+                    io.setDate(year + "第" + time + "周");
+                    for (int j = 0; j < maintainList.size(); j++) {
+                        String outTime = DateFormatUtil.WEEK(maintainList.get(j).getChargeCreatedTime());
+                        String outYear = DateFormatUtil.YearFormater(maintainList.get(j).getChargeCreatedTime());
+                        String out = String.valueOf(Echarts.getWeek(outTime));
+                        String yearOut = out + outYear;
+                        if (yearTime.equals(yearOut)) {
+                            io.setMaintainMoney(maintainList.get(j).getActualPayment());
+                            break;
+                        } else {
+                            io.setMaintainMoney(0.d);
+                        }
+                    }
+                    for (int k = 0; k < preserveList.size(); k++) {
+                        String inTime = DateFormatUtil.WEEK(preserveList.get(k).getChargeCreatedTime());
+                        String inYear = DateFormatUtil.YearFormater(preserveList.get(k).getChargeCreatedTime());
+                        String in = String.valueOf(Echarts.getWeek(inTime));
+                        String yearIn = in + inYear;
+                        if (yearTime.equals(yearIn)) {
+                            io.setPreserveMoney(preserveList.get(k).getActualPayment());
+                            break;
+                        } else {
+                            io.setPreserveMoney(0.d);
+                        }
+                    }
+                    list.add(io);
+                }
+            } else if (type.equals("day")) {
+                timeList = chargeBillService.queryByCondition(start, end,user.getUserId(),"0","day");
+                maintainList=chargeBillService.queryByCondition(start, end,user.getUserId(),"1","day");
+                preserveList=chargeBillService.queryByCondition(start, end,user.getUserId(),"2","day");
+                for (int p = 0; p < timeList.size(); p++) {
+                    ChargeBillBean io = new ChargeBillBean();
+                    String ag = DateFormatUtil.DayFormater(timeList.get(p).getChargeCreatedTime());
+                    io.setDate(ag);
+                    for (int j = 0; j < maintainList.size(); j++) {
+                        String outTime = DateFormatUtil.DayFormater(maintainList.get(j).getChargeCreatedTime());
+                        if (ag.equals(outTime)) {
+                            io.setMaintainMoney(maintainList.get(j).getActualPayment());
+                            break;
+                        } else {
+                            io.setMaintainMoney(0.d);
+                        }
+                    }
+                    for (int k = 0; k < preserveList.size(); k++) {
+                        String inTime = DateFormatUtil.DayFormater(preserveList.get(k).getChargeCreatedTime());
+                        if (ag.equals(inTime)) {
+                            io.setPreserveMoney(preserveList.get(k).getActualPayment());
+                            break;
+                        } else {
+                            io.setPreserveMoney(0.d);
+                        }
+                    }
+                    list.add(io);
+                }
             }
-        }else{
-            logger.info("请先登录");
-            return null;
         }
-
-
-
+        return list;
     }
 }

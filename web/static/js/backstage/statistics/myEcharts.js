@@ -1,3 +1,5 @@
+
+
 //年的格式化
 function formatterYear(value) {
     if (value == undefined || value == null || value == '') {
@@ -89,6 +91,28 @@ function formatterQuarter(value) {
 
 
 }
+
+//季度的格式化
+function formatterQuarterDate(value) {
+
+    console.log(value)
+    var year = value.substr(0, 4)
+
+    var month = value.substring(4 + 1);
+    console.log(month)
+    if  (month === "01月"|| month === "02月" || month === "03月") {
+        month = "1月－3月 ";
+    } else  if  (month === "04月"|| month === "05月" || month === "06月") {
+        month = "4月－6月  ";
+    } else  if  (month === "07月"|| month === "08月" || month === "09月") {
+        month = "7月－9月  ";
+    } else  if  (month === "10月"|| month === "11月" || month === "12月") {
+        month = "10月－12月  ";
+    }
+    return year + "-" + month
+}
+
+
 
 //周期的格式化
 function formatterWeek(value) {
