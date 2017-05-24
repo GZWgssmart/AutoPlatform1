@@ -226,10 +226,10 @@ function validator(formId) {
                 }
             },*/
             supplyAlipay: {
-                message: '供应商支付宝验证失败',
+                message: '支付宝账号验证失败',
                 validators: {
                     notEmpty: {
-                        message: '供应商支付宝不能为空'
+                        message: '支付宝账号不能为空'
                     },
                     stringLength: {
                         min: 11,
@@ -242,28 +242,40 @@ function validator(formId) {
                     }
                 }
             },
-            supplyBank: {
-                message: '开户银行全称验证失败',
+           supplyBank: {
                 validators: {
-                    notEmpty: {
+                   /* notEmpty: {
                         message: '开户银行全称不能为空'
+                    }*/
+                    stringLength: {
+                        min: 1,
+                        max: 10,
+                        message: '开户银行全称必须在数字1-10之间'
                     }
                 }
             },
             supplyBankAccount: {
-                message: '开户人姓名验证失败',
+               /* message: '开户人姓名验证失败',
                 validators: {
                     notEmpty: {
                         message: '开户人姓名不能为空'
                     }
+                }*/
+                validators: {
+                    stringLength: {
+                        min: 1,
+                        max: 6,
+                        message: '开户人姓名长度必须在数字1-6之间'
+                    }
                 }
             },
             supplyBankNo: {
-                message: '开户银行卡号验证失败',
+                /* message: '开户银行卡号验证失败',
+                 validators: {
+                 notEmpty: {
+                 message: '开户银行卡号不能为空'
+                 },*/
                 validators: {
-                    notEmpty: {
-                        message: '开户银行卡号不能为空'
-                    },
                     stringLength: {
                         min: 16,
                         max: 19,
@@ -480,6 +492,13 @@ function showDetail() {
     var row = $('table').bootstrapTable('getSelections');
     if (row.length > 0) {
         var supply = row[0];
+        /*console.log(supply)
+        if(supply.supplyBankNo == null || supply.supplyBankNo == ""){
+            $("#BankNo").val("无");
+        }else{
+            $("#BankNo").val(supply.supplyBankNo);
+        }
+        $("#BankNo").val(supply.supplyBankNo);*/
         var createdTime = supply.supplyCreatedTime;
         /* 创建时间 */
         var formatterCreateTime = formatterDateTime(createdTime);
