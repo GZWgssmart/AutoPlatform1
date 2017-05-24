@@ -293,6 +293,7 @@
                 </div>
                 <form role="form" class="form-horizontal" id="editForm" method="post">
                     <input type="hidden" define="emp.userId" name="userId" class="form-control"/>
+                    <input id="editLoginTime" type="hidden" class="form-control" disabled="true">
                     <div>
                         <div class="form-group col-md-6 pull-left">
                             <label class="col-md-4 control-label">姓名：</label>
@@ -382,7 +383,7 @@
                             <div class="col-md-9" id="address" style="margin-top: 10px;display: block;">
                                 <input id="sourceAddress" type="text" define="emp.userAddress" class="form-control">
                             </div>
-                            <div class="col-md-9" id="userAddress" style="display: none;">
+                            <div class="col-md-9" id="userAddress" style="display:none;">
                                 <fieldset id="editCity_china">
                                     <div class="pull-left">
                                         省份：<select class="province" disabled="disabled" id="editProvince" name="editProvince"></select>
@@ -417,7 +418,7 @@
     <div class="modal-dialog">
         <div class="modal-content" style="width:850px; margin-left:-121px;">
             <div class="modal-body">
-                <%--<span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('detailWindow', 'detailForm')"></span>--%>
+                <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('detailWindow', 'detailForm')"></span>
                 <div class="modal-header">
                     <h3>详细信息</h3>
                 </div>

@@ -86,6 +86,13 @@ public class UserBasicManageController {
                 String province = request.getParameter("province");
                 String city = request.getParameter("city");
                 String area = request.getParameter("area");
+                /*if(province != null) {
+                    if(city != null) {
+                        if(area != null) {
+
+                        }
+                    }
+                }*/
                 user.setUserAddress(province + "-" + city + "-" + area);
                 user.setUserPwd(EncryptUtil.md5Encrypt("123456"));
                 String nickName = request.getParameter("userNickname");
@@ -173,7 +180,17 @@ public class UserBasicManageController {
                 String province = request.getParameter("editProvince");
                 String city = request.getParameter("editCity");
                 String area = request.getParameter("editArea");
-                user.setUserAddress(province + "-" + city + "-" + area);
+                String userAddress = "";
+                if(province != null || province != "") {
+                    if(city != null || city != "") {
+                        if(area != null || area != "") {
+                            userAddress = province + "-" + city + "-" + area;
+                        }
+                        userAddress = province + "-" + city;
+                    }
+                    userAddress = province;
+                }
+                user.setUserAddress(userAddress);
                 userService.update(user);
                 UserRole userRole = new UserRole();
                 userRole.setUserId(user.getUserId());
@@ -466,5 +483,28 @@ public class UserBasicManageController {
             logger.info("请先登录");
             return null;
         }
+    }
+
+//  个人资料修改
+    @ResponseBody
+    @RequestMapping(value = "updateSelfManage", method = RequestMethod.POST)
+    public ControllerResult updateSelfManage(String id, HttpServletRequest request, HttpSession session) {
+        User user = (User)session.getAttribute("user");
+        String province = request.getParameter("editProvince");
+        String city = request.getParameter("editCity");
+        String area = request.getParameter("editArea");
+        String userAddress = "";
+        if(province != null || province != "") {
+            if(city != null || city != "") {
+                if(area != null || area != "") {
+                    userAddress = province + "-" + city + "-" + area;
+                }
+                userAddress = province + "-" + city;
+            }
+            userAddress = province;
+        }
+        user.setUserAddress(userAddress);
+        userService.updateSelfManage(user.getUserId());
+        return ControllerResult.getSuccessResult("修改个人资料成功");
     }
 }

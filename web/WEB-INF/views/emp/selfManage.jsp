@@ -75,7 +75,7 @@
                         </div>
                         <div class="form-group pull-left">
                             <label class="control-label">身份证：</label>
-                            <input style="margin-left: 10px;" type="number" class="form-control"
+                            <input style="margin-left: 10px;width: 300px;" type="number" class="form-control"
                                    value="${sessionScope.user.userIdentity}" disabled="true">
                         </div>
                         <div class="form-group pull-left">
@@ -128,11 +128,11 @@
                     </div>
                 </div>
                 <%-- 暂时先不添加修改功能，完善工资后再回头完成修改 --%>
-                <%--<div class="modal-footer">
+                <div class="modal-footer">
                     <button id="btn_edit" type="button" class="btn btn-default" onclick="showEdit();">
                         <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
                     </button>
-                </div>--%>
+                </div>
             </form>
         </div>
     </div>
@@ -220,7 +220,7 @@
                             <div class="col-md-9" id="address" style="margin-top: 10px;display: block;">
                                 <input id="sourceAddress" type="text" value="${sessionScope.user.userAddress}" class="form-control">
                             </div>
-                            <div class="col-md-9" id="userAddress" style="display: none;">
+                            <div class="col-md-9" id="userAddress" style="margin-top: 10px;display: none;">
                                 <fieldset id="editCity_china">
                                     <div class="pull-left">
                                         省份：<select class="province" disabled="disabled" id="editProvince" name="editProvince"></select>
@@ -270,4 +270,11 @@
 <script src="/static/js/jquery.cxselect.min.js"></script>
 
 </body>
+
+<script>
+    $.cxSelect.defaults.url = '/static/js/cityData.json';
+    $('#editCity_china').cxSelect({
+        selects: ['province', 'city', 'area']
+    });
+</script>
 </html>

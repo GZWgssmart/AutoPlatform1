@@ -140,4 +140,7 @@ public interface UserDAO extends BaseDAO<String, User>{
     public void updatePwdByEmail(@Param("pwd") String pwd, @Param("email") String email);
 
     public void updatePwdByPhone(@Param("pwd")String pwd, @Param("phone")String phone);
+
+//   修改个人资料
+    public int updateSelfManage(String userId);
 }

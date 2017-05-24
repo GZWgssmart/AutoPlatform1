@@ -67,6 +67,16 @@
      ]]>
   </update>
 
+  <!-- 修改个人资料 -->
+  <update id="updateSelfManage" parameterType="user">
+    <![CDATA[
+       update t_user u set u.userName = #{userName}, u.userEmail = #{userEmail}, u.userPhone = #{userPhone},
+            u.userIdentity = #{userIdentity}, u.userGender = #{userGender},u.userNickname=#{userNickname},
+           u.userBirthday = #{userBirthday}, u.userDes = #{userDes}, u.userAddress = #{userAddress}
+        where u.userId = #{userId};
+     ]]>
+  </update>
+
   <!-- 修改密码 -->
   <update id="updatePwd" parameterType="user">
     <![CDATA[
