@@ -24,6 +24,9 @@ $(function() {
 function showEdit(){
     // 初始化时间框, 第一参数是form表单id, 第二参数是input的name
     initDatePicker('editForm', 'userBirthday', 'editDatetimepicker');
+
+    $('#editUserGender').val(formatterGender(gender));
+
     $("#editWindow").modal('show'); // 显示弹窗
     $("#editButton").removeAttr("disabled");
     // $("#editForm").fill(user);
@@ -119,9 +122,7 @@ function validator(formId) {
         }
     })
     .on('success.form.bv', function (e) {
-        if (formId == "editForm") {
             formSubmit("/userBasicManage/updateSelfManage", formId, "editWindow");
-        }
     })
 }
 
@@ -240,6 +241,16 @@ function formatterDateTime(value) {
     }
 }
 
+//   格式化性别
+function formatterGender(val) {
+    if (val == 'N') {
+        return "未选择";
+    } else if (val == 'M') {
+        return "男"
+    } else if (val == 'F') {
+        return "女"
+    }
+}
 
 //  修改时，点击地址的文本框后，文本框隐藏，地址下拉选择显示
 var address = $("#address");
