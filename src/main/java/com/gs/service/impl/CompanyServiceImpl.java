@@ -61,7 +61,7 @@ public class CompanyServiceImpl implements CompanyService {
 
 	@Override
 	public int countByBlurred(Company company, User user) {
-		return companyDAO.countByDisable(user);
+		return companyDAO.countByBlurred(company,user);
 	}
 
 	@Override

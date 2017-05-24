@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.gs.dao.CarModelDAO" >
-  <resultMap id="carmodelMap" type="carmodel" >
+  <resultMap id="carmodelMap" type="carModel" >
     <id column="modelId" property="modelId" jdbcType="VARCHAR" />
     <result column="modelName" property="modelName" jdbcType="VARCHAR" />
     <result column="modelDes" property="modelDes" jdbcType="VARCHAR" />
@@ -40,13 +40,13 @@
     ]]>
     </select>
 
-  <insert id="insert" parameterType="carmodel">
+  <insert id="insert" parameterType="carModel">
       <![CDATA[
             insert into t_car_model(modelId,modelName,modelDes,brandId,modelStaus) values (uuid(),#{modelName},#{modelDes},#{brandId},'Y')
        ]]>
   </insert>
 
-  <update id="update" parameterType="carmodel">
+  <update id="update" parameterType="carModel">
       <![CDATA[
             update t_car_model set modelName = #{modelName},modelDes = #{modelDes},modelStaus = 'Y',brandId = #{brandId} where modelId = #{modelId}
       ]]>
@@ -79,14 +79,14 @@
     </select>
 
     <!--冻结数据-->
-    <update id="inactive" keyProperty="modelId" parameterType="carmodel">
+    <update id="inactive" keyProperty="modelId" parameterType="carModel">
         <![CDATA[
          update t_car_model set modelStaus = 'N' where modelId = #{modelId}
         ]]>
     </update>
 
     <!--激活数据-->
-    <update id="active" keyProperty="modelId" parameterType="carmodel">
+    <update id="active" keyProperty="modelId" parameterType="carModel">
         <![CDATA[
         update t_car_model set modelStaus = 'Y' where modelId = #{modelId}
         ]]>
@@ -98,26 +98,36 @@
             left join t_car_brand cb on cm.brandId = cb.brandId
             where 1=1
        ]]>
-        <if test="carModel.modelName != '' and carModel.modelName != null">
-            and cm.modelName like '%${carModel.modelName}%'
-        </if>
-        <if test="carModel.brandId != '' and carModel.brandId != null">
-            and cb.brandName like '%${carModel.brandId}%'
-        </if>
+        and(
+            <if test="carModel.modelName != '' and carModel.modelName != null">
+               cm.modelName like '%${carModel.modelName}%'
+            </if>
+            <if test="carModel.modelName != '' and carModel.modelName != null and carModel.brandId != '' and carModel.brandId != null">
+                or
+            </if>
+            <if test="carModel.brandId != '' and carModel.brandId != null">
+               cb.brandName like '%${carModel.brandId}%'
+            </if>
+        )
         limit #{pager.beginIndex}, #{pager.pageSize}
     </select>
 
     <select id="countByBlurred" resultType="int">
     <![CDATA[
-      select count(*) from auto_platform.t_car_model cm
-      left join t_car_brand cb on cm.brandId = cb.brandId
-      where 1=1
-    ]]>
+          select count(*) from auto_platform.t_car_model cm
+          left join t_car_brand cb on cm.brandId = cb.brandId
+          where 1=1
+      ]]>
+        and(
         <if test="carModel.modelName != '' and carModel.modelName != null">
-            and cm.modelName like '%${carModel.modelName}%'
+            cm.modelName like '%${carModel.modelName}%'
+        </if>
+        <if test="carModel.modelName != '' and carModel.modelName != null and carModel.brandId != '' and carModel.brandId != null">
+            or
         </if>
         <if test="carModel.brandId != '' and carModel.brandId != null">
-            and cb.brandName like '%${carModel.brandId}%'
+            cb.brandName like '%${carModel.brandId}%'
         </if>
+        )
     </select>
 </mapper>
