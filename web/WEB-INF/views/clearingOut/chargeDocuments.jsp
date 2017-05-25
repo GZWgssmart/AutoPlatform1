@@ -46,9 +46,10 @@
                     </th>
                 </shiro:hasAnyRoles>
                 <th data-width="100" data-hide="all" data-field="maintainRecord.currentStatus">
-                    当前状态
+                    记录状态
                 </th>
                 <th data-width="130" data-field="chargeBillStatus" data-formatter="showStatusFormatter">收费单据状态</th>
+                <th data-width="130" data-field="currentStatus" data-formatter="currentStatusFormatter">单据当前状态</th>
             <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司接待员">
                 <th data-width="90" data-field="chargeBillStatus" data-formatter="statusFormatter">操作</th>
             </shiro:hasAnyRoles>

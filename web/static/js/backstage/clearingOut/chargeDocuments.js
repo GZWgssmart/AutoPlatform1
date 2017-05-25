@@ -24,6 +24,14 @@ $(function () {
         });
 });
 
+function currentStatusFormatter(value, row, index){
+    if(value != 'N'){
+        return "用户已确认";
+    }else{
+        return "用户未确认";
+    }
+}
+
 // 激活或禁用
 function statusFormatter(value, row, index) {
             if(value == 'Y') {
@@ -122,30 +130,58 @@ function showMoney(){
     if(row.length ==1) {
         if(row[0].actualPayment != null && row[0].actualPayment != ""){
             if(row[0].maintainRecord.currentStatus !='已收费'){
-                swal({
-                    title: "",
-                    text: "是否确认已经收到维修保养费用!",
-                    type: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#DD6B55",
-                    confirmButtonText: "我确定",
-                    cancelButtonText: "再考虑一下",
-                    closeOnConfirm: true,
-                    closeOnCancel: false
-                },function(ifCor) {
-                    if (ifCor) {
-                        $("#inOutMoneyId").val(row[0].actualPayment);
-                        $("#addWin").modal('show');
-                        validator1("addForm", row[0].chargeBillId, row[0].maintainRecordId);
-                    } else {
-                        swal({
-                            title: "",
-                            text: "已取消",
-                            confirmButtonText: "确认",
-                            type: "error"
-                        });
-                    }
-                })
+                if(row[0].currentStatus !="N") {
+                    swal({
+                        title: "",
+                        text: "是否确认已经收到维修保养费用!",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: "我确定",
+                        cancelButtonText: "再考虑一下",
+                        closeOnConfirm: true,
+                        closeOnCancel: false
+                    }, function (ifCor) {
+                        if (ifCor) {
+                            $("#inOutMoneyId").val(row[0].actualPayment);
+                            $("#addWin").modal('show');
+                            validator1("addForm", row[0].chargeBillId, row[0].maintainRecordId);
+                        } else {
+                            swal({
+                                title: "",
+                                text: "已取消",
+                                confirmButtonText: "确认",
+                                type: "error"
+                            });
+                        }
+                    })
+                }else{
+                    // 未用户确认
+                    swal({
+                        title: "",
+                        text: "改收费单据用户未确认， 确定确认收到维修保养费用了吗?",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: "我确定",
+                        cancelButtonText: "再考虑一下",
+                        closeOnConfirm: true,
+                        closeOnCancel: false
+                    }, function (ifCor) {
+                        if (ifCor) {
+                            $("#inOutMoneyId").val(row[0].actualPayment);
+                            $("#addWin").modal('show');
+                            validator1("addForm", row[0].chargeBillId, row[0].maintainRecordId);
+                        } else {
+                            swal({
+                                title: "",
+                                text: "已取消",
+                                confirmButtonText: "确认",
+                                type: "error"
+                            });
+                        }
+                    })
+                }
             }else{
                 swal({
                     title:"",

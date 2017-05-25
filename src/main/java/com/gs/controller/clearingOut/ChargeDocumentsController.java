@@ -57,27 +57,55 @@ public class ChargeDocumentsController {
 
     /**
      * 分页查询所有收费单据
-     * @return
      */
     @ResponseBody
-    @RequestMapping(value="queryByPager", method = RequestMethod.GET)
-    public Pager4EasyUI<ChargeBill> queryByPager(HttpSession session, @Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
-        if(SessionUtil.isLogin(session)) {
+    @RequestMapping(value = "queryByPager", method = RequestMethod.GET)
+    public Pager4EasyUI<ChargeBill> queryByPager(HttpSession session, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
+        if (SessionUtil.isLogin(session)) {
             String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员";
-            if(RoleUtil.checkRoles(roles)) {
+            if (RoleUtil.checkRoles(roles)) {
                 logger.info("分页查询所有收费单据");
                 Pager pager = new Pager();
                 pager.setPageNo(Integer.valueOf(pageNumber));
                 pager.setPageSize(Integer.valueOf(pageSize));
-                pager.setUser((User)session.getAttribute("user"));
-                pager.setTotalRecords(chargeBillService.count((User)session.getAttribute("user")));
+                pager.setUser((User) session.getAttribute("user"));
+                pager.setTotalRecords(chargeBillService.count((User) session.getAttribute("user")));
                 List<ChargeBill> chargeBills = chargeBillService.queryByPager(pager);
                 return new Pager4EasyUI<ChargeBill>(pager.getTotalRecords(), chargeBills);
-            }else{
+            } else {
                 logger.info("此用户无拥有可用收费单据分页查询的角色");
                 return null;
             }
-        }else{
+        } else {
+            logger.info("请先登录");
+            return null;
+        }
+    }
+
+    /**
+     * 分页查询所有收费单据
+     *
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "queryByOwner", method = RequestMethod.GET)
+    public Pager4EasyUI<ChargeBill> queryByOwner(HttpSession session, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
+        if (SessionUtil.isOwnerLogin(session)) {
+            String roles = "车主";
+            if (RoleUtil.checkRoles(roles)) {
+                logger.info("车主分页查询所有收费单据");
+                Pager pager = new Pager();
+                pager.setPageNo(Integer.valueOf(pageNumber));
+                pager.setPageSize(Integer.valueOf(pageSize));
+                pager.setUser((User) session.getAttribute("frontUser"));
+                pager.setTotalRecords(chargeBillService.countByOwner((User) session.getAttribute("frontUser")));
+                List<ChargeBill> chargeBills = chargeBillService.queryByOwner(pager);
+                return new Pager4EasyUI<ChargeBill>(pager.getTotalRecords(), chargeBills);
+            } else {
+                logger.info("此用户无拥有收费单据分页查询的车主角色");
+                return null;
+            }
+        } else {
             logger.info("请先登录");
             return null;
         }
@@ -85,27 +113,28 @@ public class ChargeDocumentsController {
 
     /**
      * 查询所有被禁用的登记记录
+     *
      * @return
      */
     @ResponseBody
-    @RequestMapping(value="queryByPagerDisable", method = RequestMethod.GET)
-    public Pager4EasyUI<ChargeBill> queryByPagerDisable(HttpSession session, @Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
-        if(SessionUtil.isLogin(session)) {
+    @RequestMapping(value = "queryByPagerDisable", method = RequestMethod.GET)
+    public Pager4EasyUI<ChargeBill> queryByPagerDisable(HttpSession session, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
+        if (SessionUtil.isLogin(session)) {
             String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员";
-            if(RoleUtil.checkRoles(roles)) {
+            if (RoleUtil.checkRoles(roles)) {
                 logger.info("分页查询所有被禁用收费单据");
                 Pager pager = new Pager();
                 pager.setPageNo(Integer.valueOf(pageNumber));
                 pager.setPageSize(Integer.valueOf(pageSize));
-                pager.setUser((User)session.getAttribute("user"));
-                pager.setTotalRecords(chargeBillService.countByDisable((User)session.getAttribute("user")));
+                pager.setUser((User) session.getAttribute("user"));
+                pager.setTotalRecords(chargeBillService.countByDisable((User) session.getAttribute("user")));
                 List<ChargeBill> chargeBills = chargeBillService.queryByPagerDisable(pager);
                 return new Pager4EasyUI<ChargeBill>(pager.getTotalRecords(), chargeBills);
-            }else{
+            } else {
                 logger.info("此用户无拥有禁用收费单据分页查询的角色");
                 return null;
             }
-        }else{
+        } else {
             logger.info("请先登录");
             return null;
         }
@@ -115,18 +144,18 @@ public class ChargeDocumentsController {
     @ResponseBody
     @RequestMapping(value = "add", method = RequestMethod.POST)
     public ControllerResult addCheckin(HttpSession session, ChargeBill chargeBill) {
-        if(SessionUtil.isLogin(session)) {
+        if (SessionUtil.isLogin(session)) {
             String roles = "公司超级管理员,公司普通管理员,汽车公司接待员";
-            if(RoleUtil.checkRoles(roles)) {
+            if (RoleUtil.checkRoles(roles)) {
                 logger.info("添加收费单据");
-                maintainRecordService.updateCurrentStatus("待收费", "'"+chargeBill.getMaintainRecordId()+"'");
+                maintainRecordService.updateCurrentStatus("待收费", "'" + chargeBill.getMaintainRecordId() + "'");
                 chargeBillService.insert(chargeBill);
                 return ControllerResult.getSuccessResult("结算出厂成功");
-            }else{
+            } else {
                 logger.info("此用户无拥有添加收费单据的角色");
                 return null;
             }
-        }else{
+        } else {
             logger.info("请先登录");
             return null;
         }
@@ -135,20 +164,20 @@ public class ChargeDocumentsController {
     @ResponseBody
     @RequestMapping(value = "edit", method = RequestMethod.POST)
     public ControllerResult editCheckin(HttpSession session, ChargeBill chargeBill) {
-        if(SessionUtil.isLogin(session)) {
+        if (SessionUtil.isLogin(session)) {
             String roles = "公司超级管理员,公司普通管理员,汽车公司接待员";
-            if(RoleUtil.checkRoles(roles)) {
+            if (RoleUtil.checkRoles(roles)) {
                 logger.info("修改收费单据");
-                if(chargeBill.getChargeBillStatus().equals("N")){
+                if (chargeBill.getChargeBillStatus().equals("N")) {
                     chargeBill.setChargeBillStatus("Y");
                 }
                 chargeBillService.update(chargeBill);
                 return ControllerResult.getSuccessResult("修改成功");
-            }else{
+            } else {
                 logger.info("此用户无拥有修改收费单据的角色");
                 return null;
             }
-        }else{
+        } else {
             logger.info("请先登录");
             return null;
         }
@@ -166,7 +195,7 @@ public class ChargeDocumentsController {
                 User user = (User) session.getAttribute("user");
                 chargeBillService.updateDate(chargeBillId);
                 maintainRecordService.updatePickupTime(maintainRecordId);
-                maintainRecordService.updateCurrentStatus("已收费", "'"+maintainRecordId+"'");
+                maintainRecordService.updateCurrentStatus("已收费", "'" + maintainRecordId + "'");
                 return ControllerResult.getSuccessResult("确认收费成功");
             } else {
                 logger.info("此用户无拥有此方法角色");
@@ -177,6 +206,31 @@ public class ChargeDocumentsController {
             return ControllerResult.getFailResult("请先登录");
         }
 
+    }
+
+    /**
+     * 用户对收费单据进行确认
+     */
+    @ResponseBody
+    @RequestMapping(value = "updateCurrent", method = RequestMethod.POST)
+    public ControllerResult updateCurrent(HttpSession session, String id){
+        if (SessionUtil.isOwnerLogin(session)) {
+            String roles = "车主";
+            if (RoleUtil.checkRoles(roles)) {
+                if (id != null && !id.equals("")) {
+                    chargeBillService.updateCurrent(id);
+                    return ControllerResult.getSuccessResult("确认成功");
+                } else {
+                    return ControllerResult.getFailResult("操作失败");
+                }
+            } else {
+                logger.info("此用户无拥有可用收费单据更改状态的角色");
+                return null;
+            }
+        } else {
+            logger.info("请先登录");
+            return null;
+        }
     }
 
     /**

@@ -115,4 +115,22 @@ public class ChargeBillServiceImpl implements ChargeBillService {
     public void updateDate(String chargeBillId) {
         chargeBillDAO.updateDate(chargeBillId);
     }
+
+    /**
+     * 用户确认收费单据
+     */
+    @Override
+    public void updateCurrent(String id) {
+        chargeBillDAO.updateCurrent(id);
+    }
+
+    @Override
+    public int countByOwner(User frontUser) {
+        return chargeBillDAO.countByOwner(frontUser);
+    }
+
+    @Override
+    public List<ChargeBill> queryByOwner(Pager pager) {
+        return chargeBillDAO.queryByOwner(pager);
+    }
 }

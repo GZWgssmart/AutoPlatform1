@@ -11,6 +11,7 @@
     <result column="chargeCreatedTime" property="chargeCreatedTime" jdbcType="TIMESTAMP" />
     <result column="chargeBillDes" property="chargeBillDes" jdbcType="VARCHAR" />
     <result column="chargeBillStatus" property="chargeBillStatus" jdbcType="VARCHAR" />
+    <result column="currentStatus" property="currentStatus" jdbcType="VARCHAR" />
 
     <association property="maintainRecord" javaType="com.gs.bean.MaintainRecord">
       <id column="recordId" property="recordId"/>
@@ -168,15 +169,15 @@
 
   <insert id="insert" useGeneratedKeys="true" keyProperty="chargeBillId" parameterType="chargeBill">
     <![CDATA[
-        insert into t_charge_bill(chargeBillId, maintainRecordId, chargeBillMoney,paymentMethod,actualPayment,chargeTime,chargeCreatedTime,chargeBillDes,chargeBillStatus)
-        values(uuid(), #{maintainRecordId}, #{chargeBillMoney}, #{paymentMethod},#{actualPayment},#{chargeTime}, now(), #{chargeBillDes}, 'Y')
+        insert into t_charge_bill(chargeBillId, maintainRecordId, chargeBillMoney,paymentMethod,actualPayment,chargeTime,chargeCreatedTime,chargeBillDes,chargeBillStatus，currentStatus)
+        values(uuid(), #{maintainRecordId}, #{chargeBillMoney}, #{paymentMethod},#{actualPayment},#{chargeTime}, now(), #{chargeBillDes}, 'Y'， 'N')
         ]]>
   </insert>
 
   <update id="update" parameterType="chargeBill">
     <![CDATA[
 			update t_charge_bill set chargeBillId = #{chargeBillId}, maintainRecordId = #{maintainRecordId}, chargeBillMoney = #{chargeBillMoney}, paymentMethod = #{paymentMethod},
-				actualPayment = #{actualPayment}, chargeTime = #{chargeTime}, chargeCreatedTime = #{chargeCreatedTime}, chargeBillDes = #{chargeBillDes}, chargeBillStatus = #{chargeBillStatus}
+				actualPayment = #{actualPayment}, chargeTime = #{chargeTime}, chargeCreatedTime = #{chargeCreatedTime}, chargeBillDes = #{chargeBillDes}, chargeBillStatus = #{chargeBillStatus}, currentStatus=#{currentStatus}
 				where chargeBillId = #{chargeBillId}
 		]]>
   </update>
@@ -184,6 +185,12 @@
   <update id="updateDate" parameterType="chargeBill">
     <![CDATA[
 			update t_charge_bill set chargeTime = now() where chargeBillId = #{chargeBillId}
+		]]>
+  </update>
+
+  <update id="updateCurrent">
+    <![CDATA[
+			update t_charge_bill set currentStatus = 'Y' where chargeBillId = #{id}
 		]]>
   </update>
 
@@ -292,6 +299,30 @@
     <if test="chargeBill.maintainRecord.checkin.userPhone != '' and chargeBill.maintainRecord.checkin.userPhone != null">
       ck.userPhone like '%${chargeBill.maintainRecord.checkin.userPhone}%'
     </if>)
+  </select>
+
+  <select id="queryByOwner" resultMap="chargeBillMap" parameterType="com.gs.common.bean.Pager">
+    <![CDATA[
+        select c.*, ck.*, cc.colorId, cc.colorName, cp.plateId, cp.plateName,
+        cm.modelId, cm.modelName, cb.brandId, cb.brandName, company.companyId, company.companyName,
+         m.* from t_checkin ck, t_car_brand cb,
+        t_car_color cc, t_car_model cm, t_car_plate cp, t_company company,
+        t_charge_bill c, t_maintain_record m
+        where c.maintainRecordId = m.recordId and
+        m.checkinId = ck.checkinId and ck.brandId = cb.brandId
+        and ck.colorId = cc.colorId and ck.modelId = cm.modelId
+        and ck.plateId = cp.plateId and ck.companyId = company.companyId
+        and c.chargeBillStatus = 'Y' and ck.userId = #{user.userId}
+    ]]>
+    limit #{beginIndex}, #{pageSize}
+  </select>
+
+  <select id="countByOwner" resultType="int" parameterType="com.gs.bean.User">
+    <![CDATA[
+      select count(*) from t_charge_bill c, t_maintain_record m, t_checkin ck where
+       c.maintainRecordId = m.recordId and m.checkinId = ck.checkinId
+       and c.chargeBillStatus = 'Y' and ck.userId = #{userId}
+    ]]>
   </select>
 
   <!--员工工单报表-->

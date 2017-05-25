@@ -2,7 +2,6 @@ package com.gs.dao;
 
 import com.gs.bean.ChargeBill;
 import com.gs.bean.User;
-import com.gs.bean.WorkInfo;
 import com.gs.common.bean.Pager;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -42,4 +41,15 @@ public interface ChargeBillDAO extends BaseDAO<String, ChargeBill>{
      * 确认收费
      */
     public void updateDate(String chargeBillId);
+    /**
+     * 用户确认收费单据
+     */
+    public void updateCurrent(String id);
+
+    /**
+     * 车主查询收费单据
+     */
+    public int countByOwner(User user);
+
+    public List<ChargeBill> queryByOwner(Pager pager);
 }
