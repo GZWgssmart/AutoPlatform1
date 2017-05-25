@@ -15,7 +15,7 @@ $(function () {
                 size:"small",
                 onSwitchChange:function(event,state){
                     if(state==true){
-                        initTableNotTollbar("appTable", "/userBasicManage/queryByPager");
+                        initTableNotTollbar("appTable", "/userBasicManage/queryCarByRoleName");
                         $('#addForm').data('bootstrapValidator').resetForm();
                         $("#appWindow").modal('show');
                         $("#addWindow").modal("hide");

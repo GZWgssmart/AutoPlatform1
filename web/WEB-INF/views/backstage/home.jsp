@@ -15,6 +15,7 @@
 <body class="gray-bg" style="background-color: #f3f3f4;font-size: 0px;">
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="row">
+        <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司库管人员">
         <div class="col-sm-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
@@ -51,6 +52,7 @@
                 </div>
             </div>
         </div>
+        </shiro:hasAnyRoles>
         <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员">
             <div class="col-sm-12">
                 <div class="ibox float-e-margins">

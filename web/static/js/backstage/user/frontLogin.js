@@ -352,7 +352,7 @@ function phoneCodeTime1(o, phone) {
     }
 }
 
-// 点击发送短信
+// 点击发送邮箱
 var emailCode1 = 60;
 function emailCodes(button) {
     button.setAttribute("disabled", true);

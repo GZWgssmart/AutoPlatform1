@@ -140,6 +140,9 @@ function validator(formId) {
             userEmail: {
                 message: '邮箱验证失败',
                 validators: {
+                    notEmpty: {
+                        message: '邮箱不能为空'
+                    },
                     remote: {
                         url: '/userBasicManage/queryIsEmailByOne',//验证邮箱
                         message: '该邮箱已存在',//提示消息

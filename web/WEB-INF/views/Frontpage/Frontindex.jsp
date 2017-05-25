@@ -295,20 +295,20 @@
                 <i class="title-bg"></i>
                 <h3><a href="javaScript:;" style="text-decoration: none;">最近维修保养</a></h3>
             </div>
-            <div class="search-box">
-                <form method="" name="search">
-                    <div class="form-search" style="text-align: right;">
-                        <input id="phone" type="text" class="input-text" placeholder="输入手机号，查看维修保养记录"/>
-                        <button type="button" class="btn" id="sendbutton">
-                            <span>
-                                发送短信验证码
-                            </span>
-                        </button>
-                        <span id="codeprompt" style="font-size: 20px;color: red;display: none;margin-left: 15px;">手机号错误</span>
-                        <input id="phonecodeinput" type="text" class="input-text" onchange="" placeholder="输入短信验证码" style="margin-left: 15px;width: 200px;display:none;">
-                    </div>
-                </form>
-            </div>
+            <%--<div class="search-box">--%>
+                <%--<form method="" name="search">--%>
+                    <%--<div class="form-search" style="text-align: right;">--%>
+                        <%--<input id="phone" type="text" class="input-text" placeholder="输入手机号，查看维修保养记录"/>--%>
+                        <%--<button type="button" class="btn" id="sendbutton">--%>
+                            <%--<span>--%>
+                                <%--发送短信验证码--%>
+                            <%--</span>--%>
+                        <%--</button>--%>
+                        <%--<span id="codeprompt" style="font-size: 20px;color: red;display: none;margin-left: 15px;">手机号错误</span>--%>
+                        <%--<input id="phonecodeinput" type="text" class="input-text" onchange="" placeholder="输入短信验证码" style="margin-left: 15px;width: 200px;display:none;">--%>
+                    <%--</div>--%>
+                <%--</form>--%>
+            <%--</div>--%>
             <div class="con">
                 <div class="acc-head">
                     <ul>

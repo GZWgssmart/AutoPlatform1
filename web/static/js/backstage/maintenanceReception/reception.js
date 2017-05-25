@@ -37,7 +37,7 @@ $(function () {
                 onSwitchChange:function(event,state){
                     if(state==true){
                         // 点击开关, 开关为开时, 显示所有本店用户
-                        initTableNotTollbar("customerTable", "/userBasicManage/queryByPager");
+                        initTableNotTollbar("customerTable", "/userBasicManage/queryCarByRoleName");
                         $('#addForm').data('bootstrapValidator').resetForm();
                         $("#addWindow").modal("hide");
                         $("#customerWindow").modal('show');

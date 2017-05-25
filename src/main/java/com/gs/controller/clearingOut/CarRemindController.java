@@ -114,11 +114,10 @@ public class CarRemindController {
                         MailConfig.sendMail(file, mail);
                         maintainRecordService.updateCurrentStatus("待结算",ids);
                         // 当提醒成功之后, 应该修改状态, 提醒完毕, 页面不再显示此记录
-                        return ControllerResult.getSuccessResult("提醒成功");
                     }else{
                         maintainRecordService.updateCurrentStatus("待结算",ids);
-                        return ControllerResult.getSuccessResult("提醒成功");
                     }
+                    return ControllerResult.getSuccessResult("提醒成功");
                 }else{
                     return ControllerResult.getFailResult("此维修保养记录车主不是本店用户, 无车主邮箱");
                 }

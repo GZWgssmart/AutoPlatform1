@@ -30,7 +30,7 @@
                 <th data-width="100" data-field="userName" >
                     车主姓名
                 </th>
-                <th data-width="100" data-field="userPhone">
+                <th data-width="120" data-field="userPhone">
                     车主电话
                 </th>
                 <th data-width="100" data-field="brand.brandName">
