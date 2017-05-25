@@ -418,13 +418,15 @@ function submitDispatcher() {
                     $('#recordTable').bootstrapTable("refresh"); // 重新加载指定数据网格数据
                     swal({
                         title: "",
-                        text: data.message,
+                        text: '指派成功',
+                        confirmButtonText:"确认",
                         type: "success"
                     })// 提示窗口, 修改成功
                 } else if (data.result == "fail") {
                     swal({
                         title: "",
-                        text: data.message,
+                        text: '指派失败',
+                        confirmButtonText:"确认",
                         type: "error"
                     })
                 }
