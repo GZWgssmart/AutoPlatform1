@@ -1,7 +1,8 @@
 package com.gs.service;
 
 import com.gs.bean.ChargeBill;
-import org.apache.ibatis.annotations.Param;
+import com.gs.bean.User;
+import com.gs.common.bean.Pager;
 
 import java.util.List;
 
@@ -27,4 +28,15 @@ public interface ChargeBillService extends BaseService<String, ChargeBill>{
      */
     public List<ChargeBill> queryByCondition( String start,  String end,  String userId, String maintainOrFix, String type);
 
+    /**
+     * 用户确认收费单据
+     */
+    public void updateCurrent(String id);
+
+    /**
+     * 车主查询收费单据
+     */
+    public int countByOwner(User frontUser);
+
+    public List<ChargeBill> queryByOwner(Pager pager);
 }

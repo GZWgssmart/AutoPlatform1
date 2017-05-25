@@ -82,6 +82,7 @@
 			<dt><i class="Hui-iconfont">&#xe70c;</i> 消费统计<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
+					<li><a data-href="/cdocument" data-title="收费单据" href="javascript:void(0)">收费单据</a></li>
 					<li><a data-href="/statistics/consume" data-title="消费统计" href="javascript:void(0)">消费统计</a></li>
 					<li><a data-href="/mycomment" data-title="投诉管理" href="javascript:void(0)">投诉管理</a></li>
 			</ul>
