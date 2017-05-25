@@ -102,7 +102,6 @@
         </div>
         <div class="fp-section" id="four">
             <div style="margin-left: 200px">
-                <h1 style="font-size: 3em;margin-top: 40%;color: #fff;">此贴终结</h1>
             </div>
         </div>
     </div>
