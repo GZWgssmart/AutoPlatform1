@@ -126,7 +126,6 @@
                 <div class="container">
                     <div class="col-md-6 col-sm-6 content-left wow fadeInLeft animated">
                         <div class="first-rt-txt">
-                            <h1 style="font-size: 4em;">不想说什么</h1>
                         </div>
 
                     </div>
