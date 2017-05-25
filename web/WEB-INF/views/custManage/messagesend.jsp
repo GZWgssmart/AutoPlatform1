@@ -34,10 +34,12 @@
             <thead>
             <tr>
                 <th data-radio="true"></th>
-                <th data-field="checkin.userName">车主姓名</th>
-                <th data-field="sendMsg">发送内容</th>
+                <th data-field="checkin.userName" >车主姓名</th>
+                <th data-field="user.userPhone" >车主手机号码</th>
+                <%--<th data-field="sendMsg">短信内容</th>--%>
                 <th data-field="sendTime" data-formatter="formatterDate">发送时间</th>
                 <th data-field="sendCreatedTime" data-formatter="formatterDate">发送记录创建时间</th>
+                <th data-formatter="formatterSendMsg" data-width="100">查看发送内容</th>
             </tr>
             </thead>
         </table>
@@ -55,6 +57,8 @@
                             <li><a onclick="onclikLi(this)">车主姓名</a></li>
                             <li class="divider"></li>
                             <li><a onclick="onclikLi(this)">发送内容</a></li>
+                            <%--<li class="divider"></li>--%>
+                            <%--<li><a onclick="onclikLi(this)">车主手机号码</a></li>--%>
                         </ul>
                     </div><!-- /btn-group -->
                     <input id="ulInput" class="form-control" onkeypress="if(event.keyCode==13) {blurredQuery();}">
@@ -75,7 +79,6 @@
             <div class="modal-body">
             <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('addWindow', 'addForm')"></span>
             <form class="form-horizontal" id="addForm" method="post">
-                <%--<input id="addUserId" type="text" name="userId" width="100px">--%>
                 <div class="modal-header" style="overflow:auto;">
                     <h4>添加短信发送提醒的信息</h4>
                 </div>
@@ -102,10 +105,20 @@
                     <%--</div>--%>
                 <%--</div>--%>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">发送内容：</label>
+                    <label class="col-sm-3 control-label">消息模板：</label>
                     <div class="col-sm-7">
-                        <textarea type="text" name="sendMsg" placeholder="请输入发送内容" style="height: 100px;"
-                                  class="form-control"></textarea>
+                        <select name="messageSendText" onchange="messageTypeChange(this)"
+                                class="form-control js-data-example-ajax">
+                            <option value="模板1">模板1</option>
+                            <option value="模板2">模板2</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="sendMsgDiv" class="form-group">
+                    <label class="col-sm-3 control-label">短信内容：</label>
+                    <div class="col-sm-7">
+                        <textarea id="addSendMsg" type="text" name="sendMsg" placeholder="请输入短信内容" style="height: 100px;"
+                                  maxlength="500" class="form-control"></textarea>
                     </div>
                 </div>
                 <div class="form-group">
@@ -123,53 +136,6 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-
-<%--<!-- 修改弹窗 -->--%>
-<%--<div class="modal fade" id="editWindow" aria-hidden="true">--%>
-    <%--<div class="modal-dialog" style="width: 720px;height: auto;">--%>
-        <%--<div class="modal-content">--%>
-            <%--<form class="form-horizontal" id="editForm" method="post">--%>
-                <%--<div class="modal-header" style="overflow:auto;">--%>
-                    <%--<h4>请修改短信发送提醒信息</h4>--%>
-                <%--</div>--%>
-                <%--<br/>--%>
-                <%--<div class="form-group">--%>
-                    <%--<label class="col-sm-3 control-label">用户名：</label>--%>
-                    <%--<div class="col-sm-7">--%>
-                        <%--<input type="text" name="userId" define="MessageSend.userId" placeholder="请选择用户" class="form-control">--%>
-                    <%--</div>--%>
-                <%--</div>--%>
-                <%--<div class="form-group">--%>
-                    <%--<label class="col-sm-3 control-label">发送时间：</label>--%>
-                    <%--<div class="col-sm-7">--%>
-                        <%--<input type="text" name="sendTime" define="MessageSend.sendTime" value="2012-05-15 21:05"--%>
-                               <%--id="editDateTimePicker" class="form-control">--%>
-                    <%--</div>--%>
-                <%--</div>--%>
-                <%--<div class="form-group">--%>
-                    <%--<label class="col-sm-3 control-label">发送记录创建时间：</label>--%>
-                    <%--<div class="col-sm-7">--%>
-                        <%--<input type="text"  name="sendCreateTime" define="MessageSend.sendCreateTime" value="2012-05-15 21:05"--%>
-                               <%--id="editDateTimePicker1" class="form-control">--%>
-                    <%--</div>--%>
-                <%--</div>--%>
-                <%--<div class="form-group">--%>
-                    <%--<label class="col-sm-3 control-label">发送内容：</label>--%>
-                    <%--<div class="col-sm-7">--%>
-                        <%--<textarea type="text" name="sendMsg"  define="MessageSend.sendMsg" placeholder="请输入发送内容" style="height: 100px;"--%>
-                                  <%--class="form-control"></textarea>--%>
-                    <%--</div>--%>
-                <%--</div>--%>
-                <%--<div class="form-group">--%>
-                    <%--<div class="col-sm-offset-8">--%>
-                        <%--<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>--%>
-                        <%--<button class="btn btn-sm btn-success" type="submit">保 存</button>--%>
-                    <%--</div>--%>
-                <%--</div>--%>
-            <%--</form>--%>
-        <%--</div><!-- /.modal-content -->--%>
-    <%--</div><!-- /.modal-dialog -->--%>
-<%--</div><!-- /.modal -->--%>
 <div id="showMessageSendWindow" class="modal fade" aria-hidden="true" style="overflow-y:scroll" data-backdrop="static"
      keyboard:false>
     <div class="modal-dialog" style="width: 80%">
@@ -181,7 +147,7 @@
                     <thead>
                     <tr>
                         <th data-checkbox="true"></th>
-                        <th data-field="checkin.userName">维修保养登记人</th>
+                        <th data-field="checkin.userName">车主姓名</th>
                         <th data-field="checkin.user.userEmail">车主邮箱</th>
                         <th data-field="checkin.user.userPhone">车主电话号码</th>
                     </tr>
@@ -194,6 +160,32 @@
                     <button type="button" class="btn btn-default" onclick="closeMessageSendUserWin()">关闭
                     </button>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="sendMsgWindow" class="modal fade" aria-hidden="true" style="overflow-y:scroll" data-backdrop="static"
+     keyboard:false>
+    <div class="modal-dialog" style="width: 60%">
+        <div class="modal-content">
+            <div class="modal-body">
+                <span class="glyphicon glyphicon-remove closeModal"
+                      onclick="closeMessageSendModals()"></span>
+                <h4>查看短信内容</h4>
+                <form class="form-horizontal" id="sendMsgForm" method="post">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">短信内容：</label>
+                        <div class="col-sm-7">
+                        <textarea id="sendMsgText" type="text"  placeholder="请输入短信内容" style="height: 200px;"
+                                  maxlength="500" class="form-control"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

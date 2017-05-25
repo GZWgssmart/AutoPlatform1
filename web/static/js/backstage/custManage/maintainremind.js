@@ -30,6 +30,19 @@ $(function () {
     });
 });
 
+function formatterreMindMsg(value, row, index) {
+    return "&nbsp;&nbsp;<button type='button' class='btn btn-success' onclick='mindMsgShow(\""+'/maintainRemind/queryById/'+ row.remindId+"\")'>查看保养提醒消息</a>";
+}
+
+function mindMsgShow(url) {
+    $.get(url, function(data){
+        // alert(data.sendMsg);
+        document.getElementById('remindMsgText').value = data.remindMsg;
+    },"json");
+    $("#remindMsgWindow").modal('show');
+    document.getElementById('remindMsgText').readOnly = true;
+}
+
 // 模糊查询
 function blurredQuery(){
     var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员";
@@ -281,12 +294,26 @@ function showAddRemindUser() {
 
 }
 
+function closeaddWindow() {
+    $("#addWindow").modal('hide');
+    $("#RemindUserWindow").modal('show');
+    $("#addForm").data('bootstrapValidator').destroy(); // 销毁此form表单
+    $("#addForm").data('bootstrapValidator', null);// 此form表单设置为空
+}
+
 function remindTypeChange(obj) {
     if(obj.value == '短信提醒') {
-        document.getElementById('addRemindMsg').style.display='none';
+        // document.getElementById('addRemindMsg').style.display='none'; //div隐藏
+        document.getElementById("addRemindMsg").value = "【汽车之家】尊敬的"+$('#addCheckinName').val()+"车主， 你的爱车已经需要再次维修保养了， 请速速前来本店。 ";
+        document.getElementById("addRemindMsg").readOnly = true;
     } else if(obj.value == '邮箱提醒') {
-        document.getElementById('addRemindMsg').style.display='';
+        document.getElementById("addRemindMsg").value = "";
+        document.getElementById("addRemindMsg").readOnly = false;
     }
+}
+
+function closeRemindModals() {
+    $("#remindMsgWindow").modal('hide');
 }
 
 function validator(formId) {

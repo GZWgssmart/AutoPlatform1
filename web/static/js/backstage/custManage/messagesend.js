@@ -55,6 +55,40 @@ $(function () {
     // });
 });
 
+function formatterSendMsg(value, row, index) {
+    return "&nbsp;&nbsp;<button type='button' class='btn btn-success' onclick='sendMsgShow(\""+'/messageSend/queryById/'+ row.messageId+"\")'>查看短信内容</a>";
+}
+
+function sendMsgShow(url) {
+    $.get(url, function(data){
+            // alert(data.sendMsg);
+            document.getElementById('sendMsgText').value = data.sendMsg;
+        },"json");
+    $("#sendMsgWindow").modal('show');
+    document.getElementById('sendMsgText').readOnly = true;
+}
+
+function closesendMsgWindow() {
+    $("#sendMsgWindow").modal('hide');
+}
+
+function messageTypeChange(obj) {
+    if(obj.value == '模板1') {
+        document.getElementById('sendMsgDiv').style.display='';
+        // document.getElementById('addRemindMsg').style.display='none'; //div隐藏
+        document.getElementById("addSendMsg").value = "【汽车之家】亲，本店开启了促销活动， 快来给你的爱车进行维修保养吧~";
+        document.getElementById("addSendMsg").readOnly = true;
+    } else if(obj.value == '模板2') {
+        document.getElementById('sendMsgDiv').style.display='';
+        document.getElementById("addSendMsg").value = "【汽车之家】尊敬的车主您好， 您已经很久没有进行维修保养了， 快来预约吧。";
+        document.getElementById("addSendMsg").readOnly = true;
+    }
+}
+
+function closeMessageSendModals() {
+    $("#sendMsgWindow").modal('hide');
+}
+
 // 模糊查询
 function blurredQuery() {
     var roles = "公司超级管理员,公司普通管理员,汽车公司接待员";
@@ -199,10 +233,15 @@ function validator(formId, userIds, userPhone) {
                 }
             },
             sendMsg: {
-                message: '发送内容验证失败',
+                message: '短信内容验证失败',
                 validators: {
                     notEmpty: {
-                        message: '发送内容不能为空'
+                        message: '短信内容不能为空'
+                    },
+                    stringLength: {
+                        min: 1,
+                        max: 500,
+                        message: '短信内容不能超过500个字符'
                     }
                 }
             }
@@ -289,6 +328,7 @@ function showMessageSend() {
     $.post("/user/isLogin/" + roles, function (data) {
         if (data.result == 'success') {
             $("#showMessageSendWindow").modal('show');
+            document.getElementById('sendMsgDiv').style.display='none'; //div隐藏
             initTableMessageNotTollbar("showMessageSendTable", "/maintainRecord/queryByPagerSuccess");
         } else if (data.result == 'notLogin') {
             swal({
@@ -316,6 +356,7 @@ function showMessageSend() {
 }
 
 function closeMessageSend() {
+    document.getElementById('sendMsgDiv').style.display='none'; //div隐藏
     $("#addWindow").modal('hide');
     $("#showMessageSendWindow").modal('show');
     $("#addForm").data('bootstrapValidator').destroy(); // 销毁此form表单
@@ -351,6 +392,7 @@ function showMessageSendUser() {
                         userPhone += "," + row[index].checkin.user.userPhone;
                     }
                 });
+                $("#addSendMsg").val(row[0].sendMsg);
                 $("#showMessageSendWindow").modal('hide');
                 $("#addWindow").modal('show');
                 $("#addButton").removeAttr("disabled");

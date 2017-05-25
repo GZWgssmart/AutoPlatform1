@@ -11,6 +11,7 @@ import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
 import com.gs.common.mail.MailConfig;
+import com.gs.common.mes.IndustrySMS;
 import com.gs.common.util.RoleUtil;
 import com.gs.common.util.SessionUtil;
 import com.gs.service.MaintainRecordService;
@@ -86,6 +87,24 @@ public class MessageSendController {
     }
 
     @ResponseBody
+    @RequestMapping(value = "queryById/{messageId}", method = RequestMethod.GET)
+    public MessageSend queryById(HttpSession session, @PathVariable("messageId") String messageId) {
+        if (SessionUtil.isLogin(session)) {
+            String roles = "公司超级管理员,公司普通管理员,汽车公司接待员";
+            if (RoleUtil.checkRoles(roles)) {
+                MessageSend ms = messageSendService.queryById(messageId);
+                return ms;
+            } else {
+                logger.info("此用户无拥有此方法");
+                return null;
+            }
+        } else {
+            logger.info("请先登录");
+            return null;
+        }
+    }
+
+    @ResponseBody
     @RequestMapping(value = "insert/{userIds}/{userPhone}", method = RequestMethod.POST)
     public ControllerResult batchInsert(HttpSession session, @PathVariable("userIds") String userIds,@PathVariable("userPhone")String userPhone) {
         if (SessionUtil.isLogin(session)) {
@@ -94,6 +113,7 @@ public class MessageSendController {
                 logger.info("短信提醒记录添加操作");
                 User user = (User) session.getAttribute("user");
                 String sendMsg = req.getParameter("sendMsg");
+                String messageSendText = req.getParameter("messageSendText");
                 String[] strArray = null;
                 strArray = userIds.split(",");
                 String[] strArray1 = null;
@@ -106,8 +126,16 @@ public class MessageSendController {
                     m.setCompanyId(user.getCompanyId());
                     list.add(m);
                 }
-                for(String phone : strArray1){
-                    // TODO sendSms
+                if(messageSendText.equals("模板1")) {
+                    for(String phone : strArray1){
+                        IndustrySMS i = new IndustrySMS(phone, "【汽车之家】亲，本店开启了促销活动， 快来给你的爱车进行维修保养吧~");
+                        i.execute();
+                    }
+                } else if(messageSendText.equals("模板2")) {
+                    for(String phone2 : strArray1){
+                        IndustrySMS i = new IndustrySMS(phone2, "【汽车之家】尊敬的车主您好， 您已经很久没有进行维修保养了， 快来预约吧。");
+                        i.execute();
+                    }
                 }
                 messageSendService.batchInsert(list);
                 return ControllerResult.getSuccessResult("添加短信提醒成功");
@@ -176,7 +204,7 @@ public class MessageSendController {
 
     @ResponseBody
     @RequestMapping(value = "blurredQuery", method = RequestMethod.GET)
-    public Pager4EasyUI<MessageSend> blurredQuery(HttpSession session, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize, MessageSend messageSend) {
+    public Pager4EasyUI<MessageSend> blurredQuery(HttpSession session, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize, MessageSend messageSend, User user) {
         if (SessionUtil.isLogin(session)) {
             String roles = "公司超级管理员,公司普通管理员,汽车公司接待员";
             if (RoleUtil.checkRoles(roles)) {
@@ -191,6 +219,8 @@ public class MessageSendController {
                         messageSend.setUserId(value);
                     } else if (text.equals("发送内容")) {
                         messageSend.setSendMsg(value);
+                    } else if (text.equals("车主手机号码")) {
+                        messageSend.setUser(user);
                     }
                     int count = messageSendService.countByBlurred(messageSend, (User) session.getAttribute("user"));
                     pager.setTotalRecords(count);

@@ -39,9 +39,8 @@
   </select>
 
   <select id="count" resultType="int" parameterType="com.gs.bean.User">
-    select count(mr.remindId) from t_maintain_remind mr,t_checkin c
-    where mr.userId = c.userId and remindMsg is not null
-    and c.checkinStatus = 'Y'
+    select count(*) from t_maintain_remind mr,t_checkin c where mr.userId = c.userId
+    and remindMsg is not null and c.checkinStatus = 'Y'
     <if test="companyId != null and companyId != ''">
       and mr.companyId = #{companyId}
     </if>
@@ -63,9 +62,8 @@
   </select>
 
   <select id="countNull" resultType="int" parameterType="com.gs.bean.User">
-    select count(mr.remindId) from t_maintain_remind mr,t_checkin c
-    where mr.userId = c.userId and remindMsg is null
-    and c.checkinStatus = 'Y'
+    select count(*) from t_maintain_remind mr,t_checkin c where mr.userId = c.userId
+    and remindMsg is null and c.checkinStatus = 'Y'
     <if test="companyId != null and companyId != ''">
       and mr.companyId = #{companyId}
     </if>
@@ -94,9 +92,8 @@
   </select>
 
   <select id="countUser" resultType="int">
-    select count(mr.remindId) from t_maintain_remind mr,t_checkin c
-    where mr.userId = c.userId and mr.userId = #{userId}
-    and c.checkinStatus = 'Y'
+    select count(*) from t_maintain_remind mr,t_checkin c where mr.userId = c.userId
+    and mr.userId = #{userId} and c.checkinStatus = 'Y'
   </select>
 
   <select id="blurredQuery" resultMap="BaseResultMap">
@@ -123,8 +120,7 @@
   </select>
 
   <select id="countByBlurred"  resultType="int">
-    select count(mr.remindId)
-    from t_maintain_remind mr,t_checkin c where mr.userId = c.userId
+    select count(*) from t_maintain_remind mr,t_checkin c where mr.userId = c.userId
     and remindMsg is not null and c.checkinStatus = 'Y'
     <if test="user.companyId != null and user.companyId != ''">
       and mr.companyId = #{user.companyId}
@@ -142,4 +138,9 @@
       and mr.remindType like concat('%',#{maintainRemind.remindType},'%')
     </if>
   </select>
+
+  <select id="queryById" resultType="maintainRemind">
+    SELECT mr.* FROM t_maintain_remind mr where mr.remindId = #{remindId}
+  </select>
+
 </mapper>

@@ -45,6 +45,16 @@
     limit #{beginIndex}, #{pageSize}
   </select>
 
+  <select id="count" resultType="int" parameterType="com.gs.bean.User">
+    SELECT count(*) FROM t_company co,t_complaint c
+    LEFT JOIN t_user u ON c.userId = u.userId
+    LEFT  JOIN t_user u2 ON c.complaintReplyUser = u2.userId
+    WHERE c.companyId = co.companyId
+    <if test="companyId != null and companyId != ''">
+      and c.companyId = #{companyId}
+    </if>
+  </select>
+
   <select id="queryByPagerName" resultMap="BaseResultMap">
     SELECT c.*,u.userId AS user_id,u.userName AS user_name,
     u2.userId AS admin_id,u2.userName AS admin_name,
@@ -74,8 +84,7 @@
   </select>
 
   <select id="countName"  resultType="int">
-    SELECT count(complaintId)
-    FROM t_company co,t_complaint c
+    SELECT count(*) FROM t_company co,t_complaint c
     LEFT JOIN t_user u ON c.userId = u.userId
     LEFT  JOIN t_user u2 ON c.complaintReplyUser = u2.userId
     WHERE c.companyId = co.companyId
@@ -93,17 +102,6 @@
     </if>
     <if test="complaint.complaintReply != null and complaint.complaintReply != ''">
       and c.complaintReply like concat('%',#{complaint.complaintReply},'%')
-    </if>
-  </select>
-
-  <select id="count" resultType="int" parameterType="com.gs.bean.User">
-    select count(c.complaintId)
-    FROM t_company co,t_complaint c
-    LEFT JOIN t_user u ON c.userId = u.userId
-    LEFT  JOIN t_user u2 ON c.complaintReplyUser = u2.userId
-    WHERE c.companyId = co.companyId
-    <if test="companyId != null and companyId != ''">
-      and c.companyId = #{companyId}
     </if>
   </select>
 
@@ -129,8 +127,7 @@
   </select>
 
   <select id="countComplaintUser" resultType="int">
-    select count(c.complaintId)
-    FROM t_company co,t_complaint c
+   SELECT count(*) FROM t_company co,t_complaint c
     LEFT JOIN t_user u ON c.userId = u.userId
     LEFT  JOIN t_user u2 ON c.complaintReplyUser = u2.userId
     WHERE c.companyId = co.companyId and u.userId = #{userId}

@@ -28,18 +28,19 @@
             <tr>
                 <th data-radio="true"></th>
                 <th data-field="checkin.userName">车主姓名</th>
-                <th data-field="lastMaintainTime" data-formatter="formatterDate">上次维修保养时间</th>
+                <th data-field="lastMaintainTime" data-formatter="formatterDate" data-width="100">上次维修保养时间</th>
                 <th data-field="lastMaintainMileage">上次汽车行驶里程</th>
-                <th data-field="remindMsg">维修保养提醒消息</th>
+                <%--<th data-field="remindMsg">维修保养提醒消息</th>--%>
                 <th data-field="remindType">维修保养提醒方式</th>
                 <th data-field="remindTime" data-formatter="formatterDate">维修保养提醒时间</th>
                 <th data-field="remindCreatedTime" data-formatter="formatterDate">提醒记录创建时间</th>
+                <th data-formatter="formatterreMindMsg">查看保养提醒消息</th>
             </tr>
             </thead>
         </table>
         <div id="toolbar" class="btn-group">
             <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员">
-                <button type="button" class="btn btn-success" onclick="showRemindUser()">
+                <button type="button" class="btn btn-w-m btn-info" onclick="showRemindUser()">
                     查看需要维修保养提醒的车主
                 </button>
             </shiro:hasAnyRoles>
@@ -111,10 +112,10 @@
                             </select>
                         </div>
                     </div>
-                    <div id="addRemindMsg" class="form-group">
+                    <div class="form-group">
                         <label class="col-sm-3 control-label">维修保养提醒内容：</label>
                         <div class="col-sm-7">
-                        <textarea type="text" name="remindMsg" placeholder="请输入维修保养提醒内容" style="height: 100px;"
+                        <textarea id="addRemindMsg" type="text" name="remindMsg" placeholder="请输入维修保养提醒内容" style="height: 100px;"
                                   class="form-control"></textarea>
                         </div>
                     </div>
@@ -133,7 +134,7 @@
                     <div class="form-group">
                         <div class="col-sm-offset-8">
                             <button type="button" class="btn btn-default"
-                                    onclick="closeModals('addWindow', 'addForm')">关闭
+                                    onclick="closeaddWindow()">关闭
                             </button>
                             <button id="addButton" class="btn btn-sm btn-success" type="button" onclick="addSubmit()">
                                 添加
@@ -268,19 +269,19 @@
                     <thead>
                     <tr>
                         <th data-radio="true"></th>
-                        <th data-field="checkin.user.userName">
+                        <th data-field="checkin.user.userName" data-width="80">
                             车主名称
                         </th>
-                        <th data-field="checkin.user.userPhone" data-width="150">
+                        <th data-field="checkin.user.userPhone" data-width="100">
                             车主手机号码
                         </th>
-                        <th data-field="checkin.user.userEmail" data-width="200">
+                        <th data-field="checkin.user.userEmail" data-width="150">
                             车主邮箱
                         </th>
-                        <th data-field="actualEndTime" data-formatter="formatterDate">
+                        <th data-field="actualEndTime" data-formatter="formatterDate" data-width="150">
                             上次维修保养时间
                         </th>
-                        <th data-field="checkin.carMileage">
+                        <th data-field="checkin.carMileage" data-width="150">
                             上次汽车行驶里程
                         </th>
                     </tr>
@@ -298,6 +299,31 @@
                     <%--<input type="button" class="btn btn-primary" onclick="checkUser()" value="确定">--%>
                     <%--</input>--%>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="remindMsgWindow" class="modal fade" aria-hidden="true" style="overflow-y:scroll" data-backdrop="static"
+     keyboard:false>
+    <div class="modal-dialog" style="width: 60%">
+        <div class="modal-content">
+            <div class="modal-body">
+                <span class="glyphicon glyphicon-remove closeModal"
+                      onclick="closeRemindModals()"></span>
+                <h4>查看维修保养提醒内容</h4>
+                <form class="form-horizontal" id="remindMsgForm" method="post">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">维修保养提醒内容：</label>
+                        <div class="col-sm-7">
+                        <textarea id="remindMsgText" type="text" placeholder="请输入维修保养提醒内容" style="height: 100px;"
+                                  maxlength="500" class="form-control"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

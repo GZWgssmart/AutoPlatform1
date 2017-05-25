@@ -44,7 +44,7 @@
   </select>
 
   <select id="count" resultType="int" parameterType="com.gs.bean.User" >
-    select count(m.messageId) FROM t_message_send m, t_checkin c, t_user u
+    SELECT count(*) FROM t_message_send m, t_checkin c, t_user u
     where  m.userId = c.userId and c.userId = u.userId
     and c.checkinStatus = 'Y'
     <if test="companyId != null and companyId != ''">
@@ -90,13 +90,15 @@
     <if test="messageSend.sendMsg != null and messageSend.sendMsg != ''">
       and m.sendMsg like concat('%',#{messageSend.sendMsg},'%')
     </if>
+    <if test="messageSend.user.userPhone != null and messageSend.user.userPhone != ''">
+      and u.userPhone like concat('%',#{messageSend.user.userPhone},'%')
+    </if>
     order by m.sendCreatedTime Desc
     limit #{pager.beginIndex}, #{pager.pageSize}
   </select>
 
   <select id="countByBlurred"  resultType="int">
-    SELECT count(m.messageId)
-    FROM t_message_send m, t_checkin c, t_user u
+    SELECT count(*) FROM t_message_send m, t_checkin c, t_user u
     where  m.userId = c.userId and c.userId = u.userId
     and c.checkinStatus = 'Y'
     <if test="user.companyId != null and user.companyId != ''">
@@ -108,6 +110,13 @@
     <if test="messageSend.sendMsg != null and messageSend.sendMsg != ''">
       and m.sendMsg like concat('%',#{messageSend.sendMsg},'%')
     </if>
+    <if test="messageSend.user.userPhone != null and messageSend.user.userPhone != ''">
+      and u.userPhone like concat('%',#{messageSend.user.userPhone},'%')
+    </if>
+  </select>
+
+  <select id="queryById" resultType="messageSend">
+    SELECT m.* FROM t_message_send m where m.messageId = #{messageId}
   </select>
 
 </mapper>

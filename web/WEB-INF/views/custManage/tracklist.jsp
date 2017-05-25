@@ -66,8 +66,8 @@
                             <li><a onclick="onclikLi(this)">跟踪回访车主</a></li>
                             <li class="divider"></li>
                             <li><a onclick="onclikLi(this)">回访问题</a></li>
-                            <li class="divider"></li>
-                            <li><a onclick="onclikLi(this)">服务评价</a></li>
+                            <%--<li class="divider"></li>--%>
+                            <%--<li><a onclick="onclikLi(this)">服务评价</a></li>--%>
                         </ul>
                     </div><!-- /btn-group -->
                     <input id="ulInput" class="form-control" onkeypress="if(event.keyCode==13) {blurredQuery();}">
