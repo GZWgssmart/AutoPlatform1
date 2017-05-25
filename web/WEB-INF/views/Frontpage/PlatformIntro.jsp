@@ -41,10 +41,10 @@
         <div class="nav-two">
             <div class="container-nav">
                 <ul class="nav-ul">
-                    <a href="#windows-m"><li>简介</li></a>
-                    <a href="#android-m"><li>所在地</li></a>
-                    <a href="#iphone-m"><li>我要干嘛</li></a>
-                    <a href="#ipad-m"><li>都是浮云</li></a>
+                    <a href="#windows-m"><li>项目简介</li></a>
+                    <a href="#android-m"><li>公司简介</li></a>
+                    <a href="#iphone-m"><li>常见问题</li></a>
+                    <a href="#ipad-m"><li>诚聘英才</li></a>
                     <div class="clearfix"></div>
                 </ul>
             </div>
@@ -67,9 +67,11 @@
                                 独特的二次开发功能可以为新老用户在以后的使用过程中出现的新模块，新功能随时进行添加，
                                 为用户的使用提供全面服务。
                             </p>
-                            <h3><strong>开发人员名单 </strong></h3>
-                            <p style="font-size: 22px;">张文星，程燕，钟燕玲，杨泽桥，姚勇，郭昶</p>
-                            <p style="font-size: 22px;">肖铭丰，王怡，姜圆圆，王彬， 杨建勇</p>
+                            <p>
+                                "汽车维修管理平台"以对车辆的维修和管理为主线， 通过对信息的收集、存储、传递、统计、分析、综合查询、报表输出和信息共享， 及时为企业领导及各部门管理人员的决策提供全面、准确的信息数据。
+                                此汽车维修保养管理平台旨在提升汽修店的信息化水平及工作 效率，提供便捷有效的方式管理从维修保养预约到维修完成产生收费单据并提车的整个过程。并附带汽修店基本信息的管理，汽车配件的库存管理等功能。
+                            </p>
+
                         </ul>
                     </div>
                     <div class="clearfix"></div>
@@ -85,10 +87,12 @@
             <div class="container">
                 <div class="col-md-6 col-sm-6 content-left  wow fadeInLeft animated" data-wow-delay="0.7s" >
                     <div class="first-rt-txt">
-                        <h1 style="font-size: 4em;">我们在做什么？<p>What are we doing</p></h1>
-
+                        <h1 style="font-size: 4em;">公司简介</h1>
+                        <p style="font-size: 22px;"><strong>地址：</strong>江西赣州</p>
+                        <h3><strong>开发人员： </strong></h3>
+                        <p style="font-size: 22px;">张文星，程燕，钟燕玲，杨泽桥，姚勇，郭昶</p>
+                        <p style="font-size: 22px;">肖铭丰，王怡，姜圆圆，王彬， 杨建勇</p>
                     </div>
-
                 </div>
                 <div class="col-md-6 col-sm-6 content-right wow fadeInRight animated" data-wow-delay="0.7s" >
                     <div class="first-left-bg">
@@ -110,7 +114,8 @@
                     </div>
                     <div class="col-md-6 col-sm-6 content-right wow fadeInRight animated" data-wow-delay="0.7s" >
                         <div class="first-rt-txt">
-                            <h1 style="font-size: 4em;">我们在哪？<p>Where are we</p></h1>
+                            <h1 style="font-size: 4em;">常见问题</h1>
+                            <p style="font-size: 22px;">如有疑问请咨询客服或前往<a href="/common">常见问题页面</a>了解</p>
                         </div>
                         <div class="clearfix"></div>
                     </div>
