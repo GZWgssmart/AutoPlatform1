@@ -30,7 +30,7 @@
 
                 </div>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="/index">主页</a></li>
+                    <li><a href="/home">主页</a></li>
                     <li class="icon-li"><a href="/reg">登录</a></li>
                     <li class="icon-li"><a href="/platformIntro">关于我们</a></li>
                     <li id="menu-bg"><a href="/factoryreg">汽修公司入驻</a></li>
@@ -41,8 +41,8 @@
         <div class="nav-two">
             <div class="container-nav">
                 <ul class="nav-ul">
-                    <a href="#windows-m"><li>我是谁</li></a>
-                    <a href="#android-m"><li>我在哪</li></a>
+                    <a href="#windows-m"><li>简介</li></a>
+                    <a href="#android-m"><li>所在地</li></a>
                     <a href="#iphone-m"><li>我要干嘛</li></a>
                     <a href="#ipad-m"><li>都是浮云</li></a>
                     <div class="clearfix"></div>
@@ -59,9 +59,17 @@
                 </div>
                 <div class="col-md-6 col-sm-6 content-right wow fadeInRight animated" data-wow-delay="0.7s" >
                     <div class="first-rt-txt">
-                        <h1 style="font-size: 4em;"><p>我们是谁？</p> Who are we</h1>
-                        <ul class="des-txt" style="list-style: none;">
-
+                        <h1 style="font-size: 4em;"><p>简介</p></h1>
+                        <ul class="des-txt" style="list-style: none;margin-left: 20px;">
+                            <p>
+                                "汽车维修管理平台"是一款面向汽修汽配行业的管理软件，本平台专注于车辆的信息化管理，
+                                为加强企业对车辆维修的综合管理而提供全方位的解决方案，并且具有二次开发的独特特性，
+                                独特的二次开发功能可以为新老用户在以后的使用过程中出现的新模块，新功能随时进行添加，
+                                为用户的使用提供全面服务。
+                            </p>
+                            <h3><strong>开发人员名单 </strong></h3>
+                            <p style="font-size: 22px;">张文星，程燕，钟燕玲，杨泽桥，姚勇，郭昶</p>
+                            <p style="font-size: 22px;">肖铭丰，王怡，姜圆圆，王彬， 杨建勇</p>
                         </ul>
                     </div>
                     <div class="clearfix"></div>

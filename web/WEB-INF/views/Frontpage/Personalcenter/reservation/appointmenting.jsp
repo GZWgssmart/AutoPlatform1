@@ -213,9 +213,9 @@
                         notEmpty: {
                             message: '车牌号码不能为空'
                         }, stringLength: {
-                            min: 6,
-                            max: 6,
-                            message: '车牌号码必须为6位'
+                            min: 5,
+                            max: 5,
+                            message: '车牌号码必须为5位'
                         },
                     }
                 },

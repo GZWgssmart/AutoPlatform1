@@ -134,7 +134,7 @@
                 </div>
             </div>
             <div class="button-box2">
-                <button class="btn wow fadeInRight animated " data-wow-delay="0.5s" style="width: 200px;height: 50px;visibility: visible; animation-delay: 1s; animation-name: fadeInRight;">了解更多</button>
+                <button class="btn wow fadeInRight animated " data-wow-delay="0.5s" style="width: 200px;height: 50px;visibility: visible; animation-delay: 1s; animation-name: fadeInRight;"><a href="/platformIntro" style="color: #fff;text-decoration: none;">了解更多</a></button>
             </div>
         </div>
         <%--主内容三--%>
