@@ -68,8 +68,8 @@ var FileInput = function () {
             minImageWidth: 50, //图片的最小宽度
             minImageHeight: 50,//图片的最小高度
 //          showPreview :true, //是否显示预览
-//          maxImageWidth: 350,//图片的最大宽度
-//          maxImageHeight: 350,//图片的最大高度
+            maxImageWidth: 220,//图片的最大宽度
+            maxImageHeight: 220,//图片的最大高度
 //          maxFileSize: 0,//单位为kb，如果为0表示不限制文件大小
             maxFileCount: 1, //表示允许同时上传的最大文件个数
             autoReplace: true,//是否自动替换当前图片，设置为true时，再次选择文件，会将当前的文件替换掉。
@@ -94,63 +94,63 @@ var FileInput = function () {
 
 
 //初始化fileinput
-// var FileInput1 = function () {
-//     var oFile = new Object();
-//     //初始化fileinput控件（第一次初始化）
-//     oFile.Init = function (ctrlName, uploadUrl, editLogo) {
-//         var control = $('#' + ctrlName);
-//         var editLogo = $("#editLogo").val();
-//         $('#' + ctrlName).parent().css('width', '90%');
-//         $('#' + ctrlName).parent().css('height', '70%');
-//         //初始化上传控件的样式
-//         control.fileinput({
-//             language: 'zh', //设置语言
-//             uploadUrl: uploadUrl, //上传的地址
-//             allowedFileExtension      s: ['jpg', 'gif', 'png'],//接收的文件后缀
-//             showUpload: false, //是否显示上传按钮
-//             showCaption: false,//是否显示标题
-//             browseClass: "btn btn-primary", //按钮样式
-//             showRemove : true, //显示移除按钮,跟随文本框的那个
-//             dropZoneEnabled: true,//是否显示拖拽区域
-//             minImageWidth: 50, //图片的最小宽度
-//             minImageHeight: 50,//图片的最小高度
-// //          maxImageWidth: 350,//图片的最大宽度
-// //          maxImageHeight: 350,//图片的最大高度
-// //          maxFileSize: 0,//单位为kb，如果为0表示不限制文件大小
-//             maxFileCount: 1, //表示允许同时上传的最大文件个数
-//             autoReplace: true,//是否自动替换当前图片，设置为true时，再次选择文件，会将当前的文件替换掉。
-//             enctype: 'multipart/form-data',
-//             validateInitialCount: true,
-//             previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
-//         //     // msgFilesTooMany: "选择上传的文件数量({n}) 超过允许的最大数值{m}！",
-//         //
-//             overwriteInitial: true,
-//             initialPreview: [
-//                 '<img src="http://localhost:8080/'+editLogo+'"  class="kv-preview-data krajee-init-preview file-preview-image">',
-//             ],
-//             // initialPreviewAsData: false, // allows you to set a raw markup
-//             // initialPreviewFileType: 'image', // image is the default and can be overridden in config below
-//             // initialPreviewConfig: [
-//             //     {type: "image", size: 847000, url: "http://localhost:8080/"+editLogo},
-//             // ],
-//             uploadExtraData: {
-//                 img_key: "1000",
-//                 img_keywords: "happy, nature",
-//             }
-//
-//         }).on("fileuploaded", function (event, data) {
-//             // data 为controller返回的json
-//             var resp = data.response;
-//             if (resp.controllerResult.result == 'success') {
-//                 $("#file").val(resp.imgPath)
-//                 alert('处理成功');
-//             } else {
-//                 alert("上传失败")
-//             }
-//         });
-//     }
-//     return oFile;
-// };
+var FileInput1 = function () {
+    var oFile = new Object();
+    //初始化fileinput控件（第一次初始化）
+    oFile.Init = function (ctrlName, uploadUrl, editLogo) {
+        var control = $('#' + ctrlName);
+        var editLogo = $("#editLogo").val();
+        $('#' + ctrlName).parent().css('width', '90%');
+        $('#' + ctrlName).parent().css('height', '70%');
+        //初始化上传控件的样式
+        control.fileinput({
+            language: 'zh', //设置语言
+            uploadUrl: uploadUrl, //上传的地址
+            allowedFileExtensions: ['jpg', 'gif', 'png'],//接收的文件后缀
+            showUpload: false, //是否显示上传按钮
+            showCaption: false,//是否显示标题
+            browseClass: "btn btn-primary", //按钮样式
+            showRemove : true, //显示移除按钮,跟随文本框的那个
+            dropZoneEnabled: true,//是否显示拖拽区域
+            minImageWidth: 50, //图片的最小宽度
+            minImageHeight: 50,//图片的最小高度
+            maxImageWidth: 220,//图片的最大宽度
+            maxImageHeight: 220,//图片的最大高度
+//          maxFileSize: 0,//单位为kb，如果为0表示不限制文件大小
+            maxFileCount: 1, //表示允许同时上传的最大文件个数
+            autoReplace: true,//是否自动替换当前图片，设置为true时，再次选择文件，会将当前的文件替换掉。
+            enctype: 'multipart/form-data',
+            validateInitialCount: true,
+            previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
+        //     // msgFilesTooMany: "选择上传的文件数量({n}) 超过允许的最大数值{m}！",
+        //
+            overwriteInitial: true,
+            initialPreview: [
+                '<img src="http://localhost:8080/'+editLogo+'"  class="kv-preview-data krajee-init-preview file-preview-image">',
+            ],
+            // initialPreviewAsData: false, // allows you to set a raw markup
+            // initialPreviewFileType: 'image', // image is the default and can be overridden in config below
+            // initialPreviewConfig: [
+            //     {type: "image", size: 847000, url: "http://localhost:8080/"+editLogo},
+            // ],
+            uploadExtraData: {
+                img_key: "1000",
+                img_keywords: "happy, nature",
+            }
+
+        }).on("fileuploaded", function (event, data) {
+            // data 为controller返回的json
+            var resp = data.response;
+            if (resp.controllerResult.result == 'success') {
+                $("#file").val(resp.imgPath)
+                alert('处理成功');
+            } else {
+                alert("上传失败")
+            }
+        });
+    }
+    return oFile;
+};
 
 //显示弹窗
 function showEdit() {
@@ -169,7 +169,7 @@ function showEdit() {
                 $("#editForm").fill(ceshi);
                 var editLogo = row[0].companyLogo;
                 // alert(editLogo);
-                var oFileInput = new FileInput();
+                var oFileInput = new FileInput1();
                 oFileInput.Init("file1", "/company/addFile", editLogo);
                 initCityPicker("address");//初始化三级地区联动
                 validator('editForm');
@@ -563,6 +563,10 @@ function endSuc(data, winId, formId) {
             text: data.controllerResult.message,
             confirmButtonText: "确定", // 提示按钮上的文本
             type: "success"
+        },function(isConfirm){
+            if (isConfirm) {
+                itemOnclik1();
+            }
         })
         $('#' + winId).modal('hide');
         $('#table').bootstrapTable('refresh');
