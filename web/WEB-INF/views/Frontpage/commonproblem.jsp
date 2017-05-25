@@ -42,7 +42,9 @@
     h2{
         margin:15px 0;
     }
-
+    p{
+        font-size:22px;
+    }
     .users,.admin{
         margin-top: 10%;
         margin-left: 5%;
@@ -52,12 +54,9 @@
 <body>
     <div id="fullpage">
         <div class="fp-section" id="one">
-            <div class="nav nav-two" id="navbar-two">
+            <div class="nav nav-two" style="background:rgba(0,0,0,0.3);" id="navbar-two">
                 <ul class="nav-two-ul wow fadeInLeft animated">
                     <a href="/home"><li>首页</li></a>
-                    <%--<a href="/factorypage"><li>商家</li></a>
-                    <a href="/resepage"><li>预约</li></a>
-                    <a href="/common" class="actives"><li>常见问题</li></a>--%>
                 </ul>
             </div>
             <div class="company wow fadeInRight animated">
