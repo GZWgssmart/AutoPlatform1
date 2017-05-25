@@ -332,7 +332,7 @@
     </if>
    </select>
 
-  <!-- 根据角色查询车主的基本信息 -->
+  <!-- 根据角色查询车主的基本信息 不分状态 -->
   <select id="queryCarByRoleName" resultMap="userBasicManageMap" parameterType="com.gs.common.bean.Pager">
     <![CDATA[
       select u.*, r.* from t_user u
@@ -343,7 +343,29 @@
     limit #{beginIndex}, #{pageSize};
   </select>
 
-  <!-- 车主记录数 -->
+  <!-- 查询角色为车主的可用状态的基本信息 -->
+  <select id="queryCarByOk" resultMap="userBasicManageMap" parameterType="com.gs.common.bean.Pager">
+    <![CDATA[
+      select u.*, r.* from t_user u
+          left join t_user_role ur on u.userId = ur.userId
+          left join t_role r on r.roleId = ur.roleId
+       where 1 = 1 and r.roleName = '车主' and u.userStatus = 'Y'
+    ]]>
+    limit #{beginIndex}, #{pageSize};
+  </select>
+
+  <!-- 查询角色为车主的不可用状态的基本信息 -->
+  <select id="queryCarByNo" resultMap="userBasicManageMap" parameterType="com.gs.common.bean.Pager">
+    <![CDATA[
+      select u.*, r.* from t_user u
+          left join t_user_role ur on u.userId = ur.userId
+          left join t_role r on r.roleId = ur.roleId
+       where 1 = 1 and r.roleName = '车主' and u.userStatus = 'N'
+    ]]>
+    limit #{beginIndex}, #{pageSize};
+  </select>
+
+  <!-- 车主记录数 不分状态 -->
   <select id="countCar" resultType="int">
     <![CDATA[
       select count(*) from t_user u
@@ -351,7 +373,26 @@
         left join t_role r on r.roleId = ur.roleId
         where 1 = 1 and r.roleName = '车主'
     ]]>
+  </select>
 
+  <!-- 可用的车主总记录数 -->
+  <select id="countCarByOk" resultType="int" parameterType="String">
+    <![CDATA[
+      select count(*) from t_user u
+        left join t_user_role ur on u.userId = ur.userId
+        left join t_role r on r.roleId = ur.roleId
+        where 1 = 1 and r.roleName = '车主' and u.userStatus = 'Y'
+    ]]>
+  </select>
+
+  <!-- 不可用的车主总记录数 -->
+  <select id="countCarByNo" resultType="int" parameterType="String">
+    <![CDATA[
+      select count(*) from t_user u
+        left join t_user_role ur on u.userId = ur.userId
+        left join t_role r on r.roleId = ur.roleId
+        where 1 = 1 and r.roleName = '车主' and u.userStatus = 'N'
+    ]]>
   </select>
 
   <!-- 根据id查询员工的基本信息 -->

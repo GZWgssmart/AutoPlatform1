@@ -9,7 +9,6 @@ $(function () {
 
             // 初始化select2, 第一个参数是class的名字, 第二个参数是select2的提示语, 第三个参数是select2的查询url
             initSelect2("userRole", "请选择角色", "/role/role2CheckBox");
-
             //0.初始化fileinput
             var oFileInput = new FileInput();
             oFileInput.Init("file", "/userBasicManage/addFile");
@@ -65,6 +64,7 @@ var FileInput = function () {
 //                maxImageHeight: 350,//图片的最大高度
             maxFileSize: 0,//单位为kb，如果为0表示不限制文件大小
             maxFileCount: 1, //表示允许同时上传的最大文件个数
+            autoReplace: true,//是否自动替换当前图片，设置为true时，再次选择文件，会将当前的文件替换掉。
             enctype: 'multipart/form-data',
             validateInitialCount: true,
             previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
@@ -124,14 +124,6 @@ function validator(formId) {
             validating: 'glyphicon glyphicon-refresh'
         },
         fields: {
-            // userIconTemp: {
-            //     message: '用户头像验证失败',
-            //     validators: {
-            //         notEmpty: {
-            //             message: '头像不能为空'
-            //         }
-            //     }
-            // },
             userName: {
                 message: '用户名验证失败',
                 validators: {
@@ -281,7 +273,6 @@ function formSubmit(url, formId, winId) {
             $.post(url, $("#"+formId).serialize() + "&userBirthday="+userBirthday,
                 function (data) {
                     if (data.controllerResult.result == "success") {
-                        console.log(data);
                         if(data.user) {
                             var fileData = document.getElementById("file").files[0];
                             var formData = new FormData();
@@ -381,7 +372,6 @@ function showEdit(){
             var row =  $('table').bootstrapTable('getSelections');
             if(row.length >0) {
                 var emp = row[0];
-
                 var loginTime = emp.userLoginedTime;  /* 登录时间 */
                 var formatterLoginTime = formatterDateTime(loginTime);
                 if(formatterLoginTime == null || formatterLoginTime == '') {
@@ -389,7 +379,6 @@ function showEdit(){
                 } else {
                     $("#editLoginTime").val(formatterLoginTime);
                 }
-
                 //如果登录的是系统的管理员就只能对系统的管理员进行操作
                 if(loginRoleName == '系统超级管理员' || loginRoleName == '系统普通管理员' ) {
                     if(emp.role.roleName == '系统超级管理员' || emp.role.roleName == '系统普通管理员') {
@@ -397,8 +386,8 @@ function showEdit(){
                         $("#editButton").removeAttr("disabled");
                         $('#editUserRole').html('<option value="' + emp.role.roleId + '">' + emp.role.roleName + '</option>').trigger("change");
                         $('#editDatetimepicker').val(formatterDate(emp.userBirthday));
-                        $('#editCity_china').val(formatterAddress(emp.userAddress));
                         $("#editForm").fill(emp);
+                        initCityPicker("editAddress");//初始化三级地区联动
                         validator('editForm');
                     } else {
                         swal({
@@ -417,8 +406,8 @@ function showEdit(){
                                 $("#editButton").removeAttr("disabled");
                                 $('#editUserRole').html('<option value="' + emp.role.roleId + '">' + emp.role.roleName + '</option>').trigger("change");
                                 $('#editDatetimepicker').val(formatterDate(emp.userBirthday));
-                                $('#editCity_china').val(formatterAddress(emp.userAddress));
                                 $("#editForm").fill(emp);
+                                initCityPicker("editAddress");//初始化三级地区联动
                                 validator('editForm');
                             } else {
                                 swal({
@@ -434,8 +423,8 @@ function showEdit(){
                             $("#editButton").removeAttr("disabled");
                             $('#editUserRole').html('<option value="' + emp.role.roleId + '">' + emp.role.roleName + '</option>').trigger("change");
                             $('#editDatetimepicker').val(formatterDate(emp.userBirthday));
-                            $('#editCity_china').val(formatterAddress(emp.userAddress));
                             $("#editForm").fill(emp);
+                            initCityPicker("editAddress");//初始化三级地区联动
                             validator('editForm');
                         }
                     } else {
@@ -482,12 +471,14 @@ function showEdit(){
 }
 
 function editSubmit() {
-    $("#editForm").data('bootstrapValidator').validate();
-    if ($("#editForm").data('bootstrapValidator').isValid()) {
-        $("#editButton").attr("disabled","disabled");
-    } else {
-        $("#editButton").removeAttr("disabled");
-    }
+    setTimeout(function () {
+        $("#editForm").data('bootstrapValidator').validate();
+        if ($("#editForm").data('bootstrapValidator').isValid()) {
+            $("#editButton").attr("disabled","disabled");
+        } else {
+            $("#editButton").removeAttr("disabled");
+        }
+    },500)
 }
 
 // function showReturn(){
@@ -584,58 +575,47 @@ function blurredQuery(){
 
 // 点击显示详细信息
 function showDetail(row) {
-        var emp = row;
+    var emp = row;
+    // 将获取到的userIcon 的值 赋给img的src  attr=>属性 val=>值
+    if(emp.userIcon != null) {
+        $('#detailUserIcon').attr("src", "/" + emp.userIcon);
+    } else {
+        $('#detailUserIcon').attr("src", "/static/img/default.png");    // 如果图片为空就显示默认图
+    }
 
-        // 将获取到的userIcon 的值 赋给img的src  attr=>属性 val=>值
-        if(emp.userIcon != null) {
-            $('#detailUserIcon').attr("src", "/" + emp.userIcon);
-        } else {
-            $('#detailUserIcon').attr("src", "/static/img/default.png");    // 如果图片为空就显示默认图
-        }
+    var gender = emp.userGender;
+    if(gender == 'M') {
+        $('#detailGender').val('男');
+    } else if(gender == 'F') {
+        $('#detailGender').val('女');
+    } else {
+        $('#detailGender').val('未选择');
+    }
 
-        var gender = emp.userGender;
-        if(gender == 'M') {
-            $('#detailGender').val('男');
-        } else if(gender == 'F') {
-            $('#detailGender').val('女');
-        } else {
-            $('#detailGender').val('未选择');
-        }
+    var createdTime = emp.userCreatedTime;  /* 创建时间 */
+    var formatterCreateTime = formatterDateTime(createdTime);
+    $("#detailCreatedTime").val(formatterCreateTime);
 
-        var createdTime = emp.userCreatedTime;  /* 创建时间 */
-        var formatterCreateTime = formatterDateTime(createdTime);
-        $("#detailCreatedTime").val(formatterCreateTime);
+    var loginTime = emp.userLoginedTime;  /* 登录时间 */
+    var formatterLoginTime = formatterDateTime(loginTime);
+    if(formatterLoginTime == null || formatterLoginTime == '') {
+        $("#detailLoginTime").val("未登录过");
+    } else {
+        $("#detailLoginTime").val(formatterLoginTime);
+    }
 
-        var loginTime = emp.userLoginedTime;  /* 登录时间 */
-        var formatterLoginTime = formatterDateTime(loginTime);
-        if(formatterLoginTime == null || formatterLoginTime == '') {
-            $("#detailLoginTime").val("未登录过");
-        } else {
-            $("#detailLoginTime").val(formatterLoginTime);
-        }
+    $('#detailBirthday').val(formatterDate(emp.userBirthday));  /* 格式化不带时分秒的时间 */
 
-        var address = emp.userAddress;
-        var addresses = address.split('-');
-        console.log(addresses)
-        var dress="";
-        for(var i= 0, len = addresses.length; i<len; i++ ){
-            if(addresses[i] != null && addresses[i] != 'null' && addresses[i] != "" && addresses[i] != 0){
-                dress += '-' + addresses[i] ;
-            }
-        }
-        if(dress != "") {
-            dress = dress.substring(1);
-        } else {
-            dress = "未选择";
-        }
-        $("#detailAddress").val(dress);
+    var addressString = emp.userAddress;
+    if(addressString != null && addressString != "null" && addressString != 0) {
+        $("#address").val(addressString);
+    } else {
+        $("#address").val("未选择");
+    }
 
-        $('#detailBirthday').val(formatterDate(emp.userBirthday));  /* 格式化不带时分秒的时间 */
+    $("#detailWindow").modal('show');
+    $("#detailForm").fill(emp);
 
-        $("#detailWindow").modal('show');
-        $("#detailForm").fill(emp);
-
-        console.log(emp);
 }
 
 //  查询不可用的
@@ -724,15 +704,6 @@ function formatterGender(val) {
     }
 }
 
-// 格式化地址
-function formatterAddress(val) {
-    var address = val.split('-');
-    $("#editProvince").val(address[0]);
-    $("#editCity").val(address[1]);
-    $("#editArea").val(address[2]);
-    // alert(address[0] + ',' + address[1] + ',' + address[2]);
-}
-
 //格式化不带时分秒的时间值。
 function formatterDate(value) {
     if (value == undefined || value == null || value == '') {
@@ -783,7 +754,7 @@ function formatterDateTime(value) {
     }
 }
 
-// 激活或禁用    =---------------------------------  禁用激活有点问题，记得改 ***************************
+// 激活或禁用
 function formatterStatus(value, row, index) {
     if(loginRoleName == '系统超级管理员' || loginRoleName == '系统普通管理员') {  // 登录的角色为系统的管理员的时候
         if (userId != row.userId) { // 登录的用户如果和选中的行的数据的userId不一样
@@ -831,12 +802,6 @@ function companyFormatter(el,row,index){
     return "暂无"
 }
 
-//  修改时，点击地址的文本框后，文本框隐藏，地址下拉选择显示
-var address = $("#address");
-address.click(function () {
-    address.css('display', 'none');
-    $('#userAddress').css('display', 'block');
-})
 
 // $(".js-example-basic-multiple").select2({
 //     allowClear: true

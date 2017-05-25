@@ -14,6 +14,8 @@
     <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.css">
     <link rel="stylesheet/less" href="/static/css/bootstrap-dateTimePicker/datetimepicker.less">
     <link rel="stylesheet" href="/static/css/select2.min.css">
+    <%-- 地址 --%>
+    <link rel="stylesheet" href="/static/css/city-picker/city-picker.css">
 
     <style>
         /* 让显示详细信息的窗口中的所有Input都不显示边框 */
@@ -49,6 +51,11 @@
 <body>
 <%@include file="../backstage/contextmenu.jsp" %>
 
+<%
+    User user = (User)session.getAttribute("user");
+    String iconSrcString = user.getUserIcon();
+%>
+
 <div class="container" id="detailWindow">
     <div class="panel-body" style="padding-bottom:0px;">
         <div class="modal-body">
@@ -57,15 +64,15 @@
                     <div class="form-right col-md-7">
                         <div class="form-group">
                             <img id="detailUserIcon" class="img-circle" style="width:180px;height:180px;"
-                                 src="/${sessionScope.user.userIcon}"><br/>
+                                 src=""><br/>
                         </div>
                         <div class="form-group pull-left">
                             <label class=" control-label">姓名：</label>
                             <input type="text" name="userName" value="${sessionScope.user.userName}" class="form-control"
-                                   style="margin-left: 30px;" disabled="true"> <%-- 此果文字会变成灰色，不可编辑。--%>
+                                   style="margin-left: 30px;" disabled="true">
                         </div>
                         <div class="form-group pull-left">
-                            <label class="control-label">Email：</label>
+                            <label class="control-label">邮箱：</label>
                             <input style="margin-left: 20px;" type="text" value="${sessionScope.user.userEmail}"
                                    class="form-control" disabled="true">
                         </div>
@@ -118,7 +125,7 @@
                         </div>
                         <div class="form-group pull-left">
                             <label class="control-label" >地址：</label>
-                            <input type="text" value="${sessionScope.user.userAddress}" class="form-control" disabled="true" style="margin-left: 20px;">
+                            <input type="text" id="userAddress" value="${sessionScope.user.userAddress}" class="form-control" style="margin-left: 20px;" disabled="true">
                         </div>
                         <div class="form-group pull-left">
                             <label class="control-label">上一次登录时间：</label>
@@ -128,11 +135,11 @@
                     </div>
                 </div>
                 <%-- 暂时先不添加修改功能，完善工资后再回头完成修改 --%>
-                <%--<div class="modal-footer">--%>
-                    <%--<button id="btn_edit" type="button" class="btn btn-default" onclick="showEdit();">--%>
-                        <%--<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改--%>
-                    <%--</button>--%>
-                <%--</div>--%>
+                <div class="modal-footer">
+                    <button id="btn_edit" type="button" class="btn btn-default" onclick="showEdit();">
+                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
+                    </button>
+                </div>
             </form>
         </div>
     </div>
@@ -147,8 +154,8 @@
                 <div class="modal-header" style="overflow:auto;">
                     <h3>修改人员信息</h3>
                 </div>
-                <form role="form" class="form-horizontal" id="editForm" method="post">
-                    <input type="hidden" value="${sessionScope.user.userId}" name="userId" class="form-control"/>
+                <form role="form" class="form-horizontal" id="editForm" >
+                    <input type="hidden" value="${sessionScope.user.userId}" name="userId" class="form-control" method="post"/>
                     <div>
                         <div class="form-group col-md-6 pull-left">
                             <label class="col-md-4 control-label">姓名：</label>
@@ -183,7 +190,7 @@
                         <div class="form-group col-md-6 pull-left">
                             <label class="col-md-4 control-label">性别：</label>
                             <div class="col-md-8">
-                                <select id="editUserGender" name="userGender" class="form-control" style="width: 50%;">
+                                <select id="editUserGender" name="userGender" value="${sessionScope.user.userGender}" class="form-control" style="width: 50%;">
                                     <option value='N'>未选择</option>
                                     <option value='M'>男</option>
                                     <option value='F'>女</option>
@@ -216,31 +223,16 @@
                     </div>
                     <div>
                         <div class="form-group col-md-12 pull-right">
-                            <label class="col-md-2 control-label" style="top: 9px;right:5px">地址：</label>
-                            <div class="col-md-9" id="address" style="margin-top: 10px;display: block;">
-                                <input id="sourceAddress" type="text" value="${sessionScope.user.userAddress}" class="form-control">
-                            </div>
-                            <div class="col-md-9" id="userAddress" style="margin-top: 10px;display: none;">
-                                <fieldset id="editCity_china">
-                                    <div class="pull-left">
-                                        省份：<select class="province" disabled="disabled" id="editProvince" name="editProvince"></select>
-                                    </div>
-                                    <div class="pull-left">
-                                        &nbsp;&nbsp;&nbsp;城市：<select class="city" disabled="disabled"
-                                                     id="editCity" name="editCity"></select>
-                                    </div>
-                                    <div class="pull-left">
-                                        &nbsp;&nbsp;&nbsp;地区：<select class="area" disabled="disabled"
-                                         id="editArea" name="editArea"></select>
-                                    </div>
-                                </fieldset>
+                            <label class="col-md-2 control-label" style="top: 5px;right:5px">地址：</label>
+                            <div style="position: relative;margin-top:10px;" class="col-md-10">
+                                <input id="editAddress" type="text" class="col-md-5" value="${sessionScope.user.userAddress}" name="userAddress"/>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <span id="editError"></span>
                         <button type="button" class="btn btn-default" onclick="closeModals('editWindow', 'editForm')">关闭</button>
-                        <button id="editButton" onclick="editSubmit();" type="button" class="btn btn-primary btn-sm" title="双击我">
+                        <button id="editButton" onclick="editSubmit();" type="submit" class="btn btn-primary btn-sm" title="双击我">
                             保存
                         </button>
                     </div>
@@ -267,16 +259,12 @@
 <script src="/static/js/backstage/emp/selfManage.js"></script>
 
 <%-- 地址选择 --%>
-<script src="/static/js/jquery.cxselect.min.js"></script>
+<script src="/static/js/city-picker/city-picker.data.js"></script>
+<script src="/static/js/city-picker/city-picker.js"></script>
 
 </body>
 
 <script>
-    $.cxSelect.defaults.url = '/static/js/cityData.json';
-    $('#editCity_china').cxSelect({
-        selects: ['province', 'city', 'area']
-    });
-
-    var gender = "${sessionScope.user.userGender}";
+    var iconSrc = "<%=iconSrcString %>";  // 登录的用户的头像
 </script>
 </html>

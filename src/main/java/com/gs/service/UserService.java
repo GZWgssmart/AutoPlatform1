@@ -146,9 +146,21 @@ public interface UserService extends BaseService<String, User> {
 
     public User queryById(User user);
 
-    //    查询车主用户信息
+    //  查询车主用户信息
     public List<User> queryCarByRoleName(Pager pager);
 
     //  车主记录数
     public int countCar();
+
+    //  查询状态为可用的车主用户信息
+    public List<User> queryCarByOk(Pager pager);
+
+    //  查询状态为不可用的车主用户信息
+    public List<User> queryCarByNo(Pager pager);
+
+    //  车主记录数 可用
+    public int countCarByOk(User user);
+
+    //  车主记录数 不可用
+    public int countCarByNo(User user);
 }

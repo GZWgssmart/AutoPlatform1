@@ -17,6 +17,8 @@
 
     <link rel="stylesheet" href="/static/css/fileinput.css">
 
+    <link rel="stylesheet" href="/static/css/city-picker/city-picker.css">
+
     <title>员工基本信息</title>
 
     <style>
@@ -89,7 +91,7 @@
                 <th data-width="70" data-field="userGender" data-formatter="formatterGender">性别</th>
                 <th data-formatter="formatterRole">用户角色</th>
                 <th data-width="150" data-field="company" data-formatter="companyFormatter">所属公司</th>
-                <th data-field="userEmail">用户Email</th>
+                <th data-field="userEmail">用户邮箱</th>
                 <th data-field="userPhone">用户手机号</th>
             <shiro:hasAnyRoles name="系统超级管理员, 系统普通管理员, 公司超级管理员,公司普通管理员,汽车公司人力资源管理部">
                 <th data-field="userStatus" data-formatter="formatterStatus" data-events="tableTodoCellFun">操作</th>
@@ -199,7 +201,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-3 control-label">Email：</label>
+                            <label class="col-md-3 control-label">邮箱：</label>
                             <div class="col-md-9">
                                 <input type="email" name="userEmail" placeholder="请输入邮箱"
                                        class="form-control userEmail">
@@ -253,19 +255,11 @@
                         </div>
                     </div>
                     <div class="form-group col-md-12">
-                        <label class="col-md-2 control-label" style="top: 9px;right:5px">家庭住址：</label>
+                        <label class="col-md-2 control-label" style="top: 5px;right:5px">地址：</label>
                         <div class="col-md-10">
-                            <fieldset id="city_china">
-                                <div class="form-group col-md-4">
-                                    <select class="province js-example-tags form-control" disabled="disabled" name="province"></select>
-                                </div>
-                                <div class="form-group col-md-4">
-                                    <select class="city js-example-tags form-control" disabled="disabled" name="city"></select>
-                                </div>
-                                <div class="form-group col-md-4">
-                                    <select class="area js-example-tags form-control" disabled="disabled" name="area"></select>
-                                </div>
-                            </fieldset>
+                            <div style="position: relative;">
+                                <input data-toggle="city-picker" class="col-md-4" name="userAddress"/>
+                            </div>
                         </div>
                     </div>
                     <p class="clearfix"></p>
@@ -302,7 +296,7 @@
                             </div>
                         </div>
                         <div class="form-group col-md-6 pull-left">
-                            <label class="col-md-4 control-label">Email：</label>
+                            <label class="col-md-4 control-label">邮箱：</label>
                             <div class="col-md-8">
                                 <input type="text" name="userEmail" define="emp.userEmail" class="form-control">
                             </div>
@@ -380,30 +374,15 @@
                     <div>
                         <div class="form-group col-md-12 pull-right">
                             <label class="col-md-2 control-label" style="top: 9px;right:5px">地址：</label>
-                            <div class="col-md-9" id="address" style="margin-top: 10px;display: block;">
-                                <input id="sourceAddress" type="text" define="emp.userAddress" class="form-control">
-                            </div>
-                            <div class="col-md-9" id="userAddress" style="display:none;">
-                                <fieldset id="editCity_china">
-                                    <div class="pull-left">
-                                        省份：<select class="province" disabled="disabled" id="editProvince" name="editProvince"></select>
-                                    </div>
-                                    <div class="pull-left">
-                                        &nbsp;&nbsp;&nbsp;城市：<select class="city" disabled="disabled"
-                                            id="editCity" name="editCity"></select>
-                                    </div>
-                                    <div class="pull-left">
-                                        &nbsp;&nbsp;&nbsp;地区：<select class="area" disabled="disabled"
-                                            id="editArea" name="editArea"></select>
-                                    </div>
-                                </fieldset>
+                            <div style="position: relative;margin-top:10px;" class="col-md-10">
+                                <input id="editAddress" type="text" class="col-md-5" define="emp.userAddress" name="userAddress"/>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <span id="editError"></span>
                         <button type="button" class="btn btn-default" onclick="closeModals('editWindow', 'editForm')">关闭</button>
-                        <button id="editButton" onclick="editSubmit();" type="button" class="btn btn-primary btn-sm" title="双击我">
+                        <button id="editButton" onclick="editSubmit();" class="btn btn-primary btn-sm" title="双击我">
                             保存
                         </button>
                     </div>
@@ -434,7 +413,7 @@
                                    style="margin-left: 30px;" disabled="true"> <%-- &lt;%&ndash;&lt;%&ndash;此果文字会变成灰色，不可编辑。&ndash;%&gt;&ndash;%&gt;--%>
                             </div>
                             <div class="form-group pull-left">
-                                <label class="control-label">Email：</label>
+                                <label class="control-label">邮箱：</label>
                                 <input style="margin-left: 20px;" type="text" define="emp.userEmail" class="form-control" disabled="true">
                             </div>
                             <div class="form-group pull-left">
@@ -489,7 +468,7 @@
                             </shiro:hasAnyRoles>
                             <div class="form-group pull-left">
                                 <label class="control-label" >地址：</label>
-                                <input type="text" id="detailAddress" class="form-control" disabled="true" style="margin-left: 20px;">
+                                <input id="address" type="text" class="form-control" name="userAddress"/>
                             </div>
                             <div class="form-group pull-left">
                                 <label class="control-label">上一次登录时间：</label>
@@ -524,7 +503,8 @@
 <script src="/static/js/backstage/emp/empInFormation.js"></script>
 
 <%-- 地址选择 --%>
-<script src="/static/js/jquery.cxselect.min.js"></script>
+<script src="/static/js/city-picker/city-picker.data.js"></script>
+<script src="/static/js/city-picker/city-picker.js"></script>
 
 <%-- 文件上传 --%>
 <script src="/static/js/fileInput/fileinput.js"></script>
@@ -533,21 +513,8 @@
 </body>
 <script>
 
-    $.cxSelect.defaults.url = '/static/js/cityData.json';
-    $('#city_china').cxSelect({
-        selects: ['province', 'city', 'area']
-    });
-    $('#editCity_china').cxSelect({
-        selects: ['province', 'city', 'area']
-    });
-    $('#city_china_val').cxSelect({
-        selects: ['province', 'city', 'area'],
-        nodata: 'none'
-    });
-
     var loginRoleName = "<%= name %>";
     var userId = "<%= userId %>";
-
 
     var tableTodoCellFun = {
         'click .detail': function (e, value, row, index) {

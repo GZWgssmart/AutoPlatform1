@@ -1,35 +1,53 @@
 var gender = $("#detailGender").val();
 $(function() {
-        var resultGender = formatterSex(gender);
-        $("#detailGender").val(resultGender);
-
-        var birthday = $("#detailBirthday").val();
-        $('#detailBirthday').val(formatterDate(new Date(birthday)));  /* 格式化不带时分秒的时间 */
-
-        var createdTime = $("#detailCreatedTime").val();  /* 创建时间 */
-        var formatterCreateTime = formatterDateTime(createdTime);
-        $("#detailCreatedTime").val(formatterCreateTime);
-
-        var loginTime = $("#detailLoginTime").val();  /* 登录时间 */
-        var formatterLoginTime = formatterDateTime(loginTime);
-        if(formatterLoginTime == null || formatterLoginTime == '') {
-            $("#detailLoginTime").val("未登录过");
-        } else {
-            $("#detailLoginTime").val(formatterLoginTime);
-        }
+    if(iconSrc == null || iconSrc == "null" || iconSrc == "") {
+        $("#detailUserIcon").attr("src","/static/img/default.png");
+    } else {
+        iconSrc = "/" + iconSrc;
+        $("#detailUserIcon").attr("src", iconSrc);
     }
-);
+
+    var resultGender = formatterSex(gender);
+    $("#detailGender").val(resultGender);
+
+    var birthday = $("#detailBirthday").val();
+    if(birthday != null && birthday != "") {
+        $('#detailBirthday').val(formatterDate(new Date(birthday)));
+    } else {
+        $('#detailBirthday').val("未选择生日");
+    }
+
+    var createdTime = $("#detailCreatedTime").val();  /* 创建时间 */
+    var formatterCreateTime = formatterDateTime(createdTime);
+    $("#detailCreatedTime").val(formatterCreateTime);
+
+    var loginTime = $("#detailLoginTime").val();  /* 登录时间 */
+    var formatterLoginTime = formatterDateTime(loginTime);
+    if(formatterLoginTime == null || formatterLoginTime == '') {
+        $("#detailLoginTime").val("未登录过");
+    } else {
+        $("#detailLoginTime").val(formatterLoginTime);
+    }
+
+    var addressString = $("#userAddress").val();
+    if(addressString != null && addressString != "null" && addressString != 0) {
+        $("#userAddress").val(addressString);
+    } else {
+        $("#userAddress").val("未选择");
+    }
+});
 
 // 修改窗口有问题*************************************************************************************
 function showEdit(){
+    alert("123")
     // 初始化时间框, 第一参数是form表单id, 第二参数是input的name
     initDatePicker('editForm', 'userBirthday', 'editDatetimepicker');
-
+    var birthday = $('#editDatetimepicker').val();
+    $('#editDatetimepicker').val(formatterDate(birthday));
     $('#editUserGender').val(formatterGender(gender));
-
     $("#editWindow").modal('show'); // 显示弹窗
     $("#editButton").removeAttr("disabled");
-    // $("#editForm").fill(user);
+    initCityPicker("editAddress");//初始化三级地区联动
     validator('editForm');
 }
 
@@ -122,7 +140,7 @@ function validator(formId) {
         }
     })
     .on('success.form.bv', function (e) {
-            formSubmit("/userBasicManage/updateSelfManage", formId, "editWindow");
+        formSubmit("/userBasicManage/updateSelfManage", formId, "editWindow");
     })
 }
 
@@ -136,7 +154,6 @@ function formSubmit(url, formId, winId) {
                 confirmButtonText: "确定", // 提示按钮上的文本
                 type: "success"
             })// 提示窗口, 修改成功
-            $('#table').bootstrapTable('refresh');
             $('#' + formId).data('bootstrapValidator', null);// 此form表单设置为空
         } else if (data.result == "fail") {
             swal({
@@ -161,9 +178,7 @@ function formSubmit(url, formId, winId) {
                     top.location = "/user/loginPage";
                 }
             })
-            if (formId == 'addForm') {
-                $("#addButton").removeAttr("disabled");
-            } else if (formId == 'editForm') {
+            if (formId == 'editForm') {
                 $("#editButton").removeAttr("disabled");
             }
         }
@@ -173,6 +188,7 @@ function formSubmit(url, formId, winId) {
 
 //   提交修改的数据
 function editSubmit() {
+    window.parent.refresh(window.name);
     $("#editForm").data('bootstrapValidator').validate();
     if ($("#editForm").data('bootstrapValidator').isValid()) {
         $("#editButton").attr("disabled","disabled");
@@ -251,10 +267,3 @@ function formatterGender(val) {
         return "女"
     }
 }
-
-//  修改时，点击地址的文本框后，文本框隐藏，地址下拉选择显示
-var address = $("#address");
-address.click(function () {
-    address.css('display', 'none');
-    $('#userAddress').css('display', 'block');
-})
