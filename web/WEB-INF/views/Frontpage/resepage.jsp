@@ -24,6 +24,7 @@
 <link rel="stylesheet" href="/static/css/bootstrap-validate/bootstrapValidator.min.css">
 <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.css">
 <link rel="stylesheet/less" href="/static/css/bootstrap-dateTimePicker/datetimepicker.less">
+
 <body>
     <%--预约页面--%>
     <div class="main">
@@ -185,6 +186,7 @@
 <script src="/static/js/backstage/main.js"></script>
 <script src="/static/js/bootstrap-switch/bootstrap-switch.js"></script>
 <script src="/static/js/bootstrap-validate/bootstrapValidator.js"></script>
+
 <script>
 
     function addApp() {
