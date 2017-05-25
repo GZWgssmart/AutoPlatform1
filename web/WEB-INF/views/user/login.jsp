@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="/static/css/bootstrap-validate/bootstrapValidator.min.css">
     <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.css">
     <link rel="stylesheet/less" href="/static/css/bootstrap-dateTimePicker/datetimepicker.less">
+    <link rel="stylesheet" href="/static/css/city-picker/city-picker.css">
 </head>
 <style>
     body{
@@ -96,19 +97,11 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3  col-md-3 control-label">公司地址</label>
-                        <div class="col-sm-9 col-md-9">
-                            <fieldset id="city_china">
-                                <div class="form-group col-md-4">
-                                    <select class="province js-example-tags form-control" disabled="disabled" name="province"></select>
-                                </div>
-                                <div class="form-group col-md-4">
-                                    <select class="city js-example-tags form-control" disabled="disabled" name="city"></select>
-                                </div>
-                                <div class="form-group col-md-4">
-                                    <select class="area js-example-tags form-control" disabled="disabled" name="area"></select>
-                                </div>
-                            </fieldset>
+                        <label class="col-sm-4  col-md-4 control-label">公司地址</label>
+                        <div class="col-sm-7 col-md-7">
+                            <div style="position: relative;">
+                                <input id="address" type="text" class="col-md-4" name="companyAddress"/>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group">
@@ -138,6 +131,8 @@
 <script src="/static/js/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.js"></script>
 <script src="/static/js/bootstrap-dateTimePicker/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
 <script src="/static/js/jquery.cxselect.js"></script>
+<script src="/static/js/city-picker/city-picker.data.js"></script>
+<script src="/static/js/city-picker/city-picker.js"></script>
 <script>
 
     $.cxSelect.defaults.url = '/static/js/cityData.min.json';

@@ -5,6 +5,7 @@
     <id column="materialReturnId" property="materialReturnId" jdbcType="VARCHAR" />
     <result column="matainRecordId" property="matainRecordId" jdbcType="VARCHAR" />
     <result column="count" property="count" />
+    <result column="accIdle" property="accIdle" />
     <result column="accId" property="accId" jdbcType="VARCHAR" />
     <result column="accCount" property="accCount" jdbcType="INTEGER" />
     <result column="mrCreatedDate" property="mrCreatedDate" jdbcType="TIMESTAMP" />
@@ -19,8 +20,9 @@
   <!--库存统计-->
   <select id="queryByCondition" resultMap="BaseResultMap">
     <![CDATA[
-select(SUM(mu.accCount) - SUM(mr.accCount)) as count, mr.mrCreatedDate from t_accessories a, t_accessories_type t,t_company c, t_material_use mu, t_material_return mr
-where a.accTypeId = t.accTypeId and a.companyId = c.companyId and a.accStatus = 'Y' and mu.accId = a.accId and mr.accId = a.accId and
+
+select SUM(mr.accCount) as count,a.accIdle as accIdle, mr.mrCreatedDate from t_accessories a, t_accessories_type t,t_company c, t_material_return mr
+where a.accTypeId = t.accTypeId and a.companyId = c.companyId and a.accStatus = 'Y' and mr.accId = a.accId and
 c.companyId = #{companyId} and t.accTypeId = #{accTypeId} and mr.mrCreatedDate >= #{start} and mr.mrCreatedDate <= #{end}
         ]]>
     <if test="type =='year'">

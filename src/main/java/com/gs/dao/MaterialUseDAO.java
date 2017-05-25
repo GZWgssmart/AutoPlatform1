@@ -67,4 +67,9 @@ public interface MaterialUseDAO extends BaseDAO<String, MaterialUse>{
 
 
     public List<Company> queryNearCompanys(Map pointsMap);
+
+    /**
+     * 库存使用情况报表
+     */
+    public List<MaterialUse> queryByCondition(@Param("start")String start, @Param("end")String end, @Param("companyId")String companyId, @Param("accTypeId") String accTypeId, @Param("type")String type);
 }

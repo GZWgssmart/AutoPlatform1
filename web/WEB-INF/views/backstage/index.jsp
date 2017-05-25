@@ -279,7 +279,9 @@
                             </li>
                             <li><a class="J_menuItem" href="/statistics/repertory">库存统计</a>
                             </li>
-                            <li><a class="J_menuItem" href="/statistics/inventoryUsing">库存使用情况统计</a>
+                            <li><a class="J_menuItem" href="/statistics/inventoryUsing">库存领料统计</a>
+                            </li>
+                            <li><a class="J_menuItem" href="/statistics/inventoryUsing1">库存退料统计</a>
                             </li>
                             <li><a class="J_menuItem" href="/statistics/vindicate">维修保养统计</a>
                             </li>

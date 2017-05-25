@@ -216,19 +216,6 @@ public class CompanyController {
         Map map = new HashMap();
         if (company != null && !company.equals("")) {
             logger.info("添加公司信息");
-            String province = request.getParameter("province");
-            String city = request.getParameter("city");
-            String area = request.getParameter("area");
-            if (province == null) {
-                province = "";
-            }
-            if (city == null) {
-                city = "";
-            }
-            if (area == null) {
-                area = "";
-            }
-            company.setCompanyAddress(province + "-" + city + "-" + area);
             String companyId = UUIDUtil.uuid();
             company.setCompanyId(companyId);
             User user = new User();

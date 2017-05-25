@@ -272,6 +272,11 @@ public class MaterialUseServiceImpl implements MaterialUseService {
 		return materialUseDAO.queryNearCompanys(pointsMap);
 	}
 
+	@Override
+	public List<MaterialUse> queryByCondition(String start, String end, String companyId, String accTypeId, String type) {
+		return materialUseDAO.queryByCondition(start,end,companyId,accTypeId,type);
+	}
+
 
 	private class Flag{
 		private  String flag;

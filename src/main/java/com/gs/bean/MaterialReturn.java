@@ -15,8 +15,16 @@ public class MaterialReturn {
 
     private Date mrReturnDate;
 
+
+    /**
+     * 库存退料数量
+     */
     private int count;
 
+    /**
+     * 库存可用数量
+     */
+    private int accIdle;
     public int getCount() {
         return count;
     }

@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>- 库存领料统计 -</title>
+    <title>- 库存退料统计 -</title>
     <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.css">
     <link rel="stylesheet" href="/static/css/bootstrap.min.css">
     <link rel="stylesheet" href="/static/css/select2.min.css">
@@ -32,7 +32,7 @@
 
 
 <div class='container-fluid'>
-    <h2 class='page-header'>库存领料统计</h2>
+    <h2 class='page-header'>库存退料统计</h2>
     <!--
         选项卡：通过BS的类来控制选项卡的样式
     -->
@@ -264,7 +264,7 @@
 </script>
 <!-- 显示Echarts图表 -->
 <script src="/static/js/backstage/statistics/myEcharts.js"></script>
-<script type="text/javascript" src="/static/js/backstage/statistics/inventoryUsing.js"></script>
+<script type="text/javascript" src="/static/js/backstage/statistics/inventoryUsing1.js"></script>
 <script src="/static/js/jquery.min.js"></script>
 <script src="/static/js/contextmenu.js"></script>
 <script src="/static/js/select2/select2.js"></script>

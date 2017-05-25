@@ -4,10 +4,13 @@
   <resultMap id="BaseResultMap" type="com.gs.bean.MaterialUse" >
     <id column="materialUseId" property="materialUseId" jdbcType="VARCHAR" />
     <result column="matainRecordId" property="matainRecordId" jdbcType="VARCHAR" />
+      <result column="count" property="count"/>
     <result column="accId" property="accId" jdbcType="VARCHAR" />
     <result column="accCount" property="accCount" jdbcType="INTEGER" />
     <result column="muCreatedTime" property="muCreatedTime" jdbcType="TIMESTAMP" />
     <result column="muUseDate" property="muUseDate" jdbcType="TIMESTAMP" />
+
+      <result column="accIdle" property="accIdle"/>
   </resultMap>
   
   <resultMap id="baseRecordView" type="com.gs.bean.view.RecordBaseView">
@@ -554,6 +557,30 @@
         <![CDATA[ and comp.companyLongitude <  ]]> #{maxLng}
         <![CDATA[ and comp.companyLatitude  >  ]]> #{minLat}
         <![CDATA[ and comp.companyLatitude  <  ]]> #{maxLat}
+    </select>
+
+    <!--库存领料统计-->
+    <select id="queryByCondition" resultMap="BaseResultMap">
+        <![CDATA[
+        select SUM(mu.accCount) as count,a.accIdle as accIdle, mu.muCreatedTime from t_accessories a, t_accessories_type t,t_company c, t_material_use mu
+              where a.accTypeId = t.accTypeId and a.companyId = c.companyId and a.accStatus = 'Y' and mu.accId = a.accId  and
+            c.companyId = #{companyId} and t.accTypeId = #{accTypeId} and mu.muCreatedTime >= #{start} and mu.muCreatedTime <= #{end}
+        ]]>
+        <if test="type =='year'">
+            group by date_format(mu.muCreatedTime, '%Y') ORDER BY mu.muCreatedTime ASC;
+        </if>
+        <if test="type =='quarter'">
+            group by concat(date_format(mu.muCreatedTime, '%Y'),FLOOR((date_format(mu.muCreatedTime, '%m')+2)/3)) ORDER BY mu.muCreatedTime ASC;
+        </if>
+        <if test="type =='month'">
+            group by date_format(mu.muCreatedTime, '%y-%m') ORDER BY mu.muCreatedTime ASC;
+        </if>
+        <if test="type =='week'">
+            group by date_format(mu.muCreatedTime, '%y-%m') ORDER BY mu.muCreatedTime ASC;
+        </if>
+        <if test="type =='day'">
+            group by date(mu.muCreatedTime) ORDER BY mu.muCreatedTime ASC;
+        </if>
     </select>
 
 
