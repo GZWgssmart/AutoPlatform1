@@ -33,7 +33,7 @@
                     <li><a href="/home">主页</a></li>
                     <li class="icon-li"><a href="/reg">登录</a></li>
                     <li class="icon-li"><a href="/platformIntro">关于我们</a></li>
-                    <li id="menu-bg"><a href="/factoryreg">汽修公司入驻</a></li>
+                    <li id="menu-bg"><a href="/factoryreg">汽车公司入驻</a></li>
                 </ul>
             </div>
         </nav>

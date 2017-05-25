@@ -146,9 +146,8 @@
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-
-                                    <button id="addButton" style="width: 200px;" type="button" onclick="addSubmit()" class="btn btn-success">添加
-                                    </button>
+                                    <button id="addButton" style="width: 200px;" type="button" onclick="addSubmit()" class="btn btn-success">添加</button>
+                                    <input type="reset" name="reset" style="display: none;"/>
                                 </div>
                             </form>
                         </div>
@@ -158,7 +157,7 @@
                 <div class="form-wechat">
                     <div class="wechat-right" id="wechat-right">
                         <div class="erm-img  wow fadeInLeft animated">
-                            <img src="/static/img/Frontpage/2wei.jpg"/>
+                            <img src="/static/img/Frontpage/erweim.jpg"/>
                         </div>
                         <span style="font-size: 16px;padding-left:8px;float:left;color: white;">扫描二维码，微信预约，方便快捷</span>
                         <div class="clearfix"></div>
