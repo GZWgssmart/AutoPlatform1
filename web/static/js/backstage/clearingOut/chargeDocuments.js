@@ -130,7 +130,7 @@ function showMoney(){
     if(row.length ==1) {
         if(row[0].actualPayment != null && row[0].actualPayment != ""){
             if(row[0].maintainRecord.currentStatus !='已收费'){
-                if(row[0].currentStatus !="N") {
+                if(row[0].cdStatus !="N") {
                     swal({
                         title: "",
                         text: "是否确认已经收到维修保养费用!",
@@ -159,7 +159,7 @@ function showMoney(){
                     // 未用户确认
                     swal({
                         title: "",
-                        text: "改收费单据用户未确认， 确定确认收到维修保养费用了吗?",
+                        text: "该收费单据用户未确认， 确定确认收到维修保养费用了吗?",
                         type: "warning",
                         showCancelButton: true,
                         confirmButtonColor: "#DD6B55",
@@ -240,12 +240,21 @@ function showEdit(){
         if(data.result == 'success'){
             var row =  $('#table').bootstrapTable('getSelections');
             if(row.length >0) {
-                $("#editWindow").modal('show'); // 显示弹窗
-                var chargeBill = row[0];
-                $("#editForm").fill(chargeBill);
-                $("#editPaymentMethod").val(chargeBill.paymentMethod);
-                $('#chargeCreatedTime').val(formatterDate(chargeBill.chargeCreatedTime))
-                validator('editForm'); // 初始化验证
+                if(row[0].maintainRecord.currentStatus != '已收费'){
+                    $("#editWindow").modal('show'); // 显示弹窗
+                    var chargeBill = row[0];
+                    $("#editForm").fill(chargeBill);
+                    $("#editPaymentMethod").val(chargeBill.paymentMethod);
+                    $('#chargeCreatedTime').val(formatterDate(chargeBill.chargeCreatedTime))
+                    validator('editForm'); // 初始化验证
+                }else{
+                    swal({
+                        title:"",
+                        text: "请收费单据已经确认， 不可再次修改", // 主要文本
+                        confirmButtonColor: "#DD6B55", // 提示按钮的颜色
+                        confirmButtonText:"确定", // 提示按钮上的文本
+                        type:"error"}) // 提示类型
+                }
             }else{
                 swal({
                     title:"",

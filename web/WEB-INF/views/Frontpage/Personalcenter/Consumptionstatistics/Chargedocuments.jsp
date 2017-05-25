@@ -46,7 +46,7 @@
                     记录状态
                 </th>
                 <th data-width="130" data-field="chargeBillStatus" data-formatter="showStatusFormatter">收费单据状态</th>
-                <th data-width="130" data-field="currentStatus" data-formatter="currentStatusFormatter">单据当前状态</th>
+                <th data-width="130" data-field="cdStatus" data-formatter="currentStatusFormatter">单据当前状态</th>
             </tr>
             </thead>
         </table>
@@ -109,7 +109,7 @@
                 if(row.length ==1) {
                     if(row[0].actualPayment != null && row[0].actualPayment != ""){
                         if(row[0].maintainRecord.currentStatus !='已收费'){
-                            if(row[0].currentStatus !="N") {
+                            if(row[0].cdStatus !="N") {
                                 swal({title:"",
                                     text:"您已确认过此收费单据， 请等待公司人员确认已经收到费用",
                                     confirmButtonText:"确认",
@@ -130,6 +130,7 @@
                                     if (ifCor) {
                                         $.post("/charge/updateCurrent?id="+row[0].chargeBillId, function (data) {
                                             if(data.result == "success"){
+                                                $('#table').bootstrapTable('refresh');
                                                 swal({
                                                     title: "",
                                                     text: data.message,

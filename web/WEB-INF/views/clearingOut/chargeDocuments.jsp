@@ -49,7 +49,7 @@
                     记录状态
                 </th>
                 <th data-width="130" data-field="chargeBillStatus" data-formatter="showStatusFormatter">收费单据状态</th>
-                <th data-width="130" data-field="currentStatus" data-formatter="currentStatusFormatter">单据当前状态</th>
+                <th data-width="130" data-field="cdStatus" data-formatter="currentStatusFormatter">单据当前状态</th>
             <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司接待员">
                 <th data-width="90" data-field="chargeBillStatus" data-formatter="statusFormatter">操作</th>
             </shiro:hasAnyRoles>
@@ -72,7 +72,7 @@
                             <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
                         </button>
             </shiro:hasAnyRoles>
-            <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司接待员">
+            <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司财务人员">
                 <button id="btn_edit" type="button" class="btn btn-default" onclick="showMoney();">
                     <span class="glyphicon glyphicon-user" aria-hidden="true"></span>确认收费
                 </button>
@@ -129,6 +129,7 @@
                     <input type="hidden" define="chargeBill.chargeBillId" name="chargeBillId"/>
                     <input type="hidden" define="chargeBill.maintainRecordId" name="maintainRecordId"/>
                     <input type="hidden" define="chargeBill.chargeBillStatus" name="chargeBillStatus"/>
+                    <input type="hidden" define="chargeBill.cdStatus" name="cdStatus"/>
                     <input id="chargeCreatedTime" type="hidden" name="chargeCreatedTime"/>
                     <div class="form-group">
                         <label class="col-sm-3 control-label" >付款方式：</label>

@@ -289,6 +289,7 @@ function showEditStatus(){
                         if(isConfirm){
                             $.post("/maintainDetail/statusOperate?id="+row[0].maintainDetailId+"&status=Y", function (data) {
                                 if(data.result == "success"){
+                                    $('#detailTable').bootstrapTable('refresh');
                                     swal({title:"",
                                         text:data.message,
                                         confirmButtonText:"确认",
