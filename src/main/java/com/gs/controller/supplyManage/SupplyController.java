@@ -142,10 +142,6 @@ public class SupplyController {
                 logger.info("添加供应商记录");
                 if (supply != null && !supply.equals("")) {
                     supply.setCompanyId(user.getCompanyId());
-                    String province = request.getParameter("province");
-                    String city = request.getParameter("city");
-                    String area = request.getParameter("area");
-                    supply.setSupplyAddress(province + "-" + city + "-" + area);
                     supplyService.insert(supply);
                     logger.info("添加供应商成功");
                     return ControllerResult.getSuccessResult("添加供应商成功");
@@ -195,10 +191,6 @@ public class SupplyController {
                 if (supply != null && !supply.equals("")) {
                     User user = (User)session.getAttribute("user");
                     supply.setCompanyId(user.getCompanyId());
-                    String province = request.getParameter("editProvince");
-                    String city = request.getParameter("editCity");
-                    String area = request.getParameter("editArea");
-                    supply.setSupplyAddress(province + "-" + city + "-" + area);
                     supplyService.update(supply);
                     logger.info("修改供应商成功");
                     return ControllerResult.getSuccessResult("修改供应商成功");

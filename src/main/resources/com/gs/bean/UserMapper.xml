@@ -338,24 +338,20 @@
       select u.*, r.* from t_user u
           left join t_user_role ur on u.userId = ur.userId
           left join t_role r on r.roleId = ur.roleId
-       where 1 = 1
+       where 1 = 1 and r.roleName = '车主'
     ]]>
-    <if test="role.roleName != null and role.roleName != ''">
-      and r.roleId = '8067fa42-3205-11e7-bc72-507b9d765567'
-    </if>
+    limit #{beginIndex}, #{pageSize};
   </select>
 
   <!-- 车主记录数 -->
-  <select id="countCar" resultType="int" parameterType="user">
+  <select id="countCar" resultType="int">
     <![CDATA[
       select count(*) from t_user u
         left join t_user_role ur on u.userId = ur.userId
         left join t_role r on r.roleId = ur.roleId
-        where 1 = 1
+        where 1 = 1 and r.roleName = '车主'
     ]]>
-    <if test="role.roleName != null and role.roleName != ''">
-      and r.roleId = '8067fa42-3205-11e7-bc72-507b9d765567'
-    </if>
+
   </select>
 
   <!-- 根据id查询员工的基本信息 -->

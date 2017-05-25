@@ -14,7 +14,7 @@
 
     <title>供应商管理</title>
 
-   <%-- <style>
+   <style>
 
         /* 让显示详细信息的窗口中的所有Input都不显示边框 */
         #detailWindow input {
@@ -41,7 +41,7 @@
             box-shadow: none;
         }
 
-    </style>--%>
+    </style>
 </head>
 <body>
 <%@include file="../backstage/contextmenu.jsp"%>
@@ -200,7 +200,6 @@
                                 <label class="col-md-4 control-label">开户银行全称：</label>
                                 <div class="col-md-8">
                                     <select class="js-example-tags form-control" name="supplyBank" placeholder="请选择开户银行全称" class="form-control">
-                                        <option value="请选择开户银行">请选择开户银行</option>
                                         <option value="中国银行">中国银行</option>
                                         <option value="交通银行">交通银行</option>
                                         <option value="招商银行">招商银行</option>
@@ -347,7 +346,6 @@
                                 <label class="col-md-4 control-label">开户银行全称：</label>
                                 <div class="col-md-8">
                                     <select class="js-example-tags form-control" define="supply.supplyBank" class="form-control" name="supplyBank">
-                                        <option value="请选择开户银行">请选择开户银行</option>
                                         <option value="中国银行">中国银行</option>
                                         <option value="交通银行">交通银行</option>
                                         <option value="招商银行">招商银行</option>
@@ -489,7 +487,8 @@
 <script src="/static/js/bootstrap.min.js"></script>
 <script src="/static/js/bootstrap-table/bootstrap-table.js"></script>
 <script src="/static/js/bootstrap-table/bootstrap-table-zh-CN.js"></script>
-<script src="/static/js/jquery.formFill.js"></script>
+<%--<script src="/static/js/jquery.formFill.js"></script>--%>
+<script src="/static/js/backstage/emp/jquery.formFillTemp.js"></script>
 <script src="/static/js/select2/select2.js"></script>
 <script src="/static/js/sweetalert/sweetalert.min.js"></script>
 <script src="/static/js/city-picker/city-picker.data.js"></script>

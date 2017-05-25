@@ -148,6 +148,11 @@
                                     <a class="J_menuItem" href="/emp/workInfo">工单查询</a>
                                 </li>
                             </shiro:hasAnyRoles>
+                            <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员">
+                                <li>
+                                    <a class="J_menuItem" href="/emp/carOwnerInfo">车主管理</a>
+                                </li>
+                            </shiro:hasAnyRoles>
                         </ul>
                     </li>
                 </shiro:hasAnyRoles>
