@@ -54,6 +54,7 @@
                 <a href="/home"><li>首页</li></a>
                 <a href="/factorypage"><li class="actives">商家</li></a>
                 <a href="/resepage"><li>预约</li></a>
+                <a href="/common"><li>常见问题</li></a>
             </ul>
         </div>
         <%--主内容区开始--%>

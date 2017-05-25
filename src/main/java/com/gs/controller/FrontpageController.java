@@ -127,11 +127,11 @@ FrontpageController {
                 }
             }
 
-    /*关于我们页面*/
-    @RequestMapping(value ="aboutus",method=RequestMethod.GET)
+    /*常见问题页面*/
+    @RequestMapping(value ="common",method=RequestMethod.GET)
     public String aboutus(){
 
-        return "Frontpage/aboutus";
+        return "Frontpage/commonproblem";
     }
 
 
