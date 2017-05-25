@@ -1,4 +1,3 @@
-var gender = $("#detailGender").val();
 $(function() {
     if(iconSrc == null || iconSrc == "null" || iconSrc == "") {
         $("#detailUserIcon").attr("src","/static/img/default.png");
@@ -7,6 +6,7 @@ $(function() {
         $("#detailUserIcon").attr("src", iconSrc);
     }
 
+    // var gender = $("#detailGender").val();
     var resultGender = formatterSex(gender);
     $("#detailGender").val(resultGender);
 
@@ -43,7 +43,12 @@ function showEdit(){
     initDatePicker('editForm', 'userBirthday', 'editDatetimepicker');
     var birthday = $('#editDatetimepicker').val();
     $('#editDatetimepicker').val(formatterDate(birthday));
-    $('#editUserGender').val(formatterGender(gender));
+    // $('#editUserGender').val(gender);
+    // var gender = $("#editUserGender").val();
+    var resultGender = formatterSex(gender);
+    $("#editUserGender").val(resultGender);
+    var genderTempObj = {"gender": gender};
+    $("#editForm").fill(genderTempObj);
     $("#editWindow").modal('show'); // 显示弹窗
     $("#editButton").removeAttr("disabled");
     initCityPicker("editAddress");//初始化三级地区联动
@@ -187,7 +192,7 @@ function formSubmit(url, formId, winId) {
 
 //   提交修改的数据
 function editSubmit() {
-    window.parent.refresh(window.name);
+    // window.parent.refresh(window.name);
     $("#editForm").data('bootstrapValidator').validate();
     if ($("#editForm").data('bootstrapValidator').isValid()) {
         $("#editButton").attr("disabled","disabled");
@@ -196,12 +201,12 @@ function editSubmit() {
     }
 }
 
-function formatterSex(gender) {
-    if (gender == 'N') {
+function formatterSex(val) {
+    if (val == 'N') {
         return "未选择";
-    } else if (gender == 'M') {
+    } else if (val == 'M') {
         return "男"
-    } else if (gender == 'F') {
+    } else if (val == 'F') {
         return "女"
     }
 }
@@ -253,16 +258,5 @@ function formatterDateTime(value) {
             seconds = "0" + seconds;
         }
         return year + "-" + month + "-" + day + " " + hour + ":" + minutes + ":" + seconds;
-    }
-}
-
-//   格式化性别
-function formatterGender(val) {
-    if (val == 'N') {
-        return "未选择";
-    } else if (val == 'M') {
-        return "男"
-    } else if (val == 'F') {
-        return "女"
     }
 }

@@ -422,8 +422,6 @@ public class UserBasicManageController {
                 Pager pager = new Pager();
                 pager.setPageNo(Integer.valueOf(pageNumber));
                 pager.setPageSize(Integer.valueOf(pageSize));
-
-
                 String text = request.getParameter("text");
                 String value = request.getParameter("value");
                 if (text != null && text != "" && value != null && value != "") {
@@ -434,6 +432,10 @@ public class UserBasicManageController {
                         user.setUserPhone(value);
                         user.setRoleId(value);
                         user.setCompanyId(value);
+                    } else if (text.equals("姓名/手机号/角色名称")) {
+                        user.setUserName(value);
+                        user.setUserPhone(value);
+                        user.setRoleId(value);
                     } else if (text.equals("姓名")) {
                         user.setUserName(value);
                     } else if (text.equals("手机号")) {

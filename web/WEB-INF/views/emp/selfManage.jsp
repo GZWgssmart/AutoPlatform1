@@ -54,6 +54,7 @@
 <%
     User user = (User)session.getAttribute("user");
     String iconSrcString = user.getUserIcon();
+    String userGender = user.getUserGender();
 %>
 
 <div class="container" id="detailWindow">
@@ -190,7 +191,7 @@
                         <div class="form-group col-md-6 pull-left">
                             <label class="col-md-4 control-label">性别：</label>
                             <div class="col-md-8">
-                                <select id="editUserGender" name="userGender" value="${sessionScope.user.userGender}" class="form-control" style="width: 50%;">
+                                <select id="editUserGender" name="userGender"  define="genderTempObj.gender" class="form-control" style="width: 50%;">
                                     <option value='N'>未选择</option>
                                     <option value='M'>男</option>
                                     <option value='F'>女</option>
@@ -266,5 +267,9 @@
 
 <script>
     var iconSrc = "<%=iconSrcString %>";  // 登录的用户的头像
+    var gender = "<%=userGender %>";    // 登录的用户的性别
+
+    var us= "<%=user %>";    // 登录的用户的性别
+    console.log(us); // 也就是说刷新这样的页面，session还是旧的
 </script>
 </html>

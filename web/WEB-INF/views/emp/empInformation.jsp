@@ -468,7 +468,7 @@
                             </shiro:hasAnyRoles>
                             <div class="form-group pull-left">
                                 <label class="control-label" >地址：</label>
-                                <input id="address" type="text" class="form-control" name="userAddress"/>
+                                <input id="address" type="text" class="form-control" name="userAddress" disabled="true"/>
                             </div>
                             <div class="form-group pull-left">
                                 <label class="control-label">上一次登录时间：</label>
