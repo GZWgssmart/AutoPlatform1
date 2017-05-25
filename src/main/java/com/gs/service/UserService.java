@@ -142,5 +142,13 @@ public interface UserService extends BaseService<String, User> {
     public void updatePwdByPhone(String pwd, String phone);
 
     //   修改个人资料
-    public int updateSelfManage(String userId);
+    public int updateSelfManage(User user);
+
+    public User queryById(User user);
+
+    //    查询车主用户信息
+    public List<User> queryCarByRoleName(Pager pager);
+
+    //  车主记录数
+    public int countCar();
 }

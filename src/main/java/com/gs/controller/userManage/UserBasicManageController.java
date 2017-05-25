@@ -367,12 +367,12 @@ public class UserBasicManageController {
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
     }
 
-    @ResponseBody
-    @RequestMapping(value = "queryById", method = RequestMethod.POST)
-    public User queryById(@Param("userId") String userId) {
-        logger.info("根据id查询该id的详细信息");
-        return userService.queryById(userId);
-    }
+//    @ResponseBody
+//    @RequestMapping(value = "queryById", method = RequestMethod.POST)
+//    public User queryById(@Param("userId") String userId) {
+//        logger.info("根据id查询该id的详细信息");
+//        return userService.queryById(userId);
+//    }
 
     @ResponseBody
     @RequestMapping(value = "queryByRoleName", method = RequestMethod.POST)
@@ -491,8 +491,8 @@ public class UserBasicManageController {
 //  个人资料修改
     @ResponseBody
     @RequestMapping(value = "updateSelfManage", method = RequestMethod.POST)
-    public ControllerResult updateSelfManage(String id, HttpServletRequest request, HttpSession session) {
-        User user = (User)session.getAttribute("user");
+    public ControllerResult updateSelfManage(User user, HttpServletRequest request, HttpSession session) {
+//        User user = (User)session.getAttribute("user");
         String province = request.getParameter("editProvince");
         String city = request.getParameter("editCity");
         String area = request.getParameter("editArea");
@@ -507,7 +507,42 @@ public class UserBasicManageController {
             userAddress = province;
         }
         user.setUserAddress(userAddress);
-        userService.updateSelfManage(user.getUserId());
+        int count = userService.updateSelfManage(user);
+        if(count > 0) {
+            User u = userService.queryById(user);
+            session.setAttribute("user", u);
+        }
         return ControllerResult.getSuccessResult("修改个人资料成功");
+    }
+
+    /**
+     * 分页查询状态为可用的记录
+     */
+    @ResponseBody
+    @RequestMapping(value="queryCarByRoleName", method = RequestMethod.GET)
+    public Pager4EasyUI queryCarByRoleName(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize, HttpSession session) {
+        if(SessionUtil.isLogin(session)) {
+            String roles = "系统超级管理员,系统普通管理员";
+            if (RoleUtil.checkRoles(roles)) {
+                logger.info("分页查询车主用户基本信息成功");
+                Pager pager = new Pager();
+                pager.setPageNo(Integer.valueOf(pageNumber));
+                pager.setPageSize(Integer.valueOf(pageSize));
+                pager.setUser((User) session.getAttribute("user"));
+
+                String roleName = ((User) session.getAttribute("user")).getRole().getRoleName();
+                List<User> users = null;
+                pager.setTotalRecords(userService.countCar());
+                users = userService.queryCarByRoleName(pager);
+
+                return new Pager4EasyUI<User>(pager.getTotalRecords(), users);
+            } else {
+                logger.info("此用户没有该操作所属的角色");
+                return null;
+            }
+        } else {
+            logger.info("请先登录");
+            return null;
+        }
     }
 }

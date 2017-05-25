@@ -319,7 +319,7 @@
   </select>
 
   <!-- 根据id查询员工的基本信息 -->
-  <select id="queryById" resultMap="userBasicManageMap" parameterType="String">
+  <select id="queryById" resultMap="userBasicManageMap" parameterType="user">
     <![CDATA[
       select u.*, r.*, c.companyId, c.companyName from t_user u
           left join t_user_role ur on u.userId = ur.userId
@@ -327,10 +327,36 @@
           left join t_company c on u.companyId = c.companyId
        where u.userId = #{userId}
     ]]>
-    <if test="user.companyId != null and user.companyId != ''">
-      and u.companyId = #{user.companyId}
+    <if test="companyId != null and companyId != ''">
+      and u.companyId = #{companyId}
     </if>
    </select>
+
+  <!-- 根据角色查询车主的基本信息 -->
+  <select id="queryCarByRoleName" resultMap="userBasicManageMap" parameterType="com.gs.common.bean.Pager">
+    <![CDATA[
+      select u.*, r.* from t_user u
+          left join t_user_role ur on u.userId = ur.userId
+          left join t_role r on r.roleId = ur.roleId
+       where 1 = 1
+    ]]>
+    <if test="role.roleName != null and role.roleName != ''">
+      and r.roleId = '8067fa42-3205-11e7-bc72-507b9d765567'
+    </if>
+  </select>
+
+  <!-- 车主记录数 -->
+  <select id="countCar" resultType="int" parameterType="user">
+    <![CDATA[
+      select count(*) from t_user u
+        left join t_user_role ur on u.userId = ur.userId
+        left join t_role r on r.roleId = ur.roleId
+        where 1 = 1
+    ]]>
+    <if test="role.roleName != null and role.roleName != ''">
+      and r.roleId = '8067fa42-3205-11e7-bc72-507b9d765567'
+    </if>
+  </select>
 
   <!-- 根据id查询员工的基本信息 -->
   <select id="queryInfoById" resultMap="userBasicManageMap" parameterType="String">
