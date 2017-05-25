@@ -474,6 +474,8 @@ function accInfoFormat(element, row, index){
     }
     htmltest.push("<input type='number'  max="+ numMax +" min="+ numMin +" class='form-control text-center'  value='0'  style='width:100px;margin-left:20px;display: inline-block; width:80px'>");
     htmltest.push("</span>");
+    htmltest.push("<span class='glyphicon glyphicon-question-sign' title='正为领料,负为退料'>");
+    htmltest.push("</span>");
     htmltest.push("</div>");
     htmltest.push("<div style='float:right;height:100%;text-align: center;' class='col-md-4'>");
 

@@ -21,24 +21,24 @@
   <select id="queryByCondition" resultMap="BaseResultMap">
     <![CDATA[
 
-select SUM(mr.accCount) as count,a.accIdle as accIdle, mr.mrCreatedDate from t_accessories a, t_accessories_type t,t_company c, t_material_return mr
+select SUM(mr.accCount) as count,a.accIdle as accIdle, mr.mrReturnDate from t_accessories a, t_accessories_type t,t_company c, t_material_return mr
 where a.accTypeId = t.accTypeId and a.companyId = c.companyId and a.accStatus = 'Y' and mr.accId = a.accId and
-c.companyId = #{companyId} and t.accTypeId = #{accTypeId} and mr.mrCreatedDate >= #{start} and mr.mrCreatedDate <= #{end}
+c.companyId = #{companyId} and t.accTypeId = #{accTypeId} and mr.mrReturnDate >= #{start} and mr.mrReturnDate <= #{end}
         ]]>
     <if test="type =='year'">
-      group by date_format(mr.mrCreatedDate, '%Y') ORDER BY mr.mrCreatedDate ASC;
+      group by date_format(mr.mrReturnDate, '%Y') ORDER BY mr.mrReturnDate ASC;
     </if>
     <if test="type =='quarter'">
-      group by concat(date_format(mr.mrCreatedDate, '%Y'),FLOOR((date_format(mr.mrCreatedDate, '%m')+2)/3)) ORDER BY mr.mrCreatedDate ASC;
+      group by concat(date_format(mr.mrReturnDate, '%Y'),FLOOR((date_format(mr.mrReturnDate, '%m')+2)/3)) ORDER BY mr.mrReturnDate ASC;
     </if>
     <if test="type =='month'">
-      group by date_format(mr.mrCreatedDate, '%y-%m') ORDER BY mr.mrCreatedDate ASC;
+      group by date_format(mr.mrReturnDate, '%y-%m') ORDER BY mr.mrReturnDate ASC;
     </if>
     <if test="type =='week'">
-      group by date_format(mr.mrCreatedDate, '%y-%m') ORDER BY mr.mrCreatedDate ASC;
+      group by date_format(mr.mrReturnDate, '%y-%m') ORDER BY mr.mrReturnDate ASC;
     </if>
     <if test="type =='day'">
-      group by date(mr.mrCreatedDate) ORDER BY mr.mrCreatedDate ASC;
+      group by date(mr.mrReturnDate) ORDER BY mr.mrReturnDate ASC;
     </if>
   </select>
 

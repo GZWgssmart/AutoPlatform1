@@ -1,113 +1,64 @@
-$(function () {
-    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员";
-    $.post("/user/isLogin/"+roles, function (data) {
-        if(data.result == 'success'){
-            initTable('table', '/charge/queryByPager'); // 初始化表格
-        }else if(data.result == 'notLogin'){
-            swal({title:"",
-                    text:data.message,
-                    confirmButtonText:"确认",
-                    type:"error"}
-                ,function(isConfirm){
-                    if(isConfirm){
-                        top.location = "/user/loginPage";
-                    }else{
-                        top.location = "/user/loginPage";
-                    }
-                })
-        }else if(data.result == 'notRole'){
-            swal({title:"",
-                text:data.message,
-                confirmButtonText:"确认",
-                type:"error"})
-        }
-    });
+/**
+ * 添加窗口
+ */
+function showAdd(){
+    var row =  $('table').bootstrapTable('getSelections');
+    if(row.length >0) {
+//                $('#editId').val(row[0].id);
+//                $('#editName').val(row[0].name);
+//                $('#editPrice').val(row[0].price);
+        $("#add").modal('show'); // 显示弹窗
+        var chargeBill =  row[0];
+        console.log(chargeBill.maintainRecord.checkin.company.companyTel + "公司电话")
+        console.log(chargeBill.maintainRecord.checkin.company.companyAddress + "公司地址")
+        document.getElementById('companyName').innerHTML=chargeBill.maintainRecord.checkin.company.companyName;
 
-});
+        document.getElementById('paymentMethod').innerHTML=chargeBill.chargeBillDes;
 
-// 查看全部可用
-function showAvailable(){
-    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员";
-    $.post("/user/isLogin/"+roles, function (data) {
-        if(data.result == 'success'){
-            initTable('table', '/charge/queryByPager');
-        }else if(data.result == 'notLogin'){
-            swal({title:"",
-                    text:data.message,
-                    confirmButtonText:"确认",
-                    type:"error"}
-                ,function(isConfirm){
-                    if(isConfirm){
-                        top.location = "/user/loginPage";
-                    }else{
-                        top.location = "/user/loginPage";
-                    }
-                })
-        }else if(data.result == 'notRole'){
-            swal({title:"",
-                text:data.message,
-                confirmButtonText:"确认",
-                type:"error"})
-        }
-    });
+        document.getElementById('totalPrice').innerHTML=chargeBill.chargeBillMoney;
+
+        document.getElementById('newestPrice').innerHTML=chargeBill.actualPayment;
+
+        document.getElementById('newestPrice').innerHTML=chargeBill.actualPayment;
+
+        document.getElementById('chargeBillDes').innerHTML=chargeBill.chargeBillDes;
+
+        document.getElementById('companyTel').innerHTML=chargeBill.maintainRecord.checkin.company.companyTel;
+
+        document.getElementById('companyAddress').innerHTML=chargeBill.maintainRecord.checkin.company.companyAddress;
+
+        document.getElementById('chargeCreatedTime').innerHTML= formatterDate((chargeBill.chargeCreatedTime));
+
+
+        validator("addForm");
+    }else{
+        swal({
+            title:"",
+            text:"请选择要查询的收费单据",
+            confirmButtonColor: "#DD6B55", // 提示按钮的颜色
+            confirmButtonText: "确定", // 提示按钮上的文本
+            type: "warning"
+        })
+    }
 
 
 }
 
-// 查看全部禁用
-function showDisable(){
-    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员";
-    $.post("/user/isLogin/"+roles, function (data) {
-        if(data.result == 'success'){
-            initTable('table', '/charge/queryByPagerDisable');
-        }else if(data.result == 'notLogin'){
-            swal({title:"",
-                    text:data.message,
-                    confirmButtonText:"确认",
-                    type:"error"}
-                ,function(isConfirm){
-                    if(isConfirm){
-                        top.location = "/user/loginPage";
-                    }else{
-                        top.location = "/user/loginPage";
-                    }
-                })
-        }else if(data.result == 'notRole'){
-            swal({title:"",
-                text:data.message,
-                confirmButtonText:"确认",
-                type:"error"})
+//格式化不带时分秒的时间值。
+function formatterDate(value) {
+    if (value == undefined || value == null || value == '') {
+        return "";
+    } else {
+        var date = new Date(value);
+        var year = date.getFullYear().toString();
+        var month = (date.getMonth() + 1);
+        var day = date.getDate().toString();
+        if (month < 10) {
+            month = "0" + month;
         }
-    });
-}
-
-// 模糊查询
-function blurredQuery(){
-    var roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员";
-    $.post("/user/isLogin/"+roles, function (data) {
-        if(data.result == 'success'){
-            var button = $("#ulButton");// 获取模糊查询按钮
-            var text = button.text();// 获取模糊查询按钮文本
-            var vaule = $("#ulInput").val();// 获取模糊查询输入框文本
-            initTable('table', '/charge/blurredQuery?text='+text+'&value='+vaule);
-        }else if(data.result == 'notLogin'){
-            swal({title:"",
-                    text:data.message,
-                    confirmButtonText:"确认",
-                    type:"error"}
-                ,function(isConfirm){
-                    if(isConfirm){
-                        top.location = "/user/loginPage";
-                    }else{
-                        top.location = "/user/loginPage";
-                    }
-                })
-        }else if(data.result == 'notRole'){
-            swal({title:"",
-                text:data.message,
-                confirmButtonText:"确认",
-                type:"error"})
+        if (day < 10) {
+            day = "0" + day;
         }
-    });
-
+        return year + "-" + month + "-" + day + ""
+    }
 }

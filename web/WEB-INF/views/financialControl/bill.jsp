@@ -58,6 +58,9 @@
                     <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询禁用收费单据
                 </button>
             </shiro:hasAnyRoles>
+            <button id="btn_add" type="button" class="btn btn-success" onclick="showAdd();">
+                <span class="glyphicon glyphicon-earch " aria-hidden="true"></span>查询收费单据打印页面
+            </button>
             <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司财务人员">
                 <div class="input-group" style="width:350px;float:left;padding:0;margin:0 0 0 -1px;">
                     <div class="input-group-btn">
@@ -86,6 +89,137 @@
     </div>
 </div>
 
+<!-- 添加弹窗 -->
+<div aria-hidden="true" data-backdrop="static" keyboard:false
+     class="modal fade" id="add" aria-hidden="true">
+    <div class="modal-dialog" style="width: 1500px; height: 1000px">
+        <div class="modal-content" >
+            <div class="container" >
+                <div class="modal-body">
+                    <span class="glyphicon glyphicon-remove closeModal"  onclick="closeModals('add', 'addForm')"></span>
+                    <form class="form-horizontal" role="form" id="addForm">
+                        <div class="col-sm-12" style="text-align: center">
+                            <h3><strong>收&nbsp;费&nbsp;单&nbsp;据</strong></h3>
+                        </div>
+
+                        <div class="col-sm-12" style="border: 1px solid black;height:350px;font-size: 20px; padding-top: 20px;">
+                            <div class="col-sm-12" style="margin-bottom: 10px;padding-top:10px;">
+                                <div class="col-sm-1" style="width: 130px;display:inline;float:left;">汽车公司 : </div>
+                                <div id="companyName" class="col-sm-4" style="border-bottom: 1px solid black;width:300px;display:inline;float:left;">
+                                    <c:choose>
+                                        <c:when test="${chargeBill.maintainRecord.checkin.company.companyName != null}">
+                                            chargeBill.companyName
+                                        </c:when>
+                                        <c:otherwise>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        </c:otherwise>
+                                    </c:choose>
+                                </div>
+                                <div class="col-sm-1" style="width: 130px;margin-left:120px;display:inline;float:left;">收款方式 : </div>
+                                <div id="paymentMethod" class="col-sm-4" style="border-bottom: 1px solid black;width:300px;display:inline;float:left;">
+                                    <c:choose>
+                                        <c:when test="${chargeBill.chargeBillDes != null}">
+                                            ${chargeBill.chargeBillDes}
+                                        </c:when>
+                                        <c:otherwise>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        </c:otherwise>
+                                    </c:choose>
+                                </div>
+                            </div>
+                            <p class="clear"></p>
+                            <div class="col-sm-12" style="margin-bottom: 10px;padding-top:10px;">
+                                <div class="col-sm-1" style="width: 130px;display:inline;float:left;">总金额：</div>
+                                <div id="totalPrice" class="col-sm-4" style="border-bottom: 1px solid black;width:300px;display:inline;float:left;">
+                                    <c:choose>
+                                        <c:when test="${chargeBill.chargeBillMoney != null}">
+                                            ${chargeBill.chargeBillMoney}
+                                        </c:when>
+                                        <c:otherwise>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        </c:otherwise>
+                                    </c:choose>
+                                </div>
+                                <div class="col-sm-4" style="width: 130px;margin-left:120px;display:inline;float:left;">实际付款：</div>
+                                <div id="newestPrice" class="col-sm-4" style="border-bottom: 1px solid black;width:300px;display:inline;float:left;">
+                                    <c:choose>
+                                        <c:when test="${chargeBill.actualPayment != null}">
+                                            ${chargeBill.actualPayment}
+                                        </c:when>
+                                        <c:otherwise>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        </c:otherwise>
+                                    </c:choose>
+                                </div>
+                            </div>
+                            <p class="clear"></p>
+                            <div class="col-sm-12" style="margin-bottom: 10px;padding-top:10px;">
+                                <div class="col-sm-1" style="width: 130px;display:inline;float:left;">收款事由 : </div>
+                                <div id="chargeBillDes" class="col-sm-10" style="border-bottom: 1px solid black;display:inline;float:left;width:850px;">
+                                    <c:choose>
+                                        <c:when test="${chargeBill.chargeBillDes!= null}">
+                                            ${chargeBill.chargeBillDes}
+                                        </c:when>
+                                        <c:otherwise>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        </c:otherwise>
+                                    </c:choose>
+                                </div>
+                            </div>
+                            <p class="clear"></p>
+                            <div class="col-sm-12" style="float:right;">
+                                <div class="col-sm-7"></div>
+                                <div class="col-sm-2" style="display:inline;float:left;">公司电话 : </div>
+                                <div id="companyTel" class="col-sm-1" style="border-bottom: 1px solid black;width:190px;display:inline;float:left;">
+                                    <c:choose>
+                                        <c:when test="${chargeBill.maintainRecord.checkin.company.companyTel != null}">
+                                            ${chargeBill.maintainRecord.checkin.company.companyTel}
+                                        </c:when>
+                                        <c:otherwise>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        </c:otherwise>
+                                    </c:choose>
+                                </div>
+                            </div>
+                            <p class="clear"></p>
+                            <div class="col-sm-12" style="float:right;">
+                                <div class="col-sm-7"></div>
+                                <div class="col-sm-2" style="display:inline;float:left;">公司地址 : </div>
+                                <div id="companyAddress" class="col-sm-1" style="border-bottom: 1px solid black;width:190px;display:inline;float:left;">
+                                    <c:choose>
+                                        <c:when test="${chargeBill.maintainRecord.checkin.company.companyAddress != null}">
+                                            ${chargeBill.maintainRecord.checkin.company.companyAddress}
+                                        </c:when>
+                                        <c:otherwise>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        </c:otherwise>
+                                    </c:choose>
+                                </div>
+                            </div>
+                            <p class="clear"></p>
+                            <div class="col-sm-12" style="float:right;">
+                                <div class="col-sm-7"></div>
+                                <div class="col-sm-2" style="display:inline;float:left;">车主签字 : </div>
+                                <div class="col-sm-1" style="border-bottom: 1px solid black;width:100px;display:inline;float:left;">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                </div>
+                            </div>
+                            <p class="clear"></p>
+                            <div class="col-sm-12" style="float:right;">
+                                <div class="col-sm-7"></div>
+                                <div class="col-sm-2" style="display:inline;float:left;">单据日期 : </div>
+                                <div id="chargeCreatedTime" class="col-sm-1" style="width:230px;display:inline;float:left;">
+                                    <fmt:formatDate value="${chargeBill.chargeCreatedTime}" pattern="yyyy/MM/dd  HH:mm:ss"></fmt:formatDate>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 <script src="/static/js/jquery.min.js"></script>
 <script src="/static/js/bootstrap.min.js"></script>
 <script src="/static/js/bootstrap-table/bootstrap-table.js"></script>
@@ -99,5 +233,6 @@
 <script src="/static/js/backstage/clearingOut/chargeDocuments.js"></script>
 <script src="/static/js/backstage/main.js"></script>
 <script src="/static/js/bootstrap-validate/bootstrapValidator.js"></script>
+<script src="/static/js/backstage/financialControlJS/bill.js"></script>
 </body>
 </html>
