@@ -167,6 +167,38 @@ public class MaintainDetailController {
     }
 
     /**
+     * 对状态的激活和启用，只使用一个方法进行切换。
+     */
+    @ResponseBody
+    @RequestMapping(value = "statusOperate", method = RequestMethod.POST)
+    public ControllerResult inactive(HttpSession session, String id, String status) {
+        if(SessionUtil.isLogin(session)) {
+            String roles = "公司超级管理员,公司普通管理员,汽车公司接待员";
+            if(RoleUtil.checkRoles(roles)) {
+                if (id != null && !id.equals("") && status != null && !status.equals("")) {
+                    if (status.equals("N")) {
+                        maintainDetailService.active(id);
+                        logger.info("激活成功");
+                        return ControllerResult.getSuccessResult("激活维修保养明细成功");
+                    } else {
+                        maintainDetailService.inactive(id);
+                        logger.info("禁用成功");
+                        return ControllerResult.getSuccessResult("禁用维修保养明细成功");
+                    }
+                } else {
+                    return ControllerResult.getFailResult("操作失败");
+                }
+            }else{
+                logger.info("此用户无拥有更改登记记录状态的角色");
+                return ControllerResult.getNotRoleResult("权限不足");
+            }
+        }else{
+            logger.info("请先登录");
+            return ControllerResult.getNotLoginResult("登录信息无效，请重新登录");
+        }
+    }
+
+    /**
      * 根据维修保养记录id查询此记录所有明细
      */
     @ResponseBody
@@ -224,6 +256,26 @@ public class MaintainDetailController {
         }else{
             logger.info("请先登录");
             return null;
+        }
+    }
+
+    /**
+     * 查询维修保养明细中是否已经存在此维修保养项目, 不可同时存在
+     */
+    @ResponseBody
+    @RequestMapping(value = "queryItem/{maintainId}/{recordId}", method = RequestMethod.POST)
+    public ControllerResult queryItem(HttpSession session, @PathVariable("maintainId") String maintainId, @PathVariable("recordId") String recordId) {
+        logger.info("查询维修保养明细中是否已经存在此维修保养项目, 不可同时存在");
+        if (recordId != null && recordId != "" && maintainId != null && maintainId != "") {
+            List<MaintainDetail> maintainDetails = maintainDetailService.queryByRecordId(recordId);
+            for(MaintainDetail m : maintainDetails){
+                if(m.getMaintainItemId().equals(maintainId)){
+                    return ControllerResult.getFailResult("此维修保养项目以存在此维修保养记录中, 请重新选择");
+                }
+            }
+            return ControllerResult.getSuccessResult("生成成功");
+        } else {
+            return ControllerResult.getFailResult("生成失败");
         }
     }
 

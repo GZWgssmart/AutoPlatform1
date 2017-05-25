@@ -8,6 +8,7 @@
     <result column="maintainItemId" property="maintainItemId" jdbcType="VARCHAR" />
     <result column="maintainDiscount" property="maintainDiscount" jdbcType="DOUBLE" />
     <result column="mdcreatedTime" property="mdcreatedTime" jdbcType="TIMESTAMP" />
+    <result column="mdStatus" property="mdStatus" jdbcType="VARCHAR" />
 
     <association property="maintainFix" javaType="com.gs.bean.MaintainFix">
       <id column="maintainId" property="maintainId"/>
@@ -98,7 +99,7 @@
     <![CDATA[
        select md.*, mf.maintainId, mf.maintainName from t_maintain_detail md
        LEFT JOIN t_maintain_fix mf on md.maintainItemId = mf.maintainId
-       where 1=1
+       where 1=1 and md.mdStatus = 'Y'
     ]]>
     <if test="user.companyId != '' and user.companyId != null">
       and ck.companyId = #{user.companyId}
@@ -109,7 +110,7 @@
 
   <select id="count" resultType="int" parameterType="com.gs.bean.User">
     <![CDATA[
-      select count(maintainDetailId) from t_maintain_detail where 1=1
+      select count(maintainDetailId) from t_maintain_detail where 1=1 and mdStatus = 'Y'
     ]]>
     <if test="companyId != '' and companyId != null">
       and ck.companyId = #{companyId}
@@ -121,7 +122,7 @@
        select md.*, mf.maintainId, mf.maintainName, mf.maintainHour,
         mf.maintainMoney, mf.maintainOrFix, mf.maintainDes from t_maintain_detail md
        LEFT JOIN t_maintain_fix mf on md.maintainItemId = mf.maintainId
-       where md.maintainRecordId = #{maintainRecordId}
+       where md.maintainRecordId = #{maintainRecordId} and md.mdStatus = 'Y'
        order by md.mdCreatedTime Desc
     ]]>
     limit #{pager.beginIndex}, #{pager.pageSize}
@@ -129,7 +130,7 @@
 
   <select id="countByDetail" resultType="int">
     <![CDATA[
-      select count(maintainDetailId) from t_maintain_detail where maintainRecordId = #{maintainRecordId}
+      select count(maintainDetailId) from t_maintain_detail where maintainRecordId = #{maintainRecordId} and mdStatus = 'Y'
     ]]>
   </select>
 
@@ -138,7 +139,7 @@
        select md.*, mf.*, c.*, m.* from t_maintain_detail md,t_maintain_fix mf,t_maintain_record mr,t_checkin ck,t_car_model m, t_company c
        where md.maintainItemId = mf.maintainId and md.maintainRecordId = mr.recordId
 		and mr.checkinId = ck.checkinId and ck.companyId = c.companyId
-		and ck.modelId = m.modelId
+		and ck.modelId = m.modelId and md.mdStatus = 'Y'
 		and mr.recordStatus = 'Y' and mr.currentStatus = '已收费'
     ]]>
     order by md.mdCreatedTime Desc
@@ -150,23 +151,37 @@
        select md.*, mf.maintainId, mf.maintainName, mf.maintainHour,
         mf.maintainMoney, mf.maintainOrFix, mf.maintainDes from t_maintain_detail md
        LEFT JOIN t_maintain_fix mf on md.maintainItemId = mf.maintainId
-       where md.maintainRecordId = #{maintainRecordId}
+       where md.maintainRecordId = #{maintainRecordId} and md.mdStatus = 'Y'
        order by md.mdCreatedTime Desc
     ]]>
   </select>
 
   <insert id="insert"  parameterType="MaintainDetail">
     <![CDATA[
-			insert into t_maintain_detail(maintainDetailId, maintainRecordId, maintainItemId, maintainDiscount, mdCreatedTime)
-				values(uuid(), #{maintainRecordId}, #{maintainItemId}, #{maintainDiscount}, now())
+			insert into t_maintain_detail(maintainDetailId, maintainRecordId, maintainItemId, maintainDiscount, mdCreatedTime, mdStatus)
+				values(uuid(), #{maintainRecordId}, #{maintainItemId}, #{maintainDiscount}, now(), 'Y')
 		]]>
   </insert>
 
   <update id="update" parameterType="MaintainDetail">
     <![CDATA[
 			update t_maintain_detail set maintainDetailId = #{maintainDetailId}, maintainRecordId = #{maintainRecordId}, maintainItemId = #{maintainItemId}, maintainDiscount = #{maintainDiscount},
-				mdCreatedTime = now() where maintainDetailId = #{maintainDetailId}
+				mdCreatedTime = now(), mdStatus = #{mdStatus} where maintainDetailId = #{maintainDetailId}
 		]]>
+  </update>
+
+  <!--冻结数据-->
+  <update id="inactive">
+    <![CDATA[
+         update t_maintain_detail set mdStatus = 'N' where maintainDetailId = #{id}
+        ]]>
+  </update>
+
+  <!--激活数据-->
+  <update id="active">
+    <![CDATA[
+        update t_maintain_detail set mdStatus = 'Y' where maintainDetailId = #{id}
+        ]]>
   </update>
 
   <select id="queryByOwner" resultMap="maintainDetailMap">
@@ -175,7 +190,7 @@
        mf.maintainMoney, mf.maintainOrFix, mf.maintainDes from t_maintain_detail md, t_maintain_fix mf, t_maintain_record mr, t_checkin ck
        where md.maintainItemId = mf.maintainId and
 	   md.maintainRecordId=mr.recordId and mr.checkinId = ck.checkinId and md.maintainRecordId = #{recordId}
-	   and ck.userId =#{userId} order by md.mdCreatedTime Desc
+	   and ck.userId =#{userId} and md.mdStatus = 'Y' order by md.mdCreatedTime Desc
     ]]>
     limit #{pager.beginIndex}, #{pager.pageSize}
   </select>
@@ -185,7 +200,7 @@
       select count(maintainDetailId) from t_maintain_detail md,
        t_maintain_record mr, t_checkin ck where
         md.maintainRecordId=mr.recordId and mr.checkinId = ck.checkinId
-        and md.maintainRecordId = #{recordId} and ck.userId =#{userId}
+        and md.maintainRecordId = #{recordId} and md.mdStatus = 'Y' and ck.userId =#{userId}
     ]]>
   </select>
 

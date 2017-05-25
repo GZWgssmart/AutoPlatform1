@@ -430,6 +430,7 @@ CREATE TABLE `t_maintain_detail` (
   `maintainItemId` varchar(36) DEFAULT NULL COMMENT '维修保养项目编号，来源于t_maintain_fix表，可为空',
   `maintainDiscount` double DEFAULT NULL COMMENT '维修保养项目折扣，default 0,可选择折扣，也可选择减价',
   `mdCreatedTime` datetime DEFAULT NULL COMMENT '维修保养明细创建时间',
+  `mdStatus` varchar(2) DEFAULT NULL COMMENT '维修保养明细状态，Y表示可用，N表示不可用',
   PRIMARY KEY (`maintainDetailId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

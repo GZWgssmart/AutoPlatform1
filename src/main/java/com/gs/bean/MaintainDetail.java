@@ -16,6 +16,8 @@ public class MaintainDetail {
 
     private Date mdcreatedTime; //维修保养明细创建时间
 
+    private String mdStatus; // 维修保养明细状态
+
     private MaintainFix maintainFix;
 
     private MaintainRecord maintainRecord;
@@ -98,6 +100,14 @@ public class MaintainDetail {
 
     public void setMdcreatedTime(Date mdcreatedTime) {
         this.mdcreatedTime = mdcreatedTime;
+    }
+
+    public String getMdStatus() {
+        return mdStatus;
+    }
+
+    public void setMdStatus(String mdStatus) {
+        this.mdStatus = mdStatus;
     }
 
     @Override

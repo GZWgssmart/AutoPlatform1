@@ -138,7 +138,7 @@
                             <h4>添加电话预约信息</h4>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">是否为本店用户：</label>
+                            <label class="col-sm-3 control-label">是否注册车主：</label>
                             <div class="col-sm-7">
                                 <input id="app" type="checkbox"/>
                             </div>
@@ -195,7 +195,7 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">车牌号码：</label>
                             <div class="col-sm-7">
-                                <input  type="number" name="carPlate" placeholder="请输入车牌号码" class="form-control"/>
+                                <input type="text" name="carPlate" placeholder="请输入车牌号码" class="form-control"/>
                             </div>
                         </div>
                         <div class="form-group">
@@ -317,18 +317,18 @@
         <div class="modal-content">
             <div class="modal-body">
                 <span class="glyphicon glyphicon-remove closeModal" onclick="closeAppWin()"></span>
-                        <h3>选择用户记录</h3>
+                        <h3>选择车主记录</h3>
                         <table class="table table-hover" id="appTable"style="table-layout: fixed">
                             <thead>
                             <tr>
                                 <th data-radio="true"></th>
-                                <th data-width="90" data-field="userIcon" data-formatter="formatterImg">
+                                <th data-width="140" data-field="userIcon" data-formatter="formatterImg">
                                     用户头像
                                 </th>
                                 <th data-width="90" data-field="userName">
                                     用户姓名
                                 </th>
-                                <th data-width="110" data-field="userEmail">
+                                <th data-width="140" data-field="userEmail">
                                     用户邮箱
                                 </th>
                                 <th data-width="130" data-field="userPhone">
@@ -340,10 +340,10 @@
                                 <th data-width="90" data-field="userNickname">
                                     用户昵称
                                 </th>
-                                <th data-width="90" data-field="userGender">
+                                <th data-width="90" data-field="userGender" data-formatter="formatterGender">
                                     用户性别
                                 </th>
-                                <th data-width="170" data-field="userBirthday"data-formatter="formatterDate">
+                                <th data-width="170" data-field="userBirthday" data-formatter="formatterDate">
                                     用户生日
                                 </th>
                                 <th data-width="170" data-field="userAddress">
