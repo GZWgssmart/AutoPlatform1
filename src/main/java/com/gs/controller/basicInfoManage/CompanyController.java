@@ -182,7 +182,8 @@ public class CompanyController {
                     user.setCompanyId(companyId);
                     user.setUserName(company.getCompanyPricipal());
                     user.setUserAddress(company.getCompanyAddress());
-                    user.setUserPwd(EncryptUtil.md5Encrypt("123456"));
+                    String pwd = Randompwd.getCharAndNumr(6);
+                    user.setUserPwd(EncryptUtil.md5Encrypt(pwd));
                     UserRole userRole = new UserRole();
                     userRole.setUserId(user.getUserId());
                     userRole.setRoleId("8010cecf-3205-11e7-bc72-507b9d765567");
@@ -190,10 +191,10 @@ public class CompanyController {
                     userRoleService.insert(userRole);
                     companyService.insert(company);
                     map.put("company",company);
-                    String pwd = "123456";
+
                     IndustrySMS i = new IndustrySMS(company.getCompanyPricipalphone(), "【汽车之家】尊敬的" +company.getCompanyPricipal() + "公司负责人您好，你的公司"+company.getCompanyName() + "已在本平台入驻成功，初始密码为"+pwd+"，请前来完善公司相关信息。");
                     i.execute();
-                    map.put("controllerResult",ControllerResult.getSuccessResult("添加公司信息成功" + "\n" + "账号:" + company.getCompanyPricipalphone() + " " + "初始密码为:123456"));
+                    map.put("controllerResult",ControllerResult.getSuccessResult("添加公司信息成功" + "\n" + "账号:" + company.getCompanyPricipalphone() + " " + "初始密码为:"+pwd));
                     return map;
                 } else {
                     map.put("controllerResult",ControllerResult.getFailResult("添加公司信息失败"));
