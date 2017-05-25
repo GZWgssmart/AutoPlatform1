@@ -89,9 +89,8 @@
                     <div class="first-rt-txt">
                         <h1 style="font-size: 4em;">公司简介</h1>
                         <p style="font-size: 22px;"><strong>地址：</strong>江西赣州</p>
-                        <h3><strong>开发人员： </strong></h3>
-                        <p style="font-size: 22px;">张文星，程燕，钟燕玲，杨泽桥，姚勇，郭昶</p>
-                        <p style="font-size: 22px;">肖铭丰，王怡，姜圆圆，王彬， 杨建勇</p>
+
+
                     </div>
                 </div>
                 <div class="col-md-6 col-sm-6 content-right wow fadeInRight animated" data-wow-delay="0.7s" >
@@ -115,7 +114,7 @@
                     <div class="col-md-6 col-sm-6 content-right wow fadeInRight animated" data-wow-delay="0.7s" >
                         <div class="first-rt-txt">
                             <h1 style="font-size: 4em;">常见问题</h1>
-                            <p style="font-size: 22px;">如有疑问请咨询客服或前往<a href="/common">常见问题页面</a>了解</p>
+                            <p style="font-size: 22px;">如有疑问请咨询客服或前往<a href="/common">常见问题页面</a>进行了解</p>
                         </div>
                         <div class="clearfix"></div>
                     </div>
