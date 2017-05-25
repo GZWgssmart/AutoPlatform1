@@ -39,7 +39,6 @@ $(function() {
 
 // 修改窗口有问题*************************************************************************************
 function showEdit(){
-    alert("123")
     // 初始化时间框, 第一参数是form表单id, 第二参数是input的name
     initDatePicker('editForm', 'userBirthday', 'editDatetimepicker');
     var birthday = $('#editDatetimepicker').val();
