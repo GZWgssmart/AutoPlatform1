@@ -1,6 +1,7 @@
 package com.gs.controller.accessoriesManage;
 
 import ch.qos.logback.classic.Logger;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.gs.bean.Accessories;
 import com.gs.bean.User;
 import com.gs.common.bean.ComboBox4EasyUI;
@@ -158,7 +159,7 @@ public class AccessoriesInventoryController {
     @RequestMapping(value = "addAccInv", method = RequestMethod.POST)
     public ControllerResult addAccInv(HttpSession session, Accessories accessories) {
         if (SessionUtil.isLogin(session)) {
-            User user= (User) session.getAttribute("user");
+            User user = (User) session.getAttribute("user");
             String roles = "公司超级管理员,公司普通管理员,汽车公司采购人员";
             if (RoleUtil.checkRoles(roles)) {
                 if (accessories != null && !accessories.equals("")) {
@@ -189,7 +190,7 @@ public class AccessoriesInventoryController {
     @RequestMapping(value = "updateAccInv", method = RequestMethod.POST)
     public ControllerResult updateAccInv(HttpSession session, Accessories accessories) {
         if (SessionUtil.isLogin(session)) {
-            User user= (User) session.getAttribute("user");
+            User user = (User) session.getAttribute("user");
             String roles = "公司超级管理员,公司普通管理员,汽车公司采购人员";
             if (RoleUtil.checkRoles(roles)) {
                 if (accessories != null && !accessories.equals("")) {
@@ -323,9 +324,9 @@ public class AccessoriesInventoryController {
     @ResponseBody
     @RequestMapping(value = "queryAccInvById", method = RequestMethod.POST)
     public Accessories queryAccInvById(String accId) {
-        if(accId!=null&&!accId.equals("")){
-            Accessories accessories=accessoriesService.queryById(accId);
-            if(accessories!=null){
+        if (accId != null && !accId.equals("")) {
+            Accessories accessories = accessoriesService.queryById(accId);
+            if (accessories != null) {
                 return accessories;
             }
             return null;
@@ -342,52 +343,63 @@ public class AccessoriesInventoryController {
 
     @ResponseBody
     @RequestMapping(value = "queryByCondition")
-    public List<Accessories> queryByCondition(HttpSession session,String start, String end, String type, String companyId, String accTypeId) {
-        if(SessionUtil.isLogin(session)){
-            String roles="公司超级管理员,公司普通管理员,系统超级管理员,系统普通管理员";
-            if(RoleUtil.checkRoles(roles)){
+    public List<Accessories> queryByCondition(HttpSession session, String start, String end, String type, String companyId, String accTypeId) {
+        if (SessionUtil.isLogin(session)) {
+            String roles = "公司超级管理员,公司普通管理员,系统超级管理员,系统普通管理员";
+            if (RoleUtil.checkRoles(roles)) {
                 List<Accessories> list = null;
                 User user = (User) session.getAttribute("user");
                 if (type != null && !type.equals("")) {
                     if (type.equals("year")) {
                         if (companyId != null) {
-                            list = accessoriesService.queryByCondition(start, end, companyId, accTypeId,"year");
+                            list = accessoriesService.queryByCondition(start, end, companyId, accTypeId, "year");
                         } else {
-                            list = accessoriesService.queryByCondition(start, end, user.getCompanyId(), accTypeId,"year");
+                            list = accessoriesService.queryByCondition(start, end, user.getCompanyId(), accTypeId, "year");
                         }
                     } else if (type.equals("quarter")) {
                         if (companyId != null) {
-                            list = accessoriesService.queryByCondition(start, end, companyId, accTypeId,"quarter");
+                            list = accessoriesService.queryByCondition(start, end, companyId, accTypeId, "quarter");
                         } else {
-                            list = accessoriesService.queryByCondition(start, end, user.getCompanyId(),accTypeId, "quarter");
+                            list = accessoriesService.queryByCondition(start, end, user.getCompanyId(), accTypeId, "quarter");
                         }
                     } else if (type.equals("month")) {
                         if (companyId != null) {
-                            list = accessoriesService.queryByCondition(start, end, companyId, accTypeId,"month");
+                            list = accessoriesService.queryByCondition(start, end, companyId, accTypeId, "month");
                         } else {
-                            list = accessoriesService.queryByCondition(start, end, user.getCompanyId(), accTypeId,"month");
+                            list = accessoriesService.queryByCondition(start, end, user.getCompanyId(), accTypeId, "month");
                         }
                     } else if (type.equals("week")) {
                         if (companyId != null) {
-                            list = accessoriesService.queryByCondition(start, end, companyId, accTypeId,"week");
+                            list = accessoriesService.queryByCondition(start, end, companyId, accTypeId, "week");
                         } else {
-                            list = accessoriesService.queryByCondition(start, end, user.getCompanyId(), accTypeId,"week");
+                            list = accessoriesService.queryByCondition(start, end, user.getCompanyId(), accTypeId, "week");
                         }
                     } else if (type.equals("day")) {
                         if (companyId != null) {
-                            list = accessoriesService.queryByCondition(start, end, companyId, accTypeId,"day");
+                            list = accessoriesService.queryByCondition(start, end, companyId, accTypeId, "day");
                         } else {
-                            list = accessoriesService.queryByCondition(start, end, user.getCompanyId(), accTypeId,"day");
+                            list = accessoriesService.queryByCondition(start, end, user.getCompanyId(), accTypeId, "day");
                         }
                     }
                 }
                 return list;
-            }else{
+            } else {
                 logger.info("此用户无法拥有库存统计查询角色");
                 return null;
             }
-        }else{
+        } else {
             logger.info("请先登陆");
+            return null;
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "queryByIdForPrice", method = RequestMethod.POST)
+    public Double queryByIdForPrice(String accId) {
+        if (accId != null && !accId.equals("")) {
+            Accessories accessories = accessoriesService.queryById(accId);
+            return accessories.getAccPrice();
+        } else {
             return null;
         }
     }

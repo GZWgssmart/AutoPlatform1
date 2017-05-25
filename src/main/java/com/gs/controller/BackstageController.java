@@ -55,6 +55,9 @@ public class BackstageController {
     @Resource
     private IncomingOutgoingService incomingOutgoingService;
 
+    @Resource
+    private RemindService remindService;
+
     /**
      * 后台主页
      */
@@ -73,11 +76,13 @@ public class BackstageController {
             List<MaintainFix> mainInfo=maintainFixService.queryByCompanyId(user.getCompanyId());
             List<IncomingOutgoing> incomInfo=incomingOutgoingService.queryByCompanyIdForInType(user.getCompanyId());
             List<IncomingOutgoing> outgoInfo=incomingOutgoingService.queryByCompanyIdForOutType(user.getCompanyId());
+            List<Remind> remindInfo=remindService.selectRemind();
             mav.addObject("userinfo",userinfo);
             mav.addObject("appinfo",appinfo);
             mav.addObject("maininfo",mainInfo);
             mav.addObject("incomInfo",incomInfo);
             mav.addObject("outgoInfo",outgoInfo);
+            mav.addObject("remindInfo",remindInfo);
         }
         return mav;
     }

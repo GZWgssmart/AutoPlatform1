@@ -6,7 +6,7 @@ var countNum;
 $(function () {
     $.post(contentPath + "/user/isLogin/" + roles, function (data) {
         if (data.result == "success") {
-            initTable('table', '/accSale/queryByPage'); // 初始化表格
+            initTable('table', '/accSale/queryByPage','#toolbar'); // 初始化表格
             initSelect2("company", "请选择所属公司", "/company/queryAllCompany");
             initSelect2("accInv", "请选择配件", "/accInv/queryAllAccInv");
             initSelect2("incoming", "请选择收入类型", "/incomingType/queryAllIncoming");
@@ -39,7 +39,7 @@ $(function () {
 function showAvailable() {
     $.post(contentPath + "/user/isLogin/" + roles, function (data) {
         if (data.result == "success") {
-            initTable('table', '/accSale/queryByPage');
+            initTable('table', '/accSale/queryByPage','#toolbar');
         } else if (data.result == "notLogin") {
             swal({
                 text: data.message,
@@ -66,7 +66,7 @@ function showAvailable() {
 function showDisable() {
     $.post(contentPath + "/user/isLogin/" + roles, function (data) {
         if (data.result == "success") {
-            initTable('table', '/accSale/queryByPagerDisable');
+            initTable('table', '/accSale/queryByPagerDisable','#toolbar');
         } else if (data.result == "notLogin") {
             swal({
                 text: data.message,
@@ -96,7 +96,7 @@ function blurredQuery() {
             var button = $("#ulButton");// 获取模糊查询按钮
             var text = button.text();// 获取模糊查询按钮文本
             var vaule = $("#ulInput").val();// 获取模糊查询输入框文本
-            initTable('table', '/accSale/blurredQuery?text=' + text + '&value=' + vaule);
+            initTable('table', '/accSale/blurredQuery?text=' + text + '&value=' + vaule,'#toolbar');
         } else if (data.result == "notLogin") {
             swal({
                 text: data.message,
@@ -331,6 +331,7 @@ function formSubmit(url, formId, winId) {
                 }, "json");
         } else if (data.result == "notLogin") {
             swal({
+                title:'',
                 text: data.message,
                 confirmButtonText: "确认", // 提示按钮上的文本
                 type: "error"
@@ -343,6 +344,7 @@ function formSubmit(url, formId, winId) {
             })
         } else if (data.result = "notRole") {
             swal({
+                title:'',
                 text: data.message,
                 confirmButtonText: "确认", // 提示按钮上的文本
                 type: "error"
@@ -472,4 +474,115 @@ function Editcalculate() {
             addBuyMoney.value = totalPrice;
         }
     }
+}
+
+function checkAppointment() {
+    initTable("accTable", "/accInv/queryByPage","#toolbar1");
+    $('#addForm').data('bootstrapValidator').resetForm();
+    $("#addWindow").modal('hide');
+    $("#appWindow").modal('show');
+}
+function closeAppWin() {
+    $("#appWindow").modal('hide');
+    $("#addWindow").modal('show');
+}
+// 选择预约记录
+function checkApp() {
+    var row = $("#accTable").bootstrapTable('getSelections');
+    if (row.length != 1) {
+        swal({title:"",
+            text:"请选择一个配件",
+            confirmButtonText:"确认",
+            type:"error"})
+        return false;
+    } else {
+        var selectRow = $("#accTable").bootstrapTable('getSelections');
+        var accInv=selectRow[0];
+        if (accInv != null) {
+            $("#addCountNum").attr("max",accInv.accIdle)
+            $("#addInvId").val(accInv.accId);
+            $('#addAccInv').val(accInv.accName);
+            $("#addSalePrice").val(accInv.accSalePrice)
+            $("#addCountNum").val(accInv.accIdle)
+            $("#appWindow").modal('hide');
+            $("#addWindow").modal('show');
+        } else {
+            return false;
+        }
+    }
+}
+
+
+function initTable(tableId, url,toolbarId) {
+    //先销毁表格
+    $('#' + tableId).bootstrapTable('destroy');
+    //初始化表格,动态从服务器加载数据
+    $("#" + tableId).bootstrapTable({
+        method: "get",  //使用get请求到服务器获取数据
+        url: url, //获取数据的Servlet地址
+        striped: false,  //表格显示条纹
+        pagination: true, //启动分页
+        pageSize: 10,  //每页显示的记录数
+        pageNumber:1, //当前第几页
+        pageList: [10, 15, 20, 25, 30],  //记录数可选列表
+        showColumns: true,  //显示下拉框勾选要显示的列
+        showRefresh: true,  //显示刷新按钮
+        showToggle: true, // 显示详情
+        strictSearch: true,
+        clickToSelect: true,  //是否启用点击选中行
+        uniqueId: "checkinId",                     //每一行的唯一标识，一般为主键列
+        sortable: true,                     //是否启用排序
+        sortOrder: "asc",                   //排序方式
+        toolbar :toolbarId,// 指定工具栏
+        sidePagination: "server", //表示服务端请求
+
+        //设置为undefined可以获取pageNumber，pageSize，searchText，sortName，sortOrder
+        //设置为limit可以获取limit, offset, search, sort, order
+        queryParamsType : "undefined",
+        queryParams: function queryParams(params) {   //设置查询参数
+            var param = {
+                pageNumber: params.pageNumber,
+                pageSize: params.pageSize,
+                orderNum : $("#orderNum").val()
+            };
+            return param;
+        },
+    });
+}
+
+// 模糊查询
+function accblurredQuery() {
+    $.post(contentPath + "/user/isLogin/" + roles, function (data) {
+        if (data.result == "success") {
+            var button = $("#ulButton1");// 获取模糊查询按钮
+            var text = button.text();// 获取模糊查询按钮文本
+            var vaule = $("#ulInput1").val();// 获取模糊查询输入框文本
+            initTable('accTable', '/accInv/blurredQuery?text=' + text + '&value=' + vaule,'#toolbar1');
+        } else if (data.result == "notLogin") {
+            swal({
+                text: data.message,
+                confirmButtonText: "确认", // 提示按钮上的文本
+                type: "error"
+            }, function (isConfirm) {
+                if (isConfirm) {
+                    top.location = "/user/loginPage";
+                } else {
+                    top.location = "/user/loginPage";
+                }
+            })
+        } else if (data.result = "notRole") {
+            swal({
+                text: data.message,
+                confirmButtonText: "确认", // 提示按钮上的文本
+                type: "error"
+            })
+        }
+    })
+}
+
+//模糊查询li点击事件
+function onclikLi1(lis) {
+    var button = $("#ulButton1");
+    button.text($(lis).text());
+    button.append("<span class='caret'></span>");
 }

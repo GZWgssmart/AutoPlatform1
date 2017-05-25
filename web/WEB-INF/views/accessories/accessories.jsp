@@ -64,7 +64,7 @@
                 </button>
             </shiro:hasAnyRoles>
             <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司采购人员,系统超级管理员,系统普通管理员">
-                <button id="btn_disable" type="button" class="btn btn-danger" onclick="showDisable();">
+                <button id="btn_disable" type="button" class="btn btn-danger" onclick="showDisable1();">
                     <span class="glyphicon glyphicon-search" aria-hidden="true"></span>禁用配件库存
                 </button>
             </shiro:hasAnyRoles>

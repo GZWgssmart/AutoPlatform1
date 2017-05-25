@@ -11,6 +11,7 @@ import com.gs.common.util.SessionUtil;
 import com.gs.service.AccessoriesSaleService;
 import com.gs.service.AccessoriesService;
 import com.gs.service.IncomingOutgoingService;
+import com.gs.service.RemindService;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -47,7 +48,10 @@ public class AccessoriesSaleController {
     private AccessoriesService accessoriesService;
 
     @Resource
-    public IncomingOutgoingService incomingOutgoingService;
+    private IncomingOutgoingService incomingOutgoingService;
+
+    @Resource
+    private RemindService remindService;
 
     @ResponseBody
     @RequestMapping(value = "queryAllAccSale", method = RequestMethod.GET)
@@ -123,6 +127,14 @@ public class AccessoriesSaleController {
                     accessoriesSale.setCompanyId(user.getCompanyId());
                     accessoriesSaleService.insert(accessoriesSale);
                     accessoriesService.reduceCount(accessoriesSale.getAccSaleCount(), accessoriesSale.getAccId());
+                    Accessories a=accessoriesService.queryById(accessoriesSale.getAccId());
+                    if(a.getAccIdle()==0&& a.getAccTotal()==0 || a.getAccIdle()<0 || a.getAccTotal()<0){
+                        Remind remind=new Remind();
+                        remind.setRemindDes("名称为："+a.getAccName()+"的配件可用数量已为0，请尽快添加");
+                        remind.setRemindUser(user.getUserId());
+                        remindService.addRemind(remind);
+                        accessoriesService.inactive(accessoriesSale.getAccId());
+                    }
                     incomingOutgoingService.insert(inconSet(accessoriesSale, inTypeId,user));
                     logger.info("添加配件销售成功");
                     return ControllerResult.getSuccessResult("添加配件销售成功");

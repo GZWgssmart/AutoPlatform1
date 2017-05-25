@@ -9,11 +9,48 @@
     <link rel="stylesheet" href="/static/css/bootstrap.min.css">
     <link href="/static/css/animate.min.css" rel="stylesheet">
     <link href="/static/css/style.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/sweetalert.css">
 </head>
 <%@include file="contextmenu.jsp" %>
 <body class="gray-bg" style="background-color: #f3f3f4;font-size: 0px;">
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>库存提示</h5>
+                </div>
+                <div class="ibox-content">
+                    <c:choose>
+                        <c:when test="${remindInfo.size()>0}">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>提醒人</th>
+                                    <th>提醒内容</th>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <c:forEach items="${remindInfo}" var="re">
+                                    <tr>
+                                        <td>${re.user.userName}</td>
+                                        <td>${re.remindDes}</td>
+                                        <td>
+                                            <button type="button" onclick="deleteRemind('${re.remindId}')" class="btn btn-success">知道了</button>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                                </tbody>
+                            </table>
+                        </c:when>
+                        <c:otherwise>
+                            暂无数据
+                        </c:otherwise>
+                    </c:choose>
+                </div>
+            </div>
+        </div>
         <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员">
             <div class="col-sm-12">
                 <div class="ibox float-e-margins">
@@ -273,8 +310,43 @@
 <script src="/static/js/bootstrap.min.js"></script>
 <script src="/static/js/contextmenu.js"></script>
 <script src="/static/js/content.min.js"></script>
-<script src="/static/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+<script src="/static/js/sweetalert/sweetalert.min.js"></script>
 <script>
+    function deleteRemind(remindId) {
+        $.post("/remind/deleteRemind?remindId="+remindId,function(data){
+            if(data.result=="success"){
+                swal(
+                     {title:"",
+                         text:"你确定吗",
+                         type:"warning",
+                         showCancelButton:true,
+                         confirmButtonColor:"#DD6B55",
+                         confirmButtonText:"我确定",
+                         cancelButtonText:"额，好像没做完！",
+                         closeOnConfirm:false,
+                         closeOnCancel:false
+                     },function(isConfirm){
+                         if (isConfirm) {
+                             swal({
+                                 title: "提示",
+                                 text: data.message,
+                                 type: "success",
+                                 confirmButtonText: "确认",
+                             }, function () {
+                                 javascript:location.reload();
+                             })
+                         }
+                         else{
+                             swal({title:"提示",
+                                 text:"已取消",
+                                 confirmButtonText:"确认",
+                                 type:"error"})
+                         }
+                     }
+                 )
+            }
+        });
+    }
 </script>
 </div>
 </body>

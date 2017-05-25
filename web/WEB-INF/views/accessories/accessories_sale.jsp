@@ -78,9 +78,11 @@
                 <div class="input-group" style="width:350px;float:left;padding:0;margin:0 0 0 -1px;">
                     <div class="input-group-btn">
                         <button type="button" id="ulButton" class="btn btn-default" style="border-radius:0px;"
-                                data-toggle="dropdown">配件名称<shiro:hasAnyRoles name="系统超级管理员,系统普通管理员">/汽车公司</shiro:hasAnyRoles><span class="caret"></span></button>
+                                data-toggle="dropdown">配件名称<shiro:hasAnyRoles
+                                name="系统超级管理员,系统普通管理员">/汽车公司</shiro:hasAnyRoles><span class="caret"></span></button>
                         <ul class="dropdown-menu pull-right">
-                            <li><a onclick="onclikLi(this)">配件名称<shiro:hasAnyRoles name="系统超级管理员,系统普通管理员">/汽车公司</shiro:hasAnyRoles></a></li>
+                            <li><a onclick="onclikLi(this)">配件名称<shiro:hasAnyRoles
+                                    name="系统超级管理员,系统普通管理员">/汽车公司</shiro:hasAnyRoles></a></li>
                             <li class="divider"></li>
                             <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员">
                                 <li><a onclick="onclikLi(this)">汽车公司</a></li>
@@ -122,8 +124,11 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">配件：</label>
                         <div class="col-sm-7">
-                            <select id="addAccInv" class="js-example-tags accInv" name="accId" style="width:100%">
-                            </select>
+                            <%--<select id="addAccInv" class="js-example-tags accInv" onchange="takeAccPrice();" name="accId" style="width:100%">--%>
+                            <%--</select>--%>
+                            <input type="hidden" id="addInvId" name="accId"/>
+                            <input readonly="true" onclick="checkAppointment();" type="text" name="accName"
+                                   id="addAccInv" placeholder="请选择配件" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
@@ -152,7 +157,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">配件销售折扣：</label>
                         <div class="col-sm-7">
-                            <input type="number" min="0.0" step="0.1" max="1" value="1" id="addSaleDiscount"
+                            <input type="number" min="0.0" step="0.1" max="1" id="addSaleDiscount"
                                    name="accSaleDiscount" onchange="Addcalculate();" placeholder="请输入配件销售折扣"
                                    class="form-control">
                         </div>
@@ -204,7 +209,8 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">配件：</label>
                         <div class="col-sm-7">
-                            <select id="editAccInv" class="js-example-tags accInv" define="AccessoriesSale.accId"
+                            <select id="editAccInv" class="js-example-tags accInv" onchange=""
+                                    define="AccessoriesSale.accId" readonly="true"
                                     name="accId" style="width:100%">
                             </select>
                         </div>
@@ -238,7 +244,7 @@
                         <div class="col-sm-7">
                             <input type="number" id="editSaleDiscount" name="accSaleDiscount" onchange="Editcalculate()"
                                    define="AccessoriesSale.accSaleDiscount"
-                                   placeholder="请输入配件销售折扣" class="form-control">
+                                   placeholder="请输入销售折扣，0.1代表1折" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
@@ -271,6 +277,66 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+<div id="appWindow" class="modal fade" aria-hidden="true" style="overflow-y:scroll" data-backdrop="static"
+     keyboard:false>
+    <div class="modal-dialog" style="width: 80%">
+        <div class="modal-content">
+            <div class="modal-body">
+                <span class="glyphicon glyphicon-remove closeModal" onclick="closeAppWin()"></span>
+                <h3>请选择配件</h3>
+                <table id="accTable">
+                    <thead>
+                    <tr>
+                        <th data-radio="true" data-field="status"></th>
+                        <th data-field="accessoriesType.accTypeName">配件所属类别</th>
+                        <th data-field="supply.supplyName">所属供应商</th>
+                        <th data-field="accName">配件名称</th>
+                        <th data-field="accDes">配件描述</th>
+                        <th data-field="accPrice">配件价格</th>
+                        <th data-field="accSalePrice">配件售价</th>
+                        <th data-field="accTotal">配件数量</th>
+                        <th data-field="accIdle">配件可用数量</th>
+                    </tr>
+                    </thead>
+                </table>
+                <div id="toolbar1" class="btn-group">
+                    <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司采购人员,系统超级管理员,系统普通管理员">
+                        <button id="btn_available" type="button" class="btn btn-success" onclick="showAvailable1();">
+                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>可用配件库存
+                        </button>
+                    </shiro:hasAnyRoles>
+                    <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司采购人员,系统超级管理员,系统普通管理员">
+                        <button id="btn_disable" type="button" class="btn btn-danger" onclick="showDisable1();">
+                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>禁用配件库存
+                        </button>
+                    </shiro:hasAnyRoles>
+                    <div class="input-group" style="width:350px;float:left;padding:0;margin:0 0 0 -1px;">
+                        <div class="input-group-btn">
+                            <button type="button" id="ulButton1" class="btn btn-default" style="border-radius:0px;"
+                                    data-toggle="dropdown">配件名称</button>
+                            <ul class="dropdown-menu pull-right">
+                                <li><a onclick="onclikLi1(this)">配件名称</a></li>
+                                <li class="divider"></li>
+                                <li><a onclick="onclikLi1(this)">配件类型</a></li>
+                                <li class="divider"></li>
+                            </ul>
+                        </div>
+                        <input id="ulInput1" class="form-control" onkeypress="if(event.keyCode==13) {accblurredQuery();}">
+                        <a href="javaScript:;" onclick="accblurredQuery()"><span
+                                class="glyphicon glyphicon-search search-style"></span></a>
+                        </input>
+                    </div>
+                </div>
+                <div class="modal-footer" style="overflow:hidden;">
+                    <button type="button" class="btn btn-default" onclick="closeAppWin()">关闭
+                    </button>
+                    <input type="button" class="btn btn-primary" onclick="checkApp()" value="确定">
+                    </input>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- 提示弹窗 -->
 <div class="modal fade" id="tanchuang" aria-hidden="true">
     <div class="modal-dialog">
