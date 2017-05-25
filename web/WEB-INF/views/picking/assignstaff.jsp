@@ -122,7 +122,7 @@
                         data-dismiss="modal">关闭
                 </button>
                 <button type="button" onclick="submitDispatcher()" class="btn btn-success">
-                    确认
+                    指派
                 </button>
             </div>
            <%-- <form class="form-horizontal" id="appointForm" method="post">
