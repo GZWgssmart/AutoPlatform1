@@ -35,8 +35,8 @@
                 <th data-width="180" data-field="maintainRecord.pickupTime" data-formatter="formatterDate">维修保养记录提车时间</th>
                 <th data-width="150" data-field="maintainRecord.recordDes">维修保养记录描述</th>
                 <th data-width="90" data-field="paymentMethod">付款方式</th>
-                <th data-width="90" data-field="chargeBillMoney">总金额(元)</th>
-                <th data-width="90" data-field="actualPayment">实际付款(元)</th>
+                <th data-width="110" data-field="chargeBillMoney">总金额(元)</th>
+                <th data-width="120" data-field="actualPayment">实际付款(元)</th>
                 <th data-width="180" data-field="chargeTime" data-formatter="formatterDate">收费时间</th>
                 <th data-width="180" data-field="chargeCreatedTime" data-formatter="formatterDate">收费单据创建时间</th>
                 <th data-width="130" data-field="chargeBillDes">收费单据描述</th>
@@ -132,19 +132,24 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label" >付款方式：</label>
                         <div class="col-sm-7">
-                            <input type="text" name="paymentMethod" define="chargeBill.paymentMethod" placeholder="请输入付款方式" class="form-control">
+                            <select id="editPaymentMethod" class="js-example-tags form-control" name="paymentMethod">
+                                <option value="现金">现金</option>
+                                <option value="支付宝">支付宝</option>
+                                <option value="微信">微信</option>
+                                <option value="财付通">财付通</option>
+                            </select>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">总金额(元)：</label>
                         <div class="col-sm-7">
-                            <input type="number" name="chargeBillMoney" min="1" define="chargeBill.chargeBillMoney" placeholder="请输入总金额" class="form-control">
+                            <input type="number" name="chargeBillMoney" min="0" define="chargeBill.chargeBillMoney" placeholder="请输入总金额" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">实际付款(元)：</label>
                         <div class="col-sm-7">
-                            <input type="number" name="actualPayment" min="1" define="chargeBill.actualPayment" placeholder="请输入实际付款" class="form-control">
+                            <input type="number" name="actualPayment" min="0" define="chargeBill.actualPayment" placeholder="请输入实际付款" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
@@ -157,7 +162,7 @@
                         <button type="button" class="btn btn-default"
                                 onclick="closeModals('editWindow','editForm')">关闭
                         </button>
-                        <button type="submit" class="btn btn-success btn-sm">保存</button>
+                        <button onclick="editSubmit()" id="editButton" class="btn btn-success btn-sm">保存</button>
                     </div>
                 </form>
             </div>
@@ -169,7 +174,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
-                <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
+                <span class="glyphicon glyphicon-remove closeModal" onclick="closeModals('addWin', 'addForm')"></span>
                 <form class="form-horizontal" id="addForm" method="post">
                     <input type="reset" name="reset" style="display: none;"/>
                     <div class="modal-header" style="overflow:auto;">
@@ -194,7 +199,7 @@
                     </div>
                     <div class="form-group">
                         <div class="col-sm-offset-8">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            <button type="button" class="btn btn-default" onclick="closeModals('addWin', 'addForm')">关闭</button>
                             <button class="btn btn-sm btn-success" type="button" id="addButton"
                                     onclick="addInSubmit()">保 存
                             </button>

@@ -289,7 +289,6 @@ function showEditStatus(){
                         if(isConfirm){
                             $.post("/maintainDetail/statusOperate?id="+row[0].maintainDetailId+"&status=Y", function (data) {
                                 if(data.result == "success"){
-                                    $("#detailTable").bootstrapTable('refresh');
                                     swal({title:"",
                                         text:data.message,
                                         confirmButtonText:"确认",
@@ -311,7 +310,7 @@ function showEditStatus(){
             }else{
                 swal({
                     title:"",
-                    text: "请先选择要禁用的维修保养明细", // 主要文本
+                    text: "请xian选择要禁用的维修保养明细", // 主要文本
                     confirmButtonColor: "#DD6B55", // 提示按钮的颜色
                     confirmButtonText:"确定", // 提示按钮上的文本
                     type:"warning"}) // 提示类型

@@ -306,7 +306,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">保养&nbsp;|&nbsp;维修：</label>
                         <div class="col-sm-7">
-                            <select id="editMaintainOrFix" define="checkin.maintainOrFix"
+                            <select id="editMaintainOrFix"
                                     class="js-example-tags form-control" name="maintainOrFix">
                                 <option value="保养">保养</option>
                                 <option value="维修">维修</option>
@@ -316,7 +316,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">是否洗车：</label>
                         <div class="col-sm-7">
-                            <select class="js-example-tags form-control" define="checkin.ifClearCar" name="ifClearCar">
+                            <select id="editIfClearCar" class="js-example-tags form-control" name="ifClearCar">
                                 <option value="N">否</option>
                                 <option value="Y">是</option>
                             </select>

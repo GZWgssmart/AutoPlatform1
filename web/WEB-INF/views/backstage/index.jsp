@@ -212,10 +212,10 @@
                     <li>
                         <a href="#"><i class="fa fa-ambulance"></i> <span class="nav-label">派工领料管理</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
-                            <li><a class="J_menuItem" href="pickingControll/materialsIndex">我的工单</a></li>
                             <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司总技师">
                                 <li><a class="J_menuItem" href="pickingControll/assignstaffIndex">指派员工</a></li>
                             </shiro:hasAnyRoles>
+                            <li><a class="J_menuItem" href="pickingControll/materialsIndex">我的工单</a></li>
                             <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司库管人员">
                                 <li><a class="J_menuItem" href="pickingControll/mattermanageIndex">物料管理</a></li>
                             </shiro:hasAnyRoles>

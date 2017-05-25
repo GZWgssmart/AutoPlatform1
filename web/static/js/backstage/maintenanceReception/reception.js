@@ -330,6 +330,8 @@ function showEdit(){
                 $("#editWindow").modal('show'); // 显示弹窗
                 $("#editButton").removeAttr("disabled");
                 var checkin = row[0];
+                $("#editMaintainOrFix").val(checkin.maintainOrFix);
+                $("#editIfClearCar").val(checkin.ifClearCar);
                 $('#editCarBrand').html('<option value="' + checkin.brand.brandId + '">' + checkin.brand.brandName + '</option>').trigger("change");
                 $('#editCarColor').html('<option value="' + checkin.color.colorId + '">' + checkin.color.colorName + '</option>').trigger("change");
                 $('#editCarModel').html('<option value="' + checkin.model.modelId + '">' + checkin.model.modelName + '</option>').trigger("change");

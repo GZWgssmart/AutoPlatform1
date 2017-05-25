@@ -144,15 +144,6 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">保养&nbsp;|&nbsp;维修：</label>
-                            <div class="col-sm-7">
-                                <select  class="js-example-tags form-control" name="maintainOrFix">
-                                    <option value="保养">保养</option>
-                                    <option value="维修">维修</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
                             <label class="col-sm-3 control-label">车主姓名：</label>
                             <div class="col-sm-7">
                                 <input type="text" id="addUserName" placeholder="请输入车主姓名" name="userName" class="form-control"/>
@@ -199,6 +190,15 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label class="col-sm-3 control-label">保养&nbsp;|&nbsp;维修：</label>
+                            <div class="col-sm-7">
+                                <select  class="js-example-tags form-control" name="maintainOrFix">
+                                    <option value="保养">保养</option>
+                                    <option value="维修">维修</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label class="col-sm-3 control-label">到店时间：</label>
                             <div class="col-sm-7">
                                 <!-- 当设置不可编辑后, 会修改颜色, 在min.css里搜索.form-control{background-color:#eee;opacity:1} -->
@@ -237,7 +237,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">保养&nbsp;|&nbsp;维修：</label>
                     <div class="col-sm-7">
-                        <select  define="appointment.maintainOrFix" class="js-example-tags form-control" name="maintainOrFix">
+                        <select  id="editMaintainOrFix" class="js-example-tags form-control" name="maintainOrFix">
                             <option value="保养">保养</option>
                             <option value="维修">维修</option>
                         </select>

@@ -189,6 +189,15 @@ function inCheckInType(){
     $("#inTypeName").val(row[0].inTypeName);
 }
 
+function editSubmit(){
+    $("#editForm").data('bootstrapValidator').validate();
+    if ($("#editForm").data('bootstrapValidator').isValid()) {
+        $("#editButton").attr("disabled", "disabled");
+    } else {
+        $("#editButton").removeAttr("disabled");
+    }
+}
+
 function showEdit(){
     var roles = "公司超级管理员,公司普通管理员,汽车公司接待员";
     $.post("/user/isLogin/"+roles, function (data) {
@@ -198,6 +207,7 @@ function showEdit(){
                 $("#editWindow").modal('show'); // 显示弹窗
                 var chargeBill = row[0];
                 $("#editForm").fill(chargeBill);
+                $("#editPaymentMethod").val(chargeBill.paymentMethod);
                 $('#chargeCreatedTime').val(formatterDate(chargeBill.chargeCreatedTime))
                 validator('editForm'); // 初始化验证
             }else{
