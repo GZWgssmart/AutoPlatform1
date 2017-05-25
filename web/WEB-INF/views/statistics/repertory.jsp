@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="/static/css/bootstrap.min.css">
     <link rel="stylesheet" href="/static/css/select2.min.css">
     <link href="/static/css/select2/select2.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/sweetalert.css">
+</head>
 
 </head>
 <style>
@@ -267,6 +269,7 @@
 <script src="/static/js/contextmenu.js"></script>
 <script src="/static/js/select2/select2.js"></script>
 <script src="/static/js/backstage/main.js"></script>
+<script src="/static/js/sweetalert/sweetalert.min.js"></script>
 
 </div>
 

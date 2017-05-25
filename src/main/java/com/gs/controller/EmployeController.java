@@ -66,4 +66,14 @@ public class EmployeController {
         logger.info("个人资料跳转页面");
         return "emp/selfManage";
     }
+
+    /**
+     *车主信息跳转页面
+     */
+    @RequiresAuthentication
+    @RequestMapping(value = "carOwnerInfo", method = RequestMethod.GET)
+    public String carOwnerInfo() {
+        logger.info("个人资料跳转页面");
+        return "emp/carOwnerInfo";
+    }
 }

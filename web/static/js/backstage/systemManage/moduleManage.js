@@ -459,7 +459,7 @@ function addSubmit(){
         } else {
             $("#addButton").removeAttr("disabled");
         }
-    }, 100);
+    }, 300);
 }
 function delSubmit(url, el) {
     var modulePanel = $(el).parents(".panel").first();

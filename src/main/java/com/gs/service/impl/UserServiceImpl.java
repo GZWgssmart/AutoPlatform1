@@ -278,7 +278,42 @@ public class UserServiceImpl implements UserService {
     }
 
     //   修改个人资料
-    public int updateSelfManage(String userId) {
-        return userDAO.updateSelfManage(userId);
+    public int updateSelfManage(User user) {
+        return userDAO.updateSelfManage(user);
     }
+
+    public User queryById(User user) {
+        return userDAO.queryById(user);
+    }
+
+    //  查询车主用户信息
+    public List<User> queryCarByRoleName(Pager pager) {
+        return userDAO.queryCarByRoleName(pager);
+    }
+
+    //  车主记录数
+    public int countCar() {
+        return userDAO.countCar();
+    }
+
+    //  查询状态为可用的车主用户信息
+    public List<User> queryCarByOk(Pager pager) {
+        return userDAO.queryCarByOk(pager);
+    }
+
+    //  查询状态为不可用的车主用户信息
+    public List<User> queryCarByNo(Pager pager) {
+        return userDAO.queryCarByNo(pager);
+    }
+
+    //  车主记录数 可用
+    public int countCarByOk(User user) {
+        return userDAO.countCarByOk(user);
+    }
+
+    //  车主记录数 不可用
+    public int countCarByNo(User user) {
+        return userDAO.countNO(user);
+    }
+
 }

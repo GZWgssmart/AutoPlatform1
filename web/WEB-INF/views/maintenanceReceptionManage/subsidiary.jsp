@@ -174,52 +174,6 @@
     </div>
 </div>
 
-
-<!-- 修改弹窗 -->
-<div class="modal fade" id="editWindow" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static" keyboard:false>
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-body">
-                <span class="glyphicon glyphicon-remove closeModal" onclick="closeEditForm()"></span>
-                <form role="form" class="form-horizontal" id="editForm">
-                    <input type="hidden" define="maintainDetail.maintainDetailId" name="maintainDetailId"/>
-                    <input type="hidden" define="maintainDetail.maintainRecordId" name="maintainRecordId"/>
-                    <input type="hidden" id="editItemId" name="maintainItemId">
-                    <div class="modal-header" style="overflow:auto;">
-                        <h3>修改维修保养明细</h3>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">维修保养项目：</label>
-                        <div class="col-sm-7">
-                            <button type="button" class="btn btn-default" onclick="showItem('editWindow');">
-                                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查看项目
-                            </button>
-                            <input id="editItem" type="text" name="maintainItemName" define="maintainDetail.maintainFix.maintainName"
-                                   class="form-control" placeholder="请选择维修保养项目" readonly="true" style="width:66%;">
-                            </input>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">项目折扣：</label>
-                        <div class="col-sm-7">
-                            <input type="number" name="maintainDiscount" placeholder="请输入项目折扣, 0.1代表1折" step="0.1"
-                                   min="0.1" max="1" define="maintainDetail.maintainDiscount" class="form-control"
-                                   style="width:100%"/>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default"
-                                onclick="closeEditForm()">关闭
-                        </button>
-                        <button id="editButton" type="button" onclick="editSubmit()" class="btn btn-success">保存
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
 <!-- 维修保养项目表格 -->
 <div class="modal fade" id="itemWindow" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog" style="width:90%;">
@@ -295,16 +249,12 @@
                 </table>
                 <div id="detailToolbar" class="btn-group">
                     <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司接待员">
-                                        <button id="btn_userDetail" type="button" class="btn btn-default" onclick="showUserDetail();">
-                                            <span class="glyphicon glyphicon-user" aria-hidden="true"></span>用户已签字
-                                        </button>
-                    </shiro:hasAnyRoles>
-                    <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司接待员">
-                                        <button id="btn_editDetail" type="button" class="btn btn-default" onclick="showEditDetail();">
-                                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改明细
-                                        </button>
-                    </shiro:hasAnyRoles>
-                    <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司接待员">
+                        <button id="btn_userDetail" type="button" class="btn btn-default" onclick="showUserDetail();">
+                            <span class="glyphicon glyphicon-user" aria-hidden="true"></span>用户已签字
+                        </button>
+                        <button id="btn_editDetail" type="button" class="btn btn-default" onclick="showEditStatus();">
+                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>禁用明细
+                        </button>
                         <button id="btn_printDetail" type="button" class="btn btn-default" onclick="showPrint();">
                             <span class="glyphicon glyphicon-print" aria-hidden="true"></span>打印明细
                         </button>

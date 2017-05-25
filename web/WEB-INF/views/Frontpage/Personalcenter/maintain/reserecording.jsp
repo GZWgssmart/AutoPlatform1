@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="/static/css/sweetalert.css">
     <link rel="stylesheet" href="/static/css/table/table.css">
     <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.css">
-    <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/datetimepicker.less">
+    <link rel="stylesheet/less" href="/static/css/bootstrap-dateTimePicker/datetimepicker.less">
     <link rel="stylesheet" href="/static/js/plugins/layui/css/layui.css">
 </head>
 <body>
@@ -40,7 +40,7 @@
                 <th data-field="recordCreatedTime" data-formatter="formatterDate">维修保养记录创建时间</th>
                 <th data-field="pickupTime" data-formatter="formatterDate">维修保养车主提车时间</th>
                 <th data-field="recordDes">维修保养记录描述</th>
-                <th data-field="recordStatus" data-formatter="formatterStatus">维修保养记录状态</th>
+                <th data-field="recordStatus" data-formatter="showStatusFormatter">记录状态</th>
             </tr>
             </thead>
         </table>

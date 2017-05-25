@@ -24,6 +24,7 @@
                     <li class="icon-li"><a href="#mc2-des" id="pt">平台介绍</a></li>
                     <li class="icon-li"><a href="#mc4-des" id="gn">功能介绍</a></li>
                     <li class="icon-li"><a href="/reg">登录</a></li>
+                    <li class="icon-li"><a href="/resepage">预约</a></li>
                     <li class="icon-li"><a href="/platformIntro">关于我们</a></li>
                     <li id="menu-bg"><a href="/factoryreg">汽车公司入驻</a></li>
                 </ul>
@@ -133,7 +134,7 @@
                 </div>
             </div>
             <div class="button-box2">
-                <button class="btn wow fadeInRight animated " data-wow-delay="0.5s" style="width: 200px;height: 50px;visibility: visible; animation-delay: 1s; animation-name: fadeInRight;">了解更多</button>
+                <button class="btn wow fadeInRight animated " data-wow-delay="0.5s" style="width: 200px;height: 50px;visibility: visible; animation-delay: 1s; animation-name: fadeInRight;"><a href="/platformIntro" style="color: #fff;text-decoration: none;">了解更多</a></button>
             </div>
         </div>
         <%--主内容三--%>
@@ -236,11 +237,12 @@
                     <div class="col-sm-9 col-md-5 wechat">
                         <h3 style="margin: 0;">扫码关注</h3>
                         <div class="row sm ">
+                            <div class="col-md-3 col-sm-3">
+                            </div>
                             <div class="col-md-5 col-sm-5" style="text-align: center;">
                                 <img src="/static/img/Frontpage/erweim.jpg" width="180px" height="140px"/>
                             </div>
-                            <div class="col-md-3 col-sm-3">
-                            </div>
+
                             <div class="col-md-3 col-sm-3">
                             </div>
                         </div>

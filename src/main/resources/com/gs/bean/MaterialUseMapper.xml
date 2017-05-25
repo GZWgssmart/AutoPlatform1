@@ -4,10 +4,13 @@
   <resultMap id="BaseResultMap" type="com.gs.bean.MaterialUse" >
     <id column="materialUseId" property="materialUseId" jdbcType="VARCHAR" />
     <result column="matainRecordId" property="matainRecordId" jdbcType="VARCHAR" />
+      <result column="count" property="count"/>
     <result column="accId" property="accId" jdbcType="VARCHAR" />
     <result column="accCount" property="accCount" jdbcType="INTEGER" />
     <result column="muCreatedTime" property="muCreatedTime" jdbcType="TIMESTAMP" />
     <result column="muUseDate" property="muUseDate" jdbcType="TIMESTAMP" />
+
+      <result column="accIdle" property="accIdle"/>
   </resultMap>
   
   <resultMap id="baseRecordView" type="com.gs.bean.view.RecordBaseView">
@@ -39,6 +42,10 @@
             <association property="checkin" javaType="checkin">
                 <id property="checkinId" column="checkinId" />
                 <result property="carPlate" column="carPlate"/>
+                <association property="plate" javaType="carPlate">
+                    <id property="plateId" column="plateId"></id>
+                    <id property="plateName" column="plateName"></id>
+                </association>
             </association>
         </association>
         <association property="accessories" javaType="accessories">
@@ -104,6 +111,7 @@
           record.recordId,
           checkin.checkinId,
           checkin.carplate,
+          carp.plateName,
           mater.*
         from
             (select *,'U' as 'flag' from t_material_use
@@ -114,6 +122,7 @@
         left join t_user tuser on workinfo.userId = tuser.userId
         left join t_maintain_record record on mater.matainRecordId = record.recordId
         left join t_checkin checkin on record.checkinId = checkin.checkinId
+        left join t_car_plate carp on carp.plateId = checkin.plateId
         <where>
             <if test="userId!=null">
                 tuser.userId = #{userId}
@@ -302,7 +311,7 @@
         left join act_ru_execution ruexe on repro.ID_ =  ruexe.PROC_DEF_ID_
         left join act_hi_procinst hipro on ruexe.PROC_INST_ID_ = hipro.PROC_INST_ID_
         where repro.KEY_ = #{flowName}
-        <if test="user.userId != '' and user.userId != null" >
+        <if test="user.userId != null and user.userId != '' " >
             and hipro.START_USER_ID_ = #{user.userId}
         </if>
 
@@ -429,6 +438,7 @@
     <select id="userWorksByPager" resultMap="com.gs.dao.WorkInfoDAO.BaseResultMap">
         select
             workinfo.workId ,
+            workinfo.workStatus,
             record.recordId ,
             color.colorRGB ,
             color.colorName ,
@@ -448,7 +458,7 @@
         left join t_car_plate plate on checkin.plateId = plate.plateId
         <where>
             1 = 1
-            <if test="user.companyId != '' and user.companyId != null">
+            <if test="user.companyId != null and user.companyId != ''">
               and workinfo.userId = #{user.userId}
             </if>
             <if test="status!=null">
@@ -465,7 +475,7 @@
         t_work_info workinfo
         <where>
             1 = 1
-            <if test="user.companyId != '' and user.companyId != null">
+            <if test="user.companyId != null and user.companyId != '' ">
                 and workinfo.userId = #{user.userId}
             </if>
             <if test="status!=null">
@@ -520,7 +530,7 @@
             left join t_accessories_type acType on ac.accTypeId = acType.accTypeId
             where 1=1 and ac.accStatus = 'Y'
         ]]>
-            <if test="companyId != '' and companyId !=null">
+            <if test="companyId !=null and companyId != '' ">
                 and acType.companyId = #{companyId}
             </if>
     </select>
@@ -529,7 +539,7 @@
         <![CDATA[
             select * FROM auto_platform.t_accessories ac where 1=1 and ac.accStatus = 'Y'
         ]]>
-        <if test="companyId != '' and companyId !=null">
+        <if test="companyId !=null and companyId != ''">
             and ac.companyId = #{companyId}
         </if>
     </select>
@@ -548,4 +558,30 @@
         <![CDATA[ and comp.companyLatitude  >  ]]> #{minLat}
         <![CDATA[ and comp.companyLatitude  <  ]]> #{maxLat}
     </select>
+
+    <!--库存领料统计-->
+    <select id="queryByCondition" resultMap="BaseResultMap">
+        <![CDATA[
+        select SUM(mu.accCount) as count,a.accIdle as accIdle, mu.muCreatedTime from t_accessories a, t_accessories_type t,t_company c, t_material_use mu
+              where a.accTypeId = t.accTypeId and a.companyId = c.companyId and a.accStatus = 'Y' and mu.accId = a.accId  and
+            c.companyId = #{companyId} and t.accTypeId = #{accTypeId} and mu.muCreatedTime >= #{start} and mu.muCreatedTime <= #{end}
+        ]]>
+        <if test="type =='year'">
+            group by date_format(mu.muCreatedTime, '%Y') ORDER BY mu.muCreatedTime ASC;
+        </if>
+        <if test="type =='quarter'">
+            group by concat(date_format(mu.muCreatedTime, '%Y'),FLOOR((date_format(mu.muCreatedTime, '%m')+2)/3)) ORDER BY mu.muCreatedTime ASC;
+        </if>
+        <if test="type =='month'">
+            group by date_format(mu.muCreatedTime, '%y-%m') ORDER BY mu.muCreatedTime ASC;
+        </if>
+        <if test="type =='week'">
+            group by date_format(mu.muCreatedTime, '%y-%m') ORDER BY mu.muCreatedTime ASC;
+        </if>
+        <if test="type =='day'">
+            group by date(mu.muCreatedTime) ORDER BY mu.muCreatedTime ASC;
+        </if>
+    </select>
+
+
 </mapper>

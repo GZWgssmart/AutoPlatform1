@@ -76,7 +76,7 @@ var option = {
          */
     },
     legend: {
-        data: ['库存使用统计']
+        data: ['库存领料统计','库存可用数量']
     },
     dataZoom: [
         {
@@ -91,8 +91,8 @@ var option = {
         }
     ],
     color:[
-        '#FF3333',	//温度曲线颜色
-        '#49ebff'//温度曲线颜色
+        '#FF3333',	//库存领料颜色
+        '#49ebff'//库存可用颜色
     ],
     toolbox: {
         //显示策略，可选为：true（显示） | false（隐藏），默认值为false
@@ -132,7 +132,13 @@ var option = {
     ],
     series : [	//系列（内容）列表
         {
-            name:'项目库存使用统计',
+            name:'库存领料统计',
+            type:'line',	//折线图表示（生成温度曲线）
+            symbol:'emptycircle',	//设置折线图中表示每个坐标点的符号；emptycircle：空心圆；emptyrect：空心矩形；circle：实心圆；emptydiamond：菱形
+            data:[]		//数据值通过Ajax动态获取
+        },
+        {
+            name:'库存可用数量',
             type:'line',	//折线图表示（生成温度曲线）
             symbol:'emptycircle',	//设置折线图中表示每个坐标点的符号；emptycircle：空心圆；emptyrect：空心矩形；circle：实心圆；emptydiamond：菱形
             data:[]		//数据值通过Ajax动态获取
@@ -159,7 +165,7 @@ $.ajax({	//使用JQuery内置的Ajax方法
         if (result != null && result.length > 0) {
             for (var i = 0; i < result.length; i++) {
                 count.push(result[i].count);
-                workInfoDatas.push(formatterWeek(result[i].mrCreatedDate));
+                workInfoDatas.push(formatterWeek(result[i].muCreatedTime));
 
             }
             myChart.hideLoading();	//隐藏加载动画
@@ -173,7 +179,7 @@ $.ajax({	//使用JQuery内置的Ajax方法
 
                     {
                         // 根据名字对应到相应的系列
-                        name: '库存使用统计',
+                        name: '库存领料统计',
                         data: count
                     }
                 ]
@@ -182,7 +188,13 @@ $.ajax({	//使用JQuery内置的Ajax方法
         }
         else {
             //返回的数据为空时显示提示信息
-            alert("图表请求数据为空,没有当前时间段的数据");
+            swal({
+                title:"",
+                text:"请选择条件查询图表",
+                confirmButtonColor: "#DD6B55", // 提示按钮的颜色
+                confirmButtonText: "确定", // 提示按钮上的文本
+                type: "warning"
+            })
             myChart.hideLoading();
         }
 
@@ -238,6 +250,7 @@ function selectYears() {
 
     var count=[];		//湿度数组
     var workInfoDatas=[];		//时间数组
+    var accIdle=[];		//库存剩余数量
     var start = $("#startYearInput").val() + "-01-01";
     var end = $("#endYearInput").val() + "-12-31";
     var companyId = $("#companyId").val();
@@ -254,7 +267,8 @@ function selectYears() {
             if (result !== null && result.length > 0) {
                 for (var i = 0; i < result.length; i++) {
                     count.push(result[i].count);
-                    workInfoDatas.push(formatterYear(result[i].mrCreatedDate));
+                    workInfoDatas.push(formatterYear(result[i].muCreatedTime));
+                    accIdle.push(result[i].accIdle)
                 }
 
                 myChart.hideLoading();	//隐藏加载动画
@@ -266,8 +280,13 @@ function selectYears() {
                     series: [	//填入系列（内容）数据
                         {
                             // 根据名字对应到相应的系列
-                            name: '库存使用统计',
+                            name: '库存领料统计',
                             data: count
+                        },
+                        {
+                            // 根据名字对应到相应的系列
+                            name: '库存可用数量',
+                            data: accIdle
                         }
                     ]
                 });
@@ -276,7 +295,13 @@ function selectYears() {
             }
             else {
                 //返回的数据为空时显示提示信息
-                alert("图表请求数据为空,没有当前时间段的数据");
+                swal({
+                    title:"",
+                    text:"图表请求数据为空,没有当前时间段的数据,请选择一个时间段的数据，可以根据年月日季度周查询",
+                    confirmButtonColor: "#DD6B55", // 提示按钮的颜色
+                    confirmButtonText: "确定", // 提示按钮上的文本
+                    type: "warning"
+                })
                 myChart.hideLoading();
             }
 
@@ -296,6 +321,7 @@ function selectMonth() {
 
     var count=[];		//湿度数组
     var workInfoDatas=[];		//时间数组
+    var accIdle=[];		//库存剩余数量
     var start = $("#startMonthInput").val() + "-01";
     var end = $("#endMonthInput").val() + "-31";
     var companyId = $("#monthCompanyId").val();
@@ -313,7 +339,8 @@ function selectMonth() {
             if (result != null && result.length > 0) {
                 for (var i = 0; i < result.length; i++) {
                     count.push(result[i].count);
-                    workInfoDatas.push(formatterMonth(result[i].mrCreatedDate));
+                    workInfoDatas.push(formatterMonth(result[i].muCreatedTime));
+                    accIdle.push(result[i].accIdle)
 
                 }
                 myChart.hideLoading();	//隐藏加载动画
@@ -327,8 +354,13 @@ function selectMonth() {
 
                         {
                             // 根据名字对应到相应的系列
-                            name: '库存使用统计',
+                            name: '库存领料统计',
                             data: count
+                        },
+                        {
+                            // 根据名字对应到相应的系列
+                            name: '库存可用数量',
+                            data: accIdle
                         }
                     ]
                 });
@@ -336,7 +368,13 @@ function selectMonth() {
             }
             else {
                 //返回的数据为空时显示提示信息
-                alert("图表请求数据为空,没有当前时间段的数据");
+                swal({
+                    title:"",
+                    text:"图表请求数据为空,没有当前时间段的数据,请选择一个时间段的数据，可以根据年月日季度周查询",
+                    confirmButtonColor: "#DD6B55", // 提示按钮的颜色
+                    confirmButtonText: "确定", // 提示按钮上的文本
+                    type: "warning"
+                })
                 myChart.hideLoading();
             }
 
@@ -354,6 +392,7 @@ function selectDay() {
 
     var count=[];		//湿度数组
     var workInfoDatas=[];		//时间数组
+    var accIdle=[];		//库存剩余数量
     var start = $("#startDayInput").val();
     var end = $("#endDayInput").val();
     var companyId = $("#dayCompanyId").val();
@@ -371,7 +410,8 @@ function selectDay() {
             if (result != null && result.length > 0) {
                 for (var i = 0; i < result.length; i++) {
                     count.push(result[i].count);
-                    workInfoDatas.push(formatterDay(result[i].mrCreatedDate));
+                    workInfoDatas.push(formatterDay(result[i].muCreatedTime));
+                    accIdle.push(result[i].accIdle)
 
                 }
                 myChart.hideLoading();	//隐藏加载动画
@@ -384,8 +424,13 @@ function selectDay() {
                     series: [	//填入系列（内容）数据
                         {
                             // 根据名字对应到相应的系列
-                            name: '库存使用统计',
+                            name: '库存领料统计',
                             data: count
+                        },
+                        {
+                            // 根据名字对应到相应的系列
+                            name: '库存可用数量',
+                            data: accIdle
                         }
                     ]
                 });
@@ -393,7 +438,13 @@ function selectDay() {
             }
             else {
                 //返回的数据为空时显示提示信息
-                alert("图表请求数据为空,没有当前时间段的数据");
+                swal({
+                    title:"",
+                    text:"图表请求数据为空,没有当前时间段的数据,请选择一个时间段的数据，可以根据年月日季度周查询",
+                    confirmButtonColor: "#DD6B55", // 提示按钮的颜色
+                    confirmButtonText: "确定", // 提示按钮上的文本
+                    type: "warning"
+                })
                 myChart.hideLoading();
             }
 
@@ -411,6 +462,7 @@ function selectQuarter() {
 
     var count=[];		//湿度数组
     var workInfoDatas=[];		//时间数组
+    var accIdle=[];		//库存剩余数量
     var start = $("#startQuarterInput").val();
     var end = $("#endQuarterInput").val();
     var companyId = $("#quarterCompanyId").val();
@@ -428,7 +480,8 @@ function selectQuarter() {
             if (result != null && result.length > 0) {
                 for (var i = 0; i < result.length; i++) {
                     count.push(result[i].count);
-                    workInfoDatas.push(formatterQuarter(result[i].mrCreatedDate));
+                    workInfoDatas.push(formatterQuarter(result[i].muCreatedTime));
+                    accIdle.push(result[i].accIdle)
 
                 }
                 myChart.hideLoading();	//隐藏加载动画
@@ -442,8 +495,13 @@ function selectQuarter() {
 
                         {
                             // 根据名字对应到相应的系列
-                            name: '库存使用统计',
+                            name: '库存领料统计',
                             data: count
+                        },
+                        {
+                            // 根据名字对应到相应的系列
+                            name: '库存可用数量',
+                            data: accIdle
                         }
                     ]
                 });
@@ -451,7 +509,13 @@ function selectQuarter() {
             }
             else {
                 //返回的数据为空时显示提示信息
-                alert("图表请求数据为空,没有当前时间段的数据");
+                swal({
+                    title:"",
+                    text:"图表请求数据为空,没有当前时间段的数据,请选择一个时间段的数据，可以根据年月日季度周查询",
+                    confirmButtonColor: "#DD6B55", // 提示按钮的颜色
+                    confirmButtonText: "确定", // 提示按钮上的文本
+                    type: "warning"
+                })
                 myChart.hideLoading();
             }
 
@@ -470,6 +534,7 @@ function selectWeek() {
 
     var count=[];		//湿度数组
     var workInfoDatas=[];		//时间数组
+    var accIdle=[];		//库存剩余数量
     var start = $("#startWeekInput").val();
     var end = $("#endWeekInput").val();
     var companyId = $("#weekCompanyId").val();
@@ -487,7 +552,8 @@ function selectWeek() {
             if (result != null && result.length > 0) {
                 for (var i = 0; i < result.length; i++) {
                     count.push(result[i].count);
-                    workInfoDatas.push(formatterWeek(result[i].mrCreatedDate));
+                    workInfoDatas.push(formatterWeek(result[i].muCreatedTime));
+                    accIdle.push(result[i].accIdle)
 
                 }
                 myChart.hideLoading();	//隐藏加载动画
@@ -501,8 +567,13 @@ function selectWeek() {
 
                         {
                             // 根据名字对应到相应的系列
-                            name: '库存使用统计',
+                            name: '库存领料统计',
                             data: count
+                        },
+                        {
+                            // 根据名字对应到相应的系列
+                            name: '库存可用数量',
+                            data: accIdle
                         }
                     ]
                 });
@@ -510,7 +581,13 @@ function selectWeek() {
             }
             else {
                 //返回的数据为空时显示提示信息
-                alert("图表请求数据为空,没有当前时间段的数据");
+                swal({
+                    title:"",
+                    text:"图表请求数据为空,没有当前时间段的数据,请选择一个时间段的数据，可以根据年月日季度周查询",
+                    confirmButtonColor: "#DD6B55", // 提示按钮的颜色
+                    confirmButtonText: "确定", // 提示按钮上的文本
+                    type: "warning"
+                })
                 myChart.hideLoading();
             }
 

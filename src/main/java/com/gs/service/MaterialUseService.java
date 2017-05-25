@@ -68,4 +68,9 @@ public interface MaterialUseService extends BaseService<String, MaterialUse>{
     public String queryUserIdbyRecordId4workInfo(String recordId);
 
     public List<Company> queryNearCompanys(Map pointsMap);
+
+    /**
+     * 库存使用情况报表
+     */
+    public List<MaterialUse> queryByCondition(String start, String end, String companyId,  String accTypeId, String type);
 }

@@ -2,14 +2,15 @@ var contentPath = '';
 
 $(function () {
     validator('loginForm');
+    initCityPicker("address");//初始化三级地区联动
 })
 
 function loginSubmit() {
     $("#loginForm").data('bootstrapValidator').validate();
     if ($("#loginForm").data('bootstrapValidator').isValid()) {
-        $("#loginForm").attr("disabled", "disabled");
+        $("#loginButton").attr("disabled", "disabled");
     } else {
-        $("#loginForm").removeAttr("disabled");
+        $("#loginButton").removeAttr("disabled");
     }
 }
 
@@ -27,14 +28,16 @@ function validator(formId) {
                 validators: {
                     notEmpty: {
                         message: '公司名称'
-                    }
-                }
-            },
-            companyAddress: {
-                message: '公司地址不能为空',
-                validators: {
-                    notEmpty: {
-                        message: '公司地址不能为空'
+                    },
+                    remote: {
+                        url: '/company/querycompanyName',
+                        message: '该公司名称已存在',
+                        delay: 2000,
+                        type: 'POST',
+                        data: {
+                            companyId: $("#" + formId + " input[name=companyId]").val(),
+                            companyName: $("#" + formId + " input[name=companyName]").val()
+                        }
                     }
                 }
             },

@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="/static/css/table/table.css">
     <link rel="stylesheet" href="/static/css/fileinput.css">
     <link rel="stylesheet" href="/static/css/sweetalert.css">
+    <link rel="stylesheet" href="/static/css/city-picker/city-picker.css">
     <link rel="stylesheet" href="/static/css/bootstrap-validate/bootstrapValidator.min.css">
     <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.css">
     <link rel="stylesheet/less" href="/static/css/bootstrap-dateTimePicker/datetimepicker.less">
@@ -90,7 +91,7 @@
 </div>
 
 <!-- 添加弹窗 -->
-<div class="modal fade"  id="addWindow" style="overflow-y:scroll" aria-hidden="true" data-backdrop="static" keyboard:false>
+<div class="modal fade"  id="addWindow" style="overflow:auto;" aria-hidden="true" data-backdrop="static" keyboard:false>
     <div class="modal-dialog" style="width:90%;">
         <div class="modal-content" data-options="resizable:true,modal:true">
               <div class="modal-body">
@@ -99,6 +100,7 @@
                 <div class="modal-header" style="overflow:auto;">
                     <h4>添加公司的信息</h4>
                 </div>
+                <br/>
                 <div>
                     <div class="form-group col-md-6">
                         <label class="col-md-4 control-label">公司名称：</label>
@@ -208,26 +210,39 @@
                     </div>
                     <p class="clearfix"></p>
                 </div>
-
-                <div>
-                    <div class="form-group col-md-12">
-                        <label class="col-md-2 control-label" style="top:3px;right:5px">公司地址：</label>
-                        <div class="col-md-10">
-                            <fieldset id="city_china">
-                                <div class="form-group col-md-4">
-                                    <select class="province js-example-tags form-control" disabled="disabled" name="province"></select>
-                                </div>
-                                <div class="form-group col-md-4">
-                                    <select class="city js-example-tags form-control" disabled="disabled" name="city"></select>
-                                </div>
-                                <div class="form-group col-md-4">
-                                    <select class="area js-example-tags form-control" disabled="disabled" name="area"></select>
-                                </div>
-                            </fieldset>
+                <%--<div>--%>
+                    <%--<div class="form-group col-md-12">--%>
+                        <%--<label class="col-md-2 control-label" style="top:3px;right:5px">公司地址：</label>--%>
+                        <%--<div class="col-md-10">--%>
+                            <%--<fieldset id="city_china">--%>
+                                <%--<div class="form-group col-md-4">--%>
+                                    <%--<select class="province js-example-tags form-control" disabled="disabled" name="province"></select>--%>
+                                <%--</div>--%>
+                                <%--<div class="form-group col-md-4">--%>
+                                    <%--<select class="city js-example-tags form-control" disabled="disabled" name="city"></select>--%>
+                                <%--</div>--%>
+                                <%--<div class="form-group col-md-4">--%>
+                                    <%--<select class="area js-example-tags form-control" disabled="disabled" name="area"></select>--%>
+                                <%--</div>--%>
+                            <%--</fieldset>--%>
+                        <%--</div>--%>
+                    <%--</div>--%>
+                <%--<div class="form-group">--%>
+                    <%--<label class="control-label">公司地址：</label>--%>
+                    <%--<div style="position: relative;">--%>
+                        <%--<input data-toggle="city-picker" class="col-sm-6" name="companyAddress"/>--%>
+                    <%--</div>--%>
+                <%--</div>--%>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">公司地址：</label>
+                    <div class="col-md-10">
+                        <div style="position: relative;">
+                            <input data-toggle="city-picker" class="col-md-4" name="companyAddress"/>
                         </div>
                     </div>
-                    <p class="clearfix"></p>
                 </div>
+                    <%--<p class="clearfix"></p>--%>
+                <%--</div>--%>
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal" onclick="closeModals('addWindow', 'addForm')">关闭</button>
@@ -366,28 +381,36 @@
                     <p class="clearfix"></p>
                 </div>
 
-                <div>
-                    <div class="form-group col-md-12 pull-right">
-                        <label class="col-md-2 control-label" style="bottom: 6px;right:5px">公司地址：</label>
-                        <div class="col-md-10" id="address" style="bottom:3px;display: block;">
-                            <input type="text" define="companyInfo.companyAddress" class="form-control">
-                        </div>
-                        <div class="col-md-9" id="companyAddress" style="display: none;">
-                            <fieldset id="editCity_china">
-                                <div class="pull-left">
-                                    省份：<select class="province" disabled="disabled" id="editProvince" name="editProvince"></select>
-                                </div>
-                                <div class="pull-left">
-                                    &nbsp;&nbsp;&nbsp;城市：<select class="city" disabled="disabled" id="editCity" name="editCity"></select>
-                                </div>
-                                <div class="pull-left">
-                                    &nbsp;&nbsp;&nbsp;地区：<select class="area" disabled="disabled" id="editArea" name="editArea"></select>
-                                </div>
-                            </fieldset>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">公司地址：</label>
+                    <div class="col-md-10">
+                        <div style="position: relative;">
+                            <input id="address" type="text" class="col-md-4" define="companyInfo.companyAddress" name="companyAddress"/>
                         </div>
                     </div>
-                    <p class="clearfix"></p>
                 </div>
+                <%--<div>--%>
+                    <%--<div class="form-group col-md-12 pull-right">--%>
+                        <%--<label class="col-md-2 control-label" style="bottom: 6px;right:5px">公司地址：</label>--%>
+                        <%--<div class="col-md-10" id="address" style="bottom:3px;display: block;">--%>
+                            <%--<input type="text" define="companyInfo.companyAddress" class="form-control">--%>
+                        <%--</div>--%>
+                        <%--<div class="col-md-9" id="companyAddress" style="display: none;">--%>
+                            <%--<fieldset id="editCity_china">--%>
+                                <%--<div class="pull-left">--%>
+                                    <%--省份：<select class="province" disabled="disabled" id="editProvince" name="editProvince"></select>--%>
+                                <%--</div>--%>
+                                <%--<div class="pull-left">--%>
+                                    <%--&nbsp;&nbsp;&nbsp;城市：<select class="city" disabled="disabled" id="editCity" name="editCity"></select>--%>
+                                <%--</div>--%>
+                                <%--<div class="pull-left">--%>
+                                    <%--&nbsp;&nbsp;&nbsp;地区：<select class="area" disabled="disabled" id="editArea" name="editArea"></select>--%>
+                                <%--</div>--%>
+                            <%--</fieldset>--%>
+                        <%--</div>--%>
+                    <%--</div>--%>
+                    <%--<p class="clearfix"></p>--%>
+                <%--</div>--%>
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default"
@@ -436,6 +459,8 @@
     <script src="/static/js/backstage/main.js"></script>
     <script src="/static/js/fileInput/fileinput.js"></script>
     <script src="/static/js/fileInput/zh.js"></script>
+    <script src="/static/js/city-picker/city-picker.data.js"></script>
+    <script src="/static/js/city-picker/city-picker.js"></script>
     <script src="/static/js/bootstrap-validate/bootstrapValidator.js"></script>
     <script src="/static/js/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.js"></script>
     <script src="/static/js/bootstrap-dateTimePicker/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
@@ -448,20 +473,20 @@
     <script src="/static/js/jquery.cxselect.min.js"></script>
 
 </body>
-<script>
+<%--<script>--%>
 
 
-    $.cxSelect.defaults.url = '/static/js/cityData.json';
-    $('#city_china').cxSelect({
-        selects: ['province', 'city', 'area']
-    });
-    $('#editCity_china').cxSelect({
-        selects: ['province', 'city', 'area']
-    });
-    $('#city_china_val').cxSelect({
-        selects: ['province', 'city', 'area'],
-        nodata: 'none'
-    });
+    <%--$.cxSelect.defaults.url = '/static/js/cityData.json';--%>
+    <%--$('#city_china').cxSelect({--%>
+        <%--selects: ['province', 'city', 'area']--%>
+    <%--});--%>
+    <%--$('#editCity_china').cxSelect({--%>
+        <%--selects: ['province', 'city', 'area']--%>
+    <%--});--%>
+    <%--$('#city_china_val').cxSelect({--%>
+        <%--selects: ['province', 'city', 'area'],--%>
+        <%--nodata: 'none'--%>
+    <%--});--%>
 
-</script>
+<%--</script>--%>
 </html>

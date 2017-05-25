@@ -65,9 +65,9 @@ public class CompanyController {
     @ResponseBody
     @RequestMapping(value = "queryAllCompany",method = RequestMethod.GET)
     public List<ComboBox4EasyUI> queryAll(HttpSession session){
-        if (SessionUtil.isLogin(session) || SessionUtil.isOwnerLogin(session)) {
+       /* if (SessionUtil.isLogin(session) || SessionUtil.isOwnerLogin(session)) {
             String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,车主";
-            if (RoleUtil.checkRoles(roles)) {
+            if (RoleUtil.checkRoles(roles)) {*/
                 logger.info("查询所有公司信息");
                 List<Company> companys = companyService.queryAll((User) session.getAttribute("user"));
                 List<ComboBox4EasyUI> comboxs = new ArrayList<ComboBox4EasyUI>();
@@ -78,14 +78,14 @@ public class CompanyController {
                     comboxs.add(comboBox4EasyUI);
                 }
                 return comboxs;
-            }else {
+            /*}else {
                 logger.info("此用户无拥有此方法角色");
                 return null;
             }
         } else {
             logger.info("请先登录");
             return null;
-        }
+        }*/
     }
 
     /**
@@ -163,26 +163,27 @@ public class CompanyController {
 //                    company.setCompanyId(UUIDUtil.uuid());
                     String companyId = UUIDUtil.uuid();
                     company.setCompanyId(companyId);
-                    String province = request.getParameter("province");
-                    String city = request.getParameter("city");
-                    String area = request.getParameter("area");
-                    if (province == null) {
-                        province = "";
-                    }
-                    if (city == null) {
-                        city = "";
-                    }
-                    if (area == null) {
-                        area = "";
-                    }
-                    company.setCompanyAddress(province + "-" + city + "-" + area);
+//                    String province = request.getParameter("province");
+//                    String city = request.getParameter("city");
+//                    String area = request.getParameter("area");
+//                    if (province == null) {
+//                        province = "";
+//                    }
+//                    if (city == null) {
+//                        city = "";
+//                    }
+//                    if (area == null) {
+//                        area = "";
+//                    }
+//                    company.setCompanyAddress(province + "-" + city + "-" + area);
                     User user = new User();
                     user.setUserId(UUIDUtil.uuid());
                     user.setUserPhone(company.getCompanyPricipalphone());
                     user.setCompanyId(companyId);
                     user.setUserName(company.getCompanyPricipal());
                     user.setUserAddress(company.getCompanyAddress());
-                    user.setUserPwd(EncryptUtil.md5Encrypt("123456"));
+                    String pwd = Randompwd.getCharAndNumr(6);
+                    user.setUserPwd(EncryptUtil.md5Encrypt(pwd));
                     UserRole userRole = new UserRole();
                     userRole.setUserId(user.getUserId());
                     userRole.setRoleId("8010cecf-3205-11e7-bc72-507b9d765567");
@@ -190,10 +191,10 @@ public class CompanyController {
                     userRoleService.insert(userRole);
                     companyService.insert(company);
                     map.put("company",company);
-                    String pwd = "123456";
+
                     IndustrySMS i = new IndustrySMS(company.getCompanyPricipalphone(), "【汽车之家】尊敬的" +company.getCompanyPricipal() + "公司负责人您好，你的公司"+company.getCompanyName() + "已在本平台入驻成功，初始密码为"+pwd+"，请前来完善公司相关信息。");
                     i.execute();
-                    map.put("controllerResult",ControllerResult.getSuccessResult("添加公司信息成功" + "\n" + "账号:" + company.getCompanyPricipalphone() + " " + "初始密码为:123456"));
+                    map.put("controllerResult",ControllerResult.getSuccessResult("添加公司信息成功" + "\n" + "账号:" + company.getCompanyPricipalphone() + " " + "初始密码为:"+pwd));
                     return map;
                 } else {
                     map.put("controllerResult",ControllerResult.getFailResult("添加公司信息失败"));
@@ -216,19 +217,6 @@ public class CompanyController {
         Map map = new HashMap();
         if (company != null && !company.equals("")) {
             logger.info("添加公司信息");
-            String province = request.getParameter("province");
-            String city = request.getParameter("city");
-            String area = request.getParameter("area");
-            if (province == null) {
-                province = "";
-            }
-            if (city == null) {
-                city = "";
-            }
-            if (area == null) {
-                area = "";
-            }
-            company.setCompanyAddress(province + "-" + city + "-" + area);
             String companyId = UUIDUtil.uuid();
             company.setCompanyId(companyId);
             User user = new User();
@@ -335,10 +323,10 @@ public class CompanyController {
                 Map map = new HashMap();
                 if (company != null && !company.equals("")) {
                         logger.info("修改公司信息");
-                        String province = request.getParameter("editProvince");
-                        String city = request.getParameter("editCity");
-                        String area = request.getParameter("editArea");
-                        company.setCompanyAddress(province + "-" + city + "-" + area);
+//                        String province = request.getParameter("editProvince");
+//                        String city = request.getParameter("editCity");
+//                        String area = request.getParameter("editArea");
+//                        company.setCompanyAddress(province + "-" + city + "-" + area);
                         companyService.update(company);
                         map.put("company",company);
                         map.put("controllerResult",ControllerResult.getSuccessResult("修改公司信息成功"));

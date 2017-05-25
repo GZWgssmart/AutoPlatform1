@@ -3,11 +3,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>- 库存统计 -</title>
+    <title>- 库存领料统计 -</title>
     <link rel="stylesheet" href="/static/css/bootstrap-dateTimePicker/bootstrap-datetimepicker.min.css">
     <link rel="stylesheet" href="/static/css/bootstrap.min.css">
     <link rel="stylesheet" href="/static/css/select2.min.css">
     <link href="/static/css/select2/select2.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/sweetalert.css">
 
 </head>
 <style>
@@ -25,12 +26,13 @@
 <script type="text/javascript" src="/static/js/bootstrap-dateTimePicker/locales/bootstrap-datetimepicker.zh-CN.js"></script>
 
 
+
 <body>
 <%@include file="../backstage/contextmenu.jsp" %>
 
 
 <div class='container-fluid'>
-    <h2 class='page-header'>库存统计</h2>
+    <h2 class='page-header'>库存领料统计</h2>
     <!--
         选项卡：通过BS的类来控制选项卡的样式
     -->
@@ -267,6 +269,7 @@
 <script src="/static/js/contextmenu.js"></script>
 <script src="/static/js/select2/select2.js"></script>
 <script src="/static/js/backstage/main.js"></script>
+<script src="/static/js/sweetalert/sweetalert.min.js"></script>
 
 </div>
 

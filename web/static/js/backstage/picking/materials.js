@@ -177,8 +177,13 @@ function showDel(t){
     } else if(val <min){
         $input.val(min);
     }
+    var workStatus = $("#workStatus").val();
     if(val == 0) {
-        $input.val(1);
+        if(workStatus == 'N') {
+            $input.val(1);
+        } else if(workStatus == 'Y'){
+            $input.val(-1);
+        }
     }
     var materials = {};
     var accName = td1.text();
@@ -220,10 +225,14 @@ function showWorkInfoDetail(recordId){
 // 表格数据初始一块
 function initHistory(){
     // historyPanel
-    initTable('historyTable', '/materials/history', "toolbar3"); // 初始化表格
+    initTable('materialsTable', '/materials/finishWorkByUser',"toolbar1"); // 初始化表格
+    $("#historyPanel").removeClass(" panel-body active in");
     $("#reviewingPanel").removeClass(" panel-body active in");
-    $("#workInfoPanel").removeClass(" panel-body active in");
-    $("#historyPanel").addClass(" panel-body active in");
+    $("#workInfoPanel").addClass(" panel-body active in");
+    // initTable('historyTable', '/materials/history', "toolbar3"); // 初始化表格
+    // $("#reviewingPanel").removeClass(" panel-body active in");
+    // $("#workInfoPanel").removeClass(" panel-body active in");
+    // $("#historyPanel").addClass(" panel-body active in");
 }
 function initReviewing() {
     // reviewingPanel
@@ -309,21 +318,7 @@ function validator(formId) {
                         message: '请选择配件'
                     }
                 }
-            },
-            reqMsg: {
-                message: '描述验证失败',
-                validators: {
-                    notEmpty: {
-                        message: '请输入描述'
-                    },
-                    stringLength: {
-                        min: 3,
-                        max: 100,
-                        message: '描述至少3至100个字符'
-                    },
-                }
             }
-
         }
     }).on('success.form.bv', function (e) {
         if (formId == "materialsForm") {
@@ -384,13 +379,10 @@ function removeMaterialsProInst(url, proInstId) {
 
 // tableFormatter一块
 function todoCell(ele, row, index) {
-    return "<a href='javascript:;'><span onclick='showWorkInfoDetail(\"" + row.maintainRecord.recordId +"\")'><span class='glyphicon glyphicon-list-alt icon-list-alt' style='margin-right: 5px;' ></span><span>查看清单</span></span></a>";
+    $("#workStatus").val(row.workStatus);
+    return "<button class='btn btn-default' onclick='showWorkInfoDetail(\"" + row.maintainRecord.recordId +"\")'><span class='glyphicon glyphicon-list-alt icon-list-alt' style='margin-right: 5px;' ></span><span>查看清单</span></button>";
 }
-function formatterPlate(el, row) {
-    console.log(row);
-    var checkin = row.maintainRecord.checkin;
-    return checkin.plate.plateName + " " + checkin.carPlate;
-}
+
 function reTodoBtn(ele, row, index) {
     var retodoHtml = [];
     if (row.varsMap.respMsg != null) {
@@ -444,6 +436,7 @@ function accInfoFormat(element, row, index){
     if(row.other.materialURTemp) {
         rAu = getReturnAndUseCount(row.other.materialURTemp.varsMap.accCount);
     }
+    console.log(row)
     var min ;
     if(!isnull(row.materialUse)&&!isnull(row.materialReturn)){
         min = row.materialUse.accCount- row.materialReturn.accCount;
@@ -456,10 +449,6 @@ function accInfoFormat(element, row, index){
     var htmltest = [];
     htmltest.push("<input style='display:none' value=" + row.accessories.accId+ " /> ");
     htmltest.push("<div style='display: inline-block;' class='col-md-7'>");
-    htmltest.push("<span>库存: </span>");
-    htmltest.push("<span>");
-    htmltest.push(max);
-    htmltest.push("</span><br />");
     htmltest.push("<span >所需数量: </span>");
     htmltest.push(row.materialCount);
     htmltest.push("</span></br>");
@@ -477,7 +466,15 @@ function accInfoFormat(element, row, index){
     htmltest.push("<span '>已领取: </span>");
     htmltest.push("<span style='margin-right:10px;'>");
     htmltest.push(min);
-    htmltest.push("<input type='number'  max="+ (max-rAu.use) +" min="+ (-min-rAu.rtn) +" class='form-control text-center'  value='0'  style='width:100px;margin-left:20px;display: inline-block; width:80px'>");
+    var numMax = (max-rAu.use);
+    var numMin = (-min-rAu.rtn);
+    var workStatus = $("#workStatus").val();
+    if(workStatus == 'Y'){
+        var numMax = -1;
+    }
+    htmltest.push("<input type='number'  max="+ numMax +" min="+ numMin +" class='form-control text-center'  value='0'  style='width:100px;margin-left:20px;display: inline-block; width:80px'>");
+    htmltest.push("</span>");
+    htmltest.push("<span class='glyphicon glyphicon-question-sign' title='正为领料,负为退料'>");
     htmltest.push("</span>");
     htmltest.push("</div>");
     htmltest.push("<div style='float:right;height:100%;text-align: center;' class='col-md-4'>");
@@ -590,3 +587,12 @@ function showDel(){
     }
 }*/
 
+function formatterCarPlate(val, row, index) {
+    var plateName = row.record.checkin.plate.plateName;
+    return plateName + " · " + val;
+}
+
+function formatterPlate(el, row) {
+    var checkin = row.maintainRecord.checkin;
+    return checkin.plate.plateName + " · " + checkin.carPlate;
+}

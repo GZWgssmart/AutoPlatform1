@@ -73,18 +73,34 @@ function showItem(windowId){
 // 在所有项目中点击确定
 function itemSubmit(){
     var row =  $('#itemTable').bootstrapTable('getSelections');
+    var row1 = $('#table').bootstrapTable('getSelections');
     if(row.length >0) {
-        $("#itemWindow").modal('hide');
-        if($("#closeButton").hasClass('addWindow')){
-            $("#addItemId").val(row[0].maintainId);
-            $("#addItem").val(row[0].maintainName);
-            $("#addWindow").modal('show');
-            $("#closeButton").removeClass('addWindow');
-        }else if($("#closeButton").hasClass('editWindow')){
-            $("#editItemId").val(row[0].maintainId);
-            $("#editItem").val(row[0].maintainName);
-            $("#editWindow").modal('show');
-            $("#closeButton").removeClass('editWindow');
+        if(row[0].accessories!= null){
+            var maintainId = row[0].maintainId;
+            var recordId = row1[0].recordId;
+            $.post("/maintainDetail/queryItem/"+maintainId+"/"+recordId, function (data) {
+                if(data.result == 'success'){
+                    $("#itemWindow").modal('hide');
+                    $("#addItemId").val(row[0].maintainId);
+                    $("#addItem").val(row[0].maintainName);
+                    $("#addWindow").modal('show');
+                    $("#closeButton").removeClass('addWindow');
+                }else {
+                    swal({
+                        title:"",
+                        text: data.message, // 主要文本
+                        confirmButtonColor: "#DD6B55", // 提示按钮的颜色
+                        confirmButtonText:"确定", // 提示按钮上的文本
+                        type:"error"}) // 提示类型
+                }
+            })
+        }else{
+            swal({
+                title:"",
+                text: "此维修保养项目无配件, 请添加配件或重新选择", // 主要文本
+                confirmButtonColor: "#DD6B55", // 提示按钮的颜色
+                confirmButtonText:"确定", // 提示按钮上的文本
+                type:"error"}) // 提示类型
         }
     }else{
             swal({
@@ -92,7 +108,7 @@ function itemSubmit(){
                 text: "请先选择维修保养项目", // 主要文本
                 confirmButtonColor: "#DD6B55", // 提示按钮的颜色
                 confirmButtonText:"确定", // 提示按钮上的文本
-                type:"warning"}) // 提示类型
+                type:"error"}) // 提示类型
     }
 }
 
@@ -252,25 +268,50 @@ function showDetail(){
         });
 }
 
-// 修改明细
-function showEditDetail(){
+// 禁用明细
+function showEditStatus(){
     var roles = "公司超级管理员,公司普通管理员,汽车公司接待员";
     $.post("/user/isLogin/"+roles, function (data) {
         if(data.result == 'success'){
-            var row =  $('#detailTable').bootstrapTable('getSelections');
-            if(row.length >0) {
-                $("#detailWindow").modal('hide');
-                $("#editButton").removeAttr("disabled");
-                var maintainDetail = row[0];
-                $("#editForm").fill(maintainDetail);
-                $('#editItem').html('<option value="' + maintainDetail.maintainFix.maintainId + '">' + maintainDetail.maintainFix.maintainName + '</option>').trigger("change");
-                $("#editItemId").val(maintainDetail.maintainFix.maintainId);
-                $("#editWindow").modal('show');
-                validator('editForm'); // 初始化验证
+            var row = $("#detailTable").bootstrapTable('getSelections');
+            if(row.length > 0){
+                swal(
+                    {title:"",
+                        text:"确定禁用此维修保养明细吗",
+                        type:"warning",
+                        showCancelButton:true,
+                        confirmButtonColor:"#DD6B55",
+                        confirmButtonText:"我确定",
+                        cancelButtonText:"再考虑一下",
+                        closeOnConfirm:false,
+                        closeOnCancel:false
+                    },function(isConfirm){
+                        if(isConfirm){
+                            $.post("/maintainDetail/statusOperate?id="+row[0].maintainDetailId+"&status=Y", function (data) {
+                                if(data.result == "success"){
+                                    $('#detailTable').bootstrapTable('refresh');
+                                    swal({title:"",
+                                        text:data.message,
+                                        confirmButtonText:"确认",
+                                        type:"success"})
+                                }else{
+                                    swal({title:"",
+                                        text:data.message,
+                                        confirmButtonText:"确认",
+                                        type:"error"})
+                                }
+                            })
+                        }else{
+                            swal({title:"",
+                                text:"已取消",
+                                confirmButtonText:"确认",
+                                type:"error"})
+                        }
+                    })
             }else{
                 swal({
                     title:"",
-                    text: "请选择要修改的维修保养明细", // 主要文本
+                    text: "请xian选择要禁用的维修保养明细", // 主要文本
                     confirmButtonColor: "#DD6B55", // 提示按钮的颜色
                     confirmButtonText:"确定", // 提示按钮上的文本
                     type:"warning"}) // 提示类型

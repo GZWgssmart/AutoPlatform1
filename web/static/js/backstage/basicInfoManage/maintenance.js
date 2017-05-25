@@ -172,34 +172,43 @@ function showOk(){
         closeOnConfirm: false,
         closeOnCancel: false
     },function(ifCor){
-        var row =$('table').bootstrapTable('getSelections');
-        $.post("/Order/statusOperate/"+row[0].workId +"/"+row[0].recordId, function (data) {
-            if(data.result == "success"){
-                $('#table').bootstrapTable("refresh");
-                $("#ifConfirm").css("display", "block");
-                $("#toolbars").css("display", "none");
-                swal({
-                    title: "",
-                    text: data.message,
-                    confirmButtonText: "确认",
-                    type: "success"
-                })
-            }else if (data.result == "fail") {
-                swal({
-                    title: "",
-                    text: data.message,
-                    confirmButtonText: "确认",
-                    type: "error"
-                })
-            }else if (data.result == "notRole") {
-                swal({
-                    title: "",
-                    text: data.message,
-                    confirmButtonText: "确认",
-                    type: "error"
-                })
-            }
-        })
+        if(ifCor){
+            var row =$('table').bootstrapTable('getSelections');
+            $.post("/Order/statusOperate/"+row[0].workId +"/"+row[0].recordId, function (data) {
+                if(data.result == "success"){
+                    $('#table').bootstrapTable("refresh");
+                    $("#ifConfirm").css("display", "block");
+                    $("#toolbars").css("display", "none");
+                    swal({
+                        title: "",
+                        text: data.message,
+                        confirmButtonText: "确认",
+                        type: "success"
+                    })
+                }else if (data.result == "fail") {
+                    swal({
+                        title: "",
+                        text: data.message,
+                        confirmButtonText: "确认",
+                        type: "error"
+                    })
+                }else if (data.result == "notRole") {
+                    swal({
+                        title: "",
+                        text: data.message,
+                        confirmButtonText: "确认",
+                        type: "error"
+                    })
+                }
+            })
+        }else{
+            swal({
+                title: "",
+                text: "已取消",
+                confirmButtonText: "确认",
+                type: "error"
+            })
+        }
     });
 }
 

@@ -89,7 +89,7 @@
 
                 <div class="form-group">
                     <div class="col-sm-offset-8">
-                        <button type="button" class="btn btn-default"
+                        <button id="closebtn" type="button" class="btn btn-default"
                                 onclick="closeModals('addWindow', 'addForm')">关闭
                         </button>
                         <button id="addButton" class="btn btn-sm btn-success" type="button" onclick="addSubmit()">保 存</button>
@@ -196,14 +196,13 @@
                 $("#" + formId).serialize(),
                 function (data) {
                     if (data.result == "success") {
-//                        swal({
-//                            title: "",
-//                            text: data.message,
-//                            confirmButtonText: "确认",
-//                            type: "success"
-//                        })
-                        alert("投诉成功！");
-                        window.location.href = "mycomment";
+                        swal({
+                            title: "",
+                            text: data.message,
+                            confirmButtonText: "确认",
+                            type: "success"
+                        })
+                        $("#closebtn").click();
                     } else if (data.result == "fail" ) {
                         swal({
                             title: "",

@@ -148,6 +148,11 @@
                                     <a class="J_menuItem" href="/emp/workInfo">工单查询</a>
                                 </li>
                             </shiro:hasAnyRoles>
+                            <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员">
+                                <li>
+                                    <a class="J_menuItem" href="/emp/carOwnerInfo">车主管理</a>
+                                </li>
+                            </shiro:hasAnyRoles>
                         </ul>
                     </li>
                 </shiro:hasAnyRoles>
@@ -186,7 +191,7 @@
                         <a href="#"><i class="fa fa-phone"></i> <span class="nav-label">&nbsp;维修保养预约管理</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a class="J_menuItem" href="/customerBooking/phoneReservation">电话预约</a>
+                                <a class="J_menuItem" href="/customerBooking/phoneReservation">所有预约</a>
                             </li>
 
                         </ul>
@@ -207,10 +212,10 @@
                     <li>
                         <a href="#"><i class="fa fa-ambulance"></i> <span class="nav-label">派工领料管理</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
-                            <li><a class="J_menuItem" href="pickingControll/materialsIndex">物料清单</a></li>
                             <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司总技师">
                                 <li><a class="J_menuItem" href="pickingControll/assignstaffIndex">指派员工</a></li>
                             </shiro:hasAnyRoles>
+                            <li><a class="J_menuItem" href="pickingControll/materialsIndex">我的工单</a></li>
                             <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员,汽车公司库管人员">
                                 <li><a class="J_menuItem" href="pickingControll/mattermanageIndex">物料管理</a></li>
                             </shiro:hasAnyRoles>
@@ -279,7 +284,9 @@
                             </li>
                             <li><a class="J_menuItem" href="/statistics/repertory">库存统计</a>
                             </li>
-                            <li><a class="J_menuItem" href="/statistics/inventoryUsing">库存使用情况统计</a>
+                            <li><a class="J_menuItem" href="/statistics/inventoryUsing">库存领料统计</a>
+                            </li>
+                            <li><a class="J_menuItem" href="/statistics/inventoryUsing1">库存退料统计</a>
                             </li>
                             <li><a class="J_menuItem" href="/statistics/vindicate">维修保养统计</a>
                             </li>

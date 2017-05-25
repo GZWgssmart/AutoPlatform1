@@ -75,4 +75,8 @@ public class SupplyServiceImpl implements SupplyService {
 		return supplyDAO.countByBlurred(supply,user);
 	}
 
+	@Override
+	public int queryNameByOne(String supplyName, String supplyId) {
+		return supplyDAO.queryNameByOne(supplyName,supplyId);
+	}
 }

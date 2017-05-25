@@ -31,7 +31,9 @@
                 <th data-width="150" data-field="maintainMoney">保养项目基础费用</th>
                 <th data-width="150" data-field="maintainManHourFee">保养项目工时费</th>
                 <th data-width="150" data-field="maintainDes">保养项目描述</th>
-                <th data-width="150" data-field="company.companyName">保养项目所属公司</th>
+                <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员">
+                    <th data-width="150" data-field="company.companyName">保养项目所属公司</th>
+                </shiro:hasAnyRoles>
                 <th data-width="150" data-field="maintainStatus" data-formatter="showStatusFormatter">保养项目状态</th>
                 <shiro:hasAnyRoles name="公司超级管理员,公司普通管理员">
                     <th data-width="150" data-field="maintainStatus" data-formatter="statusFormatter">

@@ -46,6 +46,7 @@ li{
 }
 .nav-two-ul{
     margin:0px 50px;
+    overflow: hidden;
 }
 .nav-two-ul li{
     float: left;

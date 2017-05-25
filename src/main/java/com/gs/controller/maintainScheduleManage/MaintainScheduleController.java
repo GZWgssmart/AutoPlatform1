@@ -32,7 +32,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/maintainSchedule")
-public class    MaintainScheduleController {
+public class  MaintainScheduleController {
     private Logger logger = (Logger) LoggerFactory.getLogger(MaintainScheduleController.class);
 
     @Resource

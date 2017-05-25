@@ -8,12 +8,13 @@
     <link rel="stylesheet" href="/static/css/bootstrap-table.css">
     <link rel="stylesheet" href="/static/css/select2.min.css">
     <link rel="stylesheet" href="/static/css/sweetalert.css">
+    <link rel="stylesheet" href="/static/css/city-picker/city-picker.css">
     <link rel="stylesheet" href="/static/css/table/table.css">
     <link rel="stylesheet" href="/static/css/bootstrap-validate/bootstrapValidator.min.css">
 
     <title>供应商管理</title>
 
-    <style>
+   <style>
 
         /* 让显示详细信息的窗口中的所有Input都不显示边框 */
         #detailWindow input {
@@ -199,7 +200,6 @@
                                 <label class="col-md-4 control-label">开户银行全称：</label>
                                 <div class="col-md-8">
                                     <select class="js-example-tags form-control" name="supplyBank" placeholder="请选择开户银行全称" class="form-control">
-                                        <option value="请选择开户银行">请选择开户银行</option>
                                         <option value="中国银行">中国银行</option>
                                         <option value="交通银行">交通银行</option>
                                         <option value="招商银行">招商银行</option>
@@ -244,7 +244,7 @@
                             <p class="clearfix"></p>
                         </div>
                         <div>
-                           <div class="form-group col-md-12">
+                           <%--<div class="form-group col-md-12">
                                    <label class="col-md-2 control-label" style="top:3px;right:5px">供应商地址：</label>
                                    <div class="col-md-10">
                                        <fieldset id="city_china">
@@ -258,6 +258,12 @@
                                                <select class="area js-example-tags form-control" disabled="disabled" name="area"></select>
                                            </div>
                                        </fieldset>
+                                   </div>
+                               </div>--%>
+                               <label class="col-md-2 control-label">供应商地址：</label>
+                               <div class="col-md-10">
+                                   <div style="position: relative;">
+                                       <input data-toggle="city-picker" class="col-md-4" name="supplyAddress"/>
                                    </div>
                                </div>
                             <p class="clearfix"></p>
@@ -340,7 +346,6 @@
                                 <label class="col-md-4 control-label">开户银行全称：</label>
                                 <div class="col-md-8">
                                     <select class="js-example-tags form-control" define="supply.supplyBank" class="form-control" name="supplyBank">
-                                        <option value="请选择开户银行">请选择开户银行</option>
                                         <option value="中国银行">中国银行</option>
                                         <option value="交通银行">交通银行</option>
                                         <option value="招商银行">招商银行</option>
@@ -385,23 +390,10 @@
                             <p class="clearfix"></p>
                         </div>
                         <div>
-                            <div class="form-group col-md-12 pull-right">
-                                <label class="col-md-2 control-label" style="bottom: 6px;right:5px">供应商地址：</label>
-                                <div class="col-md-9" id="address" style="bottom:3px;display: block;">
-                                    <input type="text" define="supply.supplyAddress" class="form-control">
-                                </div>
-                                <div class="col-md-9" id="supplyAddress" style="display: none;">
-                                    <fieldset id="editCity_china">
-                                        <div class="pull-left">
-                                            省份：<select class="province" disabled="disabled" id="editProvince" name="editProvince"></select>
-                                        </div>
-                                        <div class="pull-left">
-                                            &nbsp;&nbsp;&nbsp;城市：<select class="city" disabled="disabled" id="editCity" name="editCity"></select>
-                                        </div>
-                                        <div class="pull-left">
-                                            &nbsp;&nbsp;&nbsp;地区：<select class="area" disabled="disabled" id="editArea" name="editArea"></select>
-                                        </div>
-                                    </fieldset>
+                            <label class="col-md-2 control-label">供应商地址：</label>
+                            <div class="col-md-10">
+                                <div style="position: relative;">
+                                    <input id="address" type="text" class="col-md-4" define="supply.supplyAddress" name="supplyAddress"/>
                                 </div>
                             </div>
                             <p class="clearfix"></p>
@@ -495,9 +487,12 @@
 <script src="/static/js/bootstrap.min.js"></script>
 <script src="/static/js/bootstrap-table/bootstrap-table.js"></script>
 <script src="/static/js/bootstrap-table/bootstrap-table-zh-CN.js"></script>
-<script src="/static/js/jquery.formFill.js"></script>
+<%--<script src="/static/js/jquery.formFill.js"></script>--%>
+<script src="/static/js/backstage/emp/jquery.formFillTemp.js"></script>
 <script src="/static/js/select2/select2.js"></script>
 <script src="/static/js/sweetalert/sweetalert.min.js"></script>
+<script src="/static/js/city-picker/city-picker.data.js"></script>
+<script src="/static/js/city-picker/city-picker.js"></script>
 <script src="/static/js/contextmenu.js"></script>
 <script src="/static/js/bootstrap-validate/bootstrapValidator.js"></script>
 <script src="/static/js/backstage/main.js"></script>
@@ -507,7 +502,7 @@
 <script src="/static/js/jquery.cxselect.min.js"></script>
 
 </body>
-<script>
+<%--<script>
 
 
     $.cxSelect.defaults.url = '/static/js/cityData.json';
@@ -522,5 +517,5 @@
         nodata: 'none'
     });
 
-</script>
+</script>--%>
 </html>

@@ -28,7 +28,6 @@
         <table id="table" style="table-layout: fixed">
             <thead>
             <tr>
-                <th data-radio="true" data-field="status"></th>
                 <shiro:hasAnyRoles name="系统超级管理员,系统普通管理员">
                 <th data-field="company" data-formatter="formatterCompany">
                     公司
@@ -45,6 +44,9 @@
                 </th>
                 <th data-field="workStatus" data-formatter="statusFormatter">
                     工单状态
+                </th>
+                <th data-field="showAccs" data-formatter="showCell" data-events="showCellEvn">
+                    查看
                 </th>
             </tr>
             </thead>
@@ -84,6 +86,31 @@
 
         </div>
     </div>
+</div>
+
+<%-- 物料明细弹窗 --%>
+<div class="modal fade" id="accsInfo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="margin-right:0;width:95%;">
+                <span class="glyphicon glyphicon-remove closeModal"  data-dismiss="modal" aria-hidden="true"></span>
+                <h4 class="modal-title" id="myModalLabel">工单配件明细</h4>
+            </div>
+            <div class="modal-body">
+                <table id="workInfoAccDetailTable" style="table-layout: fixed">
+                    <thead>
+                    <tr >
+                        <th data-width="50"  data-field="accessories.accName">配件名称</th>
+                        <th data-width="110"  data-formatter="accInfoFormat">所需数量</th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default"  data-dismiss="modal" >关闭</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
 </div>
 
 <!-- 修改弹窗 -->

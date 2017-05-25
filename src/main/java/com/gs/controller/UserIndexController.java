@@ -276,24 +276,21 @@ public class UserIndexController {
     }
 
     /**
-     *
      * 添加电话预约
+     *
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "appointmentAdd",method = RequestMethod.POST)
-    public ControllerResult add(Appointment appointment,HttpSession session){
-            String roles = "车主";
-                User user = (User)session.getAttribute("frontUser");
-                logger.info("添加电话预约");
-                if (appointment != null) {
-                    appointment.setUserId(user.getUserId());
-                    appointment.setCurrentStatus("已预约");
-                    appointmentService.insert(appointment);
-                    return ControllerResult.getSuccessResult("添加预约成功");
-                } else {
-                    return ControllerResult.getFailResult("添加预约失败");
-                }
+    @RequestMapping(value = "appointmentAdd", method = RequestMethod.POST)
+    public ControllerResult add(Appointment appointment) {
+        logger.info("前台添加电话预约");
+        if (appointment != null) {
+            appointment.setCurrentStatus("已预约");
+            appointmentService.insert(appointment);
+            return ControllerResult.getSuccessResult("添加预约成功");
+        } else {
+            return ControllerResult.getFailResult("添加预约失败");
+        }
     }
 
     /*添加投诉*/

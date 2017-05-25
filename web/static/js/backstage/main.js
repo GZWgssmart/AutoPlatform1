@@ -256,3 +256,10 @@ function keydown(buttonId){
         document.getElementById(buttonId).click();
     }
 }
+
+
+/** 初始化三级地区联动 */
+function initCityPicker(id) {
+    $('#' + id).citypicker('destroy');
+    $('#' + id).citypicker();
+}

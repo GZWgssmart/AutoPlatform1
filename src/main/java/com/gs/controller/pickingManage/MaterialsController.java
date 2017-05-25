@@ -100,7 +100,7 @@ public class MaterialsController {
 
     // baoliu
     @ResponseBody
-    @RequestMapping("history")
+    @RequestMapping("history") // 查询一个员工的领料历史记录
     public Pager4EasyUI historyByPager(@RequestParam("pageNumber") int pageNumber, @RequestParam("pageSize") int pageSize, HttpSession session){
         // TODO 公司员工
         if(SessionUtil.isLogin(session)) {
@@ -116,6 +116,27 @@ public class MaterialsController {
             pager4EasyUI.setRows(rows);
             return pager4EasyUI;
         } else {
+            logger.info("请先登录");
+            return null;
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping("finishWorkByUser") // 查询一个员工的领料历史记录
+    public Pager4EasyUI queryFinishWorkByUser(@RequestParam("pageNumber") int pageNumber, @RequestParam("pageSize") int pageSize, HttpSession session) {
+        User user = (User)session.getAttribute("user");
+        if(SessionUtil.isLogin(session)) {
+            Pager4EasyUI pager4EasyUI = new Pager4EasyUI();
+            Pager pager = new Pager();
+            //当前以用户1号查询,后期需要判断是否拥有查询所有领用记录才可以使用
+            int total = materialUseService.countUserWorksStatus(user,"Y");
+            pager.setPageNo(pageNumber);
+            pager.setPageSize(pageSize);
+            List workInfos = materialUseService.userWorksStatusByPager(user, "Y",pager);
+            pager4EasyUI.setTotal(total);
+            pager4EasyUI.setRows(workInfos);
+            return pager4EasyUI;
+        }  else {
             logger.info("请先登录");
             return null;
         }
@@ -233,6 +254,7 @@ public class MaterialsController {
         int resultCount = 0;
         MaterialUse materialUse = new MaterialUse();
         materialUse.setMaterialUseId(UUIDUtil.uuid());
+        // TODO  零件库存需要更新
         if(accCount>0) {
             materialUse.setMatainRecordId(recordId);
             materialUse.setAccId(accId);
@@ -240,6 +262,9 @@ public class MaterialsController {
             materialUse.setMuCreatedTime(new Date());
             materialUse.setMuUseDate(new Date());
             resultCount  = materialUseService.insert(materialUse);
+            if(resultCount > 0) {
+                accessoriesService.reduceCount(Math.abs(accCount), accId);
+            }
         }else {
             MaterialReturn materialReturn = new MaterialReturn();
             materialReturn.setMaterialReturnId(materialUse.getMaterialUseId());
@@ -249,6 +274,9 @@ public class MaterialsController {
             materialReturn.setMrCreatedDate(new Date());
             materialReturn.setMrReturnDate(new Date());
             resultCount  = materialReturnService.insert(materialReturn);
+            if(resultCount > 0) {
+                accessoriesService.reduceCount(-Math.abs(accCount), accId);
+            }
         }
         if(resultCount>0) {
             return true;
@@ -315,9 +343,81 @@ public class MaterialsController {
         }
     }
 
+    /**
+     * 库存领料统计
+     * @param session
+     * @param start
+     * @param end
+     * @param type
+     * @param companyId
+     * @param accTypeId
+     * @return
+     */
     @ResponseBody
     @RequestMapping(value = "queryByCondition")
-    public List<MaterialReturn> queryByCondition(HttpSession session,String start, String end, String type, String companyId, String accTypeId) {
+    public List<MaterialUse> queryByCondition(HttpSession session,String start, String end, String type, String companyId, String accTypeId) {
+        if(SessionUtil.isLogin(session)){
+            String roles="公司超级管理员,公司普通管理员,系统超级管理员,系统普通管理员";
+            if(RoleUtil.checkRoles(roles)){
+                List<MaterialUse> list = null;
+                User user = (User) session.getAttribute("user");
+                if (type != null && !type.equals("")) {
+                    if (type.equals("year")) {
+                        if (companyId != null) {
+                            list = materialUseService.queryByCondition(start, end, companyId, accTypeId,"year");
+                        } else {
+                            list = materialUseService.queryByCondition(start, end, user.getCompanyId(), accTypeId,"year");
+                        }
+                    } else if (type.equals("quarter")) {
+                        if (companyId != null) {
+                            list = materialUseService.queryByCondition(start, end, companyId, accTypeId,"quarter");
+                        } else {
+                            list = materialUseService.queryByCondition(start, end, user.getCompanyId(),accTypeId, "quarter");
+                        }
+                    } else if (type.equals("month")) {
+                        if (companyId != null) {
+                            list = materialUseService.queryByCondition(start, end, companyId, accTypeId,"month");
+                        } else {
+                            list = materialUseService.queryByCondition(start, end, user.getCompanyId(), accTypeId,"month");
+                        }
+                    } else if (type.equals("week")) {
+                        if (companyId != null) {
+                            list = materialUseService.queryByCondition(start, end, companyId, accTypeId,"week");
+                        } else {
+                            list = materialUseService.queryByCondition(start, end, user.getCompanyId(), accTypeId,"week");
+                        }
+                    } else if (type.equals("day")) {
+                        if (companyId != null) {
+                            list = materialUseService.queryByCondition(start, end, companyId, accTypeId,"day");
+                        } else {
+                            list = materialUseService.queryByCondition(start, end, user.getCompanyId(), accTypeId,"day");
+                        }
+                    }
+                }
+                return list;
+            }else{
+                logger.info("此用户无法拥有库存统计查询角色");
+                return null;
+            }
+        }else{
+            logger.info("请先登陆");
+            return null;
+        }
+    }
+
+    /**
+     * 库存退料统计
+     * @param session
+     * @param start
+     * @param end
+     * @param type
+     * @param companyId
+     * @param accTypeId
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "queryByResultCondition")
+    public List<MaterialReturn> queryByResultCondition(HttpSession session,String start, String end, String type, String companyId, String accTypeId) {
         if(SessionUtil.isLogin(session)){
             String roles="公司超级管理员,公司普通管理员,系统超级管理员,系统普通管理员";
             if(RoleUtil.checkRoles(roles)){

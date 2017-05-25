@@ -24,8 +24,17 @@ public class ChargeBill {
 
     private String chargeBillStatus; //收费状态
 
+    private String cdStatus; // 收费单据当前状态
+
     private MaintainRecord maintainRecord;
 
+    public String getCdStatus() {
+        return cdStatus;
+    }
+
+    public void setCdStatus(String cdStatus) {
+        this.cdStatus = cdStatus;
+    }
 
     public MaintainRecord getMaintainRecord() {
         return maintainRecord;

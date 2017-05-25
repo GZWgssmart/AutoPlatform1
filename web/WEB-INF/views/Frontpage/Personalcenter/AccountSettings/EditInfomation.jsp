@@ -12,6 +12,7 @@
 </head>
 <link rel="stylesheet" href="/static/css/bootstrap.css">
 <link rel="stylesheet" href="/static/css/sweetalert.css">
+<link rel="stylesheet" href="/static/css/city-picker/city-picker.css">
 <style>
     body,html{
         font-family:Microsoft YaHei,Arial,simsun, Helvetica, sans-serif;
@@ -62,12 +63,9 @@
                     </div>
                     <div class="info">
                         <label>地址：</label>
-                        <fieldset id="city_china">
-                            <select class="province select" disabled="disabled" name="province" >
-                            </select>
-                            <select class="city select" disabled="disabled" name="city"></select>
-                            <select class="area select" disabled="disabled" name="area"></select>
-                        </fieldset>
+                        <div style="position: relative;">
+                            <input data-toggle="city-picker" id="address" type="text" name="userAddress" value="${sessionScope.frontUser.userAddress}"/>
+                        </div>
                     </div>
                     <div class="info">
                         <label>性别：</label>
@@ -94,14 +92,14 @@
     <script src="/static/js/jquery.min.js"></script>
     <script src="/static/js/jquery.cxselect.js"></script>
     <script src="/static/js/sweetalert/sweetalert.min.js"></script>
+    <script src="/static/js/city-picker/city-picker.data.js"></script>
+    <script src="/static/js/city-picker/city-picker.js"></script>
 </body>
 <script>
-    $.cxSelect.defaults.url = '/static/js/cityData.min.json';
-    $('#city_china').cxSelect({
-        selects: ['province', 'city', 'area']
-    });
+    initCityPicker("address");//初始化三级地区联动
 
     function edit() {
+
         $.post("/editinfomation",$("#form2").serialize(),function (data) {
             if(data.result=="success"){
                 swal({

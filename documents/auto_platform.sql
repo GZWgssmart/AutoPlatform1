@@ -430,6 +430,7 @@ CREATE TABLE `t_maintain_detail` (
   `maintainItemId` varchar(36) DEFAULT NULL COMMENT '维修保养项目编号，来源于t_maintain_fix表，可为空',
   `maintainDiscount` double DEFAULT NULL COMMENT '维修保养项目折扣，default 0,可选择折扣，也可选择减价',
   `mdCreatedTime` datetime DEFAULT NULL COMMENT '维修保养明细创建时间',
+  `mdStatus` varchar(2) DEFAULT NULL COMMENT '维修保养明细状态，Y表示可用，N表示不可用',
   PRIMARY KEY (`maintainDetailId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -506,6 +507,7 @@ CREATE TABLE `t_material_return` (
 收费单据表
 */
 DROP TABLE IF EXISTS `t_charge_bill`;
+DROP TABLE IF EXISTS `t_charge_bill`;
 CREATE TABLE `t_charge_bill` (
   `chargeBillId` varchar(36) NOT NULL COMMENT '收费单据编号，UUID,主键',
   `maintainRecordId` varchar(36) DEFAULT NULL COMMENT '维修保养记录编号，来源于t_maintain_record表',
@@ -516,6 +518,7 @@ CREATE TABLE `t_charge_bill` (
   `chargeCreatedTime` datetime DEFAULT NULL COMMENT '收费单据创建时间',
   `chargeBillDes` varchar(500) DEFAULT NULL COMMENT '收费单据描述',
   `chargeBillStatus` varchar(2) DEFAULT NULL COMMENT '收费状态,Y表示可用，N表示不可用',
+  `cdStatus` varchar(2) DEFAULT NULL COMMENT '用户是否确认状态， Y为确认， N为未确认',
   PRIMARY KEY (`chargeBillId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -638,3 +641,13 @@ CREATE TABLE `t_salary` (
   `salaryCreatedTime` datetime DEFAULT NULL COMMENT '工资发放创建时间',
   PRIMARY KEY (`salaryId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/**
+提醒表
+*/
+CREATE TABLE t_remind
+(
+    remindUser VARCHAR(36) NOT NULL,
+    remindDes VARCHAR(100) NOT NULL,
+    remindId VARCHAR(36) PRIMARY KEY NOT NULL
+);

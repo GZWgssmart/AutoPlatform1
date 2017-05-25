@@ -24,6 +24,31 @@ public class MaterialUse {
     private Date muUseDate;
 
     /**
+     * 领料数量
+     */
+    private int count;
+    /**
+     * 库存可用数量
+     */
+    private int accIdle;
+
+    public int getAccIdle() {
+        return accIdle;
+    }
+
+    public void setAccIdle(int accIdle) {
+        this.accIdle = accIdle;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    /**
      *  关联其它表的其它实例
      */
     private MaintainRecord record;

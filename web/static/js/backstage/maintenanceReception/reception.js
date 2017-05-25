@@ -23,6 +23,7 @@ $(function () {
                     }else if(state==false){
                         $("#addUserName").attr("readOnly",false);
                         $("#addUserPhone").attr("readOnly",false);
+                        $("#customerDiv").css("display", "block");
                         clearAddForm();
                     }
                 }
@@ -43,6 +44,7 @@ $(function () {
                     }else if(state==false){
                         $("#addUserName").attr("readOnly",false);
                         $("#addUserPhone").attr("readOnly",false);
+                        $("#appDiv").css("display", "block");
                         clearAddForm1();
                     }
                 }
@@ -73,6 +75,16 @@ function formatterImg(value, row, index){
         return [
             '<img style="width:120px;height:40px;" src="/'+ value +'">'
         ]
+    }
+}
+
+function formatterGender(value, row, index){
+    if(row.userGender != 'N'){
+        return "女";
+    }else if(row.userGender != 'M'){
+        return "男";
+    }else{
+        return "未选择";
     }
 }
 
@@ -219,6 +231,7 @@ function checkApp() {
         appointment = row[0];
         if(appointment.userName != null && appointment.userName != "" && appointment.userPhone != null && appointment.userPhone != "") {
             setData(appointment);
+            $("#customerDiv").css("display", "none");
             $("#appWindow").modal('hide');
             $("#addWindow").modal("show");
         }else{
@@ -243,6 +256,7 @@ function checkCustomer() {
         user = row[0];
         if(user.userName != null && user.userName != "" && user.userPhone != null && user.userPhone != ""){
             setData1(user);
+            $("#appDiv").css("display", "none");
             $("#customerWindow").modal('hide');
             $("#addWindow").modal("show");
         }else{
@@ -286,6 +300,8 @@ function setData1(user) {
 
 /** 清除添加的form表单信息 */
 function clearAddForm() {
+    $("#addUserId").val("");
+    $("#addAppointmentId").val("");
     $('#addCarBrand').html('').trigger("change");
     $('#addCarColor').html('').trigger("change");
     $('#addCarModel').html('').trigger("change");
@@ -295,6 +311,8 @@ function clearAddForm() {
 
 /** 清除添加的form表单信息 */
 function clearAddForm1() {
+    $("#addUserId").val("");
+    $("#addAppointmentId").val("");
     $("input[type=reset]").trigger("click");
 }
 
@@ -312,6 +330,8 @@ function showEdit(){
                 $("#editWindow").modal('show'); // 显示弹窗
                 $("#editButton").removeAttr("disabled");
                 var checkin = row[0];
+                $("#editMaintainOrFix").val(checkin.maintainOrFix);
+                $("#editIfClearCar").val(checkin.ifClearCar);
                 $('#editCarBrand').html('<option value="' + checkin.brand.brandId + '">' + checkin.brand.brandName + '</option>').trigger("change");
                 $('#editCarColor').html('<option value="' + checkin.color.colorId + '">' + checkin.color.colorName + '</option>').trigger("change");
                 $('#editCarModel').html('<option value="' + checkin.model.modelId + '">' + checkin.model.modelName + '</option>').trigger("change");
@@ -466,9 +486,9 @@ function validator(formId) {
                         message: '汽车车牌号不能为空'
                     },
                     stringLength: {
-                        min: 6,
-                        max: 6,
-                        message: '车牌号码必须为6位'
+                        min: 5,
+                        max: 5,
+                        message: '车牌号码必须为5位'
                     },
                 }
             },

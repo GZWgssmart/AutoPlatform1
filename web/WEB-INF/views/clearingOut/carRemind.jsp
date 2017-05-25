@@ -159,7 +159,12 @@
                     <div class="form-group">
                         <label class="col-sm-4 control-label">付款方式：</label>
                         <div class="col-sm-6">
-                            <input type="text" name="paymentMethod" placeholder="请输入付款方式" class="form-control" style="width:100%"/>
+                            <select id="addPaymentMethod" class="js-example-tags form-control" name="paymentMethod">
+                                <option value="现金">现金</option>
+                                <option value="支付宝">支付宝</option>
+                                <option value="微信">微信</option>
+                                <option value="财付通">财付通</option>
+                            </select>
                         </div>
                     </div>
                     <div class="form-group">

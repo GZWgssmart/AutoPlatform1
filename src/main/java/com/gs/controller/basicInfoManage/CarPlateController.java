@@ -68,9 +68,9 @@ public class CarPlateController {
     @ResponseBody
     @RequestMapping(value = "queryAllCarPlate", method = RequestMethod.GET)
     public List<ComboBox4EasyUI> queryAll(HttpSession session) {
-        if (SessionUtil.isLogin(session) || SessionUtil.isOwnerLogin(session)) {
+       /* if (SessionUtil.isLogin(session) || SessionUtil.isOwnerLogin(session)) {
             String roles = "系统超级管理员,系统普通管理员,公司超级管理员,公司普通管理员,汽车公司接待员,汽车公司总技师,汽车公司技师,汽车公司学徒,汽车公司销售人员,汽车公司财务人员,汽车公司采购人员,汽车公司库管人员,汽车公司人力资源管理部,车主";
-            if (RoleUtil.checkRoles(roles)) {
+            if (RoleUtil.checkRoles(roles)) {*/
                 logger.info("查询所有车牌");
                 List<CarPlate> carPlates = carPlateService.queryAll((User) session.getAttribute("user"));
                 List<ComboBox4EasyUI> comboxs = new ArrayList<ComboBox4EasyUI>();
@@ -81,14 +81,14 @@ public class CarPlateController {
                     comboxs.add(comboBox4EasyUI);
                 }
                 return comboxs;
-            } else {
+           /* } else {
                 logger.info("此用户无拥有此方法角色");
                 return null;
             }
         } else {
             logger.info("请先登录");
             return null;
-        }
+        }*/
     }
 
     @ResponseBody

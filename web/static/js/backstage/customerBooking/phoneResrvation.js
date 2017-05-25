@@ -126,6 +126,16 @@ function statusFormatter(value, row, index) {
             }
 }
 
+function formatterGender(value, row, index){
+    if(row.userGender != 'N'){
+        return "女";
+    }else if(row.userGender != 'M'){
+        return "男";
+    }else{
+        return "未选择";
+    }
+}
+
 /** 判断是否选中 */
 function checkAppointment(combox) {
     var val = combox.value;
@@ -232,6 +242,7 @@ function showEdit(){
         $("#editWindow").modal('show'); // 显示弹窗
         $("#editButton").removeAttr("disabled");
         var appointment = row[0];
+        $('#editMaintainOrFix').val(appointment.maintainOrFix);
         $('#editCarBrand').html('<option value="' + appointment.brand.brandId + '">' + appointment.brand.brandName + '</option>').trigger("change");
         $('#editCarColor').html('<option value="' + appointment.color.colorId + '">' + appointment.color.colorName + '</option>').trigger("change");
         $('#editCarModel').html('<option value="' + appointment.model.modelId + '">' + appointment.model.modelName + '</option>').trigger("change");
@@ -346,9 +357,9 @@ function validator(formId) {
                     notEmpty: {
                         message: '车牌号码不能为空'
                     }, stringLength: {
-                        min: 6,
-                        max: 6,
-                        message: '车牌号码必须为6位'
+                        min: 5,
+                        max: 5,
+                        message: '车牌号码必须为5位'
                     },
                 }
             },
