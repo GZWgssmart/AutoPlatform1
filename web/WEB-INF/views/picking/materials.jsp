@@ -155,7 +155,7 @@
                     <span class="glyphicon glyphicon-search" aria-hidden="true"></span>我的工单
                 </button>
                 <button type="button" class="btn btn-default" onclick="initReviewing()">
-                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>审核中
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>审核中的配件
                 </button>
 
                 <button type="button" class="btn btn-default" onclick="initHistory()">
