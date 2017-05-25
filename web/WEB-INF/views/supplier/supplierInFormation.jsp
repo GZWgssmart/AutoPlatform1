@@ -14,7 +14,7 @@
 
     <title>供应商管理</title>
 
-    <style>
+   <%-- <style>
 
         /* 让显示详细信息的窗口中的所有Input都不显示边框 */
         #detailWindow input {
@@ -41,7 +41,7 @@
             box-shadow: none;
         }
 
-    </style>
+    </style>--%>
 </head>
 <body>
 <%@include file="../backstage/contextmenu.jsp"%>
@@ -392,31 +392,12 @@
                             <p class="clearfix"></p>
                         </div>
                         <div>
-                            <%--<div class="form-group col-md-12 pull-right">
-                                <label class="col-md-2 control-label" style="bottom: 6px;right:5px">供应商地址：</label>
-                                <div class="col-md-9" id="address" style="bottom:3px;display: block;">
-                                    <input type="text" define="supply.supplyAddress" class="form-control">
+                            <label class="col-md-2 control-label">供应商地址：</label>
+                            <div class="col-md-10">
+                                <div style="position: relative;">
+                                    <input id="address" type="text" class="col-md-4" define="supply.supplyAddress" name="supplyAddress"/>
                                 </div>
-                                <div class="col-md-9" id="supplyAddress" style="display: none;">
-                                    <fieldset id="editCity_china">
-                                        <div class="pull-left">
-                                            省份：<select class="province" disabled="disabled" id="editProvince" name="editProvince"></select>
-                                        </div>
-                                        <div class="pull-left">
-                                            &nbsp;&nbsp;&nbsp;城市：<select class="city" disabled="disabled" id="editCity" name="editCity"></select>
-                                        </div>
-                                        <div class="pull-left">
-                                            &nbsp;&nbsp;&nbsp;地区：<select class="area" disabled="disabled" id="editArea" name="editArea"></select>
-                                        </div>
-                                    </fieldset>
-                                </div>
-                            </div>--%>
-                                <label class="col-md-2 control-label">供应商地址：</label>
-                                <div class="col-md-10">
-                                    <div style="position: relative;">
-                                        <input id="address" type="text" class="col-md-4" define="supply.supplyAddress" name="supplyAddress"/>
-                                    </div>
-                                </div>
+                            </div>
                             <p class="clearfix"></p>
                         </div>
                         <p class="clearfix"></p>
@@ -522,7 +503,7 @@
 <script src="/static/js/jquery.cxselect.min.js"></script>
 
 </body>
-<script>
+<%--<script>
 
 
     $.cxSelect.defaults.url = '/static/js/cityData.json';
@@ -537,5 +518,5 @@
         nodata: 'none'
     });
 
-</script>
+</script>--%>
 </html>

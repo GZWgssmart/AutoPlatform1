@@ -277,6 +277,14 @@ function validator(formId) {
                         message: '请输入正确的开户银行卡号'
                     }
                 }
+            },
+            supplyAddress: {
+                message: '供应商地址验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '供应商地址不能为空'
+                    }
+                }
             }
         }
     })
