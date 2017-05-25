@@ -316,4 +316,13 @@ public class UserServiceImpl implements UserService {
         return userDAO.countNO(user);
     }
 
+    //  模糊分页查询，不分状态     只是角色为车主的
+    public List<User> queryCarByPagerLike(Pager pager) {
+        return userDAO.queryCarByPagerLike(pager);
+    }
+
+    //  车主记录数 可用    模糊查询的分页记录数
+    public int countAllCar(User user) {
+        return userDAO.countAllCar(user);
+    }
 }

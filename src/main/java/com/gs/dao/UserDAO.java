@@ -164,4 +164,10 @@ public interface UserDAO extends BaseDAO<String, User>{
     //  车主记录数 不可用
     public int countCarByNo(User user);
 
+    //  模糊分页查询，不分状态     只是角色为车主的
+    public List<User> queryCarByPagerLike(Pager pager);
+
+    //  车主记录数 可用    模糊查询的分页记录数
+    public int countAllCar(User user);
+
 }

@@ -568,4 +568,59 @@ public class UserBasicManageController {
             return null;
         }
     }
+
+    /**
+     * 模糊查询 车主管理得模糊查询
+     */
+    @ResponseBody
+    @RequestMapping(value="queryCarByPagerLike", method = RequestMethod.GET)
+    public Pager4EasyUI queryCarByPagerLike(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize, HttpSession session, HttpServletRequest request) {
+        if (SessionUtil.isLogin(session)) {
+            String roles = "系统超级管理员,系统普通管理员";
+            if (RoleUtil.checkRoles(roles)) {
+                Pager pager = new Pager();
+                pager.setPageNo(Integer.valueOf(pageNumber));
+                pager.setPageSize(Integer.valueOf(pageSize));
+                String text = request.getParameter("text");
+                String value = request.getParameter("value");
+                if (text != null && text != "" && value != null && value != "") {
+                    List<User> users = null;
+                    User user = new User();
+                    if (text.equals("姓名/手机号/角色名称/所属公司")) {
+                        user.setUserName(value);
+                        user.setUserPhone(value);
+                        user.setRoleId(value);
+                        user.setCompanyId(value);
+                    } else if (text.equals("姓名/手机号/角色名称")) {
+                        user.setUserName(value);
+                        user.setUserPhone(value);
+                        user.setRoleId(value);
+                    } else if (text.equals("姓名")) {
+                        user.setUserName(value);
+                    } else if (text.equals("手机号")) {
+                        user.setUserPhone(value);
+                    } else if (text.equals("角色名称")) {
+                        user.setRoleId(value);
+                    } else if (text.equals("所属公司")) {
+                        user.setCompanyId(value);
+                    }
+                    pager.setUser(user);
+                    users = userService.queryCarByPagerLike(pager);
+                    pager.setTotalRecords(userService.countAllCar((User) session.getAttribute("user")));
+                    System.out.print(users);
+                    return new Pager4EasyUI<User>(pager.getTotalRecords(), users);
+                } else {
+                    pager.setTotalRecords(userService.countOK((User) session.getAttribute("user")));
+                    List<User> users = userService.queryCarByRoleName(pager);
+                    return new Pager4EasyUI<User>(pager.getTotalRecords(), users);
+                }
+            }else {
+                logger.info("此用户无人员基本信息模糊查询角色");
+                return null;
+            }
+        }else{
+            logger.info("请先登录");
+            return null;
+        }
+    }
 }

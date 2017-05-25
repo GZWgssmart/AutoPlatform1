@@ -28,7 +28,7 @@
       <result property="companyName" column="companyName"></result>
       <result property="companyDes" column="compangyDes"></result>
     </association>
-    
+
     <association property="role" javaType="com.gs.bean.Role">
       <id property="roleId" column="roleId"></id>
       <result property="roleName" column="roleName"></result>
@@ -121,12 +121,12 @@
         where 1 = 1
     ]]>
     <if test="user.companyId != null and user.companyId != ''">
-        and u.companyId = #{user.companyId}
-        and ur.roleId !='7ff4f1c5-3205-11e7-bc72-507b9d765567'
-        and ur.roleId != '80095901-3205-11e7-bc72-507b9d765567'
+      and u.companyId = #{user.companyId}
+      and ur.roleId !='7ff4f1c5-3205-11e7-bc72-507b9d765567'
+      and ur.roleId != '80095901-3205-11e7-bc72-507b9d765567'
     </if>
-        order by u.userCreatedTime desc
-     limit #{beginIndex}, #{pageSize};
+    order by u.userCreatedTime desc
+    limit #{beginIndex}, #{pageSize};
   </select>
 
   <!-- 分页查询状态为可用的记录 -->
@@ -143,8 +143,8 @@
       and ur.roleId !='7ff4f1c5-3205-11e7-bc72-507b9d765567'
       and ur.roleId != '80095901-3205-11e7-bc72-507b9d765567'
     </if>
-        order by u.userCreatedTime desc
-     limit #{beginIndex}, #{pageSize};
+    order by u.userCreatedTime desc
+    limit #{beginIndex}, #{pageSize};
   </select>
 
   <!-- 分页查询状态为不可用的员工及角色名称 -->
@@ -161,7 +161,7 @@
       and ur.roleId !='7ff4f1c5-3205-11e7-bc72-507b9d765567'
       and ur.roleId != '80095901-3205-11e7-bc72-507b9d765567'
     </if>
-        order by u.userCreatedTime desc
+    order by u.userCreatedTime desc
     limit #{beginIndex}, #{pageSize};
   </select>
 
@@ -201,7 +201,48 @@
         where 1 = 1
     ]]>
     <if test="user.companyId != '' and user.companyId !=null">
-        and u.companyId = #{user.companyId}
+      and u.companyId = #{user.companyId}
+    </if>
+    and(
+    <if test="user.userName != '' and user.userName != null">
+      u.userName like '%${user.userName}%'
+    </if>
+    <if test="user.userName != '' and  user.userName != null and
+            user.userPhone != '' and user.userPhone != null">
+      or
+    </if>
+    <if test="user.userPhone != '' and user.userPhone != null">
+      u.userPhone like '%${user.userPhone}%'
+    </if>
+    <if test="user.userPhone != '' and  user.userPhone != null and
+            user.companyId != '' and user.companyId != null">
+      or
+    </if>
+    <if test="user.companyId != '' and user.companyId != null">
+      c.companyName like '%${user.companyId}%'
+    </if>
+    <if test="user.companyId != '' and user.companyId != null and
+            user.roleId != '' and user.roleId != null">
+      or
+    </if>
+    <if test="user.roleId != '' and user.roleId != null">
+      r.roleName like '%${user.roleId}%'
+    </if>
+    )order by u.userCreatedTime desc
+    limit #{beginIndex}, #{pageSize};
+  </select>
+
+  <!-- 车主分页模糊查询 -->
+  <select id="queryCarByPagerLike" resultMap="userBasicManageMap" parameterType="com.gs.common.bean.Pager">
+    <![CDATA[
+      select u.*, r.*, c.companyId, c.companyName from t_user u
+        left join t_user_role ur on u.userId = ur.userId
+        left join t_role r on r.roleId = ur.roleId
+        left join t_company c on u.companyId = c.companyId
+        where 1 = 1
+    ]]>
+    <if test="user.companyId != '' and user.companyId !=null">
+      and u.companyId = #{user.companyId}
     </if>
     and(
     <if test="user.userName != '' and user.userName != null">
@@ -241,9 +282,47 @@
     ]]>
     <if test="companyId != null and companyId != ''">
       and u.companyId = #{companyId}
-      and ur.roleId !='7ff4f1c5-3205-11e7-bc72-507b9d765567'
-      and ur.roleId != '80095901-3205-11e7-bc72-507b9d765567'
+      and ur.roleId !='8067fa42-3205-11e7-bc72-507b9d765567'
     </if>
+  </select>
+
+  <!-- 模糊查询记录数 -->
+  <select id="countAllCar" resultType="int" parameterType="user">
+    <![CDATA[
+      select count(*) from t_user u
+        left join t_user_role ur on u.userId = ur.userId
+        left join t_role r on r.roleId = ur.roleId
+        where 1 = 1
+    ]]>
+    <if test="user.companyId != '' and user.companyId !=null">
+      and u.companyId = #{user.companyId}
+    </if>
+    and(
+    <if test="user.userName != '' and user.userName != null">
+      u.userName like '%${user.userName}%'
+    </if>
+    <if test="user.userName != '' and  user.userName != null and
+            user.userPhone != '' and user.userPhone != null">
+      or
+    </if>
+    <if test="user.userPhone != '' and user.userPhone != null">
+      u.userPhone like '%${user.userPhone}%'
+    </if>
+    <if test="user.userPhone != '' and  user.userPhone != null and
+            user.companyId != '' and user.companyId != null">
+      or
+    </if>
+    <if test="user.companyId != '' and user.companyId != null">
+      c.companyName like '%${user.companyId}%'
+    </if>
+    <if test="user.companyId != '' and user.companyId != null and
+            user.roleId != '' and user.roleId != null">
+      or
+    </if>
+    <if test="user.roleId != '' and user.roleId != null">
+      r.roleName like '%${user.roleId}%'
+    </if>
+    )
   </select>
 
   <select id="countAll" resultType="int" parameterType="user">
@@ -330,38 +409,53 @@
     <if test="companyId != null and companyId != ''">
       and u.companyId = #{companyId}
     </if>
-   </select>
+  </select>
 
   <!-- 根据角色查询车主的基本信息 不分状态 -->
   <select id="queryCarByRoleName" resultMap="userBasicManageMap" parameterType="com.gs.common.bean.Pager">
     <![CDATA[
-      select u.*, r.* from t_user u
+      select u.*, r.*,c.companyId, c.companyName from t_user u
           left join t_user_role ur on u.userId = ur.userId
           left join t_role r on r.roleId = ur.roleId
-       where 1 = 1 and r.roleName = '车主'
+          left join t_company c on u.companyId = c.companyId
+       where 1 = 1
     ]]>
+    <if test="user.companyId != '' and user.companyId !=null">
+      and u.companyId = #{companyId}
+    </if>
+    and r.roleName = '车主'
     limit #{beginIndex}, #{pageSize};
   </select>
 
   <!-- 查询角色为车主的可用状态的基本信息 -->
   <select id="queryCarByOk" resultMap="userBasicManageMap" parameterType="com.gs.common.bean.Pager">
     <![CDATA[
-      select u.*, r.* from t_user u
+       select u.*, r.*,c.companyId, c.companyName from t_user u
           left join t_user_role ur on u.userId = ur.userId
           left join t_role r on r.roleId = ur.roleId
-       where 1 = 1 and r.roleName = '车主' and u.userStatus = 'Y'
+          left join t_company c on u.companyId = c.companyId
+       where 1 = 1
     ]]>
+    <if test="user.companyId != '' and user.companyId !=null">
+      and u.companyId = #{companyId}
+    </if>
+    and r.roleName = '车主' and u.userStatus = 'Y'
     limit #{beginIndex}, #{pageSize};
   </select>
 
   <!-- 查询角色为车主的不可用状态的基本信息 -->
   <select id="queryCarByNo" resultMap="userBasicManageMap" parameterType="com.gs.common.bean.Pager">
     <![CDATA[
-      select u.*, r.* from t_user u
+       select u.*, r.*,c.companyId, c.companyName from t_user u
           left join t_user_role ur on u.userId = ur.userId
           left join t_role r on r.roleId = ur.roleId
-       where 1 = 1 and r.roleName = '车主' and u.userStatus = 'N'
+          left join t_company c on u.companyId = c.companyId
+       where 1 = 1
     ]]>
+    <if test="user.companyId != '' and user.companyId !=null">
+      and u.companyId = #{companyId}
+    </if>
+    and r.roleName = '车主' and u.userStatus = 'N'
     limit #{beginIndex}, #{pageSize};
   </select>
 

@@ -1,13 +1,14 @@
 var contentPath = ''
+var roles = "系统超级管理员,系统普通管理员";
 
 $(function () {
-    var roles = "系统超级管理员,系统普通管理员";
     $.post(contentPath + "/user/isLogin/" + roles, function (data) {
         if (data.result == "success") {
             initTable('table', '/userBasicManage/queryCarByRoleName'); // 初始化表格
 
             // 初始化select2, 第一个参数是class的名字, 第二个参数是select2的提示语, 第三个参数是select2的查询url
             initSelect2("userRole", "请选择角色", "/role/role2CheckBox");
+            /*$('#detailBirthday').val(formatterDate(emp.userBirthday));  /!* 格式化不带时分秒的时间 *!/*/
 
             //0.初始化fileinput
             var oFileInput = new FileInput();
@@ -396,8 +397,8 @@ function showEdit(){
                         $("#editButton").removeAttr("disabled");
                         $('#editUserRole').html('<option value="' + emp.role.roleId + '">' + emp.role.roleName + '</option>').trigger("change");
                         $('#editDatetimepicker').val(formatterDate(emp.userBirthday));
-                        $('#editCity_china').val(formatterAddress(emp.userAddress));
                         $("#editForm").fill(emp);
+                        initCityPicker("address");//初始化三级地区联动
                         validator('editForm');
                     } else {
                         swal({
@@ -450,7 +451,7 @@ function showEdit(){
             } else {
                 swal({
                     title:"",
-                    text: "请先选中一条人员信息", // 主要文本
+                    text: "请先选中一条车主信息", // 主要文本
                     confirmButtonColor: "#DD6B55", // 提示按钮的颜色
                     confirmButtonText:"确定", // 提示按钮上的文本
                     type:"warning"
@@ -489,68 +490,6 @@ function editSubmit() {
     }
 }
 
-// function showReturn(){
-//     $.post(contentPath + "/user/isLogin/" + roles, function (data) {
-//         if (data.result == "success") {
-//             var row =  $('table').bootstrapTable('getSelections');
-//             if(row.length >0) {
-//                 swal(
-//                     {title:"",
-//                         text:"您确定要辞退此员工吗",
-//                         type:"warning",
-//                         showCancelButton:true,
-//                         confirmButtonColor:"#DD6B55",
-//                         confirmButtonText:"我确定",
-//                         cancelButtonText:"再考虑一下",
-//                         closeOnConfirm:false,
-//                         closeOnCancel:false
-//                     },function(isConfirm){
-//                         if (isConfirm) {
-//                             swal({
-//                                 title: "提示",
-//                                 text: "操作成功",
-//                                 type: "success",
-//                                 confirmButtonText: "确认",
-//                             }, function () {
-//                             })
-//                         }
-//                         else{
-//                             swal({title:"提示",
-//                                 text:"已取消",
-//                                 confirmButtonText:"确认",
-//                                 type:"error"})
-//                         }
-//                     }
-//                 )
-//             }else{
-//                 swal({
-//                     title:"",
-//                     text: "请先选择要辞退的员工", // 主要文本
-//                     confirmButtonColor: "#DD6B55", // 提示按钮的颜色
-//                     confirmButtonText:"确定", // 提示按钮上的文本
-//                     type:"warning"}) // 提示类型
-//             }
-//         } else if (data.result == "notLogin") {
-//             swal({
-//                 text: data.message,
-//                 confirmButtonText: "确认", // 提示按钮上的文本
-//                 type: "error"
-//             }, function (isConfirm) {
-//                 if (isConfirm) {
-//                     top.location = "/user/loginPage";
-//                 } else {
-//                     top.location = "/user/loginPage";
-//                 }
-//             })
-//         } else if (data.result == "notRole") {
-//             swal({
-//                 text: data.message,
-//                 confirmButtonText: "确认", // 提示按钮上的文本
-//                 type: "error"
-//             })
-//         }
-//     })
-// }
 
 // 模糊查询
 function blurredQuery(){
@@ -559,7 +498,7 @@ function blurredQuery(){
             var button = $("#ulButton");// 获取模糊查询按钮
             var text = button.text();// 获取模糊查询按钮文本
             var vaule = $("#ulInput").val();// 获取模糊查询输入框文本
-            initTable('table', '/userBasicManage/queryByPagerLike?text='+text+'&value='+vaule);
+            initTable('table', '/userBasicManage/queryCarByPagerLike?text='+text+'&value='+vaule);
         }else if(data.result == 'notLogin'){
             swal({title:"",
                     text:data.message,
@@ -579,62 +518,6 @@ function blurredQuery(){
                 type:"error"})
         }
     });
-}
-
-// 点击显示详细信息
-function showDetail(row) {
-        var emp = row;
-
-        // 将获取到的userIcon 的值 赋给img的src  attr=>属性 val=>值
-        if(emp.userIcon != null) {
-            $('#detailUserIcon').attr("src", "/" + emp.userIcon);
-        } else {
-            $('#detailUserIcon').attr("src", "/static/img/default.png");    // 如果图片为空就显示默认图
-        }
-
-        var gender = emp.userGender;
-        if(gender == 'M') {
-            $('#detailGender').val('男');
-        } else if(gender == 'F') {
-            $('#detailGender').val('女');
-        } else {
-            $('#detailGender').val('未选择');
-        }
-
-        var createdTime = emp.userCreatedTime;  /* 创建时间 */
-        var formatterCreateTime = formatterDateTime(createdTime);
-        $("#detailCreatedTime").val(formatterCreateTime);
-
-        var loginTime = emp.userLoginedTime;  /* 登录时间 */
-        var formatterLoginTime = formatterDateTime(loginTime);
-        if(formatterLoginTime == null || formatterLoginTime == '') {
-            $("#detailLoginTime").val("未登录过");
-        } else {
-            $("#detailLoginTime").val(formatterLoginTime);
-        }
-
-        var address = emp.userAddress;
-        var addresses = address.split('-');
-        console.log(addresses)
-        var dress="";
-        for(var i= 0, len = addresses.length; i<len; i++ ){
-            if(addresses[i] != null && addresses[i] != 'null' && addresses[i] != "" && addresses[i] != 0){
-                dress += '-' + addresses[i] ;
-            }
-        }
-        if(dress != "") {
-            dress = dress.substring(1);
-        } else {
-            dress = "未选择";
-        }
-        $("#detailAddress").val(dress);
-
-        $('#detailBirthday').val(formatterDate(emp.userBirthday));  /* 格式化不带时分秒的时间 */
-
-        $("#detailWindow").modal('show');
-        $("#detailForm").fill(emp);
-
-        console.log(emp);
 }
 
 //  查询不可用的
@@ -723,14 +606,6 @@ function formatterGender(val) {
     }
 }
 
-// 格式化地址
-function formatterAddress(val) {
-    var address = val.split('-');
-    $("#editProvince").val(address[0]);
-    $("#editCity").val(address[1]);
-    $("#editArea").val(address[2]);
-    // alert(address[0] + ',' + address[1] + ',' + address[2]);
-}
 
 //格式化不带时分秒的时间值。
 function formatterDate(value) {
@@ -782,45 +657,66 @@ function formatterDateTime(value) {
     }
 }
 
-// 激活或禁用    =---------------------------------  禁用激活有点问题，记得改 ***************************
+// 激活或禁用
 function formatterStatus(value, row, index) {
-    if(loginRoleName == '系统超级管理员' || loginRoleName == '系统普通管理员') {  // 登录的角色为系统的管理员的时候
-        if (userId != row.userId) { // 登录的用户如果和选中的行的数据的userId不一样
-            if(row.roleName == '系统超级管理员' || row.roleName == '系统普通管理员') {
-                if (value == 'Y') {
-                    return "&nbsp;<button type='button' class='btn btn-danger' " +
-                        "onclick='inactive(\"" + '/userBasicManage/updateStatus?id=' + row.userId + '&status=Y' + "\")'>禁用</button>&nbsp;&nbsp;"
-                        + "<a  class='btn btn-info btn-sm detail'><span class='glyphicon glyphicon-fullscreen'></span>详细信息</a>";
-                } else {
-                    return "&nbsp;<button type='button' class='btn btn-success' " +
-                        "onclick='active(\"" + '/userBasicManage/updateStatus?id=' + row.userId + '&status=N' + "\")'>激活</button>&nbsp;&nbsp;"
-                        + "<a  class='btn btn-info btn-sm detail'><span class='glyphicon glyphicon-fullscreen'></span>详细信息</a>";
-                }
-            }
-            return "&nbsp;&nbsp;<a  style='margin-left: 60px;' class='btn btn-info btn-sm detail'>" +
-                "<span class='glyphicon glyphicon-fullscreen'></span>详细信息</a>";
-        }
-        return "&nbsp;&nbsp;<a  style='margin-left: 60px;' class='btn btn-info btn-sm detail'>" +
-            "<span class='glyphicon glyphicon-fullscreen'></span>详细信息</a>";
-    } else {	// 登录的角色不为系统的管理员的时候
-        if (userId != row.userId) {  // 登录的用户是否和选中行的userId一致
-            if (row.roleName != '系统超级管理员' || row.roleName != '系统普通管理员') {// 选中行数据的角色也不为系统的管理员时
-                if (value == 'Y') {
-                    return "&nbsp;<button type='button' class='btn btn-danger' " +
-                        "onclick='inactive(\"" + '/userBasicManage/updateStatus?id=' + row.userId + '&status=Y' + "\")'>禁用</button>&nbsp;&nbsp;"
-                        + "<a  class='btn btn-info btn-sm detail'><span class='glyphicon glyphicon-fullscreen'></span>详细信息</a>";
-                }
-                return "&nbsp;&nbsp;<a  style='margin-left: 60px;' class='btn btn-info btn-sm detail'>" +
-                    "<span class='glyphicon glyphicon-fullscreen'></span>详细信息</a>";
-            } else {
-                return "&nbsp;<button type='button' class='btn btn-success' " +
-                    "onclick='active(\"" + '/userBasicManage/updateStatus?id=' + row.userId + '&status=N' + "\")'>激活</button>&nbsp;&nbsp;"
-                    + "<a  class='btn btn-info btn-sm detail'><span class='glyphicon glyphicon-fullscreen'></span>详细信息</a>";
-            }
-        }
-        return "&nbsp;&nbsp;<a  style='margin-left: 60px;' class='btn btn-info btn-sm detail'>" +
-            "<span class='glyphicon glyphicon-fullscreen'></span>详细信息</a>";
+    if(value == 'Y') {
+        return "&nbsp;&nbsp;<button type='button' class='btn btn-danger' onclick='inactive(\""+'/userBasicManage/updateStatus?id='+row.userId+'&status=Y'+"\")'>禁用</button>";
+    } else {
+        return "&nbsp;&nbsp;<button type='button' class='btn btn-success' onclick='active(\""+'/userBasicManage/updateStatus?id='+ row.userId+'&status=N'+ "\")'>激活</button>";
     }
+}
+
+// 查看全部可用
+function searchRapidStatus(){
+    var roles = "系统超级管理员,系统普通管理员";
+    $.post("/user/isLogin/"+roles, function (data) {
+        if(data.result == 'success'){
+            initTable('table', '/userBasicManage/queryCarByOk');
+        }else if(data.result == 'notLogin'){
+            swal({title:"",
+                    text:data.message,
+                    confirmButtonText:"确认",
+                    type:"error"}
+                ,function(isConfirm){
+                    if(isConfirm){
+                        top.location = "/user/loginPage";
+                    }else{
+                        top.location = "/user/loginPage";
+                    }
+                })
+        }else if(data.result == 'notRole'){
+            swal({title:"",
+                text:data.message,
+                confirmButtonText:"确认",
+                type:"error"})
+        }
+    });
+}
+// 查看全部禁用
+function searchDisableStatus(){
+    var roles = "系统超级管理员,系统普通管理员";
+    $.post("/user/isLogin/"+roles, function (data) {
+        if(data.result == 'success'){
+            initTable('table', '/userBasicManage/queryCarByNo');
+        }else if(data.result == 'notLogin'){
+            swal({title:"",
+                    text:data.message,
+                    confirmButtonText:"确认",
+                    type:"error"}
+                ,function(isConfirm){
+                    if(isConfirm){
+                        top.location = "/user/loginPage";
+                    }else{
+                        top.location = "/user/loginPage";
+                    }
+                })
+        }else if(data.result == 'notRole'){
+            swal({title:"",
+                text:data.message,
+                confirmButtonText:"确认",
+                type:"error"})
+        }
+    });
 }
 
 function companyFormatter(el,row,index){
@@ -830,13 +726,41 @@ function companyFormatter(el,row,index){
     return "暂无"
 }
 
-//  修改时，点击地址的文本框后，文本框隐藏，地址下拉选择显示
-var address = $("#address");
-address.click(function () {
-    address.css('display', 'none');
-    $('#userAddress').css('display', 'block');
-})
-
-// $(".js-example-basic-multiple").select2({
-//     allowClear: true
-// });
+// 禁用
+function inactive(url) {
+    $.post(url,
+        function(data){
+            if(data.result == 'success'){
+                $('#table').bootstrapTable("refresh");
+                swal({
+                    title:"",
+                    text: "禁用车主成功",
+                    confirmButtonText:"确定", // 提示按钮上的文本
+                    type:"success"})// 提示窗口, 修改成功
+            }else{
+                swal({title:"",
+                    text:"禁用失败",
+                    confirmButtonText:"确认",
+                    type:"error"})
+            }
+        },"json");
+}
+// 激活
+function active(url) {
+    $.post(url,
+        function(data){
+            if(data.result == 'success'){
+                $('#table').bootstrapTable("refresh");
+                swal({
+                    title:"",
+                    text: "激活车主信息成功",
+                    confirmButtonText:"确定", // 提示按钮上的文本
+                    type:"success"})// 提示窗口, 修改成功
+            }else{
+                swal({title:"",
+                    text:"激活失败",
+                    confirmButtonText:"确认",
+                    type:"error"})
+            }
+        },"json");
+}
