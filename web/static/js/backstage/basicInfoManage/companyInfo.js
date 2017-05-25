@@ -67,10 +67,12 @@ var FileInput = function () {
             dropZoneEnabled: true,//是否显示拖拽区域
             minImageWidth: 50, //图片的最小宽度
             minImageHeight: 50,//图片的最小高度
-//                maxImageWidth: 350,//图片的最大宽度
-//                maxImageHeight: 350,//图片的最大高度
-//             maxFileSize: 0,//单位为kb，如果为0表示不限制文件大小
+//          showPreview :true, //是否显示预览
+//          maxImageWidth: 350,//图片的最大宽度
+//          maxImageHeight: 350,//图片的最大高度
+//          maxFileSize: 0,//单位为kb，如果为0表示不限制文件大小
             maxFileCount: 1, //表示允许同时上传的最大文件个数
+            autoReplace: true,//是否自动替换当前图片，设置为true时，再次选择文件，会将当前的文件替换掉。
             enctype: 'multipart/form-data',
             validateInitialCount: true,
             previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
@@ -104,7 +106,7 @@ var FileInput = function () {
 //         control.fileinput({
 //             language: 'zh', //设置语言
 //             uploadUrl: uploadUrl, //上传的地址
-//             allowedFileExtensions: ['jpg', 'gif', 'png'],//接收的文件后缀
+//             allowedFileExtension      s: ['jpg', 'gif', 'png'],//接收的文件后缀
 //             showUpload: false, //是否显示上传按钮
 //             showCaption: false,//是否显示标题
 //             browseClass: "btn btn-primary", //按钮样式
@@ -112,10 +114,11 @@ var FileInput = function () {
 //             dropZoneEnabled: true,//是否显示拖拽区域
 //             minImageWidth: 50, //图片的最小宽度
 //             minImageHeight: 50,//图片的最小高度
-// //                maxImageWidth: 350,//图片的最大宽度
-// //                maxImageHeight: 350,//图片的最大高度
-// //             maxFileSize: 0,//单位为kb，如果为0表示不限制文件大小
+// //          maxImageWidth: 350,//图片的最大宽度
+// //          maxImageHeight: 350,//图片的最大高度
+// //          maxFileSize: 0,//单位为kb，如果为0表示不限制文件大小
 //             maxFileCount: 1, //表示允许同时上传的最大文件个数
+//             autoReplace: true,//是否自动替换当前图片，设置为true时，再次选择文件，会将当前的文件替换掉。
 //             enctype: 'multipart/form-data',
 //             validateInitialCount: true,
 //             previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
