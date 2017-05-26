@@ -87,10 +87,10 @@
         </table>
         <div id="toolbar" class="btn-group">
             <button type="button" class="btn btn-default" onclick="noDispatcher()">
-                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>未指定
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>未指派
             </button>
             <button type="button" class="btn btn-default" onclick="hasDispatcher()">
-                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>进行中
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>已指派
             </button>
         </div>
     </div>
